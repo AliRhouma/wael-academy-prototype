@@ -150,7 +150,7 @@ lift on hover (`-translate-y-[3px]`); nav items nudge `translate-x-0.5`. Everyth
 ## RTL / Arabic
 For `lang="ar"` set `dir="rtl"` on the shell/frame; flip `border-r`→`border-l`, mirror any leading
 gutter, swap `left`/`right` on breakout elements and badges. Prefer logical utilities (`ps-`/`pe-`,
-`ms-`/`me-`, `start-`/`end-`). Keep Comic Relief for Latin display; for Arabic display, Rubik's Arabic
+`ms-`/`me-`, `start-`/`end-`). Keep Cause for Latin display; for Arabic display, Rubik's Arabic
 covers both so a single `font-sans` heading is acceptable in RTL. Keep the same warmth and softness.
 
 ## Density & restraint

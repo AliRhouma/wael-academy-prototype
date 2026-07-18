@@ -16,7 +16,7 @@ themes for free.
 
 Two faces, strict division of labor:
 
-- **Comic Relief** — display only (`font-display`, and auto-applied to `h1–h6`). Titles, month label,
+- **Cause** — display only (`font-display`, and auto-applied to `h1–h6`). Titles, month label,
   week numbers, chip titles, big stat numbers, the CTA label, brand wordmark. **Ships only 400 and
   700** — there is no mid-weight, so display text always runs **700**. It runs wide (Comic Sans
   metrics), so set display sizes ~10% smaller than you would a grotesk, or small titles overflow.
@@ -26,7 +26,8 @@ Two faces, strict division of labor:
 
 Load once at the app root:
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cause:wght@400;700&display=swap" rel="stylesheet">
 ```
 
 ---

@@ -10,7 +10,7 @@
    tokened component themes for light/dark automatically.
 
    The look: a warm, soft education dashboard on the Wael Academy brand —
-   green → teal → navy gradient, gold + red accents, cream warmth, Comic Relief
+   green → teal → navy gradient, gold + red accents, cream warmth, Cause
    display type, Rubik interface type, low-contrast green-tinted elevation.
 
    Light is the primary theme. Dark tokens are defined via `[data-theme="dark"]`.
@@ -19,8 +19,9 @@
 
 /* ---------- Fonts ---------- */
 /* Load once, at the app root:
-   <link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-   Comic Relief ships ONLY 400 + 700 — there is no mid-weight. Headings run 700. */
+   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Cause:wght@400;700&display=swap" rel="stylesheet">
+   Cause is the display face; headings run 700. Rubik is the interface face. */
 
 /* ===========================================================================
    :root  —  Light theme tokens
@@ -295,7 +296,7 @@
   --shadow-xl: var(--shadow-xl);
 
   /* ---- Fonts ---- */
-  --font-display: "Comic Relief", "Comic Sans MS", cursive;
+  --font-display: "Cause", "Comic Sans MS", cursive;
   --font-sans: "Rubik", system-ui, sans-serif;
 }
 
@@ -316,14 +317,14 @@
     @apply bg-background text-foreground antialiased;
     font-weight: 500;
   }
-  /* Display face is Comic Relief; it only ships 400/700, so headings run 700. */
+  /* Display face is Cause; headings run 700. */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: "Comic Relief", "Comic Sans MS", cursive;
+    font-family: "Cause", "Comic Sans MS", cursive;
     font-weight: 700;
     letter-spacing: -0.004em;
     color: var(--ink);
@@ -356,7 +357,7 @@
 
 @layer utilities {
   .font-display {
-    font-family: "Comic Relief", "Comic Sans MS", cursive;
+    font-family: "Cause", "Comic Sans MS", cursive;
   }
   .font-sans {
     font-family: "Rubik", system-ui, sans-serif;

@@ -34,7 +34,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
   size?: keyof typeof SIZES
 }
 
-/** Deterministic tinted-initials avatar; Comic Relief initials (design system §10). */
+/** Deterministic tinted-initials avatar; Cause initials (design system §10). */
 export function Avatar({ name, size = "md", className, ...props }: AvatarProps) {
   return (
     <span

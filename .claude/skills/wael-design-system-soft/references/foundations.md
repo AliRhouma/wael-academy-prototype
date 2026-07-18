@@ -22,7 +22,7 @@ one of these is usually missing:
    secondaries keep even dense text feeling gentle.
 4. **Generous rounding + roomy padding.** Big soft corners and air around content read calm; tight
    corners and cramped padding read utilitarian.
-5. **A friendly display face.** Comic Relief's rounded, hand-drawn letters carry warmth in the type
+5. **A friendly display face.** Cause's rounded, hand-drawn letters carry warmth in the type
    itself. It is the voice of the brand; Rubik is the quiet, legible body around it.
 
 Warmth is carried by the **neutrals, the cream, and the shadows** — the quiet layer. The accents stay
@@ -76,12 +76,12 @@ action and a couple of soft-tinted elements is on-brand. Five competing accent f
 
 ## 3. Type — two faces, strict roles
 
-- **Comic Relief** — the **display** voice (`font-display`, and auto-applied to `h1–h6`). Page titles,
+- **Cause** — the **display** voice (`font-display`, and auto-applied to `h1–h6`). Page titles,
   section/card titles, big numbers (stats, week numbers), kickers, the brand wordmark, key button
   labels. It is the warmth in the typography.
   - **Ships only 400 and 700.** There is no mid-weight, so display text **always runs 700.** Never set
     it to 400/500/600 — it looks broken.
-  - **It runs wide** (Comic Sans metrics, big x-height). Set display sizes **~10% smaller** than you'd
+  - **It runs wide** (big x-height). Set display sizes **~10% smaller** than you'd
     set a grotesk at the same role, or small titles overflow their containers.
 - **Rubik** — **everything else** (`font-sans`, the `:root` default). Nav, body, inputs, secondary
   lines, times, table cells, labels. Soft-cornered, highly legible, calm. Weights: 400 (light body),
@@ -89,11 +89,11 @@ action and a couple of soft-tinted elements is on-brand. Five competing accent f
 
 Hierarchy is set by size + color, not by many weights: `text-ink` (primary) → `text-ink-subtle`
 (secondary) → `text-ink-muted` (tertiary / labels / placeholders). Keep letter-spacing near-neutral on
-Comic Relief (`-0.004em`); don't tighten it hard.
+Cause (`-0.004em`); don't tighten it hard.
 
-> **Swap note.** Comic Relief is the confirmed brand face. If a context needs more gravity (a formal
+> **Swap note.** Cause is the confirmed brand face. If a context needs more gravity (a formal
 > report, a parent-facing legal page), Baloo 2 is the sanctioned alternate — same rounded warmth, full
-> weight range, no Comic Sans association. It's a two-line change: the `font-display` token in
+> weight range. It's a two-line change: the `font-display` token in
 > `tokens.css` and the `<link>`. Don't reach for it casually; it's the escape hatch, not the default.
 
 ---
@@ -183,6 +183,6 @@ formatting. Arabic/RTL is supported (see `patterns.md`); keep the same warmth an
 
 A surface is on-brand when: the ground is the warm canvas (not flat white/grey) · shadows are
 green-tinted (not black) · the gradient appears on at most a couple of surfaces (not as a wash) · gold
-and red each mean their one thing · display text is Comic Relief 700 and body is Rubik · corners are
+and red each mean their one thing · display text is Cause 700 and body is Rubik · corners are
 soft and there's air around content · it lifts gently on hover. If all ten read true, it feels like
 Wael. If it feels cold, start with the shadows and the ground.

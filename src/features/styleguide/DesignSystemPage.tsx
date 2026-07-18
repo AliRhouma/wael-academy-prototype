@@ -145,7 +145,7 @@ const PRINCIPLES = [
   "Chaleur dans les neutres, pas dans les accents — canevas sage, encre vert-noir, ombres vert-forêt (jamais noires).",
   "Le dégradé est l’ADN de la marque, utilisé avec parcimonie : action principale, nav active, avatar.",
   "Chaque accent a un seul sens — or = récompense, rouge = alerte, émeraude = positif, navy = information.",
-  "Comic Relief en display uniquement, toujours en 700 ; Rubik pour toute l’interface.",
+  "Cause en display uniquement, toujours en 700 ; Rubik pour toute l’interface.",
   "Doux, aéré, arrondi — rayons généreux, marges confortables, élévation légère.",
   "Le mouvement est une montée douce ; désactivé sous prefers-reduced-motion.",
 ]
@@ -331,7 +331,7 @@ export default function DesignSystemPage() {
           <Section id="typographie" icon={Type} title="Typographie" subtitle="Deux polices, rôles stricts.">
             <div className="flex flex-col gap-4">
               <div className="border-b border-border pb-4">
-                <p className="mb-2 text-[11px] font-medium text-ink-muted">Comic Relief — display (700 uniquement)</p>
+                <p className="mb-2 text-[11px] font-medium text-ink-muted">Cause — display (700 uniquement)</p>
                 <p className="font-display text-3xl font-bold text-ink">Bonjour, Wael Academy</p>
                 <p className="font-display text-xl font-bold text-ink">Titre de section</p>
               </div>

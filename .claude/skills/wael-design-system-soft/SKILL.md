@@ -1,14 +1,13 @@
 ---
 name: wael-design-system-soft
-description: Apply the Wael Academy (soft) design system when building ANY page, screen, component, section, marketing block, dashboard, form, or visual interface for the Wael Academy product family — not just one screen type. Triggers whenever the user asks to build, mock up, restyle, or extend a Wael Academy UI, or says "use the Wael style", "our design system", "our theme", "the soft theme", "on-brand", "match the app", or references the warm green-teal-navy education aesthetic with gold + red accents, cream warmth, green-tinted soft shadows, Comic Relief display type and Rubik interface type. Use it for app shells, landing/marketing sections, auth screens, dashboards, tables, cards, chips, modals, empty states, settings — any surface. Consult this skill for every Wael Academy surface, even a single quick component, so the whole product stays on-brand and soft. Note this is the SOFT web/app UI system (green/gold/navy, warm, rounded), distinct from the WaelDocuments printable-PDF skill (wael-design-system).
+description: Apply the Wael Academy (soft) design system when building ANY page, screen, component, section, marketing block, dashboard, form, or visual interface for the Wael Academy product family — not just one screen type. Triggers whenever the user asks to build, mock up, restyle, or extend a Wael Academy UI, or says "use the Wael style", "our design system", "our theme", "the soft theme", "on-brand", "match the app", or references the warm green-teal-navy education aesthetic with gold + red accents, cream warmth, green-tinted soft shadows, Cause display type and Rubik interface type. Use it for app shells, landing/marketing sections, auth screens, dashboards, tables, cards, chips, modals, empty states, settings — any surface. Consult this skill for every Wael Academy surface, even a single quick component, so the whole product stays on-brand and soft. Note this is the SOFT web/app UI system (green/gold/navy, warm, rounded), distinct from the WaelDocuments printable-PDF skill (wael-design-system).
 ---
 
 # Wael Academy — Soft Design System
 
 A complete visual language for the Wael Academy product: an education brand that should feel **warm,
 soft, and trustworthy**, never cold or clinical. It is built on the brand's **green -> teal -> navy
-gradient** DNA, warmed with **gold + cream**, grounded in **green-tinted neutrals**, set in **Comic
-Relief** (display) over **Rubik** (interface), and rendered with **soft green-tinted elevation** on a
+gradient** DNA, warmed with **gold + cream**, grounded in **green-tinted neutrals**, set in **Cause** (display) over **Rubik** (interface), and rendered with **soft green-tinted elevation** on a
 **warm canvas**. This is a full system - colors, type, surfaces, the background, spacing, motion, and
 the UI-element patterns - not a template for one screen. Consult it for every surface, big or small;
 staying on-brand *and warm* is the whole job.
@@ -26,8 +25,8 @@ system fully assembled.
 1. **Install the tokens.** Ensure `assets/tokens.css` is imported into the project's global stylesheet
    (it's the source of truth - Tailwind v4 `@theme inline`, light + dark). For a standalone artifact,
    inline its `:root` / `[data-theme="dark"]` blocks in a `<style>`. Every utility below depends on it.
-2. **Load the two fonts** at the app root (Comic Relief ships only 400/700):
-   `<link href="https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">`
+2. **Load the two fonts** at the app root (Cause ships only 400/700):
+   `<link href="https://fonts.googleapis.com/css2?family=Cause:wght@400;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">`
 3. **Read the reference you need** (don't guess values or markup from memory):
    - `references/foundations.md` - **read this first.** The soft vibe explained as rules, the color
      roles, type system, the warm background, surfaces & elevation, radii, spacing, motion, iconography.
@@ -51,7 +50,7 @@ soft green glow bottom-left), never on flat white or grey. Content is white `sur
 (`bg-grad`) is the loud brand signal, spent on a handful of surfaces per view - a primary CTA, an
 active nav item, an avatar, a key control - never as a wash behind text. **Gold** is the kicker / seal
 / reward color; **red** is reserved for alerts, "today", and destructive; **emerald** and **navy** are
-the two supporting brand greens. Display text (titles, big numbers, kickers) is **Comic Relief** at
+the two supporting brand greens. Display text (titles, big numbers, kickers) is **Cause** at
 700; all interface text is **Rubik**. Ink runs `ink -> ink-subtle -> ink-muted`, and is near-black-green,
 never pure black. The feeling is warm, unhurried, and soft - warmth comes from the neutrals, the cream,
 and the green-tinted shadows, not from loud accents; color is earned, not sprinkled.
@@ -66,9 +65,9 @@ and the green-tinted shadows, not from loud accents; color is earned, not sprink
   and never put small body text directly on it.
 - **Each accent means one thing.** Gold = kicker / seal / reward. Red = alert / today / destructive.
   Emerald = positive / supporting green. Navy = informational / depth. Don't reuse them as decoration.
-- **Comic Relief is display-only, and only ever 700.** Titles, big numbers, kickers, brand wordmark,
+- **Cause is display-only, and only ever 700.** Titles, big numbers, kickers, brand wordmark,
   card/section titles. It ships no mid-weight - never set it to 400/500/600. All interface text is
-  Rubik. Keep Comic Relief ~10% smaller than a grotesk at the same role - it runs wide and overflows fast.
+  Rubik. Keep Cause ~10% smaller than a grotesk at the same role - it runs wide and overflows fast.
 - **Soft, roomy, rounded.** Chips/small `rounded-sm`; buttons / inputs / icon-chips `rounded-md`; cards
   `rounded-lg`; hero/shell/promo `rounded-xl`; pills/avatars `rounded-full`. Roomy padding (`p-4`+).
 - **Text on tokens.** `text-ink` / `-subtle` / `-muted` - never raw `text-gray-*`.

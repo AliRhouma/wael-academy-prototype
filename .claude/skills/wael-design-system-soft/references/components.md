@@ -2,7 +2,7 @@
 
 Copy-adapt these. Every class references a token from `tokens.css`, so they theme automatically.
 Snippets are React/JSX + Tailwind v4 with `lucide-react` icons. Keep semantics identical when porting
-to plain HTML. Display text uses `font-display` (Comic Relief 700); everything else is Rubik (default).
+to plain HTML. Display text uses `font-display` (Cause 700); everything else is Rubik (default).
 Recipes 1–6 and 10–14 are general — they dress any Wael surface. Recipes 7–9 (calendar board,
 mini-calendar, reminders) are the planning-specific family, kept here as a worked set; build other
 product areas from the general recipes plus the patterns in `patterns.md`.
@@ -52,7 +52,7 @@ Shape `rounded-md`, `font-medium`, `px-4 h-10`, focus → `focus-visible:ring-2 
 
 ## 2. Chips (session / task) & status badges
 The signature board element: a soft-bg tile with a 4px left border in a status color, `rounded-sm`,
-Comic Relief title, Rubik time line, and a gentle hover-lift. Drive the color with CSS vars so one
+Cause title, Rubik time line, and a gentle hover-lift. Drive the color with CSS vars so one
 component serves every status.
 
 ```jsx
@@ -88,7 +88,7 @@ Base card: `rounded-lg border border-border bg-surface p-[18px] shadow-md`. The 
 // Content card (mini-calendar, reminders live in these)
 <div className="rounded-lg border border-border bg-surface p-[18px] shadow-md">…</div>
 
-// Stat card — label above, Comic Relief value, muted sub. The "active" one is gradient.
+// Stat card — label above, Cause value, muted sub. The "active" one is gradient.
 <div>
   <p className="mb-[7px] text-[11px] text-ink-muted">Meilleur mois</p>
   <div className="relative overflow-hidden rounded-md bg-surface p-[14px_12px] shadow-md">
@@ -190,7 +190,7 @@ A white `surface` card, `rounded-lg`, with a muted header row and week rows. Gri
 Muted (adjacent-month) days: date text → `text-neutral-300`.
 
 ## 8. Mini-calendar
-Inside a content card. 7-col grid; weekday initials in Comic Relief (weekend in gold); day buttons
+Inside a content card. 7-col grid; weekday initials in Cause (weekend in gold); day buttons
 with an optional status dot; the selected day is a gradient pill.
 ```jsx
 <div className="grid grid-cols-7 gap-y-0.5 text-center">
