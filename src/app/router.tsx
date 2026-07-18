@@ -1,6 +1,7 @@
 import { createBrowserRouter, Link, Navigate } from "react-router-dom"
-import { ChevronRight, GraduationCap } from "lucide-react"
+import { ChevronRight, GraduationCap, Palette } from "lucide-react"
 import WorkspaceLayout from "@/features/workspace/WorkspaceLayout"
+import DesignSystemPage from "@/features/styleguide/DesignSystemPage"
 
 /**
  * Frame only — no real pages yet. These placeholders prove navigation works
@@ -28,6 +29,12 @@ function CoursesList() {
             </p>
             <h1 className="font-display text-[26px] font-bold text-ink">Cours</h1>
           </div>
+          <Link
+            to="/design-system"
+            className="ml-auto inline-flex h-9 items-center gap-2 rounded-md border border-border-strong bg-surface px-3.5 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
+          >
+            <Palette className="size-4" /> Design system
+          </Link>
         </header>
 
         <ul className="grid gap-3">
@@ -102,5 +109,6 @@ export const router = createBrowserRouter([
       { path: "grades", element: <SectionPlaceholder title="Notes & évaluations" /> },
     ],
   },
+  { path: "/design-system", element: <DesignSystemPage /> },
   { path: "*", element: <NotFound /> },
 ])
