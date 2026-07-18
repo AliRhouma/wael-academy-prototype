@@ -17,7 +17,7 @@ const SAMPLE_COURSES = [
 
 function CoursesList() {
   return (
-    <div className="min-h-screen bg-canvas">
+    <div className="min-h-dvh bg-canvas">
       <div className="mx-auto w-full max-w-[880px] px-4 py-10 sm:px-6">
         <header className="mb-6 flex items-center gap-3">
           <span className="grid size-11 place-items-center rounded-[11px] bg-grad text-ink-inverted shadow-brand">
@@ -31,9 +31,10 @@ function CoursesList() {
           </div>
           <Link
             to="/design-system"
-            className="ml-auto inline-flex h-9 items-center gap-2 rounded-md border border-border-strong bg-surface px-3.5 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
+            aria-label="Design system"
+            className="ms-auto inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-3 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 sm:h-9 sm:px-3.5"
           >
-            <Palette className="size-4" /> Design system
+            <Palette className="size-4" /> <span className="hidden sm:inline">Design system</span>
           </Link>
         </header>
 
@@ -81,7 +82,7 @@ function SectionPlaceholder({ title }: { title: string }) {
 
 function NotFound() {
   return (
-    <div className="grid min-h-screen place-items-center bg-canvas px-4 text-center">
+    <div className="grid min-h-dvh place-items-center bg-canvas px-4 text-center">
       <div>
         <h1 className="font-display text-2xl font-bold text-ink">Page introuvable</h1>
         <p className="mt-2 text-sm text-ink-muted">Cette page n’existe pas encore.</p>

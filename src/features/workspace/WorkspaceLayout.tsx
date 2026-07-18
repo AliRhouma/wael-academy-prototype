@@ -8,16 +8,18 @@ import {
   Sun,
   Users,
 } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
 import { useTheme } from "@/app/providers"
 import { cn } from "@/lib/utils"
 
-/** Section tabs for a course workspace; each links to a child route of /courses/:id. */
-const TABS = [
+/** Primary sections; each links to a child route of /courses/:id. (≤5 fit the
+ *  mobile bottom bar; beyond that, move extras into a "More" sheet.) */
+const TABS: { seg: string; label: string; icon: LucideIcon }[] = [
   { seg: "", label: "Aperçu", icon: LayoutGrid },
   { seg: "planning", label: "Planning", icon: CalendarDays },
   { seg: "students", label: "Élèves", icon: Users },
   { seg: "grades", label: "Notes", icon: ClipboardList },
-] as const
+]
 
 function ThemeToggle() {
   const { theme, toggle } = useTheme()
@@ -27,7 +29,7 @@ function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={theme === "dark" ? "Passer en clair" : "Passer en sombre"}
-      className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
+      className="grid size-11 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink md:size-9"
     >
       <Icon className="size-[18px]" />
     </button>
@@ -36,78 +38,98 @@ function ThemeToggle() {
 
 export default function WorkspaceLayout() {
   const { id = "" } = useParams()
+  const tabTo = (seg: string) => `/courses/${id}${seg ? `/${seg}` : ""}`
 
   return (
-    <div className="min-h-screen bg-canvas">
-      <div className="mx-auto w-full max-w-[1120px] px-4 py-8 sm:px-6 sm:py-10">
-        <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-xl">
-          {/* Header — back, title, actions */}
-          <header className="flex items-center gap-4 border-b border-border p-5 sm:px-7">
-            <Link
-              to="/courses"
-              aria-label="Retour aux cours"
-              className="grid size-9 shrink-0 place-items-center rounded-md border border-border bg-surface-muted text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
-            >
-              <ArrowLeft className="size-4" />
-            </Link>
-            <div className="min-w-0">
-              <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-                Espace de travail
-              </p>
-              <h1 className="truncate font-display text-[22px] font-bold leading-tight text-ink">
-                Cours · {id}
-              </h1>
-            </div>
-            <div className="ml-auto flex shrink-0 items-center gap-2">
-              <ThemeToggle />
-              {/* Avatar — gradient fill, cream ring (design system §10) */}
-              <div className="grid size-9 place-items-center rounded-full bg-grad font-display text-sm font-bold text-ink-inverted shadow-[0_0_0_2.5px_var(--surface),0_0_0_4px_var(--brand-100)]">
-                W
-              </div>
-            </div>
-          </header>
+    <div className="min-h-dvh bg-canvas md:py-8">
+      {/* Full-bleed on mobile; a floating window on md+ */}
+      <div className="mx-auto flex h-dvh w-full max-w-[1120px] flex-col overflow-hidden bg-surface md:h-[calc(100dvh-4rem)] md:rounded-xl md:border md:border-border md:shadow-xl">
+        {/* Header — mobile: top app bar (safe-area padded); desktop: static header */}
+        <header className="z-20 flex items-center gap-3 border-b border-border bg-surface px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:gap-4 md:px-7 md:pb-5 md:pt-5">
+          <Link
+            to="/courses"
+            aria-label="Retour aux cours"
+            className="grid size-11 shrink-0 place-items-center rounded-md border border-border bg-surface-muted text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:size-9"
+          >
+            <ArrowLeft className="size-4" />
+          </Link>
+          <div className="min-w-0 flex-1">
+            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+              Espace de travail
+            </p>
+            <h1 className="truncate font-display text-lg font-bold leading-tight text-ink md:text-[22px]">
+              Cours · {id}
+            </h1>
+          </div>
+          <ThemeToggle />
+          <div className="grid size-9 shrink-0 place-items-center rounded-full bg-grad font-display text-sm font-bold text-ink-inverted shadow-[0_0_0_2.5px_var(--surface),0_0_0_4px_var(--brand-100)]">
+            W
+          </div>
+        </header>
 
-          {/* Section tabs */}
-          <nav className="flex gap-1 overflow-x-auto border-b border-border p-2 sm:px-5">
-            {TABS.map((tab) => {
-              const to = `/courses/${id}${tab.seg ? `/${tab.seg}` : ""}`
-              const Icon = tab.icon
-              return (
-                <NavLink
-                  key={tab.seg || "index"}
-                  to={to}
-                  end={tab.seg === ""}
-                  className={({ isActive }) =>
-                    cn(
-                      "inline-flex shrink-0 items-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium transition",
-                      isActive
-                        ? "bg-brand-50 text-brand-700"
-                        : "text-ink-subtle hover:bg-brand-50/60 hover:text-brand-600",
-                    )
-                  }
-                >
-                  {({ isActive }) => (
-                    <>
-                      <Icon
-                        className={cn(
-                          "size-4",
-                          isActive ? "text-brand-600" : "text-ink-muted",
-                        )}
-                      />
-                      {tab.label}
-                    </>
-                  )}
-                </NavLink>
-              )
-            })}
-          </nav>
+        {/* Desktop tabs (mobile uses the bottom bar instead) */}
+        <nav className="hidden gap-1 overflow-x-auto border-b border-border p-2 md:flex md:px-5">
+          {TABS.map((tab) => {
+            const Icon = tab.icon
+            return (
+              <NavLink
+                key={tab.seg || "index"}
+                to={tabTo(tab.seg)}
+                end={tab.seg === ""}
+                className={({ isActive }) =>
+                  cn(
+                    "inline-flex shrink-0 items-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium transition",
+                    isActive
+                      ? "bg-brand-50 text-brand-700"
+                      : "text-ink-subtle hover:bg-brand-50/60 hover:text-brand-600",
+                  )
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <Icon className={cn("size-4", isActive ? "text-brand-600" : "text-ink-muted")} />
+                    {tab.label}
+                  </>
+                )}
+              </NavLink>
+            )
+          })}
+        </nav>
 
-          {/* Active section content */}
-          <main className="p-5 sm:p-8">
-            <Outlet />
-          </main>
-        </div>
+        {/* Content scrolls internally; pb-24 on mobile clears the fixed bottom bar */}
+        <main className="flex-1 overflow-y-auto scroll-touch p-4 pb-24 md:p-8 md:pb-8">
+          <Outlet />
+        </main>
       </div>
+
+      {/* Mobile bottom tab bar — fixed, safe-area padded, hidden on desktop */}
+      <nav className="pb-safe fixed inset-x-0 bottom-0 z-30 border-t border-border bg-surface md:hidden">
+        <div className="flex items-stretch justify-around px-1 py-1">
+          {TABS.map((tab) => {
+            const Icon = tab.icon
+            return (
+              <NavLink
+                key={tab.seg || "index"}
+                to={tabTo(tab.seg)}
+                end={tab.seg === ""}
+                className={({ isActive }) =>
+                  cn(
+                    "flex min-h-[52px] flex-1 flex-col items-center justify-center gap-0.5 rounded-md text-[11px] font-medium transition",
+                    isActive ? "text-brand-600" : "text-ink-muted",
+                  )
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <Icon className={cn("size-[22px]", isActive ? "text-brand-600" : "text-ink-muted")} />
+                    <span>{tab.label}</span>
+                  </>
+                )}
+              </NavLink>
+            )
+          })}
+        </div>
+      </nav>
     </div>
   )
 }

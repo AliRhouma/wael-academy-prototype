@@ -502,3 +502,34 @@
     radial-gradient(680px 480px at -6% 106%, rgb(35 172 118 / 0.10), transparent 60%),
     radial-gradient(500px 380px at 108% 92%, rgb(24 63 107 / 0.14), transparent 62%);
 }
+
+/* ===========================================================================
+   App base (non-token — PRESERVE across token syncs)
+   ---------------------------------------------------------------------------
+   Mobile-first / app-ready helpers for the responsive codebase (later wrapped
+   as an app via webview/PWA). These are NOT design tokens — do NOT move them
+   into tokens.css and do NOT change any token VALUES. They reuse existing
+   tokens for all colors/spacing; they only add device-aware layout behavior.
+   =========================================================================== */
+@layer utilities {
+  /* Safe-area padding for FIXED top/bottom bars (notch + home indicator).
+     Put on a wrapper WITHOUT competing padding on that axis; base padding goes
+     on the inner element. env() resolves to 0 on non-notched screens. */
+  .pt-safe { padding-top: max(0px, env(safe-area-inset-top)); }
+  .pb-safe { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+  .pl-safe { padding-left: max(0px, env(safe-area-inset-left)); }
+  .pr-safe { padding-right: max(0px, env(safe-area-inset-right)); }
+
+  /* Momentum scrolling for internal scroll containers in iOS webviews. */
+  .scroll-touch {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+@layer base {
+  /* App-like: no grey tap flash on touch. */
+  body {
+    -webkit-tap-highlight-color: transparent;
+  }
+}

@@ -19,6 +19,7 @@ import {
   Pencil,
   Plus,
   Search,
+  Smartphone,
   Sparkles,
   Square,
   Sun,
@@ -31,6 +32,7 @@ import {
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { useTheme } from "@/app/providers"
+import { useIsMobile } from "@/lib/hooks"
 import { fakeDelay } from "@/lib/utils"
 import { cn } from "@/lib/utils"
 import { PageHeader } from "@/components/kit/PageHeader"
@@ -40,6 +42,7 @@ import { EmptyState } from "@/components/kit/EmptyState"
 import { DataTable, type Column } from "@/components/kit/DataTable"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { FormSheet } from "@/components/kit/FormSheet"
+import type { OverflowAction } from "@/components/kit/OverflowMenu"
 
 /* ------------------------------------------------------------------ helpers */
 
@@ -164,6 +167,7 @@ const btnSecondary =
 
 export default function DesignSystemPage() {
   const { theme, toggle } = useTheme()
+  const isMobile = useIsMobile()
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [confirmLoading, setConfirmLoading] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -208,16 +212,11 @@ export default function DesignSystemPage() {
         </Badge>
       ),
     },
-    {
-      key: "actions",
-      header: "",
-      align: "right",
-      render: () => (
-        <button className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink">
-          <Trash2 className="size-4" />
-        </button>
-      ),
-    },
+  ]
+
+  const rowActions = (r: DemoStudent): OverflowAction[] => [
+    { label: "Modifier", icon: Pencil, onClick: () => toast(`Modifier ${r.name}`) },
+    { label: "Supprimer", icon: Trash2, tone: "danger", onClick: () => toast.success(`${r.name} supprimé`) },
   ]
 
   const toc: [string, string][] = [
@@ -225,7 +224,7 @@ export default function DesignSystemPage() {
     ["typographie", "Typographie"], ["elevation", "Élévation"], ["rayons", "Rayons"],
     ["boutons", "Boutons"], ["badges", "Badges & chips"], ["avatars", "Avatars"],
     ["cartes", "Cartes"], ["champs", "Champs"], ["vide", "État vide"],
-    ["tableau", "Tableau"], ["overlays", "Superpositions"],
+    ["tableau", "Tableau"], ["overlays", "Superpositions"], ["responsive", "Responsive"],
   ]
 
   return (
@@ -549,7 +548,13 @@ export default function DesignSystemPage() {
             <div className="flex flex-col gap-5">
               <Tile label="Avec données">
                 <div className="w-full">
-                  <DataTable columns={columns} rows={DEMO_ROWS} rowKey={(r) => r.id} />
+                  <DataTable
+                    columns={columns}
+                    rows={DEMO_ROWS}
+                    rowKey={(r) => r.id}
+                    rowActions={rowActions}
+                    onRowClick={(r) => toast(r.name)}
+                  />
                 </div>
               </Tile>
               <div className="grid gap-5 lg:grid-cols-2">
@@ -568,20 +573,43 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Overlays */}
-          <Section id="overlays" icon={PanelRight} title="Superpositions" subtitle="ConfirmDialog + FormSheet (kit) — essayez-les.">
+          <Section id="overlays" icon={PanelRight} title="Superpositions" subtitle="Bottom sheet sur mobile, dialog sur bureau — essayez-les.">
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => setConfirmOpen(true)}
-                className="inline-flex h-10 items-center gap-2 rounded-md bg-danger-500 px-4 font-medium text-danger-foreground shadow-sm transition hover:bg-danger-600"
+                className="inline-flex h-11 items-center gap-2 rounded-md bg-danger-500 px-4 font-medium text-danger-foreground shadow-sm transition hover:bg-danger-600"
               >
-                <Trash2 className="size-4" /> Supprimer (dialog)
+                <Trash2 className="size-4" /> Confirmation
               </button>
               <button
                 onClick={() => setSheetOpen(true)}
-                className="inline-flex h-10 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
+                className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
               >
-                <UserPlus className="size-4" /> Nouveau (sheet)
+                <UserPlus className="size-4" /> Formulaire
               </button>
+            </div>
+          </Section>
+
+          {/* Responsive */}
+          <Section id="responsive" icon={Smartphone} title="Responsive & app-ready" subtitle="Une seule base, mobile-first. Réduisez la fenêtre sous 768px.">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-ink-muted">Mode actuel :</span>
+                <Badge tone={isMobile ? "brand" : "neutral"} dot>
+                  {isMobile ? "Mobile" : "Bureau"}
+                </Badge>
+              </div>
+              <ul className="grid gap-2 text-sm text-ink-subtle sm:grid-cols-2">
+                <li>Tableaux → cartes empilées sous md.</li>
+                <li>Modales/formulaires → bottom sheets sous md.</li>
+                <li>Navigation → barre d’onglets en bas sur mobile.</li>
+                <li>Actions de ligne derrière un menu « … » (jamais au survol).</li>
+                <li>Cibles tactiles ≥ 44px.</li>
+                <li>Zones sûres (encoche / barre) respectées.</li>
+              </ul>
+              <p className="text-[12px] text-ink-muted">
+                Le tableau et les superpositions ci-dessus basculent automatiquement — le menu « … » de chaque ligne fonctionne au toucher.
+              </p>
             </div>
           </Section>
         </div>

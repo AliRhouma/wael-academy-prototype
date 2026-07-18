@@ -42,6 +42,19 @@ Before building any screen or component, think like a designer, not a code gener
 
 End each screen by stating, in one line, the main UX/creative decision you made.
 
+## Responsive & app-ready (applies to EVERY page)
+This is ONE responsive codebase, mobile-first, later wrapped as an app (webview/PWA) — **not** two route trees. Compose from `components/kit`; its primitives are already responsive. Author base styles for ~390px and enhance upward at `md+`. Verify every screen at ~390px AND desktop before calling it done.
+
+- **Mobile-first.** Base = phone (~390px); layer desktop with `md:` utilities.
+- **Tables → stacked cards below `md`, real columns at `md+`.** `DataTable` renders both from one data source.
+- **Modals/forms → bottom sheet on mobile, centered dialog on desktop.** `FormSheet` and `ConfirmDialog` switch via `useIsMobile()`. Same props either way.
+- **Navigation → bottom tab bar on mobile; header/sidebar tabs on desktop.**
+- **Touch targets ≥ 44px. No hover-only actions** — row/item actions live behind a visible "…" overflow menu (`OverflowMenu`), never a hover reveal.
+- **Safe areas.** Pad fixed top/bottom bars with `pt-safe` / `pb-safe` (`env(safe-area-inset-*)`, defined in the "App base" section of `index.css`).
+- **RTL-ready.** Use logical utilities (`ms-`/`me-`/`ps-`/`pe-`, `start`/`end`) — no hardcoded `left`/`right` — so nav and sheets mirror under `dir="rtl"`.
+- **Prefer Tailwind** responsive utilities for pure show/hide (`hidden md:flex` / `md:hidden`). Use `useIsMobile()` ONLY to render *different* React components (Dialog vs Sheet).
+- **ONE page per screen:** branch on the hook/breakpoint inside it. NEVER create separate `*Mobile.tsx` / `*Desktop.tsx` files.
+
 ## Stack (keep it minimal)
 - Vite + React + TypeScript.
 - Tailwind v4 (tokens via `src/styles/index.css`) + `lucide-react` icons.

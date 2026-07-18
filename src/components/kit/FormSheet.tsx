@@ -3,10 +3,17 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { useIsMobile } from "@/lib/hooks"
 
 export interface FormSheetProps {
   open: boolean
@@ -18,15 +25,14 @@ export interface FormSheetProps {
   onSubmit: () => void
   submitLabel?: string
   cancelLabel?: string
-  /** Disables the form and shows a pending label while saving. */
   submitting?: boolean
-  side?: "left" | "right"
 }
 
 /**
- * Side sheet for create/edit forms — shadcn Sheet, styled on the soft raised
- * surface. Submitting via Enter or the footer button; Escape / backdrop / Cancel
- * closes. The parent owns the open state and the data mutation.
+ * Create/edit form container. Mobile: a full-width **bottom sheet**. Desktop: a
+ * centered **dialog**. Chosen via `useIsMobile()` — same API either way. Submits
+ * on Enter or the footer button; Escape / backdrop / Cancel closes. The parent
+ * owns open state and the data mutation.
  */
 export function FormSheet({
   open,
@@ -38,48 +44,74 @@ export function FormSheet({
   submitLabel = "Enregistrer",
   cancelLabel = "Annuler",
   submitting = false,
-  side = "right",
 }: FormSheetProps) {
+  const isMobile = useIsMobile()
+
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (!submitting) onSubmit()
   }
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side={side}
-        className="w-full gap-0 border-border bg-surface-raised p-0 shadow-xl sm:max-w-md"
+  const fields = (
+    <div className="flex-1 space-y-4 overflow-y-auto scroll-touch p-5">{children}</div>
+  )
+
+  const footer = (
+    <div className="flex flex-col gap-2 border-t border-border p-5 sm:flex-row sm:justify-end">
+      <button
+        type="button"
+        onClick={() => onOpenChange(false)}
+        disabled={submitting}
+        className="inline-flex h-11 w-full items-center justify-center rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 disabled:opacity-60 sm:w-auto"
       >
-        <form onSubmit={handleSubmit} className="flex h-full flex-col">
-          <SheetHeader className="gap-1 border-b border-border p-5">
-            <SheetTitle className="font-display text-lg font-bold text-ink">{title}</SheetTitle>
+        {cancelLabel}
+      </button>
+      <button
+        type="submit"
+        disabled={submitting}
+        className="inline-flex h-11 w-full items-center justify-center rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-60 sm:w-auto"
+      >
+        {submitting ? "Enregistrement…" : submitLabel}
+      </button>
+    </div>
+  )
+
+  if (isMobile) {
+    return (
+      <Sheet open={open} onOpenChange={onOpenChange}>
+        <SheetContent
+          side="bottom"
+          className="max-h-[92dvh] gap-0 rounded-t-xl border-border bg-surface-raised p-0"
+        >
+          <form onSubmit={handleSubmit} className="flex max-h-[92dvh] flex-col pb-safe">
+            <SheetHeader className="gap-1 border-b border-border p-5 text-start">
+              <SheetTitle className="font-display text-lg font-bold text-ink">{title}</SheetTitle>
+              {description && (
+                <SheetDescription className="text-sm text-ink-muted">{description}</SheetDescription>
+              )}
+            </SheetHeader>
+            {fields}
+            {footer}
+          </form>
+        </SheetContent>
+      </Sheet>
+    )
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="gap-0 overflow-hidden rounded-xl bg-surface-raised p-0 sm:max-w-lg">
+        <form onSubmit={handleSubmit} className="flex max-h-[85dvh] flex-col">
+          <DialogHeader className="gap-1 border-b border-border p-5 text-start sm:text-start">
+            <DialogTitle className="font-display text-lg font-bold text-ink">{title}</DialogTitle>
             {description && (
-              <SheetDescription className="text-sm text-ink-muted">{description}</SheetDescription>
+              <DialogDescription className="text-sm text-ink-muted">{description}</DialogDescription>
             )}
-          </SheetHeader>
-
-          <div className="flex-1 space-y-4 overflow-y-auto p-5">{children}</div>
-
-          <SheetFooter className="flex-row justify-end gap-2 border-t border-border p-5">
-            <button
-              type="button"
-              onClick={() => onOpenChange(false)}
-              disabled={submitting}
-              className="inline-flex h-10 items-center justify-center rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 disabled:opacity-60"
-            >
-              {cancelLabel}
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="inline-flex h-10 items-center justify-center rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-60"
-            >
-              {submitting ? "Enregistrement…" : submitLabel}
-            </button>
-          </SheetFooter>
+          </DialogHeader>
+          {fields}
+          {footer}
         </form>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   )
 }
