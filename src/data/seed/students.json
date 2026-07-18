@@ -1,0 +1,7 @@
+[
+  { "id": "s-mohamed", "name": "Mohamed Ben Salah", "group": "Bac Sciences", "courseIds": ["c-math-bac", "c-phys-term"] },
+  { "id": "s-ines", "name": "Ines Trabelsi", "group": "Terminale", "courseIds": ["c-phys-term", "c-eng-b1"] },
+  { "id": "s-youssef", "name": "Youssef Gharbi", "group": "Collège", "courseIds": ["c-math-college", "c-fr-a2"] },
+  { "id": "s-sarra", "name": "Sarra Khelifi", "group": "Bac Sciences", "courseIds": ["c-math-bac", "c-eng-b1"] },
+  { "id": "s-amira", "name": "Amira Jlassi", "group": "9e année", "courseIds": ["c-math-college"] }
+]

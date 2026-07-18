@@ -13,3 +13,14 @@ export function cn(...inputs: ClassValue[]) {
 export function fakeDelay(ms = 400): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
+
+/** Format an ISO date-time as a short French label (e.g. "lun. 20 juil., 09:00"). */
+export function formatDateTime(iso: string): string {
+  return new Date(iso).toLocaleString("fr-FR", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  })
+}

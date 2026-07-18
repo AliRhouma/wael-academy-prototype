@@ -55,6 +55,25 @@ This is ONE responsive codebase, mobile-first, later wrapped as an app (webview/
 - **Prefer Tailwind** responsive utilities for pure show/hide (`hidden md:flex` / `md:hidden`). Use `useIsMobile()` ONLY to render *different* React components (Dialog vs Sheet).
 - **ONE page per screen:** branch on the hook/breakpoint inside it. NEVER create separate `*Mobile.tsx` / `*Desktop.tsx` files.
 
+## Roles (admin, teacher, parent, student)
+This app has four roles. They are NOT four apps — they are four filtered views
+over ONE shared dataset. Same stores, same seed data, same kit primitives; only
+navigation, page composition, and allowed actions differ.
+- Route prefix per role: /admin/*, /teacher/*, /parent/*, /student/*. Each is a
+  RoleLayout that sets the current role and renders the shared responsive AppShell
+  with that role's nav config (src/app/nav/<role>.ts).
+- No auth/backend. A useAuth store holds currentRole + currentUser, seeded with
+  one demo user per role. Root route "/" is the role SWITCHER (four buttons) — the
+  app's entry point. A "Switch role" action stays reachable inside every shell.
+- "My X" pages filter shared stores by currentUser (e.g. sessions.filter(s =>
+  s.teacherId === currentUser.id)). Admin sees everything.
+- ONE responsive AppShell driven by a nav config — do NOT build four shell files.
+- Shared vs role-specific: if it's the SAME screen differing only by which rows
+  show and which actions are enabled, build ONE component in features/shared/ with
+  a role/scope prop. Split into features/<role>/ only when the information
+  architecture and primary task genuinely differ. Never duplicate a page across
+  roles when a scope prop will do.
+
 ## Stack (keep it minimal)
 - Vite + React + TypeScript.
 - Tailwind v4 (tokens via `src/styles/index.css`) + `lucide-react` icons.

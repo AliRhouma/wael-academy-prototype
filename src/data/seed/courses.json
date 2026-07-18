@@ -1,0 +1,7 @@
+[
+  { "id": "c-math-bac", "name": "Mathématiques — Bac", "teacherId": "t-karim", "level": "4e Sc." },
+  { "id": "c-math-college", "name": "Maths — Collège", "teacherId": "t-karim", "level": "9e" },
+  { "id": "c-phys-term", "name": "Physique — Terminale", "teacherId": "t-leila", "level": "Bac Sc." },
+  { "id": "c-fr-a2", "name": "Français — Niveau A2", "teacherId": "t-sonia", "level": "Collège" },
+  { "id": "c-eng-b1", "name": "Anglais — Niveau B1", "teacherId": "t-nabil", "level": "Lycée" }
+]

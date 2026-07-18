@@ -1,0 +1,6 @@
+[
+  { "id": "u-admin", "name": "Amel Zouari", "role": "admin" },
+  { "id": "u-teacher", "name": "Karim Bouaziz", "role": "teacher", "teacherId": "t-karim" },
+  { "id": "u-parent", "name": "Fatma Ben Salah", "role": "parent", "childrenIds": ["s-mohamed", "s-sarra"] },
+  { "id": "u-student", "name": "Mohamed Ben Salah", "role": "student", "studentId": "s-mohamed" }
+]

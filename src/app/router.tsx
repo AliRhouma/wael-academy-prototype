@@ -1,21 +1,26 @@
-import { createBrowserRouter, Link, Navigate } from "react-router-dom"
+import type { ReactElement } from "react"
+import { createBrowserRouter, Link } from "react-router-dom"
 import { ChevronRight, GraduationCap, Palette } from "lucide-react"
+import type { Role } from "@/data/types"
+import type { NavItem } from "@/app/nav/types"
 import WorkspaceLayout from "@/features/workspace/WorkspaceLayout"
 import DesignSystemPage from "@/features/styleguide/DesignSystemPage"
+import { RoleSwitcher } from "@/features/switcher/RoleSwitcher"
+import { RoleLayout } from "@/app/RoleLayout"
+import { ComingSoon } from "@/features/shared/ComingSoon"
+import { adminNav } from "@/app/nav/admin"
+import { teacherNav } from "@/app/nav/teacher"
+import { parentNav } from "@/app/nav/parent"
+import { studentNav } from "@/app/nav/student"
+import AdminDashboard from "@/features/admin/Dashboard"
+import TeacherDashboard from "@/features/teacher/Dashboard"
+import ParentDashboard from "@/features/parent/Dashboard"
+import StudentDashboard from "@/features/student/Dashboard"
+import { useData } from "@/stores/useData"
 
-/**
- * Frame only — no real pages yet. These placeholders prove navigation works
- * end to end; real screens replace them later, wired to the in-memory store.
- */
-
-// A few placeholder courses so you can click into a workspace.
-const SAMPLE_COURSES = [
-  { id: "bac-math", name: "Mathématiques — Bac", level: "4e Sc." },
-  { id: "physique-term", name: "Physique — Terminale", level: "Bac Sc." },
-  { id: "francais-a2", name: "Français — Niveau A2", level: "Collège" },
-]
-
+/** Standalone list of the shared courses; links into the /courses/:id workspace. */
 function CoursesList() {
+  const courses = useData((s) => s.courses)
   return (
     <div className="min-h-dvh bg-canvas">
       <div className="mx-auto w-full max-w-[880px] px-4 py-10 sm:px-6">
@@ -24,9 +29,7 @@ function CoursesList() {
             <GraduationCap className="size-6" />
           </span>
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-              Wael Academy
-            </p>
+            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">Wael Academy</p>
             <h1 className="font-display text-[26px] font-bold text-ink">Cours</h1>
           </div>
           <Link
@@ -39,16 +42,14 @@ function CoursesList() {
         </header>
 
         <ul className="grid gap-3">
-          {SAMPLE_COURSES.map((c) => (
+          {courses.map((c) => (
             <li key={c.id}>
               <Link
                 to={`/courses/${c.id}`}
                 className="group flex items-center gap-4 rounded-lg border border-border bg-surface p-[18px] shadow-sm transition hover:border-brand-200 hover:shadow-md motion-safe:hover:-translate-y-0.5"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-display text-[15px] font-bold text-ink">
-                    {c.name}
-                  </p>
+                  <p className="truncate font-display text-[15px] font-bold text-ink">{c.name}</p>
                   <p className="text-[12px] text-ink-muted">{c.level}</p>
                 </div>
                 <ChevronRight className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
@@ -56,10 +57,6 @@ function CoursesList() {
             </li>
           ))}
         </ul>
-
-        <p className="mt-6 text-center text-[12px] text-ink-muted">
-          Prototype — cadre de l’application. Les écrans réels arrivent ensuite.
-        </p>
       </div>
     </div>
   )
@@ -73,9 +70,7 @@ function SectionPlaceholder({ title }: { title: string }) {
         <GraduationCap className="size-5" />
       </span>
       <h2 className="mt-4 font-display text-lg font-bold text-ink">{title}</h2>
-      <p className="mt-1 text-sm text-ink-muted">
-        Écran à construire — le cadre et la navigation sont prêts.
-      </p>
+      <p className="mt-1 text-sm text-ink-muted">Écran à construire — le cadre et la navigation sont prêts.</p>
     </div>
   )
 }
@@ -86,19 +81,35 @@ function NotFound() {
       <div>
         <h1 className="font-display text-2xl font-bold text-ink">Page introuvable</h1>
         <p className="mt-2 text-sm text-ink-muted">Cette page n’existe pas encore.</p>
-        <Link
-          to="/courses"
-          className="mt-4 inline-block text-sm font-medium text-brand-600 hover:underline"
-        >
-          Retour aux cours
+        <Link to="/" className="mt-4 inline-block text-sm font-medium text-brand-600 hover:underline">
+          Retour à l’accueil
         </Link>
       </div>
     </div>
   )
 }
 
+/** Build a role's route: RoleLayout + dashboard index + "coming soon" children. */
+function roleRoute(base: string, role: Role, nav: NavItem[], dashboard: ReactElement) {
+  return {
+    path: base,
+    element: <RoleLayout role={role} nav={nav} />,
+    children: [
+      { index: true, element: dashboard },
+      ...nav.slice(1).map((item) => ({
+        path: item.path.slice(base.length + 1),
+        element: <ComingSoon title={item.label} />,
+      })),
+    ],
+  }
+}
+
 export const router = createBrowserRouter([
-  { path: "/", element: <Navigate to="/courses" replace /> },
+  { path: "/", element: <RoleSwitcher /> },
+  roleRoute("/admin", "admin", adminNav, <AdminDashboard />),
+  roleRoute("/teacher", "teacher", teacherNav, <TeacherDashboard />),
+  roleRoute("/parent", "parent", parentNav, <ParentDashboard />),
+  roleRoute("/student", "student", studentNav, <StudentDashboard />),
   { path: "/courses", element: <CoursesList /> },
   {
     path: "/courses/:id",

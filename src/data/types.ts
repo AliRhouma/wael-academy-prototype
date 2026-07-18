@@ -13,6 +13,8 @@ export interface Student {
   id: Id
   name: string
   group?: string
+  /** Courses this student is enrolled in. */
+  courseIds?: Id[]
 }
 
 /** A teacher / instructor (enseignant). */
@@ -37,4 +39,25 @@ export interface Session {
   title: string
   startsAt: string // ISO date-time
   durationMin: number
+}
+
+/** The four roles — filtered VIEWS over the same shared data, not four apps. */
+export type Role = "admin" | "teacher" | "parent" | "student"
+
+/**
+ * A signed-in user of a given role. Linkage ids tie a user to the shared
+ * entities so "My X" pages can filter by them:
+ *  - student user → `studentId`
+ *  - teacher user → `teacherId`
+ *  - parent user  → `childrenIds` (student ids)
+ *  - admin        → no linkage (sees everything)
+ */
+export interface User {
+  id: Id
+  name: string
+  role: Role
+  avatarUrl?: string
+  studentId?: Id
+  teacherId?: Id
+  childrenIds?: Id[]
 }
