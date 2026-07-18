@@ -1,0 +1,106 @@
+import { createBrowserRouter, Link, Navigate } from "react-router-dom"
+import { ChevronRight, GraduationCap } from "lucide-react"
+import WorkspaceLayout from "@/features/workspace/WorkspaceLayout"
+
+/**
+ * Frame only — no real pages yet. These placeholders prove navigation works
+ * end to end; real screens replace them later, wired to the in-memory store.
+ */
+
+// A few placeholder courses so you can click into a workspace.
+const SAMPLE_COURSES = [
+  { id: "bac-math", name: "Mathématiques — Bac", level: "4e Sc." },
+  { id: "physique-term", name: "Physique — Terminale", level: "Bac Sc." },
+  { id: "francais-a2", name: "Français — Niveau A2", level: "Collège" },
+]
+
+function CoursesList() {
+  return (
+    <div className="min-h-screen bg-canvas">
+      <div className="mx-auto w-full max-w-[880px] px-4 py-10 sm:px-6">
+        <header className="mb-6 flex items-center gap-3">
+          <span className="grid size-11 place-items-center rounded-[11px] bg-grad text-ink-inverted shadow-brand">
+            <GraduationCap className="size-6" />
+          </span>
+          <div>
+            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+              Wael Academy
+            </p>
+            <h1 className="font-display text-[26px] font-bold text-ink">Cours</h1>
+          </div>
+        </header>
+
+        <ul className="grid gap-3">
+          {SAMPLE_COURSES.map((c) => (
+            <li key={c.id}>
+              <Link
+                to={`/courses/${c.id}`}
+                className="group flex items-center gap-4 rounded-lg border border-border bg-surface p-[18px] shadow-sm transition hover:border-brand-200 hover:shadow-md motion-safe:hover:-translate-y-0.5"
+              >
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-display text-[15px] font-bold text-ink">
+                    {c.name}
+                  </p>
+                  <p className="text-[12px] text-ink-muted">{c.level}</p>
+                </div>
+                <ChevronRight className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <p className="mt-6 text-center text-[12px] text-ink-muted">
+          Prototype — cadre de l’application. Les écrans réels arrivent ensuite.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/** Placeholder shown inside each workspace tab. */
+function SectionPlaceholder({ title }: { title: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-16 text-center">
+      <span className="grid size-12 place-items-center rounded-full bg-brand-50 text-brand-600">
+        <GraduationCap className="size-5" />
+      </span>
+      <h2 className="mt-4 font-display text-lg font-bold text-ink">{title}</h2>
+      <p className="mt-1 text-sm text-ink-muted">
+        Écran à construire — le cadre et la navigation sont prêts.
+      </p>
+    </div>
+  )
+}
+
+function NotFound() {
+  return (
+    <div className="grid min-h-screen place-items-center bg-canvas px-4 text-center">
+      <div>
+        <h1 className="font-display text-2xl font-bold text-ink">Page introuvable</h1>
+        <p className="mt-2 text-sm text-ink-muted">Cette page n’existe pas encore.</p>
+        <Link
+          to="/courses"
+          className="mt-4 inline-block text-sm font-medium text-brand-600 hover:underline"
+        >
+          Retour aux cours
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+export const router = createBrowserRouter([
+  { path: "/", element: <Navigate to="/courses" replace /> },
+  { path: "/courses", element: <CoursesList /> },
+  {
+    path: "/courses/:id",
+    element: <WorkspaceLayout />,
+    children: [
+      { index: true, element: <SectionPlaceholder title="Aperçu du cours" /> },
+      { path: "planning", element: <SectionPlaceholder title="Planning des séances" /> },
+      { path: "students", element: <SectionPlaceholder title="Élèves inscrits" /> },
+      { path: "grades", element: <SectionPlaceholder title="Notes & évaluations" /> },
+    ],
+  },
+  { path: "*", element: <NotFound /> },
+])
