@@ -1,10 +1,10 @@
 [
   {
-    "id": "q-math-complexes",
-    "title": "QCM — Nombres complexes",
-    "tags": ["révision", "facile", "chapitre 1"],
+    "id": "q-cx-1",
+    "title": "QCM — Module et conjugué",
+    "tags": ["révision", "facile"],
     "durationMin": 15,
-    "quizExamId": "qe-math-analyse",
+    "quizExamId": "qe-cx",
     "questions": [
       {
         "id": "qq-cx-1",
@@ -19,16 +19,31 @@
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "yearIds": ["y-bac-math"],
+    "chapterId": "ch-complexes",
     "order": 0
   },
   {
-    "id": "q-math-limites",
+    "id": "q-cx-2",
+    "title": "QCM — Forme trigonométrique",
+    "tags": ["moyen"],
+    "durationMin": 20,
+    "quizExamId": "qe-cx",
+    "questions": [
+      {
+        "id": "qq-cx-3",
+        "prompt": "L'argument de z = i vaut :",
+        "choices": ["0", "π/2", "π", "−π/2"],
+        "correctIndex": 1
+      }
+    ],
+    "chapterId": "ch-complexes",
+    "order": 1
+  },
+  {
+    "id": "q-lim",
     "title": "QCM — Limites et continuité",
     "tags": ["révision", "moyen"],
     "durationMin": 20,
-    "quizExamId": "qe-math-analyse",
     "questions": [
       {
         "id": "qq-lim-1",
@@ -43,16 +58,14 @@
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "yearIds": ["y-bac-math"],
-    "order": 1
+    "chapterId": "ch-limites",
+    "order": 0
   },
   {
-    "id": "q-math-deriv",
+    "id": "q-der",
     "title": "QCM — Dérivabilité",
-    "tags": ["chapitre 3", "difficile"],
+    "tags": ["difficile"],
     "durationMin": 25,
-    "quizExamId": "qe-math-analyse",
     "questions": [
       {
         "id": "qq-der-1",
@@ -61,12 +74,11 @@
         "correctIndex": 0
       }
     ],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "yearIds": ["y-bac-math"],
-    "order": 2
+    "chapterId": "ch-derivabilite",
+    "order": 0
   },
   {
-    "id": "q-math-proba",
+    "id": "q-proba",
     "title": "QCM — Probabilités",
     "tags": ["révision"],
     "durationMin": 15,
@@ -89,17 +101,16 @@
         "correctIndex": 0
       }
     ],
-    "subjectIds": ["subj-bac-math-mathematiques", "subj-bac-sci-mathematiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
-    "order": 3
+    "chapterId": "ch-probabilites",
+    "order": 0
   },
 
   {
-    "id": "q-phys-rc",
-    "title": "QCM — Le dipôle RC",
+    "id": "q-rc-1",
+    "title": "QCM — Constante de temps",
     "tags": ["révision", "électricité"],
     "durationMin": 15,
-    "quizExamId": "qe-phys-elec",
+    "quizExamId": "qe-rc",
     "questions": [
       {
         "id": "qq-rc-1",
@@ -114,16 +125,31 @@
         "correctIndex": 2
       }
     ],
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
+    "chapterId": "ch-rc",
     "order": 0
   },
   {
-    "id": "q-phys-rl",
+    "id": "q-rc-2",
+    "title": "QCM — Énergie du condensateur",
+    "tags": ["moyen"],
+    "durationMin": 12,
+    "quizExamId": "qe-rc",
+    "questions": [
+      {
+        "id": "qq-rc-3",
+        "prompt": "L'énergie emmagasinée dans un condensateur est proportionnelle à :",
+        "choices": ["U", "U²", "1/U", "√U"],
+        "correctIndex": 1
+      }
+    ],
+    "chapterId": "ch-rc",
+    "order": 1
+  },
+  {
+    "id": "q-rl",
     "title": "QCM — Le dipôle RL",
     "tags": ["électricité", "moyen"],
     "durationMin": 15,
-    "quizExamId": "qe-phys-elec",
     "questions": [
       {
         "id": "qq-rl-1",
@@ -132,12 +158,11 @@
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
-    "order": 1
+    "chapterId": "ch-rl",
+    "order": 0
   },
   {
-    "id": "q-phys-ondes",
+    "id": "q-ondes",
     "title": "QCM — Les ondes mécaniques",
     "tags": ["ondes", "révision"],
     "durationMin": 12,
@@ -154,17 +179,15 @@
         "correctIndex": 2
       }
     ],
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
-    "order": 2
+    "chapterId": "ch-ondes",
+    "order": 0
   },
 
   {
-    "id": "q-svt-immunite",
+    "id": "q-imm",
     "title": "QCM — L'immunité",
     "tags": ["révision", "facile"],
     "durationMin": 15,
-    "quizExamId": "qe-svt-bio",
     "questions": [
       {
         "id": "qq-imm-1",
@@ -173,16 +196,14 @@
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "yearIds": ["y-bac-sci"],
+    "chapterId": "ch-immunite",
     "order": 0
   },
   {
-    "id": "q-svt-genetique",
+    "id": "q-gen",
     "title": "QCM — La génétique humaine",
     "tags": ["difficile"],
     "durationMin": 20,
-    "quizExamId": "qe-svt-bio",
     "questions": [
       {
         "id": "qq-gen-1",
@@ -191,17 +212,16 @@
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "yearIds": ["y-bac-sci"],
-    "order": 1
+    "chapterId": "ch-genetique-humaine",
+    "order": 0
   },
 
   {
-    "id": "q-info-sql",
-    "title": "QCM — Requêtes SQL",
+    "id": "q-sql-1",
+    "title": "QCM — Clauses SQL",
     "tags": ["SQL", "pratique"],
     "durationMin": 10,
-    "quizExamId": "qe-info-bdd",
+    "quizExamId": "qe-sql",
     "questions": [
       {
         "id": "qq-sql-1",
@@ -216,12 +236,33 @@
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-bac-info-informatique"],
-    "yearIds": ["y-bac-info"],
+    "chapterId": "ch-sql",
     "order": 0
   },
   {
-    "id": "q-info-reseaux",
+    "id": "q-sql-2",
+    "title": "QCM — Les jointures",
+    "tags": ["SQL", "moyen"],
+    "durationMin": 12,
+    "quizExamId": "qe-sql",
+    "questions": [
+      {
+        "id": "qq-sql-3",
+        "prompt": "Une jointure INNER JOIN retourne :",
+        "choices": [
+          "Toutes les lignes des deux tables",
+          "Les lignes correspondantes des deux tables",
+          "Uniquement la table de gauche",
+          "Les lignes sans correspondance"
+        ],
+        "correctIndex": 1
+      }
+    ],
+    "chapterId": "ch-sql",
+    "order": 1
+  },
+  {
+    "id": "q-reseaux",
     "title": "QCM — Réseaux : notions de base",
     "tags": ["réseaux", "révision"],
     "durationMin": 12,
@@ -233,13 +274,12 @@
         "correctIndex": 2
       }
     ],
-    "subjectIds": ["subj-bac-info-informatique"],
-    "yearIds": ["y-bac-info"],
-    "order": 1
+    "chapterId": "ch-reseaux",
+    "order": 0
   },
 
   {
-    "id": "q-eco-croissance",
+    "id": "q-croiss",
     "title": "QCM — La croissance économique",
     "tags": ["révision"],
     "durationMin": 15,
@@ -251,13 +291,12 @@
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-bac-eco-economie"],
-    "yearIds": ["y-bac-eco"],
+    "chapterId": "ch-croissance",
     "order": 0
   },
 
   {
-    "id": "q-9-thales",
+    "id": "q-9th",
     "title": "QCM — Le théorème de Thalès",
     "tags": ["révision", "géométrie"],
     "durationMin": 15,
@@ -269,45 +308,58 @@
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-9-mathematiques"],
-    "yearIds": ["y-9"],
+    "chapterId": "ch-9-thales",
     "order": 0
   },
 
   {
-    "id": "q-ar-hijaji",
-    "title": "اختبار — النص الحجاجي",
+    "id": "q-arh-1",
+    "title": "اختبار — بنية النص الحجاجي",
     "tags": ["مراجعة", "سهل"],
     "durationMin": 15,
-    "quizExamId": "qe-ar-nusus",
+    "quizExamId": "qe-arh",
     "questions": [
       {
-        "id": "qq-ar-1",
+        "id": "qq-arh-1",
         "prompt": "ما هو الهدف الأساسي من النص الحجاجي؟",
         "choices": ["الإقناع", "السرد", "الوصف", "التسلية"],
         "correctIndex": 0
       }
     ],
-    "subjectIds": ["subj-bac-lettres-arabe"],
-    "yearIds": ["y-bac-lettres"],
+    "chapterId": "ch-ar-hijaji",
     "order": 0
   },
   {
-    "id": "q-ar-sardi",
+    "id": "q-arh-2",
+    "title": "اختبار — الروابط الحجاجية",
+    "tags": ["مراجعة"],
+    "durationMin": 15,
+    "quizExamId": "qe-arh",
+    "questions": [
+      {
+        "id": "qq-arh-2",
+        "prompt": "من الروابط الحجاجية الدالة على النتيجة:",
+        "choices": ["لأنّ", "بما أنّ", "إذن", "مثل"],
+        "correctIndex": 2
+      }
+    ],
+    "chapterId": "ch-ar-hijaji",
+    "order": 1
+  },
+  {
+    "id": "q-arsd",
     "title": "اختبار — النص السردي",
     "tags": ["مراجعة"],
     "durationMin": 15,
-    "quizExamId": "qe-ar-nusus",
     "questions": [
       {
-        "id": "qq-ar-2",
+        "id": "qq-arsd-1",
         "prompt": "من عناصر النص السردي:",
         "choices": ["الحجة", "الشخصيات", "المقدمة المنطقية", "الاستنتاج"],
         "correctIndex": 1
       }
     ],
-    "subjectIds": ["subj-bac-lettres-arabe"],
-    "yearIds": ["y-bac-lettres"],
-    "order": 1
+    "chapterId": "ch-ar-sardi",
+    "order": 0
   }
 ]

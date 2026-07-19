@@ -52,19 +52,27 @@ export default function AdminSubjectsScreen() {
     return m
   }, [allExams])
 
+  // Content is chapter-owned; a lesson/quiz counts toward every subject its
+  // chapter belongs to.
+  const chapterSubjects = useMemo(() => {
+    const m = new Map<string, string[]>()
+    for (const c of allChapters) m.set(c.id, c.subjectIds)
+    return m
+  }, [allChapters])
+
   const lessonCount = useMemo(() => {
     const m = new Map<string, number>()
     for (const l of allLessons)
-      for (const sid of l.subjectIds) m.set(sid, (m.get(sid) ?? 0) + 1)
+      for (const sid of chapterSubjects.get(l.chapterId) ?? []) m.set(sid, (m.get(sid) ?? 0) + 1)
     return m
-  }, [allLessons])
+  }, [allLessons, chapterSubjects])
 
   const quizCount = useMemo(() => {
     const m = new Map<string, number>()
     for (const q of allQuizzes)
-      for (const sid of q.subjectIds) m.set(sid, (m.get(sid) ?? 0) + 1)
+      for (const sid of chapterSubjects.get(q.chapterId) ?? []) m.set(sid, (m.get(sid) ?? 0) + 1)
     return m
-  }, [allQuizzes])
+  }, [allQuizzes, chapterSubjects])
 
   const pathCount = useMemo(() => {
     const m = new Map<string, number>()

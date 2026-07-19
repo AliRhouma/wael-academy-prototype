@@ -53,7 +53,9 @@ export function FormSheet({
   }
 
   const fields = (
-    <div className="flex-1 space-y-4 overflow-y-auto scroll-touch p-5">{children}</div>
+    <div className="min-w-0 flex-1 space-y-4 overflow-y-auto overflow-x-hidden scroll-touch p-5">
+      {children}
+    </div>
   )
 
   const footer = (
@@ -83,7 +85,7 @@ export function FormSheet({
           side="bottom"
           className="max-h-[92dvh] gap-0 rounded-t-xl border-border bg-surface-raised p-0"
         >
-          <form onSubmit={handleSubmit} className="flex max-h-[92dvh] flex-col pb-safe">
+          <form onSubmit={handleSubmit} className="flex min-w-0 max-h-[92dvh] flex-col pb-safe">
             <SheetHeader className="gap-1 border-b border-border p-5 text-start">
               <SheetTitle className="font-display text-lg font-bold text-ink">{title}</SheetTitle>
               {description && (
@@ -101,7 +103,7 @@ export function FormSheet({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="gap-0 overflow-hidden rounded-xl bg-surface-raised p-0 sm:max-w-lg">
-        <form onSubmit={handleSubmit} className="flex max-h-[85dvh] flex-col">
+        <form onSubmit={handleSubmit} className="flex min-w-0 max-h-[85dvh] flex-col">
           <DialogHeader className="gap-1 border-b border-border p-5 text-start sm:text-start">
             <DialogTitle className="font-display text-lg font-bold text-ink">{title}</DialogTitle>
             {description && (

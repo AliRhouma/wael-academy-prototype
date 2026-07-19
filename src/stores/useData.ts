@@ -166,6 +166,25 @@ function reconcile(next: {
   return { quizzes, paths }
 }
 
+/**
+ * After the set of chapters changes (a chapter deleted, or chapters orphaned by
+ * a subject/year deletion), drop every lesson / quiz / quiz-exam that lived in a
+ * removed chapter, then reconcile quiz→group links and path steps. Pass the
+ * surviving chapters and paths; returns the whole reconciled content slice.
+ */
+function afterChapterChange(
+  s: DataState,
+  chapters: Chapter[],
+  paths: Path[],
+): Pick<DataState, "chapters" | "lessons" | "quizExams" | "quizzes" | "paths"> {
+  const alive = new Set(chapters.map((c) => c.id))
+  const lessons = s.lessons.filter((l) => alive.has(l.chapterId))
+  const quizExams = s.quizExams.filter((e) => alive.has(e.chapterId))
+  const survivingQuizzes = s.quizzes.filter((q) => alive.has(q.chapterId))
+  const reconciled = reconcile({ lessons, quizzes: survivingQuizzes, quizExams, paths })
+  return { chapters, lessons, quizExams, quizzes: reconciled.quizzes, paths: reconciled.paths }
+}
+
 export const useData = create<DataState>()((set) => ({
   students: studentsSeed as Student[],
   teachers: teachersSeed as Teacher[],
@@ -196,22 +215,16 @@ export const useData = create<DataState>()((set) => ({
         s.subjects.filter((sub) => sub.yearId === id).map((sub) => sub.id),
       )
       const droppedYear = new Set([id])
-      const lessons = pruneScoped(s.lessons, droppedSubjects, droppedYear)
-      const quizExams = pruneScoped(s.quizExams, droppedSubjects, droppedYear)
-      const prunedQuizzes = pruneScoped(s.quizzes, droppedSubjects, droppedYear)
+      const chapters = pruneScoped(s.chapters, droppedSubjects, droppedYear)
       const survivingPaths = s.paths.filter(
         (p) => !droppedSubjects.has(p.subjectId) && p.yearId !== id,
       )
-      const { quizzes, paths } = reconcile({ lessons, quizzes: prunedQuizzes, quizExams, paths: survivingPaths })
       return {
         years: s.years.filter((y) => y.id !== id),
         subjects: s.subjects.filter((sub) => sub.yearId !== id),
-        chapters: pruneScoped(s.chapters, droppedSubjects, droppedYear),
         exams: pruneScoped(s.exams, droppedSubjects, droppedYear),
-        lessons,
-        quizExams,
-        quizzes,
-        paths,
+        // Chapters prune by scope; their lessons/quizzes/quiz-exams cascade off.
+        ...afterChapterChange(s, chapters, survivingPaths),
         // Sessions drop the dead year/subject links; empty ones are pruned.
         sessions: pruneScoped(s.sessions, droppedSubjects, droppedYear),
         // A group whose home year is gone loses that link.
@@ -230,19 +243,13 @@ export const useData = create<DataState>()((set) => ({
     set((s) => {
       const dropped = new Set([id])
       const empty = new Set<string>()
-      const lessons = pruneScoped(s.lessons, dropped, empty)
-      const quizExams = pruneScoped(s.quizExams, dropped, empty)
-      const prunedQuizzes = pruneScoped(s.quizzes, dropped, empty)
+      const chapters = pruneScoped(s.chapters, dropped, empty)
       const survivingPaths = s.paths.filter((p) => p.subjectId !== id)
-      const { quizzes, paths } = reconcile({ lessons, quizzes: prunedQuizzes, quizExams, paths: survivingPaths })
       return {
         subjects: s.subjects.filter((sub) => sub.id !== id),
-        chapters: pruneScoped(s.chapters, dropped, empty),
         exams: pruneScoped(s.exams, dropped, empty),
-        lessons,
-        quizExams,
-        quizzes,
-        paths,
+        // Chapters lose the subject; ones left with none cascade their content off.
+        ...afterChapterChange(s, chapters, survivingPaths),
         // Sessions drop the dead subject link; ones with no subject left are pruned.
         sessions: pruneScoped(s.sessions, dropped, empty),
       }
@@ -255,7 +262,10 @@ export const useData = create<DataState>()((set) => ({
   },
   updateChapter: (id, patch) =>
     set((s) => ({ chapters: s.chapters.map((c) => (c.id === id ? { ...c, ...patch } : c)) })),
-  removeChapter: (id) => set((s) => ({ chapters: s.chapters.filter((c) => c.id !== id) })),
+  /** Removes the chapter AND cascades: its lessons, quizzes and quiz-exams go
+   * too, and any path step that pointed to them is dropped. */
+  removeChapter: (id) =>
+    set((s) => afterChapterChange(s, s.chapters.filter((c) => c.id !== id), s.paths)),
 
   addExam: (input) => {
     const exam: Exam = { id: crypto.randomUUID(), ...input }

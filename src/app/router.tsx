@@ -16,10 +16,12 @@ import AdminDashboard from "@/features/admin/Dashboard"
 import AdminYearsScreen from "@/features/admin/curriculum/YearsScreen"
 import AdminSubjectsScreen from "@/features/admin/curriculum/SubjectsScreen"
 import AdminSubjectDetailScreen from "@/features/admin/curriculum/SubjectDetailScreen"
+import AdminChapterDetailScreen from "@/features/admin/curriculum/ChapterDetailScreen"
 import AdminUsersScreen from "@/features/admin/users/UsersScreen"
 import AdminOffersScreen from "@/features/admin/offers/OffersScreen"
 import AdminGroupsScreen from "@/features/admin/groups/GroupsScreen"
 import AdminSessionsScreen from "@/features/admin/sessions/SessionsScreen"
+import AdminCalendarScreen from "@/features/admin/planning/CalendarScreen"
 import TeacherDashboard from "@/features/teacher/Dashboard"
 import TeacherSessionsScreen from "@/features/teacher/SessionsScreen"
 import ParentDashboard from "@/features/parent/Dashboard"
@@ -142,11 +144,13 @@ export const router = createBrowserRouter([
       users: <AdminUsersScreen />,
       groups: <AdminGroupsScreen />,
       sessions: <AdminSessionsScreen />,
+      calendar: <AdminCalendarScreen />,
       offers: <AdminOffersScreen />,
     },
     [
       { path: "curriculum/:yearId", element: <AdminSubjectsScreen /> },
       { path: "curriculum/:yearId/:subjectId", element: <AdminSubjectDetailScreen /> },
+      { path: "curriculum/:yearId/:subjectId/:chapterId", element: <AdminChapterDetailScreen /> },
     ],
   ),
   roleRoute("/teacher", "teacher", teacherNav, <TeacherDashboard />, {

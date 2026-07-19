@@ -34,6 +34,7 @@ function useItemLookup(subjectLessons: Lesson[], subjectQuizzes: Quiz[]) {
 /** The "Parcours" tab — ordered learning paths built from the subject's content. */
 export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) {
   const allPaths = useData((s) => s.paths)
+  const allChapters = useData((s) => s.chapters)
   const allLessons = useData((s) => s.lessons)
   const allQuizzes = useData((s) => s.quizzes)
   const addPath = useData((s) => s.addPath)
@@ -46,19 +47,26 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
     [allPaths, subject.id],
   )
 
+  /** Chapters that belong to this subject — the content available to a parcours
+   * is whatever lives in these chapters. */
+  const subjectChapterIds = useMemo(
+    () => new Set(allChapters.filter((c) => c.subjectIds.includes(subject.id)).map((c) => c.id)),
+    [allChapters, subject.id],
+  )
+
   const subjectLessons = useMemo(
     () =>
       allLessons
-        .filter((l) => l.subjectIds.includes(subject.id))
+        .filter((l) => subjectChapterIds.has(l.chapterId))
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    [allLessons, subject.id],
+    [allLessons, subjectChapterIds],
   )
   const subjectQuizzes = useMemo(
     () =>
       allQuizzes
-        .filter((q) => q.subjectIds.includes(subject.id))
+        .filter((q) => subjectChapterIds.has(q.chapterId))
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    [allQuizzes, subject.id],
+    [allQuizzes, subjectChapterIds],
   )
 
   const lookup = useItemLookup(subjectLessons, subjectQuizzes)

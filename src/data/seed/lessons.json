@@ -1,352 +1,312 @@
 [
   {
-    "id": "l-math-cours-complexes",
+    "id": "l-cx-cours",
     "title": "Cours — Nombres complexes : forme algébrique",
     "kind": "cours",
     "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
     "pdfs": [{ "name": "Résumé du cours" }, { "name": "Formulaire" }],
-    "chapterIds": ["ch-complexes"],
-    "subjectIds": ["subj-bac-math-mathematiques", "subj-bac-sci-mathematiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
+    "chapterId": "ch-complexes",
     "order": 0
   },
   {
-    "id": "l-math-cours-limites",
-    "title": "Cours — Limites et continuité",
-    "kind": "cours",
+    "id": "l-cx-exos",
+    "title": "Exercices corrigés — Nombres complexes",
+    "kind": "exercice",
     "videoUrl": "https://youtu.be/oHg5SJYRHA0",
-    "pdfs": [{ "name": "Support de cours" }],
-    "chapterIds": ["ch-limites"],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "yearIds": ["y-bac-math"],
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé détaillé" }],
+    "chapterId": "ch-complexes",
     "order": 1
   },
   {
-    "id": "l-math-exos-deriv",
-    "title": "Exercices corrigés — Dérivabilité",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
-    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé détaillé" }],
-    "chapterIds": ["ch-derivabilite"],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "yearIds": ["y-bac-math"],
+    "id": "l-cx-serie",
+    "title": "Série d'exercices N°1 — Nombres complexes",
+    "kind": "serie",
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Indications" }],
+    "chapterId": "ch-complexes",
     "order": 2
   },
   {
-    "id": "l-math-serie-suites",
-    "title": "Série d'exercices N°3 — Suites réelles",
-    "kind": "serie",
-    "pdfs": [{ "name": "Énoncé" }, { "name": "Indications" }],
-    "chapterIds": ["ch-suites"],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "yearIds": ["y-bac-math"],
-    "order": 3
-  },
-  {
-    "id": "l-math-resume-log",
-    "title": "Résumé — Fonction logarithme népérien",
+    "id": "l-cx-resume",
+    "title": "Résumé — Nombres complexes",
     "kind": "resume",
     "pdfs": [{ "name": "Fiche résumé" }],
-    "chapterIds": ["ch-logarithme"],
-    "subjectIds": ["subj-bac-math-mathematiques", "subj-bac-sci-mathematiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
-    "order": 4
-  },
-  {
-    "id": "l-math-cours-integrales",
-    "title": "Cours complet — Calcul intégral : primitives, intégration par parties et applications au calcul d'aires",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/9bZkp7q19f0",
-    "pdfs": [{ "name": "Support de cours" }, { "name": "Table des primitives" }],
-    "chapterIds": ["ch-integrales"],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "yearIds": ["y-bac-math"],
-    "order": 5
-  },
-  {
-    "id": "l-math-exos-proba",
-    "title": "Exercices — Probabilités conditionnelles",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
-    "pdfs": [{ "name": "Énoncé" }],
-    "chapterIds": ["ch-probabilites"],
-    "subjectIds": [
-      "subj-bac-math-mathematiques",
-      "subj-bac-sci-mathematiques",
-      "subj-bac-tech-mathematiques",
-      "subj-bac-info-mathematiques"
-    ],
-    "yearIds": ["y-bac-math", "y-bac-sci", "y-bac-tech", "y-bac-info"],
-    "order": 6
+    "chapterId": "ch-complexes",
+    "order": 3
   },
 
   {
-    "id": "l-phys-cours-rc",
+    "id": "l-lim-cours",
+    "title": "Cours — Limites et continuité",
+    "kind": "cours",
+    "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
+    "pdfs": [{ "name": "Support de cours" }],
+    "chapterId": "ch-limites",
+    "order": 0
+  },
+  {
+    "id": "l-lim-serie",
+    "title": "Série d'exercices — Limites et continuité",
+    "kind": "serie",
+    "pdfs": [{ "name": "Énoncé" }],
+    "chapterId": "ch-limites",
+    "order": 1
+  },
+
+  {
+    "id": "l-der-cours",
+    "title": "Cours — Dérivabilité et étude de fonctions",
+    "kind": "cours",
+    "videoUrl": "https://youtu.be/9bZkp7q19f0",
+    "pdfs": [{ "name": "Support de cours" }],
+    "chapterId": "ch-derivabilite",
+    "order": 0
+  },
+  {
+    "id": "l-der-exos",
+    "title": "Exercices corrigés — Dérivabilité",
+    "kind": "exercice",
+    "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
+    "chapterId": "ch-derivabilite",
+    "order": 1
+  },
+
+  {
+    "id": "l-int-cours",
+    "title": "Cours complet — Calcul intégral : primitives, intégration par parties et applications au calcul d'aires",
+    "kind": "cours",
+    "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Table des primitives" }],
+    "chapterId": "ch-integrales",
+    "order": 0
+  },
+
+  {
+    "id": "l-proba-exos",
+    "title": "Exercices — Probabilités conditionnelles",
+    "kind": "exercice",
+    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
+    "pdfs": [{ "name": "Énoncé" }],
+    "chapterId": "ch-probabilites",
+    "order": 0
+  },
+
+  {
+    "id": "l-rc-cours",
     "title": "Cours — Le dipôle RC",
     "kind": "cours",
     "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
     "pdfs": [{ "name": "Support de cours" }, { "name": "Formulaire" }],
-    "chapterIds": ["ch-rc"],
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
+    "chapterId": "ch-rc",
     "order": 0
   },
   {
-    "id": "l-phys-exos-rl",
-    "title": "Exercices corrigés — Le dipôle RL",
+    "id": "l-rc-exos",
+    "title": "Exercices corrigés — Le dipôle RC",
     "kind": "exercice",
-    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
-    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
-    "chapterIds": ["ch-rl"],
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
-    "order": 1
-  },
-  {
-    "id": "l-phys-serie-rlc",
-    "title": "Série d'exercices — Oscillations libres dans un circuit RLC",
-    "kind": "serie",
-    "pdfs": [{ "name": "Énoncé" }],
-    "chapterIds": ["ch-rlc-libre"],
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
-    "order": 2
-  },
-  {
-    "id": "l-phys-resume-ondes",
-    "title": "Résumé — Les ondes mécaniques progressives",
-    "kind": "resume",
-    "pdfs": [{ "name": "Fiche de révision" }],
-    "chapterIds": ["ch-ondes"],
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
-    "order": 3
-  },
-  {
-    "id": "l-phys-cours-noyau",
-    "title": "Cours — Le noyau, la masse et l'énergie",
-    "kind": "cours",
     "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
-    "pdfs": [{ "name": "Support de cours" }],
-    "chapterIds": ["ch-noyau"],
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
-    "order": 4
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
+    "chapterId": "ch-rc",
+    "order": 1
   },
 
   {
-    "id": "l-svt-cours-repro",
-    "title": "Cours — La reproduction humaine",
-    "kind": "cours",
+    "id": "l-rl-exos",
+    "title": "Exercices corrigés — Le dipôle RL",
+    "kind": "exercice",
     "videoUrl": "https://youtu.be/9bZkp7q19f0",
-    "pdfs": [{ "name": "Support de cours" }, { "name": "Schémas" }],
-    "chapterIds": ["ch-reproduction"],
-    "subjectIds": [
-      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
-      "subj-bac-math-sciences-de-la-vie-et-de-la-terre"
-    ],
-    "yearIds": ["y-bac-sci", "y-bac-math"],
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
+    "chapterId": "ch-rl",
     "order": 0
   },
+
   {
-    "id": "l-svt-resume-immunite",
+    "id": "l-ondes-resume",
+    "title": "Résumé — Les ondes mécaniques progressives",
+    "kind": "resume",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-ondes",
+    "order": 0
+  },
+
+  {
+    "id": "l-imm-resume",
     "title": "Résumé — L'immunité et le système immunitaire",
     "kind": "resume",
     "pdfs": [{ "name": "Fiche de révision" }],
-    "chapterIds": ["ch-immunite"],
-    "subjectIds": [
-      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
-      "subj-bac-math-sciences-de-la-vie-et-de-la-terre"
-    ],
-    "yearIds": ["y-bac-sci", "y-bac-math"],
-    "order": 1
+    "chapterId": "ch-immunite",
+    "order": 0
   },
+
   {
-    "id": "l-svt-exos-genetique",
+    "id": "l-gen-exos",
     "title": "Exercices — La génétique humaine",
     "kind": "exercice",
     "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
     "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
-    "chapterIds": ["ch-genetique-humaine"],
-    "subjectIds": [
-      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
-      "subj-bac-math-sciences-de-la-vie-et-de-la-terre"
-    ],
-    "yearIds": ["y-bac-sci", "y-bac-math"],
-    "order": 2
+    "chapterId": "ch-genetique-humaine",
+    "order": 0
   },
+
   {
-    "id": "l-svt-cours-neuro",
+    "id": "l-repro-cours",
+    "title": "Cours — La reproduction humaine",
+    "kind": "cours",
+    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Schémas" }],
+    "chapterId": "ch-reproduction",
+    "order": 0
+  },
+
+  {
+    "id": "l-neuro-cours",
     "title": "Cours — La neurophysiologie : le réflexe myotatique",
     "kind": "cours",
     "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
     "pdfs": [{ "name": "Support de cours" }],
-    "chapterIds": ["ch-neuro"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "yearIds": ["y-bac-sci"],
-    "order": 3
+    "chapterId": "ch-neuro",
+    "order": 0
   },
 
   {
-    "id": "l-info-cours-sql",
+    "id": "l-sql-cours",
     "title": "Cours — Le langage SQL",
     "kind": "cours",
     "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
     "pdfs": [{ "name": "Support de cours" }, { "name": "Aide-mémoire SQL" }],
-    "chapterIds": ["ch-sql", "ch-bdd"],
-    "subjectIds": ["subj-bac-info-informatique"],
-    "yearIds": ["y-bac-info"],
+    "chapterId": "ch-sql",
     "order": 0
   },
   {
-    "id": "l-info-tp-sql",
+    "id": "l-sql-tp",
     "title": "TP — Requêtes SQL (SELECT, JOIN)",
     "kind": "exercice",
     "videoUrl": "https://youtu.be/oHg5SJYRHA0",
     "pdfs": [{ "name": "Sujet TP" }, { "name": "Base de données (script)" }],
-    "chapterIds": ["ch-sql"],
-    "subjectIds": ["subj-bac-info-informatique"],
-    "yearIds": ["y-bac-info"],
+    "chapterId": "ch-sql",
     "order": 1
   },
+
   {
-    "id": "l-info-resume-reseaux",
+    "id": "l-reseaux-resume",
     "title": "Résumé — Les réseaux informatiques",
     "kind": "resume",
     "pdfs": [{ "name": "Fiche de révision" }],
-    "chapterIds": ["ch-reseaux"],
-    "subjectIds": ["subj-bac-info-informatique"],
-    "yearIds": ["y-bac-info"],
-    "order": 2
+    "chapterId": "ch-reseaux",
+    "order": 0
   },
+
   {
-    "id": "l-info-cours-python",
+    "id": "l-python-cours",
     "title": "Cours — Programmation en Python",
     "kind": "cours",
     "videoUrl": "https://youtu.be/9bZkp7q19f0",
     "pdfs": [{ "name": "Support de cours" }, { "name": "Exemples de code" }],
-    "chapterIds": ["ch-python"],
-    "subjectIds": ["subj-bac-info-informatique"],
-    "yearIds": ["y-bac-info"],
-    "order": 3
+    "chapterId": "ch-python",
+    "order": 0
   },
 
   {
-    "id": "l-eco-cours-croissance",
+    "id": "l-croiss-cours",
     "title": "Cours — La croissance économique",
     "kind": "cours",
     "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
     "pdfs": [{ "name": "Support de cours" }],
-    "chapterIds": ["ch-croissance"],
-    "subjectIds": ["subj-bac-eco-economie"],
-    "yearIds": ["y-bac-eco"],
+    "chapterId": "ch-croissance",
     "order": 0
   },
+
   {
-    "id": "l-eco-resume-mondialisation",
+    "id": "l-mond-resume",
     "title": "Résumé — La mondialisation",
     "kind": "resume",
     "pdfs": [{ "name": "Fiche de révision" }],
-    "chapterIds": ["ch-mondialisation"],
-    "subjectIds": ["subj-bac-eco-economie"],
-    "yearIds": ["y-bac-eco"],
-    "order": 1
+    "chapterId": "ch-mondialisation",
+    "order": 0
   },
+
   {
-    "id": "l-eco-exos-chomage",
+    "id": "l-chomage-exos",
     "title": "Exercices — Le chômage et l'inflation",
     "kind": "exercice",
     "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
     "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
-    "chapterIds": ["ch-chomage"],
-    "subjectIds": ["subj-bac-eco-economie"],
-    "yearIds": ["y-bac-eco"],
-    "order": 2
+    "chapterId": "ch-chomage",
+    "order": 0
   },
 
   {
-    "id": "l-philo-cours-conscience",
+    "id": "l-consc-cours",
     "title": "Cours — La conscience et l'inconscient",
     "kind": "cours",
     "videoUrl": "https://youtu.be/oHg5SJYRHA0",
     "pdfs": [{ "name": "Support de cours" }, { "name": "Citations clés" }],
-    "chapterIds": ["ch-conscience"],
-    "subjectIds": ["subj-bac-lettres-philosophie", "subj-bac-sci-philosophie"],
-    "yearIds": ["y-bac-lettres", "y-bac-sci"],
+    "chapterId": "ch-conscience",
     "order": 0
-  },
-  {
-    "id": "l-philo-resume-liberte",
-    "title": "Résumé — La liberté",
-    "kind": "resume",
-    "pdfs": [{ "name": "Fiche de révision" }],
-    "chapterIds": ["ch-liberte"],
-    "subjectIds": ["subj-bac-lettres-philosophie", "subj-bac-sci-philosophie"],
-    "yearIds": ["y-bac-lettres", "y-bac-sci"],
-    "order": 1
   },
 
   {
-    "id": "l-9-cours-thales",
+    "id": "l-lib-resume",
+    "title": "Résumé — La liberté",
+    "kind": "resume",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-liberte",
+    "order": 0
+  },
+
+  {
+    "id": "l-9th-cours",
     "title": "Cours — Le théorème de Thalès",
     "kind": "cours",
     "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
     "pdfs": [{ "name": "Support de cours" }],
-    "chapterIds": ["ch-9-thales"],
-    "subjectIds": ["subj-9-mathematiques"],
-    "yearIds": ["y-9"],
+    "chapterId": "ch-9-thales",
     "order": 0
-  },
-  {
-    "id": "l-9-serie-trigo",
-    "title": "Série d'exercices — La trigonométrie",
-    "kind": "serie",
-    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
-    "chapterIds": ["ch-9-trigonometrie"],
-    "subjectIds": ["subj-9-mathematiques"],
-    "yearIds": ["y-9"],
-    "order": 1
-  },
-  {
-    "id": "l-9-resume-equations",
-    "title": "Résumé — Équations et inéquations",
-    "kind": "resume",
-    "pdfs": [{ "name": "Fiche de révision" }],
-    "chapterIds": ["ch-9-equations"],
-    "subjectIds": ["subj-9-mathematiques"],
-    "yearIds": ["y-9"],
-    "order": 2
   },
 
   {
-    "id": "l-ar-cours-hijaji",
+    "id": "l-9trig-serie",
+    "title": "Série d'exercices — La trigonométrie",
+    "kind": "serie",
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
+    "chapterId": "ch-9-trigonometrie",
+    "order": 0
+  },
+
+  {
+    "id": "l-9eq-resume",
+    "title": "Résumé — Équations et inéquations",
+    "kind": "resume",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-9-equations",
+    "order": 0
+  },
+
+  {
+    "id": "l-arh-cours",
     "title": "درس — النص الحجاجي",
     "kind": "cours",
     "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
     "pdfs": [{ "name": "ملخص الدرس" }],
-    "chapterIds": ["ch-ar-hijaji"],
-    "subjectIds": ["subj-bac-lettres-arabe"],
-    "yearIds": ["y-bac-lettres"],
+    "chapterId": "ch-ar-hijaji",
     "order": 0
   },
+
   {
-    "id": "l-ar-resume-shi3r",
+    "id": "l-ars-resume",
     "title": "ملخص — الشعر الحديث",
     "kind": "resume",
     "pdfs": [{ "name": "بطاقة مراجعة" }],
-    "chapterIds": ["ch-ar-shi3r"],
-    "subjectIds": ["subj-bac-lettres-arabe"],
-    "yearIds": ["y-bac-lettres"],
-    "order": 1
+    "chapterId": "ch-ar-shi3r",
+    "order": 0
   },
+
   {
-    "id": "l-ar-serie-sardi",
+    "id": "l-arsd-serie",
     "title": "سلسلة تمارين — النص السردي",
     "kind": "serie",
     "pdfs": [{ "name": "الأسئلة" }, { "name": "الإصلاح" }],
-    "chapterIds": ["ch-ar-sardi"],
-    "subjectIds": ["subj-bac-lettres-arabe"],
-    "yearIds": ["y-bac-lettres"],
-    "order": 2
+    "chapterId": "ch-ar-sardi",
+    "order": 0
   }
 ]

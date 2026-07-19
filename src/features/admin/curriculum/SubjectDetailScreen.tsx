@@ -1,17 +1,16 @@
 import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { ArrowLeft, BookOpen, ClipboardList, GraduationCap, Layers3, ListChecks, Route } from "lucide-react"
+import { ArrowLeft, ClipboardList, GraduationCap, Layers3, Route } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { useData } from "@/stores/useData"
 import { ChaptersPanel } from "./ChaptersPanel"
 import { ExamsPanel } from "./ExamsPanel"
-import { LessonsPanel } from "./LessonsPanel"
-import { QuizzesPanel } from "./QuizzesPanel"
 import { PathsPanel } from "./PathsPanel"
 
-type Tab = "chapters" | "lessons" | "quizzes" | "paths" | "exams"
+type Tab = "chapters" | "paths" | "exams"
 
-/** Admin — one subject, with its Chapitres and Examens as two tabs. */
+/** Admin — one subject: its Chapitres (each opens to its own content), Parcours
+ * and Examens. Contenus & quiz live on the chapter pages, not here. */
 export default function AdminSubjectDetailScreen() {
   const { yearId, subjectId } = useParams()
   const navigate = useNavigate()
@@ -19,12 +18,6 @@ export default function AdminSubjectDetailScreen() {
   const subject = useData((s) => s.subjects.find((s) => s.id === subjectId))
   const chapterCount = useData(
     (s) => s.chapters.filter((c) => subjectId && c.subjectIds.includes(subjectId)).length,
-  )
-  const lessonCount = useData(
-    (s) => s.lessons.filter((l) => subjectId && l.subjectIds.includes(subjectId)).length,
-  )
-  const quizCount = useData(
-    (s) => s.quizzes.filter((q) => subjectId && q.subjectIds.includes(subjectId)).length,
   )
   const pathCount = useData((s) => s.paths.filter((p) => p.subjectId === subjectId).length)
   const examCount = useData(
@@ -55,8 +48,6 @@ export default function AdminSubjectDetailScreen() {
 
   const tabs: { key: Tab; label: string; count: number; icon: typeof Layers3 }[] = [
     { key: "chapters", label: "Chapitres", count: chapterCount, icon: Layers3 },
-    { key: "lessons", label: "Contenus", count: lessonCount, icon: BookOpen },
-    { key: "quizzes", label: "Quiz", count: quizCount, icon: ListChecks },
     { key: "paths", label: "Parcours", count: pathCount, icon: Route },
     { key: "exams", label: "Examens", count: examCount, icon: ClipboardList },
   ]
@@ -77,7 +68,7 @@ export default function AdminSubjectDetailScreen() {
         </h1>
       </div>
 
-      {/* Segmented control: Chapitres / Contenus / Quiz / Parcours / Examens */}
+      {/* Segmented control: Chapitres / Parcours / Examens */}
       <div className="-mx-1 overflow-x-auto scroll-touch px-1 pb-1">
         <div className="inline-flex rounded-lg border border-border bg-surface-muted p-1">
           {tabs.map((t) => {
@@ -110,8 +101,6 @@ export default function AdminSubjectDetailScreen() {
       </div>
 
       {tab === "chapters" && <ChaptersPanel year={year} subject={subject} />}
-      {tab === "lessons" && <LessonsPanel year={year} subject={subject} />}
-      {tab === "quizzes" && <QuizzesPanel year={year} subject={subject} />}
       {tab === "paths" && <PathsPanel year={year} subject={subject} />}
       {tab === "exams" && <ExamsPanel year={year} subject={subject} />}
     </div>

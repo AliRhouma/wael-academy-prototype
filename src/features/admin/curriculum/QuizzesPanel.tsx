@@ -2,13 +2,11 @@ import { useMemo, useState, type KeyboardEvent } from "react"
 import { Check, Clock, FolderPlus, Layers, Pencil, Plus, Tag, Trash2, X } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
-import { Badge } from "@/components/kit/Badge"
 import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
-import type { Quiz, QuizExam, QuizQuestion, Subject, Year } from "@/data/types"
-import { ScopePicker } from "./ScopePicker"
+import type { Chapter, Quiz, QuizExam, QuizQuestion } from "@/data/types"
 import { QUIZ_ICON } from "./content"
 
 const INPUT =
@@ -18,9 +16,8 @@ function newQuestion(): QuizQuestion {
   return { id: crypto.randomUUID(), prompt: "", choices: ["", ""], correctIndex: 0 }
 }
 
-/** The "Quiz" tab of a subject — MCQ quizzes with tags, grouped into examens. */
-export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }) {
-  const years = useData((s) => s.years)
+/** The "Quiz" tab of a chapter — MCQ quizzes with tags, grouped into examens. */
+export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
   const allQuizzes = useData((s) => s.quizzes)
   const allQuizExams = useData((s) => s.quizExams)
   const addQuiz = useData((s) => s.addQuiz)
@@ -31,29 +28,23 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
   const removeQuizExam = useData((s) => s.removeQuizExam)
   const { show, toast } = useToast()
 
-  const yearName = useMemo(() => {
-    const m = new Map<string, string>()
-    for (const y of years) m.set(y.id, y.name)
-    return m
-  }, [years])
-
   const quizzes = useMemo(
     () =>
       allQuizzes
-        .filter((q) => q.subjectIds.includes(subject.id))
+        .filter((q) => q.chapterId === chapter.id)
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    [allQuizzes, subject.id],
+    [allQuizzes, chapter.id],
   )
 
   const exams = useMemo(
     () =>
       allQuizExams
-        .filter((e) => e.subjectIds.includes(subject.id))
+        .filter((e) => e.chapterId === chapter.id)
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    [allQuizExams, subject.id],
+    [allQuizExams, chapter.id],
   )
 
-  /** Quizzes grouped by their exam id; "" bucket = ungrouped. */
+  /** Quizzes grouped by their exam id; a trailing bucket holds the ungrouped. */
   const grouped = useMemo(() => {
     const groups: { exam: QuizExam | null; items: Quiz[] }[] = exams.map((e) => ({
       exam: e,
@@ -73,16 +64,12 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
   const [duration, setDuration] = useState("")
   const [examId, setExamId] = useState<string>("")
   const [questions, setQuestions] = useState<QuizQuestion[]>([])
-  const [pickedYears, setPickedYears] = useState<string[]>([])
-  const [pickedSubjects, setPickedSubjects] = useState<string[]>([])
   const [deleteQuiz, setDeleteQuiz] = useState<Quiz | null>(null)
 
   // --- Exam (group) form state ---
   const [examOpen, setExamOpen] = useState(false)
   const [editingExam, setEditingExam] = useState<QuizExam | null>(null)
   const [examTitle, setExamTitle] = useState("")
-  const [examYears, setExamYears] = useState<string[]>([])
-  const [examSubjects, setExamSubjects] = useState<string[]>([])
   const [deleteExam, setDeleteExam] = useState<QuizExam | null>(null)
 
   function openAddQuiz(preselectExam?: string) {
@@ -93,8 +80,6 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
     setDuration("")
     setExamId(preselectExam ?? "")
     setQuestions([newQuestion()])
-    setPickedYears([year.id])
-    setPickedSubjects([subject.id])
     setQuizOpen(true)
   }
 
@@ -106,8 +91,6 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
     setDuration(quiz.durationMin ? String(quiz.durationMin) : "")
     setExamId(quiz.quizExamId ?? "")
     setQuestions(quiz.questions.length > 0 ? quiz.questions.map((q) => ({ ...q, choices: [...q.choices] })) : [newQuestion()])
-    setPickedYears(quiz.yearIds)
-    setPickedSubjects(quiz.subjectIds)
     setQuizOpen(true)
   }
 
@@ -128,7 +111,7 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
 
   function submitQuiz() {
     const trimmed = title.trim()
-    if (!trimmed || pickedSubjects.length === 0 || pickedYears.length === 0) return
+    if (!trimmed) return
     const cleanQuestions = questions
       .map((q) => ({
         ...q,
@@ -143,8 +126,7 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
       durationMin: duration.trim() ? Number(duration) : undefined,
       quizExamId: examId || undefined,
       questions: cleanQuestions,
-      subjectIds: pickedSubjects,
-      yearIds: pickedYears,
+      chapterId: chapter.id,
     }
     if (editing) {
       updateQuiz(editing.id, patch)
@@ -159,27 +141,23 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
   function openAddExam() {
     setEditingExam(null)
     setExamTitle("")
-    setExamYears([year.id])
-    setExamSubjects([subject.id])
     setExamOpen(true)
   }
 
   function openEditExam(exam: QuizExam) {
     setEditingExam(exam)
     setExamTitle(exam.title)
-    setExamYears(exam.yearIds)
-    setExamSubjects(exam.subjectIds)
     setExamOpen(true)
   }
 
   function submitExam() {
     const trimmed = examTitle.trim()
-    if (!trimmed || examSubjects.length === 0 || examYears.length === 0) return
+    if (!trimmed) return
     if (editingExam) {
-      updateQuizExam(editingExam.id, { title: trimmed, subjectIds: examSubjects, yearIds: examYears })
+      updateQuizExam(editingExam.id, { title: trimmed })
       show("Examen de quiz modifié")
     } else {
-      addQuizExam({ title: trimmed, subjectIds: examSubjects, yearIds: examYears, order: exams.length })
+      addQuizExam({ title: trimmed, chapterId: chapter.id, order: exams.length })
       show("Examen de quiz créé")
     }
     setExamOpen(false)
@@ -276,7 +254,6 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
               ) : (
                 <ul className="grid gap-3">
                   {g.items.map((quiz) => {
-                    const otherYears = quiz.yearIds.filter((yid) => yid !== year.id)
                     const Icon = QUIZ_ICON
                     return (
                       <li
@@ -314,16 +291,6 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
                               ))}
                             </div>
                           )}
-                          <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                            <Badge tone="brand" dot>
-                              {year.name}
-                            </Badge>
-                            {otherYears.map((yid) => (
-                              <Badge key={yid} tone="neutral">
-                                {yearName.get(yid) ?? "—"}
-                              </Badge>
-                            ))}
-                          </div>
                         </div>
                         <OverflowMenu
                           actions={[
@@ -362,7 +329,7 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
             dir="auto"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ex. QCM — Nombres complexes"
+            placeholder="Ex. QCM — Module et conjugué"
             autoFocus
           />
         </label>
@@ -551,13 +518,6 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
             </button>
           </div>
         </div>
-
-        <ScopePicker
-          yearIds={pickedYears}
-          subjectIds={pickedSubjects}
-          onYearsChange={setPickedYears}
-          onSubjectsChange={setPickedSubjects}
-        />
       </FormSheet>
 
       {/* --- Exam (group) form --- */}
@@ -565,7 +525,7 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
         open={examOpen}
         onOpenChange={setExamOpen}
         title={editingExam ? "Modifier l'examen de quiz" : "Nouvel examen de quiz"}
-        description={editingExam ? undefined : "Un groupe qui rassemble plusieurs quiz pour les afficher ensemble."}
+        description={editingExam ? undefined : "Un groupe qui rassemble plusieurs quiz de ce chapitre pour les afficher ensemble."}
         submitLabel={editingExam ? "Enregistrer" : "Créer"}
         onSubmit={submitExam}
       >
@@ -576,17 +536,10 @@ export function QuizzesPanel({ year, subject }: { year: Year; subject: Subject }
             dir="auto"
             value={examTitle}
             onChange={(e) => setExamTitle(e.target.value)}
-            placeholder="Ex. Examen de quiz — Analyse"
+            placeholder="Ex. Examen de quiz — Révision générale"
             autoFocus
           />
         </label>
-
-        <ScopePicker
-          yearIds={examYears}
-          subjectIds={examSubjects}
-          onYearsChange={setExamYears}
-          onSubjectsChange={setExamSubjects}
-        />
       </FormSheet>
 
       <ConfirmDialog

@@ -1,9 +1,8 @@
 import { useMemo, useState } from "react"
-import { CalendarDays, ChevronDown, Pencil, Plus, Search, Trash2 } from "lucide-react"
+import { CalendarDays, Pencil, Plus, Search, Trash2 } from "lucide-react"
 import { PageHeader } from "@/components/kit/PageHeader"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
-import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
@@ -11,8 +10,7 @@ import type { Session } from "@/data/types"
 import { nowStamp, sessionStamp, formatSessionDayLong } from "@/lib/utils"
 import { SessionCard, groupByDay } from "@/features/shared/session/SessionCard"
 import { useSessionLabels } from "@/features/shared/session/sessionLabels"
-import { ScopePicker } from "@/features/admin/curriculum/ScopePicker"
-import { GroupPicker } from "./GroupPicker"
+import { SessionFormSheet } from "./SessionFormSheet"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
@@ -22,9 +20,6 @@ type TimeFilter = "upcoming" | "past" | "all"
 /** Admin — the academy's séances: plan them for groups, subjects and a teacher. */
 export default function AdminSessionsScreen() {
   const sessions = useData((s) => s.sessions)
-  const teachers = useData((s) => s.teachers)
-  const addSession = useData((s) => s.addSession)
-  const updateSession = useData((s) => s.updateSession)
   const removeSession = useData((s) => s.removeSession)
   const { teacherName } = useSessionLabels()
   const { show, toast } = useToast()
@@ -34,21 +29,7 @@ export default function AdminSessionsScreen() {
 
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Session | null>(null)
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [date, setDate] = useState("")
-  const [startTime, setStartTime] = useState("")
-  const [endTime, setEndTime] = useState("")
-  const [teacherId, setTeacherId] = useState("")
-  const [yearIds, setYearIds] = useState<string[]>([])
-  const [subjectIds, setSubjectIds] = useState<string[]>([])
-  const [groupIds, setGroupIds] = useState<string[]>([])
   const [deleteTarget, setDeleteTarget] = useState<Session | null>(null)
-
-  const sortedTeachers = useMemo(
-    () => [...teachers].sort((a, b) => a.name.localeCompare(b.name, "fr")),
-    [teachers],
-  )
 
   const counts = useMemo(() => {
     const now = nowStamp()
@@ -80,64 +61,12 @@ export default function AdminSessionsScreen() {
 
   function openAdd() {
     setEditing(null)
-    setTitle("")
-    setDescription("")
-    setDate("")
-    setStartTime("")
-    setEndTime("")
-    setTeacherId("")
-    setYearIds([])
-    setSubjectIds([])
-    setGroupIds([])
     setFormOpen(true)
   }
 
   function openEdit(session: Session) {
     setEditing(session)
-    setTitle(session.title)
-    setDescription(session.description ?? "")
-    setDate(session.date)
-    setStartTime(session.startTime)
-    setEndTime(session.endTime)
-    setTeacherId(session.teacherId ?? "")
-    setYearIds(session.yearIds)
-    setSubjectIds(session.subjectIds)
-    setGroupIds(session.groupIds)
     setFormOpen(true)
-  }
-
-  const timeInvalid = startTime !== "" && endTime !== "" && endTime <= startTime
-  const canSubmit =
-    title.trim() !== "" &&
-    date !== "" &&
-    startTime !== "" &&
-    endTime !== "" &&
-    !timeInvalid &&
-    yearIds.length > 0 &&
-    subjectIds.length > 0 &&
-    groupIds.length > 0
-
-  function submit() {
-    if (!canSubmit) return
-    const patch = {
-      title: title.trim(),
-      description: description.trim() || undefined,
-      date,
-      startTime,
-      endTime,
-      teacherId: teacherId || undefined,
-      yearIds,
-      subjectIds,
-      groupIds,
-    }
-    if (editing) {
-      updateSession(editing.id, patch)
-      show("Séance modifiée")
-    } else {
-      addSession(patch)
-      show("Séance planifiée")
-    }
-    setFormOpen(false)
   }
 
   function confirmDelete() {
@@ -269,119 +198,12 @@ export default function AdminSessionsScreen() {
         </>
       )}
 
-      <FormSheet
+      <SessionFormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier la séance" : "Nouvelle séance"}
-        description={
-          editing ? undefined : "Un créneau pour un ou plusieurs groupes, avec sa matière et son enseignant."
-        }
-        submitLabel={editing ? "Enregistrer" : "Planifier"}
-        onSubmit={submit}
-      >
-        <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre</span>
-          <input
-            className={INPUT + " text-start"}
-            dir="auto"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ex. Révision — Intégrales"
-            autoFocus
-          />
-        </label>
-
-        <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Description <span className="font-normal text-ink-muted">(optionnel)</span>
-          </span>
-          <textarea
-            className={INPUT.replace("h-11", "min-h-[84px]") + " resize-y py-2.5 text-start"}
-            dir="auto"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Le programme de la séance…"
-            rows={3}
-          />
-        </label>
-
-        <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Date</span>
-          <input
-            type="date"
-            className={INPUT}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            dir="ltr"
-          />
-        </label>
-
-        <div className="grid grid-cols-2 gap-3">
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Début</span>
-            <input
-              type="time"
-              className={INPUT + " tabular-nums"}
-              value={startTime}
-              onChange={(e) => setStartTime(e.target.value)}
-              dir="ltr"
-            />
-          </label>
-          <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Fin</span>
-            <input
-              type="time"
-              className={
-                INPUT +
-                " tabular-nums " +
-                (timeInvalid ? "border-danger-400 focus:border-danger-400 focus:ring-danger-200/40" : "")
-              }
-              value={endTime}
-              onChange={(e) => setEndTime(e.target.value)}
-              dir="ltr"
-            />
-          </label>
-        </div>
-        {timeInvalid && (
-          <p className="text-[12px] font-medium text-danger-600">
-            L’heure de fin doit être après l’heure de début.
-          </p>
-        )}
-
-        <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Enseignant <span className="font-normal text-ink-muted">(optionnel)</span>
-          </span>
-          <div className="relative">
-            <select
-              className={INPUT + " appearance-none pe-10"}
-              value={teacherId}
-              onChange={(e) => setTeacherId(e.target.value)}
-            >
-              <option value="">— Aucun —</option>
-              {sortedTeachers.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name}
-                  {t.subject ? ` · ${t.subject}` : ""}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
-          </div>
-        </label>
-
-        <ScopePicker
-          yearIds={yearIds}
-          subjectIds={subjectIds}
-          onYearsChange={(ids) => {
-            setYearIds(ids)
-            // A group whose year is no longer selected drops off the session too.
-          }}
-          onSubjectsChange={setSubjectIds}
-        />
-
-        <GroupPicker yearIds={yearIds} groupIds={groupIds} onChange={setGroupIds} />
-      </FormSheet>
+        editing={editing}
+        onSaved={show}
+      />
 
       <ConfirmDialog
         open={deleteTarget !== null}

@@ -7,8 +7,7 @@ import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
-import type { Lesson, LessonKind, ResourceLink, Subject, Year } from "@/data/types"
-import { ScopePicker } from "./ScopePicker"
+import type { Chapter, Lesson, LessonKind, ResourceLink } from "@/data/types"
 import { LESSON_KINDS, LESSON_KIND_ORDER } from "./content"
 
 const INPUT =
@@ -19,43 +18,20 @@ const CHIP =
 
 type KindFilter = LessonKind | "all"
 
-/** The "Contenus" tab of a subject — cours, exercices, séries & résumés. */
-export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }) {
-  const years = useData((s) => s.years)
+/** The "Contenus" tab of a chapter — its cours, exercices, séries & résumés. */
+export function LessonsPanel({ chapter }: { chapter: Chapter }) {
   const allLessons = useData((s) => s.lessons)
-  const allChapters = useData((s) => s.chapters)
   const addLesson = useData((s) => s.addLesson)
   const updateLesson = useData((s) => s.updateLesson)
   const removeLesson = useData((s) => s.removeLesson)
   const { show, toast } = useToast()
 
-  const yearName = useMemo(() => {
-    const m = new Map<string, string>()
-    for (const y of years) m.set(y.id, y.name)
-    return m
-  }, [years])
-
-  const chapterName = useMemo(() => {
-    const m = new Map<string, string>()
-    for (const c of allChapters) m.set(c.id, c.name)
-    return m
-  }, [allChapters])
-
-  /** Chapters of THIS subject, offered in the form as attachable chapters. */
-  const subjectChapters = useMemo(
-    () =>
-      allChapters
-        .filter((c) => c.subjectIds.includes(subject.id))
-        .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    [allChapters, subject.id],
-  )
-
   const lessons = useMemo(
     () =>
       allLessons
-        .filter((l) => l.subjectIds.includes(subject.id))
+        .filter((l) => l.chapterId === chapter.id)
         .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    [allLessons, subject.id],
+    [allLessons, chapter.id],
   )
 
   const [filter, setFilter] = useState<KindFilter>("all")
@@ -67,9 +43,6 @@ export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }
   const [kind, setKind] = useState<LessonKind>("cours")
   const [videoUrl, setVideoUrl] = useState("")
   const [pdfs, setPdfs] = useState<ResourceLink[]>([])
-  const [pickedChapters, setPickedChapters] = useState<string[]>([])
-  const [pickedYears, setPickedYears] = useState<string[]>([])
-  const [pickedSubjects, setPickedSubjects] = useState<string[]>([])
   const [deleteTarget, setDeleteTarget] = useState<Lesson | null>(null)
 
   const kindHasVideo = LESSON_KINDS[kind].hasVideo
@@ -85,9 +58,6 @@ export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }
     setKind(filter === "all" ? "cours" : filter)
     setVideoUrl("")
     setPdfs([{ name: "" }])
-    setPickedChapters([])
-    setPickedYears([year.id])
-    setPickedSubjects([subject.id])
     setFormOpen(true)
   }
 
@@ -97,19 +67,12 @@ export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }
     setKind(lesson.kind)
     setVideoUrl(lesson.videoUrl ?? "")
     setPdfs(lesson.pdfs.length > 0 ? lesson.pdfs.map((p) => ({ ...p })) : [{ name: "" }])
-    setPickedChapters(lesson.chapterIds)
-    setPickedYears(lesson.yearIds)
-    setPickedSubjects(lesson.subjectIds)
     setFormOpen(true)
-  }
-
-  function toggleChapter(id: string) {
-    setPickedChapters((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]))
   }
 
   function submit() {
     const trimmed = title.trim()
-    if (!trimmed || pickedSubjects.length === 0 || pickedYears.length === 0) return
+    if (!trimmed) return
     const cleanPdfs = pdfs
       .map((p) => ({ name: p.name.trim(), url: p.url?.trim() || undefined }))
       .filter((p) => p.name !== "")
@@ -118,9 +81,7 @@ export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }
       kind,
       videoUrl: kindHasVideo ? videoUrl.trim() || undefined : undefined,
       pdfs: cleanPdfs,
-      chapterIds: pickedChapters,
-      subjectIds: pickedSubjects,
-      yearIds: pickedYears,
+      chapterId: chapter.id,
     }
     if (editing) {
       updateLesson(editing.id, patch)
@@ -215,7 +176,7 @@ export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }
           <EmptyState
             icon={BookOpen}
             title="Rien dans ce filtre"
-            description="Aucun contenu de ce type pour cette matière."
+            description="Aucun contenu de ce type dans ce chapitre."
           />
         </div>
       ) : (
@@ -223,7 +184,6 @@ export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }
           {shown.map((lesson) => {
             const meta = LESSON_KINDS[lesson.kind]
             const Icon = meta.icon
-            const otherYears = lesson.yearIds.filter((yid) => yid !== year.id)
             return (
               <li
                 key={lesson.id}
@@ -233,37 +193,10 @@ export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }
                   <Icon className="size-5" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Badge tone={meta.tone}>{meta.label}</Badge>
-                    {lesson.chapterIds.slice(0, 2).map((cid) => (
-                      <span key={cid} dir="auto" className="text-[12px] text-ink-muted">
-                        {chapterName.get(cid) ?? "—"}
-                      </span>
-                    ))}
-                    {lesson.chapterIds.length > 2 && (
-                      <span className="text-[12px] text-ink-muted">
-                        +{lesson.chapterIds.length - 2}
-                      </span>
-                    )}
-                  </div>
+                  <Badge tone={meta.tone}>{meta.label}</Badge>
                   <p dir="auto" className="mt-1 font-display text-[15px] font-bold text-ink">
                     {lesson.title}
                   </p>
-                  <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
-                    <Badge tone="brand" dot>
-                      {year.name}
-                    </Badge>
-                    {otherYears.map((yid) => (
-                      <Badge key={yid} tone="neutral">
-                        {yearName.get(yid) ?? "—"}
-                      </Badge>
-                    ))}
-                    {lesson.subjectIds.length > 1 && (
-                      <span className="text-[12px] text-ink-muted">
-                        · {lesson.subjectIds.length} matières
-                      </span>
-                    )}
-                  </div>
                   {(lesson.videoUrl || lesson.pdfs.length > 0) && (
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {lesson.videoUrl && (
@@ -404,46 +337,6 @@ export function LessonsPanel({ year, subject }: { year: Year; subject: Subject }
             </button>
           </div>
         </div>
-
-        <div>
-          <span className="mb-2 block text-sm font-medium text-ink-subtle">
-            Chapitres de « <span dir="auto">{subject.name}</span> »{" "}
-            <span className="font-normal text-ink-muted">({pickedChapters.length})</span>
-          </span>
-          {subjectChapters.length === 0 ? (
-            <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-              Cette matière n'a pas encore de chapitres.
-            </p>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {subjectChapters.map((c) => {
-                const active = pickedChapters.includes(c.id)
-                return (
-                  <button
-                    key={c.id}
-                    type="button"
-                    onClick={() => toggleChapter(c.id)}
-                    className={
-                      "inline-flex min-h-9 items-center rounded-full border px-3 py-1 text-sm font-medium transition " +
-                      (active
-                        ? "border-transparent bg-grad text-ink-inverted shadow-brand"
-                        : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
-                    }
-                  >
-                    <span dir="auto">{c.name}</span>
-                  </button>
-                )
-              })}
-            </div>
-          )}
-        </div>
-
-        <ScopePicker
-          yearIds={pickedYears}
-          subjectIds={pickedSubjects}
-          onYearsChange={setPickedYears}
-          onSubjectsChange={setPickedSubjects}
-        />
       </FormSheet>
 
       <ConfirmDialog

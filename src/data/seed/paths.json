@@ -6,11 +6,11 @@
     "subjectId": "subj-bac-math-mathematiques",
     "yearId": "y-bac-math",
     "items": [
-      { "id": "pi-a1", "refType": "lesson", "refId": "l-math-cours-limites" },
-      { "id": "pi-a2", "refType": "quiz", "refId": "q-math-limites" },
-      { "id": "pi-a3", "refType": "lesson", "refId": "l-math-exos-deriv" },
-      { "id": "pi-a4", "refType": "quiz", "refId": "q-math-deriv" },
-      { "id": "pi-a5", "refType": "lesson", "refId": "l-math-cours-integrales" }
+      { "id": "pi-a1", "refType": "lesson", "refId": "l-lim-cours" },
+      { "id": "pi-a2", "refType": "quiz", "refId": "q-lim" },
+      { "id": "pi-a3", "refType": "lesson", "refId": "l-der-exos" },
+      { "id": "pi-a4", "refType": "quiz", "refId": "q-der" },
+      { "id": "pi-a5", "refType": "lesson", "refId": "l-int-cours" }
     ],
     "order": 0
   },
@@ -21,8 +21,9 @@
     "subjectId": "subj-bac-math-mathematiques",
     "yearId": "y-bac-math",
     "items": [
-      { "id": "pi-c1", "refType": "lesson", "refId": "l-math-cours-complexes" },
-      { "id": "pi-c2", "refType": "quiz", "refId": "q-math-complexes" }
+      { "id": "pi-c1", "refType": "lesson", "refId": "l-cx-cours" },
+      { "id": "pi-c2", "refType": "quiz", "refId": "q-cx-1" },
+      { "id": "pi-c3", "refType": "lesson", "refId": "l-cx-exos" }
     ],
     "order": 1
   },
@@ -33,25 +34,24 @@
     "subjectId": "subj-bac-math-sciences-physiques",
     "yearId": "y-bac-math",
     "items": [
-      { "id": "pi-e1", "refType": "lesson", "refId": "l-phys-cours-rc" },
-      { "id": "pi-e2", "refType": "quiz", "refId": "q-phys-rc" },
-      { "id": "pi-e3", "refType": "lesson", "refId": "l-phys-exos-rl" },
-      { "id": "pi-e4", "refType": "quiz", "refId": "q-phys-rl" },
-      { "id": "pi-e5", "refType": "lesson", "refId": "l-phys-serie-rlc" }
+      { "id": "pi-e1", "refType": "lesson", "refId": "l-rc-cours" },
+      { "id": "pi-e2", "refType": "quiz", "refId": "q-rc-1" },
+      { "id": "pi-e3", "refType": "lesson", "refId": "l-rl-exos" },
+      { "id": "pi-e4", "refType": "quiz", "refId": "q-rl" }
     ],
     "order": 0
   },
   {
     "id": "p-svt-bio",
     "title": "Parcours — Immunité & génétique",
-    "description": "Un parcours de révision en biologie : cours, résumés, exercices et quiz.",
+    "description": "Un parcours de révision en biologie : résumés, exercices et quiz.",
     "subjectId": "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
     "yearId": "y-bac-sci",
     "items": [
-      { "id": "pi-s1", "refType": "lesson", "refId": "l-svt-resume-immunite" },
-      { "id": "pi-s2", "refType": "quiz", "refId": "q-svt-immunite" },
-      { "id": "pi-s3", "refType": "lesson", "refId": "l-svt-exos-genetique" },
-      { "id": "pi-s4", "refType": "quiz", "refId": "q-svt-genetique" }
+      { "id": "pi-s1", "refType": "lesson", "refId": "l-imm-resume" },
+      { "id": "pi-s2", "refType": "quiz", "refId": "q-imm" },
+      { "id": "pi-s3", "refType": "lesson", "refId": "l-gen-exos" },
+      { "id": "pi-s4", "refType": "quiz", "refId": "q-gen" }
     ],
     "order": 0
   },
@@ -62,9 +62,9 @@
     "subjectId": "subj-bac-info-informatique",
     "yearId": "y-bac-info",
     "items": [
-      { "id": "pi-b1", "refType": "lesson", "refId": "l-info-cours-sql" },
-      { "id": "pi-b2", "refType": "lesson", "refId": "l-info-tp-sql" },
-      { "id": "pi-b3", "refType": "quiz", "refId": "q-info-sql" }
+      { "id": "pi-b1", "refType": "lesson", "refId": "l-sql-cours" },
+      { "id": "pi-b2", "refType": "lesson", "refId": "l-sql-tp" },
+      { "id": "pi-b3", "refType": "quiz", "refId": "q-sql-1" }
     ],
     "order": 0
   },
@@ -75,9 +75,9 @@
     "subjectId": "subj-9-mathematiques",
     "yearId": "y-9",
     "items": [
-      { "id": "pi-g1", "refType": "lesson", "refId": "l-9-cours-thales" },
-      { "id": "pi-g2", "refType": "quiz", "refId": "q-9-thales" },
-      { "id": "pi-g3", "refType": "lesson", "refId": "l-9-serie-trigo" }
+      { "id": "pi-g1", "refType": "lesson", "refId": "l-9th-cours" },
+      { "id": "pi-g2", "refType": "quiz", "refId": "q-9th" },
+      { "id": "pi-g3", "refType": "lesson", "refId": "l-9trig-serie" }
     ],
     "order": 0
   }

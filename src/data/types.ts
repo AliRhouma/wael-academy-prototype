@@ -98,8 +98,8 @@ export type LessonKind = "cours" | "exercice" | "serie" | "resume"
 /**
  * A content item of the syllabus — a cours, an exercice, a série or a résumé.
  * Carries a title, PDF documents, and (cours / exercice only) a single video —
- * série & résumé have none. Like a chapter it is shared across one OR MORE
- * subjects and years, and it can be attached to one or more chapters.
+ * série & résumé have none. It belongs to exactly ONE chapter (`chapterId`) and
+ * is created on that chapter's page; its subjects/years are those of the chapter.
  */
 export interface Lesson {
   id: Id
@@ -109,13 +109,9 @@ export interface Lesson {
   videoUrl?: string
   /** PDF documents (cours, énoncé, corrigé…) — zero or more. */
   pdfs: ResourceLink[]
-  /** Chapters (chapitres) this content is attached to — zero or more. */
-  chapterIds: Id[]
-  /** Subjects (matières) this content belongs to — at least one. */
-  subjectIds: Id[]
-  /** Years (années) this content targets — at least one. */
-  yearIds: Id[]
-  /** Sort order within a subject's list. */
+  /** The chapter (chapitre) this content belongs to. */
+  chapterId: Id
+  /** Sort order within its chapter's list. */
   order?: number
 }
 
@@ -131,9 +127,10 @@ export interface QuizQuestion {
 
 /**
  * A quiz — a set of MCQ questions plus free-text `tags` used to categorize it
- * (e.g. "révision", "facile", "chapitre 3"). A quiz may be regrouped into an
- * "examen de quiz" (`quizExamId`) so several quizzes display together. Shared
- * across subjects / years like the rest of the syllabus.
+ * (e.g. "révision", "facile", "chapitre 3"). It belongs to exactly ONE chapter
+ * (`chapterId`) and is created on that chapter's page. A quiz may be regrouped
+ * into an "examen de quiz" (`quizExamId`) of the same chapter so several
+ * quizzes display together.
  */
 export interface Quiz {
   id: Id
@@ -143,25 +140,23 @@ export interface Quiz {
   /** Suggested duration in minutes (optional). */
   durationMin?: number
   questions: QuizQuestion[]
-  /** The group (QuizExam) this quiz belongs to, if any. */
+  /** The group (QuizExam) this quiz belongs to, if any — same chapter. */
   quizExamId?: Id
-  /** Subjects (matières) this quiz belongs to — at least one. */
-  subjectIds: Id[]
-  /** Years (années) this quiz targets — at least one. */
-  yearIds: Id[]
-  /** Sort order within a subject's list. */
+  /** The chapter (chapitre) this quiz belongs to. */
+  chapterId: Id
+  /** Sort order within its chapter's list. */
   order?: number
 }
 
 /**
- * A named group that regroups several quizzes ("examen de quiz") — quizzes with
- * a matching `quizExamId` display together under it. Shared like the rest.
+ * A named group that regroups several quizzes of ONE chapter ("examen de quiz")
+ * — quizzes with a matching `quizExamId` display together under it.
  */
 export interface QuizExam {
   id: Id
   title: string
-  subjectIds: Id[]
-  yearIds: Id[]
+  /** The chapter (chapitre) this group belongs to. */
+  chapterId: Id
   order?: number
 }
 

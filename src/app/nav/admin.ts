@@ -1,5 +1,6 @@
-import { BookOpen, CalendarDays, CreditCard, Layers, Settings, Tag, Users, UsersRound } from "lucide-react"
+import { BookOpen, CalendarDays, CalendarRange, CreditCard, Layers, Settings, Users, UsersRound } from "lucide-react"
 import { DashboardIcon } from "@/components/icons/DashboardIcon"
+import { OffresIcon } from "@/components/icons/OffresIcon"
 import type { NavItem } from "./types"
 
 export const adminNav: NavItem[] = [
@@ -9,7 +10,8 @@ export const adminNav: NavItem[] = [
   { label: "Groupes", path: "/admin/groups", icon: UsersRound },
   { label: "Cours", path: "/admin/courses", icon: BookOpen },
   { label: "Séances", path: "/admin/sessions", icon: CalendarDays },
-  { label: "Offres", path: "/admin/offers", icon: Tag },
+  { label: "Calendrier", path: "/admin/calendar", icon: CalendarRange },
+  { label: "Offres", path: "/admin/offers", icon: OffresIcon, colored: true },
   { label: "Paiements", path: "/admin/payments", icon: CreditCard },
   { label: "Réglages", path: "/admin/settings", icon: Settings },
 ]
