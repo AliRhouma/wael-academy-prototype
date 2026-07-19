@@ -1,0 +1,22 @@
+[
+  { "id": "y-7", "name": "7ème année", "order": 0 },
+  { "id": "y-8", "name": "8ème année", "order": 1 },
+  { "id": "y-9", "name": "9ème année", "order": 2 },
+  { "id": "y-1", "name": "1ère année", "order": 3 },
+  { "id": "y-2-eco", "name": "2ème année — Économie", "order": 4 },
+  { "id": "y-2-info", "name": "2ème année — Informatique", "order": 5 },
+  { "id": "y-2-lettres", "name": "2ème année — Lettres", "order": 6 },
+  { "id": "y-2-sci", "name": "2ème année — Sciences", "order": 7 },
+  { "id": "y-3-eco", "name": "3ème année — Économie & Gestion", "order": 8 },
+  { "id": "y-3-info", "name": "3ème année — Informatique", "order": 9 },
+  { "id": "y-3-lettres", "name": "3ème année — Lettres", "order": 10 },
+  { "id": "y-3-math", "name": "3ème année — Mathématiques", "order": 11 },
+  { "id": "y-3-sci", "name": "3ème année — Sciences", "order": 12 },
+  { "id": "y-3-tech", "name": "3ème année — Technique", "order": 13 },
+  { "id": "y-bac-eco", "name": "Bac — Économie & Gestion", "order": 14 },
+  { "id": "y-bac-info", "name": "Bac — Informatique", "order": 15 },
+  { "id": "y-bac-lettres", "name": "Bac — Lettres", "order": 16 },
+  { "id": "y-bac-math", "name": "Bac — Mathématiques", "order": 17 },
+  { "id": "y-bac-sci", "name": "Bac — Sciences expérimentales", "order": 18 },
+  { "id": "y-bac-tech", "name": "Bac — Technique", "order": 19 }
+]

@@ -13,7 +13,15 @@ import { teacherNav } from "@/app/nav/teacher"
 import { parentNav } from "@/app/nav/parent"
 import { studentNav } from "@/app/nav/student"
 import AdminDashboard from "@/features/admin/Dashboard"
+import AdminYearsScreen from "@/features/admin/curriculum/YearsScreen"
+import AdminSubjectsScreen from "@/features/admin/curriculum/SubjectsScreen"
+import AdminSubjectDetailScreen from "@/features/admin/curriculum/SubjectDetailScreen"
+import AdminUsersScreen from "@/features/admin/users/UsersScreen"
+import AdminOffersScreen from "@/features/admin/offers/OffersScreen"
+import AdminGroupsScreen from "@/features/admin/groups/GroupsScreen"
+import AdminSessionsScreen from "@/features/admin/sessions/SessionsScreen"
 import TeacherDashboard from "@/features/teacher/Dashboard"
+import TeacherSessionsScreen from "@/features/teacher/SessionsScreen"
 import ParentDashboard from "@/features/parent/Dashboard"
 import StudentDashboard from "@/features/student/Dashboard"
 import { useData } from "@/stores/useData"
@@ -89,25 +97,61 @@ function NotFound() {
   )
 }
 
-/** Build a role's route: RoleLayout + dashboard index + "coming soon" children. */
-function roleRoute(base: string, role: Role, nav: NavItem[], dashboard: ReactElement) {
+interface RouteChild {
+  path: string
+  element: ReactElement
+}
+
+/**
+ * Build a role's route: RoleLayout + dashboard index + children. Nav items get a
+ * "coming soon" placeholder unless a real screen is supplied in `built` (matched
+ * by the nav item's relative path); `extra` adds nested routes with no nav entry
+ * (e.g. detail pages).
+ */
+function roleRoute(
+  base: string,
+  role: Role,
+  nav: NavItem[],
+  dashboard: ReactElement,
+  built: Record<string, ReactElement> = {},
+  extra: RouteChild[] = [],
+) {
   return {
     path: base,
     element: <RoleLayout role={role} nav={nav} />,
     children: [
       { index: true, element: dashboard },
-      ...nav.slice(1).map((item) => ({
-        path: item.path.slice(base.length + 1),
-        element: <ComingSoon title={item.label} />,
-      })),
+      ...nav.slice(1).map((item) => {
+        const rel = item.path.slice(base.length + 1)
+        return { path: rel, element: built[rel] ?? <ComingSoon title={item.label} /> }
+      }),
+      ...extra,
     ],
   }
 }
 
 export const router = createBrowserRouter([
   { path: "/", element: <RoleSwitcher /> },
-  roleRoute("/admin", "admin", adminNav, <AdminDashboard />),
-  roleRoute("/teacher", "teacher", teacherNav, <TeacherDashboard />),
+  roleRoute(
+    "/admin",
+    "admin",
+    adminNav,
+    <AdminDashboard />,
+    {
+      curriculum: <AdminYearsScreen />,
+      users: <AdminUsersScreen />,
+      groups: <AdminGroupsScreen />,
+      sessions: <AdminSessionsScreen />,
+      offers: <AdminOffersScreen />,
+    },
+    [
+      { path: "curriculum/:yearId", element: <AdminSubjectsScreen /> },
+      { path: "curriculum/:yearId/:subjectId", element: <AdminSubjectDetailScreen /> },
+    ],
+  ),
+  roleRoute("/teacher", "teacher", teacherNav, <TeacherDashboard />, {
+    sessions: <TeacherSessionsScreen />,
+  }),
   roleRoute("/parent", "parent", parentNav, <ParentDashboard />),
   roleRoute("/student", "student", studentNav, <StudentDashboard />),
   { path: "/courses", element: <CoursesList /> },

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { GraduationCap, MoreHorizontal, Repeat } from "lucide-react"
+import { ChevronsLeft, ChevronsRight, GraduationCap, MoreHorizontal, Repeat } from "lucide-react"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { Avatar } from "@/components/kit/Avatar"
 import { useAuth } from "@/stores/useAuth"
@@ -17,15 +17,17 @@ const ROLE_LABEL: Record<Role, string> = {
 
 const MAX_BAR = 5 // items shown in the mobile bottom bar before overflowing to "More"
 
-function SideNavItem({ item }: { item: NavItem }) {
+function SideNavItem({ item, expanded }: { item: NavItem; expanded: boolean }) {
   const Icon = item.icon
   return (
     <NavLink
       to={item.path}
       end
+      title={expanded ? undefined : item.label}
       className={({ isActive }) =>
         cn(
-          "group flex items-center gap-3 rounded-md px-3.5 py-3 text-sm font-medium transition",
+          "group flex items-center rounded-md text-sm font-medium transition",
+          expanded ? "gap-3 px-3.5 py-3" : "justify-center px-0 py-3",
           isActive
             ? "bg-grad text-ink-inverted shadow-brand"
             : "text-ink-subtle hover:bg-brand-50 hover:text-brand-600",
@@ -34,8 +36,17 @@ function SideNavItem({ item }: { item: NavItem }) {
     >
       {({ isActive }) => (
         <>
-          <Icon className={cn("size-[21px]", isActive ? "text-white" : "text-ink-muted group-hover:text-brand-600")} />
-          {item.label}
+          <Icon
+            className={cn(
+              "size-[21px] shrink-0",
+              item.colored
+                ? isActive && "[&_path]:fill-white" // gradient glyph → force white on the active pill
+                : isActive
+                  ? "text-white"
+                  : "text-ink-muted group-hover:text-brand-600",
+            )}
+          />
+          {expanded && <span className="truncate">{item.label}</span>}
         </>
       )}
     </NavLink>
@@ -75,6 +86,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
   const navigate = useNavigate()
   const { currentRole, currentUser } = useAuth()
   const [moreOpen, setMoreOpen] = useState(false)
+  const [expanded, setExpanded] = useState(true)
 
   const overflow = nav.length > MAX_BAR
   const barItems = overflow ? nav.slice(0, MAX_BAR - 1) : nav
@@ -85,36 +97,74 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-canvas md:flex-row">
-      {/* Sidebar (desktop) */}
-      <aside className="hidden md:flex md:w-60 md:shrink-0 md:flex-col md:border-e md:border-border md:bg-surface-muted">
-        <div className="flex items-center gap-2.5 px-5 py-5">
-          <span className="grid size-9 shrink-0 place-items-center rounded-[11px] bg-grad text-ink-inverted shadow-brand">
-            <GraduationCap className="size-5" />
-          </span>
-          <div className="min-w-0">
-            <p className="font-display text-[15px] font-bold leading-tight text-ink">Wael Academy</p>
-            <p className="truncate text-[11px] text-ink-muted">{roleLabel}</p>
+      {/* Sidebar (desktop) — floating, expandable rail */}
+      <aside
+        className={cn(
+          "z-20 m-3 hidden shrink-0 flex-col rounded-xl border border-border bg-surface shadow-lg transition-[width] duration-300 ease-out md:flex",
+          expanded ? "md:w-60" : "md:w-[76px]",
+        )}
+      >
+        {/* Brand + collapse toggle */}
+        {expanded ? (
+          <div className="flex items-center justify-between gap-2 px-4 py-4">
+            <div className="flex min-w-0 items-center gap-2.5">
+              <span className="grid size-9 shrink-0 place-items-center rounded-[11px] bg-grad text-ink-inverted shadow-brand">
+                <GraduationCap className="size-5" />
+              </span>
+              <div className="min-w-0">
+                <p className="font-display text-[15px] font-bold leading-tight text-ink">Wael Academy</p>
+                <p className="truncate text-[11px] text-ink-muted">{roleLabel}</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setExpanded(false)}
+              aria-label="Réduire le menu"
+              className="grid size-8 shrink-0 place-items-center rounded-full border border-border bg-surface text-ink-subtle shadow-sm transition hover:border-brand-200 hover:text-brand-600"
+            >
+              <ChevronsLeft className="size-4" />
+            </button>
           </div>
-        </div>
-        <nav className="flex flex-1 flex-col gap-1 px-3 py-2">
+        ) : (
+          <div className="flex flex-col items-center gap-2 px-2 py-4">
+            <span className="grid size-9 shrink-0 place-items-center rounded-[11px] bg-grad text-ink-inverted shadow-brand">
+              <GraduationCap className="size-5" />
+            </span>
+            <button
+              type="button"
+              onClick={() => setExpanded(true)}
+              aria-label="Développer le menu"
+              className="grid size-8 shrink-0 place-items-center rounded-full border border-border bg-surface text-ink-subtle shadow-sm transition hover:border-brand-200 hover:text-brand-600"
+            >
+              <ChevronsRight className="size-4" />
+            </button>
+          </div>
+        )}
+
+        <nav className={cn("flex flex-1 flex-col gap-1 overflow-y-auto scroll-touch py-2", expanded ? "px-3" : "px-2")}>
           {nav.map((item) => (
-            <SideNavItem key={item.path} item={item} />
+            <SideNavItem key={item.path} item={item} expanded={expanded} />
           ))}
         </nav>
-        <div className="border-t border-border p-3">
+
+        <div className={cn("border-t border-border p-3", !expanded && "px-2")}>
           <button
             type="button"
             onClick={switchRole}
-            className="flex w-full items-center gap-2.5 rounded-md px-3.5 py-3 text-sm font-medium text-ink-subtle transition hover:bg-brand-50 hover:text-brand-600"
+            title={expanded ? undefined : "Changer de rôle"}
+            className={cn(
+              "flex w-full items-center rounded-md text-sm font-medium text-ink-subtle transition hover:bg-brand-50 hover:text-brand-600",
+              expanded ? "gap-2.5 px-3.5 py-3" : "justify-center py-3",
+            )}
           >
-            <Repeat className="size-[18px] text-ink-muted" /> Changer de rôle
+            <Repeat className="size-[18px] shrink-0 text-ink-muted" /> {expanded && "Changer de rôle"}
           </button>
         </div>
       </aside>
 
       {/* Right column: top bar + scrolling content */}
       <div className="flex h-full min-w-0 flex-1 flex-col">
-        <header className="z-20 flex items-center gap-3 border-b border-border bg-surface px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:px-8 md:pb-4 md:pt-4">
+        <header className="z-20 flex items-center gap-3 border-b border-border bg-surface px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:mt-3 md:me-3 md:rounded-lg md:border md:px-8 md:pb-4 md:pt-4 md:shadow-sm">
           <span className="grid size-9 shrink-0 place-items-center rounded-[10px] bg-grad text-ink-inverted shadow-brand md:hidden">
             <GraduationCap className="size-5" />
           </span>
@@ -135,7 +185,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
           {currentUser && <Avatar name={currentUser.name} />}
         </header>
 
-        <main className="flex-1 overflow-y-auto scroll-touch p-4 pb-24 md:p-8 md:pb-8">
+        <main className="flex-1 overflow-y-auto scroll-touch p-4 pb-24 md:px-8 md:pb-8 md:pt-5">
           <Outlet />
         </main>
       </div>

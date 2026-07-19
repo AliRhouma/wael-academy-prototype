@@ -4,18 +4,30 @@ import { StatTile } from "@/features/shared/StatTile"
 import { SessionList } from "@/features/shared/SessionList"
 import { useAuth } from "@/stores/useAuth"
 import { useData } from "@/stores/useData"
+import { nowStamp, sessionStamp } from "@/lib/utils"
 
 /** Scoped to the current student: their courses + schedule. */
 export default function StudentDashboard() {
   const user = useAuth((s) => s.currentUser)
-  const { students, courses, sessions } = useData()
+  const { students, courses, sessions, groups } = useData()
 
   const me = students.find((s) => s.id === user?.studentId)
   const myCourseIds = new Set(me?.courseIds ?? [])
   const myCourses = courses.filter((c) => myCourseIds.has(c.id))
+
+  // My séances: those of a group I'm in, or scheduled for my year.
+  const myGroupIds = new Set(
+    groups.filter((g) => user && g.studentIds.includes(user.id)).map((g) => g.id),
+  )
+  const now = nowStamp()
   const mySessions = sessions
-    .filter((s) => myCourseIds.has(s.courseId))
-    .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
+    .filter(
+      (s) =>
+        sessionStamp(s) >= now &&
+        (s.groupIds.some((id) => myGroupIds.has(id)) ||
+          (user?.yearId ? s.yearIds.includes(user.yearId) : false)),
+    )
+    .sort((a, b) => sessionStamp(a).localeCompare(sessionStamp(b)))
   const firstName = user?.name.split(" ")[0] ?? ""
 
   return (
@@ -29,7 +41,7 @@ export default function StudentDashboard() {
 
       <section>
         <h2 className="mb-3 font-display text-base font-bold text-ink">Emploi du temps</h2>
-        <SessionList sessions={mySessions} courses={courses} empty="Aucune séance programmée" />
+        <SessionList sessions={mySessions} empty="Aucune séance programmée" />
       </section>
     </div>
   )

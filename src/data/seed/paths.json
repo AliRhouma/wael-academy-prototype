@@ -1,0 +1,84 @@
+[
+  {
+    "id": "p-math-analyse",
+    "title": "Parcours — Démarrer en Analyse",
+    "description": "Un chemin guidé pour maîtriser l'analyse, étape par étape : cours, exercices, puis quiz de validation.",
+    "subjectId": "subj-bac-math-mathematiques",
+    "yearId": "y-bac-math",
+    "items": [
+      { "id": "pi-a1", "refType": "lesson", "refId": "l-math-cours-limites" },
+      { "id": "pi-a2", "refType": "quiz", "refId": "q-math-limites" },
+      { "id": "pi-a3", "refType": "lesson", "refId": "l-math-exos-deriv" },
+      { "id": "pi-a4", "refType": "quiz", "refId": "q-math-deriv" },
+      { "id": "pi-a5", "refType": "lesson", "refId": "l-math-cours-integrales" }
+    ],
+    "order": 0
+  },
+  {
+    "id": "p-math-complexes",
+    "title": "Parcours — Les nombres complexes de A à Z",
+    "description": "Du cours au quiz : tout ce qu'il faut pour être prêt sur les nombres complexes.",
+    "subjectId": "subj-bac-math-mathematiques",
+    "yearId": "y-bac-math",
+    "items": [
+      { "id": "pi-c1", "refType": "lesson", "refId": "l-math-cours-complexes" },
+      { "id": "pi-c2", "refType": "quiz", "refId": "q-math-complexes" }
+    ],
+    "order": 1
+  },
+  {
+    "id": "p-phys-elec",
+    "title": "Parcours — L'électricité pas à pas",
+    "description": "Du dipôle RC au dipôle RL : cours, exercices et quiz pour construire des bases solides en électricité.",
+    "subjectId": "subj-bac-math-sciences-physiques",
+    "yearId": "y-bac-math",
+    "items": [
+      { "id": "pi-e1", "refType": "lesson", "refId": "l-phys-cours-rc" },
+      { "id": "pi-e2", "refType": "quiz", "refId": "q-phys-rc" },
+      { "id": "pi-e3", "refType": "lesson", "refId": "l-phys-exos-rl" },
+      { "id": "pi-e4", "refType": "quiz", "refId": "q-phys-rl" },
+      { "id": "pi-e5", "refType": "lesson", "refId": "l-phys-serie-rlc" }
+    ],
+    "order": 0
+  },
+  {
+    "id": "p-svt-bio",
+    "title": "Parcours — Immunité & génétique",
+    "description": "Un parcours de révision en biologie : cours, résumés, exercices et quiz.",
+    "subjectId": "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-bac-sci",
+    "items": [
+      { "id": "pi-s1", "refType": "lesson", "refId": "l-svt-resume-immunite" },
+      { "id": "pi-s2", "refType": "quiz", "refId": "q-svt-immunite" },
+      { "id": "pi-s3", "refType": "lesson", "refId": "l-svt-exos-genetique" },
+      { "id": "pi-s4", "refType": "quiz", "refId": "q-svt-genetique" }
+    ],
+    "order": 0
+  },
+  {
+    "id": "p-info-bdd",
+    "title": "Parcours — Bases de données & SQL",
+    "description": "Cours, TP puis quiz : construisez vos premières requêtes SQL avec méthode.",
+    "subjectId": "subj-bac-info-informatique",
+    "yearId": "y-bac-info",
+    "items": [
+      { "id": "pi-b1", "refType": "lesson", "refId": "l-info-cours-sql" },
+      { "id": "pi-b2", "refType": "lesson", "refId": "l-info-tp-sql" },
+      { "id": "pi-b3", "refType": "quiz", "refId": "q-info-sql" }
+    ],
+    "order": 0
+  },
+  {
+    "id": "p-9-geo",
+    "title": "Parcours — Géométrie 9ème",
+    "description": "Thalès et trigonométrie : un chemin simple pour les élèves de 9ème année.",
+    "subjectId": "subj-9-mathematiques",
+    "yearId": "y-9",
+    "items": [
+      { "id": "pi-g1", "refType": "lesson", "refId": "l-9-cours-thales" },
+      { "id": "pi-g2", "refType": "quiz", "refId": "q-9-thales" },
+      { "id": "pi-g3", "refType": "lesson", "refId": "l-9-serie-trigo" }
+    ],
+    "order": 0
+  }
+]

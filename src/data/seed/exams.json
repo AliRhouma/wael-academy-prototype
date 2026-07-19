@@ -1,0 +1,84 @@
+[
+  {
+    "id": "ex-math-ds1",
+    "title": "Devoir de synthèse N°1 — Mathématiques",
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
+    "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
+    "subjectIds": ["subj-bac-math-mathematiques", "subj-bac-sci-mathematiques"],
+    "yearIds": ["y-bac-math", "y-bac-sci"],
+    "order": 0
+  },
+  {
+    "id": "ex-math-dc2",
+    "title": "Devoir de contrôle N°2 — Mathématiques",
+    "pdfs": [{ "name": "Énoncé" }],
+    "subjectIds": ["subj-bac-math-mathematiques"],
+    "yearIds": ["y-bac-math"],
+    "order": 1
+  },
+  {
+    "id": "ex-math-bacblanc",
+    "title": "Bac blanc — Mathématiques",
+    "pdfs": [{ "name": "Sujet" }, { "name": "Barème" }, { "name": "Corrigé détaillé" }],
+    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
+    "subjectIds": [
+      "subj-bac-math-mathematiques",
+      "subj-bac-sci-mathematiques",
+      "subj-bac-tech-mathematiques",
+      "subj-bac-info-mathematiques"
+    ],
+    "yearIds": ["y-bac-math", "y-bac-sci", "y-bac-tech", "y-bac-info"],
+    "order": 2
+  },
+  {
+    "id": "ex-phys-ds1",
+    "title": "Devoir de synthèse N°1 — Sciences physiques",
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
+    "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
+    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
+    "yearIds": ["y-bac-math", "y-bac-sci"],
+    "order": 0
+  },
+  {
+    "id": "ex-phys-dc1",
+    "title": "Devoir de contrôle N°1 — Sciences physiques",
+    "pdfs": [{ "name": "Énoncé" }],
+    "subjectIds": ["subj-bac-sci-sciences-physiques"],
+    "yearIds": ["y-bac-sci"],
+    "order": 1
+  },
+  {
+    "id": "ex-svt-ds2",
+    "title": "Devoir de synthèse N°2 — SVT",
+    "pdfs": [{ "name": "Énoncé" }, { "name": "Corrigé" }],
+    "videoUrl": "https://youtu.be/9bZkp7q19f0",
+    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
+    "yearIds": ["y-bac-sci"],
+    "order": 0
+  },
+  {
+    "id": "ex-info-tp",
+    "title": "Épreuve pratique — Informatique",
+    "pdfs": [{ "name": "Sujet TP" }, { "name": "Grille d'évaluation" }],
+    "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
+    "subjectIds": ["subj-bac-info-informatique"],
+    "yearIds": ["y-bac-info"],
+    "order": 0
+  },
+  {
+    "id": "ex-ar-farth1",
+    "title": "فرض تأليفي عدد 1 — العربية",
+    "pdfs": [{ "name": "نص الامتحان" }, { "name": "الإصلاح" }],
+    "subjectIds": ["subj-bac-lettres-arabe"],
+    "yearIds": ["y-bac-lettres"],
+    "order": 0
+  },
+  {
+    "id": "ex-7-math-dc1",
+    "title": "Devoir de contrôle N°1 — Mathématiques",
+    "pdfs": [{ "name": "Énoncé" }],
+    "subjectIds": ["subj-7-mathematiques"],
+    "yearIds": ["y-7"],
+    "order": 0
+  }
+]

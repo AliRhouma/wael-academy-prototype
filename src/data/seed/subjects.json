@@ -1,0 +1,806 @@
+[
+  {
+    "id": "subj-7-mathematiques",
+    "yearId": "y-7",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-7-sciences-physiques",
+    "yearId": "y-7",
+    "name": "Sciences physiques",
+    "order": 1
+  },
+  {
+    "id": "subj-7-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-7",
+    "name": "Sciences de la vie et de la terre",
+    "order": 2
+  },
+  {
+    "id": "subj-7-francais",
+    "yearId": "y-7",
+    "name": "Français",
+    "order": 3
+  },
+  {
+    "id": "subj-7-arabe",
+    "yearId": "y-7",
+    "name": "Arabe",
+    "order": 4
+  },
+  {
+    "id": "subj-7-anglais",
+    "yearId": "y-7",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-7-informatique",
+    "yearId": "y-7",
+    "name": "Informatique",
+    "order": 6
+  },
+  {
+    "id": "subj-7-education-islamique",
+    "yearId": "y-7",
+    "name": "Éducation islamique",
+    "order": 7
+  },
+  {
+    "id": "subj-7-histoire-geographie",
+    "yearId": "y-7",
+    "name": "Histoire-Géographie",
+    "order": 8
+  },
+  {
+    "id": "subj-8-mathematiques",
+    "yearId": "y-8",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-8-sciences-physiques",
+    "yearId": "y-8",
+    "name": "Sciences physiques",
+    "order": 1
+  },
+  {
+    "id": "subj-8-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-8",
+    "name": "Sciences de la vie et de la terre",
+    "order": 2
+  },
+  {
+    "id": "subj-8-francais",
+    "yearId": "y-8",
+    "name": "Français",
+    "order": 3
+  },
+  {
+    "id": "subj-8-arabe",
+    "yearId": "y-8",
+    "name": "Arabe",
+    "order": 4
+  },
+  {
+    "id": "subj-8-anglais",
+    "yearId": "y-8",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-8-informatique",
+    "yearId": "y-8",
+    "name": "Informatique",
+    "order": 6
+  },
+  {
+    "id": "subj-8-education-islamique",
+    "yearId": "y-8",
+    "name": "Éducation islamique",
+    "order": 7
+  },
+  {
+    "id": "subj-8-histoire-geographie",
+    "yearId": "y-8",
+    "name": "Histoire-Géographie",
+    "order": 8
+  },
+  {
+    "id": "subj-9-mathematiques",
+    "yearId": "y-9",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-9-sciences-physiques",
+    "yearId": "y-9",
+    "name": "Sciences physiques",
+    "order": 1
+  },
+  {
+    "id": "subj-9-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-9",
+    "name": "Sciences de la vie et de la terre",
+    "order": 2
+  },
+  {
+    "id": "subj-9-francais",
+    "yearId": "y-9",
+    "name": "Français",
+    "order": 3
+  },
+  {
+    "id": "subj-9-arabe",
+    "yearId": "y-9",
+    "name": "Arabe",
+    "order": 4
+  },
+  {
+    "id": "subj-9-anglais",
+    "yearId": "y-9",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-1-mathematiques",
+    "yearId": "y-1",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-1-sciences-physiques",
+    "yearId": "y-1",
+    "name": "Sciences physiques",
+    "order": 1
+  },
+  {
+    "id": "subj-1-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-1",
+    "name": "Sciences de la vie et de la terre",
+    "order": 2
+  },
+  {
+    "id": "subj-1-francais",
+    "yearId": "y-1",
+    "name": "Français",
+    "order": 3
+  },
+  {
+    "id": "subj-1-arabe",
+    "yearId": "y-1",
+    "name": "Arabe",
+    "order": 4
+  },
+  {
+    "id": "subj-1-anglais",
+    "yearId": "y-1",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-2-eco-mathematiques",
+    "yearId": "y-2-eco",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-2-eco-economie",
+    "yearId": "y-2-eco",
+    "name": "Économie",
+    "order": 1
+  },
+  {
+    "id": "subj-2-eco-gestion",
+    "yearId": "y-2-eco",
+    "name": "Gestion",
+    "order": 2
+  },
+  {
+    "id": "subj-2-eco-francais",
+    "yearId": "y-2-eco",
+    "name": "Français",
+    "order": 3
+  },
+  {
+    "id": "subj-2-eco-arabe",
+    "yearId": "y-2-eco",
+    "name": "Arabe",
+    "order": 4
+  },
+  {
+    "id": "subj-2-eco-anglais",
+    "yearId": "y-2-eco",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-2-info-mathematiques",
+    "yearId": "y-2-info",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-2-info-informatique",
+    "yearId": "y-2-info",
+    "name": "Informatique",
+    "order": 1
+  },
+  {
+    "id": "subj-2-info-sciences-physiques",
+    "yearId": "y-2-info",
+    "name": "Sciences physiques",
+    "order": 2
+  },
+  {
+    "id": "subj-2-info-francais",
+    "yearId": "y-2-info",
+    "name": "Français",
+    "order": 3
+  },
+  {
+    "id": "subj-2-info-arabe",
+    "yearId": "y-2-info",
+    "name": "Arabe",
+    "order": 4
+  },
+  {
+    "id": "subj-2-info-anglais",
+    "yearId": "y-2-info",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-2-lettres-arabe",
+    "yearId": "y-2-lettres",
+    "name": "Arabe",
+    "order": 0
+  },
+  {
+    "id": "subj-2-lettres-francais",
+    "yearId": "y-2-lettres",
+    "name": "Français",
+    "order": 1
+  },
+  {
+    "id": "subj-2-lettres-anglais",
+    "yearId": "y-2-lettres",
+    "name": "Anglais",
+    "order": 2
+  },
+  {
+    "id": "subj-2-lettres-philosophie",
+    "yearId": "y-2-lettres",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-2-lettres-histoire-geographie",
+    "yearId": "y-2-lettres",
+    "name": "Histoire-Géographie",
+    "order": 4
+  },
+  {
+    "id": "subj-2-lettres-education-islamique",
+    "yearId": "y-2-lettres",
+    "name": "Éducation islamique",
+    "order": 5
+  },
+  {
+    "id": "subj-2-sci-mathematiques",
+    "yearId": "y-2-sci",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-2-sci-sciences-physiques",
+    "yearId": "y-2-sci",
+    "name": "Sciences physiques",
+    "order": 1
+  },
+  {
+    "id": "subj-2-sci-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-2-sci",
+    "name": "Sciences de la vie et de la terre",
+    "order": 2
+  },
+  {
+    "id": "subj-2-sci-francais",
+    "yearId": "y-2-sci",
+    "name": "Français",
+    "order": 3
+  },
+  {
+    "id": "subj-2-sci-arabe",
+    "yearId": "y-2-sci",
+    "name": "Arabe",
+    "order": 4
+  },
+  {
+    "id": "subj-2-sci-anglais",
+    "yearId": "y-2-sci",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-3-eco-economie",
+    "yearId": "y-3-eco",
+    "name": "Économie",
+    "order": 0
+  },
+  {
+    "id": "subj-3-eco-gestion",
+    "yearId": "y-3-eco",
+    "name": "Gestion",
+    "order": 1
+  },
+  {
+    "id": "subj-3-eco-mathematiques",
+    "yearId": "y-3-eco",
+    "name": "Mathématiques",
+    "order": 2
+  },
+  {
+    "id": "subj-3-eco-philosophie",
+    "yearId": "y-3-eco",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-3-eco-francais",
+    "yearId": "y-3-eco",
+    "name": "Français",
+    "order": 4
+  },
+  {
+    "id": "subj-3-eco-arabe",
+    "yearId": "y-3-eco",
+    "name": "Arabe",
+    "order": 5
+  },
+  {
+    "id": "subj-3-info-informatique",
+    "yearId": "y-3-info",
+    "name": "Informatique",
+    "order": 0
+  },
+  {
+    "id": "subj-3-info-mathematiques",
+    "yearId": "y-3-info",
+    "name": "Mathématiques",
+    "order": 1
+  },
+  {
+    "id": "subj-3-info-sciences-physiques",
+    "yearId": "y-3-info",
+    "name": "Sciences physiques",
+    "order": 2
+  },
+  {
+    "id": "subj-3-info-philosophie",
+    "yearId": "y-3-info",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-3-info-francais",
+    "yearId": "y-3-info",
+    "name": "Français",
+    "order": 4
+  },
+  {
+    "id": "subj-3-info-anglais",
+    "yearId": "y-3-info",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-3-lettres-arabe",
+    "yearId": "y-3-lettres",
+    "name": "Arabe",
+    "order": 0
+  },
+  {
+    "id": "subj-3-lettres-francais",
+    "yearId": "y-3-lettres",
+    "name": "Français",
+    "order": 1
+  },
+  {
+    "id": "subj-3-lettres-anglais",
+    "yearId": "y-3-lettres",
+    "name": "Anglais",
+    "order": 2
+  },
+  {
+    "id": "subj-3-lettres-philosophie",
+    "yearId": "y-3-lettres",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-3-lettres-histoire-geographie",
+    "yearId": "y-3-lettres",
+    "name": "Histoire-Géographie",
+    "order": 4
+  },
+  {
+    "id": "subj-3-lettres-pensee-islamique",
+    "yearId": "y-3-lettres",
+    "name": "Pensée islamique",
+    "order": 5
+  },
+  {
+    "id": "subj-3-math-mathematiques",
+    "yearId": "y-3-math",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-3-math-sciences-physiques",
+    "yearId": "y-3-math",
+    "name": "Sciences physiques",
+    "order": 1
+  },
+  {
+    "id": "subj-3-math-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-3-math",
+    "name": "Sciences de la vie et de la terre",
+    "order": 2
+  },
+  {
+    "id": "subj-3-math-philosophie",
+    "yearId": "y-3-math",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-3-math-francais",
+    "yearId": "y-3-math",
+    "name": "Français",
+    "order": 4
+  },
+  {
+    "id": "subj-3-math-arabe",
+    "yearId": "y-3-math",
+    "name": "Arabe",
+    "order": 5
+  },
+  {
+    "id": "subj-3-sci-sciences-physiques",
+    "yearId": "y-3-sci",
+    "name": "Sciences physiques",
+    "order": 0
+  },
+  {
+    "id": "subj-3-sci-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-3-sci",
+    "name": "Sciences de la vie et de la terre",
+    "order": 1
+  },
+  {
+    "id": "subj-3-sci-mathematiques",
+    "yearId": "y-3-sci",
+    "name": "Mathématiques",
+    "order": 2
+  },
+  {
+    "id": "subj-3-sci-philosophie",
+    "yearId": "y-3-sci",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-3-sci-francais",
+    "yearId": "y-3-sci",
+    "name": "Français",
+    "order": 4
+  },
+  {
+    "id": "subj-3-sci-anglais",
+    "yearId": "y-3-sci",
+    "name": "Anglais",
+    "order": 5
+  },
+  {
+    "id": "subj-3-tech-technologie",
+    "yearId": "y-3-tech",
+    "name": "Technologie",
+    "order": 0
+  },
+  {
+    "id": "subj-3-tech-mathematiques",
+    "yearId": "y-3-tech",
+    "name": "Mathématiques",
+    "order": 1
+  },
+  {
+    "id": "subj-3-tech-sciences-physiques",
+    "yearId": "y-3-tech",
+    "name": "Sciences physiques",
+    "order": 2
+  },
+  {
+    "id": "subj-3-tech-francais",
+    "yearId": "y-3-tech",
+    "name": "Français",
+    "order": 3
+  },
+  {
+    "id": "subj-3-tech-arabe",
+    "yearId": "y-3-tech",
+    "name": "Arabe",
+    "order": 4
+  },
+  {
+    "id": "subj-bac-eco-economie",
+    "yearId": "y-bac-eco",
+    "name": "Économie",
+    "order": 0
+  },
+  {
+    "id": "subj-bac-eco-gestion",
+    "yearId": "y-bac-eco",
+    "name": "Gestion",
+    "order": 1
+  },
+  {
+    "id": "subj-bac-eco-mathematiques",
+    "yearId": "y-bac-eco",
+    "name": "Mathématiques",
+    "order": 2
+  },
+  {
+    "id": "subj-bac-eco-philosophie",
+    "yearId": "y-bac-eco",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-bac-eco-histoire-geographie",
+    "yearId": "y-bac-eco",
+    "name": "Histoire-Géographie",
+    "order": 4
+  },
+  {
+    "id": "subj-bac-eco-francais",
+    "yearId": "y-bac-eco",
+    "name": "Français",
+    "order": 5
+  },
+  {
+    "id": "subj-bac-eco-arabe",
+    "yearId": "y-bac-eco",
+    "name": "Arabe",
+    "order": 6
+  },
+  {
+    "id": "subj-bac-eco-anglais",
+    "yearId": "y-bac-eco",
+    "name": "Anglais",
+    "order": 7
+  },
+  {
+    "id": "subj-bac-info-informatique",
+    "yearId": "y-bac-info",
+    "name": "Informatique",
+    "order": 0
+  },
+  {
+    "id": "subj-bac-info-algorithmique",
+    "yearId": "y-bac-info",
+    "name": "Algorithmique",
+    "order": 1
+  },
+  {
+    "id": "subj-bac-info-mathematiques",
+    "yearId": "y-bac-info",
+    "name": "Mathématiques",
+    "order": 2
+  },
+  {
+    "id": "subj-bac-info-sciences-physiques",
+    "yearId": "y-bac-info",
+    "name": "Sciences physiques",
+    "order": 3
+  },
+  {
+    "id": "subj-bac-info-philosophie",
+    "yearId": "y-bac-info",
+    "name": "Philosophie",
+    "order": 4
+  },
+  {
+    "id": "subj-bac-info-francais",
+    "yearId": "y-bac-info",
+    "name": "Français",
+    "order": 5
+  },
+  {
+    "id": "subj-bac-info-arabe",
+    "yearId": "y-bac-info",
+    "name": "Arabe",
+    "order": 6
+  },
+  {
+    "id": "subj-bac-info-anglais",
+    "yearId": "y-bac-info",
+    "name": "Anglais",
+    "order": 7
+  },
+  {
+    "id": "subj-bac-lettres-arabe",
+    "yearId": "y-bac-lettres",
+    "name": "Arabe",
+    "order": 0
+  },
+  {
+    "id": "subj-bac-lettres-francais",
+    "yearId": "y-bac-lettres",
+    "name": "Français",
+    "order": 1
+  },
+  {
+    "id": "subj-bac-lettres-anglais",
+    "yearId": "y-bac-lettres",
+    "name": "Anglais",
+    "order": 2
+  },
+  {
+    "id": "subj-bac-lettres-philosophie",
+    "yearId": "y-bac-lettres",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-bac-lettres-histoire-geographie",
+    "yearId": "y-bac-lettres",
+    "name": "Histoire-Géographie",
+    "order": 4
+  },
+  {
+    "id": "subj-bac-lettres-pensee-islamique",
+    "yearId": "y-bac-lettres",
+    "name": "Pensée islamique",
+    "order": 5
+  },
+  {
+    "id": "subj-bac-lettres-adab",
+    "yearId": "y-bac-lettres",
+    "name": "الأدب العربي",
+    "order": 6
+  },
+  {
+    "id": "subj-bac-lettres-hadara",
+    "yearId": "y-bac-lettres",
+    "name": "الحضارة العربية والإسلامية",
+    "order": 7
+  },
+  {
+    "id": "subj-bac-math-mathematiques",
+    "yearId": "y-bac-math",
+    "name": "Mathématiques",
+    "order": 0
+  },
+  {
+    "id": "subj-bac-math-sciences-physiques",
+    "yearId": "y-bac-math",
+    "name": "Sciences physiques",
+    "order": 1
+  },
+  {
+    "id": "subj-bac-math-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-bac-math",
+    "name": "Sciences de la vie et de la terre",
+    "order": 2
+  },
+  {
+    "id": "subj-bac-math-philosophie",
+    "yearId": "y-bac-math",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-bac-math-francais",
+    "yearId": "y-bac-math",
+    "name": "Français",
+    "order": 4
+  },
+  {
+    "id": "subj-bac-math-arabe",
+    "yearId": "y-bac-math",
+    "name": "Arabe",
+    "order": 5
+  },
+  {
+    "id": "subj-bac-math-anglais",
+    "yearId": "y-bac-math",
+    "name": "Anglais",
+    "order": 6
+  },
+  {
+    "id": "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-bac-sci",
+    "name": "Sciences de la vie et de la terre",
+    "order": 0
+  },
+  {
+    "id": "subj-bac-sci-sciences-physiques",
+    "yearId": "y-bac-sci",
+    "name": "Sciences physiques",
+    "order": 1
+  },
+  {
+    "id": "subj-bac-sci-mathematiques",
+    "yearId": "y-bac-sci",
+    "name": "Mathématiques",
+    "order": 2
+  },
+  {
+    "id": "subj-bac-sci-philosophie",
+    "yearId": "y-bac-sci",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-bac-sci-francais",
+    "yearId": "y-bac-sci",
+    "name": "Français",
+    "order": 4
+  },
+  {
+    "id": "subj-bac-sci-arabe",
+    "yearId": "y-bac-sci",
+    "name": "Arabe",
+    "order": 5
+  },
+  {
+    "id": "subj-bac-sci-anglais",
+    "yearId": "y-bac-sci",
+    "name": "Anglais",
+    "order": 6
+  },
+  {
+    "id": "subj-bac-tech-technologie",
+    "yearId": "y-bac-tech",
+    "name": "Technologie",
+    "order": 0
+  },
+  {
+    "id": "subj-bac-tech-mathematiques",
+    "yearId": "y-bac-tech",
+    "name": "Mathématiques",
+    "order": 1
+  },
+  {
+    "id": "subj-bac-tech-sciences-physiques",
+    "yearId": "y-bac-tech",
+    "name": "Sciences physiques",
+    "order": 2
+  },
+  {
+    "id": "subj-bac-tech-philosophie",
+    "yearId": "y-bac-tech",
+    "name": "Philosophie",
+    "order": 3
+  },
+  {
+    "id": "subj-bac-tech-francais",
+    "yearId": "y-bac-tech",
+    "name": "Français",
+    "order": 4
+  },
+  {
+    "id": "subj-bac-tech-arabe",
+    "yearId": "y-bac-tech",
+    "name": "Arabe",
+    "order": 5
+  },
+  {
+    "id": "subj-bac-tech-anglais",
+    "yearId": "y-bac-tech",
+    "name": "Anglais",
+    "order": 6
+  }
+]

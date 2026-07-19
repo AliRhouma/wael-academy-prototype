@@ -1,0 +1,38 @@
+[
+  {
+    "id": "g-2sci-excellents",
+    "title": "Excellents — 2ème Sciences",
+    "yearId": "y-2-sci",
+    "studentIds": ["u-st-yasmine", "u-st-aziz", "u-st-nour", "u-st-maryam"]
+  },
+  {
+    "id": "g-2sci-b",
+    "title": "2ème Sciences — Groupe B",
+    "yearId": "y-2-sci",
+    "studentIds": ["u-st-hamza", "u-st-oussama"]
+  },
+  {
+    "id": "g-bacsci-renfort",
+    "title": "Bac Sciences — Renforcement",
+    "yearId": "y-bac-sci",
+    "studentIds": ["u-student", "u-student-sarra", "u-st-selim", "u-st-emna", "u-st-wassim"]
+  },
+  {
+    "id": "g-bacmath-elite",
+    "title": "Bac Maths — Élite",
+    "yearId": "y-bac-math",
+    "studentIds": ["u-student-ines", "u-st-khalil", "u-st-syrine"]
+  },
+  {
+    "id": "g-9-a",
+    "title": "9ème année — Groupe A",
+    "yearId": "y-9",
+    "studentIds": ["u-student-youssef", "u-student-amira", "u-st-adam", "u-st-lina"]
+  },
+  {
+    "id": "g-7-soutien",
+    "title": "7ème année — Soutien",
+    "yearId": "y-7",
+    "studentIds": []
+  }
+]

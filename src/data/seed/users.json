@@ -1,6 +1,35 @@
 [
-  { "id": "u-admin", "name": "Amel Zouari", "role": "admin" },
-  { "id": "u-teacher", "name": "Karim Bouaziz", "role": "teacher", "teacherId": "t-karim" },
-  { "id": "u-parent", "name": "Fatma Ben Salah", "role": "parent", "childrenIds": ["s-mohamed", "s-sarra"] },
-  { "id": "u-student", "name": "Mohamed Ben Salah", "role": "student", "studentId": "s-mohamed" }
+  { "id": "u-admin", "name": "Amel Zouari", "role": "admin", "phone": "+216 71 245 880", "email": "amel.zouari@waelacademy.tn" },
+  { "id": "u-admin-2", "name": "Hédi Bel Hadj", "role": "admin", "phone": "+216 98 112 447", "email": "direction@waelacademy.tn" },
+
+  { "id": "u-teacher", "name": "Karim Bouaziz", "role": "teacher", "phone": "+216 22 610 305", "email": "k.bouaziz@waelacademy.tn", "teacherId": "t-karim" },
+  { "id": "u-teacher-leila", "name": "Leïla Hamdi", "role": "teacher", "phone": "+216 55 903 218", "email": "l.hamdi@waelacademy.tn", "teacherId": "t-leila" },
+  { "id": "u-teacher-sonia", "name": "Sonia Gharbi", "role": "teacher", "phone": "+216 20 447 690", "teacherId": "t-sonia" },
+  { "id": "u-teacher-nabil", "name": "Nabil Marzouki", "role": "teacher", "phone": "+216 97 338 052", "email": "n.marzouki@waelacademy.tn", "teacherId": "t-nabil" },
+
+  { "id": "u-parent", "name": "Fatma Ben Salah", "role": "parent", "phone": "+216 21 774 100", "email": "fatma.bensalah@gmail.com", "childrenIds": ["s-mohamed", "s-sarra"] },
+  { "id": "u-parent-2", "name": "Slim Trabelsi", "role": "parent", "phone": "+216 50 662 913", "childrenIds": ["s-ines"] },
+  { "id": "u-parent-3", "name": "Nadia Gharbi Abderrahmen", "role": "parent", "phone": "+216 24 508 771", "email": "nadia.g@outlook.com", "childrenIds": ["s-youssef"] },
+
+  { "id": "u-student", "name": "Mohamed Ben Salah", "role": "student", "phone": "+216 29 340 118", "email": "mohamed.bs@waelacademy.tn", "studentId": "s-mohamed", "yearId": "y-bac-sci" },
+  { "id": "u-student-ines", "name": "Ines Trabelsi", "role": "student", "phone": "+216 54 217 806", "studentId": "s-ines", "yearId": "y-bac-math" },
+  { "id": "u-student-youssef", "name": "Youssef Gharbi", "role": "student", "phone": "+216 26 991 043", "email": "youssef.gharbi04@gmail.com", "studentId": "s-youssef", "yearId": "y-9" },
+  { "id": "u-student-sarra", "name": "Sarra Khelifi", "role": "student", "phone": "+216 23 705 662", "studentId": "s-sarra", "yearId": "y-bac-sci" },
+  { "id": "u-student-amira", "name": "Amira Jlassi", "role": "student", "phone": "+216 52 480 397", "email": "amira.jlassi@gmail.com", "studentId": "s-amira", "yearId": "y-9" },
+  { "id": "u-student-rayan", "name": "Rayan Ben Abdallah Mestiri", "role": "student", "phone": "+216 27 118 529", "yearId": "y-7" },
+  { "id": "u-student-farah", "name": "Farah Chaabane", "role": "student", "phone": "+216 58 903 641", "email": "farah.chaabane@gmail.com", "yearId": "y-bac-info" },
+
+  { "id": "u-st-yasmine", "name": "Yasmine Ferjani", "role": "student", "phone": "+216 27 604 118", "email": "yasmine.ferjani@gmail.com", "yearId": "y-2-sci" },
+  { "id": "u-st-aziz", "name": "Aziz Khemiri", "role": "student", "phone": "+216 52 118 903", "yearId": "y-2-sci" },
+  { "id": "u-st-nour", "name": "Nour Belhaj", "role": "student", "phone": "+216 24 770 335", "email": "nour.belhaj@gmail.com", "yearId": "y-2-sci" },
+  { "id": "u-st-hamza", "name": "Hamza Toumi", "role": "student", "phone": "+216 55 209 641", "yearId": "y-2-sci" },
+  { "id": "u-st-maryam", "name": "Maryam Sassi", "role": "student", "phone": "+216 29 883 072", "email": "maryam.sassi@outlook.com", "yearId": "y-2-sci" },
+  { "id": "u-st-oussama", "name": "Oussama Riahi", "role": "student", "phone": "+216 26 415 780", "yearId": "y-2-sci" },
+  { "id": "u-st-selim", "name": "Selim Ayari", "role": "student", "phone": "+216 20 337 916", "email": "selim.ayari@gmail.com", "yearId": "y-bac-sci" },
+  { "id": "u-st-emna", "name": "Emna Dridi", "role": "student", "phone": "+216 54 902 148", "yearId": "y-bac-sci" },
+  { "id": "u-st-wassim", "name": "Wassim Nasri", "role": "student", "phone": "+216 22 760 553", "email": "wassim.nasri@gmail.com", "yearId": "y-bac-sci" },
+  { "id": "u-st-khalil", "name": "Khalil Baccouche", "role": "student", "phone": "+216 98 204 617", "yearId": "y-bac-math" },
+  { "id": "u-st-syrine", "name": "Syrine Mabrouk", "role": "student", "phone": "+216 50 118 774", "email": "syrine.mabrouk@gmail.com", "yearId": "y-bac-math" },
+  { "id": "u-st-adam", "name": "Adam Zribi", "role": "student", "phone": "+216 27 990 336", "yearId": "y-9" },
+  { "id": "u-st-lina", "name": "Lina Chaari", "role": "student", "phone": "+216 23 448 105", "email": "lina.chaari@gmail.com", "yearId": "y-9" }
 ]

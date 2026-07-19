@@ -1,0 +1,40 @@
+[
+  {
+    "id": "offer-bac-math-annuel",
+    "name": "Abonnement annuel — Bac Maths",
+    "description": "Accès complet à tous les cours, séries, quiz et examens corrigés de l'année. Suivi personnalisé et parcours guidés.",
+    "price": 480,
+    "promoPrice": 360,
+    "yearId": "y-bac-math"
+  },
+  {
+    "id": "offer-bac-sci-trimestre",
+    "name": "Pack trimestriel — Sciences",
+    "description": "Un trimestre d'accès aux contenus de sciences expérimentales, idéal pour la révision ciblée.",
+    "price": 180,
+    "yearId": "y-bac-sci"
+  },
+  {
+    "id": "offer-9-rentree",
+    "name": "Offre de rentrée — 9ème année",
+    "description": "Bien démarrer l'année : cours, exercices et quiz des premiers chapitres, tarif de lancement.",
+    "price": 150,
+    "promoPrice": 99,
+    "yearId": "y-9"
+  },
+  {
+    "id": "offer-bac-info-annuel",
+    "name": "Abonnement annuel — Bac Informatique",
+    "description": "Toute l'année d'informatique en accès illimité, avec les examens des sessions précédentes.",
+    "price": 420,
+    "yearId": "y-bac-info"
+  },
+  {
+    "id": "offer-7-decouverte",
+    "name": "Découverte — 7ème année",
+    "description": "",
+    "price": 90,
+    "promoPrice": 60,
+    "yearId": "y-7"
+  }
+]

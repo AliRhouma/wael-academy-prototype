@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -29,7 +30,7 @@
 :root {
   /* ---- Base ---- */
   font-family: "Rubik", system-ui, sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -86,7 +87,7 @@
 
   /* ---- Surfaces & Ink (use these for layout, not raw neutrals) ---------- */
   --surface: #ffffff;          /* cards, popovers, inputs */
-  --surface-subtle: #edf2ed;   /* the page background (warm sage) */
+  --surface-subtle: #f4f7f8;   /* the page background (cool, light near-white) */
   --surface-muted: #f7faf8;    /* table headers, side panel, control tracks */
   --surface-raised: #ffffff;   /* dialogs, dropdowns, sheets */
   --surface-cream: #fdf7e9;    /* warm callouts, the promo card */
@@ -315,7 +316,7 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    font-weight: 500;
+    font-weight: 400;
   }
   /* Display face is Cause; headings run 700. */
   h1,
@@ -370,9 +371,9 @@
   .bg-canvas {
     background-color: var(--surface-subtle);
     background-image:
-      radial-gradient(760px 420px at 88% -6%, rgb(251 238 203 / 0.85), transparent 62%),
-      radial-gradient(680px 480px at -6% 106%, rgb(35 172 118 / 0.13), transparent 60%),
-      radial-gradient(500px 380px at 108% 92%, rgb(24 63 107 / 0.07), transparent 62%);
+      radial-gradient(760px 420px at 88% -6%, rgb(96 165 250 / 0.12), transparent 62%),
+      radial-gradient(680px 480px at -6% 106%, rgb(129 140 248 / 0.11), transparent 60%),
+      radial-gradient(500px 380px at 108% 92%, rgb(45 178 164 / 0.10), transparent 62%);
   }
   .shadow-brand {
     box-shadow: var(--shadow-brand);

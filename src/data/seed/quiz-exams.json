@@ -1,0 +1,37 @@
+[
+  {
+    "id": "qe-math-analyse",
+    "title": "Examen de quiz — Analyse",
+    "subjectIds": ["subj-bac-math-mathematiques"],
+    "yearIds": ["y-bac-math"],
+    "order": 0
+  },
+  {
+    "id": "qe-info-bdd",
+    "title": "Examen de quiz — Bases de données",
+    "subjectIds": ["subj-bac-info-informatique"],
+    "yearIds": ["y-bac-info"],
+    "order": 0
+  },
+  {
+    "id": "qe-phys-elec",
+    "title": "Examen de quiz — Électricité",
+    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
+    "yearIds": ["y-bac-math", "y-bac-sci"],
+    "order": 0
+  },
+  {
+    "id": "qe-svt-bio",
+    "title": "Examen de quiz — Biologie",
+    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
+    "yearIds": ["y-bac-sci"],
+    "order": 0
+  },
+  {
+    "id": "qe-ar-nusus",
+    "title": "اختبار — النصوص",
+    "subjectIds": ["subj-bac-lettres-arabe"],
+    "yearIds": ["y-bac-lettres"],
+    "order": 0
+  }
+]

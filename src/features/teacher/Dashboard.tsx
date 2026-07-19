@@ -4,6 +4,7 @@ import { StatTile } from "@/features/shared/StatTile"
 import { SessionList } from "@/features/shared/SessionList"
 import { useAuth } from "@/stores/useAuth"
 import { useData } from "@/stores/useData"
+import { nowStamp, sessionStamp } from "@/lib/utils"
 
 /** Scoped to the current teacher: their courses + upcoming sessions. */
 export default function TeacherDashboard() {
@@ -11,10 +12,10 @@ export default function TeacherDashboard() {
   const { courses, sessions } = useData()
 
   const myCourses = courses.filter((c) => c.teacherId === user?.teacherId)
-  const myCourseIds = new Set(myCourses.map((c) => c.id))
+  const now = nowStamp()
   const mySessions = sessions
-    .filter((s) => myCourseIds.has(s.courseId))
-    .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
+    .filter((s) => s.teacherId && s.teacherId === user?.teacherId && sessionStamp(s) >= now)
+    .sort((a, b) => sessionStamp(a).localeCompare(sessionStamp(b)))
   const firstName = user?.name.split(" ")[0] ?? ""
 
   return (
@@ -28,7 +29,7 @@ export default function TeacherDashboard() {
 
       <section>
         <h2 className="mb-3 font-display text-base font-bold text-ink">Prochaines séances</h2>
-        <SessionList sessions={mySessions} courses={courses} empty="Aucune séance programmée" />
+        <SessionList sessions={mySessions} empty="Aucune séance programmée" />
       </section>
     </div>
   )
