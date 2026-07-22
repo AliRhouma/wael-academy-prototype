@@ -46,7 +46,7 @@ export function MemberPicker({
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase()
     return students
-      .filter((u) => (yearFilter === "all" ? true : u.yearId === yearFilter))
+      .filter((u) => (yearFilter === "all" ? true : (u.yearIds ?? []).includes(yearFilter)))
       .filter((u) => (q === "" ? true : u.name.toLowerCase().includes(q)))
       .sort((a, b) => {
         // Selected first, then alphabetical (already name-sorted from `students`).
@@ -113,7 +113,7 @@ export function MemberPicker({
                         {u.name}
                       </span>
                       <span className="block truncate text-[12px] text-ink-muted">
-                        {u.yearId ? yearName.get(u.yearId) ?? "—" : "—"}
+                        {u.yearIds?.[0] ? yearName.get(u.yearIds[0]) ?? "—" : "—"}
                       </span>
                     </span>
                     <span

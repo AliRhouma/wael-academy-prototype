@@ -25,7 +25,7 @@ export default function StudentDashboard() {
       (s) =>
         sessionStamp(s) >= now &&
         (s.groupIds.some((id) => myGroupIds.has(id)) ||
-          (user?.yearId ? s.yearIds.includes(user.yearId) : false)),
+          (user?.yearIds?.some((id) => s.yearIds.includes(id)) ?? false)),
     )
     .sort((a, b) => sessionStamp(a).localeCompare(sessionStamp(b)))
   const firstName = user?.name.split(" ")[0] ?? ""

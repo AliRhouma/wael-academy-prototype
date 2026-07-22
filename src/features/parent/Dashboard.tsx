@@ -17,7 +17,7 @@ export default function ParentDashboard() {
   const childUsers = users.filter((u) => u.studentId && childIds.has(u.studentId))
   const childUserIds = new Set(childUsers.map((u) => u.id))
   const childYearIds = new Set(
-    childUsers.map((u) => u.yearId).filter((id): id is string => Boolean(id)),
+    childUsers.flatMap((u) => u.yearIds ?? []),
   )
   const childGroupIds = new Set(
     groups.filter((g) => g.studentIds.some((id) => childUserIds.has(id))).map((g) => g.id),

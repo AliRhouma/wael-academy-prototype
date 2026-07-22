@@ -1,7 +1,8 @@
 /**
- * Gem/diamond glyph (from `svg icons/offres.svg`), recolored from the original
- * blue to the Wael brand green→teal, with the sparkles kept a palette gold
- * (gold = the "reward / kicker" accent — fitting for Offres).
+ * Gem/diamond glyph (from `svg icons/offres.svg`), recolored to the Wael brand
+ * via design tokens: the body + facets ride the brand ramp (`--brand-*`) and the
+ * sparkles ride the accent (`--accent-*` = the "reward / kicker" accent). All
+ * token-driven, so the gem follows whatever palette is active (data-palette).
  * Carries its own fill — mark its NavItem `colored: true` so the shell forces it
  * white on the active gradient pill.
  */
@@ -33,72 +34,72 @@ export function OffresIcon({ className }: { className?: string }) {
         <path d="M21.9119 9.28995C21.3595 9.65135 20.8885 10.1269 20.5322 10.6829C20.452 10.8079 20.2666 10.8079 20.1865 10.6829C19.8302 10.1269 19.3592 9.6514 18.8068 9.29C18.6842 9.20976 18.6842 9.02689 18.8068 8.94665C19.3592 8.58525 19.8302 8.10971 20.1865 7.55371C20.2666 7.42871 20.4521 7.42871 20.5322 7.55371C20.8885 8.10971 21.3595 8.58525 21.9119 8.94665C22.0345 9.02679 22.0345 9.20971 21.9119 9.28995Z" fill="url(#offresG15)" />
       </g>
       <defs>
-        {/* Main gem body — light mint → soft green */}
+        {/* Main gem body — palest brand tints */}
         <linearGradient id="offresG0" x1="8.71878" y1="6.69467" x2="19.8352" y2="18.4287" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#CFF3E4" />
-          <stop offset="1" stopColor="#BDECD6" />
+          <stop stopColor="var(--brand-50)" />
+          <stop offset="1" stopColor="var(--brand-100)" />
         </linearGradient>
         {/* Facet shading — transparent → brand teal (reused for all facets) */}
         <linearGradient id="offresG1" x1="11.998" y1="5.40476" x2="14.3508" y2="17.1099" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG2" x1="10.8808" y1="12.4178" x2="21.7625" y2="17.7116" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG3" x1="15.586" y1="13.7006" x2="25.1737" y2="8.64203" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG4" x1="3.85422" y1="13.1815" x2="13.7107" y2="23.5856" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG5" x1="16.4243" y1="15.4631" x2="20.3064" y2="19.4628" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG6" x1="7.5296" y1="6.74107" x2="11.9295" y2="8.88158" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG7" x1="16.8847" y1="13.5805" x2="7.8852" y2="16.9921" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG8" x1="14.3087" y1="9.7549" x2="7.48561" y2="2.22596" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG9" x1="11.387" y1="13.0239" x2="4.3399" y2="5.97673" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         <linearGradient id="offresG10" x1="24.1085" y1="12.8606" x2="20.032" y2="8.78415" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#8FD9C4" stopOpacity="0" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--brand-300)" stopOpacity="0" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
         {/* Sparkles — palette gold */}
         <linearGradient id="offresG11" x1="5.25346" y1="-0.768397" x2="10.0334" y2="5.23883" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FCE9AE" />
-          <stop offset="1" stopColor="#D99A00" />
+          <stop stopColor="var(--accent-100)" />
+          <stop offset="1" stopColor="var(--accent-500)" />
         </linearGradient>
         <linearGradient id="offresG12" x1="4.73806" y1="5.96542" x2="7.12797" y2="8.96898" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FCE9AE" />
-          <stop offset="1" stopColor="#D99A00" />
+          <stop stopColor="var(--accent-100)" />
+          <stop offset="1" stopColor="var(--accent-500)" />
         </linearGradient>
         <linearGradient id="offresG13" x1="21.1443" y1="12.2906" x2="23.5342" y2="15.2942" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FCE9AE" />
-          <stop offset="1" stopColor="#D99A00" />
+          <stop stopColor="var(--accent-100)" />
+          <stop offset="1" stopColor="var(--accent-500)" />
         </linearGradient>
         <linearGradient id="offresG14" x1="0.722434" y1="13.9488" x2="3.11234" y2="16.9524" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FCE9AE" />
-          <stop offset="1" stopColor="#D99A00" />
+          <stop stopColor="var(--accent-100)" />
+          <stop offset="1" stopColor="var(--accent-500)" />
         </linearGradient>
         <linearGradient id="offresG15" x1="18.7342" y1="7.07577" x2="21.1241" y2="10.0793" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FCE9AE" />
-          <stop offset="1" stopColor="#D99A00" />
+          <stop stopColor="var(--accent-100)" />
+          <stop offset="1" stopColor="var(--accent-500)" />
         </linearGradient>
         <clipPath id="offresClip">
           <rect width="26" height="26" fill="white" />

@@ -1,0 +1,33 @@
+[
+  {
+    "id": "tx-mo-1",
+    "subscriptionId": "sub-mohamed-bacmath",
+    "date": "2026-06-21",
+    "amount": 150,
+    "remarks": "Première tranche payée à l'inscription, en espèces.",
+    "installmentId": "inst-mo-1",
+    "resources": [
+      { "name": "Reçu N°2031", "notes": "Encaissé à l'accueil" }
+    ]
+  },
+  {
+    "id": "tx-in-1",
+    "subscriptionId": "sub-ines-bacmath",
+    "date": "2026-07-01",
+    "amount": 480,
+    "remarks": "Totalité réglée par virement bancaire.",
+    "installmentId": "inst-in-1",
+    "resources": [
+      { "name": "Preuve de virement", "url": "https://example.tn/virement-4471.pdf", "notes": "Réf. 4471" }
+    ]
+  },
+  {
+    "id": "tx-em-1",
+    "subscriptionId": "sub-emna-bacsci",
+    "date": "2026-07-05",
+    "amount": 40,
+    "remarks": "Acompte partiel sur la première tranche — reste 50 DT.",
+    "installmentId": "inst-em-1",
+    "resources": []
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "res-fiche-integrales",
+    "name": "Fiche de révision — Intégrales",
+    "pdf": { "name": "fiche-integrales.pdf" }
+  },
+  {
+    "id": "res-td-complexes",
+    "name": "TD — Nombres complexes",
+    "pdf": { "name": "td-complexes-serie-3.pdf" }
+  },
+  {
+    "id": "res-corrige-ds1",
+    "name": "Corrigé — DS N°1",
+    "pdf": { "name": "corrige-ds1.pdf" }
+  },
+  {
+    "id": "res-schema-cellule",
+    "pdf": { "name": "schema-cellule-vegetale.pdf" }
+  },
+  {
+    "id": "res-methode-dissertation",
+    "name": "Méthode de la dissertation",
+    "pdf": { "name": "methode-dissertation-philo.pdf" }
+  }
+]

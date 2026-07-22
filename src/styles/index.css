@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./palettes.css"; /* alternate palettes — swappable via data-palette on <html> */
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 

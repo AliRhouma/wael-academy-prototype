@@ -1,6 +1,7 @@
 /**
- * Four-panel dashboard glyph (from `svg icons/dashboard.svg`), recolored from the
- * original blue to the Wael brand green→teal gradient so it reads on-palette.
+ * Four-panel dashboard glyph (from `svg icons/dashboard.svg`), recolored to the
+ * Wael brand via design tokens (`--emerald-500` → `--brand-600`), so it follows
+ * whatever palette is active (data-palette) instead of a hardcoded green.
  * Carries its own fill — mark its NavItem `colored: true` so the shell forces it
  * white on the active gradient pill instead of tinting via `currentColor`.
  */
@@ -30,10 +31,10 @@ export function DashboardIcon({ className }: { className?: string }) {
         fill="url(#dashGrad)"
       />
       <defs>
-        {/* Brand green → teal, echoing the app gradient (--grad). */}
+        {/* Token-driven brand sweep, echoing the app gradient (--grad). */}
         <linearGradient id="dashGrad" x1="13" y1="0" x2="13" y2="26" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#2bbd85" />
-          <stop offset="1" stopColor="#0e7d7a" />
+          <stop stopColor="var(--emerald-500)" />
+          <stop offset="1" stopColor="var(--brand-600)" />
         </linearGradient>
       </defs>
     </svg>

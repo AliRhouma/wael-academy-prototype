@@ -48,6 +48,7 @@ export function SessionCard({ session, actions }: { session: Session; actions?: 
             {formatTimeRange(session.startTime, session.endTime)}
           </span>
           {teacher ? <> · {teacher}</> : null}
+          <> · <span className="tabular-nums">{session.academicYear}</span></>
           {isPast ? <> · <span className="text-ink-muted">passée</span></> : null}
         </p>
 

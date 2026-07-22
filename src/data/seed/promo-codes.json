@@ -1,0 +1,30 @@
+[
+  {
+    "id": "promo-rentree26",
+    "code": "RENTREE26",
+    "offers": [
+      { "offerId": "offer-bac-math-annuel", "discountPct": 20 },
+      { "offerId": "offer-bac-info-annuel", "discountPct": 15 },
+      { "offerId": "offer-9-rentree", "discountAmount": 20 }
+    ],
+    "maxUses": 50,
+    "usedByUserIds": ["u-student", "u-st-syrine", "u-st-khalil"]
+  },
+  {
+    "id": "promo-duo",
+    "code": "WAEL-DUO24",
+    "offers": [
+      { "offerId": "offer-bac-sci-trimestre", "discountAmount": 30 }
+    ],
+    "maxUses": 2,
+    "usedByUserIds": ["u-st-emna", "u-st-selim"]
+  },
+  {
+    "id": "promo-welcome",
+    "code": "WAEL-K7F2M",
+    "offers": [
+      { "offerId": "offer-7-decouverte", "discountPct": 50 }
+    ],
+    "usedByUserIds": []
+  }
+]

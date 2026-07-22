@@ -26,6 +26,27 @@ const INPUT =
 
 const WEEKDAYS = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"]
 
+/**
+ * Calendar event colors — distinct token-based hues so sessions read by subject
+ * (matière) instead of one flat brand color. Token-driven, so each palette maps
+ * them to its own family (Azure v2 → azur / teal / navy / pervenche / ambre).
+ * `danger` is intentionally excluded — it's reserved for the "today" marker.
+ */
+const EVENT_COLORS = [
+  { chip: "bg-brand-50 text-brand-700", dot: "bg-brand-500" },
+  { chip: "bg-emerald-50 text-emerald-700", dot: "bg-emerald-500" },
+  { chip: "bg-accent2-50 text-accent2-700", dot: "bg-accent2-500" },
+  { chip: "bg-navy-50 text-navy-700", dot: "bg-navy-500" },
+  { chip: "bg-warning-50 text-warning-700", dot: "bg-warning-500" },
+] as const
+
+/** Stable string hash → index (for sessions with no subject to key off). */
+function hashIndex(key: string, mod: number): number {
+  let h = 0
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0
+  return h % mod
+}
+
 const pad = (n: number) => String(n).padStart(2, "0")
 /** Local "YYYY-MM-DD" key for a Date (no timezone drift). */
 function dateKey(d: Date): string {
@@ -42,6 +63,7 @@ export default function AdminCalendarScreen() {
   const sessions = useData((s) => s.sessions)
   const teachers = useData((s) => s.teachers)
   const groups = useData((s) => s.groups)
+  const subjects = useData((s) => s.subjects)
   const removeSession = useData((s) => s.removeSession)
   const { show, toast } = useToast()
 
@@ -102,6 +124,27 @@ export default function AdminCalendarScreen() {
     for (const list of m.values()) list.sort((a, b) => a.startTime.localeCompare(b.startTime))
     return m
   }, [filtered])
+
+  // Each subject → a stable, distinct event color (cycled). Sessions with no
+  // subject fall back to a hash of the teacher so they still vary, not all brand.
+  const colorBySubject = useMemo(() => {
+    const m = new Map<string, (typeof EVENT_COLORS)[number]>()
+    subjects.forEach((s, i) => m.set(s.id, EVENT_COLORS[i % EVENT_COLORS.length]))
+    return m
+  }, [subjects])
+
+  const colorFor = (s: Session) => {
+    const sid = s.subjectIds[0]
+    if (sid && colorBySubject.has(sid)) return colorBySubject.get(sid)!
+    return EVENT_COLORS[hashIndex(sid ?? s.teacherId ?? s.id, EVENT_COLORS.length)]
+  }
+
+  // Subjects actually visible this view — drives the color legend.
+  const legendSubjects = useMemo(() => {
+    const ids = new Set<string>()
+    for (const s of filtered) for (const sid of s.subjectIds) ids.add(sid)
+    return subjects.filter((su) => ids.has(su.id))
+  }, [filtered, subjects])
 
   // 6-week grid (42 cells) starting on the Monday on/before the 1st.
   const y = cursor.getFullYear()
@@ -269,7 +312,10 @@ export default function AdminCalendarScreen() {
                       {items.slice(0, 2).map((s) => (
                         <span
                           key={s.id}
-                          className="truncate rounded bg-brand-50 px-1.5 py-0.5 text-[10px] font-medium leading-tight text-brand-700"
+                          className={
+                            "truncate rounded px-1.5 py-0.5 text-[10px] font-medium leading-tight " +
+                            colorFor(s).chip
+                          }
                         >
                           <span className="tabular-nums">{s.startTime}</span> {s.title}
                         </span>
@@ -284,7 +330,7 @@ export default function AdminCalendarScreen() {
                     {/* Mobile: count dots */}
                     <span className="mt-auto flex items-center gap-0.5 pt-1 sm:hidden">
                       {items.slice(0, 3).map((s) => (
-                        <span key={s.id} className="size-1.5 rounded-full bg-brand-500" />
+                        <span key={s.id} className={"size-1.5 rounded-full " + colorFor(s).dot} />
                       ))}
                       {items.length > 3 && (
                         <span className="text-[9px] font-medium text-ink-muted">+</span>
@@ -296,6 +342,26 @@ export default function AdminCalendarScreen() {
             )
           })}
         </div>
+
+        {/* Color legend — which matière each color stands for (this view). */}
+        {legendSubjects.length > 0 && (
+          <div className="mt-3 flex flex-wrap items-center gap-x-3.5 gap-y-1.5 border-t border-border pt-3">
+            <span className="text-[11px] font-medium uppercase tracking-wide text-ink-muted">
+              Matières
+            </span>
+            {legendSubjects.map((su) => (
+              <span
+                key={su.id}
+                className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-subtle"
+              >
+                <span
+                  className={"size-2 rounded-full " + (colorBySubject.get(su.id)?.dot ?? "bg-brand-500")}
+                />
+                <span dir="auto">{su.name}</span>
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Selected day agenda */}

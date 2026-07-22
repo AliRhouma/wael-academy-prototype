@@ -3,38 +3,54 @@
     "id": "offer-bac-math-annuel",
     "name": "Abonnement annuel — Bac Maths",
     "description": "Accès complet à tous les cours, séries, quiz et examens corrigés de l'année. Suivi personnalisé et parcours guidés.",
+    "logoUrl": "/favicon.svg",
+    "yearIds": ["y-bac-math"],
     "price": 480,
     "promoPrice": 360,
-    "yearId": "y-bac-math"
+    "discountPct": 25,
+    "startDate": "2026-09-01",
+    "endDate": "2027-06-30",
+    "period": "12 mois",
+    "accessIds": ["acc-bac-math-complet", "acc-bacmath-seances"]
   },
   {
     "id": "offer-bac-sci-trimestre",
     "name": "Pack trimestriel — Sciences",
     "description": "Un trimestre d'accès aux contenus de sciences expérimentales, idéal pour la révision ciblée.",
+    "yearIds": ["y-bac-sci"],
     "price": 180,
-    "yearId": "y-bac-sci"
+    "period": "3 mois",
+    "accessIds": ["acc-bac-sci-revision"]
   },
   {
     "id": "offer-9-rentree",
     "name": "Offre de rentrée — 9ème année",
     "description": "Bien démarrer l'année : cours, exercices et quiz des premiers chapitres, tarif de lancement.",
+    "yearIds": ["y-9"],
     "price": 150,
     "promoPrice": 99,
-    "yearId": "y-9"
+    "discountPct": 34,
+    "startDate": "2026-09-01",
+    "endDate": "2026-10-15",
+    "period": "3 mois",
+    "accessIds": ["acc-9-decouverte"]
   },
   {
     "id": "offer-bac-info-annuel",
     "name": "Abonnement annuel — Bac Informatique",
     "description": "Toute l'année d'informatique en accès illimité, avec les examens des sessions précédentes.",
+    "yearIds": ["y-bac-info"],
     "price": 420,
-    "yearId": "y-bac-info"
+    "period": "12 mois",
+    "accessIds": []
   },
   {
     "id": "offer-7-decouverte",
     "name": "Découverte — 7ème année",
     "description": "",
+    "yearIds": ["y-7", "y-8"],
     "price": 90,
     "promoPrice": 60,
-    "yearId": "y-7"
+    "accessIds": []
   }
 ]

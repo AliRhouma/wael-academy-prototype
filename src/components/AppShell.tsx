@@ -93,7 +93,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
   const moreItems = overflow ? nav.slice(MAX_BAR - 1) : []
 
   const roleLabel = currentRole ? ROLE_LABEL[currentRole] : ""
-  const switchRole = () => navigate("/")
+  const switchRole = () => navigate("/roles")
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-canvas md:flex-row">

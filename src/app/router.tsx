@@ -4,6 +4,7 @@ import { ChevronRight, GraduationCap, Palette } from "lucide-react"
 import type { Role } from "@/data/types"
 import type { NavItem } from "@/app/nav/types"
 import WorkspaceLayout from "@/features/workspace/WorkspaceLayout"
+import LandingPage from "@/features/landing/LandingPage"
 import DesignSystemPage from "@/features/styleguide/DesignSystemPage"
 import { RoleSwitcher } from "@/features/switcher/RoleSwitcher"
 import { RoleLayout } from "@/app/RoleLayout"
@@ -19,8 +20,14 @@ import AdminSubjectDetailScreen from "@/features/admin/curriculum/SubjectDetailS
 import AdminChapterDetailScreen from "@/features/admin/curriculum/ChapterDetailScreen"
 import AdminUsersScreen from "@/features/admin/users/UsersScreen"
 import AdminOffersScreen from "@/features/admin/offers/OffersScreen"
+import AdminAccessesScreen from "@/features/admin/offers/AccessesScreen"
+import AdminAccessContentScreen from "@/features/admin/offers/AccessContentScreen"
+import AdminPromoCodesScreen from "@/features/admin/offers/PromoCodesScreen"
+import AdminPaymentsScreen from "@/features/admin/payments/PaymentsScreen"
+import AdminSubscriptionDetailScreen from "@/features/admin/payments/SubscriptionDetailScreen"
 import AdminGroupsScreen from "@/features/admin/groups/GroupsScreen"
 import AdminSessionsScreen from "@/features/admin/sessions/SessionsScreen"
+import AdminLiveSessionsScreen from "@/features/admin/live/LiveSessionsScreen"
 import AdminCalendarScreen from "@/features/admin/planning/CalendarScreen"
 import TeacherDashboard from "@/features/teacher/Dashboard"
 import TeacherSessionsScreen from "@/features/teacher/SessionsScreen"
@@ -133,7 +140,8 @@ function roleRoute(
 }
 
 export const router = createBrowserRouter([
-  { path: "/", element: <RoleSwitcher /> },
+  { path: "/", element: <LandingPage /> },
+  { path: "/roles", element: <RoleSwitcher /> },
   roleRoute(
     "/admin",
     "admin",
@@ -144,13 +152,19 @@ export const router = createBrowserRouter([
       users: <AdminUsersScreen />,
       groups: <AdminGroupsScreen />,
       sessions: <AdminSessionsScreen />,
+      live: <AdminLiveSessionsScreen />,
       calendar: <AdminCalendarScreen />,
       offers: <AdminOffersScreen />,
+      payments: <AdminPaymentsScreen />,
     },
     [
       { path: "curriculum/:yearId", element: <AdminSubjectsScreen /> },
       { path: "curriculum/:yearId/:subjectId", element: <AdminSubjectDetailScreen /> },
       { path: "curriculum/:yearId/:subjectId/:chapterId", element: <AdminChapterDetailScreen /> },
+      { path: "offers/access", element: <AdminAccessesScreen /> },
+      { path: "offers/access/:accessId", element: <AdminAccessContentScreen /> },
+      { path: "offers/promos", element: <AdminPromoCodesScreen /> },
+      { path: "payments/:subscriptionId", element: <AdminSubscriptionDetailScreen /> },
     ],
   ),
   roleRoute("/teacher", "teacher", teacherNav, <TeacherDashboard />, {

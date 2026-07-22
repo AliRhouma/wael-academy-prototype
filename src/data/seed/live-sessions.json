@@ -1,0 +1,65 @@
+[
+  {
+    "id": "live-integrales-bacmath",
+    "name": "Révision en direct — Intégrales",
+    "url": "https://meet.google.com/wael-integrales",
+    "date": "2026-07-24",
+    "startTime": "18:00",
+    "academicYear": "2026/2027",
+    "subjectIds": ["subj-bac-math-mathematiques"],
+    "groupIds": ["g-bacmath-elite"],
+    "yearIds": ["y-bac-math"],
+    "offerId": "offer-bac-math-annuel",
+    "resourceIds": ["res-fiche-integrales", "res-corrige-ds1"]
+  },
+  {
+    "id": "live-complexes-open",
+    "name": "Séance ouverte — Nombres complexes",
+    "url": "https://meet.google.com/wael-complexes",
+    "date": "2026-07-28",
+    "startTime": "20:30",
+    "academicYear": "2026/2027",
+    "subjectIds": ["subj-bac-math-mathematiques", "subj-3-math-mathematiques"],
+    "groupIds": [],
+    "yearIds": ["y-bac-math", "y-3-math"],
+    "resourceIds": ["res-td-complexes"]
+  },
+  {
+    "id": "live-physique-bacsci",
+    "name": "Physique — Correction du DS",
+    "url": "https://zoom.us/j/wael-physique-ds",
+    "date": "2026-07-22",
+    "startTime": "17:30",
+    "academicYear": "2026/2027",
+    "subjectIds": ["subj-bac-sci-sciences-physiques"],
+    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": ["y-bac-sci"],
+    "offerId": "offer-bac-sci-trimestre",
+    "resourceIds": []
+  },
+  {
+    "id": "live-svt-9",
+    "name": "SVT — La cellule végétale",
+    "url": "https://meet.google.com/wael-svt-cellule",
+    "date": "2026-06-30",
+    "startTime": "16:00",
+    "academicYear": "2025/2026",
+    "subjectIds": ["subj-9-sciences-de-la-vie-et-de-la-terre"],
+    "groupIds": ["g-9-a"],
+    "yearIds": ["y-9"],
+    "offerId": "offer-9-rentree",
+    "resourceIds": ["res-schema-cellule"]
+  },
+  {
+    "id": "live-philo-dissertation",
+    "name": "Atelier dissertation — Philosophie",
+    "url": "https://meet.google.com/wael-philo-diss",
+    "date": "2026-08-03",
+    "startTime": "19:00",
+    "academicYear": "2026/2027",
+    "subjectIds": ["subj-bac-lettres-philosophie", "subj-bac-math-philosophie", "subj-bac-sci-philosophie"],
+    "groupIds": [],
+    "yearIds": [],
+    "resourceIds": []
+  }
+]

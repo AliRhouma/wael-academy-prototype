@@ -1,0 +1,94 @@
+/* ===========================================================================
+   Landing page — motion helpers (page-scoped, token-friendly)
+   One motion idea: things arrive softly and lift on touch (foundations §7).
+   =========================================================================== */
+
+/* Smooth anchor scrolling only while the landing is mounted. */
+html:has(.lp-root) {
+  scroll-behavior: smooth;
+}
+
+/* On-load rise (hero) — staggered via --d. */
+@keyframes lp-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.lp-rise {
+  animation: lp-rise 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* Scroll reveal — toggled by IntersectionObserver. */
+.lp-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.8, 0.3, 1),
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+.lp-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Gentle float for the hero's overlay badges. */
+@keyframes lp-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-9px);
+  }
+}
+.lp-float {
+  animation: lp-float 3.8s ease-in-out infinite alternate;
+  animation-delay: var(--d, 0s);
+}
+
+/* Soft pulse for the "live" dot. */
+@keyframes lp-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(222 0 0 / 0.35);
+  }
+  60% {
+    box-shadow: 0 0 0 6px rgb(222 0 0 / 0);
+  }
+}
+.lp-pulse {
+  animation: lp-pulse 2s ease-out infinite;
+}
+
+/* Progress bars inside mockups grow when revealed (width set inline via --w). */
+.lp-reveal .lp-bar {
+  width: 0;
+  transition: width 1.1s cubic-bezier(0.2, 0.8, 0.3, 1) 0.35s;
+}
+.lp-reveal.is-in .lp-bar {
+  width: var(--w, 60%);
+}
+
+/* Everything dies under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html:has(.lp-root) {
+    scroll-behavior: auto;
+  }
+  .lp-rise,
+  .lp-float,
+  .lp-pulse {
+    animation: none;
+  }
+  .lp-reveal,
+  .lp-reveal .lp-bar {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    width: var(--w, auto);
+  }
+}

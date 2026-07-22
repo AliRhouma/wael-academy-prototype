@@ -1,0 +1,1201 @@
+/* ===========================================================================
+   Wael Academy — Alternate palettes (experimentation layer)
+   ---------------------------------------------------------------------------
+   Each palette re-points ONLY the raw color primitives that src/styles/index.css
+   defines in :root (and re-points under [data-theme="dark"]). Every semantic
+   alias (--primary, --background, …) and every Tailwind utility references those
+   primitives through var(), so a palette themes the whole app automatically —
+   components change nothing.
+
+   Switching: set `data-palette="<id>"` on <html> (the PaletteDock does this).
+   No attribute (or data-palette="warm") = the default warm system in index.css.
+
+   ADD A NEW PALETTE:
+     1. Copy the two blocks below, rename "azure" → your id.
+     2. Fill light values in the :not([data-theme="dark"]) block, dark in the other.
+     3. Register it in src/app/palettes.ts so the dock lists it. Done.
+
+   Selectors are mutually exclusive and (0,2,0)-specific, so they cleanly beat
+   both :root and [data-theme="dark"] with no source-order surprises.
+   =========================================================================== */
+
+/* ===========================================================================
+   AZURE — cooler, electric. Deep royal navy, azure arc, mint-teal, periwinkle.
+   Role map onto existing token names:
+     brand   = azure (primary)      emerald = mint-teal (supporting green)
+     navy    = royal navy           accent  = periwinkle (was gold)
+   =========================================================================== */
+[data-palette="azure"]:not([data-theme="dark"]) {
+  --brand-50:#e9f2fe;  --brand-100:#d0e4fd; --brand-200:#a6ccfa; --brand-300:#6fb0f5;
+  --brand-400:#3896ec; --brand-500:#1e88e5; --brand-600:#1570c9; --brand-700:#115aa3;
+  --brand-800:#0e487f; --brand-900:#0b3760; --brand-foreground:#ffffff;
+
+  --emerald-50:#e6f6f2; --emerald-500:#2aa795; --emerald-600:#218a7b; --emerald-700:#196b60;
+
+  --navy-50:#e9edf9; --navy-500:#24408f; --navy-600:#1a3172; --navy-700:#122356;
+
+  --accent-50:#edeefb; --accent-100:#dfe1f8; --accent-500:#5b6ad8;
+  --accent-600:#4653c4; --accent-700:#3843a3; --accent-foreground:#ffffff;
+
+  --neutral-50:#f4f7fb; --neutral-100:#eef2f8; --neutral-200:#e4ebf5; --neutral-300:#d3ddec;
+  --neutral-400:#aeb9cc; --neutral-500:#8792a8; --neutral-600:#56607a; --neutral-700:#38415a;
+  --neutral-800:#212a41; --neutral-900:#0c1524;
+
+  --surface:#ffffff; --surface-subtle:#f2f6fc; --surface-muted:#f4f8fd;
+  --surface-raised:#ffffff; --surface-cream:#eef1fb; /* a cool periwinkle tint, not warm cream */
+
+  --ink:#0c1524; --ink-subtle:#55617a; --ink-muted:#8792a8; --ink-inverted:#ffffff;
+
+  --border:#e4ebf5; --border-strong:#d3ddec;
+  --input:#f4f8fd; --input-border:#e4ebf5; --ring:#1e88e5;
+
+  --success-50:#e6f6f0; --success-500:#12a06f; --success-600:#0f8a5f; --success-700:#0c6b4b;
+  --warning-50:#fdf3dd; --warning-500:#d99400; --warning-600:#b87c00; --warning-700:#8a6000;
+  --danger-50:#fdecec;  --danger-500:#e5484d;  --danger-600:#cc3b40;  --danger-700:#a8201d;
+  --info-50:#e9edf9;    --info-500:#24408f;    --info-600:#1a3172;    --info-700:#122356;
+
+  --grad:linear-gradient(148deg,#2fb7a0 0%,#1fa3d4 26%,#1e7fe6 50%,#1c56cf 72%,#16307f 100%);
+
+  /* blue-tinted elevation (index.css tints shadows forest-green) */
+  --shadow-brand:0 12px 22px -10px rgb(30 136 229 / .55);
+}
+
+[data-palette="azure"][data-theme="dark"] {
+  /* dark ground literally borrowed from the reference image's royal navy */
+  --brand-50:#0c2647;  --brand-100:#0f345f; --brand-200:#164a86; --brand-300:#1f66b3;
+  --brand-400:#3f9bf0; --brand-500:#4aa4f5; --brand-600:#79bef8; --brand-700:#a6d5fb;
+  --brand-800:#cbe7fd; --brand-900:#e6f3fe; --brand-foreground:#06162e;
+
+  --emerald-50:#0d3a33; --emerald-500:#38c2ac; --emerald-600:#62d3c1; --emerald-700:#8fe0d3;
+
+  --navy-50:#16234a; --navy-500:#8aa2df; --navy-600:#adbde9; --navy-700:#c7d6f0;
+
+  --accent-50:#232a5c; --accent-100:#2c3570; --accent-500:#8792ec;
+  --accent-600:#a7b0f2; --accent-700:#c6ccf7; --accent-foreground:#0b1024;
+
+  --neutral-50:#111c3d; --neutral-100:#16234a; --neutral-200:#1f2d55; --neutral-300:#2b3a68;
+  --neutral-400:#6472a0; --neutral-500:#8a97be; --neutral-600:#b3bcd8; --neutral-700:#d2d9ec;
+  --neutral-800:#e7ebf6; --neutral-900:#f3f5fb;
+
+  --surface:#101a3d; --surface-subtle:#0a1330; --surface-muted:#0d1636;
+  --surface-raised:#16214a; --surface-cream:#1c2450;
+
+  --ink:#eaf0fb; --ink-subtle:#a9b4cd; --ink-muted:#7581a0; --ink-inverted:#06162e;
+
+  --border:rgb(255 255 255 / .09); --border-strong:rgb(255 255 255 / .15);
+  --input:#0d1636; --input-border:rgb(255 255 255 / .10); --ring:#4aa4f5;
+
+  --success-50:#0d3a2a; --success-500:#2fc78c; --success-600:#58d3a0; --success-700:#7fe0b9;
+  --warning-50:#3a2c08; --warning-500:#e6a41f; --warning-600:#f2bd4d; --warning-700:#f8d27e;
+  --danger-50:#3d1614;  --danger-500:#ff6b6f;  --danger-600:#ff8d90;  --danger-700:#ffa8ab;
+  --info-50:#16234a;    --info-500:#8aa2df;    --info-600:#adbde9;    --info-700:#c7d6f0;
+
+  --grad:linear-gradient(148deg,#2fb7a0 0%,#1fa3d4 26%,#1e7fe6 50%,#1c56cf 72%,#16307f 100%);
+}
+
+/* Azure re-tints the ambient canvas glows cool in dark (index's dark glows run
+   gold/green/navy — warm gold reads slightly off against azure). */
+[data-palette="azure"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(79 195 247 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(42 167 149 / 0.11), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(91 106 216 / 0.14), transparent 62%);
+}
+
+/* ===========================================================================
+   MÉDINA — warm earth. Terracotta clay, olive, teal-petrol, saffron on sand.
+   The terracotta-and-turquoise of Tunisian tilework. Role map:
+     brand   = terracotta (primary)   emerald = olive (supporting green)
+     navy    = teal-petrol (cool anchor / info)   accent = saffron (warm spark)
+   =========================================================================== */
+[data-palette="medina"]:not([data-theme="dark"]) {
+  --brand-50:#fbeee9;  --brand-100:#f6d9cd; --brand-200:#eebaa6; --brand-300:#e19478;
+  --brand-400:#d1734f; --brand-500:#c25a38; --brand-600:#a54829; --brand-700:#883a22;
+  --brand-800:#6d2f1e; --brand-900:#57271b; --brand-foreground:#ffffff;
+
+  --emerald-50:#f2f4e6; --emerald-500:#7f8a3d; --emerald-600:#697531; --emerald-700:#525c27;
+
+  --navy-50:#e7f0ef; --navy-500:#1f5f5a; --navy-600:#174a46; --navy-700:#113734;
+
+  --accent-50:#fdf1d9; --accent-100:#fbe6bd; --accent-500:#d98e15;
+  --accent-600:#b5730c; --accent-700:#8f5a0a; --accent-foreground:#ffffff;
+
+  --neutral-50:#f8f5f0; --neutral-100:#f1ebe2; --neutral-200:#e7ded1; --neutral-300:#d6c9b8;
+  --neutral-400:#b6a692; --neutral-500:#8f8271; --neutral-600:#5f5647; --neutral-700:#423c31;
+  --neutral-800:#2a251d; --neutral-900:#171310;
+
+  --surface:#fffdfb; --surface-subtle:#f6f1ea; --surface-muted:#faf6f0;
+  --surface-raised:#fffdfb; --surface-cream:#fbf1dd;
+
+  --ink:#241d16; --ink-subtle:#5f5647; --ink-muted:#8f8271; --ink-inverted:#ffffff;
+
+  --border:#e8e0d4; --border-strong:#d6c9b8;
+  --input:#faf6f0; --input-border:#e8e0d4; --ring:#c25a38;
+
+  --success-50:#e9f4ea; --success-500:#3f9d5b; --success-600:#33864b; --success-700:#276639;
+  --warning-50:#fdf1d9; --warning-500:#d98e15; --warning-600:#b5730c; --warning-700:#8f5a0a;
+  --danger-50:#fbeae8;  --danger-500:#d92d20;  --danger-600:#b91c1c;  --danger-700:#991b1b;
+  --info-50:#e7f0ef;    --info-500:#1f5f5a;    --info-600:#174a46;    --info-700:#113734;
+
+  --grad:linear-gradient(148deg,#e0932f 0%,#cf6b43 30%,#c25a38 55%,#9a3f28 78%,#6d2f1e 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(194 90 56 / .5);
+}
+
+[data-palette="medina"][data-theme="dark"] {
+  /* deep espresso / warm night ground, brighter clay so text stays legible */
+  --brand-50:#3a1c12;  --brand-100:#4d2417; --brand-200:#6b3320; --brand-300:#8f4a30;
+  --brand-400:#c26a44; --brand-500:#db7a52; --brand-600:#e59674; --brand-700:#eeb298;
+  --brand-800:#f4ccbb; --brand-900:#f9e3d9; --brand-foreground:#2a1108;
+
+  --emerald-50:#2c3016; --emerald-500:#a6b25c; --emerald-600:#bcc67e; --emerald-700:#d2daa1;
+
+  --navy-50:#123230; --navy-500:#5fb3ab; --navy-600:#83c7c0; --navy-700:#a8dad4;
+
+  --accent-50:#3a2a0c; --accent-100:#4d380f; --accent-500:#e6a63a;
+  --accent-600:#f0bd63; --accent-700:#f7d494; --accent-foreground:#2a1c05;
+
+  --neutral-50:#211a13; --neutral-100:#2a2118; --neutral-200:#372c20; --neutral-300:#46392a;
+  --neutral-400:#7c6d59; --neutral-500:#a0917b; --neutral-600:#c2b49f; --neutral-700:#dbd0bf;
+  --neutral-800:#ece5da; --neutral-900:#f7f3ec;
+
+  --surface:#241c14; --surface-subtle:#1a140d; --surface-muted:#201810;
+  --surface-raised:#2e241a; --surface-cream:#33260f;
+
+  --ink:#f4efe6; --ink-subtle:#c8b9a4; --ink-muted:#9c8d78; --ink-inverted:#2a1108;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#201810; --input-border:rgb(255 255 255 / .10); --ring:#db7a52;
+
+  --success-50:#16301c; --success-500:#5cc47a; --success-600:#7dd396; --success-700:#9fe0b1;
+  --warning-50:#3a2a0c; --warning-500:#e6a63a; --warning-600:#f0bd63; --warning-700:#f7d494;
+  --danger-50:#3d1512;  --danger-500:#f26a5c;  --danger-600:#f68a7f;  --danger-700:#faa9a1;
+  --info-50:#123230;    --info-500:#5fb3ab;    --info-600:#83c7c0;    --info-700:#a8dad4;
+
+  --grad:linear-gradient(148deg,#e0932f 0%,#cf6b43 30%,#c25a38 55%,#9a3f28 78%,#6d2f1e 100%);
+}
+
+/* Médina re-tints the ambient canvas glows warm in BOTH modes (index's light
+   glows run cool blue/indigo — they'd fight the sand ground). */
+[data-palette="medina"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(224 147 47 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(194 90 56 / 0.09), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(31 95 90 / 0.08), transparent 62%);
+}
+[data-palette="medina"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(224 147 47 / 0.10), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(194 90 56 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(31 95 90 / 0.12), transparent 62%);
+}
+
+/* ===========================================================================
+   CRÉPUSCULE — twilight jewel tones. Violet, teal-mint, deep indigo-plum, rose.
+   A dusk-sky sweep (violet → magenta → coral). Role map:
+     brand   = violet (primary)        emerald = teal-mint (supporting cool)
+     navy    = indigo-plum (depth/info)   accent = rose (the dusk spark)
+   =========================================================================== */
+[data-palette="crepuscule"]:not([data-theme="dark"]) {
+  --brand-50:#f1edfd;  --brand-100:#e4dbfb; --brand-200:#cabdf6; --brand-300:#ac93ee;
+  --brand-400:#9370e6; --brand-500:#7b50de; --brand-600:#6838c6; --brand-700:#542da0;
+  --brand-800:#43267e; --brand-900:#351f61; --brand-foreground:#ffffff;
+
+  --emerald-50:#e4f7f4; --emerald-500:#17b3a3; --emerald-600:#109184; --emerald-700:#0c6f66;
+
+  --navy-50:#ece9f6; --navy-500:#34206b; --navy-600:#281652; --navy-700:#1d0f3d;
+
+  --accent-50:#ffe9f1; --accent-100:#ffd4e3; --accent-500:#ef5f8f;
+  --accent-600:#db3f75; --accent-700:#b52e5c; --accent-foreground:#ffffff;
+
+  --neutral-50:#f6f5fa; --neutral-100:#efedf6; --neutral-200:#e6e3f0; --neutral-300:#d5d0e4;
+  --neutral-400:#aca6c1; --neutral-500:#837c99; --neutral-600:#565070; --neutral-700:#3b3552;
+  --neutral-800:#262038; --neutral-900:#140f22;
+
+  --surface:#ffffff; --surface-subtle:#f4f2fb; --surface-muted:#f7f6fc;
+  --surface-raised:#ffffff; --surface-cream:#fdeef0; /* soft blush callout */
+
+  --ink:#171226; --ink-subtle:#565070; --ink-muted:#837c99; --ink-inverted:#ffffff;
+
+  --border:#e6e3f0; --border-strong:#d5d0e4;
+  --input:#f7f6fc; --input-border:#e6e3f0; --ring:#7b50de;
+
+  --success-50:#e5f5ee; --success-500:#12a071; --success-600:#0f8a5f; --success-700:#0c6b4b;
+  --warning-50:#fdf1dd; --warning-500:#d98e15; --warning-600:#b5730c; --warning-700:#8f5a0a;
+  --danger-50:#fdeaea;  --danger-500:#dc2626;  --danger-600:#c01f1f;  --danger-700:#9c1a1a;
+  --info-50:#ece9f6;    --info-500:#34206b;    --info-600:#281652;    --info-700:#1d0f3d;
+
+  --grad:linear-gradient(148deg,#8b5cf6 0%,#7b50de 22%,#9a3fb0 46%,#d6417f 70%,#f76d5e 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(123 80 222 / .55);
+}
+
+[data-palette="crepuscule"][data-theme="dark"] {
+  /* deep aubergine night, brighter violet so text-brand-* stays legible */
+  --brand-50:#241546;  --brand-100:#2f1a5c; --brand-200:#3f2280; --brand-300:#5a3bb5;
+  --brand-400:#7d5ae0; --brand-500:#9673ef; --brand-600:#b195f4; --brand-700:#cbb6f8;
+  --brand-800:#ded0fb; --brand-900:#efe7fd; --brand-foreground:#1a0f36;
+
+  --emerald-50:#0c3a35; --emerald-500:#2fccbb; --emerald-600:#57d9cb; --emerald-700:#86e5da;
+
+  --navy-50:#201748; --navy-500:#9b86d6; --navy-600:#b6a6e4; --navy-700:#cfc4ef;
+
+  --accent-50:#3d1229; --accent-100:#521734; --accent-500:#f87aa5;
+  --accent-600:#fa9cbc; --accent-700:#fcbdd3; --accent-foreground:#2b0a1a;
+
+  --neutral-50:#171129; --neutral-100:#1e1733; --neutral-200:#292040; --neutral-300:#372c54;
+  --neutral-400:#6d6488; --neutral-500:#928aac; --neutral-600:#b4adca; --neutral-700:#d2cde2;
+  --neutral-800:#e8e5f1; --neutral-900:#f5f3fa;
+
+  --surface:#1b1436; --surface-subtle:#120c28; --surface-muted:#170f30;
+  --surface-raised:#241a44; --surface-cream:#2a1533;
+
+  --ink:#f1eefb; --ink-subtle:#c3bcd9; --ink-muted:#928aac; --ink-inverted:#1a0f36;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#170f30; --input-border:rgb(255 255 255 / .10); --ring:#9673ef;
+
+  --success-50:#103326; --success-500:#2fca8f; --success-600:#59d6a5; --success-700:#82e2bc;
+  --warning-50:#3a2a0c; --warning-500:#e6a63a; --warning-600:#f0bd63; --warning-700:#f7d494;
+  --danger-50:#3d1420;  --danger-500:#ff5c5c;  --danger-600:#ff8080;  --danger-700:#ffa8a8;
+  --info-50:#201748;    --info-500:#9b86d6;    --info-600:#b6a6e4;    --info-700:#cfc4ef;
+
+  --grad:linear-gradient(148deg,#8b5cf6 0%,#7b50de 22%,#9a3fb0 46%,#d6417f 70%,#f76d5e 100%);
+}
+
+/* Crépuscule re-tints the ambient canvas glows to dusk (violet / rose / teal). */
+[data-palette="crepuscule"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(123 80 222 / 0.10), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(239 95 143 / 0.09), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(23 179 163 / 0.08), transparent 62%);
+}
+[data-palette="crepuscule"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(150 115 239 / 0.13), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(248 122 165 / 0.11), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(47 204 187 / 0.10), transparent 62%);
+}
+
+/* ===========================================================================
+   CYAN — bright electric turquoise. Fresh aqua, mint, deep ocean navy, coral.
+   Sits between Chaleureux (greener) and Azure (bluer), more saturated. Role map:
+     brand   = cyan (primary)          emerald = spring-mint (supporting green)
+     navy    = ocean navy (depth/info)    accent = coral (warm spark)
+   =========================================================================== */
+[data-palette="cyan"]:not([data-theme="dark"]) {
+  --brand-50:#e3f8fb;  --brand-100:#bff0f5; --brand-200:#8ce6ef; --brand-300:#4dd6e4;
+  --brand-400:#17bdd3; --brand-500:#069fbe; --brand-600:#06849f; --brand-700:#0a6a80;
+  --brand-800:#0d5468; --brand-900:#0e4353; --brand-foreground:#ffffff;
+
+  --emerald-50:#e4f8ee; --emerald-500:#10b981; --emerald-600:#0d9668; --emerald-700:#0a7350;
+
+  --navy-50:#e6eef2; --navy-500:#103c52; --navy-600:#0c2e40; --navy-700:#08212f;
+
+  --accent-50:#fff0ec; --accent-100:#ffddd4; --accent-500:#f97362;
+  --accent-600:#ec5a44; --accent-700:#c4442f; --accent-foreground:#ffffff;
+
+  --neutral-50:#f4f8f9; --neutral-100:#eef4f5; --neutral-200:#e3edef; --neutral-300:#d0dee1;
+  --neutral-400:#a6b8bd; --neutral-500:#7d9196; --neutral-600:#4f6469; --neutral-700:#344549;
+  --neutral-800:#202d30; --neutral-900:#101819;
+
+  --surface:#ffffff; --surface-subtle:#eff6f8; --surface-muted:#f4f9fa;
+  --surface-raised:#ffffff; --surface-cream:#e4f6f9; /* cool aqua callout */
+
+  --ink:#0f1c1f; --ink-subtle:#4f6469; --ink-muted:#7d9196; --ink-inverted:#ffffff;
+
+  --border:#e3edef; --border-strong:#d0dee1;
+  --input:#f4f9fa; --input-border:#e3edef; --ring:#069fbe;
+
+  --success-50:#e4f6ee; --success-500:#12a071; --success-600:#0f8a5f; --success-700:#0c6b4b;
+  --warning-50:#fdf1dd; --warning-500:#d98e15; --warning-600:#b5730c; --warning-700:#8f5a0a;
+  --danger-50:#fdecef;  --danger-500:#e11d48;  --danger-600:#c01840;  --danger-700:#9f1239;
+  --info-50:#e6eef2;    --info-500:#103c52;    --info-600:#0c2e40;    --info-700:#08212f;
+
+  --grad:linear-gradient(148deg,#2ad9b0 0%,#10bfd0 28%,#08a9c8 52%,#0f92b4 76%,#12809c 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(6 159 190 / .5);
+}
+
+[data-palette="cyan"][data-theme="dark"] {
+  /* deep ocean night, brighter cyan so text-brand-* stays legible */
+  --brand-50:#05323d;  --brand-100:#06414f; --brand-200:#08596b; --brand-300:#0c7d94;
+  --brand-400:#12a5c0; --brand-500:#22c3dd; --brand-600:#55d4e8; --brand-700:#8ce2f0;
+  --brand-800:#b8eef7; --brand-900:#ddf7fb; --brand-foreground:#032027;
+
+  --emerald-50:#073a2a; --emerald-500:#2fd39a; --emerald-600:#57e0b0; --emerald-700:#86ecc6;
+
+  --navy-50:#0e2e3d; --navy-500:#7fb0c4; --navy-600:#a3c8d7; --navy-700:#c7dde8;
+
+  --accent-50:#3d1712; --accent-100:#521f18; --accent-500:#ff8f7d;
+  --accent-600:#ffab9c; --accent-700:#ffc7bc; --accent-foreground:#2b0d08;
+
+  --neutral-50:#101b1e; --neutral-100:#152225; --neutral-200:#1e2e32; --neutral-300:#2a3d42;
+  --neutral-400:#64777c; --neutral-500:#8a9da2; --neutral-600:#b0c0c4; --neutral-700:#d0dde0;
+  --neutral-800:#e6eef0; --neutral-900:#f3f8f9;
+
+  --surface:#122023; --surface-subtle:#0a1517; --surface-muted:#0f1b1d;
+  --surface-raised:#182829; --surface-cream:#10302f;
+
+  --ink:#eef6f7; --ink-subtle:#b0c0c4; --ink-muted:#8a9da2; --ink-inverted:#032027;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0f1b1d; --input-border:rgb(255 255 255 / .10); --ring:#22c3dd;
+
+  --success-50:#0d3327; --success-500:#2fca8f; --success-600:#59d6a5; --success-700:#82e2bc;
+  --warning-50:#3a2a0c; --warning-500:#e6a63a; --warning-600:#f0bd63; --warning-700:#f7d494;
+  --danger-50:#3d141c;  --danger-500:#ff5c78;  --danger-600:#ff8098;  --danger-700:#ffa8b8;
+  --info-50:#0e2e3d;    --info-500:#7fb0c4;    --info-600:#a3c8d7;    --info-700:#c7dde8;
+
+  --grad:linear-gradient(148deg,#2ad9b0 0%,#10bfd0 28%,#08a9c8 52%,#0f92b4 76%,#12809c 100%);
+}
+
+/* Cyan re-tints the ambient canvas glows aqua (cyan / coral / mint). */
+[data-palette="cyan"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(6 159 190 / 0.11), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(249 115 98 / 0.08), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(16 185 129 / 0.08), transparent 62%);
+}
+[data-palette="cyan"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(34 195 221 / 0.13), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(255 143 125 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(47 211 154 / 0.10), transparent 62%);
+}
+
+/* ===========================================================================
+   CYAN V2 — same Cyan system, but the gradient no longer sinks to deep teal:
+   the LEFT gradient stop (#2ad9b0, the bright mint-aqua) dominates, so gradient
+   surfaces (buttons, active nav, avatar, gem) read brighter/minty. Every token
+   matches Cyan except --grad (+ a mint-leaning brand glow).
+   =========================================================================== */
+[data-palette="cyan2"]:not([data-theme="dark"]) {
+  --brand-50:#e3f8fb;  --brand-100:#bff0f5; --brand-200:#8ce6ef; --brand-300:#4dd6e4;
+  --brand-400:#17bdd3; --brand-500:#069fbe; --brand-600:#06849f; --brand-700:#0a6a80;
+  --brand-800:#0d5468; --brand-900:#0e4353; --brand-foreground:#ffffff;
+
+  --emerald-50:#e4f8ee; --emerald-500:#10b981; --emerald-600:#0d9668; --emerald-700:#0a7350;
+
+  --navy-50:#e6eef2; --navy-500:#103c52; --navy-600:#0c2e40; --navy-700:#08212f;
+
+  --accent-50:#fff0ec; --accent-100:#ffddd4; --accent-500:#f97362;
+  --accent-600:#ec5a44; --accent-700:#c4442f; --accent-foreground:#ffffff;
+
+  --neutral-50:#f4f8f9; --neutral-100:#eef4f5; --neutral-200:#e3edef; --neutral-300:#d0dee1;
+  --neutral-400:#a6b8bd; --neutral-500:#7d9196; --neutral-600:#4f6469; --neutral-700:#344549;
+  --neutral-800:#202d30; --neutral-900:#101819;
+
+  --surface:#ffffff; --surface-subtle:#eff6f8; --surface-muted:#f4f9fa;
+  --surface-raised:#ffffff; --surface-cream:#e4f6f9;
+
+  --ink:#0f1c1f; --ink-subtle:#4f6469; --ink-muted:#7d9196; --ink-inverted:#ffffff;
+
+  --border:#e3edef; --border-strong:#d0dee1;
+  --input:#f4f9fa; --input-border:#e3edef; --ring:#069fbe;
+
+  --success-50:#e4f6ee; --success-500:#12a071; --success-600:#0f8a5f; --success-700:#0c6b4b;
+  --warning-50:#fdf1dd; --warning-500:#d98e15; --warning-600:#b5730c; --warning-700:#8f5a0a;
+  --danger-50:#fdecef;  --danger-500:#e11d48;  --danger-600:#c01840;  --danger-700:#9f1239;
+  --info-50:#e6eef2;    --info-500:#103c52;    --info-600:#0c2e40;    --info-700:#08212f;
+
+  /* the v2 difference — mint-aqua (left stop) dominant, no deep-teal dive */
+  --grad:linear-gradient(148deg,#38e0bd 0%,#2ad9b0 34%,#1fceb4 58%,#18c2ba 80%,#14b3bf 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(42 217 176 / .5);
+}
+
+[data-palette="cyan2"][data-theme="dark"] {
+  --brand-50:#05323d;  --brand-100:#06414f; --brand-200:#08596b; --brand-300:#0c7d94;
+  --brand-400:#12a5c0; --brand-500:#22c3dd; --brand-600:#55d4e8; --brand-700:#8ce2f0;
+  --brand-800:#b8eef7; --brand-900:#ddf7fb; --brand-foreground:#032027;
+
+  --emerald-50:#073a2a; --emerald-500:#2fd39a; --emerald-600:#57e0b0; --emerald-700:#86ecc6;
+
+  --navy-50:#0e2e3d; --navy-500:#7fb0c4; --navy-600:#a3c8d7; --navy-700:#c7dde8;
+
+  --accent-50:#3d1712; --accent-100:#521f18; --accent-500:#ff8f7d;
+  --accent-600:#ffab9c; --accent-700:#ffc7bc; --accent-foreground:#2b0d08;
+
+  --neutral-50:#101b1e; --neutral-100:#152225; --neutral-200:#1e2e32; --neutral-300:#2a3d42;
+  --neutral-400:#64777c; --neutral-500:#8a9da2; --neutral-600:#b0c0c4; --neutral-700:#d0dde0;
+  --neutral-800:#e6eef0; --neutral-900:#f3f8f9;
+
+  --surface:#122023; --surface-subtle:#0a1517; --surface-muted:#0f1b1d;
+  --surface-raised:#182829; --surface-cream:#10302f;
+
+  --ink:#eef6f7; --ink-subtle:#b0c0c4; --ink-muted:#8a9da2; --ink-inverted:#032027;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0f1b1d; --input-border:rgb(255 255 255 / .10); --ring:#22c3dd;
+
+  --success-50:#0d3327; --success-500:#2fca8f; --success-600:#59d6a5; --success-700:#82e2bc;
+  --warning-50:#3a2a0c; --warning-500:#e6a63a; --warning-600:#f0bd63; --warning-700:#f7d494;
+  --danger-50:#3d141c;  --danger-500:#ff5c78;  --danger-600:#ff8098;  --danger-700:#ffa8b8;
+  --info-50:#0e2e3d;    --info-500:#7fb0c4;    --info-600:#a3c8d7;    --info-700:#c7dde8;
+
+  --grad:linear-gradient(148deg,#38e0bd 0%,#2ad9b0 34%,#1fceb4 58%,#18c2ba 80%,#14b3bf 100%);
+}
+
+/* Cyan v2 shares Cyan's aqua canvas glows, brand stop leading mint. */
+[data-palette="cyan2"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(42 217 176 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(249 115 98 / 0.08), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(16 185 129 / 0.08), transparent 62%);
+}
+[data-palette="cyan2"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(42 217 176 / 0.13), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(255 143 125 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(47 211 154 / 0.10), transparent 62%);
+}
+
+/* ===========================================================================
+   CYAN V3 — one more step along the v1→v2 direction: the gradient goes even
+   BRIGHTER and GREENER, a luminous spring-mint that dominates end to end (no
+   dive at all). The lightest/greenest of the three. Every token matches Cyan
+   except --grad (+ a spring-mint brand glow).
+   =========================================================================== */
+[data-palette="cyan3"]:not([data-theme="dark"]) {
+  --brand-50:#e3f8fb;  --brand-100:#bff0f5; --brand-200:#8ce6ef; --brand-300:#4dd6e4;
+  --brand-400:#17bdd3; --brand-500:#069fbe; --brand-600:#06849f; --brand-700:#0a6a80;
+  --brand-800:#0d5468; --brand-900:#0e4353; --brand-foreground:#ffffff;
+
+  --emerald-50:#e4f8ee; --emerald-500:#10b981; --emerald-600:#0d9668; --emerald-700:#0a7350;
+
+  --navy-50:#e6eef2; --navy-500:#103c52; --navy-600:#0c2e40; --navy-700:#08212f;
+
+  --accent-50:#fff0ec; --accent-100:#ffddd4; --accent-500:#f97362;
+  --accent-600:#ec5a44; --accent-700:#c4442f; --accent-foreground:#ffffff;
+
+  --neutral-50:#f4f8f9; --neutral-100:#eef4f5; --neutral-200:#e3edef; --neutral-300:#d0dee1;
+  --neutral-400:#a6b8bd; --neutral-500:#7d9196; --neutral-600:#4f6469; --neutral-700:#344549;
+  --neutral-800:#202d30; --neutral-900:#101819;
+
+  --surface:#ffffff; --surface-subtle:#eff6f8; --surface-muted:#f4f9fa;
+  --surface-raised:#ffffff; --surface-cream:#e4f6f9;
+
+  --ink:#0f1c1f; --ink-subtle:#4f6469; --ink-muted:#7d9196; --ink-inverted:#ffffff;
+
+  --border:#e3edef; --border-strong:#d0dee1;
+  --input:#f4f9fa; --input-border:#e3edef; --ring:#069fbe;
+
+  --success-50:#e4f6ee; --success-500:#12a071; --success-600:#0f8a5f; --success-700:#0c6b4b;
+  --warning-50:#fdf1dd; --warning-500:#d98e15; --warning-600:#b5730c; --warning-700:#8f5a0a;
+  --danger-50:#fdecef;  --danger-500:#e11d48;  --danger-600:#c01840;  --danger-700:#9f1239;
+  --info-50:#e6eef2;    --info-500:#103c52;    --info-600:#0c2e40;    --info-700:#08212f;
+
+  /* the v3 difference — luminous spring-mint, brightest & greenest, no dive */
+  --grad:linear-gradient(148deg,#4fe9c4 0%,#33e2b4 30%,#22d9b0 56%,#1acdb8 80%,#17c0bf 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(51 226 180 / .5);
+}
+
+[data-palette="cyan3"][data-theme="dark"] {
+  --brand-50:#05323d;  --brand-100:#06414f; --brand-200:#08596b; --brand-300:#0c7d94;
+  --brand-400:#12a5c0; --brand-500:#22c3dd; --brand-600:#55d4e8; --brand-700:#8ce2f0;
+  --brand-800:#b8eef7; --brand-900:#ddf7fb; --brand-foreground:#032027;
+
+  --emerald-50:#073a2a; --emerald-500:#2fd39a; --emerald-600:#57e0b0; --emerald-700:#86ecc6;
+
+  --navy-50:#0e2e3d; --navy-500:#7fb0c4; --navy-600:#a3c8d7; --navy-700:#c7dde8;
+
+  --accent-50:#3d1712; --accent-100:#521f18; --accent-500:#ff8f7d;
+  --accent-600:#ffab9c; --accent-700:#ffc7bc; --accent-foreground:#2b0d08;
+
+  --neutral-50:#101b1e; --neutral-100:#152225; --neutral-200:#1e2e32; --neutral-300:#2a3d42;
+  --neutral-400:#64777c; --neutral-500:#8a9da2; --neutral-600:#b0c0c4; --neutral-700:#d0dde0;
+  --neutral-800:#e6eef0; --neutral-900:#f3f8f9;
+
+  --surface:#122023; --surface-subtle:#0a1517; --surface-muted:#0f1b1d;
+  --surface-raised:#182829; --surface-cream:#10302f;
+
+  --ink:#eef6f7; --ink-subtle:#b0c0c4; --ink-muted:#8a9da2; --ink-inverted:#032027;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0f1b1d; --input-border:rgb(255 255 255 / .10); --ring:#22c3dd;
+
+  --success-50:#0d3327; --success-500:#2fca8f; --success-600:#59d6a5; --success-700:#82e2bc;
+  --warning-50:#3a2a0c; --warning-500:#e6a63a; --warning-600:#f0bd63; --warning-700:#f7d494;
+  --danger-50:#3d141c;  --danger-500:#ff5c78;  --danger-600:#ff8098;  --danger-700:#ffa8b8;
+  --info-50:#0e2e3d;    --info-500:#7fb0c4;    --info-600:#a3c8d7;    --info-700:#c7dde8;
+
+  --grad:linear-gradient(148deg,#4fe9c4 0%,#33e2b4 30%,#22d9b0 56%,#1acdb8 80%,#17c0bf 100%);
+}
+
+/* Cyan v3 leads its glows with the brightest spring-mint. */
+[data-palette="cyan3"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(51 226 180 / 0.13), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(249 115 98 / 0.08), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(16 185 129 / 0.09), transparent 62%);
+}
+[data-palette="cyan3"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(51 226 180 / 0.14), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(255 143 125 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(47 211 154 / 0.11), transparent 62%);
+}
+
+/* ===========================================================================
+   CYAN V4 — the chosen Cyan: a BALANCED 50/50 gradient (mint one half, cyan the
+   other) promoted to a FULL, COHESIVE palette, so EVERY token-driven surface —
+   calendar chips, backgrounds, badges, the SVG icons — reads as one fresh
+   mint-cyan world instead of Cyan's leftovers. The five calendar event hues
+   (brand·emerald·accent·navy·warning) are a balanced, differentiated set:
+     brand   = cyan-teal        emerald = fresh mint (= DashboardIcon top stop)
+     navy    = a TRUE navy-blue (a distinct cool anchor, NOT another teal)
+     accent  = warm coral (complementary spark / gem sparkles)   warning = amber
+   =========================================================================== */
+[data-palette="cyan4"]:not([data-theme="dark"]) {
+  /* brand ramp centered on the gradient hue; -600 = the gradient's cyan end */
+  --brand-50:#e4f8fb;  --brand-100:#bff0f7; --brand-200:#8ce6f0; --brand-300:#4dd7e6;
+  --brand-400:#17bfd6; --brand-500:#0aa6c2; --brand-600:#0b8ba6; --brand-700:#0d7089;
+  --brand-800:#0f5a6f; --brand-900:#0f4a5c; --brand-foreground:#ffffff;
+
+  /* emerald = fresh mint (the gradient's light end) → DashboardIcon top stop */
+  --emerald-50:#e3f8ef; --emerald-500:#15c29a; --emerald-600:#0f9c78; --emerald-700:#0b785d;
+
+  /* navy = a TRUE navy-blue anchor — a distinct cool hue from the teal brand, so
+     the calendar's "navy" events don't collapse into the "brand" ones */
+  --navy-50:#e8edf5; --navy-500:#1c4a7a; --navy-600:#153a61; --navy-700:#0f2b49;
+
+  /* accent = warm coral spark (complementary pop / gem sparkles) */
+  --accent-50:#fff0ec; --accent-100:#ffddd4; --accent-500:#f97362;
+  --accent-600:#ec5a44; --accent-700:#c4442f; --accent-foreground:#ffffff;
+
+  /* cool aqua-tinted greys keep the whole chrome in the mint-cyan family */
+  --neutral-50:#f4f8f9; --neutral-100:#eef4f5; --neutral-200:#e3edef; --neutral-300:#d0dee1;
+  --neutral-400:#a6b8bd; --neutral-500:#7d9196; --neutral-600:#4f6469; --neutral-700:#344549;
+  --neutral-800:#202d30; --neutral-900:#101819;
+
+  --surface:#ffffff; --surface-subtle:#edf7f8; --surface-muted:#f4fafa;
+  --surface-raised:#ffffff; --surface-cream:#e5f6f8; /* aqua callout, in-family */
+
+  --ink:#0f1c1f; --ink-subtle:#4f6469; --ink-muted:#7d9196; --ink-inverted:#ffffff;
+
+  --border:#e3edef; --border-strong:#d0dee1;
+  --input:#f4fafa; --input-border:#e3edef; --ring:#0aa6c2;
+
+  /* status tuned into the fresh world: success = the mint green, info = the navy */
+  --success-50:#e3f8ef; --success-500:#14a87c; --success-600:#0f9068; --success-700:#0b7052;
+  --warning-50:#fdf4dc; --warning-500:#e0a11a; --warning-600:#bd8410; --warning-700:#94660b;
+  --danger-50:#fdecec;  --danger-500:#e5342f;  --danger-600:#cc2622;  --danger-700:#a81f1c;
+  --info-50:#e8edf5;    --info-500:#1c4a7a;    --info-600:#153a61;    --info-700:#0f2b49;
+
+  /* the v4 difference — balanced 50/50 mint↔cyan, neither side dominates */
+  --grad:linear-gradient(148deg,#2bd8b2 0%,#17bec2 50%,#08a4cc 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(23 190 194 / .5);
+}
+
+[data-palette="cyan4"][data-theme="dark"] {
+  --brand-50:#05323d;  --brand-100:#06414f; --brand-200:#08596b; --brand-300:#0c7d94;
+  --brand-400:#12a5c0; --brand-500:#22c3dd; --brand-600:#4fd6e6; --brand-700:#8ce2f0;
+  --brand-800:#b8eef7; --brand-900:#ddf7fb; --brand-foreground:#032027;
+
+  /* bright mint top stop for the DashboardIcon on the dark ground */
+  --emerald-50:#073a2a; --emerald-500:#2fd8a8; --emerald-600:#57e2ba; --emerald-700:#86edcd;
+
+  /* navy-blue anchor, brightened for dark */
+  --navy-50:#12233a; --navy-500:#7ba7d8; --navy-600:#a3c3e6; --navy-700:#c7dbf0;
+
+  --accent-50:#3d1712; --accent-100:#521f18; --accent-500:#ff8f7d;
+  --accent-600:#ffab9c; --accent-700:#ffc7bc; --accent-foreground:#2b0d08;
+
+  --neutral-50:#101b1e; --neutral-100:#152225; --neutral-200:#1e2e32; --neutral-300:#2a3d42;
+  --neutral-400:#64777c; --neutral-500:#8a9da2; --neutral-600:#b0c0c4; --neutral-700:#d0dde0;
+  --neutral-800:#e6eef0; --neutral-900:#f3f8f9;
+
+  --surface:#122023; --surface-subtle:#0a1517; --surface-muted:#0f1b1d;
+  --surface-raised:#182829; --surface-cream:#10302f;
+
+  --ink:#eef6f7; --ink-subtle:#b0c0c4; --ink-muted:#8a9da2; --ink-inverted:#032027;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0f1b1d; --input-border:rgb(255 255 255 / .10); --ring:#22c3dd;
+
+  --success-50:#0d3327; --success-500:#2fca8f; --success-600:#59d6a5; --success-700:#82e2bc;
+  --warning-50:#3a2a0c; --warning-500:#e6a63a; --warning-600:#f0bd63; --warning-700:#f7d494;
+  --danger-50:#3d1512;  --danger-500:#ff5f52;  --danger-600:#ff8074;  --danger-700:#ffa79d;
+  --info-50:#12233a;    --info-500:#7ba7d8;    --info-600:#a3c3e6;    --info-700:#c7dbf0;
+
+  --grad:linear-gradient(148deg,#2bd8b2 0%,#17bec2 50%,#08a4cc 100%);
+}
+
+/* Cyan v4 leads its glows with the balanced midpoint teal. */
+[data-palette="cyan4"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(23 190 194 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(249 115 98 / 0.08), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(16 185 129 / 0.08), transparent 62%);
+}
+[data-palette="cyan4"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(23 190 194 / 0.13), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(255 143 125 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(47 211 154 / 0.10), transparent 62%);
+}
+
+/* ===========================================================================
+   AZURE V2 — same cool Azure system, but the gradient stays blue-cyan dominant
+   (bright cyan → azure → medium royal blue) instead of sinking to deep navy, so
+   gradient surfaces (buttons, active nav, avatar, gem) read brighter/electric.
+   Every token matches Azure except --grad (+ a cyan-leaning brand glow).
+   =========================================================================== */
+[data-palette="azure2"]:not([data-theme="dark"]) {
+  --brand-50:#e9f2fe;  --brand-100:#d0e4fd; --brand-200:#a6ccfa; --brand-300:#6fb0f5;
+  --brand-400:#3896ec; --brand-500:#1e88e5; --brand-600:#1570c9; --brand-700:#115aa3;
+  --brand-800:#0e487f; --brand-900:#0b3760; --brand-foreground:#ffffff;
+
+  --emerald-50:#e6f6f2; --emerald-500:#2aa795; --emerald-600:#218a7b; --emerald-700:#196b60;
+
+  --navy-50:#e9edf9; --navy-500:#24408f; --navy-600:#1a3172; --navy-700:#122356;
+
+  --accent-50:#edeefb; --accent-100:#dfe1f8; --accent-500:#5b6ad8;
+  --accent-600:#4653c4; --accent-700:#3843a3; --accent-foreground:#ffffff;
+
+  --neutral-50:#f4f7fb; --neutral-100:#eef2f8; --neutral-200:#e4ebf5; --neutral-300:#d3ddec;
+  --neutral-400:#aeb9cc; --neutral-500:#8792a8; --neutral-600:#56607a; --neutral-700:#38415a;
+  --neutral-800:#212a41; --neutral-900:#0c1524;
+
+  --surface:#ffffff; --surface-subtle:#f2f6fc; --surface-muted:#f4f8fd;
+  --surface-raised:#ffffff; --surface-cream:#eef1fb;
+
+  --ink:#0c1524; --ink-subtle:#55617a; --ink-muted:#8792a8; --ink-inverted:#ffffff;
+
+  --border:#e4ebf5; --border-strong:#d3ddec;
+  --input:#f4f8fd; --input-border:#e4ebf5; --ring:#1e88e5;
+
+  --success-50:#e6f6f0; --success-500:#12a06f; --success-600:#0f8a5f; --success-700:#0c6b4b;
+  --warning-50:#fdf3dd; --warning-500:#d99400; --warning-600:#b87c00; --warning-700:#8a6000;
+  --danger-50:#fdecec;  --danger-500:#e5484d;  --danger-600:#cc3b40;  --danger-700:#a8201d;
+  --info-50:#e9edf9;    --info-500:#24408f;    --info-600:#1a3172;    --info-700:#122356;
+
+  /* the v2 difference — cyan-blue dominant, no deep-navy dive */
+  --grad:linear-gradient(148deg,#2ccdea 0%,#2aacf3 30%,#3f9bf0 55%,#57a6f4 78%,#6fb5f7 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(37 174 232 / .55);
+}
+
+[data-palette="azure2"][data-theme="dark"] {
+  --brand-50:#0c2647;  --brand-100:#0f345f; --brand-200:#164a86; --brand-300:#1f66b3;
+  --brand-400:#3f9bf0; --brand-500:#4aa4f5; --brand-600:#79bef8; --brand-700:#a6d5fb;
+  --brand-800:#cbe7fd; --brand-900:#e6f3fe; --brand-foreground:#06162e;
+
+  --emerald-50:#0d3a33; --emerald-500:#38c2ac; --emerald-600:#62d3c1; --emerald-700:#8fe0d3;
+
+  --navy-50:#16234a; --navy-500:#8aa2df; --navy-600:#adbde9; --navy-700:#c7d6f0;
+
+  --accent-50:#232a5c; --accent-100:#2c3570; --accent-500:#8792ec;
+  --accent-600:#a7b0f2; --accent-700:#c6ccf7; --accent-foreground:#0b1024;
+
+  --neutral-50:#111c3d; --neutral-100:#16234a; --neutral-200:#1f2d55; --neutral-300:#2b3a68;
+  --neutral-400:#6472a0; --neutral-500:#8a97be; --neutral-600:#b3bcd8; --neutral-700:#d2d9ec;
+  --neutral-800:#e7ebf6; --neutral-900:#f3f5fb;
+
+  --surface:#101a3d; --surface-subtle:#0a1330; --surface-muted:#0d1636;
+  --surface-raised:#16214a; --surface-cream:#1c2450;
+
+  --ink:#eaf0fb; --ink-subtle:#a9b4cd; --ink-muted:#7581a0; --ink-inverted:#06162e;
+
+  --border:rgb(255 255 255 / .09); --border-strong:rgb(255 255 255 / .15);
+  --input:#0d1636; --input-border:rgb(255 255 255 / .10); --ring:#4aa4f5;
+
+  --success-50:#0d3a2a; --success-500:#2fc78c; --success-600:#58d3a0; --success-700:#7fe0b9;
+  --warning-50:#3a2c08; --warning-500:#e6a41f; --warning-600:#f2bd4d; --warning-700:#f8d27e;
+  --danger-50:#3d1614;  --danger-500:#ff6b6f;  --danger-600:#ff8d90;  --danger-700:#ffa8ab;
+  --info-50:#16234a;    --info-500:#8aa2df;    --info-600:#adbde9;    --info-700:#c7d6f0;
+
+  --grad:linear-gradient(148deg,#2ccdea 0%,#2aacf3 30%,#3f9bf0 55%,#57a6f4 78%,#6fb5f7 100%);
+}
+
+[data-palette="azure2"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(37 203 232 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(30 136 229 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(91 106 216 / 0.10), transparent 62%);
+}
+[data-palette="azure2"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(37 203 232 / 0.13), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(74 164 245 / 0.11), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(135 146 236 / 0.13), transparent 62%);
+}
+
+/* ===========================================================================
+   SARCELLE — serene petrol teal, antique gold & warm cream. Lifted straight
+   from the pesantren "Doa" quote-cards: a deep teal card gradient, gold quote
+   marks / dividers / frames, on a soft textured cream ground. Role map:
+     brand   = petrol teal (primary)     emerald = jade (supporting green)
+     navy    = deep teal-petrol (anchor/info)   accent = antique gold (the spark)
+   =========================================================================== */
+[data-palette="sarcelle"]:not([data-theme="dark"]) {
+  --brand-50:#e5f2f1;  --brand-100:#c2e2e0; --brand-200:#93cbc8; --brand-300:#5aaeaa;
+  --brand-400:#2a938e; --brand-500:#147e7d; --brand-600:#0f6867; --brand-700:#0d5455;
+  --brand-800:#0d4546; --brand-900:#0b3839; --brand-foreground:#ffffff;
+
+  --emerald-50:#e3f4ec; --emerald-500:#17a07d; --emerald-600:#128267; --emerald-700:#0d6552;
+
+  --navy-50:#e5eeed; --navy-500:#123e42; --navy-600:#0d2f32; --navy-700:#082325;
+
+  --accent-50:#faf0d6; --accent-100:#f3dfae; --accent-500:#c19a3f;
+  --accent-600:#a37f30; --accent-700:#836626; --accent-foreground:#ffffff;
+
+  --neutral-50:#f8f4ea; --neutral-100:#f1ebdb; --neutral-200:#e7dfcb; --neutral-300:#d7cbb0;
+  --neutral-400:#b4a886; --neutral-500:#8b8167; --neutral-600:#5d5643; --neutral-700:#403b2e;
+  --neutral-800:#2a271e; --neutral-900:#181510;
+
+  --surface:#ffffff; --surface-subtle:#f6f1e5; --surface-muted:#faf6ec;
+  --surface-raised:#ffffff; --surface-cream:#f7ecd2; /* the poster's warm gold-cream callout */
+
+  --ink:#1a201e; --ink-subtle:#57605b; --ink-muted:#8b938c; --ink-inverted:#ffffff;
+
+  --border:#e9e1d1; --border-strong:#d7cbb0;
+  --input:#faf6ec; --input-border:#e9e1d1; --ring:#147e7d;
+
+  --success-50:#e4f4ec; --success-500:#12a071; --success-600:#0f8a5f; --success-700:#0c6b4b;
+  --warning-50:#fbf0d5; --warning-500:#cf9a1e; --warning-600:#ab7f14; --warning-700:#85630f;
+  --danger-50:#fbeae8;  --danger-500:#d92d20;  --danger-600:#b91c1c;  --danger-700:#991b1b;
+  --info-50:#e5eeed;    --info-500:#123e42;    --info-600:#0d2f32;    --info-700:#082325;
+
+  --grad:linear-gradient(148deg,#1c9a92 0%,#147e7d 30%,#0f6867 55%,#0d5455 78%,#0b4344 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(20 126 125 / .5);
+}
+
+[data-palette="sarcelle"][data-theme="dark"] {
+  /* deep teal night ground, brighter teal so text-brand-* stays legible */
+  --brand-50:#07302f;  --brand-100:#093e3d; --brand-200:#0d5453; --brand-300:#137472;
+  --brand-400:#1a9c97; --brand-500:#2ab8b1; --brand-600:#57cbc4; --brand-700:#86ddd7;
+  --brand-800:#b6ebe7; --brand-900:#dcf6f4; --brand-foreground:#032423;
+
+  --emerald-50:#06392b; --emerald-500:#2fce9e; --emerald-600:#57dbb2; --emerald-700:#85e7c7;
+
+  --navy-50:#0d3033; --navy-500:#7fb6b6; --navy-600:#a3cccc; --navy-700:#c7dfdf;
+
+  --accent-50:#382a0b; --accent-100:#4b380e; --accent-500:#dfb257;
+  --accent-600:#ebc57c; --accent-700:#f4d9a3; --accent-foreground:#291f05;
+
+  --neutral-50:#14150f; --neutral-100:#1b1c14; --neutral-200:#26281d; --neutral-300:#353629;
+  --neutral-400:#6f7060; --neutral-500:#969682; --neutral-600:#b9b9a7; --neutral-700:#d5d5c6;
+  --neutral-800:#e9e9dc; --neutral-900:#f5f5ec;
+
+  --surface:#112120; --surface-subtle:#0a1615; --surface-muted:#0e1b1a;
+  --surface-raised:#182b29; --surface-cream:#2b2510;
+
+  --ink:#eef4f1; --ink-subtle:#afbcb6; --ink-muted:#7e8b85; --ink-inverted:#032423;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0e1b1a; --input-border:rgb(255 255 255 / .10); --ring:#2ab8b1;
+
+  --success-50:#0c3327; --success-500:#2fca8f; --success-600:#59d6a5; --success-700:#82e2bc;
+  --warning-50:#38290b; --warning-500:#e0b04f; --warning-600:#ebc57c; --warning-700:#f4daa4;
+  --danger-50:#3d1512;  --danger-500:#f26a5c;  --danger-600:#f68a7f;  --danger-700:#faa9a1;
+  --info-50:#0d3033;    --info-500:#7fb6b6;    --info-600:#a3cccc;    --info-700:#c7dfdf;
+
+  --grad:linear-gradient(148deg,#1c9a92 0%,#147e7d 30%,#0f6867 55%,#0d5455 78%,#0b4344 100%);
+}
+
+/* Sarcelle re-tints the ambient canvas glows to teal / gold / jade (index's
+   cool blue glows would fight the warm cream ground). */
+[data-palette="sarcelle"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(20 126 125 / 0.11), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(193 154 63 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(23 160 125 / 0.08), transparent 62%);
+}
+[data-palette="sarcelle"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(42 184 177 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(223 178 87 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(47 206 158 / 0.10), transparent 62%);
+}
+
+/* ===========================================================================
+   RÉCIF — the INRAE/SALSA editorial palette: petrol teal + coral on warm cream.
+   Bluer & more desaturated than Sarcelle, and the spark flips from gold to a
+   warm salmon-coral (the flow-diagram arrows & legends). Muted gold survives
+   as the warning tone. Role map:
+     brand   = petrol teal (primary)    emerald = jade-green (supporting)
+     navy    = deep petrol (anchor/info)   accent = coral-salmon (the spark)
+   =========================================================================== */
+[data-palette="recif"]:not([data-theme="dark"]) {
+  --brand-50:#e6f1f3;  --brand-100:#c4e0e4; --brand-200:#96c8cf; --brand-300:#5aa8b2;
+  --brand-400:#298e9b; --brand-500:#187a87; --brand-600:#12626e; --brand-700:#0f515b;
+  --brand-800:#10434c; --brand-900:#0e373f; --brand-foreground:#ffffff;
+
+  --emerald-50:#e5f4ec; --emerald-500:#159c86; --emerald-600:#107a69; --emerald-700:#0c5e51;
+
+  --navy-50:#e5eeef; --navy-500:#123f47; --navy-600:#0d2f37; --navy-700:#082228;
+
+  --accent-50:#fdece6; --accent-100:#fbd5c9; --accent-500:#ef8a72;
+  --accent-600:#dd6d52; --accent-700:#b85539; --accent-foreground:#ffffff;
+
+  --neutral-50:#f7f4ec; --neutral-100:#f0ecdf; --neutral-200:#e6e0cf; --neutral-300:#d5ccb6;
+  --neutral-400:#b2a98d; --neutral-500:#89826c; --neutral-600:#5b5648; --neutral-700:#3e3a30;
+  --neutral-800:#29261f; --neutral-900:#171511;
+
+  --surface:#ffffff; --surface-subtle:#f5f1e8; --surface-muted:#faf7ef;
+  --surface-raised:#ffffff; --surface-cream:#fce7de; /* soft coral-blush callout */
+
+  --ink:#1b201f; --ink-subtle:#575f59; --ink-muted:#8a928b; --ink-inverted:#ffffff;
+
+  --border:#e8e1d1; --border-strong:#d5ccb6;
+  --input:#faf7ef; --input-border:#e8e1d1; --ring:#187a87;
+
+  --success-50:#e4f4ec; --success-500:#12a071; --success-600:#0f8a5f; --success-700:#0c6b4b;
+  --warning-50:#fbf1d8; --warning-500:#dca63e; --warning-600:#b8862a; --warning-700:#8c661d;
+  --danger-50:#fbeae7;  --danger-500:#d92d20;  --danger-600:#b91c1c;  --danger-700:#991b1b;
+  --info-50:#e5eeef;    --info-500:#123f47;    --info-600:#0d2f37;    --info-700:#082228;
+
+  --grad:linear-gradient(148deg,#2494a1 0%,#187a87 32%,#12626e 58%,#0f515b 80%,#0e373f 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(24 122 135 / .5);
+}
+
+[data-palette="recif"][data-theme="dark"] {
+  /* deep petrol night, brighter teal so text-brand-* stays legible */
+  --brand-50:#082f34;  --brand-100:#0a3d43; --brand-200:#0e535b; --brand-300:#12727e;
+  --brand-400:#1a97a5; --brand-500:#2bb3c1; --brand-600:#57c8d4; --brand-700:#86dbe4;
+  --brand-800:#b6ebf0; --brand-900:#dcf6f8; --brand-foreground:#032226;
+
+  --emerald-50:#06392e; --emerald-500:#2fcda6; --emerald-600:#57dab8; --emerald-700:#85e6cb;
+
+  --navy-50:#0d3138; --navy-500:#7fb4bb; --navy-600:#a3cbd0; --navy-700:#c7dfe2;
+
+  --accent-50:#3d180f; --accent-100:#522014; --accent-500:#f79980;
+  --accent-600:#ffb4a0; --accent-700:#ffcdbe; --accent-foreground:#2b0d06;
+
+  --neutral-50:#141510; --neutral-100:#1b1c15; --neutral-200:#26271e; --neutral-300:#35362a;
+  --neutral-400:#6f7061; --neutral-500:#969683; --neutral-600:#b9b9a8; --neutral-700:#d5d5c7;
+  --neutral-800:#e9e9dd; --neutral-900:#f5f5ed;
+
+  --surface:#0f2124; --surface-subtle:#081517; --surface-muted:#0d1b1d;
+  --surface-raised:#17292c; --surface-cream:#33170f;
+
+  --ink:#eef4f3; --ink-subtle:#afbcb7; --ink-muted:#7e8b86; --ink-inverted:#032226;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0d1b1d; --input-border:rgb(255 255 255 / .10); --ring:#2bb3c1;
+
+  --success-50:#0c3327; --success-500:#2fca8f; --success-600:#59d6a5; --success-700:#82e2bc;
+  --warning-50:#38290b; --warning-500:#e0b04f; --warning-600:#ebc57c; --warning-700:#f4daa4;
+  --danger-50:#3d1512;  --danger-500:#f26a5c;  --danger-600:#f68a7f;  --danger-700:#faa9a1;
+  --info-50:#0d3138;    --info-500:#7fb4bb;    --info-600:#a3cbd0;    --info-700:#c7dfe2;
+
+  --grad:linear-gradient(148deg,#2494a1 0%,#187a87 32%,#12626e 58%,#0f515b 80%,#0e373f 100%);
+}
+
+/* Récif re-tints the ambient canvas glows teal / coral / gold. */
+[data-palette="recif"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(24 122 135 / 0.11), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(239 138 114 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(220 166 62 / 0.07), transparent 62%);
+}
+[data-palette="recif"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(43 179 193 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(247 153 128 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(224 176 79 / 0.08), transparent 62%);
+}
+
+/* ===========================================================================
+   TONIQUE — the "Living My Way" bright-primary palette: cobalt blue + warm
+   amber + coral, on clean WHITE (not cream). Blue is the workhorse, amber the
+   highlight (headings, key stats), coral the energetic frame — carried in the
+   ambient glow, the blush callout, and the (naturally coral) danger tone. Role:
+     brand   = cobalt blue (primary)     emerald = friendly green (supporting)
+     navy    = deep royal (anchor/info)     accent = amber-gold (the highlight)
+   NB: accent-foreground is DARK — white on bright amber would be unreadable.
+   =========================================================================== */
+[data-palette="tonique"]:not([data-theme="dark"]) {
+  --brand-50:#eaf1fa;  --brand-100:#cfe0f4; --brand-200:#a6c6ea; --brand-300:#71a4dc;
+  --brand-400:#4586cf; --brand-500:#2f6db5; --brand-600:#275b99; --brand-700:#21497b;
+  --brand-800:#1e3e66; --brand-900:#1b3455; --brand-foreground:#ffffff;
+
+  --emerald-50:#e6f5ec; --emerald-500:#3a9b5c; --emerald-600:#2d7d49; --emerald-700:#226038;
+
+  --navy-50:#e8edf6; --navy-500:#1c3f75; --navy-600:#142f5a; --navy-700:#0e2240;
+
+  --accent-50:#fef4da; --accent-100:#fce4ac; --accent-500:#f5b62c;
+  --accent-600:#e09a12; --accent-700:#b5790e; --accent-foreground:#2a1f04;
+
+  --neutral-50:#f5f7fa; --neutral-100:#eef2f7; --neutral-200:#e3e9f1; --neutral-300:#d2dbe8;
+  --neutral-400:#a7b3c6; --neutral-500:#7c8aa1; --neutral-600:#515e74; --neutral-700:#374252;
+  --neutral-800:#232b37; --neutral-900:#131922;
+
+  --surface:#ffffff; --surface-subtle:#f4f7fb; --surface-muted:#f6f9fc;
+  --surface-raised:#ffffff; --surface-cream:#ffe9e2; /* soft coral-blush callout */
+
+  --ink:#1a2230; --ink-subtle:#515e74; --ink-muted:#7c8aa1; --ink-inverted:#ffffff;
+
+  --border:#e3e9f1; --border-strong:#d2dbe8;
+  --input:#f6f9fc; --input-border:#e3e9f1; --ring:#2f6db5;
+
+  --success-50:#e6f5ec; --success-500:#3a9b5c; --success-600:#2d7d49; --success-700:#226038;
+  --warning-50:#fef4da; --warning-500:#f0a81c; --warning-600:#cc8c0e; --warning-700:#9c6a0b;
+  --danger-50:#fdeae5;  --danger-500:#f2543d;  --danger-600:#d63d28;  --danger-700:#ad2f1e;
+  --info-50:#e8edf6;    --info-500:#1c3f75;    --info-600:#142f5a;    --info-700:#0e2240;
+
+  --grad:linear-gradient(148deg,#4a86cf 0%,#2f6db5 34%,#275b99 62%,#21497b 84%,#1b3455 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(47 109 181 / .5);
+}
+
+[data-palette="tonique"][data-theme="dark"] {
+  /* deep royal night, brighter cobalt so text-brand-* stays legible */
+  --brand-50:#0c1f3d;  --brand-100:#103057; --brand-200:#16437b; --brand-300:#1f5ba6;
+  --brand-400:#3a7bd0; --brand-500:#4f92e6; --brand-600:#79aeef; --brand-700:#a6cbf5;
+  --brand-800:#cbe0fa; --brand-900:#e6f1fd; --brand-foreground:#06152e;
+
+  --emerald-50:#0c3320; --emerald-500:#46c072; --emerald-600:#6cd091; --emerald-700:#93ddab;
+
+  --navy-50:#10213f; --navy-500:#7f9bce; --navy-600:#a3bade; --navy-700:#c7d5ec;
+
+  --accent-50:#3a2a05; --accent-100:#4d3908; --accent-500:#f5bd45;
+  --accent-600:#f9cf74; --accent-700:#fbdfa0; --accent-foreground:#2a1f04;
+
+  --neutral-50:#0f1620; --neutral-100:#141c28; --neutral-200:#1e2836; --neutral-300:#2a3748;
+  --neutral-400:#62718a; --neutral-500:#8896ac; --neutral-600:#b0bccd; --neutral-700:#d0d9e5;
+  --neutral-800:#e6ebf2; --neutral-900:#f3f6fa;
+
+  --surface:#0f1b30; --surface-subtle:#0a1424; --surface-muted:#0d1930;
+  --surface-raised:#16233c; --surface-cream:#3a1712;
+
+  --ink:#eef3fa; --ink-subtle:#aeb9cc; --ink-muted:#7d8aa1; --ink-inverted:#06152e;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0d1930; --input-border:rgb(255 255 255 / .10); --ring:#4f92e6;
+
+  --success-50:#0c3320; --success-500:#40c46f; --success-600:#66d18d; --success-700:#90dda9;
+  --warning-50:#3a2a05; --warning-500:#f0b93f; --warning-600:#f7cd6f; --warning-700:#fbdd9c;
+  --danger-50:#3d160f;  --danger-500:#ff6f56;  --danger-600:#ff9078;  --danger-700:#ffb09c;
+  --info-50:#10213f;    --info-500:#7f9bce;    --info-600:#a3bade;    --info-700:#c7d5ec;
+
+  --grad:linear-gradient(148deg,#4a86cf 0%,#2f6db5 34%,#275b99 62%,#21497b 84%,#1b3455 100%);
+}
+
+/* Tonique leads its ambient glows with CORAL (the poster's frame), backed by
+   cobalt & amber — so the whole app sits on the same warm energy. */
+[data-palette="tonique"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(242 84 61 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(47 109 181 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(245 182 44 / 0.09), transparent 62%);
+}
+[data-palette="tonique"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(255 111 86 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(79 146 230 / 0.11), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(245 189 69 / 0.09), transparent 62%);
+}
+
+/* ===========================================================================
+   LAGON — the "Karat" airy palette: soft turquoise on a pale aqua-mint field,
+   with warm orange (+ yellow) sparks. Lighter & breezier than Cyan (which is
+   electric/saturated with a cool white ground & coral spark). The signature is
+   the tinted aqua canvas, not white. Role map:
+     brand   = soft turquoise (primary)   emerald = mint (supporting)
+     navy    = deep teal (anchor/info)     accent  = warm orange (the spark)
+   Yellow lives as the warning tone (the zigzag / yellow card).
+   =========================================================================== */
+[data-palette="lagon"]:not([data-theme="dark"]) {
+  --brand-50:#e6f6f4;  --brand-100:#c3ebe7; --brand-200:#93dcd5; --brand-300:#58c8bf;
+  --brand-400:#34b4ab; --brand-500:#1fa298; --brand-600:#17847b; --brand-700:#166f69;
+  --brand-800:#155a56; --brand-900:#134a47; --brand-foreground:#ffffff;
+
+  --emerald-50:#e3f7ee; --emerald-500:#17b78d; --emerald-600:#12946f; --emerald-700:#0d7053;
+
+  --navy-50:#e5efee; --navy-500:#14524e; --navy-600:#0f3e3b; --navy-700:#0a2d2b;
+
+  --accent-50:#fdefe0; --accent-100:#fbd9b8; --accent-500:#f2953f;
+  --accent-600:#dd7620; --accent-700:#b25c18; --accent-foreground:#ffffff;
+
+  --neutral-50:#f1f8f7; --neutral-100:#e9f2f1; --neutral-200:#dde9e7; --neutral-300:#cbdcd9;
+  --neutral-400:#9fb5b1; --neutral-500:#748a86; --neutral-600:#4b5d5a; --neutral-700:#33423f;
+  --neutral-800:#202b29; --neutral-900:#101817;
+
+  --surface:#ffffff; --surface-subtle:#e9f6f4; --surface-muted:#f2faf9;
+  --surface-raised:#ffffff; --surface-cream:#fdeede; /* soft orange-cream callout */
+
+  --ink:#141a19; --ink-subtle:#4b5d5a; --ink-muted:#748a86; --ink-inverted:#ffffff;
+
+  --border:#dde9e7; --border-strong:#cbdcd9;
+  --input:#f2faf9; --input-border:#dde9e7; --ring:#1fa298;
+
+  --success-50:#e3f7ee; --success-500:#17b78d; --success-600:#12946f; --success-700:#0d7053;
+  --warning-50:#fdf3d5; --warning-500:#f5c21f; --warning-600:#d19f0c; --warning-700:#a07908;
+  --danger-50:#fdece9;  --danger-500:#f2643f;  --danger-600:#d84a26;  --danger-700:#af3a1e;
+  --info-50:#e5efee;    --info-500:#14524e;    --info-600:#0f3e3b;    --info-700:#0a2d2b;
+
+  --grad:linear-gradient(148deg,#4ac9bf 0%,#28ada3 34%,#1a8a82 62%,#166f69 84%,#134a47 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(31 162 152 / .5);
+}
+
+[data-palette="lagon"][data-theme="dark"] {
+  /* deep teal night, brighter turquoise so text-brand-* stays legible */
+  --brand-50:#07322f;  --brand-100:#093f3b; --brand-200:#0d544f; --brand-300:#12736c;
+  --brand-400:#199a90; --brand-500:#29b6ab; --brand-600:#55c9bf; --brand-700:#85dbd2;
+  --brand-800:#b6ebe6; --brand-900:#dcf6f3; --brand-foreground:#032523;
+
+  --emerald-50:#06392c; --emerald-500:#2fd0a2; --emerald-600:#57ddb5; --emerald-700:#85e9c9;
+
+  --navy-50:#0d3130; --navy-500:#7fb6b2; --navy-600:#a3ccc9; --navy-700:#c7dfdd;
+
+  --accent-50:#3d2409; --accent-100:#52300c; --accent-500:#f7a659;
+  --accent-600:#ffbe7f; --accent-700:#ffd4a6; --accent-foreground:#2b1805;
+
+  --neutral-50:#0f1615; --neutral-100:#151c1a; --neutral-200:#202824; --neutral-300:#2e3733;
+  --neutral-400:#667370; --neutral-500:#8c9895; --neutral-600:#b0bcb9; --neutral-700:#d0d9d7;
+  --neutral-800:#e6ecea; --neutral-900:#f3f8f7;
+
+  --surface:#0f201e; --surface-subtle:#081513; --surface-muted:#0d1b19;
+  --surface-raised:#172927; --surface-cream:#331f0d;
+
+  --ink:#eef4f3; --ink-subtle:#afbcb9; --ink-muted:#7e8b88; --ink-inverted:#032523;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0d1b19; --input-border:rgb(255 255 255 / .10); --ring:#29b6ab;
+
+  --success-50:#06392c; --success-500:#2fd0a2; --success-600:#57ddb5; --success-700:#85e9c9;
+  --warning-50:#382908; --warning-500:#f0c93f; --warning-600:#f7d96f; --warning-700:#fbe59c;
+  --danger-50:#3d1712;  --danger-500:#ff7452;  --danger-600:#ff9578;  --danger-700:#ffb49d;
+  --info-50:#0d3130;    --info-500:#7fb6b2;    --info-600:#a3ccc9;    --info-700:#c7dfdd;
+
+  --grad:linear-gradient(148deg,#4ac9bf 0%,#28ada3 34%,#1a8a82 62%,#166f69 84%,#134a47 100%);
+}
+
+/* Lagon keeps its light-mode canvas AIRY (the pale aqua field is the signature),
+   glows leaning teal with warm orange & yellow sparks. */
+[data-palette="lagon"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(31 162 152 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(242 149 63 / 0.09), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(245 194 31 / 0.08), transparent 62%);
+}
+[data-palette="lagon"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(41 182 171 / 0.13), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(247 166 89 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(240 201 63 / 0.08), transparent 62%);
+}
+
+/* ===========================================================================
+   AIGUE-MARINE — a deliberate FUSION of Azure v2 (blue), Cyan (turquoise) and
+   Lagon (soft teal). Their brand hues average into a vivid blue-green teal,
+   nudged just onto the green side so it "feels green without being green".
+   Accents merge too: Cyan's coral + Lagon's orange → a warm coral-orange spark,
+   over Lagon's airy aqua field. Role map:
+     brand   = jewel blue-green teal (primary)   emerald = mint (supporting)
+     navy    = deep ocean teal (anchor/info)      accent  = coral-orange (spark)
+   =========================================================================== */
+[data-palette="aigue"]:not([data-theme="dark"]) {
+  --brand-50:#e2f7f5;  --brand-100:#baeeeb; --brand-200:#85dfdb; --brand-300:#46cdc7;
+  --brand-400:#16b7b0; --brand-500:#08a6a0; --brand-600:#078783; --brand-700:#0a6e6b;
+  --brand-800:#0c5957; --brand-900:#0c4948; --brand-foreground:#ffffff;
+
+  --emerald-50:#e3f7ef; --emerald-500:#14b98c; --emerald-600:#0f9670; --emerald-700:#0b7255;
+
+  --navy-50:#e5eff0; --navy-500:#123f4a; --navy-600:#0d2f39; --navy-700:#082228;
+
+  --accent-50:#fdefe6; --accent-100:#fbd7c4; --accent-500:#f58450;
+  --accent-600:#e06636; --accent-700:#b84f28; --accent-foreground:#ffffff;
+
+  --neutral-50:#f1f8f8; --neutral-100:#e9f3f3; --neutral-200:#dde9ea; --neutral-300:#cadddd;
+  --neutral-400:#9db6b6; --neutral-500:#728b8c; --neutral-600:#495e5f; --neutral-700:#324244;
+  --neutral-800:#1f2b2c; --neutral-900:#0f1819;
+
+  --surface:#ffffff; --surface-subtle:#eaf7f6; --surface-muted:#f2fafa;
+  --surface-raised:#ffffff; --surface-cream:#fdeee4; /* warm coral-cream callout */
+
+  --ink:#131c1c; --ink-subtle:#495e5f; --ink-muted:#728b8c; --ink-inverted:#ffffff;
+
+  --border:#dde9ea; --border-strong:#cadddd;
+  --input:#f2fafa; --input-border:#dde9ea; --ring:#08a6a0;
+
+  --success-50:#e3f7ef; --success-500:#14b98c; --success-600:#0f9670; --success-700:#0b7255;
+  --warning-50:#fdf3d5; --warning-500:#f2b81f; --warning-600:#cf9a0e; --warning-700:#9d740a;
+  --danger-50:#fdece8;  --danger-500:#f2593f;  --danger-600:#d84025;  --danger-700:#af331e;
+  --info-50:#e5eff0;    --info-500:#123f4a;    --info-600:#0d2f39;    --info-700:#082228;
+
+  --grad:linear-gradient(148deg,#2fd6c2 0%,#10bcae 30%,#08a6a0 56%,#097e79 80%,#0c4b49 100%);
+
+  --shadow-brand:0 12px 22px -10px rgb(8 166 160 / .5);
+}
+
+[data-palette="aigue"][data-theme="dark"] {
+  /* deep teal night, brighter aquamarine so text-brand-* stays legible */
+  --brand-50:#05322f;  --brand-100:#073f3c; --brand-200:#0a5551; --brand-300:#0e746f;
+  --brand-400:#149a93; --brand-500:#1eb8af; --brand-600:#4bccc3; --brand-700:#82ddd6;
+  --brand-800:#b4ebe7; --brand-900:#dbf6f4; --brand-foreground:#032524;
+
+  --emerald-50:#06392c; --emerald-500:#2fd0a0; --emerald-600:#57ddb3; --emerald-700:#85e9c8;
+
+  --navy-50:#0d3138; --navy-500:#7fb4b8; --navy-600:#a3cbce; --navy-700:#c7dfe1;
+
+  --accent-50:#3d1e0e; --accent-100:#522a13; --accent-500:#f79770;
+  --accent-600:#ffb495; --accent-700:#ffcdb8; --accent-foreground:#2b1305;
+
+  --neutral-50:#0f1616; --neutral-100:#151c1c; --neutral-200:#202827; --neutral-300:#2e3736;
+  --neutral-400:#667373; --neutral-500:#8c9898; --neutral-600:#b0bcbc; --neutral-700:#d0d9d9;
+  --neutral-800:#e6ecec; --neutral-900:#f3f8f8;
+
+  --surface:#0f2020; --surface-subtle:#081514; --surface-muted:#0d1b1b;
+  --surface-raised:#172929; --surface-cream:#331d0f;
+
+  --ink:#eef4f4; --ink-subtle:#afbcbc; --ink-muted:#7e8b8b; --ink-inverted:#032524;
+
+  --border:rgb(255 255 255 / .08); --border-strong:rgb(255 255 255 / .14);
+  --input:#0d1b1b; --input-border:rgb(255 255 255 / .10); --ring:#1eb8af;
+
+  --success-50:#06392c; --success-500:#2fd0a0; --success-600:#57ddb3; --success-700:#85e9c8;
+  --warning-50:#382908; --warning-500:#f0c33f; --warning-600:#f7d56f; --warning-700:#fbe39c;
+  --danger-50:#3d1611;  --danger-500:#ff6f52;  --danger-600:#ff9078;  --danger-700:#ffb49d;
+  --info-50:#0d3138;    --info-500:#7fb4b8;    --info-600:#a3cbce;    --info-700:#c7dfe1;
+
+  --grad:linear-gradient(148deg,#2fd6c2 0%,#10bcae 30%,#08a6a0 56%,#097e79 80%,#0c4b49 100%);
+}
+
+/* Aigue-marine keeps an airy aqua canvas (Lagon-derived), glows leaning
+   blue-green teal with the warm coral-orange & mint sparks. */
+[data-palette="aigue"]:not([data-theme="dark"]) .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(8 166 160 / 0.12), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(245 132 80 / 0.09), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(20 185 140 / 0.08), transparent 62%);
+}
+[data-palette="aigue"][data-theme="dark"] .bg-canvas {
+  background-color: var(--surface-subtle);
+  background-image:
+    radial-gradient(760px 420px at 88% -6%, rgb(30 184 175 / 0.13), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(247 151 112 / 0.10), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(47 208 160 / 0.09), transparent 62%);
+}

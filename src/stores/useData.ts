@@ -1,19 +1,26 @@
 import { create } from "zustand"
 import type {
+  Access,
   Chapter,
   Course,
   Exam,
   Group,
   Lesson,
+  LiveSession,
   Offer,
   Path,
+  PromoCode,
   Quiz,
   QuizExam,
+  Resource,
   Session,
   Student,
   Subject,
+  Subscription,
   Teacher,
+  Transaction,
   User,
+  UserFieldChange,
   Year,
 } from "@/data/types"
 import studentsSeed from "@/data/seed/students.json"
@@ -31,6 +38,12 @@ import quizExamsSeed from "@/data/seed/quiz-exams.json"
 import pathsSeed from "@/data/seed/paths.json"
 import offersSeed from "@/data/seed/offers.json"
 import usersSeed from "@/data/seed/users.json"
+import accessesSeed from "@/data/seed/accesses.json"
+import subscriptionsSeed from "@/data/seed/subscriptions.json"
+import promoCodesSeed from "@/data/seed/promo-codes.json"
+import transactionsSeed from "@/data/seed/transactions.json"
+import resourcesSeed from "@/data/seed/resources.json"
+import liveSessionsSeed from "@/data/seed/live-sessions.json"
 
 /**
  * The ONE shared dataset. Every role reads from here — dashboards filter it by
@@ -52,7 +65,13 @@ interface DataState {
   quizExams: QuizExam[]
   paths: Path[]
   offers: Offer[]
+  accesses: Access[]
+  subscriptions: Subscription[]
+  transactions: Transaction[]
+  promoCodes: PromoCode[]
   users: User[]
+  resources: Resource[]
+  liveSessions: LiveSession[]
 
   // Years CRUD
   addYear: (input: Omit<Year, "id">) => Year
@@ -103,6 +122,28 @@ interface DataState {
   updateOffer: (id: string, patch: Partial<Omit<Offer, "id">>) => void
   removeOffer: (id: string) => void
 
+  // Accesses (règles d'accès des offres) CRUD
+  addAccess: (input: Omit<Access, "id">) => Access
+  updateAccess: (id: string, patch: Partial<Omit<Access, "id">>) => void
+  /** Removes the access AND detaches it from every offer that used it. */
+  removeAccess: (id: string) => void
+
+  // Subscriptions (abonnements élèves) CRUD — createdAt stamped by the store.
+  addSubscription: (input: Omit<Subscription, "id" | "createdAt">) => Subscription
+  updateSubscription: (id: string, patch: Partial<Omit<Subscription, "id" | "createdAt">>) => void
+  /** Removes the subscription AND its transactions. */
+  removeSubscription: (id: string) => void
+
+  // Transactions (paiements) CRUD
+  addTransaction: (input: Omit<Transaction, "id">) => Transaction
+  updateTransaction: (id: string, patch: Partial<Omit<Transaction, "id">>) => void
+  removeTransaction: (id: string) => void
+
+  // Promo codes CRUD
+  addPromoCode: (input: Omit<PromoCode, "id">) => PromoCode
+  updatePromoCode: (id: string, patch: Partial<Omit<PromoCode, "id">>) => void
+  removePromoCode: (id: string) => void
+
   // Groups (groupes d'élèves) CRUD
   addGroup: (input: Omit<Group, "id">) => Group
   updateGroup: (id: string, patch: Partial<Omit<Group, "id">>) => void
@@ -114,9 +155,26 @@ interface DataState {
   updateSession: (id: string, patch: Partial<Omit<Session, "id">>) => void
   removeSession: (id: string) => void
 
-  // Users CRUD
-  addUser: (input: Omit<User, "id">) => User
-  updateUser: (id: string, patch: Partial<Omit<User, "id">>) => void
+  // Resources (bibliothèque de documents) CRUD
+  addResource: (input: Omit<Resource, "id">) => Resource
+  updateResource: (id: string, patch: Partial<Omit<Resource, "id">>) => void
+  /** Removes the resource AND detaches it from every live session. */
+  removeResource: (id: string) => void
+
+  // Live sessions (sessions en direct) CRUD
+  addLiveSession: (input: Omit<LiveSession, "id">) => LiveSession
+  updateLiveSession: (id: string, patch: Partial<Omit<LiveSession, "id">>) => void
+  removeLiveSession: (id: string) => void
+
+  // Users CRUD — the store owns the audit fields: `addUser` stamps
+  // createdAt/updatedAt, `updateUser` bumps updatedAt and prepends a history
+  // entry (pass the per-field before → after `changes` of the save).
+  addUser: (input: Omit<User, "id" | "createdAt" | "updatedAt" | "history">) => User
+  updateUser: (
+    id: string,
+    patch: Partial<Omit<User, "id" | "createdAt" | "updatedAt" | "history">>,
+    changes?: UserFieldChange[],
+  ) => void
   removeUser: (id: string) => void
 }
 
@@ -137,6 +195,23 @@ function pruneScoped<T extends { subjectIds: string[]; yearIds: string[] }>(
       yearIds: item.yearIds.filter((id) => !removedYearIds.has(id)),
     }))
     .filter((item) => item.subjectIds.length > 0 && item.yearIds.length > 0)
+}
+
+/**
+ * Drops deleted subject ids out of every live session, then removes any left
+ * with no subject (a live session must target at least one). Keeps live-session
+ * links consistent when a subject or a whole year is deleted.
+ */
+function pruneLiveSubjects(
+  liveSessions: LiveSession[],
+  removedSubjectIds: Set<string>,
+): LiveSession[] {
+  return liveSessions
+    .map((ls) => ({
+      ...ls,
+      subjectIds: ls.subjectIds.filter((id) => !removedSubjectIds.has(id)),
+    }))
+    .filter((ls) => ls.subjectIds.length > 0)
 }
 
 /**
@@ -200,7 +275,13 @@ export const useData = create<DataState>()((set) => ({
   quizExams: quizExamsSeed as QuizExam[],
   paths: pathsSeed as Path[],
   offers: offersSeed as Offer[],
+  accesses: accessesSeed as Access[],
+  subscriptions: subscriptionsSeed as Subscription[],
+  transactions: transactionsSeed as Transaction[],
+  promoCodes: promoCodesSeed as PromoCode[],
   users: usersSeed as User[],
+  resources: resourcesSeed as Resource[],
+  liveSessions: liveSessionsSeed as LiveSession[],
 
   addYear: (input) => {
     const year: Year = { id: crypto.randomUUID(), ...input }
@@ -227,6 +308,10 @@ export const useData = create<DataState>()((set) => ({
         ...afterChapterChange(s, chapters, survivingPaths),
         // Sessions drop the dead year/subject links; empty ones are pruned.
         sessions: pruneScoped(s.sessions, droppedSubjects, droppedYear),
+        // Live sessions drop the dead subjects (empties pruned) AND the dead year.
+        liveSessions: pruneLiveSubjects(s.liveSessions, droppedSubjects).map((ls) =>
+          ls.yearIds.includes(id) ? { ...ls, yearIds: ls.yearIds.filter((yid) => yid !== id) } : ls,
+        ),
         // A group whose home year is gone loses that link.
         groups: s.groups.map((g) => (g.yearId === id ? { ...g, yearId: undefined } : g)),
       }
@@ -252,6 +337,8 @@ export const useData = create<DataState>()((set) => ({
         ...afterChapterChange(s, chapters, survivingPaths),
         // Sessions drop the dead subject link; ones with no subject left are pruned.
         sessions: pruneScoped(s.sessions, dropped, empty),
+        // Live sessions drop the dead subject; ones left with none are pruned.
+        liveSessions: pruneLiveSubjects(s.liveSessions, dropped),
       }
     }),
 
@@ -334,7 +421,85 @@ export const useData = create<DataState>()((set) => ({
   },
   updateOffer: (id, patch) =>
     set((s) => ({ offers: s.offers.map((o) => (o.id === id ? { ...o, ...patch } : o)) })),
-  removeOffer: (id) => set((s) => ({ offers: s.offers.filter((o) => o.id !== id) })),
+  removeOffer: (id) =>
+    set((s) => {
+      // Subscriptions of the deleted offer go too, with their transactions.
+      const deadSubs = new Set(
+        s.subscriptions.filter((sub) => sub.offerId === id).map((sub) => sub.id),
+      )
+      return {
+        offers: s.offers.filter((o) => o.id !== id),
+        // Detach the deleted offer from every live session that referenced it.
+        liveSessions: s.liveSessions.map((ls) =>
+          ls.offerId === id ? { ...ls, offerId: undefined } : ls,
+        ),
+        subscriptions: s.subscriptions.filter((sub) => sub.offerId !== id),
+        transactions: s.transactions.filter((t) => !deadSubs.has(t.subscriptionId)),
+        // Promo codes lose the offer's rule; ones left with no offer are dropped.
+        promoCodes: s.promoCodes
+          .map((p) => ({ ...p, offers: p.offers.filter((r) => r.offerId !== id) }))
+          .filter((p) => p.offers.length > 0),
+      }
+    }),
+
+  addAccess: (input) => {
+    const access: Access = { id: crypto.randomUUID(), ...input }
+    set((s) => ({ accesses: [...s.accesses, access] }))
+    return access
+  },
+  updateAccess: (id, patch) =>
+    set((s) => ({ accesses: s.accesses.map((a) => (a.id === id ? { ...a, ...patch } : a)) })),
+  removeAccess: (id) =>
+    set((s) => ({
+      accesses: s.accesses.filter((a) => a.id !== id),
+      // Detach the deleted access from every offer that referenced it.
+      offers: s.offers.map((o) =>
+        o.accessIds.includes(id)
+          ? { ...o, accessIds: o.accessIds.filter((aid) => aid !== id) }
+          : o,
+      ),
+    })),
+
+  addPromoCode: (input) => {
+    const promoCode: PromoCode = { id: crypto.randomUUID(), ...input }
+    set((s) => ({ promoCodes: [...s.promoCodes, promoCode] }))
+    return promoCode
+  },
+  updatePromoCode: (id, patch) =>
+    set((s) => ({ promoCodes: s.promoCodes.map((p) => (p.id === id ? { ...p, ...patch } : p)) })),
+  removePromoCode: (id) =>
+    set((s) => ({ promoCodes: s.promoCodes.filter((p) => p.id !== id) })),
+
+  addSubscription: (input) => {
+    const subscription: Subscription = {
+      id: crypto.randomUUID(),
+      ...input,
+      createdAt: new Date().toISOString(),
+    }
+    set((s) => ({ subscriptions: [...s.subscriptions, subscription] }))
+    return subscription
+  },
+  updateSubscription: (id, patch) =>
+    set((s) => ({
+      subscriptions: s.subscriptions.map((sub) => (sub.id === id ? { ...sub, ...patch } : sub)),
+    })),
+  removeSubscription: (id) =>
+    set((s) => ({
+      subscriptions: s.subscriptions.filter((sub) => sub.id !== id),
+      transactions: s.transactions.filter((t) => t.subscriptionId !== id),
+    })),
+
+  addTransaction: (input) => {
+    const transaction: Transaction = { id: crypto.randomUUID(), ...input }
+    set((s) => ({ transactions: [...s.transactions, transaction] }))
+    return transaction
+  },
+  updateTransaction: (id, patch) =>
+    set((s) => ({
+      transactions: s.transactions.map((t) => (t.id === id ? { ...t, ...patch } : t)),
+    })),
+  removeTransaction: (id) =>
+    set((s) => ({ transactions: s.transactions.filter((t) => t.id !== id) })),
 
   addGroup: (input) => {
     const group: Group = { id: crypto.randomUUID(), ...input }
@@ -352,6 +517,18 @@ export const useData = create<DataState>()((set) => ({
           ? { ...ses, groupIds: ses.groupIds.filter((gid) => gid !== id) }
           : ses,
       ),
+      // …and from every live session that invited it.
+      liveSessions: s.liveSessions.map((ls) =>
+        ls.groupIds.includes(id)
+          ? { ...ls, groupIds: ls.groupIds.filter((gid) => gid !== id) }
+          : ls,
+      ),
+      // …and from every access rule that filtered on it.
+      accesses: s.accesses.map((a) =>
+        a.groupIds.includes(id)
+          ? { ...a, groupIds: a.groupIds.filter((gid) => gid !== id) }
+          : a,
+      ),
     })),
 
   addSession: (input) => {
@@ -363,21 +540,90 @@ export const useData = create<DataState>()((set) => ({
     set((s) => ({ sessions: s.sessions.map((ses) => (ses.id === id ? { ...ses, ...patch } : ses)) })),
   removeSession: (id) => set((s) => ({ sessions: s.sessions.filter((ses) => ses.id !== id) })),
 
+  addResource: (input) => {
+    const resource: Resource = { id: crypto.randomUUID(), ...input }
+    set((s) => ({ resources: [...s.resources, resource] }))
+    return resource
+  },
+  updateResource: (id, patch) =>
+    set((s) => ({ resources: s.resources.map((r) => (r.id === id ? { ...r, ...patch } : r)) })),
+  removeResource: (id) =>
+    set((s) => ({
+      resources: s.resources.filter((r) => r.id !== id),
+      // Detach the deleted resource from every live session that held it.
+      liveSessions: s.liveSessions.map((ls) =>
+        ls.resourceIds.includes(id)
+          ? { ...ls, resourceIds: ls.resourceIds.filter((rid) => rid !== id) }
+          : ls,
+      ),
+    })),
+
+  addLiveSession: (input) => {
+    const liveSession: LiveSession = { id: crypto.randomUUID(), ...input }
+    set((s) => ({ liveSessions: [...s.liveSessions, liveSession] }))
+    return liveSession
+  },
+  updateLiveSession: (id, patch) =>
+    set((s) => ({
+      liveSessions: s.liveSessions.map((ls) => (ls.id === id ? { ...ls, ...patch } : ls)),
+    })),
+  removeLiveSession: (id) =>
+    set((s) => ({ liveSessions: s.liveSessions.filter((ls) => ls.id !== id) })),
+
   addUser: (input) => {
-    const user: User = { id: crypto.randomUUID(), ...input }
+    const now = new Date().toISOString()
+    const user: User = {
+      id: crypto.randomUUID(),
+      ...input,
+      createdAt: now,
+      updatedAt: now,
+      history: [],
+    }
     set((s) => ({ users: [...s.users, user] }))
     return user
   },
-  updateUser: (id, patch) =>
-    set((s) => ({ users: s.users.map((u) => (u.id === id ? { ...u, ...patch } : u)) })),
-  // Removing a student also drops them from every group roster.
+  updateUser: (id, patch, changes) =>
+    set((s) => {
+      const now = new Date().toISOString()
+      return {
+        users: s.users.map((u) =>
+          u.id === id
+            ? {
+                ...u,
+                ...patch,
+                updatedAt: now,
+                // Newest first; a change-less call still bumps updatedAt.
+                history:
+                  changes && changes.length > 0
+                    ? [{ at: now, changes }, ...u.history]
+                    : u.history,
+              }
+            : u,
+        ),
+      }
+    }),
+  // Removing a student also drops them from every group roster, along with
+  // their subscriptions and the transactions recorded against them.
   removeUser: (id) =>
-    set((s) => ({
-      users: s.users.filter((u) => u.id !== id),
-      groups: s.groups.map((g) =>
-        g.studentIds.includes(id)
-          ? { ...g, studentIds: g.studentIds.filter((sid) => sid !== id) }
-          : g,
-      ),
-    })),
+    set((s) => {
+      const deadSubs = new Set(
+        s.subscriptions.filter((sub) => sub.userId === id).map((sub) => sub.id),
+      )
+      return {
+        users: s.users.filter((u) => u.id !== id),
+        groups: s.groups.map((g) =>
+          g.studentIds.includes(id)
+            ? { ...g, studentIds: g.studentIds.filter((sid) => sid !== id) }
+            : g,
+        ),
+        subscriptions: s.subscriptions.filter((sub) => sub.userId !== id),
+        transactions: s.transactions.filter((t) => !deadSubs.has(t.subscriptionId)),
+        // …and out of every promo code's used-by list.
+        promoCodes: s.promoCodes.map((p) =>
+          p.usedByUserIds.includes(id)
+            ? { ...p, usedByUserIds: p.usedByUserIds.filter((uid) => uid !== id) }
+            : p,
+        ),
+      }
+    }),
 }))

@@ -1,0 +1,78 @@
+[
+  {
+    "id": "sub-mohamed-bacmath",
+    "userId": "u-student",
+    "offerId": "offer-bac-math-annuel",
+    "price": 360,
+    "tag": "Par tranches",
+    "description": "3 tranches sur l'année scolaire — première à l'inscription.",
+    "installments": [
+      { "id": "inst-mo-1", "amount": 150, "dueDate": "2026-09-15" },
+      { "id": "inst-mo-2", "amount": 110, "dueDate": "2026-12-15" },
+      { "id": "inst-mo-3", "amount": 100, "dueDate": "2027-03-15" }
+    ],
+    "deadline": "2027-06-30",
+    "state": "active",
+    "createdAt": "2026-06-20T10:15:00.000Z"
+  },
+  {
+    "id": "sub-ines-bacmath",
+    "userId": "u-student-ines",
+    "offerId": "offer-bac-math-annuel",
+    "price": 480,
+    "tag": "Cash",
+    "description": "Paiement en une fois à l'inscription.",
+    "installments": [
+      { "id": "inst-in-1", "amount": 480, "dueDate": "2026-09-01" }
+    ],
+    "deadline": "2027-06-30",
+    "state": "active",
+    "createdAt": "2026-06-28T09:40:00.000Z"
+  },
+  {
+    "id": "sub-youssef-9",
+    "userId": "u-student-youssef",
+    "offerId": "offer-9-rentree",
+    "price": 99,
+    "tag": "Par tranches",
+    "description": "Deux tranches : moitié avant la rentrée, solde avant mi-août.",
+    "installments": [
+      { "id": "inst-yo-1", "amount": 50, "dueDate": "2026-06-15" },
+      { "id": "inst-yo-2", "amount": 49, "dueDate": "2026-08-10" }
+    ],
+    "deadline": "2026-10-15",
+    "state": "active",
+    "createdAt": "2026-06-01T14:05:00.000Z"
+  },
+  {
+    "id": "sub-emna-bacsci",
+    "userId": "u-st-emna",
+    "offerId": "offer-bac-sci-trimestre",
+    "price": 180,
+    "tag": "Par tranches",
+    "description": "Deux tranches de 90 DT. Accès suspendu tant que la première n'est pas soldée.",
+    "installments": [
+      { "id": "inst-em-1", "amount": 90, "dueDate": "2026-07-01" },
+      { "id": "inst-em-2", "amount": 90, "dueDate": "2026-10-01" }
+    ],
+    "deadline": "2026-12-31",
+    "state": "blocked",
+    "createdAt": "2026-06-25T16:30:00.000Z"
+  },
+  {
+    "id": "sub-farah-bacinfo",
+    "userId": "u-student-farah",
+    "offerId": "offer-bac-info-annuel",
+    "price": 420,
+    "tag": "Par tranches",
+    "description": "3 tranches de 140 DT réparties sur l'année.",
+    "installments": [
+      { "id": "inst-fa-1", "amount": 140, "dueDate": "2026-09-30" },
+      { "id": "inst-fa-2", "amount": 140, "dueDate": "2026-12-30" },
+      { "id": "inst-fa-3", "amount": 140, "dueDate": "2027-03-30" }
+    ],
+    "deadline": "2027-06-30",
+    "state": "active",
+    "createdAt": "2026-07-18T11:00:00.000Z"
+  }
+]

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { FormSheet } from "@/components/kit/FormSheet"
 import { useData } from "@/stores/useData"
+import { ACADEMIC_YEARS, DEFAULT_ACADEMIC_YEAR } from "@/data/academicYears"
 import type { Session } from "@/data/types"
 import { ScopePicker } from "@/features/admin/curriculum/ScopePicker"
 import { GroupPicker } from "./GroupPicker"
@@ -38,6 +39,7 @@ export function SessionFormSheet({
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
+  const [academicYear, setAcademicYear] = useState<string>(DEFAULT_ACADEMIC_YEAR)
   const [date, setDate] = useState("")
   const [startTime, setStartTime] = useState("")
   const [endTime, setEndTime] = useState("")
@@ -52,6 +54,7 @@ export function SessionFormSheet({
     if (editing) {
       setTitle(editing.title)
       setDescription(editing.description ?? "")
+      setAcademicYear(editing.academicYear)
       setDate(editing.date)
       setStartTime(editing.startTime)
       setEndTime(editing.endTime)
@@ -62,6 +65,7 @@ export function SessionFormSheet({
     } else {
       setTitle("")
       setDescription("")
+      setAcademicYear(DEFAULT_ACADEMIC_YEAR)
       setDate(defaultDate ?? "")
       setStartTime("")
       setEndTime("")
@@ -91,6 +95,7 @@ export function SessionFormSheet({
     const patch = {
       title: title.trim(),
       description: description.trim() || undefined,
+      academicYear,
       date,
       startTime,
       endTime,
@@ -146,6 +151,25 @@ export function SessionFormSheet({
           placeholder="Le programme de la séance…"
           rows={3}
         />
+      </label>
+
+      <label className="block">
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Année scolaire</span>
+        <div className="relative">
+          <select
+            className={INPUT + " appearance-none pe-10 tabular-nums"}
+            value={academicYear}
+            onChange={(e) => setAcademicYear(e.target.value)}
+            dir="ltr"
+          >
+            {ACADEMIC_YEARS.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
+          <ChevronDown className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
+        </div>
       </label>
 
       <label className="block">

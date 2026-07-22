@@ -1,0 +1,50 @@
+[
+  {
+    "id": "acc-bac-math-complet",
+    "name": "Contenu complet — Bac Maths",
+    "description": "Tous les cours, séries, quiz et parcours de la section Bac Mathématiques.",
+    "types": ["cours", "exercice", "serie", "resume", "quiz", "quizExam", "path"],
+    "yearIds": ["y-bac-math"],
+    "subjectIds": [],
+    "chapterIds": [],
+    "academicYears": [],
+    "groupIds": [],
+    "excludedIds": []
+  },
+  {
+    "id": "acc-bacmath-seances",
+    "name": "Séances enregistrées — Élite",
+    "description": "Les enregistrements des séances du groupe Bac Maths — Élite, année scolaire 2026/2027.",
+    "types": ["recordedSession"],
+    "yearIds": [],
+    "subjectIds": [],
+    "chapterIds": [],
+    "academicYears": ["2026/2027"],
+    "groupIds": ["g-bacmath-elite"],
+    "excludedIds": []
+  },
+  {
+    "id": "acc-bac-sci-revision",
+    "name": "Révision — Bac Sciences",
+    "description": "Cours, séries et quiz des matières scientifiques pour la révision ciblée.",
+    "types": ["cours", "serie", "quiz"],
+    "yearIds": ["y-bac-sci"],
+    "subjectIds": ["subj-bac-sci-mathematiques", "subj-bac-sci-sciences-physiques"],
+    "chapterIds": [],
+    "academicYears": [],
+    "groupIds": [],
+    "excludedIds": []
+  },
+  {
+    "id": "acc-9-decouverte",
+    "name": "Découverte — 9ème année",
+    "description": "Cours et quiz de mathématiques des premiers chapitres, pour goûter à la plateforme.",
+    "types": ["cours", "quiz"],
+    "yearIds": ["y-9"],
+    "subjectIds": ["subj-9-mathematiques"],
+    "chapterIds": [],
+    "academicYears": [],
+    "groupIds": [],
+    "excludedIds": []
+  }
+]

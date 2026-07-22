@@ -11,7 +11,7 @@ const ROLES: { role: Role; label: string; desc: string; icon: LucideIcon }[] = [
   { role: "student", label: "Élève", desc: "Vos cours, votre emploi du temps et vos notes.", icon: BookOpen },
 ]
 
-/** App entry ("/"): pick one of four filtered views over the same academy. */
+/** Demo entry ("/roles"): pick one of four filtered views over the same academy. */
 export function RoleSwitcher() {
   const navigate = useNavigate()
   const setRole = useAuth((s) => s.setRole)
@@ -52,7 +52,10 @@ export function RoleSwitcher() {
           ))}
         </div>
 
-        <p className="mt-8 text-center text-[12px] text-ink-muted">
+        <p className="mt-8 flex items-center justify-center gap-4 text-center text-[12px] text-ink-muted">
+          <Link to="/" className="font-medium text-brand-600 hover:underline">
+            ← Page d’accueil
+          </Link>
           <Link to="/design-system" className="font-medium text-brand-600 hover:underline">
             Design system
           </Link>

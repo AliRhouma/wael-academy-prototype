@@ -9,6 +9,7 @@ import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
+import { ACADEMIC_YEARS, DEFAULT_ACADEMIC_YEAR } from "@/data/academicYears"
 import type { Group } from "@/data/types"
 import { MemberPicker } from "./MemberPicker"
 
@@ -26,10 +27,12 @@ export default function AdminGroupsScreen() {
   const { show, toast } = useToast()
 
   const [query, setQuery] = useState("")
+  const [scolarFilter, setScolarFilter] = useState<string>("all")
 
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Group | null>(null)
   const [title, setTitle] = useState("")
+  const [academicYear, setAcademicYear] = useState<string>(DEFAULT_ACADEMIC_YEAR)
   const [yearId, setYearId] = useState("")
   const [studentIds, setStudentIds] = useState<string[]>([])
   const [deleteTarget, setDeleteTarget] = useState<Group | null>(null)
@@ -41,21 +44,30 @@ export default function AdminGroupsScreen() {
     [years],
   )
 
+  // Années scolaires present in the data — newest first, for the filter chips.
+  const scolarYears = useMemo(
+    () => [...new Set(groups.map((g) => g.academicYear))].sort().reverse(),
+    [groups],
+  )
+
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase()
     return groups
+      .filter((g) => (scolarFilter === "all" ? true : g.academicYear === scolarFilter))
       .filter((g) =>
         q === ""
           ? true
           : g.title.toLowerCase().includes(q) ||
+            g.academicYear.includes(q) ||
             (g.yearId ? (yearName.get(g.yearId)?.toLowerCase().includes(q) ?? false) : false),
       )
       .sort((a, b) => a.title.localeCompare(b.title, "fr"))
-  }, [groups, query, yearName])
+  }, [groups, query, yearName, scolarFilter])
 
   function openAdd() {
     setEditing(null)
     setTitle("")
+    setAcademicYear(DEFAULT_ACADEMIC_YEAR)
     setYearId("")
     setStudentIds([])
     setFormOpen(true)
@@ -64,6 +76,7 @@ export default function AdminGroupsScreen() {
   function openEdit(group: Group) {
     setEditing(group)
     setTitle(group.title)
+    setAcademicYear(group.academicYear)
     setYearId(group.yearId ?? "")
     setStudentIds(group.studentIds)
     setFormOpen(true)
@@ -75,6 +88,7 @@ export default function AdminGroupsScreen() {
     if (!canSubmit) return
     const patch = {
       title: title.trim(),
+      academicYear,
       yearId: yearId || undefined,
       studentIds,
     }
@@ -126,14 +140,42 @@ export default function AdminGroupsScreen() {
         </div>
       ) : (
         <>
-          <div className="relative md:w-72">
-            <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher un groupe, une année…"
-              className={INPUT + " ps-9"}
-            />
+          {/* Année scolaire chips + search — the chips only appear when the data
+              spans more than one année scolaire. */}
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            {scolarYears.length > 1 ? (
+              <div className="-mx-1 flex gap-2 overflow-x-auto scroll-touch px-1 pb-1">
+                {["all", ...scolarYears].map((y) => {
+                  const active = scolarFilter === y
+                  return (
+                    <button
+                      key={y}
+                      type="button"
+                      onClick={() => setScolarFilter(y)}
+                      className={
+                        "inline-flex h-9 shrink-0 items-center rounded-full border px-3.5 text-sm font-medium tabular-nums transition " +
+                        (active
+                          ? "border-transparent bg-brand-600 text-ink-inverted"
+                          : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
+                      }
+                    >
+                      {y === "all" ? "Toutes les années scolaires" : y}
+                    </button>
+                  )
+                })}
+              </div>
+            ) : (
+              <span />
+            )}
+            <div className="relative md:w-72">
+              <Search className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Rechercher un groupe, une année…"
+                className={INPUT + " ps-9"}
+              />
+            </div>
           </div>
 
           {rows.length === 0 ? (
@@ -161,6 +203,7 @@ export default function AdminGroupsScreen() {
                         {g.title}
                       </p>
                       <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                        <Badge tone="warning" className="tabular-nums">{g.academicYear}</Badge>
                         {g.yearId && <Badge tone="brand" dot>{yearName.get(g.yearId) ?? "—"}</Badge>}
                         <span className="text-[12px] text-ink-muted">
                           {members.length > 0
@@ -231,8 +274,27 @@ export default function AdminGroupsScreen() {
         </label>
 
         <label className="block">
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Année scolaire</span>
+          <div className="relative">
+            <select
+              className={INPUT + " appearance-none pe-10 tabular-nums"}
+              value={academicYear}
+              onChange={(e) => setAcademicYear(e.target.value)}
+              dir="ltr"
+            >
+              {ACADEMIC_YEARS.map((y) => (
+                <option key={y} value={y}>
+                  {y}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
+          </div>
+        </label>
+
+        <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Année <span className="font-normal text-ink-muted">(optionnel)</span>
+            Niveau <span className="font-normal text-ink-muted">(optionnel)</span>
           </span>
           <div className="relative">
             <select
