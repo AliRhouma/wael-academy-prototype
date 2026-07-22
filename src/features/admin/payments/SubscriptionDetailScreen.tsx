@@ -32,10 +32,8 @@ import {
 } from "./paymentLib"
 
 const SUB_STATUS: Record<SubscriptionStatus, { label: string; tone: BadgeTone }> = {
-  actif: { label: "Actif", tone: "brand" },
-  "en retard": { label: "En retard", tone: "warning" },
+  actif: { label: "Actif", tone: "success" },
   bloqué: { label: "Bloqué", tone: "danger" },
-  soldé: { label: "Soldé", tone: "success" },
 }
 
 const INST_STATUS: Record<InstallmentStatus, { label: string; tone: BadgeTone }> = {

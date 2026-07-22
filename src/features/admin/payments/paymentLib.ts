@@ -67,20 +67,24 @@ export function installmentStatus(
   return paid > 0 ? "partial" : "upcoming"
 }
 
-export type SubscriptionStatus = "soldé" | "bloqué" | "en retard" | "actif"
+export type SubscriptionStatus = "actif" | "bloqué"
 
 /**
- * Display status of a subscription: fully paid wins, then the admin block,
- * then any overdue planned line, else plain active. Derived, never stored.
+ * Display status of a subscription — BINARY: actif or bloqué. Blocked when the
+ * admin blocked it, OR automatically when a planned tranche is overdue and the
+ * total isn't settled (an unpaid retard cuts the access). Derived, never stored.
  */
 export function subscriptionStatus(
   sub: Subscription,
   transactions: Transaction[],
   today = todayISO(),
 ): SubscriptionStatus {
-  if (paidTotal(sub, transactions) >= sub.price) return "soldé"
   if (sub.state === "blocked") return "bloqué"
-  if (sub.installments.some((i) => installmentStatus(i, transactions, today) === "overdue"))
-    return "en retard"
+  const settled = paidTotal(sub, transactions) >= sub.price
+  if (
+    !settled &&
+    sub.installments.some((i) => installmentStatus(i, transactions, today) === "overdue")
+  )
+    return "bloqué"
   return "actif"
 }

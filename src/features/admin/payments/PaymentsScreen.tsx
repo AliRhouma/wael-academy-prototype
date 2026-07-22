@@ -43,12 +43,10 @@ const INPUT =
 const FILTER_SELECT =
   "h-10 w-full appearance-none rounded-md border border-input bg-input-bg px-3 pe-9 text-sm text-ink focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
-/** Derived status → badge tone + label (each tone means one thing). */
+/** Derived status → badge tone + label — binary: actif ou bloqué. */
 const STATUS: Record<SubscriptionStatus, { label: string; tone: BadgeTone }> = {
-  actif: { label: "Actif", tone: "brand" },
-  "en retard": { label: "En retard", tone: "warning" },
+  actif: { label: "Actif", tone: "success" },
   bloqué: { label: "Bloqué", tone: "danger" },
-  soldé: { label: "Soldé", tone: "success" },
 }
 
 type StatusFilter = "all" | SubscriptionStatus
