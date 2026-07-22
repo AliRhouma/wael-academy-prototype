@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { AppShell } from "@/components/AppShell"
+import { ChatWidget } from "@/features/student/ChatWidget"
 import { useAuth } from "@/stores/useAuth"
 import type { Role } from "@/data/types"
 import type { NavItem } from "@/app/nav/types"
@@ -21,5 +22,11 @@ export function RoleLayout({ role, nav }: { role: Role; nav: NavItem[] }) {
 
   if (currentRole !== role || !currentUser) return null
 
-  return <AppShell nav={nav} />
+  return (
+    <>
+      <AppShell nav={nav} />
+      {/* Students carry the floating messagerie bubble on every screen. */}
+      {role === "student" && <ChatWidget />}
+    </>
+  )
 }

@@ -452,6 +452,25 @@ export interface Transaction {
   resources: TransactionResource[]
 }
 
+/**
+ * One message of a student ↔ administration conversation. ONE thread per
+ * student (`studentUserId`). `senderUserId` says who wrote it — the student,
+ * or WHICH admin answered (the admin's account shows on their replies). The
+ * two read flags drive the unread badges of each side.
+ */
+export interface ChatMessage {
+  id: Id
+  /** The student whose thread this message belongs to. */
+  studentUserId: Id
+  /** Who wrote it — the student themself, or an admin user. */
+  senderUserId: Id
+  text: string
+  /** ISO timestamp. */
+  at: string
+  readByAdmin: boolean
+  readByStudent: boolean
+}
+
 /** The four roles — filtered VIEWS over the same shared data, not four apps. */
 export type Role = "admin" | "teacher" | "parent" | "student"
 

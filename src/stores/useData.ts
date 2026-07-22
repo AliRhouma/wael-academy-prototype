@@ -2,6 +2,7 @@ import { create } from "zustand"
 import type {
   Access,
   Chapter,
+  ChatMessage,
   Course,
   Exam,
   Group,
@@ -41,6 +42,7 @@ import usersSeed from "@/data/seed/users.json"
 import accessesSeed from "@/data/seed/accesses.json"
 import subscriptionsSeed from "@/data/seed/subscriptions.json"
 import promoCodesSeed from "@/data/seed/promo-codes.json"
+import chatMessagesSeed from "@/data/seed/chat-messages.json"
 import transactionsSeed from "@/data/seed/transactions.json"
 import resourcesSeed from "@/data/seed/resources.json"
 import liveSessionsSeed from "@/data/seed/live-sessions.json"
@@ -69,6 +71,7 @@ interface DataState {
   subscriptions: Subscription[]
   transactions: Transaction[]
   promoCodes: PromoCode[]
+  chatMessages: ChatMessage[]
   users: User[]
   resources: Resource[]
   liveSessions: LiveSession[]
@@ -143,6 +146,12 @@ interface DataState {
   addPromoCode: (input: Omit<PromoCode, "id">) => PromoCode
   updatePromoCode: (id: string, patch: Partial<Omit<PromoCode, "id">>) => void
   removePromoCode: (id: string) => void
+
+  // Chat messages (messagerie élève ↔ administration)
+  /** Sends a message — `at` is stamped by the store. */
+  addChatMessage: (input: Omit<ChatMessage, "id" | "at">) => ChatMessage
+  /** Marks a student's whole thread read for one side (opening the view). */
+  markThreadRead: (studentUserId: string, side: "admin" | "student") => void
 
   // Groups (groupes d'élèves) CRUD
   addGroup: (input: Omit<Group, "id">) => Group
@@ -279,6 +288,7 @@ export const useData = create<DataState>()((set) => ({
   subscriptions: subscriptionsSeed as Subscription[],
   transactions: transactionsSeed as Transaction[],
   promoCodes: promoCodesSeed as PromoCode[],
+  chatMessages: chatMessagesSeed as ChatMessage[],
   users: usersSeed as User[],
   resources: resourcesSeed as Resource[],
   liveSessions: liveSessionsSeed as LiveSession[],
@@ -470,6 +480,26 @@ export const useData = create<DataState>()((set) => ({
   removePromoCode: (id) =>
     set((s) => ({ promoCodes: s.promoCodes.filter((p) => p.id !== id) })),
 
+  addChatMessage: (input) => {
+    const message: ChatMessage = {
+      id: crypto.randomUUID(),
+      ...input,
+      at: new Date().toISOString(),
+    }
+    set((s) => ({ chatMessages: [...s.chatMessages, message] }))
+    return message
+  },
+  markThreadRead: (studentUserId, side) =>
+    set((s) => ({
+      chatMessages: s.chatMessages.map((m) =>
+        m.studentUserId === studentUserId
+          ? side === "admin"
+            ? { ...m, readByAdmin: true }
+            : { ...m, readByStudent: true }
+          : m,
+      ),
+    })),
+
   addSubscription: (input) => {
     const subscription: Subscription = {
       id: crypto.randomUUID(),
@@ -624,6 +654,8 @@ export const useData = create<DataState>()((set) => ({
             ? { ...p, usedByUserIds: p.usedByUserIds.filter((uid) => uid !== id) }
             : p,
         ),
+        // A deleted student's conversation goes too.
+        chatMessages: s.chatMessages.filter((m) => m.studentUserId !== id),
       }
     }),
 }))

@@ -24,6 +24,7 @@ import AdminAccessesScreen from "@/features/admin/offers/AccessesScreen"
 import AdminAccessContentScreen from "@/features/admin/offers/AccessContentScreen"
 import AdminPromoCodesScreen from "@/features/admin/offers/PromoCodesScreen"
 import AdminPaymentsScreen from "@/features/admin/payments/PaymentsScreen"
+import AdminMessagesScreen from "@/features/admin/messages/MessagesScreen"
 import AdminSubscriptionDetailScreen from "@/features/admin/payments/SubscriptionDetailScreen"
 import AdminGroupsScreen from "@/features/admin/groups/GroupsScreen"
 import AdminSessionsScreen from "@/features/admin/sessions/SessionsScreen"
@@ -156,6 +157,7 @@ export const router = createBrowserRouter([
       calendar: <AdminCalendarScreen />,
       offers: <AdminOffersScreen />,
       payments: <AdminPaymentsScreen />,
+      messages: <AdminMessagesScreen />,
     },
     [
       { path: "curriculum/:yearId", element: <AdminSubjectsScreen /> },

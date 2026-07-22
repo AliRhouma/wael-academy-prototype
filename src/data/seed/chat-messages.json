@@ -1,0 +1,67 @@
+[
+  {
+    "id": "msg-mo-1",
+    "studentUserId": "u-student",
+    "senderUserId": "u-student",
+    "text": "Bonjour, je n'arrive pas à ouvrir la vidéo du cours « Nombres complexes ». Elle charge sans fin.",
+    "at": "2026-07-20T18:05:00.000Z",
+    "readByAdmin": true,
+    "readByStudent": true
+  },
+  {
+    "id": "msg-mo-2",
+    "studentUserId": "u-student",
+    "senderUserId": "u-admin",
+    "text": "Bonjour Mohamed ! Merci pour le signalement, on vérifie tout de suite.",
+    "at": "2026-07-20T18:22:00.000Z",
+    "readByAdmin": true,
+    "readByStudent": true
+  },
+  {
+    "id": "msg-mo-3",
+    "studentUserId": "u-student",
+    "senderUserId": "u-admin-2",
+    "text": "C'est réparé ✅ Pouvez-vous réessayer et nous confirmer ?",
+    "at": "2026-07-21T09:40:00.000Z",
+    "readByAdmin": true,
+    "readByStudent": false
+  },
+
+  {
+    "id": "msg-in-1",
+    "studentUserId": "u-student-ines",
+    "senderUserId": "u-student-ines",
+    "text": "Bonjour, est-ce que les séances enregistrées du groupe Élite sont incluses dans mon abonnement ?",
+    "at": "2026-07-22T10:15:00.000Z",
+    "readByAdmin": false,
+    "readByStudent": true
+  },
+
+  {
+    "id": "msg-em-1",
+    "studentUserId": "u-st-emna",
+    "senderUserId": "u-st-emna",
+    "text": "Bonsoir, mon accès est bloqué alors que j'ai payé un acompte la semaine dernière…",
+    "at": "2026-07-18T20:02:00.000Z",
+    "readByAdmin": true,
+    "readByStudent": true
+  },
+  {
+    "id": "msg-em-2",
+    "studentUserId": "u-st-emna",
+    "senderUserId": "u-admin",
+    "text": "Bonsoir Emna, l'acompte de 40 DT est bien noté — il reste 50 DT sur la première tranche pour réactiver l'accès. Vous pouvez passer à l'accueil quand vous voulez.",
+    "at": "2026-07-19T08:55:00.000Z",
+    "readByAdmin": true,
+    "readByStudent": true
+  },
+  {
+    "id": "msg-em-3",
+    "studentUserId": "u-st-emna",
+    "senderUserId": "u-st-emna",
+    "text": "D'accord, je passerai jeudi. Merci !",
+    "at": "2026-07-19T12:30:00.000Z",
+    "readByAdmin": false,
+    "readByStudent": true
+  }
+]
