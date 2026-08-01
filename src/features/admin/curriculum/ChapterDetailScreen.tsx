@@ -116,7 +116,11 @@ export default function AdminChapterDetailScreen() {
         })}
       </div>
 
-      {tab === "lessons" ? <LessonsPanel chapter={chapter} /> : <QuizzesPanel chapter={chapter} />}
+      {tab === "lessons" ? (
+        <LessonsPanel chapter={chapter} year={year} subject={subject} />
+      ) : (
+        <QuizzesPanel chapter={chapter} year={year} subject={subject} />
+      )}
     </div>
   )
 }

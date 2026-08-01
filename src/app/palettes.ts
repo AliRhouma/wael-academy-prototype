@@ -106,6 +106,5 @@ export const PALETTES: PaletteMeta[] = [
   },
 ]
 
-// TEMP: forced to Tonique while the palette switcher is hidden. Restore to
-// "warm" (and re-enable <PaletteDock/> in providers.tsx) when done demoing.
-export const DEFAULT_PALETTE: PaletteId = "tonique"
+/** The palette a fresh visitor gets (saved choices in localStorage win). */
+export const DEFAULT_PALETTE: PaletteId = "azure2"

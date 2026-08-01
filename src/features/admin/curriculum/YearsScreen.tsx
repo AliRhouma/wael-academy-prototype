@@ -1,6 +1,18 @@
-import { useMemo, useState } from "react"
+import { useMemo, useState, type ReactNode } from "react"
 import { useNavigate } from "react-router-dom"
-import { BookOpen, ChevronRight, Layers, Pencil, Plus, Trash2 } from "lucide-react"
+import {
+  BookOpen,
+  ChevronRight,
+  Copy,
+  GraduationCap,
+  Layers,
+  Library,
+  Pencil,
+  Plus,
+  School,
+  Trash2,
+  type LucideIcon,
+} from "lucide-react"
 import { PageHeader } from "@/components/kit/PageHeader"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
@@ -8,22 +20,66 @@ import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
-import type { Year } from "@/data/types"
+import type { Cycle, Year } from "@/data/types"
+import {
+  CYCLES,
+  cycleDef,
+  groupYearsByCycle,
+  sectionsFor,
+  yearLabel,
+  yearName,
+  yearOrder,
+} from "@/data/curriculum"
+import { copyName, duplicateYear } from "./duplicate"
+import { DuplicateSheet } from "./DuplicateSheet"
 
-const INPUT =
-  "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
+/** Per-cycle display: its icon and the tone of its icon chip. */
+const CYCLE_STYLE: Record<Cycle, { icon: LucideIcon; chip: string }> = {
+  college: { icon: School, chip: "bg-brand-50 text-brand-600" },
+  secondaire: { icon: Library, chip: "bg-info-50 text-info-600" },
+  bac: { icon: GraduationCap, chip: "bg-accent2-50 text-accent2-700" },
+}
+
+/** A chip used to pick the cycle, the niveau and the section in the form. */
+function Choice({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean
+  onClick: () => void
+  children: ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={
+        "inline-flex min-h-9 items-center rounded-full border px-3 py-1 text-sm font-medium transition " +
+        (active
+          ? "border-transparent bg-grad text-ink-inverted shadow-brand"
+          : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
+      }
+    >
+      {children}
+    </button>
+  )
+}
 
 function YearCard({
-  year,
+  label,
   count,
   onOpen,
   onEdit,
+  onDuplicate,
   onDelete,
 }: {
-  year: Year
+  /** What the card leads with — the section, or the niveau when there is none. */
+  label: string
   count: number
   onOpen: () => void
   onEdit: () => void
+  onDuplicate: () => void
   onDelete: () => void
 }) {
   return (
@@ -36,7 +92,7 @@ function YearCard({
       </span>
       <div className="min-w-0 flex-1">
         <p dir="auto" className="truncate font-display text-[15px] font-bold text-ink">
-          {year.name}
+          {label}
         </p>
         <p className="mt-0.5 text-[12px] text-ink-muted">
           {count > 0 ? `${count} matière${count > 1 ? "s" : ""}` : "Aucune matière"}
@@ -47,6 +103,7 @@ function YearCard({
         <OverflowMenu
           actions={[
             { label: "Modifier", icon: Pencil, onClick: onEdit },
+            { label: "Dupliquer", icon: Copy, onClick: onDuplicate },
             { label: "Supprimer", icon: Trash2, tone: "danger", onClick: onDelete },
           ]}
         />
@@ -55,7 +112,8 @@ function YearCard({
   )
 }
 
-/** Admin — the curriculum: study years (and streams, grouped) + subject counts. */
+/** Admin — the programme: three cycles (collège · secondaire · bac), their
+ * niveaux and, from the 2ème année on, their sections. */
 export default function AdminYearsScreen() {
   const navigate = useNavigate()
   const years = useData((s) => s.years)
@@ -67,8 +125,18 @@ export default function AdminYearsScreen() {
 
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Year | null>(null)
-  const [name, setName] = useState("")
+  const [cycle, setCycle] = useState<Cycle>("college")
+  const [level, setLevel] = useState("")
+  const [section, setSection] = useState("")
   const [deleteTarget, setDeleteTarget] = useState<Year | null>(null)
+
+  // Duplicating a classe = choosing the cycle / niveau / section it lands in.
+  const [dupTarget, setDupTarget] = useState<Year | null>(null)
+  const [dupName, setDupName] = useState("")
+  const [dupNamed, setDupNamed] = useState(false)
+  const [dupCycle, setDupCycle] = useState<Cycle>("college")
+  const [dupLevel, setDupLevel] = useState("")
+  const [dupSection, setDupSection] = useState("")
 
   const countByYear = useMemo(() => {
     const m = new Map<string, number>()
@@ -76,42 +144,125 @@ export default function AdminYearsScreen() {
     return m
   }, [subjects])
 
-  const sortedYears = useMemo(
-    () => [...years].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
-    [years],
-  )
+  const groups = useMemo(() => groupYearsByCycle(years), [years])
 
   const countFor = (y: Year) => countByYear.get(y.id) ?? 0
 
-  function openAdd() {
+  const levels = cycleDef(cycle).levels
+  const sections = sectionsFor(cycle, level)
+
+  function openAdd(preset: Cycle = "college") {
+    const first = cycleDef(preset).levels[0]
     setEditing(null)
-    setName("")
+    setCycle(preset)
+    setLevel(first?.name ?? "")
+    setSection("")
     setFormOpen(true)
   }
 
   function openEdit(year: Year) {
     setEditing(year)
-    setName(year.name)
+    setCycle(year.cycle)
+    setLevel(year.level)
+    setSection(year.section ?? "")
     setFormOpen(true)
   }
 
+  function pickCycle(next: Cycle) {
+    setCycle(next)
+    setLevel(cycleDef(next).levels[0]?.name ?? "")
+    setSection("")
+  }
+
+  function pickLevel(next: string) {
+    setLevel(next)
+    setSection("")
+  }
+
   function submit() {
-    const trimmedName = name.trim()
-    if (!trimmedName) return
+    if (!level) return
+    // A niveau with filières needs one — the class isn't identified without it.
+    if (sections.length > 0 && !section) return
+    const patch = {
+      name: yearName(level, section || undefined),
+      cycle,
+      level,
+      section: section || undefined,
+      order: yearOrder(cycle, level, section || undefined),
+    }
     if (editing) {
-      updateYear(editing.id, { name: trimmedName })
-      show("Année modifiée")
+      updateYear(editing.id, patch)
+      show("Classe modifiée")
     } else {
-      addYear({ name: trimmedName, order: years.length })
-      show("Année ajoutée")
+      addYear(patch)
+      show("Classe ajoutée")
     }
     setFormOpen(false)
+  }
+
+  const dupSections = sectionsFor(dupCycle, dupLevel)
+  /** True while the copy would land in the exact slot of its original. */
+  const dupSameSlot =
+    !!dupTarget &&
+    dupCycle === dupTarget.cycle &&
+    dupLevel === dupTarget.level &&
+    (dupSection || undefined) === dupTarget.section
+
+  function openDuplicate(year: Year) {
+    setDupTarget(year)
+    setDupCycle(year.cycle)
+    setDupLevel(year.level)
+    setDupSection(year.section ?? "")
+    setDupName(copyName(year.name))
+    setDupNamed(false)
+  }
+
+  /** Keeps the name in step with the chosen slot until the user types their own. */
+  function syncDupName(source: Year | null, c: Cycle, l: string, sec: string) {
+    if (dupNamed || !source || !l) return
+    const same = c === source.cycle && l === source.level && (sec || undefined) === source.section
+    const base = yearName(l, sec || undefined)
+    setDupName(same ? copyName(base) : base)
+  }
+
+  function pickDupCycle(next: Cycle) {
+    const first = cycleDef(next).levels[0]?.name ?? ""
+    setDupCycle(next)
+    setDupLevel(first)
+    setDupSection("")
+    syncDupName(dupTarget, next, first, "")
+  }
+
+  function pickDupLevel(next: string) {
+    setDupLevel(next)
+    setDupSection("")
+    syncDupName(dupTarget, dupCycle, next, "")
+  }
+
+  function pickDupSection(next: string) {
+    setDupSection(next)
+    syncDupName(dupTarget, dupCycle, dupLevel, next)
+  }
+
+  function submitDuplicate() {
+    if (!dupTarget || !dupLevel) return
+    if (dupSections.length > 0 && !dupSection) return
+    const copy = duplicateYear(dupTarget, {
+      name: dupName.trim(),
+      cycle: dupCycle,
+      level: dupLevel,
+      section: dupSection || undefined,
+      // Same slot → sits right after the original; elsewhere → its own slot.
+      order: dupSameSlot ? undefined : yearOrder(dupCycle, dupLevel, dupSection || undefined),
+    })
+    show(`« ${copy.name} » créée avec les matières de « ${dupTarget.name} »`)
+    setDupTarget(null)
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removeYear(deleteTarget.id)
-    show("Année supprimée")
+    show("Classe supprimée")
     setDeleteTarget(null)
   }
 
@@ -119,18 +270,18 @@ export default function AdminYearsScreen() {
   const addButton = (
     <button
       type="button"
-      onClick={openAdd}
+      onClick={() => openAdd()}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter une année
+      <Plus className="size-4" /> Ajouter une classe
     </button>
   )
 
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Années & matières"
-        subtitle="Le programme de l’académie — chaque année regroupe ses matières."
+        title="Programme"
+        subtitle="Collège, secondaire et bac — chaque classe regroupe ses matières."
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -138,55 +289,247 @@ export default function AdminYearsScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Layers}
-            title="Aucune année"
-            description="Commencez par créer une année du programme (ex. 7ème année, Bac — Mathématiques)."
+            title="Aucune classe"
+            description="Commencez par créer une classe du programme (ex. 7ème année, Bac — Mathématiques)."
             action={addButton}
           />
         </div>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2">
-          {sortedYears.map((y) => (
-            <YearCard
-              key={y.id}
-              year={y}
-              count={countFor(y)}
-              onOpen={() => navigate(y.id)}
-              onEdit={() => openEdit(y)}
-              onDelete={() => setDeleteTarget(y)}
-            />
-          ))}
+        <div className="flex flex-col gap-8">
+          {groups.map(({ cycle: def, years: cycleYears, levels: levelGroups }) => {
+            const style = CYCLE_STYLE[def.key]
+            const Icon = style.icon
+            return (
+              <section key={def.key} className="flex flex-col gap-4">
+                <div className="flex items-center gap-3 border-b border-border pb-3">
+                  <span className={`grid size-9 shrink-0 place-items-center rounded-md ${style.chip}`}>
+                    <Icon className="size-[18px]" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="font-display text-[17px] font-bold leading-tight text-ink">
+                      {def.label}
+                    </h2>
+                    <p className="mt-0.5 truncate text-[12px] text-ink-muted">{def.hint}</p>
+                  </div>
+                  <span className="shrink-0 rounded-full bg-neutral-100 px-2.5 py-1 text-[12px] font-medium tabular-nums text-ink-muted">
+                    {cycleYears.length} classe{cycleYears.length > 1 ? "s" : ""}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => openAdd(def.key)}
+                    className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-[13px] font-medium text-brand-600 transition hover:bg-brand-50"
+                  >
+                    <Plus className="size-4" />
+                    <span className="hidden sm:inline">Classe</span>
+                  </button>
+                </div>
+
+                {levelGroups.length === 0 ? (
+                  <p className="rounded-lg border border-dashed border-border bg-surface px-4 py-5 text-sm text-ink-muted">
+                    Aucune classe dans ce cycle — ajoutez-en une.
+                  </p>
+                ) : (
+                  <div className="flex flex-col gap-5">
+                    {levelGroups.map((lg) => (
+                      <div key={lg.level} className="flex flex-col gap-2.5">
+                        {lg.sectioned && (
+                          <p
+                            dir="auto"
+                            className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600"
+                          >
+                            {lg.level}
+                            <span className="ms-2 font-normal normal-case tracking-normal text-ink-muted">
+                              {lg.years.length} section{lg.years.length > 1 ? "s" : ""}
+                            </span>
+                          </p>
+                        )}
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {lg.years.map((y) => (
+                            <YearCard
+                              key={y.id}
+                              label={yearLabel(y)}
+                              count={countFor(y)}
+                              onOpen={() => navigate(y.id)}
+                              onEdit={() => openEdit(y)}
+                              onDuplicate={() => openDuplicate(y)}
+                              onDelete={() => setDeleteTarget(y)}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )
+          })}
         </div>
       )}
 
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier l’année" : "Nouvelle année"}
+        title={editing ? "Modifier la classe" : "Nouvelle classe"}
         description={
           editing
             ? undefined
-            : "Le nom porte le niveau et la filière (ex. « Bac — Mathématiques »)."
+            : "Choisissez le cycle, puis le niveau — et sa section à partir de la 2ème année."
         }
         submitLabel={editing ? "Enregistrer" : "Ajouter"}
         onSubmit={submit}
       >
-        <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom de l’année</span>
-          <input
-            className={INPUT + " text-start"}
-            dir="auto"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Ex. 7ème année · Bac — Mathématiques"
-            autoFocus
-          />
-        </label>
+        <div>
+          <span className="mb-2 block text-sm font-medium text-ink-subtle">Cycle</span>
+          <div className="grid grid-cols-3 gap-2">
+            {CYCLES.map((c) => {
+              const Icon = CYCLE_STYLE[c.key].icon
+              const active = cycle === c.key
+              return (
+                <button
+                  key={c.key}
+                  type="button"
+                  onClick={() => pickCycle(c.key)}
+                  className={
+                    "inline-flex h-11 items-center justify-center gap-2 rounded-md border px-2 text-sm font-medium transition " +
+                    (active
+                      ? "border-transparent bg-grad text-ink-inverted shadow-brand"
+                      : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
+                  }
+                >
+                  <Icon className="size-4 shrink-0" /> {c.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div>
+          <span className="mb-2 block text-sm font-medium text-ink-subtle">Niveau</span>
+          <div className="flex flex-wrap gap-2">
+            {levels.map((l) => (
+              <Choice key={l.name} active={level === l.name} onClick={() => pickLevel(l.name)}>
+                <span dir="auto">{l.name}</span>
+              </Choice>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <span className="mb-2 block text-sm font-medium text-ink-subtle">
+            Section{" "}
+            <span className="font-normal text-ink-muted">
+              {sections.length > 0 ? "(obligatoire)" : "(aucune à ce niveau)"}
+            </span>
+          </span>
+          {sections.length === 0 ? (
+            <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
+              {level || "Ce niveau"} n’a pas de sections — la classe porte le niveau seul.
+            </p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {sections.map((s) => (
+                <Choice key={s} active={section === s} onClick={() => setSection(s)}>
+                  <span dir="auto">{s}</span>
+                </Choice>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <p className="rounded-md border border-border bg-surface-muted px-3 py-2.5 text-sm text-ink-subtle">
+          Nom de la classe :{" "}
+          <span dir="auto" className="font-display font-bold text-ink">
+            {level ? yearName(level, section || undefined) : "—"}
+          </span>
+        </p>
       </FormSheet>
+
+      <DuplicateSheet
+        open={dupTarget !== null}
+        onOpenChange={(o) => !o && setDupTarget(null)}
+        title="Dupliquer la classe"
+        nameLabel="Nom de la copie"
+        name={dupName}
+        onNameChange={(v) => {
+          setDupName(v)
+          setDupNamed(true)
+        }}
+        note="Toutes les matières de la classe — et leur contenu — sont copiées."
+        blocker={
+          dupSections.length > 0 && !dupSection
+            ? "Choisissez la section de destination."
+            : undefined
+        }
+        onSubmit={submitDuplicate}
+      >
+        <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface-muted p-3.5">
+          <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+            Destination
+          </p>
+
+          <div>
+            <span className="mb-2 block text-sm font-medium text-ink-subtle">Cycle</span>
+            <div className="grid grid-cols-3 gap-2">
+              {CYCLES.map((c) => {
+                const Icon = CYCLE_STYLE[c.key].icon
+                const active = dupCycle === c.key
+                return (
+                  <button
+                    key={c.key}
+                    type="button"
+                    onClick={() => pickDupCycle(c.key)}
+                    className={
+                      "inline-flex h-11 items-center justify-center gap-2 rounded-md border px-2 text-sm font-medium transition " +
+                      (active
+                        ? "border-transparent bg-grad text-ink-inverted shadow-brand"
+                        : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
+                    }
+                  >
+                    <Icon className="size-4 shrink-0" /> {c.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          <div>
+            <span className="mb-2 block text-sm font-medium text-ink-subtle">Niveau</span>
+            <div className="flex flex-wrap gap-2">
+              {cycleDef(dupCycle).levels.map((l) => (
+                <Choice
+                  key={l.name}
+                  active={dupLevel === l.name}
+                  onClick={() => pickDupLevel(l.name)}
+                >
+                  <span dir="auto">{l.name}</span>
+                </Choice>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <span className="mb-2 block text-sm font-medium text-ink-subtle">Section</span>
+            {dupSections.length === 0 ? (
+              <p className="rounded-md border border-dashed border-border bg-surface px-3 py-2.5 text-sm text-ink-muted">
+                {dupLevel || "Ce niveau"} n’a pas de sections.
+              </p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {dupSections.map((s) => (
+                  <Choice key={s} active={dupSection === s} onClick={() => pickDupSection(s)}>
+                    <span dir="auto">{s}</span>
+                  </Choice>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </DuplicateSheet>
 
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cette année ?"
+        title="Supprimer cette classe ?"
         description={
           deleteTarget
             ? `« ${deleteTarget.name} » et ses ${countFor(deleteTarget)} matière(s) seront supprimées. Cette action est définitive.`

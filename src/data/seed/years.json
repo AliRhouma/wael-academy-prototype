@@ -1,22 +1,134 @@
 [
-  { "id": "y-7", "name": "7ème année", "order": 0 },
-  { "id": "y-8", "name": "8ème année", "order": 1 },
-  { "id": "y-9", "name": "9ème année", "order": 2 },
-  { "id": "y-1", "name": "1ère année", "order": 3 },
-  { "id": "y-2-eco", "name": "2ème année — Économie", "order": 4 },
-  { "id": "y-2-info", "name": "2ème année — Informatique", "order": 5 },
-  { "id": "y-2-lettres", "name": "2ème année — Lettres", "order": 6 },
-  { "id": "y-2-sci", "name": "2ème année — Sciences", "order": 7 },
-  { "id": "y-3-eco", "name": "3ème année — Économie & Gestion", "order": 8 },
-  { "id": "y-3-info", "name": "3ème année — Informatique", "order": 9 },
-  { "id": "y-3-lettres", "name": "3ème année — Lettres", "order": 10 },
-  { "id": "y-3-math", "name": "3ème année — Mathématiques", "order": 11 },
-  { "id": "y-3-sci", "name": "3ème année — Sciences", "order": 12 },
-  { "id": "y-3-tech", "name": "3ème année — Technique", "order": 13 },
-  { "id": "y-bac-eco", "name": "Bac — Économie & Gestion", "order": 14 },
-  { "id": "y-bac-info", "name": "Bac — Informatique", "order": 15 },
-  { "id": "y-bac-lettres", "name": "Bac — Lettres", "order": 16 },
-  { "id": "y-bac-math", "name": "Bac — Mathématiques", "order": 17 },
-  { "id": "y-bac-sci", "name": "Bac — Sciences expérimentales", "order": 18 },
-  { "id": "y-bac-tech", "name": "Bac — Technique", "order": 19 }
+  { "id": "y-7", "name": "7ème année", "cycle": "college", "level": "7ème année", "order": 0 },
+  { "id": "y-8", "name": "8ème année", "cycle": "college", "level": "8ème année", "order": 100 },
+  { "id": "y-9", "name": "9ème année", "cycle": "college", "level": "9ème année", "order": 200 },
+  { "id": "y-1", "name": "1ère année", "cycle": "secondaire", "level": "1ère année", "order": 1000 },
+  {
+    "id": "y-2-sci",
+    "name": "2ème année — Sciences",
+    "cycle": "secondaire",
+    "level": "2ème année",
+    "section": "Sciences",
+    "order": 1100
+  },
+  {
+    "id": "y-2-lettres",
+    "name": "2ème année — Lettres",
+    "cycle": "secondaire",
+    "level": "2ème année",
+    "section": "Lettres",
+    "order": 1101
+  },
+  {
+    "id": "y-2-eco",
+    "name": "2ème année — Économie & Services",
+    "cycle": "secondaire",
+    "level": "2ème année",
+    "section": "Économie & Services",
+    "order": 1102
+  },
+  {
+    "id": "y-2-info",
+    "name": "2ème année — Informatique",
+    "cycle": "secondaire",
+    "level": "2ème année",
+    "section": "Informatique",
+    "order": 1103
+  },
+  {
+    "id": "y-3-math",
+    "name": "3ème année — Mathématiques",
+    "cycle": "secondaire",
+    "level": "3ème année",
+    "section": "Mathématiques",
+    "order": 1200
+  },
+  {
+    "id": "y-3-sci",
+    "name": "3ème année — Sciences expérimentales",
+    "cycle": "secondaire",
+    "level": "3ème année",
+    "section": "Sciences expérimentales",
+    "order": 1201
+  },
+  {
+    "id": "y-3-eco",
+    "name": "3ème année — Économie & Gestion",
+    "cycle": "secondaire",
+    "level": "3ème année",
+    "section": "Économie & Gestion",
+    "order": 1202
+  },
+  {
+    "id": "y-3-lettres",
+    "name": "3ème année — Lettres",
+    "cycle": "secondaire",
+    "level": "3ème année",
+    "section": "Lettres",
+    "order": 1203
+  },
+  {
+    "id": "y-3-tech",
+    "name": "3ème année — Sciences techniques",
+    "cycle": "secondaire",
+    "level": "3ème année",
+    "section": "Sciences techniques",
+    "order": 1204
+  },
+  {
+    "id": "y-3-info",
+    "name": "3ème année — Sciences de l'informatique",
+    "cycle": "secondaire",
+    "level": "3ème année",
+    "section": "Sciences de l'informatique",
+    "order": 1205
+  },
+  {
+    "id": "y-bac-math",
+    "name": "Bac — Mathématiques",
+    "cycle": "bac",
+    "level": "Bac",
+    "section": "Mathématiques",
+    "order": 2000
+  },
+  {
+    "id": "y-bac-sci",
+    "name": "Bac — Sciences expérimentales",
+    "cycle": "bac",
+    "level": "Bac",
+    "section": "Sciences expérimentales",
+    "order": 2001
+  },
+  {
+    "id": "y-bac-eco",
+    "name": "Bac — Économie & Gestion",
+    "cycle": "bac",
+    "level": "Bac",
+    "section": "Économie & Gestion",
+    "order": 2002
+  },
+  {
+    "id": "y-bac-lettres",
+    "name": "Bac — Lettres",
+    "cycle": "bac",
+    "level": "Bac",
+    "section": "Lettres",
+    "order": 2003
+  },
+  {
+    "id": "y-bac-tech",
+    "name": "Bac — Sciences techniques",
+    "cycle": "bac",
+    "level": "Bac",
+    "section": "Sciences techniques",
+    "order": 2004
+  },
+  {
+    "id": "y-bac-info",
+    "name": "Bac — Sciences de l'informatique",
+    "cycle": "bac",
+    "level": "Bac",
+    "section": "Sciences de l'informatique",
+    "order": 2005
+  }
 ]

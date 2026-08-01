@@ -21,6 +21,34 @@
     "studentIds": ["u-student", "u-student-sarra", "u-st-selim", "u-st-emna", "u-st-wassim"]
   },
   {
+    "id": "g-bacsci-elite",
+    "title": "Bac Sciences — Élite",
+    "academicYear": "2026/2027",
+    "yearId": "y-bac-sci",
+    "studentIds": ["u-st-selim", "u-st-emna"]
+  },
+  {
+    "id": "g-bacsci-a",
+    "title": "Bac Sciences — Groupe A",
+    "academicYear": "2026/2027",
+    "yearId": "y-bac-sci",
+    "studentIds": ["u-student-sarra", "u-st-wassim"]
+  },
+  {
+    "id": "g-bacsci-a-2526",
+    "title": "Bac Sciences — Groupe A",
+    "academicYear": "2025/2026",
+    "yearId": "y-bac-sci",
+    "studentIds": ["u-student", "u-student-sarra", "u-st-selim"]
+  },
+  {
+    "id": "g-bacsci-soir-2526",
+    "title": "Bac Sciences — Groupe du soir",
+    "academicYear": "2025/2026",
+    "yearId": "y-bac-sci",
+    "studentIds": ["u-st-emna", "u-st-wassim"]
+  },
+  {
     "id": "g-bacmath-elite",
     "title": "Bac Maths — Élite",
     "academicYear": "2026/2027",

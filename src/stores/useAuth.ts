@@ -13,6 +13,8 @@ interface AuthState {
   currentRole: Role | null
   currentUser: User | null
   setRole: (role: Role) => void
+  /** Sign out — clears the session; the caller routes back to the landing page. */
+  logout: () => void
 }
 
 export const useAuth = create<AuthState>()((set) => ({
@@ -20,4 +22,5 @@ export const useAuth = create<AuthState>()((set) => ({
   currentUser: null,
   setRole: (role) =>
     set({ currentRole: role, currentUser: USERS.find((u) => u.role === role) ?? null }),
+  logout: () => set({ currentRole: null, currentUser: null }),
 }))

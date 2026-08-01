@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { ChevronRight, Layers3, Pencil, Plus, Trash2 } from "lucide-react"
+import { ChevronRight, Copy, Layers3, Pencil, Plus, Trash2 } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
 import { Badge } from "@/components/kit/Badge"
@@ -10,6 +10,13 @@ import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
 import type { Chapter, Subject, Year } from "@/data/types"
 import { ScopePicker } from "./ScopePicker"
+import { copyName, duplicateChapter } from "./duplicate"
+import {
+  DuplicateSheet,
+  EMPTY_DESTINATION,
+  useDestinationName,
+  type Destination,
+} from "./DuplicateSheet"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
@@ -60,6 +67,11 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
   const [pickedSubjects, setPickedSubjects] = useState<string[]>([])
   const [deleteTarget, setDeleteTarget] = useState<Chapter | null>(null)
 
+  const [dupTarget, setDupTarget] = useState<Chapter | null>(null)
+  const [dupName, setDupName] = useState("")
+  const [dupDest, setDupDest] = useState<Destination>(EMPTY_DESTINATION)
+  const dupInto = useDestinationName(dupDest, "subject")
+
   function openAdd() {
     setEditing(null)
     setName("")
@@ -92,6 +104,23 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
       show("Chapitre ajouté")
     }
     setFormOpen(false)
+  }
+
+  function openDuplicate(chapter: Chapter) {
+    setDupTarget(chapter)
+    setDupName(copyName(chapter.name))
+    setDupDest({ yearId: year.id, subjectId: subject.id, chapterId: "" })
+  }
+
+  function submitDuplicate() {
+    if (!dupTarget) return
+    duplicateChapter(dupTarget, {
+      name: dupName.trim(),
+      subjectIds: [dupDest.subjectId],
+      yearIds: [dupDest.yearId],
+    })
+    show(`Chapitre dupliqué dans « ${dupInto} »`)
+    setDupTarget(null)
   }
 
   function confirmDelete() {
@@ -173,6 +202,7 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
                     <OverflowMenu
                       actions={[
                         { label: "Modifier", icon: Pencil, onClick: () => openEdit(chapter) },
+                        { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(chapter) },
                         {
                           label: "Supprimer",
                           icon: Trash2,
@@ -196,7 +226,7 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
         description={
           editing
             ? undefined
-            : "Un chapitre peut être partagé entre plusieurs matières et plusieurs années."
+            : `Ajouté à « ${subject.name} » — ${year.name}.`
         }
         submitLabel={editing ? "Enregistrer" : "Ajouter"}
         onSubmit={submit}
@@ -213,13 +243,31 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
           />
         </label>
 
-        <ScopePicker
-          yearIds={pickedYears}
-          subjectIds={pickedSubjects}
-          onYearsChange={setPickedYears}
-          onSubjectsChange={setPickedSubjects}
-        />
+        {/* Scope is implicit on creation (the page you're on); only an edit can
+            widen a chapter to other matières / classes. */}
+        {editing && (
+          <ScopePicker
+            yearIds={pickedYears}
+            subjectIds={pickedSubjects}
+            onYearsChange={setPickedYears}
+            onSubjectsChange={setPickedSubjects}
+          />
+        )}
       </FormSheet>
+
+      <DuplicateSheet
+        open={dupTarget !== null}
+        onOpenChange={(o) => !o && setDupTarget(null)}
+        title="Dupliquer le chapitre"
+        nameLabel="Nom de la copie"
+        name={dupName}
+        onNameChange={setDupName}
+        depth="subject"
+        destination={dupDest}
+        onDestinationChange={setDupDest}
+        note="Les contenus, les quiz et les examens de quiz du chapitre sont copiés avec lui."
+        onSubmit={submitDuplicate}
+      />
 
       <ConfirmDialog
         open={deleteTarget !== null}

@@ -22,6 +22,8 @@ import type {
   Transaction,
   User,
   UserFieldChange,
+  VideoComment,
+  VideoReaction,
   Year,
 } from "@/data/types"
 import studentsSeed from "@/data/seed/students.json"
@@ -46,6 +48,7 @@ import chatMessagesSeed from "@/data/seed/chat-messages.json"
 import transactionsSeed from "@/data/seed/transactions.json"
 import resourcesSeed from "@/data/seed/resources.json"
 import liveSessionsSeed from "@/data/seed/live-sessions.json"
+import videoCommentsSeed from "@/data/seed/video-comments.json"
 
 /**
  * The ONE shared dataset. Every role reads from here — dashboards filter it by
@@ -75,6 +78,8 @@ interface DataState {
   users: User[]
   resources: Resource[]
   liveSessions: LiveSession[]
+  videoComments: VideoComment[]
+  videoReactions: VideoReaction[]
 
   // Years CRUD
   addYear: (input: Omit<Year, "id">) => Year
@@ -169,6 +174,16 @@ interface DataState {
   updateResource: (id: string, patch: Partial<Omit<Resource, "id">>) => void
   /** Removes the resource AND detaches it from every live session. */
   removeResource: (id: string) => void
+
+  // Video comments — createdAt stamped by the store.
+  addVideoComment: (input: Omit<VideoComment, "id" | "createdAt">) => VideoComment
+  removeVideoComment: (id: string) => void
+
+  /** J'aime / je n'aime pas. `null` clears the élève's vote (voting twice). */
+  setVideoReaction: (
+    ref: { kind: VideoComment["kind"]; videoId: string; userId: string },
+    value: "like" | "dislike" | null,
+  ) => void
 
   // Live sessions (sessions en direct) CRUD
   addLiveSession: (input: Omit<LiveSession, "id">) => LiveSession
@@ -292,6 +307,10 @@ export const useData = create<DataState>()((set) => ({
   users: usersSeed as User[],
   resources: resourcesSeed as Resource[],
   liveSessions: liveSessionsSeed as LiveSession[],
+  videoComments: videoCommentsSeed as VideoComment[],
+  // Nobody has voted yet in the seed — the displayed count starts from the
+  // video's own base (see `baseLikes`) and this only carries real votes.
+  videoReactions: [],
 
   addYear: (input) => {
     const year: Year = { id: crypto.randomUUID(), ...input }
@@ -587,6 +606,28 @@ export const useData = create<DataState>()((set) => ({
           : ls,
       ),
     })),
+
+  addVideoComment: (input) => {
+    const comment: VideoComment = {
+      id: crypto.randomUUID(),
+      ...input,
+      createdAt: new Date().toISOString(),
+    }
+    set((s) => ({ videoComments: [...s.videoComments, comment] }))
+    return comment
+  },
+  removeVideoComment: (id) =>
+    set((s) => ({ videoComments: s.videoComments.filter((c) => c.id !== id) })),
+
+  setVideoReaction: (ref, value) =>
+    set((s) => {
+      const rest = s.videoReactions.filter(
+        (r) => !(r.userId === ref.userId && r.videoId === ref.videoId && r.kind === ref.kind),
+      )
+      return {
+        videoReactions: value ? [...rest, { id: crypto.randomUUID(), ...ref, value }] : rest,
+      }
+    }),
 
   addLiveSession: (input) => {
     const liveSession: LiveSession = { id: crypto.randomUUID(), ...input }

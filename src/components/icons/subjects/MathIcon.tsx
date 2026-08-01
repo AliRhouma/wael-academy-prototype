@@ -1,0 +1,80 @@
+/**
+ * MathIcon — converted from `svg icons/Math.svg` (supplied art), recoloured to
+ * the Wael tokens: blues ride the brand ramp, lavenders the accent ramp, outlines
+ * the neutral ramp, warm/pink details the warning & danger tokens. Token-driven
+ * throughout, so it follows whatever palette is active (data-palette) instead of
+ * being locked to the source blues.
+ *
+ * Gradient ids are namespaced `math-*` — a grid of these renders at once and
+ * duplicate defs ids would cross-wire between cards.
+ * Generated, then reviewed; edit here (not the source svg).
+ */
+import { useGlyphId } from "../useGlyphId"
+
+export function MathIcon({ className }: { className?: string }) {
+  const uid = useGlyphId()
+  return (
+    <svg viewBox="0 0 59 59" className={className} fill="none" aria-hidden="true">
+      <g clipPath={`url(#math-clip0_8660_424916-${uid})`}>
+      <path d="M45.9322 35.4441H12.656C12.2372 35.4441 11.8984 35.1054 11.8984 34.6866V32.8933C11.8984 32.4745 12.2372 32.1357 12.656 32.1357H45.9334C46.3522 32.1357 46.691 32.4745 46.691 32.8933V34.6866C46.6898 35.1043 46.3511 35.4441 45.9322 35.4441Z" fill={`url(#math-paint0_linear_8660_424916-${uid})`}/>
+      <path d="M43.1506 58.5924C42.7787 58.5924 42.4365 58.3487 42.3267 57.9745L40.0951 50.3254C39.9624 49.87 40.2233 49.3939 40.6788 49.2612C41.1342 49.1284 41.6103 49.3893 41.743 49.8448L43.9746 57.4938C44.1073 57.9493 43.8464 58.4253 43.3909 58.5581C43.3108 58.581 43.2307 58.5924 43.1506 58.5924Z" fill={`url(#math-paint1_linear_8660_424916-${uid})`}/>
+      <path d="M41.2943 51.8577C41.1684 52.2525 40.6248 52.2457 40.5092 51.8474L29.4648 13.9925L33.8799 12.6216L41.4568 38.5921C42.7202 42.927 42.6641 47.5572 41.2943 51.8577Z" fill={`url(#math-paint2_linear_8660_424916-${uid})`}/>
+      <path d="M15.4665 58.5924C15.3863 58.5924 15.3062 58.581 15.2261 58.5581C14.7707 58.4253 14.5098 57.9493 14.6425 57.4938L16.874 49.8448C17.0068 49.3893 17.4829 49.1284 17.9383 49.2612C18.3938 49.3939 18.6547 49.87 18.5219 50.3254L16.2904 57.9745C16.1805 58.3487 15.8372 58.5924 15.4665 58.5924Z" fill={`url(#math-paint3_linear_8660_424916-${uid})`}/>
+      <path d="M17.295 51.8577C17.4209 52.2525 17.9645 52.2457 18.0801 51.8474L29.1245 13.9925L24.7094 12.6216L17.1325 38.5921C15.8691 42.927 15.9252 47.5572 17.295 51.8577Z" fill={`url(#math-paint4_linear_8660_424916-${uid})`}/>
+      <path d="M31.4421 5.48892H27.1473C27.0672 5.48892 27.002 5.4237 27.002 5.34359V2.29382C27.0008 1.027 28.0273 0.000488281 29.2941 0.000488281C30.561 0.000488281 31.5875 1.027 31.5875 2.29382V5.34473C31.5875 5.4237 31.5222 5.48892 31.4421 5.48892Z" fill={`url(#math-paint5_linear_8660_424916-${uid})`}/>
+      <path d="M29.2935 16.5708C32.4472 16.5708 35.0039 13.9337 35.0039 10.6806C35.0039 7.42762 32.4472 4.79053 29.2935 4.79053C26.1397 4.79053 23.583 7.42762 23.583 10.6806C23.583 13.9337 26.1397 16.5708 29.2935 16.5708Z" fill={`url(#math-paint6_linear_8660_424916-${uid})`}/>
+      <path d="M29.2951 13.8498C30.9915 13.8498 32.3667 12.4311 32.3667 10.681C32.3667 8.93092 30.9915 7.51221 29.2951 7.51221C27.5988 7.51221 26.2236 8.93092 26.2236 10.681C26.2236 12.4311 27.5988 13.8498 29.2951 13.8498Z" fill={`url(#math-paint7_linear_8660_424916-${uid})`}/>
+      <path d="M29.2933 38.0257C28.3411 38.0257 27.5698 37.2544 27.5698 36.3023V31.2762C27.5698 30.324 28.3411 29.5527 29.2933 29.5527C30.2454 29.5527 31.0167 30.324 31.0167 31.2762V36.3011C31.0167 37.2544 30.2454 38.0257 29.2933 38.0257Z" fill={`url(#math-paint8_linear_8660_424916-${uid})`}/>
+      </g>
+      <defs>
+      <linearGradient id={`math-paint0_linear_8660_424916-${uid}`} x1="11.8981" y1="33.7895" x2="46.6902" y2="33.7895" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--neutral-600)"/>
+      <stop offset="0.3104" stopColor="var(--neutral-600)"/>
+      <stop offset="0.8987" stopColor="var(--neutral-700)"/>
+      <stop offset="1" stopColor="var(--neutral-700)"/>
+      </linearGradient>
+      <linearGradient id={`math-paint1_linear_8660_424916-${uid}`} x1="40.8378" y1="54.3398" x2="42.7078" y2="53.6677" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--neutral-600)"/>
+      <stop offset="0.3104" stopColor="var(--neutral-600)"/>
+      <stop offset="0.8987" stopColor="var(--neutral-700)"/>
+      <stop offset="1" stopColor="var(--neutral-700)"/>
+      </linearGradient>
+      <linearGradient id={`math-paint2_linear_8660_424916-${uid}`} x1="34.9985" y1="33.1401" x2="39.4397" y2="31.7376" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--brand-200)"/>
+      <stop offset="1" stopColor="var(--brand-500)"/>
+      </linearGradient>
+      <linearGradient id={`math-paint3_linear_8660_424916-${uid}`} x1="15.4877" y1="53.5276" x2="17.3285" y2="54.1704" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--neutral-600)"/>
+      <stop offset="0.3104" stopColor="var(--neutral-600)"/>
+      <stop offset="0.8987" stopColor="var(--neutral-700)"/>
+      <stop offset="1" stopColor="var(--neutral-700)"/>
+      </linearGradient>
+      <linearGradient id={`math-paint4_linear_8660_424916-${uid}`} x1="19.2759" y1="31.8383" x2="23.7172" y2="33.1239" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--brand-200)"/>
+      <stop offset="1" stopColor="var(--brand-500)"/>
+      </linearGradient>
+      <linearGradient id={`math-paint5_linear_8660_424916-${uid}`} x1="29.2941" y1="0.696728" x2="29.2941" y2="6.13161" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--brand-200)"/>
+      <stop offset="1" stopColor="var(--brand-500)"/>
+      </linearGradient>
+      <linearGradient id={`math-paint6_linear_8660_424916-${uid}`} x1="25.0194" y1="6.40616" x2="33.2025" y2="14.5893" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--neutral-600)"/>
+      <stop offset="0.3104" stopColor="var(--neutral-600)"/>
+      <stop offset="0.8987" stopColor="var(--neutral-700)"/>
+      <stop offset="1" stopColor="var(--neutral-700)"/>
+      </linearGradient>
+      <linearGradient id={`math-paint7_linear_8660_424916-${uid}`} x1="27.2319" y1="8.61733" x2="31.264" y2="12.6494" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--brand-200)"/>
+      <stop offset="1" stopColor="var(--brand-500)"/>
+      </linearGradient>
+      <linearGradient id={`math-paint8_linear_8660_424916-${uid}`} x1="27.5694" y1="33.7893" x2="31.0171" y2="33.7893" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--brand-200)"/>
+      <stop offset="1" stopColor="var(--brand-500)"/>
+      </linearGradient>
+      <clipPath id={`math-clip0_8660_424916-${uid}`}>
+      <rect width="58.5922" height="58.5922" fill="white"/>
+      </clipPath>
+      </defs>
+    </svg>
+  )
+}

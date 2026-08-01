@@ -1,9 +1,21 @@
-import { useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
+import { createPortal } from "react-dom"
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { ChevronsLeft, ChevronsRight, GraduationCap, MoreHorizontal, Repeat } from "lucide-react"
+import {
+  ChevronDown,
+  ChevronsLeft,
+  ChevronsRight,
+  GraduationCap,
+  LogOut,
+  MoreHorizontal,
+  Repeat,
+  UserRound,
+} from "lucide-react"
+import { DropdownMenu } from "radix-ui"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { Avatar } from "@/components/kit/Avatar"
 import { useAuth } from "@/stores/useAuth"
+import { useData } from "@/stores/useData"
 import { cn } from "@/lib/utils"
 import type { Role } from "@/data/types"
 import type { NavItem } from "@/app/nav/types"
@@ -16,6 +28,23 @@ const ROLE_LABEL: Record<Role, string> = {
 }
 
 const MAX_BAR = 5 // items shown in the mobile bottom bar before overflowing to "More"
+
+const HEADER_SLOT_ID = "shell-header-slot"
+
+/**
+ * Renders its children as a second row INSIDE the shell header card — same
+ * surface, divided by a border-t, zero gap. For page-level nav that must stay
+ * reachable while the content scrolls (the header never scrolls): portal into
+ * it when needed, unmount to give the row back. React context (router, stores)
+ * is preserved across the portal.
+ */
+export function ShellHeaderPortal({ children }: { children: ReactNode }) {
+  const [slot, setSlot] = useState<HTMLElement | null>(null)
+  // Looked up in an effect: the shell (and the slot div) is guaranteed mounted
+  // by then, and SSR-safety costs nothing.
+  useEffect(() => setSlot(document.getElementById(HEADER_SLOT_ID)), [])
+  return slot ? createPortal(children, slot) : null
+}
 
 function SideNavItem({ item, expanded }: { item: NavItem; expanded: boolean }) {
   const Icon = item.icon
@@ -68,7 +97,16 @@ function BottomNavItem({ item }: { item: NavItem }) {
     >
       {({ isActive }) => (
         <>
-          <Icon className={cn("size-[22px]", isActive ? "text-brand-600" : "text-ink-muted")} />
+          <Icon
+            className={cn(
+              "size-[22px]",
+              // A gradient glyph (`colored`) carries its own fills, so a text
+              // colour is a no-op on it — and there's no gradient pill down here
+              // to force it white against. Those keep their own colours and the
+              // label carries the active state; only mono icons tint.
+              !item.colored && (isActive ? "text-brand-600" : "text-ink-muted"),
+            )}
+          />
           <span className="max-w-[68px] truncate">{item.label}</span>
         </>
       )}
@@ -84,7 +122,10 @@ function BottomNavItem({ item }: { item: NavItem }) {
  */
 export function AppShell({ nav }: { nav: NavItem[] }) {
   const navigate = useNavigate()
-  const { currentRole, currentUser } = useAuth()
+  const { currentRole, currentUser, logout } = useAuth()
+  // The live row from the store, so a profile edit renames the header at once.
+  const currentUserId = currentUser?.id
+  const user = useData((s) => s.users.find((u) => u.id === currentUserId)) ?? currentUser
   const [moreOpen, setMoreOpen] = useState(false)
   const [expanded, setExpanded] = useState(true)
 
@@ -94,6 +135,11 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
 
   const roleLabel = currentRole ? ROLE_LABEL[currentRole] : ""
   const switchRole = () => navigate("/roles")
+
+  function signOut() {
+    logout()
+    navigate("/")
+  }
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-canvas md:flex-row">
@@ -164,25 +210,75 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
 
       {/* Right column: top bar + scrolling content */}
       <div className="flex h-full min-w-0 flex-1 flex-col">
-        <header className="z-20 flex items-center gap-3 border-b border-border bg-surface px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:mt-3 md:me-3 md:rounded-lg md:border md:px-8 md:pb-4 md:pt-4 md:shadow-sm">
-          <span className="grid size-9 shrink-0 place-items-center rounded-[10px] bg-grad text-ink-inverted shadow-brand md:hidden">
-            <GraduationCap className="size-5" />
-          </span>
-          <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">{roleLabel}</p>
-            <h1 className="truncate font-display text-lg font-bold leading-tight text-ink md:text-xl">
-              {currentUser?.name ?? "Wael Academy"}
-            </h1>
+        {/* The header card. Row 1 is the identity bar; row 2 is an empty slot a
+            page can portal secondary nav into (ShellHeaderPortal) — it then
+            reads as the header growing a row, not as a bar over the content. */}
+        <header className="z-20 border-b border-border bg-surface md:mt-3 md:me-3 md:overflow-hidden md:rounded-lg md:border md:shadow-sm">
+          <div className="flex items-center gap-3 px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:px-8 md:pb-4 md:pt-4">
+            <span className="grid size-9 shrink-0 place-items-center rounded-[10px] bg-grad text-ink-inverted shadow-brand md:hidden">
+              <GraduationCap className="size-5" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">{roleLabel}</p>
+              <h1 className="truncate font-display text-lg font-bold leading-tight text-ink md:text-xl">
+                {user?.name ?? "Wael Academy"}
+              </h1>
+            </div>
+            <button
+              type="button"
+              onClick={switchRole}
+              aria-label="Changer de rôle"
+              className="inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-3 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-9"
+            >
+              <Repeat className="size-4" /> <span className="hidden sm:inline">Changer de rôle</span>
+            </button>
+            {user && currentRole && (
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild>
+                  {/* The chevron is what makes the avatar read as a control. */}
+                  <button
+                    type="button"
+                    aria-label="Mon compte"
+                    className="group inline-flex h-11 shrink-0 items-center gap-1 rounded-full border border-transparent pe-1.5 ps-0.5 transition hover:border-border-strong hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:h-10"
+                  >
+                    <Avatar name={user.name} />
+                    <ChevronDown className="size-4 text-ink-muted transition group-hover:text-brand-600 group-data-[state=open]:rotate-180" />
+                  </button>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Portal>
+                  <DropdownMenu.Content
+                    align="end"
+                    sideOffset={8}
+                    className="z-50 min-w-[15rem] rounded-lg border border-border bg-surface-raised p-1.5 shadow-lg"
+                  >
+                    <div className="flex items-center gap-3 px-2.5 py-2">
+                      <Avatar name={user.name} size="sm" />
+                      <div className="min-w-0">
+                        <p dir="auto" className="truncate font-display text-[14px] font-bold text-ink">
+                          {user.name}
+                        </p>
+                        <p className="truncate text-[12px] text-ink-muted">{user.email ?? user.phone}</p>
+                      </div>
+                    </div>
+                    <div className="my-1 h-px bg-border" />
+                    <DropdownMenu.Item
+                      onSelect={() => navigate(`/${currentRole}/profil`)}
+                      className="flex min-h-[44px] cursor-pointer items-center gap-2.5 rounded-md px-3 text-sm text-ink outline-none transition data-[highlighted]:bg-surface-muted"
+                    >
+                      <UserRound className="size-4 shrink-0" /> Mon profil
+                    </DropdownMenu.Item>
+                    <DropdownMenu.Item
+                      onSelect={signOut}
+                      className="flex min-h-[44px] cursor-pointer items-center gap-2.5 rounded-md px-3 text-sm text-danger-600 outline-none transition data-[highlighted]:bg-danger-50"
+                    >
+                      <LogOut className="size-4 shrink-0" /> Se déconnecter
+                    </DropdownMenu.Item>
+                  </DropdownMenu.Content>
+                </DropdownMenu.Portal>
+              </DropdownMenu.Root>
+            )}
           </div>
-          <button
-            type="button"
-            onClick={switchRole}
-            aria-label="Changer de rôle"
-            className="inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-3 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-9"
-          >
-            <Repeat className="size-4" /> <span className="hidden sm:inline">Changer de rôle</span>
-          </button>
-          {currentUser && <Avatar name={currentUser.name} />}
+          <div id={HEADER_SLOT_ID} className="border-t border-border empty:hidden" />
         </header>
 
         <main className="flex-1 overflow-y-auto scroll-touch p-4 pb-24 md:px-8 md:pb-8 md:pt-5">

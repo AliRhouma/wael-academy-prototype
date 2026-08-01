@@ -25,24 +25,52 @@ export interface Teacher {
 }
 
 /**
- * A study year / level (année) — e.g. "7ème année" or "Bac — Mathématiques".
- * The name carries everything (level + stream/filière); there is no separate
- * category. It's a flat list of years, each holding its subjects.
+ * The three parts the programme is split into: collège (7/8/9ème), secondaire
+ * (1ère/2ème/3ème) and bac.
+ */
+export type Cycle = "college" | "secondaire" | "bac"
+
+/**
+ * A class of the programme (classe / année) — e.g. "7ème année" or
+ * "Bac — Mathématiques". It sits in a `cycle`, carries its `level` (the niveau
+ * inside that cycle) and, for the levels that have filières (2ème, 3ème, Bac),
+ * a `section`. `name` is the display label built from level + section and is
+ * what the rest of the app shows.
  */
 export interface Year {
   id: Id
   name: string
-  /** Sort order in the flat list. */
+  cycle: Cycle
+  /** The niveau inside the cycle — "7ème année", "1ère année", "Bac"… */
+  level: string
+  /** The filière — only on levels that have sections (2ème, 3ème, Bac). */
+  section?: string
+  /** Sort order in the flat list (cycle → level → section). */
   order?: number
 }
 
 /** A subject / matière taught within a year (contains courses, added later). */
+/**
+ * How much a matière weighs inside its filière — the three buckets the élève
+ * filters by on the Matières screen. Which bucket a matière falls into depends
+ * on the filière, not on the matière alone (Mathématiques is principale in Bac
+ * Mathématiques, secondaire in Bac Lettres), so it lives on the Subject row.
+ */
+export type SubjectCategory = "principale" | "secondaire" | "optionnelle"
+
 export interface Subject {
   id: Id
   yearId: Id
   name: string
   /** Sort order within its year. */
   order?: number
+  /**
+   * Weight bucket in this filière. Seeded from `order` (0-2 principale,
+   * 3-5 secondaire, 6+ optionnelle) — the seed lists each filière's matières in
+   * descending importance, so the buckets land right for most filières and can
+   * be tuned row by row where a real coefficient table says otherwise.
+   */
+  category?: SubjectCategory
 }
 
 /**
@@ -246,6 +274,18 @@ export interface Session {
   groupIds: Id[]
   /** The teacher who runs it. */
   teacherId?: Id
+  /** Salle / plateforme where it happens — e.g. "Salle B12" or "En ligne". */
+  room?: string
+  /**
+   * Semestre of the année scolaire the séance belongs to (1, 2 or 3) — how the
+   * élève's « Séances enregistrées » library is sectioned. Absent = semestre 1.
+   */
+  semester?: 1 | 2 | 3
+  /**
+   * Replay of a séance already given — the élève's « Voir l'enregistrement ».
+   * Absent on a past séance means the replay isn't published yet.
+   */
+  recordingUrl?: string
 }
 
 /**
@@ -532,4 +572,36 @@ export interface User {
   studentId?: Id
   teacherId?: Id
   childrenIds?: Id[]
+}
+
+/**
+ * What a comment or a réaction hangs off — the three things the élève can
+ * watch: a contenu of a chapitre, the correction filmée of an examen, or the
+ * enregistrement of a séance.
+ */
+export type VideoRefKind = "lesson" | "exam" | "seance"
+
+/**
+ * A comment left under a video — the élève's public voice, in the YouTube
+ * sense: text only, no note, no rating. Ordered newest first wherever it shows.
+ */
+export interface VideoComment {
+  id: Id
+  kind: VideoRefKind
+  /** The lesson / exam / session id it belongs to. */
+  videoId: Id
+  /** Its author (a `User` id). */
+  userId: Id
+  body: string
+  /** ISO timestamp. */
+  createdAt: string
+}
+
+/** J'aime / je n'aime pas. One per élève per video — voting again replaces it. */
+export interface VideoReaction {
+  id: Id
+  kind: VideoRefKind
+  videoId: Id
+  userId: Id
+  value: "like" | "dislike"
 }

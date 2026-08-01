@@ -4,7 +4,14 @@
     "title": "Cours — Nombres complexes : forme algébrique",
     "kind": "cours",
     "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
-    "pdfs": [{ "name": "Résumé du cours" }, { "name": "Formulaire" }],
+    "pdfs": [
+      { "name": "Résumé du cours" },
+      { "name": "Formulaire" },
+      { "name": "Fiche méthode — module et argument" },
+      { "name": "Exercices d'application (énoncé)" },
+      { "name": "Exercices d'application (corrigé)" },
+      { "name": "Annales bac — nombres complexes" }
+    ],
     "chapterId": "ch-complexes",
     "order": 0
   },
@@ -308,5 +315,299 @@
     "pdfs": [{ "name": "الأسئلة" }, { "name": "الإصلاح" }],
     "chapterId": "ch-ar-sardi",
     "order": 0
+  },
+
+  {
+    "id": "l-philo-01",
+    "title": "منهجية الفلسفة في 6 دقائق🧠باكالوريا شعب علمية و اقتصادية ✅ مقتطف من منصة وائل أكادمي 🔴",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=kHonHhSwplo",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-conscience",
+    "order": 1
+  },
+  {
+    "id": "l-philo-02",
+    "title": "Mécanique | bac technique | le train epicycloidal | plateforme Wael academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=Juluo572AZg",
+    "pdfs": [],
+    "chapterId": "ch-conscience",
+    "order": 2
+  },
+  {
+    "id": "l-philo-03",
+    "title": "Maths | Bac Scientifique | Fonction Réciproque Exercice corrigé | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=LtmNaSI0Qg8",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-conscience",
+    "order": 3
+  },
+  {
+    "id": "l-philo-04",
+    "title": "Français | Révision Bac | Exercice langue corrigé | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=uvkdpRn-_gc",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-conscience",
+    "order": 4
+  },
+  {
+    "id": "l-philo-05",
+    "title": "Mécanique | Bac technique | flexion plane simple| Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=jvWmA-oGwC0",
+    "pdfs": [],
+    "chapterId": "ch-conscience",
+    "order": 5
+  },
+  {
+    "id": "l-philo-06",
+    "title": "🔴BAC Technique | Électrique : Amplificateur Linéaire Intégré (ALI) | Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=AVT5DcI3rcE",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-conscience",
+    "order": 6
+  },
+
+  {
+    "id": "l-philo-07",
+    "title": "🔴BAC Scientifique | Informatique : Epreuve Pratique | Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=hdCxgcvikIw",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-desir",
+    "order": 0
+  },
+  {
+    "id": "l-philo-08",
+    "title": "Physique | Bac Scientifique | RLC libres | Exercice corrigé | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=utWXQXIi0kc",
+    "pdfs": [],
+    "chapterId": "ch-desir",
+    "order": 1
+  },
+  {
+    "id": "l-philo-09",
+    "title": "Anglais | Bac scientifique | Virtual vs in-person schools | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=GQsmDZE5dV4",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-desir",
+    "order": 2
+  },
+  {
+    "id": "l-philo-10",
+    "title": "🔴BAC Scientifique | English Test ( Listening , Grammar...) | Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=ip1p3Lc9Sfk",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-desir",
+    "order": 3
+  },
+  {
+    "id": "l-philo-11",
+    "title": "Mécanique | Bac technique | Train epicy , compose roulement et fabrication | Plateforme wael academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=VJfV67SV4zo",
+    "pdfs": [],
+    "chapterId": "ch-desir",
+    "order": 4
+  },
+
+  {
+    "id": "l-philo-12",
+    "title": "Cotation fonctionnelle | Bac Technique | Exercice corrigé | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=JniICVZWGQk",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-travail",
+    "order": 0
+  },
+  {
+    "id": "l-philo-13",
+    "title": "Physique | bac scientifique | RLC Forcées | plateformewael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=rX0mJ2YyzkY",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-travail",
+    "order": 1
+  },
+  {
+    "id": "l-philo-14",
+    "title": "Électrique | Bac technique | Microcontrôleurs| Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=3Ej21PFBmKk",
+    "pdfs": [],
+    "chapterId": "ch-travail",
+    "order": 2
+  },
+  {
+    "id": "l-philo-15",
+    "title": "Physique | bac science et  technique | les oscillation mécanique libre | plateforme wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=ox_GS9JRJNI",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-travail",
+    "order": 3
+  },
+  {
+    "id": "l-philo-16",
+    "title": "Maths | Bac Scientifique | Nombres Complexes Exercice corrigé | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=O8LR7NsHzWs",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-travail",
+    "order": 4
+  },
+
+  {
+    "id": "l-philo-17",
+    "title": "Physique | Bac Scientifique | RC : Exercice corrigé | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=WDNr-SEFae0",
+    "pdfs": [],
+    "chapterId": "ch-verite",
+    "order": 0
+  },
+  {
+    "id": "l-philo-18",
+    "title": "Physique | bac scientifique | les oscillations mécaniques | plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=i1tmJkjKxu0",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-verite",
+    "order": 1
+  },
+  {
+    "id": "l-philo-19",
+    "title": "Math | bac scientifique | primitive | plateforme wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=GqxaJ8sY6lA",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-verite",
+    "order": 2
+  },
+  {
+    "id": "l-philo-20",
+    "title": "Chimie | bac scientifique | acide et base | plateforme waelacademy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=DzidvUhAGpY",
+    "pdfs": [],
+    "chapterId": "ch-verite",
+    "order": 3
+  },
+  {
+    "id": "l-philo-21",
+    "title": "Math | Bac scientifique | lecture graphique | plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=VPzGidiQ1os",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-verite",
+    "order": 4
+  },
+
+  {
+    "id": "l-philo-22",
+    "title": "Maths | Bac Scientifique | Les Suites : Exercice corrigé | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=b-QOe3JHjQA",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-liberte",
+    "order": 1
+  },
+  {
+    "id": "l-philo-23",
+    "title": "Physique | bac scientifique | RLC Forcées Déphasage | plateforme wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=gGH6mUq-ioc",
+    "pdfs": [],
+    "chapterId": "ch-liberte",
+    "order": 2
+  },
+  {
+    "id": "l-philo-24",
+    "title": "Math | Bac scientifique | matrice | plateforme wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=yPbxd7IkZn0",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-liberte",
+    "order": 3
+  },
+  {
+    "id": "l-philo-25",
+    "title": "Anglais | Bac Scientifique | consolidation paper education matters | Plateforme WaelAcademy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=pk3U2t2obg8",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-liberte",
+    "order": 4
+  },
+  {
+    "id": "l-philo-26",
+    "title": "Physique | bac scientifique | oscillation mécanique forcées | plateforme wael academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=2R51u2FKTz8",
+    "pdfs": [],
+    "chapterId": "ch-liberte",
+    "order": 5
+  },
+  {
+    "id": "l-philo-27",
+    "title": "Math | Bac scientifique | fonction réciproque | plateforme  wael academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=NML7T8-2gNQ",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-liberte",
+    "order": 6
+  },
+
+  {
+    "id": "l-philo-28",
+    "title": "Math | Bac Scientifique | la lecture graphique | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=SUhReGbMD_I",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-etat",
+    "order": 0
+  },
+  {
+    "id": "l-philo-29",
+    "title": "Math | bac scientifique | fonction ln | plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=fzXZFAW0Ru4",
+    "pdfs": [],
+    "chapterId": "ch-etat",
+    "order": 1
+  },
+  {
+    "id": "l-philo-30",
+    "title": "Info : Epreuve Pratique | Bac Scientifiques | plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=w7MevlfLW1M",
+    "pdfs": [{ "name": "Support de cours" }, { "name": "Exercices d'application" }],
+    "chapterId": "ch-etat",
+    "order": 2
+  },
+  {
+    "id": "l-philo-31",
+    "title": "Option Espagnol  | Révision grammaire🇪🇸 | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=N3rldR7r3k0",
+    "pdfs": [{ "name": "Fiche de révision" }],
+    "chapterId": "ch-etat",
+    "order": 3
+  },
+  {
+    "id": "l-philo-32",
+    "title": "Français Bac Scientifique 2027 | Méthodologie | Plateforme Wael Academy",
+    "kind": "cours",
+    "videoUrl": "https://www.youtube.com/watch?v=F82qXP7dBa8",
+    "pdfs": [],
+    "chapterId": "ch-etat",
+    "order": 4
   }
 ]

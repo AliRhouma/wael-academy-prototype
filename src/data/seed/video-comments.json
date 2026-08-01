@@ -1,0 +1,42 @@
+[
+  {
+    "id": "cmt-01",
+    "kind": "lesson",
+    "videoId": "l-cx-cours",
+    "userId": "u-student-sarra",
+    "body": "La partie sur le module et l'argument est enfin claire. Le petit schéma vers 12 min m'a débloquée 🙏",
+    "createdAt": "2026-07-14T18:42:00.000Z"
+  },
+  {
+    "id": "cmt-02",
+    "kind": "lesson",
+    "videoId": "l-cx-cours",
+    "userId": "u-st-selim",
+    "body": "Quelqu'un peut m'expliquer le passage à la forme exponentielle ? J'ai revu deux fois et ça ne rentre pas.",
+    "createdAt": "2026-07-16T09:05:00.000Z"
+  },
+  {
+    "id": "cmt-03",
+    "kind": "lesson",
+    "videoId": "l-cx-cours",
+    "userId": "u-st-wassim",
+    "body": "@Selim tu écris z = |z|(cos θ + i sin θ) puis tu remplaces la parenthèse par e^(iθ). C'est juste une notation.",
+    "createdAt": "2026-07-16T13:20:00.000Z"
+  },
+  {
+    "id": "cmt-04",
+    "kind": "seance",
+    "videoId": "ses-rec-10",
+    "userId": "u-student-sarra",
+    "body": "J'étais absente ce jour-là, l'enregistrement m'a sauvée. Le son est parfait.",
+    "createdAt": "2025-10-05T17:20:00.000Z"
+  },
+  {
+    "id": "cmt-05",
+    "kind": "seance",
+    "videoId": "ses-rec-10",
+    "userId": "u-st-emna",
+    "body": "Dommage qu'on ne voie pas toujours le tableau en entier, mais ça reste très suivable.",
+    "createdAt": "2025-10-06T08:00:00.000Z"
+  }
+]

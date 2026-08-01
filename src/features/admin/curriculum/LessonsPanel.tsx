@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { BookOpen, FileText, Pencil, Plus, Trash2, Video, X } from "lucide-react"
+import { BookOpen, Copy, FileText, Pencil, Plus, Trash2, Video, X } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
 import { Badge } from "@/components/kit/Badge"
@@ -7,8 +7,15 @@ import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
-import type { Chapter, Lesson, LessonKind, ResourceLink } from "@/data/types"
+import type { Chapter, Lesson, LessonKind, ResourceLink, Subject, Year } from "@/data/types"
 import { LESSON_KINDS, LESSON_KIND_ORDER } from "./content"
+import { copyName, duplicateLesson } from "./duplicate"
+import {
+  DuplicateSheet,
+  EMPTY_DESTINATION,
+  useDestinationName,
+  type Destination,
+} from "./DuplicateSheet"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
@@ -18,8 +25,18 @@ const CHIP =
 
 type KindFilter = LessonKind | "all"
 
-/** The "Contenus" tab of a chapter — its cours, exercices, séries & résumés. */
-export function LessonsPanel({ chapter }: { chapter: Chapter }) {
+/** The "Contenus" tab of a chapter — its cours, exercices, séries & résumés.
+ * `year` / `subject` are the ones being browsed — they prefill the duplicate
+ * destination so a copy defaults to staying right where it is. */
+export function LessonsPanel({
+  chapter,
+  year,
+  subject,
+}: {
+  chapter: Chapter
+  year: Year
+  subject: Subject
+}) {
   const allLessons = useData((s) => s.lessons)
   const addLesson = useData((s) => s.addLesson)
   const updateLesson = useData((s) => s.updateLesson)
@@ -44,6 +61,11 @@ export function LessonsPanel({ chapter }: { chapter: Chapter }) {
   const [videoUrl, setVideoUrl] = useState("")
   const [pdfs, setPdfs] = useState<ResourceLink[]>([])
   const [deleteTarget, setDeleteTarget] = useState<Lesson | null>(null)
+
+  const [dupTarget, setDupTarget] = useState<Lesson | null>(null)
+  const [dupName, setDupName] = useState("")
+  const [dupDest, setDupDest] = useState<Destination>(EMPTY_DESTINATION)
+  const dupInto = useDestinationName(dupDest, "chapter")
 
   const kindHasVideo = LESSON_KINDS[kind].hasVideo
 
@@ -91,6 +113,19 @@ export function LessonsPanel({ chapter }: { chapter: Chapter }) {
       show("Contenu ajouté")
     }
     setFormOpen(false)
+  }
+
+  function openDuplicate(lesson: Lesson) {
+    setDupTarget(lesson)
+    setDupName(copyName(lesson.title))
+    setDupDest({ yearId: year.id, subjectId: subject.id, chapterId: chapter.id })
+  }
+
+  function submitDuplicate() {
+    if (!dupTarget) return
+    duplicateLesson(dupTarget, { title: dupName.trim(), chapterId: dupDest.chapterId })
+    show(`Contenu dupliqué dans « ${dupInto} »`)
+    setDupTarget(null)
   }
 
   function confirmDelete() {
@@ -221,6 +256,7 @@ export function LessonsPanel({ chapter }: { chapter: Chapter }) {
                 <OverflowMenu
                   actions={[
                     { label: "Modifier", icon: Pencil, onClick: () => openEdit(lesson) },
+                    { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(lesson) },
                     {
                       label: "Supprimer",
                       icon: Trash2,
@@ -338,6 +374,20 @@ export function LessonsPanel({ chapter }: { chapter: Chapter }) {
           </div>
         </div>
       </FormSheet>
+
+      <DuplicateSheet
+        open={dupTarget !== null}
+        onOpenChange={(o) => !o && setDupTarget(null)}
+        title="Dupliquer le contenu"
+        nameLabel="Titre de la copie"
+        name={dupName}
+        onNameChange={setDupName}
+        depth="chapter"
+        destination={dupDest}
+        onDestinationChange={setDupDest}
+        note="La vidéo et les documents PDF suivent la copie."
+        onSubmit={submitDuplicate}
+      />
 
       <ConfirmDialog
         open={deleteTarget !== null}

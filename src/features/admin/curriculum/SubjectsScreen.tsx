@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { ArrowLeft, BookMarked, ChevronRight, GraduationCap, Pencil, Plus, Trash2 } from "lucide-react"
+import { ArrowLeft, BookMarked, ChevronRight, Copy, GraduationCap, Pencil, Plus, Trash2 } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
 import { FormSheet } from "@/components/kit/FormSheet"
@@ -8,6 +8,14 @@ import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
 import type { Subject } from "@/data/types"
+import { cycleDef } from "@/data/curriculum"
+import { copyName, duplicateSubject } from "./duplicate"
+import {
+  DuplicateSheet,
+  EMPTY_DESTINATION,
+  useDestinationName,
+  type Destination,
+} from "./DuplicateSheet"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
@@ -85,19 +93,24 @@ export default function AdminSubjectsScreen() {
   const [name, setName] = useState("")
   const [deleteTarget, setDeleteTarget] = useState<Subject | null>(null)
 
+  const [dupTarget, setDupTarget] = useState<Subject | null>(null)
+  const [dupName, setDupName] = useState("")
+  const [dupDest, setDupDest] = useState<Destination>(EMPTY_DESTINATION)
+  const dupInto = useDestinationName(dupDest, "year")
+
   if (!year) {
     return (
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={GraduationCap}
-          title="Année introuvable"
-          description="Cette année n’existe pas ou a été supprimée."
+          title="Classe introuvable"
+          description="Cette classe n’existe pas ou a été supprimée."
           action={
             <Link
               to="/admin/curriculum"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
             >
-              <ArrowLeft className="size-4" /> Retour aux années
+              <ArrowLeft className="size-4" /> Retour au programme
             </Link>
           }
         />
@@ -130,6 +143,19 @@ export default function AdminSubjectsScreen() {
     setFormOpen(false)
   }
 
+  function openDuplicate(subject: Subject) {
+    setDupTarget(subject)
+    setDupName(copyName(subject.name))
+    setDupDest({ yearId: year!.id, subjectId: "", chapterId: "" })
+  }
+
+  function submitDuplicate() {
+    if (!dupTarget) return
+    duplicateSubject(dupTarget, { name: dupName.trim(), yearId: dupDest.yearId })
+    show(`Matière dupliquée dans « ${dupInto} »`)
+    setDupTarget(null)
+  }
+
   function confirmDelete() {
     if (!deleteTarget) return
     removeSubject(deleteTarget.id)
@@ -155,19 +181,19 @@ export default function AdminSubjectsScreen() {
           onClick={() => navigate("/admin/curriculum")}
           className="mb-3 inline-flex h-9 items-center gap-1.5 rounded-md text-sm font-medium text-ink-subtle transition hover:text-brand-600"
         >
-          <ArrowLeft className="size-4" /> Années & matières
+          <ArrowLeft className="size-4" /> Programme
         </button>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-              Programme
+              {cycleDef(year.cycle).label} · {year.level}
             </p>
             <h1 dir="auto" className="font-display text-[26px] font-bold leading-tight text-ink">
               {year.name}
             </h1>
             <p className="mt-1 text-sm text-ink-muted">
               {subjects.length > 0
-                ? `${subjects.length} matière${subjects.length > 1 ? "s" : ""} dans cette année`
+                ? `${subjects.length} matière${subjects.length > 1 ? "s" : ""} dans cette classe`
                 : "Aucune matière pour le moment"}
             </p>
           </div>
@@ -180,7 +206,7 @@ export default function AdminSubjectsScreen() {
           <EmptyState
             icon={BookMarked}
             title="Aucune matière"
-            description="Ajoutez les matières enseignées dans cette année (Maths, Français, Physique…)."
+            description="Ajoutez les matières enseignées dans cette classe (Maths, Français, Physique…)."
             action={addButton}
           />
         </div>
@@ -221,6 +247,7 @@ export default function AdminSubjectsScreen() {
                     <OverflowMenu
                       actions={[
                         { label: "Modifier", icon: Pencil, onClick: () => openEdit(subject) },
+                        { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(subject) },
                         {
                           label: "Supprimer",
                           icon: Trash2,
@@ -257,6 +284,20 @@ export default function AdminSubjectsScreen() {
           />
         </label>
       </FormSheet>
+
+      <DuplicateSheet
+        open={dupTarget !== null}
+        onOpenChange={(o) => !o && setDupTarget(null)}
+        title="Dupliquer la matière"
+        nameLabel="Nom de la copie"
+        name={dupName}
+        onNameChange={setDupName}
+        depth="year"
+        destination={dupDest}
+        onDestinationChange={setDupDest}
+        note="Chapitres, contenus, quiz, parcours et examens sont copiés avec la matière."
+        onSubmit={submitDuplicate}
+      />
 
       <ConfirmDialog
         open={deleteTarget !== null}

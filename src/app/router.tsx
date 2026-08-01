@@ -9,6 +9,7 @@ import DesignSystemPage from "@/features/styleguide/DesignSystemPage"
 import { RoleSwitcher } from "@/features/switcher/RoleSwitcher"
 import { RoleLayout } from "@/app/RoleLayout"
 import { ComingSoon } from "@/features/shared/ComingSoon"
+import ProfileScreen from "@/features/shared/ProfileScreen"
 import { adminNav } from "@/app/nav/admin"
 import { teacherNav } from "@/app/nav/teacher"
 import { parentNav } from "@/app/nav/parent"
@@ -34,6 +35,12 @@ import TeacherDashboard from "@/features/teacher/Dashboard"
 import TeacherSessionsScreen from "@/features/teacher/SessionsScreen"
 import ParentDashboard from "@/features/parent/Dashboard"
 import StudentDashboard from "@/features/student/Dashboard"
+import StudentSubjectsScreen from "@/features/student/SubjectsScreen"
+import StudentCalendarScreen from "@/features/student/calendar/CalendarScreen"
+import StudentSubjectDetailScreen from "@/features/student/SubjectDetailScreen"
+import StudentSeancesScreen from "@/features/student/seances/SeancesScreen"
+import StudentSeanceSubjectScreen from "@/features/student/seances/SeanceSubjectScreen"
+import StudentVideoPlayerScreen from "@/features/student/player/VideoPlayerScreen"
 import { useData } from "@/stores/useData"
 
 /** Standalone list of the shared courses; links into the /courses/:id workspace. */
@@ -116,7 +123,8 @@ interface RouteChild {
  * Build a role's route: RoleLayout + dashboard index + children. Nav items get a
  * "coming soon" placeholder unless a real screen is supplied in `built` (matched
  * by the nav item's relative path); `extra` adds nested routes with no nav entry
- * (e.g. detail pages).
+ * (e.g. detail pages). Every role also gets "profil" — the account menu in the
+ * shell header links to it from any screen.
  */
 function roleRoute(
   base: string,
@@ -131,6 +139,7 @@ function roleRoute(
     element: <RoleLayout role={role} nav={nav} />,
     children: [
       { index: true, element: dashboard },
+      { path: "profil", element: <ProfileScreen /> },
       ...nav.slice(1).map((item) => {
         const rel = item.path.slice(base.length + 1)
         return { path: rel, element: built[rel] ?? <ComingSoon title={item.label} /> }
@@ -173,7 +182,22 @@ export const router = createBrowserRouter([
     sessions: <TeacherSessionsScreen />,
   }),
   roleRoute("/parent", "parent", parentNav, <ParentDashboard />),
-  roleRoute("/student", "student", studentNav, <StudentDashboard />),
+  roleRoute(
+    "/student",
+    "student",
+    studentNav,
+    <StudentDashboard />,
+    {
+      matieres: <StudentSubjectsScreen />,
+      calendrier: <StudentCalendarScreen />,
+      seances: <StudentSeancesScreen />,
+    },
+    [
+      { path: "matieres/:subjectId", element: <StudentSubjectDetailScreen /> },
+      { path: "seances/:subjectId", element: <StudentSeanceSubjectScreen /> },
+      { path: "video/:kind/:id", element: <StudentVideoPlayerScreen /> },
+    ],
+  ),
   { path: "/courses", element: <CoursesList /> },
   {
     path: "/courses/:id",

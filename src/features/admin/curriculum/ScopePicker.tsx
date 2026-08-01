@@ -1,5 +1,6 @@
 import { useMemo, type ReactNode } from "react"
 import { useData } from "@/stores/useData"
+import { groupYearsByCycle } from "@/data/curriculum"
 
 /** A toggle chip used for picking years / subjects. */
 function Toggle({
@@ -35,14 +36,17 @@ export interface ScopePickerProps {
 }
 
 /**
- * The shared "où est-ce enseigné ?" picker used by chapters AND exams: an
- * Années chip multi-select, then a Matières picker scoped to the picked years
- * (grouped by year so the same-named subject across years stays distinct).
- * Deselecting a year drops its subjects so the links never go inconsistent.
+ * The shared "où est-ce enseigné ?" picker used when EDITING a chapter or an
+ * exam (on creation the scope comes from the page you're on): a Classes chip
+ * multi-select laid out by cycle, then a Matières picker scoped to the picked
+ * classes (grouped so the same-named subject across classes stays distinct).
+ * Deselecting a class drops its subjects so the links never go inconsistent.
  */
 export function ScopePicker({ yearIds, subjectIds, onYearsChange, onSubjectsChange }: ScopePickerProps) {
   const years = useData((s) => s.years)
   const allSubjects = useData((s) => s.subjects)
+
+  const cycleGroups = useMemo(() => groupYearsByCycle(years), [years])
 
   const sortedYears = useMemo(
     () => [...years].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)),
@@ -78,14 +82,29 @@ export function ScopePicker({ yearIds, subjectIds, onYearsChange, onSubjectsChan
     <>
       <div>
         <span className="mb-2 block text-sm font-medium text-ink-subtle">
-          Années <span className="font-normal text-ink-muted">({yearIds.length})</span>
+          Classes <span className="font-normal text-ink-muted">({yearIds.length})</span>
         </span>
-        <div className="flex flex-wrap gap-2">
-          {sortedYears.map((y) => (
-            <Toggle key={y.id} active={yearIds.includes(y.id)} onClick={() => toggleYear(y.id)}>
-              <span dir="auto">{y.name}</span>
-            </Toggle>
-          ))}
+        <div className="flex flex-col gap-3">
+          {cycleGroups
+            .filter((g) => g.years.length > 0)
+            .map((g) => (
+              <div key={g.cycle.key}>
+                <p className="mb-1.5 text-[11px] font-medium uppercase tracking-[.1em] text-accent2-600">
+                  {g.cycle.label}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {g.years.map((y) => (
+                    <Toggle
+                      key={y.id}
+                      active={yearIds.includes(y.id)}
+                      onClick={() => toggleYear(y.id)}
+                    >
+                      <span dir="auto">{y.name}</span>
+                    </Toggle>
+                  ))}
+                </div>
+              </div>
+            ))}
         </div>
       </div>
 
@@ -95,7 +114,7 @@ export function ScopePicker({ yearIds, subjectIds, onYearsChange, onSubjectsChan
         </span>
         {yearIds.length === 0 ? (
           <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-            Choisissez d’abord une ou plusieurs années.
+            Choisissez d’abord une ou plusieurs classes.
           </p>
         ) : (
           <div className="flex flex-col gap-3">

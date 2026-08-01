@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { ArrowDown, ArrowUp, Pencil, Plus, Route, Trash2, X } from "lucide-react"
+import { ArrowDown, ArrowUp, Copy, Pencil, Plus, Route, Trash2, X } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
 import { FormSheet } from "@/components/kit/FormSheet"
@@ -8,6 +8,13 @@ import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
 import type { Lesson, Path, PathItem, Quiz, Subject, Year } from "@/data/types"
 import { LESSON_KINDS, QUIZ_ICON } from "./content"
+import { copyName, duplicatePath } from "./duplicate"
+import {
+  DuplicateSheet,
+  EMPTY_DESTINATION,
+  useDestinationName,
+  type Destination,
+} from "./DuplicateSheet"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
@@ -78,6 +85,11 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
   const [items, setItems] = useState<PathItem[]>([])
   const [deleteTarget, setDeleteTarget] = useState<Path | null>(null)
 
+  const [dupTarget, setDupTarget] = useState<Path | null>(null)
+  const [dupName, setDupName] = useState("")
+  const [dupDest, setDupDest] = useState<Destination>(EMPTY_DESTINATION)
+  const dupInto = useDestinationName(dupDest, "subject")
+
   function openAdd() {
     setEditing(null)
     setTitle("")
@@ -128,6 +140,27 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
       show("Parcours créé")
     }
     setFormOpen(false)
+  }
+
+  function openDuplicate(path: Path) {
+    setDupTarget(path)
+    setDupName(copyName(path.title))
+    setDupDest({ yearId: year.id, subjectId: subject.id, chapterId: "" })
+  }
+
+  function submitDuplicate() {
+    if (!dupTarget) return
+    const { dropped } = duplicatePath(dupTarget, {
+      title: dupName.trim(),
+      subjectId: dupDest.subjectId,
+      yearId: dupDest.yearId,
+    })
+    show(
+      dropped > 0
+        ? `Parcours dupliqué dans « ${dupInto} » — ${dropped} étape${dropped > 1 ? "s" : ""} non reprise${dropped > 1 ? "s" : ""}`
+        : `Parcours dupliqué dans « ${dupInto} »`,
+    )
+    setDupTarget(null)
   }
 
   function confirmDelete() {
@@ -201,6 +234,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
                   <OverflowMenu
                     actions={[
                       { label: "Modifier", icon: Pencil, onClick: () => openEdit(path) },
+                      { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(path) },
                       {
                         label: "Supprimer",
                         icon: Trash2,
@@ -384,6 +418,25 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
           </div>
         )}
       </FormSheet>
+
+      <DuplicateSheet
+        open={dupTarget !== null}
+        onOpenChange={(o) => !o && setDupTarget(null)}
+        title="Dupliquer le parcours"
+        nameLabel="Titre de la copie"
+        name={dupName}
+        onNameChange={setDupName}
+        depth="subject"
+        destination={dupDest}
+        onDestinationChange={setDupDest}
+        note="Les étapes pointent vers les contenus et quiz de la matière."
+        warning={
+          dupDest.subjectId && dupDest.subjectId !== subject.id
+            ? "Dans une autre matière, seules les étapes qui y existent sont reprises — les autres sont laissées de côté."
+            : undefined
+        }
+        onSubmit={submitDuplicate}
+      />
 
       <ConfirmDialog
         open={deleteTarget !== null}

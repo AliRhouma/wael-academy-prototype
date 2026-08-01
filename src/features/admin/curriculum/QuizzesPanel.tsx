@@ -1,13 +1,20 @@
 import { useMemo, useState, type KeyboardEvent } from "react"
-import { Check, Clock, FolderPlus, Layers, Pencil, Plus, Tag, Trash2, X } from "lucide-react"
+import { Check, Clock, Copy, FolderPlus, Layers, Pencil, Plus, Tag, Trash2, X } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
 import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
-import type { Chapter, Quiz, QuizExam, QuizQuestion } from "@/data/types"
+import type { Chapter, Quiz, QuizExam, QuizQuestion, Subject, Year } from "@/data/types"
 import { QUIZ_ICON } from "./content"
+import { copyName, duplicateQuiz, duplicateQuizExam } from "./duplicate"
+import {
+  DuplicateSheet,
+  EMPTY_DESTINATION,
+  useDestinationName,
+  type Destination,
+} from "./DuplicateSheet"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
@@ -16,8 +23,18 @@ function newQuestion(): QuizQuestion {
   return { id: crypto.randomUUID(), prompt: "", choices: ["", ""], correctIndex: 0 }
 }
 
-/** The "Quiz" tab of a chapter — MCQ quizzes with tags, grouped into examens. */
-export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
+/** The "Quiz" tab of a chapter — MCQ quizzes with tags, grouped into examens.
+ * `year` / `subject` are the ones being browsed — they prefill the duplicate
+ * destination so a copy defaults to staying right where it is. */
+export function QuizzesPanel({
+  chapter,
+  year,
+  subject,
+}: {
+  chapter: Chapter
+  year: Year
+  subject: Subject
+}) {
   const allQuizzes = useData((s) => s.quizzes)
   const allQuizExams = useData((s) => s.quizExams)
   const addQuiz = useData((s) => s.addQuiz)
@@ -71,6 +88,13 @@ export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
   const [editingExam, setEditingExam] = useState<QuizExam | null>(null)
   const [examTitle, setExamTitle] = useState("")
   const [deleteExam, setDeleteExam] = useState<QuizExam | null>(null)
+
+  // --- Duplicate state — one sheet, either a quiz or a whole group. ---
+  const [dupQuiz, setDupQuiz] = useState<Quiz | null>(null)
+  const [dupGroup, setDupGroup] = useState<QuizExam | null>(null)
+  const [dupName, setDupName] = useState("")
+  const [dupDest, setDupDest] = useState<Destination>(EMPTY_DESTINATION)
+  const dupInto = useDestinationName(dupDest, "chapter")
 
   function openAddQuiz(preselectExam?: string) {
     setEditing(null)
@@ -136,6 +160,31 @@ export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
       show("Quiz ajouté")
     }
     setQuizOpen(false)
+  }
+
+  function openDuplicate(target: { quiz?: Quiz; group?: QuizExam }) {
+    setDupQuiz(target.quiz ?? null)
+    setDupGroup(target.group ?? null)
+    setDupName(copyName(target.quiz?.title ?? target.group?.title ?? ""))
+    setDupDest({ yearId: year.id, subjectId: subject.id, chapterId: chapter.id })
+  }
+
+  function closeDuplicate() {
+    setDupQuiz(null)
+    setDupGroup(null)
+  }
+
+  function submitDuplicate() {
+    const title = dupName.trim()
+    if (dupQuiz) {
+      // A group belongs to its chapter — a copy that moves leaves it behind.
+      duplicateQuiz(dupQuiz, { title, chapterId: dupDest.chapterId })
+      show(`Quiz dupliqué dans « ${dupInto} »`)
+    } else if (dupGroup) {
+      duplicateQuizExam(dupGroup, { title, chapterId: dupDest.chapterId })
+      show(`Examen de quiz dupliqué dans « ${dupInto} »`)
+    }
+    closeDuplicate()
   }
 
   function openAddExam() {
@@ -231,6 +280,11 @@ export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
                     actions={[
                       { label: "Modifier le groupe", icon: Pencil, onClick: () => openEditExam(g.exam!) },
                       {
+                        label: "Dupliquer le groupe",
+                        icon: Copy,
+                        onClick: () => openDuplicate({ group: g.exam! }),
+                      },
+                      {
                         label: "Supprimer le groupe",
                         icon: Trash2,
                         tone: "danger",
@@ -296,6 +350,11 @@ export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
                           actions={[
                             { label: "Modifier", icon: Pencil, onClick: () => openEditQuiz(quiz) },
                             {
+                              label: "Dupliquer",
+                              icon: Copy,
+                              onClick: () => openDuplicate({ quiz }),
+                            },
+                            {
                               label: "Supprimer",
                               icon: Trash2,
                               tone: "danger",
@@ -318,7 +377,13 @@ export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
         open={quizOpen}
         onOpenChange={setQuizOpen}
         title={editing ? "Modifier le quiz" : "Nouveau quiz"}
-        description={editing ? undefined : "Un QCM catégorisé par tags, éventuellement rattaché à un examen de quiz."}
+        description={
+          editing
+            ? undefined
+            : examId
+              ? `Un QCM ajouté au groupe « ${exams.find((e) => e.id === examId)?.title ?? ""} ».`
+              : "Un QCM catégorisé par tags. Le rattacher à un examen de quiz se fait depuis le groupe."
+        }
         submitLabel={editing ? "Enregistrer" : "Ajouter"}
         onSubmit={submitQuiz}
       >
@@ -334,22 +399,26 @@ export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
           />
         </label>
 
-        <div className="grid grid-cols-[1fr_auto] gap-3">
-          <div>
-            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Examen de quiz</span>
-            <select
-              className={INPUT + " appearance-none"}
-              value={examId}
-              onChange={(e) => setExamId(e.target.value)}
-            >
-              <option value="">— Aucun (individuel) —</option>
-              {exams.map((e) => (
-                <option key={e.id} value={e.id}>
-                  {e.title}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* On creation the group comes from where you clicked "+" — only an edit
+            moves a quiz between groups. */}
+        <div className={editing ? "grid grid-cols-[1fr_auto] gap-3" : ""}>
+          {editing && (
+            <div>
+              <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Examen de quiz</span>
+              <select
+                className={INPUT + " appearance-none"}
+                value={examId}
+                onChange={(e) => setExamId(e.target.value)}
+              >
+                <option value="">— Aucun (individuel) —</option>
+                {exams.map((e) => (
+                  <option key={e.id} value={e.id}>
+                    {e.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Durée</span>
             <div className="flex items-center gap-1.5">
@@ -541,6 +610,29 @@ export function QuizzesPanel({ chapter }: { chapter: Chapter }) {
           />
         </label>
       </FormSheet>
+
+      <DuplicateSheet
+        open={dupQuiz !== null || dupGroup !== null}
+        onOpenChange={(o) => !o && closeDuplicate()}
+        title={dupGroup ? "Dupliquer l’examen de quiz" : "Dupliquer le quiz"}
+        nameLabel="Titre de la copie"
+        name={dupName}
+        onNameChange={setDupName}
+        depth="chapter"
+        destination={dupDest}
+        onDestinationChange={setDupDest}
+        note={
+          dupGroup
+            ? "Les quiz regroupés sont copiés avec le groupe."
+            : "Les questions et les tags suivent la copie."
+        }
+        warning={
+          dupQuiz?.quizExamId && dupDest.chapterId !== chapter.id
+            ? "Les examens de quiz appartiennent à leur chapitre : la copie sera un quiz individuel."
+            : undefined
+        }
+        onSubmit={submitDuplicate}
+      />
 
       <ConfirmDialog
         open={deleteQuiz !== null}

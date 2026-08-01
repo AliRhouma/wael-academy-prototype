@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { ClipboardList, FileText, Pencil, Plus, Trash2, Video, X } from "lucide-react"
+import { ClipboardList, Copy, FileText, Pencil, Plus, Trash2, Video, X } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
 import { Badge } from "@/components/kit/Badge"
@@ -9,6 +9,13 @@ import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
 import type { Exam, ResourceLink, Subject, Year } from "@/data/types"
 import { ScopePicker } from "./ScopePicker"
+import { copyName, duplicateExam } from "./duplicate"
+import {
+  DuplicateSheet,
+  EMPTY_DESTINATION,
+  useDestinationName,
+  type Destination,
+} from "./DuplicateSheet"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
@@ -47,6 +54,11 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
   const [pickedYears, setPickedYears] = useState<string[]>([])
   const [pickedSubjects, setPickedSubjects] = useState<string[]>([])
   const [deleteTarget, setDeleteTarget] = useState<Exam | null>(null)
+
+  const [dupTarget, setDupTarget] = useState<Exam | null>(null)
+  const [dupName, setDupName] = useState("")
+  const [dupDest, setDupDest] = useState<Destination>(EMPTY_DESTINATION)
+  const dupInto = useDestinationName(dupDest, "subject")
 
   function openDoc(pdf: ResourceLink) {
     if (pdf.url) window.open(pdf.url, "_blank", "noopener,noreferrer")
@@ -94,6 +106,23 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
       show("Examen ajouté")
     }
     setFormOpen(false)
+  }
+
+  function openDuplicate(exam: Exam) {
+    setDupTarget(exam)
+    setDupName(copyName(exam.title))
+    setDupDest({ yearId: year.id, subjectId: subject.id, chapterId: "" })
+  }
+
+  function submitDuplicate() {
+    if (!dupTarget) return
+    duplicateExam(dupTarget, {
+      title: dupName.trim(),
+      subjectIds: [dupDest.subjectId],
+      yearIds: [dupDest.yearId],
+    })
+    show(`Examen dupliqué dans « ${dupInto} »`)
+    setDupTarget(null)
   }
 
   function confirmDelete() {
@@ -188,6 +217,7 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
                 <OverflowMenu
                   actions={[
                     { label: "Modifier", icon: Pencil, onClick: () => openEdit(exam) },
+                    { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(exam) },
                     {
                       label: "Supprimer",
                       icon: Trash2,
@@ -209,7 +239,7 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
         description={
           editing
             ? undefined
-            : "Un examen peut porter plusieurs documents PDF et une vidéo, partagés entre matières et années."
+            : `Documents PDF et vidéo — ajouté à « ${subject.name} » — ${year.name}.`
         }
         submitLabel={editing ? "Enregistrer" : "Ajouter"}
         onSubmit={submit}
@@ -278,13 +308,31 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
           />
         </label>
 
-        <ScopePicker
-          yearIds={pickedYears}
-          subjectIds={pickedSubjects}
-          onYearsChange={setPickedYears}
-          onSubjectsChange={setPickedSubjects}
-        />
+        {/* Scope is implicit on creation (the page you're on); only an edit can
+            widen an exam to other matières / classes. */}
+        {editing && (
+          <ScopePicker
+            yearIds={pickedYears}
+            subjectIds={pickedSubjects}
+            onYearsChange={setPickedYears}
+            onSubjectsChange={setPickedSubjects}
+          />
+        )}
       </FormSheet>
+
+      <DuplicateSheet
+        open={dupTarget !== null}
+        onOpenChange={(o) => !o && setDupTarget(null)}
+        title="Dupliquer l’examen"
+        nameLabel="Titre de la copie"
+        name={dupName}
+        onNameChange={setDupName}
+        depth="subject"
+        destination={dupDest}
+        onDestinationChange={setDupDest}
+        note="Les documents PDF et la vidéo suivent la copie."
+        onSubmit={submitDuplicate}
+      />
 
       <ConfirmDialog
         open={deleteTarget !== null}

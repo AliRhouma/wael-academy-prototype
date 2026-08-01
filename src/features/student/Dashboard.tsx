@@ -1,4 +1,5 @@
-import { BookOpen, CalendarDays } from "lucide-react"
+import { Link } from "react-router-dom"
+import { BookOpen, CalendarDays, ChevronRight } from "lucide-react"
 import { PageHeader } from "@/components/kit/PageHeader"
 import { StatTile } from "@/features/shared/StatTile"
 import { SessionList } from "@/features/shared/SessionList"
@@ -40,7 +41,15 @@ export default function StudentDashboard() {
       </div>
 
       <section>
-        <h2 className="mb-3 font-display text-base font-bold text-ink">Emploi du temps</h2>
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h2 className="font-display text-base font-bold text-ink">Emploi du temps</h2>
+          <Link
+            to="/student/calendrier"
+            className="inline-flex shrink-0 items-center gap-1 text-[13px] font-medium text-brand-600 transition hover:text-brand-700"
+          >
+            Voir le calendrier <ChevronRight className="size-4" />
+          </Link>
+        </div>
         <SessionList sessions={mySessions} empty="Aucune séance programmée" />
       </section>
     </div>

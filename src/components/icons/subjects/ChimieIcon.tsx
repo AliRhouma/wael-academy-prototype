@@ -1,0 +1,67 @@
+/**
+ * ChimieIcon — converted from `svg icons/Chimie.svg` (supplied art), recoloured to
+ * the Wael tokens: blues ride the brand ramp, lavenders the accent ramp, outlines
+ * the neutral ramp, warm/pink details the warning & danger tokens. Token-driven
+ * throughout, so it follows whatever palette is active (data-palette) instead of
+ * being locked to the source blues.
+ *
+ * Gradient ids are namespaced `chimie-*` — a grid of these renders at once and
+ * duplicate defs ids would cross-wire between cards.
+ * Generated, then reviewed; edit here (not the source svg).
+ */
+import { useGlyphId } from "../useGlyphId"
+
+export function ChimieIcon({ className }: { className?: string }) {
+  const uid = useGlyphId()
+  return (
+    <svg viewBox="0 0 59 59" className={className} fill="none" aria-hidden="true">
+      <g clipPath={`url(#chimie-clip0_8660_249406-${uid})`}>
+      <path d="M39.237 46.7263L26.7843 21.2888C26.5028 20.7144 26.3575 20.0838 26.3575 19.4441V4.44189H13.6931V19.4441C13.6931 20.0838 13.5467 20.7144 13.2663 21.2888L0.81365 46.7263C-1.74508 51.9524 2.05983 58.0517 7.87878 58.0517H32.1707C37.9897 58.0517 41.7946 51.9524 39.237 46.7263Z" fill={`url(#chimie-paint0_linear_8660_249406-${uid})`}/>
+      <path d="M36.725 47.9555L29.9722 34.1605C29.8693 33.9488 29.6541 33.8149 29.4184 33.8149H10.6318C10.3961 33.8149 10.1821 33.9488 10.078 34.1605L3.32524 47.9555C2.55052 49.537 2.6455 51.3736 3.57699 52.8681C4.50963 54.3626 6.11742 55.2541 7.87855 55.2541H32.0893C33.8298 55.2541 35.4799 54.4027 36.4263 52.9414C37.4013 51.4331 37.5111 49.5633 36.725 47.9555Z" fill={`url(#chimie-paint1_linear_8660_249406-${uid})`}/>
+      <path d="M18.9619 7.97153C18.9619 8.44643 18.5785 8.82979 18.1036 8.82979H13.6934V7.11328H18.1036C18.5785 7.11328 18.9619 7.49778 18.9619 7.97153ZM18.1036 15.1797H13.6934V16.8962H18.1036C18.5785 16.8962 18.9619 16.5117 18.9619 16.038C18.9619 15.5642 18.5785 15.1797 18.1036 15.1797ZM16.0209 11.1471H13.6934V12.8636H16.0209C16.4947 12.8636 16.8792 12.4791 16.8792 12.0053C16.8792 11.5304 16.4947 11.1471 16.0209 11.1471Z" fill={`url(#chimie-paint2_linear_8660_249406-${uid})`}/>
+      <path d="M26.5235 4.44125H13.5273C12.4493 4.44125 11.5762 3.56812 11.5762 2.49016C11.5762 1.41219 12.4493 0.539062 13.5273 0.539062H26.5235C27.6014 0.539062 28.4746 1.41219 28.4746 2.49016C28.4746 3.56812 27.6014 4.44125 26.5235 4.44125Z" fill={`url(#chimie-paint3_linear_8660_249406-${uid})`}/>
+      <path d="M51.4328 58.0499C48.6658 58.0499 46.4229 55.807 46.4229 53.04V20.4321H56.4438V53.04C56.4438 55.807 54.1998 58.0499 51.4328 58.0499Z" fill={`url(#chimie-paint4_linear_8660_249406-${uid})`}/>
+      <path d="M51.3391 55.4784C50.0185 55.428 48.9932 54.302 48.9932 52.9803V36.1608C48.9932 35.9342 49.1774 35.75 49.404 35.75H53.4607C53.6872 35.75 53.8715 35.9342 53.8715 36.1608V53.0398C53.8726 54.4164 52.7271 55.5298 51.3391 55.4784Z" fill={`url(#chimie-paint5_linear_8660_249406-${uid})`}/>
+      <path d="M56.396 20.4328H46.4701C45.2571 20.4328 44.2729 19.4487 44.2729 18.2357C44.2729 17.0227 45.2571 16.0386 46.4701 16.0386H56.396C57.609 16.0386 58.5932 17.0227 58.5932 18.2357C58.5932 19.4487 57.609 20.4328 56.396 20.4328Z" fill={`url(#chimie-paint6_linear_8660_249406-${uid})`}/>
+      <path d="M50.9292 24.5366H46.4229V26.2531H50.9292C51.403 26.2531 51.7875 25.8686 51.7875 25.3949C51.7875 24.9211 51.403 24.5366 50.9292 24.5366ZM50.9292 35.4845H46.4229V37.201H50.9292C51.403 37.201 51.7875 36.8165 51.7875 36.3427C51.7875 35.869 51.403 35.4845 50.9292 35.4845ZM48.5834 30.0111H46.4229V31.7276H48.5834C49.0571 31.7276 49.4416 31.3431 49.4416 30.8694C49.4416 30.3945 49.0571 30.0111 48.5834 30.0111ZM50.9292 46.4323H46.4229V48.1489H50.9292C51.403 48.1489 51.7875 47.7644 51.7875 47.2906C51.7875 46.8168 51.403 46.4323 50.9292 46.4323ZM48.5834 40.9578H46.4229V42.6743H48.5834C49.0571 42.6743 49.4416 42.291 49.4416 41.8161C49.4416 41.3423 49.0571 40.9578 48.5834 40.9578Z" fill={`url(#chimie-paint7_linear_8660_249406-${uid})`}/>
+      </g>
+      <defs>
+      <linearGradient id={`chimie-paint0_linear_8660_249406-${uid}`} x1="6.2774" y1="31.2468" x2="38.7961" y2="31.2468" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--accent-50)"/>
+      <stop offset="0.9959" stopColor="var(--accent-100)"/>
+      </linearGradient>
+      <linearGradient id={`chimie-paint1_linear_8660_249406-${uid}`} x1="6.89076" y1="44.5344" x2="35.0633" y2="44.5344" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--brand-200)"/>
+      <stop offset="1" stopColor="var(--brand-500)"/>
+      </linearGradient>
+      <linearGradient id={`chimie-paint2_linear_8660_249406-${uid}`} x1="13.2605" y1="12.0052" x2="18.0156" y2="12.0052" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--neutral-600)"/>
+      <stop offset="1" stopColor="var(--neutral-700)"/>
+      </linearGradient>
+      <linearGradient id={`chimie-paint3_linear_8660_249406-${uid}`} x1="20.025" y1="0.390642" x2="20.025" y2="4.75812" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--accent-50)"/>
+      <stop offset="0.9959" stopColor="var(--accent-100)"/>
+      </linearGradient>
+      <linearGradient id={`chimie-paint4_linear_8660_249406-${uid}`} x1="46.4226" y1="39.2407" x2="56.4432" y2="39.2407" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--accent-50)"/>
+      <stop offset="0.9959" stopColor="var(--accent-100)"/>
+      </linearGradient>
+      <linearGradient id={`chimie-paint5_linear_8660_249406-${uid}`} x1="48.3214" y1="45.6146" x2="55.3922" y2="45.6146" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--brand-200)"/>
+      <stop offset="1" stopColor="var(--brand-500)"/>
+      </linearGradient>
+      <linearGradient id={`chimie-paint6_linear_8660_249406-${uid}`} x1="51.4333" y1="15.7583" x2="51.4333" y2="20.7307" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--accent-50)"/>
+      <stop offset="0.9959" stopColor="var(--accent-100)"/>
+      </linearGradient>
+      <linearGradient id={`chimie-paint7_linear_8660_249406-${uid}`} x1="46.4232" y1="36.3432" x2="51.7878" y2="36.3432" gradientUnits="userSpaceOnUse">
+      <stop stopColor="var(--neutral-600)"/>
+      <stop offset="1" stopColor="var(--neutral-700)"/>
+      </linearGradient>
+      <clipPath id={`chimie-clip0_8660_249406-${uid}`}>
+      <rect width="58.59" height="58.59" fill="white"/>
+      </clipPath>
+      </defs>
+    </svg>
+  )
+}
