@@ -3,7 +3,7 @@ import { ChevronDown, Plus, Trash2, Wand2 } from "lucide-react"
 import { FormSheet } from "@/components/kit/FormSheet"
 import { useData } from "@/stores/useData"
 import type { Subscription, SubscriptionState } from "@/data/types"
-import { formatDT } from "./paymentLib"
+import { formatDT } from "@/features/shared/payments/paymentLib"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"

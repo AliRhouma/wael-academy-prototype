@@ -41,6 +41,8 @@ import StudentSubjectDetailScreen from "@/features/student/SubjectDetailScreen"
 import StudentSeancesScreen from "@/features/student/seances/SeancesScreen"
 import StudentSeanceSubjectScreen from "@/features/student/seances/SeanceSubjectScreen"
 import StudentVideoPlayerScreen from "@/features/student/player/VideoPlayerScreen"
+import StudentFinanceScreen from "@/features/student/finance/FinanceScreen"
+import StudentSubscriptionScreen from "@/features/student/finance/SubscriptionScreen"
 import { useData } from "@/stores/useData"
 
 /** Standalone list of the shared courses; links into the /courses/:id workspace. */
@@ -191,10 +193,12 @@ export const router = createBrowserRouter([
       matieres: <StudentSubjectsScreen />,
       calendrier: <StudentCalendarScreen />,
       seances: <StudentSeancesScreen />,
+      "porte-monnaie": <StudentFinanceScreen />,
     },
     [
       { path: "matieres/:subjectId", element: <StudentSubjectDetailScreen /> },
       { path: "seances/:subjectId", element: <StudentSeanceSubjectScreen /> },
+      { path: "porte-monnaie/:subscriptionId", element: <StudentSubscriptionScreen /> },
       { path: "video/:kind/:id", element: <StudentVideoPlayerScreen /> },
     ],
   ),

@@ -29,7 +29,7 @@ import {
   subscriptionStatus,
   type InstallmentStatus,
   type SubscriptionStatus,
-} from "./paymentLib"
+} from "@/features/shared/payments/paymentLib"
 
 const SUB_STATUS: Record<SubscriptionStatus, { label: string; tone: BadgeTone }> = {
   actif: { label: "Actif", tone: "success" },

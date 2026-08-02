@@ -34,7 +34,7 @@ import {
   subscriptionStatus,
   type InstallmentStatus,
   type SubscriptionStatus,
-} from "./paymentLib"
+} from "@/features/shared/payments/paymentLib"
 
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"

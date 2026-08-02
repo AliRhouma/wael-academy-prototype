@@ -1,0 +1,225 @@
+import { Check, Paperclip, Receipt, Tag, TriangleAlert } from "lucide-react"
+import type { Offer, Subscription, Transaction } from "@/data/types"
+import { Badge, type BadgeTone } from "@/components/kit/Badge"
+import {
+  dueInLabel,
+  formatDT,
+  formatDay,
+  installmentStatus,
+  paidForInstallment,
+  type InstallmentStatus,
+} from "@/features/shared/payments/paymentLib"
+
+const INST_STATUS: Record<InstallmentStatus, { label: string; tone: BadgeTone }> = {
+  paid: { label: "Payée", tone: "success" },
+  partial: { label: "Partielle", tone: "warning" },
+  overdue: { label: "En retard", tone: "danger" },
+  upcoming: { label: "À venir", tone: "neutral" },
+}
+
+/** The offer's logo — its image when set, else a quiet brand tile (as in Offres). */
+export function OfferLogo({ offer, size = 10 }: { offer?: Offer; size?: 10 | 12 }) {
+  const box = size === 12 ? "size-12" : "size-10"
+  if (offer?.logoUrl) {
+    return (
+      <img
+        src={offer.logoUrl}
+        alt=""
+        className={`${box} shrink-0 rounded-md border border-border bg-surface object-cover p-1`}
+      />
+    )
+  }
+  return (
+    <span className={`${box} grid shrink-0 place-items-center rounded-md bg-brand-50 text-brand-600`}>
+      <Tag className={size === 12 ? "size-6" : "size-5"} />
+    </span>
+  )
+}
+
+/** A thin token-driven progress bar — the gradient is the paid share. */
+export function ProgressBar({ pct, className = "" }: { pct: number; className?: string }) {
+  return (
+    <div className={`h-1.5 w-full overflow-hidden rounded-full bg-neutral-100 ${className}`}>
+      <div
+        className="h-full rounded-full bg-grad transition-[width] duration-500"
+        style={{ width: `${pct}%` }}
+      />
+    </div>
+  )
+}
+
+/**
+ * The échéancier as a vertical timeline: one node per planned tranche, its
+ * coverage, its due date and the countdown. The next tranche to pay is ringed
+ * so the eye lands on it first; settled ones fade back to a check.
+ */
+export function Echeancier({
+  sub,
+  transactions,
+}: {
+  sub: Subscription
+  transactions: Transaction[]
+}) {
+  const nextIdx = sub.installments.findIndex((i) => installmentStatus(i, transactions) !== "paid")
+
+  return (
+    <ol className="flex flex-col">
+      {sub.installments.map((inst, i) => {
+        const st = installmentStatus(inst, transactions)
+        const covered = paidForInstallment(inst, transactions)
+        const isNext = i === nextIdx
+        const isLast = i === sub.installments.length - 1
+        const node =
+          st === "paid"
+            ? "bg-success-50 text-success-700"
+            : st === "overdue"
+              ? "bg-danger-50 text-danger-600"
+              : isNext
+                ? "bg-grad text-ink-inverted shadow-brand"
+                : "bg-neutral-100 text-ink-muted"
+
+        return (
+          <li key={inst.id} className={"relative flex gap-3 " + (isLast ? "" : "pb-3")}>
+            {!isLast && (
+              <span
+                aria-hidden
+                className="absolute start-4 top-9 bottom-0 w-px -translate-x-1/2 bg-border rtl:translate-x-1/2"
+              />
+            )}
+            <span
+              className={
+                "z-[1] grid size-8 shrink-0 place-items-center rounded-full font-display text-[13px] font-bold " +
+                node
+              }
+            >
+              {st === "paid" ? (
+                <Check className="size-4" />
+              ) : st === "overdue" ? (
+                <TriangleAlert className="size-4" />
+              ) : (
+                i + 1
+              )}
+            </span>
+
+            <div
+              className={
+                "min-w-0 flex-1 rounded-lg border bg-surface p-3 shadow-sm transition " +
+                (isNext && st !== "paid" ? "border-brand-200 ring-1 ring-brand-100" : "border-border")
+              }
+            >
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <p className="font-display text-[16px] font-bold tabular-nums text-ink">
+                  {formatDT(inst.amount)}
+                </p>
+                <Badge tone={INST_STATUS[st].tone} dot>
+                  {INST_STATUS[st].label}
+                </Badge>
+                {isNext && st !== "overdue" && (
+                  <span className="text-[11px] font-medium uppercase tracking-[.1em] text-accent2-600">
+                    Prochaine
+                  </span>
+                )}
+              </div>
+
+              <p className="mt-1 flex flex-wrap items-center gap-x-2 text-[12px] text-ink-muted">
+                <span>Tranche {i + 1} — avant le {formatDay(inst.dueDate)}</span>
+                {st !== "paid" && (
+                  <span
+                    className={
+                      "tabular-nums " +
+                      (st === "overdue" ? "font-medium text-danger-600" : "text-ink-subtle")
+                    }
+                  >
+                    · {dueInLabel(inst.dueDate)}
+                  </span>
+                )}
+              </p>
+
+              {covered > 0 && covered < inst.amount && (
+                <div className="mt-2">
+                  <ProgressBar pct={Math.round((covered / inst.amount) * 100)} />
+                  <p className="mt-1 text-[12px] tabular-nums text-ink-subtle">
+                    {formatDT(covered)} versés · reste {formatDT(inst.amount - covered)}
+                  </p>
+                </div>
+              )}
+            </div>
+          </li>
+        )
+      })}
+    </ol>
+  )
+}
+
+/**
+ * One recorded payment. Every transaction in the store is money the academy
+ * confirmed cashing in, so the élève sees it as validated — with its receipt.
+ */
+export function TransactionItem({
+  tx,
+  trancheNo,
+  context,
+}: {
+  tx: Transaction
+  /** 1-based tranche number this payment settles, when it's linked to one. */
+  trancheNo?: number
+  /** Extra line (the offer name) — used on the wallet's "derniers paiements". */
+  context?: string
+}) {
+  return (
+    <li className="flex items-start gap-3 px-4 py-3">
+      <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-md bg-success-50 text-success-700">
+        <Receipt className="size-[18px]" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="font-display text-[16px] font-bold tabular-nums text-ink">
+            {formatDT(tx.amount)}
+          </span>
+          <span className="text-[13px] text-ink-muted">{formatDay(tx.date)}</span>
+          {trancheNo && <Badge tone="brand">Tranche {trancheNo}</Badge>}
+        </p>
+        {context && (
+          <p dir="auto" className="mt-0.5 truncate text-[12px] font-medium text-ink-subtle">
+            {context}
+          </p>
+        )}
+        {tx.remarks && (
+          <p dir="auto" className="mt-0.5 text-[12px] text-ink-muted">
+            {tx.remarks}
+          </p>
+        )}
+        {tx.resources.length > 0 && (
+          <div className="mt-1.5 flex flex-wrap gap-1.5">
+            {tx.resources.map((r, j) =>
+              r.url ? (
+                <a
+                  key={j}
+                  href={r.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={r.notes}
+                  className="inline-flex min-h-[28px] items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-ink-subtle transition hover:bg-brand-50 hover:text-brand-700"
+                >
+                  <Paperclip className="size-3" /> {r.name}
+                </a>
+              ) : (
+                <span
+                  key={j}
+                  title={r.notes}
+                  className="inline-flex min-h-[28px] items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-ink-subtle"
+                >
+                  <Paperclip className="size-3" /> {r.name}
+                </span>
+              ),
+            )}
+          </div>
+        )}
+      </div>
+      {/* The count lives in the section header on phones — keep the row breathable. */}
+      <Badge tone="success" className="mt-1 hidden shrink-0 sm:inline-flex">
+        Validé
+      </Badge>
+    </li>
+  )
+}
