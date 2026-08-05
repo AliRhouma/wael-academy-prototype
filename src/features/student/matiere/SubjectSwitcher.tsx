@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { SubjectIcon, hasSubjectArt } from "@/components/icons/subjects"
+import { SubjectIcon } from "@/components/icons/subjects"
 import { subjectTheme } from "@/features/student/subjectTheme"
+import { subjectTint } from "@/features/student/subjectTint"
 import { cn } from "@/lib/utils"
 import type { Subject } from "@/data/types"
 
@@ -108,15 +109,10 @@ export function SubjectSwitcher({
               )}
             >
               <span
-                className={cn(
-                  "grid size-8 shrink-0 place-items-center rounded-[9px]",
-                  theme.panel,
-                )}
+                className="grid size-8 shrink-0 place-items-center rounded-[9px]"
+                style={{ backgroundColor: subjectTint(subject.name, subject.category).panel }}
               >
-                <SubjectIcon
-                  name={subject.name}
-                  className={cn("size-5", !hasSubjectArt(subject.name) && theme.icon)}
-                />
+                <SubjectIcon name={subject.name} className="size-7" />
               </span>
               <span
                 dir="auto"

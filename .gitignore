@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Designer reference material — kept on disk, never imported by the app.
+# (The art the build DOES import lives in "svg icons/illustrations/".)
+pl.html
+svg icons/Wael Academy.html
+svg icons/Wael Academy_files/
+svg icons/38.svg
+svg icons/43.svg
+svg icons/wael running.svg
+svg icons/wael-face.svg
+svg icons/wael-running-crop.svg
+src/components/icons/subjects/art/

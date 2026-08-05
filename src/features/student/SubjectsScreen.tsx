@@ -2,8 +2,10 @@ import { useMemo } from "react"
 import { Link } from "react-router-dom"
 import { BookMarked, ChevronRight } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
-import { SubjectIcon, hasSubjectArt } from "@/components/icons/subjects"
+import { WaelProgress } from "@/components/kit/WaelProgress"
+import { SubjectIcon } from "@/components/icons/subjects"
 import { subjectTheme } from "@/features/student/subjectTheme"
+import { subjectTint } from "@/features/student/subjectTint"
 import { useAuth } from "@/stores/useAuth"
 import { useData } from "@/stores/useData"
 import { cn } from "@/lib/utils"
@@ -86,30 +88,53 @@ export default function StudentSubjectsScreen() {
           <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
             {mine.map(({ subject, category, ready, total, pct }) => {
               const c = subjectTheme(category)
+              const tint = subjectTint(subject.name, category)
+              // Theme-aware: full tint on light, mixed into the dark surface otherwise.
+              const fill = `color-mix(in srgb, ${tint.fill} var(--tint-fill-strength), var(--surface))`
               return (
                 <li key={subject.id}>
+                  {/* The WHOLE card is tinted with the drawing's OWN dominant
+                      colour — no inner panel — so the artwork and its card read
+                      as one object and the drawing can run big. `--tint-strength`
+                      keeps that honest in dark mode: full tint on light, a wash
+                      mixed into the dark surface otherwise.
+                      Title and progress bar stay on the category token — those
+                      carry meaning, the backdrop carries the art. */}
                   <Link
                     to={`/student/matieres/${subject.id}`}
-                    className="group flex h-full flex-col rounded-lg border border-border bg-surface p-3 shadow-sm transition hover:border-brand-200 hover:shadow-md motion-safe:hover:-translate-y-0.5"
+                    className="group relative isolate flex h-full flex-col overflow-hidden rounded-lg border border-border p-3 shadow-sm transition hover:border-brand-200 hover:shadow-md motion-safe:hover:-translate-y-0.5"
+                    style={{
+                      backgroundColor: `color-mix(in srgb, ${tint.panel} var(--tint-strength), var(--surface))`,
+                    }}
                   >
-                    {/* Glyph in its tinted halo */}
-                    <div
-                      className={cn(
-                        "relative grid h-24 place-items-center overflow-hidden rounded-md md:h-28",
-                        c.panel,
-                      )}
-                    >
+                    {/* HOVER, part 1: colour floods the card from the bottom up.
+                        A deeper cut of the SAME measured tint, so it reads as the
+                        card warming rather than a new colour arriving. Behind the
+                        content (`isolate` + negative z) and clipped by the card's
+                        own rounded corners. */}
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-x-0 -inset-y-10 -z-10 origin-bottom scale-y-0 transition-transform duration-500 ease-out motion-safe:group-hover:scale-y-100"
+                      style={{
+                        // Feathered leading edge — a hard line sweeping up reads
+                        // as a wipe; this reads as colour flooding in. The layer
+                        // overshoots the card so the solid part still covers it.
+                        backgroundImage: `linear-gradient(to top, ${fill} 0%, ${fill} 82%, transparent 100%)`,
+                      }}
+                    />
+
+                    {/* HOVER, part 2: the drawing swells. Where the matière has a
+                        happy variant (Anglais), SubjectIcon cross-fades the two
+                        in place at the same time — same frame, so it reads as Wael
+                        smiling, not as one icon replacing another. */}
+                    <div className="relative grid h-32 place-items-center md:h-36">
                       <span
-                        className={cn(
-                          "absolute size-20 rounded-full blur-2xl transition-transform motion-safe:group-hover:scale-110",
-                          c.halo,
-                        )}
+                        className="absolute size-24 rounded-full blur-2xl transition-transform duration-500 motion-safe:group-hover:scale-125"
+                        style={{ backgroundColor: tint.halo }}
                       />
-                      {/* Supplied art carries its own gradients; only the stroke
-                          fallbacks take the category tint. */}
                       <SubjectIcon
                         name={subject.name}
-                        className={cn("relative size-12 md:size-14", !hasSubjectArt(subject.name) && c.icon)}
+                        className="relative size-32 transition-transform duration-500 ease-out motion-safe:group-hover:scale-110 md:size-36"
                       />
                     </div>
 
@@ -122,18 +147,21 @@ export default function StudentSubjectsScreen() {
                       {subject.name}
                     </p>
 
-                    <div className="mt-auto pt-2.5">
+                    {/* pt-4, not pt-2.5: the face chip straddles the bar and
+                        rises ~8px above it — that padding is its headroom. */}
+                    <div className="mt-auto pt-4">
                       {total === 0 ? (
                         <p className="text-center text-[11px] text-ink-muted">Programme à venir</p>
                       ) : (
                         <>
                           <div className="flex items-center gap-2">
-                            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-200">
-                              <div
-                                className={cn("h-full rounded-full transition-all duration-500", c.bar)}
-                                style={{ width: `${pct}%` }}
-                              />
-                            </div>
+                            <WaelProgress
+                              pct={pct}
+                              barClassName={c.bar}
+                              chipClassName={c.chip}
+                              label={`Progression ${subject.name}`}
+                              className="flex-1"
+                            />
                             <span className="text-[11px] font-semibold tabular-nums text-ink-subtle">{pct}%</span>
                           </div>
                           <p className="mt-1 text-[11px] text-ink-muted">

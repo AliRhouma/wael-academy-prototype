@@ -1,9 +1,11 @@
 /**
  * Folder glyph for "Matières" — a dark back plate with a lighter front flap so
- * it reads with depth at 21px. Both ride the brand ramp (`--brand-*`), so the
- * folder follows whatever palette is active (data-palette).
+ * it reads with depth at 21px. This is the one manila-gold glyph in the rail:
+ * a folder reads as a folder in gold, and it breaks up a long run of blue
+ * bodies. Fixed hex, see `navGlyphColors`.
  * Paths only — see ClassementIcon for why.
  */
+import { navGlyph } from "./navGlyphColors"
 import { useGlyphId } from "./useGlyphId"
 
 export function MatieresIcon({ className }: { className?: string }) {
@@ -28,12 +30,12 @@ export function MatieresIcon({ className }: { className?: string }) {
       />
       <defs>
         <linearGradient id={`matBack-${uid}`} x1="4" y1="4.4" x2="21" y2="21.9" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-500)" />
-          <stop offset="1" stopColor="var(--brand-700)" />
+          <stop stopColor={navGlyph.gold600} />
+          <stop offset="1" stopColor={navGlyph.gold700} />
         </linearGradient>
         <linearGradient id={`matFront-${uid}`} x1="4" y1="10.5" x2="19" y2="21.9" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-200)" />
-          <stop offset="1" stopColor="var(--brand-400)" />
+          <stop stopColor={navGlyph.gold100} />
+          <stop offset="1" stopColor={navGlyph.gold500} />
         </linearGradient>
       </defs>
     </svg>

@@ -2,8 +2,9 @@ import { useMemo } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { CalendarRange, ChevronRight, MonitorPlay } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
-import { SubjectIcon, hasSubjectArt } from "@/components/icons/subjects"
+import { SubjectIcon } from "@/components/icons/subjects"
 import { subjectTheme } from "@/features/student/subjectTheme"
+import { subjectTint } from "@/features/student/subjectTint"
 import {
   academicYearsOf,
   useMyPastSessions,
@@ -205,6 +206,7 @@ export default function StudentSeancesScreen() {
               <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
                 {cards.map(({ subject, recorded, groups: groupCount }) => {
                   const c = subjectTheme(subject.category)
+                  const tint = subjectTint(subject.name, subject.category)
                   return (
                     <li key={subject.id}>
                       <Link
@@ -215,24 +217,14 @@ export default function StudentSeancesScreen() {
                         )}
                       >
                         <div
-                          className={cn(
-                            "relative grid h-24 place-items-center overflow-hidden rounded-md md:h-28",
-                            c.panel,
-                          )}
+                          className="relative grid h-24 place-items-center overflow-hidden rounded-md md:h-28"
+                          style={{ backgroundColor: tint.panel }}
                         >
                           <span
-                            className={cn(
-                              "absolute size-20 rounded-full blur-2xl transition-transform motion-safe:group-hover:scale-110",
-                              c.halo,
-                            )}
+                            className="absolute size-20 rounded-full blur-2xl transition-transform motion-safe:group-hover:scale-110"
+                            style={{ backgroundColor: tint.halo }}
                           />
-                          <SubjectIcon
-                            name={subject.name}
-                            className={cn(
-                              "relative size-12 md:size-14",
-                              !hasSubjectArt(subject.name) && c.icon,
-                            )}
-                          />
+                          <SubjectIcon name={subject.name} className="relative size-20 md:size-24" />
                           {recorded > 0 && (
                             <span className="absolute bottom-1.5 end-1.5 inline-flex items-center gap-1 rounded-full bg-surface/95 px-2 py-0.5 text-[11px] font-semibold text-ink-subtle shadow-sm">
                               <MonitorPlay className="size-3 text-brand-600" />

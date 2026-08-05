@@ -13,7 +13,7 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { Avatar } from "@/components/kit/Avatar"
 import { Badge } from "@/components/kit/Badge"
-import { SubjectIcon, hasSubjectArt } from "@/components/icons/subjects"
+import { SubjectIcon } from "@/components/icons/subjects"
 import { useSessionLabels } from "@/features/shared/session/sessionLabels"
 import {
   STATE_LABEL,
@@ -81,7 +81,7 @@ export function SessionDetailSheet({
   if (!session) return null
 
   const state = sessionState(session, now)
-  const { subjectName, theme } = visual(session)
+  const { subjectName, theme, tint } = visual(session)
   const teacher = teacherName(session.teacherId)
   const groups = groupNames(session.groupIds)
   const isDone = state === "terminee"
@@ -90,16 +90,14 @@ export function SessionDetailSheet({
   const header = (
     <div className="flex items-start gap-3.5 border-b border-border p-5 pe-12">
       <span
-        className={cn(
-          "relative grid size-14 shrink-0 place-items-center overflow-hidden rounded-lg",
-          theme.panel,
-        )}
+        className="relative grid size-14 shrink-0 place-items-center overflow-hidden rounded-lg"
+        style={{ backgroundColor: tint.panel }}
       >
-        <span className={cn("absolute size-12 rounded-full blur-2xl", theme.halo)} />
-        <SubjectIcon
-          name={subjectName ?? ""}
-          className={cn("relative size-8", !hasSubjectArt(subjectName ?? "") && theme.icon)}
+        <span
+          className="absolute size-12 rounded-full blur-2xl"
+          style={{ backgroundColor: tint.halo }}
         />
+        <SubjectIcon name={subjectName ?? ""} className="relative size-12" />
       </span>
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">

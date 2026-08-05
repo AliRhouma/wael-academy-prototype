@@ -3,8 +3,9 @@ import { Link } from "react-router-dom"
 import { Check, ChevronDown } from "lucide-react"
 import { DropdownMenu } from "radix-ui"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
-import { SubjectIcon, hasSubjectArt } from "@/components/icons/subjects"
+import { SubjectIcon } from "@/components/icons/subjects"
 import { subjectTheme } from "@/features/student/subjectTheme"
+import { subjectTint } from "@/features/student/subjectTint"
 import { useIsMobile } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 import type { Subject } from "@/data/types"
@@ -39,11 +40,11 @@ export function SubjectPicker({
       aria-label={`Matière : ${active.name}. Changer de matière`}
       className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-md border border-border-strong bg-surface ps-1.5 pe-2 transition hover:border-brand-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <span className={cn("grid size-7 shrink-0 place-items-center rounded-[8px]", theme.panel)}>
-        <SubjectIcon
-          name={active.name}
-          className={cn("size-[18px]", !hasSubjectArt(active.name) && theme.icon)}
-        />
+      <span
+        className="grid size-7 shrink-0 place-items-center rounded-[8px]"
+        style={{ backgroundColor: subjectTint(active.name, active.category).panel }}
+      >
+        <SubjectIcon name={active.name} className="size-6" />
       </span>
       <span
         dir="auto"
@@ -73,12 +74,10 @@ export function SubjectPicker({
         )}
       >
         <span
-          className={cn("grid size-8 shrink-0 place-items-center rounded-[9px]", rowTheme.panel)}
+          className="grid size-8 shrink-0 place-items-center rounded-[9px]"
+          style={{ backgroundColor: subjectTint(subject.name, subject.category).panel }}
         >
-          <SubjectIcon
-            name={subject.name}
-            className={cn("size-5", !hasSubjectArt(subject.name) && rowTheme.icon)}
-          />
+          <SubjectIcon name={subject.name} className="size-7" />
         </span>
         <span
           dir="auto"

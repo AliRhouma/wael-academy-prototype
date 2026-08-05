@@ -2,6 +2,23 @@ import { useEffect, useRef, useState } from "react"
 
 const MOBILE_QUERY = "(max-width: 767px)"
 
+/** Live `matchMedia` result for any query — re-renders when it flips. */
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState<boolean>(() =>
+    typeof window !== "undefined" ? window.matchMedia(query).matches : false,
+  )
+
+  useEffect(() => {
+    const mql = window.matchMedia(query)
+    const onChange = () => setMatches(mql.matches)
+    onChange()
+    mql.addEventListener("change", onChange)
+    return () => mql.removeEventListener("change", onChange)
+  }, [query])
+
+  return matches
+}
+
 /**
  * True below the `md` breakpoint (viewport < 768px), updated on resize.
  *
@@ -10,19 +27,7 @@ const MOBILE_QUERY = "(max-width: 767px)"
  * prefer Tailwind responsive utilities (`hidden md:flex`, `md:hidden`).
  */
 export function useIsMobile(): boolean {
-  const [isMobile, setIsMobile] = useState<boolean>(() =>
-    typeof window !== "undefined" ? window.matchMedia(MOBILE_QUERY).matches : false,
-  )
-
-  useEffect(() => {
-    const mql = window.matchMedia(MOBILE_QUERY)
-    const onChange = () => setIsMobile(mql.matches)
-    onChange()
-    mql.addEventListener("change", onChange)
-    return () => mql.removeEventListener("change", onChange)
-  }, [])
-
-  return isMobile
+  return useMediaQuery(MOBILE_QUERY)
 }
 
 /**

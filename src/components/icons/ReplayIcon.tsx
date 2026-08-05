@@ -1,10 +1,11 @@
 /**
  * Two stacked screens with a play mark for "Séances enregistrées" — an archive
  * of replays, not a live broadcast (that's LiveIcon). The back card rides the
- * accent ramp, the front one the brand ramp, and the play triangle is punched
+ * rail gold, the front one the rail blue, and the play triangle is punched
  * out as an evenodd hole so it survives the active pill, where every path is
- * forced white. Token-driven throughout; paths only.
+ * forced white. Fixed hex, see `navGlyphColors`; paths only.
  */
+import { navGlyph } from "./navGlyphColors"
 import { useGlyphId } from "./useGlyphId"
 
 export function ReplayIcon({ className }: { className?: string }) {
@@ -37,8 +38,8 @@ export function ReplayIcon({ className }: { className?: string }) {
           y2="19"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="var(--accent-500)" />
-          <stop offset="1" stopColor="var(--accent-700)" />
+          <stop stopColor={navGlyph.gold500} />
+          <stop offset="1" stopColor={navGlyph.gold700} />
         </linearGradient>
         <linearGradient
           id={`replayFront-${uid}`}
@@ -48,8 +49,8 @@ export function ReplayIcon({ className }: { className?: string }) {
           y2="23.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="var(--brand-400)" />
-          <stop offset="1" stopColor="var(--brand-700)" />
+          <stop stopColor={navGlyph.blue400} />
+          <stop offset="1" stopColor={navGlyph.blue700} />
         </linearGradient>
       </defs>
     </svg>

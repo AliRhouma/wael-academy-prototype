@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { CalendarOff, CheckCircle2, Hourglass, PlayCircle, Video } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
-import { SubjectIcon, hasSubjectArt } from "@/components/icons/subjects"
+import { SubjectIcon } from "@/components/icons/subjects"
 import {
   PX_PER_MIN,
   STATE_LABEL,
@@ -133,7 +133,7 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
           <div className="absolute inset-0 ms-[62px] me-3">
           {layout.placed.map(({ session, top, height, lane, lanes }) => {
             const state = sessionState(session, now)
-            const { subjectName, theme } = visual(session)
+            const { subjectName, theme, tint } = visual(session)
             const done = state === "terminee"
             const hasReplay = Boolean(session.recordingUrl)
             const isNext = session.id === nextId && state !== "en-cours"
@@ -176,18 +176,15 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                     aria-hidden="true"
                     className={cn(
                       "relative grid size-11 shrink-0 place-items-center overflow-hidden rounded-md",
-                      theme.panel,
                       done && "opacity-70",
                     )}
+                    style={{ backgroundColor: tint.panel }}
                   >
-                    <span className={cn("absolute size-9 rounded-full blur-xl", theme.halo)} />
-                    <SubjectIcon
-                      name={subjectName ?? ""}
-                      className={cn(
-                        "relative size-6",
-                        !hasSubjectArt(subjectName ?? "") && theme.icon,
-                      )}
+                    <span
+                      className="absolute size-9 rounded-full blur-xl"
+                      style={{ backgroundColor: tint.halo }}
                     />
+                    <SubjectIcon name={subjectName ?? ""} className="relative size-9" />
                   </span>
 
                   <span className="flex min-w-0 flex-1 flex-col self-stretch">

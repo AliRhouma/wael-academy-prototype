@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import type { Session } from "@/data/types"
 import { subjectTheme, type SubjectTheme } from "@/features/student/subjectTheme"
+import { subjectTint, type SubjectTint } from "@/features/student/subjectTint"
 import { useData } from "@/stores/useData"
 
 /* ------------------------------------------------------------------ *
@@ -272,7 +273,10 @@ export function layoutDay(sessions: Session[], nowMinutes: number | null): DayLa
 
 export interface SessionVisual {
   subjectName?: string
+  /** Category tokens — the title, the rail, the ring. */
   theme: SubjectTheme
+  /** The matière artwork's own colour, for the surfaces under the glyph. */
+  tint: SubjectTint
 }
 
 export function useSessionVisual(): (session: Session) => SessionVisual {
@@ -281,7 +285,11 @@ export function useSessionVisual(): (session: Session) => SessionVisual {
     const byId = new Map(subjects.map((s) => [s.id, s]))
     return (session: Session) => {
       const subject = session.subjectIds.map((id) => byId.get(id)).find(Boolean)
-      return { subjectName: subject?.name, theme: subjectTheme(subject?.category) }
+      return {
+        subjectName: subject?.name,
+        theme: subjectTheme(subject?.category),
+        tint: subjectTint(subject?.name ?? "", subject?.category),
+      }
     }
   }, [subjects])
 }

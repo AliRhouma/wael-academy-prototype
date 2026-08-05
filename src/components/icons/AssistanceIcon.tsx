@@ -1,9 +1,10 @@
 /**
  * Play-button-in-a-squircle glyph for "Assistance" — the section is help videos,
  * so a play mark reads truer than a headset. Kept visually distinct from
- * LiveIcon (a camcorder) so the two never blur in the rail. Token-driven
- * (data-palette). Paths only — see ClassementIcon for why.
+ * LiveIcon (a camcorder) so the two never blur in the rail. Fixed hex, see
+ * `navGlyphColors`. Paths only — see ClassementIcon for why.
  */
+import { navGlyph } from "./navGlyphColors"
 import { useGlyphId } from "./useGlyphId"
 
 export function AssistanceIcon({ className }: { className?: string }) {
@@ -26,8 +27,8 @@ export function AssistanceIcon({ className }: { className?: string }) {
       />
       <defs>
         <linearGradient id={`aidBody-${uid}`} x1="1.6" y1="1.6" x2="24.4" y2="24.4" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-400)" />
-          <stop offset="1" stopColor="var(--brand-700)" />
+          <stop stopColor={navGlyph.blue400} />
+          <stop offset="1" stopColor={navGlyph.blue700} />
         </linearGradient>
       </defs>
     </svg>

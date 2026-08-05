@@ -1,9 +1,11 @@
 /**
  * Wallet glyph for "Porte-monnaie" — a card peeking out behind the wallet body,
- * with a side pocket and a gold coin. Body/card ride the brand ramp, the coin
- * rides `--warning-*` (money reads warm). Token-driven (data-palette).
- * Paths only — see ClassementIcon for why.
+ * with a side pocket and a coin. The wallet body carries the rail gold (money
+ * reads warm, and it echoes the Matières folder further up the rail) while the
+ * tucked card and the coin stay blue so they separate from it. Fixed hex, see
+ * `navGlyphColors`. Paths only — see ClassementIcon for why.
  */
+import { navGlyph } from "./navGlyphColors"
 import { useGlyphId } from "./useGlyphId"
 
 export function PorteMonnaieIcon({ className }: { className?: string }) {
@@ -32,16 +34,16 @@ export function PorteMonnaieIcon({ className }: { className?: string }) {
       <path d="M18.9 14 A1.5 1.5 0 1 0 21.9 14 A1.5 1.5 0 1 0 18.9 14 Z" fill={`url(#wltCoin-${uid})`} />
       <defs>
         <linearGradient id={`wltCard-${uid}`} x1="4.2" y1="3" x2="4.2" y2="7" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-200)" />
-          <stop offset="1" stopColor="var(--brand-300)" />
+          <stop stopColor={navGlyph.blue300} />
+          <stop offset="1" stopColor={navGlyph.blue500} />
         </linearGradient>
         <linearGradient id={`wltBody-${uid}`} x1="1.5" y1="6.5" x2="20" y2="21.5" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-400)" />
-          <stop offset="1" stopColor="var(--brand-700)" />
+          <stop stopColor={navGlyph.gold500} />
+          <stop offset="1" stopColor={navGlyph.gold700} />
         </linearGradient>
         <linearGradient id={`wltCoin-${uid}`} x1="18.9" y1="12.5" x2="21.9" y2="15.5" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--warning-500)" />
-          <stop offset="1" stopColor="var(--warning-600)" />
+          <stop stopColor={navGlyph.blue500} />
+          <stop offset="1" stopColor={navGlyph.blue700} />
         </linearGradient>
       </defs>
     </svg>

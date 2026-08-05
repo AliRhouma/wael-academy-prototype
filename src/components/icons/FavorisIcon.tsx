@@ -1,8 +1,9 @@
 /**
- * Bookmark + star glyph for "Mes favoris". Ribbon rides the brand ramp, the star
- * rides `--warning-*` so a saved item reads as "kept / prized". Token-driven
- * (data-palette). Paths only — see ClassementIcon for why.
+ * Bookmark + star glyph for "Mes favoris". Ribbon rides the rail blue, the star
+ * the rail gold so a saved item reads as "kept / prized". Fixed hex, see
+ * `navGlyphColors`. Paths only — see ClassementIcon for why.
  */
+import { navGlyph } from "./navGlyphColors"
 import { useGlyphId } from "./useGlyphId"
 
 export function FavorisIcon({ className }: { className?: string }) {
@@ -27,12 +28,12 @@ export function FavorisIcon({ className }: { className?: string }) {
       />
       <defs>
         <linearGradient id={`favBody-${uid}`} x1="2.6" y1="2.5" x2="21" y2="24.4" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-400)" />
-          <stop offset="1" stopColor="var(--brand-700)" />
+          <stop stopColor={navGlyph.blue400} />
+          <stop offset="1" stopColor={navGlyph.blue700} />
         </linearGradient>
         <linearGradient id={`favStar-${uid}`} x1="9" y1="6.2" x2="17" y2="13.8" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--warning-500)" />
-          <stop offset="1" stopColor="var(--warning-600)" />
+          <stop stopColor={navGlyph.gold500} />
+          <stop offset="1" stopColor={navGlyph.gold600} />
         </linearGradient>
       </defs>
     </svg>

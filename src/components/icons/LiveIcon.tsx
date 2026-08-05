@@ -1,9 +1,10 @@
 /**
- * Camcorder + red "on air" dot for "Séances en direct". Body/lens ride the brand
- * and accent ramps; only the live dot uses `--danger-500`, which is the whole
- * point of the glyph (something is broadcasting now). Token-driven throughout.
- * Paths only — see ClassementIcon for why.
+ * Camcorder + red "on air" dot for "Séances en direct". Body rides the rail
+ * blue, the lens prism the rail gold; only the live dot is red, which is the
+ * whole point of the glyph (something is broadcasting now). Fixed hex, see
+ * `navGlyphColors`. Paths only — see ClassementIcon for why.
  */
+import { navGlyph } from "./navGlyphColors"
 import { useGlyphId } from "./useGlyphId"
 
 export function LiveIcon({ className }: { className?: string }) {
@@ -17,7 +18,7 @@ export function LiveIcon({ className }: { className?: string }) {
       aria-hidden="true"
     >
       {/* "On air" dot, riding above the body */}
-      <path d="M18.4 4.6 A3.1 3.1 0 1 0 24.6 4.6 A3.1 3.1 0 1 0 18.4 4.6 Z" fill="var(--danger-500)" />
+      <path d="M18.4 4.6 A3.1 3.1 0 1 0 24.6 4.6 A3.1 3.1 0 1 0 18.4 4.6 Z" fill={navGlyph.red500} />
       {/* Camera body, play mark punched out as an evenodd hole so it survives the
           active pill (where every path is forced white). */}
       <path
@@ -32,12 +33,12 @@ export function LiveIcon({ className }: { className?: string }) {
       />
       <defs>
         <linearGradient id={`liveBody-${uid}`} x1="1" y1="8" x2="15" y2="20" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-400)" />
-          <stop offset="1" stopColor="var(--brand-700)" />
+          <stop stopColor={navGlyph.blue400} />
+          <stop offset="1" stopColor={navGlyph.blue700} />
         </linearGradient>
         <linearGradient id={`liveLens-${uid}`} x1="18.6" y1="9.6" x2="25.3" y2="18.4" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--accent-500)" />
-          <stop offset="1" stopColor="var(--accent-700)" />
+          <stop stopColor={navGlyph.gold500} />
+          <stop offset="1" stopColor={navGlyph.gold700} />
         </linearGradient>
       </defs>
     </svg>

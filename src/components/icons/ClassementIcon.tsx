@@ -1,13 +1,13 @@
 /**
- * Podium + gold star glyph for "Classement". Steps ride the brand ramp
- * (`--brand-*`), the winner's star rides `--warning-*` — the one place a warm
- * gold is semantically right (a gold medal) and still fully token-driven, so it
- * follows whatever palette is active (data-palette).
+ * Podium + gold star glyph for "Classement". Steps ride the rail blue, the
+ * winner's star the rail gold — the one place a warm gold is semantically right
+ * (a gold medal). Fixed hex, see `navGlyphColors`.
  *
  * All shapes are <path> on purpose: the shell forces `[&_path]:fill-white` on a
  * `colored: true` NavItem, so a <rect>/<circle> would stay tinted on the active
  * gradient pill. Same rule in every glyph here.
  */
+import { navGlyph } from "./navGlyphColors"
 import { useGlyphId } from "./useGlyphId"
 
 export function ClassementIcon({ className }: { className?: string }) {
@@ -42,16 +42,16 @@ export function ClassementIcon({ className }: { className?: string }) {
       />
       <defs>
         <linearGradient id={`clsSide-${uid}`} x1="13" y1="14" x2="13" y2="25" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-300)" />
-          <stop offset="1" stopColor="var(--brand-500)" />
+          <stop stopColor={navGlyph.blue300} />
+          <stop offset="1" stopColor={navGlyph.blue500} />
         </linearGradient>
         <linearGradient id={`clsCentre-${uid}`} x1="13" y1="10.4" x2="13" y2="25" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--brand-500)" />
-          <stop offset="1" stopColor="var(--brand-700)" />
+          <stop stopColor={navGlyph.blue500} />
+          <stop offset="1" stopColor={navGlyph.blue700} />
         </linearGradient>
         <linearGradient id={`clsStar-${uid}`} x1="8.6" y1="2" x2="17.4" y2="10.3" gradientUnits="userSpaceOnUse">
-          <stop stopColor="var(--warning-500)" />
-          <stop offset="1" stopColor="var(--warning-600)" />
+          <stop stopColor={navGlyph.gold500} />
+          <stop offset="1" stopColor={navGlyph.gold600} />
         </linearGradient>
       </defs>
     </svg>

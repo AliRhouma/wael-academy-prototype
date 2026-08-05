@@ -15,8 +15,8 @@ import {
 import { Badge } from "@/components/kit/Badge"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { ShellHeaderPortal } from "@/components/AppShell"
-import { SubjectIcon, hasSubjectArt } from "@/components/icons/subjects"
-import { subjectTheme } from "@/features/student/subjectTheme"
+import { SubjectIcon } from "@/components/icons/subjects"
+import { subjectTint } from "@/features/student/subjectTint"
 import { SubjectPicker } from "@/features/student/matiere/SubjectPicker"
 import { SubjectSwitcher } from "@/features/student/matiere/SubjectSwitcher"
 import { useSessionLabels } from "@/features/shared/session/sessionLabels"
@@ -76,7 +76,7 @@ export default function StudentSeanceSubjectScreen() {
 
   const pool = useMyPastSessions()
   const subject = subjects.find((s) => s.id === subjectId)
-  const theme = subjectTheme(subject?.category)
+  const tint = subjectTint(subject?.name ?? "", subject?.category)
 
   /** Sibling matières — the rail, kept identical to the matière page. */
   const siblings = useMemo(
@@ -208,16 +208,14 @@ export default function StudentSeanceSubjectScreen() {
       {/* Identity */}
       <div className="flex items-center gap-3.5">
         <span
-          className={cn(
-            "relative grid size-16 shrink-0 place-items-center overflow-hidden rounded-lg md:size-[72px]",
-            theme.panel,
-          )}
+          className="relative grid size-16 shrink-0 place-items-center overflow-hidden rounded-lg md:size-[72px]"
+          style={{ backgroundColor: tint.panel }}
         >
-          <span className={cn("absolute size-14 rounded-full blur-2xl", theme.halo)} />
-          <SubjectIcon
-            name={subject.name}
-            className={cn("relative size-9 md:size-10", !hasSubjectArt(subject.name) && theme.icon)}
+          <span
+            className="absolute size-14 rounded-full blur-2xl"
+            style={{ backgroundColor: tint.halo }}
           />
+          <SubjectIcon name={subject.name} className="relative size-[54px] md:size-[62px]" />
         </span>
         <div className="min-w-0">
           <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
