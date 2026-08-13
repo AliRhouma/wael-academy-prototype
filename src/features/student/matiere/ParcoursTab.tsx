@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { ArrowRight, Route, Sparkles } from "lucide-react"
+import { ArrowLeft, Route, Sparkles } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { LESSON_KINDS, QUIZ_ICON } from "@/features/admin/curriculum/content"
 import { useData } from "@/stores/useData"
@@ -16,7 +16,7 @@ interface Step {
 }
 
 /**
- * Élève — the "Parcours" tab of a matière: the guided routes through the
+ * Élève — the "مسارات" tab of a matière: the guided routes through the
  * programme, opened by default because a first-time visitor should be told
  * where to start rather than handed a chapter list.
  *
@@ -44,7 +44,7 @@ export function ParcoursTab({
             const quiz = quizzes.find((q) => q.id === item.refId)
             return {
               key: item.id,
-              label: quiz?.title ?? "Quiz",
+              label: quiz?.title ?? "كويز",
               icon: QUIZ_ICON,
               quiz: true,
             }
@@ -52,7 +52,7 @@ export function ParcoursTab({
           const lesson = lessons.find((l) => l.id === item.refId)
           return {
             key: item.id,
-            label: lesson?.title ?? `Étape ${i + 1}`,
+            label: lesson?.title ?? `المرحلة ${i + 1}`,
             icon: lesson ? LESSON_KINDS[lesson.kind].icon : Route,
             quiz: false,
           }
@@ -71,8 +71,8 @@ export function ParcoursTab({
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={Route}
-          title="Aucun parcours pour l’instant"
-          description="Les parcours guidés de cette matière arrivent bientôt. En attendant, l’onglet Chapitres contient déjà tous les contenus."
+          title="ما فماش مسارات توّا"
+          description="المسارات الموجّهة متاع المادّة هذي جايّة قريب. في الانتظار، تاب الفصول فيه المحتويات الكل."
         />
       </div>
     )
@@ -92,14 +92,14 @@ export function ParcoursTab({
                 <Route className="size-5" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-                  Parcours guidé
+                <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+                  مسار موجّه
                 </p>
-                <h3 dir="auto" className="font-display text-[16px] font-bold leading-snug text-ink">
+                <h3 dir="auto" className="font-display text-[calc(16px*var(--ts))] font-bold leading-snug text-ink">
                   {path.title}
                 </h3>
               </div>
-              <ArrowRight className="mt-2 size-5 shrink-0 text-ink-muted transition group-hover:translate-x-0.5 group-hover:text-brand-600" />
+              <ArrowLeft className="mt-2 size-5 shrink-0 text-ink-muted transition group-hover:translate-x-0.5 group-hover:text-brand-600" />
             </div>
 
             {path.description && (
@@ -113,7 +113,7 @@ export function ParcoursTab({
               <div className="relative mt-4">
                 <span
                   aria-hidden="true"
-                  className="absolute inset-x-0 top-[15px] h-px bg-gradient-to-r from-brand-200 via-brand-100 to-transparent"
+                  className="absolute inset-x-0 top-[15px] h-px bg-gradient-to-l from-brand-200 via-brand-100 to-transparent"
                 />
                 <ol className="relative -mx-1 flex gap-2 overflow-x-auto scroll-touch px-1 pb-1">
                   {steps.map((step, i) => {
@@ -130,12 +130,12 @@ export function ParcoursTab({
                         >
                           <Icon className="size-4" />
                         </span>
-                        <span className="text-[10px] font-semibold tabular-nums text-ink-muted">
+                        <span className="text-[calc(10px*var(--ts))] font-semibold tabular-nums text-ink-muted">
                           {i + 1}
                         </span>
                         <span
                           dir="auto"
-                          className="line-clamp-2 text-center text-[11px] leading-snug text-ink-subtle"
+                          className="line-clamp-2 text-center text-[calc(11px*var(--ts))] leading-snug text-ink-subtle"
                         >
                           {step.label}
                         </span>
@@ -146,14 +146,14 @@ export function ParcoursTab({
               </div>
             )}
 
-            <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-4 text-[12px] text-ink-muted">
+            <div className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-4 text-[calc(12px*var(--ts))] text-ink-muted">
               <span className="inline-flex items-center gap-1.5 font-medium text-ink-subtle">
                 <Sparkles className="size-3.5 text-accent2-500" />
-                {steps.length} étape{steps.length > 1 ? "s" : ""}
+                {steps.length} مرحلة
               </span>
               <span>·</span>
               <span>
-                {lessonCount} contenu{lessonCount > 1 ? "s" : ""}
+                {lessonCount} محتوى
               </span>
               <span>·</span>
               <span>

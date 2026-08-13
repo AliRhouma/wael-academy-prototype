@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import {
-  ChevronLeft,
   ChevronRight,
+  ChevronLeft,
   Maximize2,
   Minimize2,
   Pause,
@@ -105,11 +105,11 @@ export function VideoStage({
           e.preventDefault()
           toggle()
           break
-        case "ArrowRight":
+        case "ArrowLeft":
           e.preventDefault()
           nudge(5)
           break
-        case "ArrowLeft":
+        case "ArrowRight":
           e.preventDefault()
           nudge(-5)
           break
@@ -147,7 +147,7 @@ export function VideoStage({
         type="button"
         onClick={() => step(go)}
         disabled={!go}
-        aria-label={dir === "prev" ? "Vidéo précédente" : "Vidéo suivante"}
+        aria-label={dir === "prev" ? "الفيديو اللي قبل" : "الفيديو اللي بعد"}
         className="grid size-9 shrink-0 place-items-center rounded-full text-white/90 transition hover:bg-white/15 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent"
       >
         <Icon className="size-[18px]" />
@@ -179,7 +179,7 @@ export function VideoStage({
         <button
           type="button"
           onClick={toggle}
-          aria-label="Lire la vidéo"
+          aria-label="شغّل الفيديو"
           className="pointer-events-auto absolute left-1/2 top-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-grad text-ink-inverted shadow-brand transition hover:brightness-110 motion-safe:hover:scale-105"
         >
           <Play className="size-7 translate-x-0.5 fill-current" />
@@ -195,18 +195,18 @@ export function VideoStage({
       >
         <div className="min-w-0 flex-1">
           {kindLabel && (
-            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-white/70">
+            <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-white/70">
               {kindLabel}
               {context ? ` · ${context}` : ""}
             </p>
           )}
-          <p dir="auto" className="truncate font-display text-[15px] font-bold text-white">
+          <p dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-white">
             {title}
           </p>
         </div>
         {position && position.total > 1 && (
-          <span className="shrink-0 rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-medium tabular-nums text-white/80">
-            {position.index + 1}/{position.total}
+          <span className="shrink-0 rounded-full bg-white/15 px-2 py-0.5 text-[calc(11px*var(--ts))] font-medium tabular-nums text-white/80">
+            <span className="num">{position.index + 1}/{position.total}</span>
           </span>
         )}
       </div>
@@ -218,33 +218,36 @@ export function VideoStage({
             <button
               type="button"
               onClick={() => step(onPrev)}
-              aria-label="Vidéo précédente"
+              aria-label="الفيديو اللي قبل"
               className={cn(
                 "absolute start-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-neutral-900/60 text-white backdrop-blur transition hover:bg-neutral-900/80",
-                uiVisible ? "opacity-100" : "pointer-events-none opacity-0",
-              )}
-            >
-              <ChevronLeft className="size-6" />
-            </button>
-          )}
-          {onNext && (
-            <button
-              type="button"
-              onClick={() => step(onNext)}
-              aria-label="Vidéo suivante"
-              className={cn(
-                "absolute end-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-neutral-900/60 text-white backdrop-blur transition hover:bg-neutral-900/80",
                 uiVisible ? "opacity-100" : "pointer-events-none opacity-0",
               )}
             >
               <ChevronRight className="size-6" />
             </button>
           )}
+          {onNext && (
+            <button
+              type="button"
+              onClick={() => step(onNext)}
+              aria-label="الفيديو اللي بعد"
+              className={cn(
+                "absolute end-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-neutral-900/60 text-white backdrop-blur transition hover:bg-neutral-900/80",
+                uiVisible ? "opacity-100" : "pointer-events-none opacity-0",
+              )}
+            >
+              <ChevronLeft className="size-6" />
+            </button>
+          )}
         </>
       )}
 
-      {/* Control bar */}
+      {/* Control bar — pinned to dir="ltr". A media transport is a time axis, not
+          text: the scrub bar must fill left→right and play/skip must keep their
+          universal orientation even in an RTL app. Only the labels are Arabic. */}
       <div
+        dir="ltr"
         className={cn(
           "absolute inset-x-0 bottom-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/60 to-transparent px-3 pb-3 pt-8 transition-opacity duration-200 sm:px-4 sm:pb-4",
           uiVisible ? "opacity-100" : "pointer-events-none opacity-0",
@@ -265,8 +268,8 @@ export function VideoStage({
             step={0.5}
             value={time}
             onChange={(e) => seek(Number(e.target.value))}
-            aria-label="Progression de la vidéo"
-            aria-valuetext={`${formatTime(time)} sur ${formatTime(duration)}`}
+            aria-label="تقدّم الفيديو"
+            aria-valuetext={`${formatTime(time)} من ${formatTime(duration)}`}
             className="absolute inset-0 w-full cursor-pointer appearance-none bg-transparent opacity-0"
           />
         </div>
@@ -275,7 +278,7 @@ export function VideoStage({
           <button
             type="button"
             onClick={toggle}
-            aria-label={playing ? "Pause" : "Lecture"}
+            aria-label={playing ? "وقّف" : "شغّل"}
             className="grid size-10 shrink-0 place-items-center rounded-full text-white transition hover:bg-white/15"
           >
             {playing ? (
@@ -289,13 +292,13 @@ export function VideoStage({
           <button
             type="button"
             onClick={toggleMute}
-            aria-label={muted ? "Réactiver le son" : "Couper le son"}
+            aria-label={muted ? "رجّع الصوت" : "سكّر الصوت"}
             className="hidden size-9 shrink-0 place-items-center rounded-full text-white/90 transition hover:bg-white/15 hover:text-white sm:grid"
           >
             {muted ? <VolumeX className="size-[18px]" /> : <Volume2 className="size-[18px]" />}
           </button>
 
-          <span className="ms-1.5 shrink-0 text-[12px] font-medium tabular-nums text-white/85">
+          <span className="ms-1.5 shrink-0 text-[calc(12px*var(--ts))] font-medium tabular-nums text-white/85">
             {formatTime(time)} <span className="text-white/45">/ {formatTime(duration)}</span>
           </span>
 
@@ -306,7 +309,7 @@ export function VideoStage({
           <button
             type="button"
             onClick={toggleFullscreen}
-            aria-label={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
+            aria-label={isFullscreen ? "اخرج من الشاشة الكاملة" : "شاشة كاملة"}
             className="grid size-10 shrink-0 place-items-center rounded-full text-white transition hover:bg-white/15"
           >
             {isFullscreen ? <Minimize2 className="size-5" /> : <Maximize2 className="size-5" />}

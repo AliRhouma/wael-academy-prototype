@@ -1,7 +1,7 @@
 [
   {
     "id": "live-integrales-bacmath",
-    "name": "Révision en direct — Intégrales",
+    "name": "مراجعة مباشرة — التكاملات",
     "url": "https://meet.google.com/wael-integrales",
     "date": "2026-07-24",
     "startTime": "18:00",
@@ -14,7 +14,7 @@
   },
   {
     "id": "live-complexes-open",
-    "name": "Séance ouverte — Nombres complexes",
+    "name": "حصّة مفتوحة — الأعداد المركّبة",
     "url": "https://meet.google.com/wael-complexes",
     "date": "2026-07-28",
     "startTime": "20:30",
@@ -26,7 +26,7 @@
   },
   {
     "id": "live-physique-bacsci",
-    "name": "Physique — Correction du DS",
+    "name": "فيزياء — إصلاح الفرض التأليفي",
     "url": "https://zoom.us/j/wael-physique-ds",
     "date": "2026-07-22",
     "startTime": "17:30",
@@ -39,7 +39,7 @@
   },
   {
     "id": "live-svt-9",
-    "name": "SVT — La cellule végétale",
+    "name": "علوم الحياة — الخلية النباتية",
     "url": "https://meet.google.com/wael-svt-cellule",
     "date": "2026-06-30",
     "startTime": "16:00",
@@ -52,7 +52,7 @@
   },
   {
     "id": "live-philo-dissertation",
-    "name": "Atelier dissertation — Philosophie",
+    "name": "ورشة المقال — فلسفة",
     "url": "https://meet.google.com/wael-philo-diss",
     "date": "2026-08-03",
     "startTime": "19:00",
@@ -60,6 +60,43 @@
     "subjectIds": ["subj-bac-lettres-philosophie", "subj-bac-math-philosophie", "subj-bac-sci-philosophie"],
     "groupIds": [],
     "yearIds": [],
+    "resourceIds": []
+  },
+  {
+    "id": "live-ondes-bacsci",
+    "name": "مباشر — تصحيح سلسلة الموجات",
+    "url": "https://meet.google.com/wael-ondes-serie9",
+    "date": "2026-08-11",
+    "startTime": "18:30",
+    "academicYear": "2026/2027",
+    "subjectIds": ["subj-bac-sci-sciences-physiques"],
+    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": ["y-bac-sci"],
+    "offerId": "offer-bac-sci-trimestre",
+    "resourceIds": ["res-corrige-ds1"]
+  },
+  {
+    "id": "live-integrales-bacsci",
+    "name": "مباشر — التكاملات، أسئلة وأجوبة",
+    "url": "https://meet.google.com/wael-integrales-qa",
+    "date": "2026-08-12",
+    "startTime": "19:00",
+    "academicYear": "2026/2027",
+    "subjectIds": ["subj-bac-sci-mathematiques"],
+    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": ["y-bac-sci"],
+    "resourceIds": ["res-fiche-integrales"]
+  },
+  {
+    "id": "live-arithmetique-bacmath",
+    "name": "مباشر — حسابيات، إصلاح مسائل الباك",
+    "url": "https://meet.google.com/wael-arithmetique",
+    "date": "2026-08-11",
+    "startTime": "20:00",
+    "academicYear": "2026/2027",
+    "subjectIds": ["subj-bac-math-mathematiques"],
+    "groupIds": ["g-bacmath-elite"],
+    "yearIds": ["y-bac-math"],
     "resourceIds": []
   }
 ]

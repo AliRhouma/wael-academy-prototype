@@ -15,7 +15,7 @@ import type { ChapterLink, GroupTab, PlayerSource, PlayerVideo } from "./types"
 
 /** "4 oct. 2025" — a replay is often months old, so the year earns its place. */
 function dayLabel(date: string): string {
-  return new Date(`${date}T00:00:00`).toLocaleDateString("fr-FR", {
+  return new Date(`${date}T00:00:00`).toLocaleDateString("ar-TN-u-nu-latn", {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -105,21 +105,21 @@ export function usePlayerSource(kind: VideoRefKind, id: string): PlayerSource | 
         kind,
         active,
         rail,
-        railLabel: chapter?.name ?? "Contenus",
+        railLabel: chapter?.name ?? "المحتويات",
         contents,
         chapters: { activeId: lesson.chapterId, list },
         back: {
           to: `/student/matieres/${subjectId}?tab=chapitres`,
-          label: subjectName(subjectId) ?? "la matière",
+          label: subjectName(subjectId) ?? "المادّة",
         },
         crumbs: [
-          { to: "/student", label: "Accueil" },
-          { to: "/student/matieres", label: "Matières" },
+          { to: "/student", label: "الرئيسية" },
+          { to: "/student/matieres", label: "الموادّ" },
           {
             to: `/student/matieres/${subjectId}?tab=chapitres`,
-            label: subjectName(subjectId) ?? "Matière",
+            label: subjectName(subjectId) ?? "المادّة",
           },
-          { label: chapter?.name ?? "Chapitre" },
+          { label: chapter?.name ?? "الفصل" },
         ],
       }
     }
@@ -138,7 +138,7 @@ export function usePlayerSource(kind: VideoRefKind, id: string): PlayerSource | 
           id: e.id,
           title: e.title,
           videoUrl: e.videoUrl,
-          kindLabel: "Correction filmée",
+          kindLabel: "إصلاح مصوّر",
           tone: "info" as const,
           playable: true,
           context: subjectName(subjectId),
@@ -157,16 +157,16 @@ export function usePlayerSource(kind: VideoRefKind, id: string): PlayerSource | 
         contents,
         back: {
           to: `/student/matieres/${subjectId}?tab=examens`,
-          label: subjectName(subjectId) ?? "la matière",
+          label: subjectName(subjectId) ?? "المادّة",
         },
         crumbs: [
-          { to: "/student", label: "Accueil" },
-          { to: "/student/matieres", label: "Matières" },
+          { to: "/student", label: "الرئيسية" },
+          { to: "/student/matieres", label: "الموادّ" },
           {
             to: `/student/matieres/${subjectId}?tab=examens`,
-            label: subjectName(subjectId) ?? "Matière",
+            label: subjectName(subjectId) ?? "المادّة",
           },
-          { label: "Examens" },
+          { label: "امتحانات" },
         ],
       }
     }
@@ -199,7 +199,7 @@ export function usePlayerSource(kind: VideoRefKind, id: string): PlayerSource | 
           id: s.id,
           title: s.title,
           videoUrl: s.recordingUrl,
-          kindLabel: "Séance enregistrée",
+          kindLabel: "حصّة مسجّلة",
           tone: "brand" as const,
           playable: true,
           context: dayLabel(s.date),
@@ -258,15 +258,15 @@ export function usePlayerSource(kind: VideoRefKind, id: string): PlayerSource | 
       kind,
       active,
       rail: contents,
-      railLabel: `Semestre ${semester}`,
+      railLabel: `الثلاثي ${semester}`,
       contents,
       groups: groupId ? { activeId: groupId, list: groupTabs } : undefined,
-      back: { to: backTo, label: group?.title ?? "les séances" },
+      back: { to: backTo, label: group?.title ?? "الحصص" },
       crumbs: [
-        { to: "/student", label: "Accueil" },
-        { to: "/student/seances", label: "Séances enregistrées" },
-        { to: backTo, label: subjectName(subjectId) ?? "Matière" },
-        { label: `Semestre ${semester}` },
+        { to: "/student", label: "الرئيسية" },
+        { to: "/student/seances", label: "الحصص المسجّلة" },
+        { to: backTo, label: subjectName(subjectId) ?? "المادّة" },
+        { label: `الثلاثي ${semester}` },
       ],
     }
   }, [kind, id, askedSubject, askedGroup, lessons, chapters, exams, sessions, subjects, teachers, groups])

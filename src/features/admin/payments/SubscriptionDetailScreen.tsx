@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import {
-  ArrowLeft,
+  ArrowRight,
   CalendarClock,
   CreditCard,
   Paperclip,
@@ -32,25 +32,25 @@ import {
 } from "@/features/shared/payments/paymentLib"
 
 const SUB_STATUS: Record<SubscriptionStatus, { label: string; tone: BadgeTone }> = {
-  actif: { label: "Actif", tone: "success" },
-  bloqué: { label: "Bloqué", tone: "danger" },
+  actif: { label: "فعّال", tone: "success" },
+  bloque: { label: "موقّف", tone: "danger" },
 }
 
 const INST_STATUS: Record<InstallmentStatus, { label: string; tone: BadgeTone }> = {
-  paid: { label: "Payée", tone: "success" },
-  partial: { label: "Partielle", tone: "warning" },
-  overdue: { label: "En retard", tone: "danger" },
-  upcoming: { label: "À venir", tone: "neutral" },
+  paid: { label: "تخلّصت", tone: "success" },
+  partial: { label: "جزئية", tone: "warning" },
+  overdue: { label: "متأخّر", tone: "danger" },
+  upcoming: { label: "الجايّة", tone: "neutral" },
 }
 
 /** A quiet stat tile — label above, big display number below. */
 function Stat({ label, value, accent }: { label: string; value: string; accent?: boolean }) {
   return (
     <div className="rounded-lg border border-border bg-surface p-4 shadow-sm">
-      <p className="text-[12px] font-medium uppercase tracking-wide text-ink-muted">{label}</p>
+      <p className="text-[calc(12px*var(--ts))] font-medium uppercase tracking-wide text-ink-muted">{label}</p>
       <p
         className={
-          "mt-1 font-display text-[22px] font-bold tabular-nums " +
+          "mt-1 font-display text-[calc(22px*var(--ts))] font-bold tabular-nums " +
           (accent ? "text-brand-600" : "text-ink")
         }
       >
@@ -96,14 +96,14 @@ export default function AdminSubscriptionDetailScreen() {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={CreditCard}
-          title="Abonnement introuvable"
-          description="Cet abonnement n’existe plus."
+          title="الاشتراك ما تلقاش"
+          description="الاشتراك هذا ما عادش موجود."
           action={
             <Link
               to="/admin/payments"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
             >
-              <ArrowLeft className="size-4 rtl:rotate-180" /> Retour aux paiements
+              <ArrowRight className="size-4" /> ارجع للخلاص
             </Link>
           }
         />
@@ -119,7 +119,7 @@ export default function AdminSubscriptionDetailScreen() {
   function confirmTxDelete() {
     if (!txDelete) return
     removeTransaction(txDelete.id)
-    show("Transaction supprimée")
+    show("المعاملة تمسحت")
     setTxDelete(null)
   }
 
@@ -129,18 +129,18 @@ export default function AdminSubscriptionDetailScreen() {
         to="/admin/payments"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-subtle transition hover:text-brand-600"
       >
-        <ArrowLeft className="size-4 rtl:rotate-180" /> Paiements
+        <ArrowRight className="size-4" /> الخلاص
       </Link>
 
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div className="flex items-center gap-3.5">
           <Avatar name={user?.name ?? "?"} size="lg" />
           <div>
-            <h1 dir="auto" className="font-display text-[22px] font-bold text-ink">
-              {user?.name ?? "Élève supprimé"}
+            <h1 dir="auto" className="font-display text-[calc(22px*var(--ts))] font-bold text-ink">
+              {user?.name ?? "التلميذ تمسح"}
             </h1>
             <p className="mt-0.5 text-sm text-ink-muted">
-              {offer?.name ?? "Offre supprimée"}
+              {offer?.name ?? "العرض تمسح"}
               {sub.tag && <> · {sub.tag}</>}
               {sub.deadline && (
                 <>
@@ -163,7 +163,7 @@ export default function AdminSubscriptionDetailScreen() {
             onClick={() => setEditOpen(true)}
             className="inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-10"
           >
-            <Pencil className="size-4" /> Modifier
+            <Pencil className="size-4" /> بدّل
           </button>
           <button
             type="button"
@@ -173,15 +173,15 @@ export default function AdminSubscriptionDetailScreen() {
             }}
             className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
           >
-            <Plus className="size-4" /> Nouvelle transaction
+            <Plus className="size-4" /> معاملة جديدة
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-3">
-        <Stat label="À payer" value={formatDT(sub.price)} />
-        <Stat label="Payé" value={formatDT(paid)} accent />
-        <Stat label="Reste" value={formatDT(left)} />
+        <Stat label="للخلاص" value={formatDT(sub.price)} />
+        <Stat label="تخلّص" value={formatDT(paid)} accent />
+        <Stat label="الباقي" value={formatDT(left)} />
       </div>
 
       {sub.description && (
@@ -195,12 +195,12 @@ export default function AdminSubscriptionDetailScreen() {
 
       {/* -------- Échéancier -------- */}
       <section>
-        <h2 className="mb-2 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-          Échéancier
+        <h2 className="mb-2 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+          روزنامة الخلاص
         </h2>
         {sub.installments.length === 0 ? (
           <p className="rounded-lg border border-dashed border-border bg-surface px-4 py-4 text-sm text-ink-muted">
-            Aucune tranche planifiée — paiement libre.
+            ما فماش أقساط مبرمجة — خلاص حرّ.
           </p>
         ) : (
           <div className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
@@ -210,7 +210,7 @@ export default function AdminSubscriptionDetailScreen() {
                 const instPaid = paidForInstallment(inst, transactions)
                 return (
                   <li key={inst.id} className="flex items-center gap-3 px-4 py-3">
-                    <span className="grid size-8 shrink-0 place-items-center rounded-full bg-brand-50 font-display text-[14px] font-bold text-brand-700">
+                    <span className="grid size-8 shrink-0 place-items-center rounded-full bg-brand-50 font-display text-[calc(14px*var(--ts))] font-bold text-brand-700">
                       {i + 1}
                     </span>
                     <div className="min-w-0 flex-1">
@@ -219,12 +219,12 @@ export default function AdminSubscriptionDetailScreen() {
                         {instPaid > 0 && instPaid < inst.amount && (
                           <span className="font-normal text-ink-muted">
                             {" "}
-                            — payé {formatDT(instPaid)}
+                            — تخلّص {formatDT(instPaid)}
                           </span>
                         )}
                       </p>
-                      <p className="text-[12px] text-ink-muted">
-                        avant le {formatDay(inst.dueDate)}
+                      <p className="text-[calc(12px*var(--ts))] text-ink-muted">
+                        قبل {formatDay(inst.dueDate)}
                       </p>
                     </div>
                     <Badge tone={INST_STATUS[st].tone} dot>
@@ -240,15 +240,15 @@ export default function AdminSubscriptionDetailScreen() {
 
       {/* -------- Transactions -------- */}
       <section>
-        <h2 className="mb-2 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+        <h2 className="mb-2 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
           Transactions
         </h2>
         {subTxs.length === 0 ? (
           <div className="rounded-lg border border-dashed border-border bg-surface">
             <EmptyState
               icon={Receipt}
-              title="Aucune transaction"
-              description="Encaissez le premier paiement de cet abonnement."
+              title="ما فماش معاملات"
+              description="خلّص أوّل دفعة متاع الاشتراك هذا."
               action={
                 <button
                   type="button"
@@ -258,7 +258,7 @@ export default function AdminSubscriptionDetailScreen() {
                   }}
                   className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
                 >
-                  <Plus className="size-4" /> Nouvelle transaction
+                  <Plus className="size-4" /> معاملة جديدة
                 </button>
               }
             />
@@ -273,16 +273,16 @@ export default function AdminSubscriptionDetailScreen() {
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="flex flex-wrap items-center gap-x-2 text-sm">
-                      <span className="font-display text-[15px] font-bold tabular-nums text-ink">
+                      <span className="font-display text-[calc(15px*var(--ts))] font-bold tabular-nums text-ink">
                         {formatDT(t.amount)}
                       </span>
                       <span className="text-ink-muted">{formatDay(t.date)}</span>
                       {t.installmentId && instNumber.has(t.installmentId) && (
-                        <Badge tone="brand">Tranche {instNumber.get(t.installmentId)}</Badge>
+                        <Badge tone="brand">القسط {instNumber.get(t.installmentId)}</Badge>
                       )}
                     </p>
                     {t.remarks && (
-                      <p dir="auto" className="mt-0.5 text-[12px] text-ink-subtle">
+                      <p dir="auto" className="mt-0.5 text-[calc(12px*var(--ts))] text-ink-subtle">
                         {t.remarks}
                       </p>
                     )}
@@ -316,7 +316,7 @@ export default function AdminSubscriptionDetailScreen() {
                   <OverflowMenu
                     actions={[
                       {
-                        label: "Modifier",
+                        label: "بدّل",
                         icon: Pencil,
                         onClick: () => {
                           setTxEditing(t)
@@ -324,7 +324,7 @@ export default function AdminSubscriptionDetailScreen() {
                         },
                       },
                       {
-                        label: "Supprimer",
+                        label: "امسح",
                         icon: Trash2,
                         tone: "danger",
                         onClick: () => setTxDelete(t),
@@ -356,9 +356,9 @@ export default function AdminSubscriptionDetailScreen() {
       <ConfirmDialog
         open={txDelete !== null}
         onOpenChange={(o) => !o && setTxDelete(null)}
-        title="Supprimer cette transaction ?"
+        title="تحبّ تمسح المعاملة هذي؟"
         description={
-          txDelete ? `Le paiement de ${formatDT(txDelete.amount)} sera supprimé.` : undefined
+          txDelete ? `الخلاص متاع ${formatDT(txDelete.amount)} باش يتمسح.` : undefined
         }
         onConfirm={confirmTxDelete}
       />

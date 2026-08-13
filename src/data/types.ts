@@ -22,6 +22,12 @@ export interface Teacher {
   id: Id
   name: string
   subject?: string
+  /**
+   * How the élève addresses them — "مسيو" / "مدام". Purely a display detail,
+   * but the dashboard writes a full sentence about the prof ("مسيو مراد بروف
+   * فيزياء بعثلك خدمة"), and a sentence has to be gendered right.
+   */
+  civility?: "m" | "f"
 }
 
 /**
@@ -286,6 +292,13 @@ export interface Session {
    * Absent on a past séance means the replay isn't published yet.
    */
   recordingUrl?: string
+  /**
+   * ISO timestamp — when the `recordingUrl` was PUT ONLINE, which is not when
+   * the séance ran: an old séance can be uploaded today. This is what the
+   * élève's dashboard means by « آخر الحصص المضافة ». Absent = we don't know,
+   * so the séance never counts as a recent addition.
+   */
+  publishedAt?: string
 }
 
 /**
@@ -318,6 +331,42 @@ export interface LiveSession {
   offerId?: Id
   /** Ressources (documents) attachées — zero or more. */
   resourceIds: Id[]
+}
+
+/**
+ * A « خدمة » (travail à faire) — homework a teacher sends to their élèves.
+ *
+ * It is NOT syllabus content: it doesn't hang off a chapitre, it hangs off a
+ * DATE and a person. The élève's dashboard reads it as a message ("مسيو مراد
+ * بروف فيزياء بعثلك خدمة") whose payload is one or more documents to download.
+ * Targeting mirrors a séance: a matière, the années it's for, and the groupes
+ * it went out to (empty = the whole année).
+ */
+export interface Homework {
+  id: Id
+  title: string
+  /** The prof's word about it — a line or two, optional. */
+  note?: string
+  /** Who sent it. */
+  teacherId: Id
+  /** The matière it belongs to. */
+  subjectId: Id
+  /** Années (at least one). */
+  yearIds: Id[]
+  /** Groupes it went out to — empty = everyone in those années. */
+  groupIds: Id[]
+  /** The documents to download — at least one. */
+  pdfs: ResourceLink[]
+  /** ISO timestamp — when the prof sent it. */
+  sentAt: string
+  /** When it's due back — "YYYY-MM-DD" (optional). */
+  dueDate?: string
+  /**
+   * The séance it hangs on — the one that corrects it, or the one it prepares
+   * for. Optional: plenty of خدمة is just "for next time". When set, the
+   * élève's calendar flags that séance with a notification dot.
+   */
+  sessionId?: Id
 }
 
 /**
@@ -391,7 +440,38 @@ export interface Offer {
   period?: string
   /** Access rules attached to this offer — zero or more. */
   accessIds: Id[]
+
+  /* ---- Catalogue card ---------------------------------------------------
+     The fields below dress the offer as a CARD on the élève's العروض page.
+     They're all optional: an offer created from the admin form with nothing
+     but a name and a price still renders — just plainer.                    */
+
+  /** Commercial tier — drives the card's art, accent and ordering. */
+  tier?: OfferTier
+  /** Billing rhythm — drives the price suffix ("/ شهر" vs "سنويّا"). */
+  billing?: "monthly" | "annual"
+  /** One-line pitch under the name — "لجميع الأقسام، من السابعة للباك". */
+  tagline?: string
+  /** Who it targets, in the catalogue's own words — "لأقسام الإعدادي". */
+  audience?: string
+  /** Prefix before the price — e.g. "ابتداءً من". */
+  priceLabel?: string
+  /** Suffix after the price, when it isn't the plain billing rhythm. */
+  pricePeriod?: string
+  /** Fine print under the price — instalments, conditions. */
+  priceNotes?: string[]
+  /** What the offer includes — the card's checklist. */
+  features?: string[]
+  /** Highlighted as the recommended card ("الأكثر رواجا"). */
+  popular?: boolean
 }
+
+/**
+ * The four rungs of the commercial ladder, cheapest first. `silver` is the
+ * monthly entry pack, `gold` the annual one, `early` the discounted early-bird,
+ * `integral` the flagship "وائل للخر" pack.
+ */
+export type OfferTier = "silver" | "gold" | "early" | "integral"
 
 /**
  * What a promo code does to ONE offer — each targeted offer is configured
@@ -516,7 +596,7 @@ export type Role = "admin" | "teacher" | "parent" | "student"
 
 /** One field-level diff inside a `UserUpdate` — display values, pre-formatted. */
 export interface UserFieldChange {
-  /** French field label — e.g. "Téléphone", "Moyenne générale". */
+  /** French field label — e.g. "التليفون", "المعدّل العام". */
   field: string
   /** Display value before the change — absent when the field was empty. */
   before?: string

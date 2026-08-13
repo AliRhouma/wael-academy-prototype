@@ -38,8 +38,8 @@ export function ConfirmDialog({
   onOpenChange,
   title,
   description,
-  confirmLabel = "Supprimer",
-  cancelLabel = "Annuler",
+  confirmLabel = "امسح",
+  cancelLabel = "إلغاء",
   onConfirm,
   loading = false,
   tone = "danger",
@@ -78,7 +78,7 @@ export function ConfirmDialog({
             : "bg-grad text-ink-inverted shadow-brand hover:brightness-105",
         )}
       >
-        {loading ? "Un instant…" : confirmLabel}
+        {loading ? "شويّة…" : confirmLabel}
       </button>
     </div>
   )

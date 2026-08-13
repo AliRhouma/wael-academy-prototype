@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronRight, ChevronLeft } from "lucide-react"
 import { SubjectIcon } from "@/components/icons/subjects"
 import { subjectTheme } from "@/features/student/subjectTheme"
 import { subjectTint } from "@/features/student/subjectTint"
@@ -64,7 +64,7 @@ export function SubjectSwitcher({
 
   const arrow = (side: "start" | "end") => {
     const shown = side === "start" ? overflow.start : overflow.end
-    const Icon = side === "start" ? ChevronLeft : ChevronRight
+    const Icon = side === "start" ? ChevronRight : ChevronLeft
     return (
       <button
         type="button"
@@ -83,7 +83,7 @@ export function SubjectSwitcher({
   }
 
   return (
-    <nav aria-label="Changer de matière" className="relative">
+    <nav aria-label="بدّل المادّة" className="relative">
       {arrow("start")}
       {arrow("end")}
 
@@ -95,30 +95,34 @@ export function SubjectSwitcher({
         {subjects.map((subject) => {
           const active = subject.id === activeId
           const theme = subjectTheme(subject.category)
+          const tint = subjectTint(subject.name, subject.category)
           return (
+            /* Each chip carries its matière's OWN duotone — the same wash its
+               card wears in the grid (see subjectTint), so the rail reads as
+               the same set of matières and not as a row of grey pills. The
+               drawing then sits straight on that wash: a plate under it would
+               be a third colour on a 44px control. */
             <Link
               key={subject.id}
               to={hrefFor(subject)}
               aria-current={active ? "page" : undefined}
               title={subject.name}
               className={cn(
-                "inline-flex h-11 shrink-0 items-center gap-2 rounded-md border bg-surface ps-1.5 pe-3 transition",
+                "inline-flex h-11 shrink-0 items-center gap-2 rounded-md border ps-1.5 pe-3 transition",
+                // With every chip coloured, the ring + weight + shadow is what
+                // marks the open one — colour can't, it's already spent.
                 active
-                  ? cn("ring-2", theme.ring)
+                  ? cn("shadow-sm ring-2", theme.ring)
                   : "border-border-strong hover:border-brand-200 hover:shadow-sm",
               )}
+              style={{ backgroundImage: tint.gradient }}
             >
-              <span
-                className="grid size-8 shrink-0 place-items-center rounded-[9px]"
-                style={{ backgroundColor: subjectTint(subject.name, subject.category).panel }}
-              >
-                <SubjectIcon name={subject.name} className="size-7" />
-              </span>
+              <SubjectIcon name={subject.name} className="size-8 shrink-0" />
               <span
                 dir="auto"
                 className={cn(
-                  "max-w-[9rem] truncate text-[13px] font-medium",
-                  active ? theme.name : "text-ink-subtle",
+                  "max-w-[9rem] truncate text-[calc(13px*var(--ts))]",
+                  active ? cn("font-semibold", theme.name) : "font-medium text-ink-subtle",
                 )}
               >
                 {subject.name}

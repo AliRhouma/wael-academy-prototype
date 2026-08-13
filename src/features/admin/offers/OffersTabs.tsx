@@ -15,21 +15,21 @@ export function OffersTabs() {
   return (
     <div className="flex gap-2">
       <NavLink to="/admin/offers" end className={({ isActive }) => `${base} ${isActive ? active : idle}`}>
-        <Tag className="size-4" /> Offres
+        <Tag className="size-4" /> العروض
       </NavLink>
       <NavLink
         to="/admin/offers/access"
         end
         className={({ isActive }) => `${base} ${isActive ? active : idle}`}
       >
-        <KeyRound className="size-4" /> Accès
+        <KeyRound className="size-4" /> الصلاحيات
       </NavLink>
       <NavLink
         to="/admin/offers/promos"
         end
         className={({ isActive }) => `${base} ${isActive ? active : idle}`}
       >
-        <TicketPercent className="size-4" /> Codes promo
+        <TicketPercent className="size-4" /> أكواد التخفيض
       </NavLink>
     </div>
   )

@@ -16,12 +16,13 @@ export function fakeDelay(ms = 400): Promise<void> {
 
 /** Format an ISO date-time as a short French label (e.g. "lun. 20 juil., 09:00"). */
 export function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString("fr-FR", {
+  return new Date(iso).toLocaleString("ar-TN-u-nu-latn", {
     weekday: "short",
     day: "numeric",
     month: "short",
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false,
   })
 }
 
@@ -39,7 +40,7 @@ export function nowStamp(): string {
 
 /** Format a "YYYY-MM-DD" day as a short French label (e.g. "lun. 20 juil."). */
 export function formatSessionDay(date: string): string {
-  return new Date(`${date}T00:00:00`).toLocaleDateString("fr-FR", {
+  return new Date(`${date}T00:00:00`).toLocaleDateString("ar-TN-u-nu-latn", {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -48,7 +49,7 @@ export function formatSessionDay(date: string): string {
 
 /** Format a "YYYY-MM-DD" day as a full French label (e.g. "lundi 20 juillet 2026"). */
 export function formatSessionDayLong(date: string): string {
-  return new Date(`${date}T00:00:00`).toLocaleDateString("fr-FR", {
+  return new Date(`${date}T00:00:00`).toLocaleDateString("ar-TN-u-nu-latn", {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -56,7 +57,9 @@ export function formatSessionDayLong(date: string): string {
   })
 }
 
-/** A time range label from two "HH:MM" strings (e.g. "09:00 – 10:30"). */
+/** A time range label from two "HH:MM" strings (e.g. "09:00 – 10:30").
+ *  Wrapped in LRI/PDI so the two times keep their order under dir="rtl" —
+ *  without it the neutral dash inherits RTL and the range reads backwards. */
 export function formatTimeRange(start: string, end: string): string {
-  return `${start} – ${end}`
+  return `⁦${start} – ${end}⁩`
 }

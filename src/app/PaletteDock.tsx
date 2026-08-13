@@ -26,15 +26,15 @@ export function PaletteDock() {
       {open && (
         <div
           role="dialog"
-          aria-label="Choisir une palette"
+          aria-label="اختار لوحة ألوان"
           className="mb-3 w-64 overflow-hidden rounded-xl border border-border bg-surface-raised shadow-xl"
         >
           <div className="flex items-center justify-between border-b border-border px-4 py-3">
-            <p className="font-display text-sm font-bold text-ink">Palette</p>
+            <p className="font-display text-sm font-bold text-ink">لوحة الألوان</p>
             <button
               type="button"
               onClick={() => setOpen(false)}
-              aria-label="Fermer"
+              aria-label="سكّر"
               className="grid size-7 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
             >
               <X className="size-4" />
@@ -64,7 +64,7 @@ export function PaletteDock() {
                     <span className={cn("block text-sm font-medium", active ? "text-brand-700" : "text-ink")}>
                       {p.name}
                     </span>
-                    <span className="block truncate text-[11px] text-ink-muted">{p.hint}</span>
+                    <span className="block truncate text-[calc(11px*var(--ts))] text-ink-muted">{p.hint}</span>
                   </span>
                   {active && <Check className="size-4 shrink-0 text-brand-600" />}
                 </button>
@@ -73,17 +73,17 @@ export function PaletteDock() {
           </div>
 
           <div className="flex items-center justify-between border-t border-border px-4 py-2.5">
-            <span className="text-[13px] font-medium text-ink-subtle">
-              {theme === "dark" ? "Sombre" : "Clair"}
+            <span className="text-[calc(13px*var(--ts))] font-medium text-ink-subtle">
+              {theme === "dark" ? "غامق" : "فاتح"}
             </span>
             <button
               type="button"
               onClick={toggle}
-              aria-label={theme === "dark" ? "Passer en clair" : "Passer en sombre"}
-              className="inline-flex h-9 items-center gap-2 rounded-md border border-border-strong bg-surface px-3 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
+              aria-label={theme === "dark" ? "دوّر للفاتح" : "دوّر للغامق"}
+              className="inline-flex h-9 items-center gap-2 rounded-md border border-border-strong bg-surface px-3 text-[calc(13px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
             >
               {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
-              {theme === "dark" ? "Clair" : "Sombre"}
+              {theme === "dark" ? "فاتح" : "غامق"}
             </button>
           </div>
         </div>
@@ -92,7 +92,7 @@ export function PaletteDock() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label="Palette & thème"
+        aria-label="لوحة الألوان والثيم"
         aria-expanded={open}
         className="grid size-12 place-items-center rounded-full bg-grad text-ink-inverted shadow-brand transition hover:brightness-105 active:scale-95"
       >

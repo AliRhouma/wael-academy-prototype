@@ -37,7 +37,7 @@ function Toggle({
 
 /** Muted helper line under a picker — explains the "vide = tous" convention. */
 function Hint({ children }: { children: ReactNode }) {
-  return <p className="mt-1.5 text-[12px] text-ink-muted">{children}</p>
+  return <p className="mt-1.5 text-[calc(12px*var(--ts))] text-ink-muted">{children}</p>
 }
 
 export interface AccessFormSheetProps {
@@ -104,7 +104,7 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
     [years],
   )
   const sortedGroups = useMemo(
-    () => [...groups].sort((a, b) => a.title.localeCompare(b.title, "fr")),
+    () => [...groups].sort((a, b) => a.title.localeCompare(b.title, "ar")),
     [groups],
   )
 
@@ -195,10 +195,10 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
     }
     if (editing) {
       updateAccess(editing.id, patch)
-      onSaved({ ...editing, ...patch }, "Accès modifié")
+      onSaved({ ...editing, ...patch }, "الصلاحية تبدّلت")
     } else {
       const access = addAccess({ ...patch, excludedIds: [] })
-      onSaved(access, "Accès créé")
+      onSaved(access, "الصلاحية تعملت")
     }
     onOpenChange(false)
   }
@@ -207,37 +207,37 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      title={editing ? "Modifier l’accès" : "Nouvel accès"}
+      title={editing ? "بدّل الصلاحية" : "صلاحية جديدة"}
       description={
         editing
           ? undefined
-          : "Ce que les élèves d’une offre peuvent voir : types de ressources, puis leur périmètre."
+          : "شنوّة ينجّمو يشوفو تلامذة عرض: أنواع الموارد، وبعد المجال متاعهم."
       }
-      submitLabel={editing ? "Enregistrer" : "Créer l’accès"}
+      submitLabel={editing ? "سجّل" : "اعمل الصلاحية"}
       onSubmit={submit}
     >
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom de l’accès</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">اسم الصلاحية</span>
         <input
           className={INPUT + " text-start"}
           dir="auto"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Ex. Contenu complet — Bac Maths"
+          placeholder="مثال: المحتوى الكامل — باك رياضيات"
           autoFocus
         />
       </label>
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-          Description <span className="font-normal text-ink-muted">(optionnel)</span>
+          Description <span className="font-normal text-ink-muted">(اختياري)</span>
         </span>
         <textarea
           className={INPUT.replace("h-11", "min-h-[72px]") + " resize-y py-2.5 text-start"}
           dir="auto"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Ce que cet accès donne à voir…"
+          placeholder="شنوّة تخلّي الصلاحية هذي تتشاف…"
           rows={2}
         />
       </label>
@@ -246,14 +246,14 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
       <div>
         <span className="mb-2 flex items-center justify-between text-sm font-medium text-ink-subtle">
           <span>
-            Types de ressources <span className="font-normal text-ink-muted">({types.length})</span>
+            أنواع الموارد <span className="font-normal text-ink-muted">({types.length})</span>
           </span>
           <button
             type="button"
             onClick={() => setTypes(types.length === TYPE_ORDER.length ? [] : [...TYPE_ORDER])}
-            className="text-[12px] font-medium text-brand-600 hover:underline"
+            className="text-[calc(12px*var(--ts))] font-medium text-brand-600 hover:underline"
           >
-            {types.length === TYPE_ORDER.length ? "Tout désélectionner" : "Tout sélectionner"}
+            {types.length === TYPE_ORDER.length ? "نحّي الكل" : "اختار الكل"}
           </button>
         </span>
         <div className="flex flex-wrap gap-2">
@@ -263,7 +263,7 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
             </Toggle>
           ))}
         </div>
-        {types.length === 0 && <Hint>Choisissez au moins un type de ressources.</Hint>}
+        {types.length === 0 && <Hint>اختار على الأقلّ نوع واحد من الموارد.</Hint>}
       </div>
 
       {/* 2 — syllabus scope: niveaux → matières → chapitres. */}
@@ -272,7 +272,7 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
           <div>
             <span className="mb-2 flex items-center gap-1.5 text-sm font-medium text-ink-subtle">
               <GraduationCap className="size-4 text-ink-muted" />
-              Niveaux <span className="font-normal text-ink-muted">({yearIds.length})</span>
+              المستويات <span className="font-normal text-ink-muted">({yearIds.length})</span>
             </span>
             <div className="flex flex-wrap gap-2">
               {sortedYears.map((y) => (
@@ -281,20 +281,20 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
                 </Toggle>
               ))}
             </div>
-            {yearIds.length === 0 && <Hint>Aucun niveau sélectionné = tous les niveaux.</Hint>}
+            {yearIds.length === 0 && <Hint>ما اخترت حتّى مستوى = المستويات الكل.</Hint>}
           </div>
 
           {yearIds.length > 0 && (
             <div>
               <span className="mb-2 block text-sm font-medium text-ink-subtle">
-                Matières <span className="font-normal text-ink-muted">({subjectIds.length})</span>
+                الموادّ <span className="font-normal text-ink-muted">({subjectIds.length})</span>
               </span>
               <div className="max-h-64 space-y-3 overflow-y-auto scroll-touch rounded-md border border-border bg-surface-muted/40 p-3">
                 {subjectGroups.map(({ year, subjects: subs }) => (
                   <div key={year.id}>
                     <p
                       dir="auto"
-                      className="mb-1.5 text-[11px] font-medium uppercase tracking-[.1em] text-ink-muted"
+                      className="mb-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.1em] text-ink-muted"
                     >
                       {year.name}
                     </p>
@@ -313,7 +313,7 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
                 ))}
               </div>
               {subjectIds.length === 0 && (
-                <Hint>Aucune matière sélectionnée = toutes les matières de ces niveaux.</Hint>
+                <Hint>ما اخترت حتّى مادّة = موادّ المستويات هذي الكل.</Hint>
               )}
             </div>
           )}
@@ -321,14 +321,14 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
           {subjectIds.length > 0 && (
             <div>
               <span className="mb-2 block text-sm font-medium text-ink-subtle">
-                Chapitres <span className="font-normal text-ink-muted">({chapterIds.length})</span>
+                الفصول <span className="font-normal text-ink-muted">({chapterIds.length})</span>
               </span>
               <div className="max-h-64 space-y-3 overflow-y-auto scroll-touch rounded-md border border-border bg-surface-muted/40 p-3">
                 {chapterGroups.map(({ subject, chapters: chs }) => (
                   <div key={subject.id}>
                     <p
                       dir="auto"
-                      className="mb-1.5 text-[11px] font-medium uppercase tracking-[.1em] text-ink-muted"
+                      className="mb-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.1em] text-ink-muted"
                     >
                       {subject.name}
                     </p>
@@ -347,7 +347,7 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
                 ))}
               </div>
               {chapterIds.length === 0 && (
-                <Hint>Aucun chapitre sélectionné = tous les chapitres de ces matières.</Hint>
+                <Hint>ما اخترت حتّى فصل = فصول الموادّ هذي الكل.</Hint>
               )}
             </div>
           )}
@@ -359,8 +359,8 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
         <>
           <div>
             <span className="mb-2 block text-sm font-medium text-ink-subtle">
-              Années scolaires{" "}
-              <span className="font-normal text-ink-muted">({academicYears.length}) · séances enregistrées</span>
+              السنوات الدراسية{" "}
+              <span className="font-normal text-ink-muted">({academicYears.length}) · حصص مسجّلة</span>
             </span>
             <div className="flex flex-wrap gap-2">
               {ACADEMIC_YEARS.map((y) => (
@@ -374,18 +374,18 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
               ))}
             </div>
             {academicYears.length === 0 && (
-              <Hint>Aucune année scolaire sélectionnée = toutes.</Hint>
+              <Hint>ما اخترت حتّى سنة دراسية = الكل.</Hint>
             )}
           </div>
 
           <div>
             <span className="mb-2 flex items-center gap-1.5 text-sm font-medium text-ink-subtle">
               <UsersRound className="size-4 text-ink-muted" />
-              Groupes <span className="font-normal text-ink-muted">({groupIds.length})</span>
+              الأفواج <span className="font-normal text-ink-muted">({groupIds.length})</span>
             </span>
             {sortedGroups.length === 0 ? (
               <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-                Aucun groupe pour le moment. Créez-en un depuis « Groupes ».
+                ما فماش أفواج توّا. اعمل واحد من «الأفواج».
               </p>
             ) : (
               <div className="flex flex-wrap gap-2">
@@ -401,7 +401,7 @@ export function AccessFormSheet({ open, onOpenChange, editing, onSaved }: Access
               </div>
             )}
             {groupIds.length === 0 && sortedGroups.length > 0 && (
-              <Hint>Aucun groupe sélectionné = tous les groupes.</Hint>
+              <Hint>ما اخترت حتّى فوج = الأفواج الكل.</Hint>
             )}
           </div>
         </>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react"
 import { CalendarOff, CheckCircle2, Hourglass, PlayCircle, Video } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { SubjectIcon } from "@/components/icons/subjects"
+import { HomeworkDot, homeworkAria } from "@/features/student/calendar/HomeworkDot"
 import {
   PX_PER_MIN,
   STATE_LABEL,
@@ -11,6 +12,7 @@ import {
   minutesNow,
   minutesOf,
   sessionState,
+  useHomeworkBySession,
   useSessionVisual,
   type SessionState,
 } from "@/features/student/calendar/schedule"
@@ -56,6 +58,7 @@ const PILL: Record<SessionState, string> = {
  */
 export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: DayTimelineProps) {
   const visual = useSessionVisual()
+  const homeworkOf = useHomeworkBySession()
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const firstPaint = useRef(true)
 
@@ -93,11 +96,11 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
       <div className="grid h-full min-h-0 place-items-center overflow-hidden rounded-xl border border-dashed border-border bg-surface">
         <EmptyState
           icon={CalendarOff}
-          title="Journée libre"
+          title="نهار فاضي"
           description={
             isToday
-              ? "Aucune séance aujourd’hui. Profites-en pour revoir un chapitre ou refaire un quiz."
-              : "Aucune séance ce jour-là. Choisis un autre jour dans la semaine."
+              ? "ما فماش حصص اليوم. استغلّ الوقت وعاود فصل ولا اعمل كويز."
+              : "ما فماش حصص نهارها. اختار نهار آخر في الجمعة."
           }
         />
       </div>
@@ -120,7 +123,7 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
               <div key={h} className="pointer-events-none absolute inset-x-0" style={{ top: y }}>
                 <div className="ms-[62px] border-t border-border/70" />
                 {!eclipsed && (
-                  <span className="absolute start-0 top-0 w-[54px] pt-1 text-end text-[11px] font-medium tabular-nums text-ink-muted">
+                  <span className="absolute start-0 top-0 w-[54px] pt-1 text-end text-[calc(11px*var(--ts))] font-medium tabular-nums text-ink-muted">
                     {String(h).padStart(2, "0")}:00
                   </span>
                 )}
@@ -137,6 +140,7 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
             const done = state === "terminee"
             const hasReplay = Boolean(session.recordingUrl)
             const isNext = session.id === nextId && state !== "en-cours"
+            const homeworks = homeworkOf(session)
 
             return (
               <div
@@ -152,7 +156,12 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                 <button
                   type="button"
                   onClick={() => onOpen(session)}
-                  aria-label={`${session.title} — ${STATE_LABEL[state]}, de ${session.startTime} à ${session.endTime}, ${cardTiming(session, now)}`}
+                  aria-label={[
+                    `${session.title} — ${STATE_LABEL[state]}، من ${session.startTime} لـ ${session.endTime}، ${cardTiming(session, now)}`,
+                    homeworkAria(homeworks.length),
+                  ]
+                    .filter(Boolean)
+                    .join("، ")}
                   className={cn(
                     "group relative flex size-full items-start gap-3 overflow-hidden rounded-lg border p-3 ps-4 text-start shadow-sm transition",
                     "hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
@@ -172,6 +181,12 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                     )}
                   />
 
+                  {/* fما خدمة. The meta row below reserves the corner for it. */}
+                  <HomeworkDot
+                    count={homeworks.length}
+                    className={cn("absolute end-2.5 top-2.5", done && "opacity-50")}
+                  />
+
                   <span
                     aria-hidden="true"
                     className={cn(
@@ -188,13 +203,18 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                   </span>
 
                   <span className="flex min-w-0 flex-1 flex-col self-stretch">
-                    <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                      <span className="text-[12px] font-semibold tabular-nums text-ink-subtle">
-                        {session.startTime} – {session.endTime}
+                    <span
+                      className={cn(
+                        "flex flex-wrap items-center gap-x-2 gap-y-1",
+                        homeworks.length > 0 && "pe-5",
+                      )}
+                    >
+                      <span className="text-[calc(12px*var(--ts))] font-semibold tabular-nums text-ink-subtle">
+                        <span className="num">{session.startTime} – {session.endTime}</span>
                       </span>
                       <span
                         className={cn(
-                          "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10.5px] font-medium",
+                          "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[calc(10.5px*var(--ts))] font-medium",
                           PILL[state],
                         )}
                       >
@@ -212,7 +232,7 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                           level, so the grid answers "when?" without a tap. */}
                       <span
                         className={cn(
-                          "text-[11px] font-medium",
+                          "text-[calc(11px*var(--ts))] font-medium",
                           state === "en-cours"
                             ? "text-danger-600"
                             : isNext
@@ -227,14 +247,14 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                     <span
                       dir="auto"
                       className={cn(
-                        "mt-1 line-clamp-2 font-display text-[15px] font-bold leading-snug",
+                        "mt-1 line-clamp-2 font-display text-[calc(15px*var(--ts))] font-bold leading-snug",
                         done ? "text-ink-subtle" : "text-ink",
                       )}
                     >
                       {session.title}
                     </span>
 
-                    <span dir="auto" className="mt-0.5 truncate text-[12px] text-ink-muted">
+                    <span dir="auto" className="mt-0.5 truncate text-[calc(12px*var(--ts))] text-ink-muted">
                       {[subjectName, session.room].filter(Boolean).join(" · ")}
                       {subjectName || session.room ? " · " : ""}
                       {formatDuration(session.startTime, session.endTime)}
@@ -248,7 +268,7 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                       <span className="hidden min-h-0 sm:block">
                         <span
                           dir="auto"
-                          className="mt-1.5 line-clamp-2 text-[12px] leading-relaxed text-ink-subtle"
+                          className="mt-1.5 line-clamp-2 text-[calc(12px*var(--ts))] leading-relaxed text-ink-subtle"
                         >
                           {session.description}
                         </span>
@@ -258,7 +278,7 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                     {/* The promise the modal keeps. */}
                     <span
                       className={cn(
-                        "mt-2 inline-flex items-center gap-1.5 text-[12px] font-medium",
+                        "mt-2 inline-flex items-center gap-1.5 text-[calc(12px*var(--ts))] font-medium",
                         done && !hasReplay
                           ? "text-ink-muted"
                           : "text-brand-600 group-hover:text-brand-700",
@@ -267,17 +287,17 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                       {done ? (
                         hasReplay ? (
                           <>
-                            <PlayCircle className="size-3.5" /> Voir l’enregistrement
+                            <PlayCircle className="size-3.5" /> شوف التسجيل
                           </>
                         ) : (
                           <>
-                            <Hourglass className="size-3.5" /> Enregistrement en préparation
+                            <Hourglass className="size-3.5" /> التسجيل في التحضير
                           </>
                         )
                       ) : (
                         <>
                           <Video className="size-3.5" />
-                          {state === "en-cours" ? "Rejoindre maintenant" : "Participer"}
+                          {state === "en-cours" ? "ادخل توّا" : "ادخل"}
                         </>
                       )}
                     </span>
@@ -297,7 +317,7 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
             >
               <div className="ms-[62px] border-t-2 border-danger-500" />
               <span className="absolute start-[56px] top-0 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-danger-500 ring-2 ring-surface" />
-              <span className="absolute start-0 top-0 w-[50px] -translate-y-1/2 rounded-full bg-danger-500 py-0.5 text-center text-[10px] font-semibold tabular-nums text-danger-foreground">
+              <span className="absolute start-0 top-0 w-[50px] -translate-y-1/2 rounded-full bg-danger-500 py-0.5 text-center text-[calc(10px*var(--ts))] font-semibold tabular-nums text-danger-foreground">
                 {String(now.getHours()).padStart(2, "0")}:
                 {String(now.getMinutes()).padStart(2, "0")}
               </span>

@@ -1,29 +1,29 @@
 /**
  * The shape of the programme: three cycles (collège · secondaire · bac), the
  * niveaux inside each, and the sections (filières) a niveau may split into.
- * This is the catalogue the "Programme" screen groups by and its form picks
+ * This is the catalogue the "البرنامج" screen groups by and its form picks
  * from — a Year stores `cycle` + `level` + optional `section`.
  */
 import type { Cycle, Year } from "./types"
 
 /** Filières of the 2ème année. */
 const SECTIONS_2EME = [
-  "Sciences",
-  "Lettres",
-  "Économie & Services",
-  "Informatique",
-  "Sport",
+  "علوم",
+  "آداب",
+  "اقتصاد وخدمات",
+  "إعلامية",
+  "رياضة",
 ]
 
 /** Filières of the 3ème année and of the Bac — the same list. */
 const SECTIONS_TERMINALES = [
-  "Mathématiques",
-  "Sciences expérimentales",
-  "Économie & Gestion",
-  "Lettres",
-  "Sciences techniques",
-  "Sciences de l'informatique",
-  "Sport",
+  "رياضيات",
+  "علوم تجريبية",
+  "اقتصاد وتصرّف",
+  "آداب",
+  "علوم تقنية",
+  "علوم إعلامية",
+  "رياضة",
 ]
 
 export interface LevelDef {
@@ -45,29 +45,29 @@ export interface CycleDef {
 export const CYCLES: CycleDef[] = [
   {
     key: "college",
-    label: "Collège",
-    hint: "7ème · 8ème · 9ème année",
+    label: "إعدادي",
+    hint: "سابعة · ثامنة · تاسعة أساسي",
     levels: [
-      { name: "7ème année", sections: [] },
-      { name: "8ème année", sections: [] },
-      { name: "9ème année", sections: [] },
+      { name: "سابعة أساسي", sections: [] },
+      { name: "ثامنة أساسي", sections: [] },
+      { name: "تاسعة أساسي", sections: [] },
     ],
   },
   {
     key: "secondaire",
-    label: "Secondaire",
-    hint: "1ère · 2ème · 3ème année — sections à partir de la 2ème",
+    label: "ثانوي",
+    hint: "أولى · ثانية · ثالثة ثانوي — الشعب تبدا من الثانية",
     levels: [
-      { name: "1ère année", sections: [] },
-      { name: "2ème année", sections: SECTIONS_2EME },
-      { name: "3ème année", sections: SECTIONS_TERMINALES },
+      { name: "أولى ثانوي", sections: [] },
+      { name: "ثانية ثانوي", sections: SECTIONS_2EME },
+      { name: "ثالثة ثانوي", sections: SECTIONS_TERMINALES },
     ],
   },
   {
     key: "bac",
-    label: "Bac",
-    hint: "L'année du baccalauréat, par section",
-    levels: [{ name: "Bac", sections: SECTIONS_TERMINALES }],
+    label: "باك",
+    hint: "عام البكالوريا، شعبة بشعبة",
+    levels: [{ name: "باك", sections: SECTIONS_TERMINALES }],
   },
 ]
 
@@ -86,7 +86,7 @@ export function sectionsFor(cycle: Cycle, level: string): string[] {
   return levelDef(cycle, level)?.sections ?? []
 }
 
-/** The display label of a class: "3ème année — Mathématiques" or "8ème année". */
+/** The display label of a class: "ثالثة ثانوي — رياضيات" or "ثامنة أساسي". */
 export function yearName(level: string, section?: string): string {
   return section ? `${level} — ${section}` : level
 }
@@ -125,7 +125,7 @@ export interface CycleGroup {
 }
 
 const byOrder = (a: Year, b: Year) =>
-  (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name, "fr")
+  (a.order ?? 0) - (b.order ?? 0) || a.name.localeCompare(b.name, "ar")
 
 /**
  * Groups the flat year list into cycle → niveau → classes, following the

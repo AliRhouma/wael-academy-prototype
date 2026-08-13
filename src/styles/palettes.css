@@ -693,35 +693,79 @@
 }
 
 [data-palette="azure2"][data-theme="dark"] {
-  --brand-50:#0c2647;  --brand-100:#0f345f; --brand-200:#164a86; --brand-300:#1f66b3;
-  --brand-400:#3f9bf0; --brand-500:#4aa4f5; --brand-600:#79bef8; --brand-700:#a6d5fb;
-  --brand-800:#cbe7fd; --brand-900:#e6f3fe; --brand-foreground:#06162e;
+  /* TINT WELLS (the `-50` / `-100` steps) all sit ABOVE the card here, never
+     below it. In dark mode a "-50" is no longer the palest wash on white — it's
+     the fill of a chip drawn ON a navy card, and anything darker than that card
+     reads as a hole punched in it rather than as a coloured badge. Every well
+     below is therefore lighter AND more saturated than `--surface`. */
+  --brand-50:#16376b;  --brand-100:#1c4784; --brand-200:#1f66b3; --brand-300:#2f86dd;
+  --brand-400:#4aa4f5; --brand-500:#5db0f8; --brand-600:#8ac8fa; --brand-700:#b6dcfc;
+  --brand-800:#d5ebfe; --brand-900:#ecf6ff; --brand-foreground:#06162e;
 
-  --emerald-50:#0d3a33; --emerald-500:#38c2ac; --emerald-600:#62d3c1; --emerald-700:#8fe0d3;
+  --emerald-50:#0f463c; --emerald-500:#3fcbb4; --emerald-600:#69d8c6; --emerald-700:#95e3d7;
 
-  --navy-50:#16234a; --navy-500:#8aa2df; --navy-600:#adbde9; --navy-700:#c7d6f0;
+  --navy-50:#1d2f63; --navy-500:#96abe4; --navy-600:#b6c4ec; --navy-700:#cedbf3;
 
-  --accent-50:#232a5c; --accent-100:#2c3570; --accent-500:#8792ec;
-  --accent-600:#a7b0f2; --accent-700:#c6ccf7; --accent-foreground:#0b1024;
+  --accent-50:#262f6b; --accent-100:#303a80; --accent-500:#949eef;
+  --accent-600:#b0b8f4; --accent-700:#ccd1f8; --accent-foreground:#0b1024;
 
-  --neutral-50:#111c3d; --neutral-100:#16234a; --neutral-200:#1f2d55; --neutral-300:#2b3a68;
-  --neutral-400:#6472a0; --neutral-500:#8a97be; --neutral-600:#b3bcd8; --neutral-700:#d2d9ec;
-  --neutral-800:#e7ebf6; --neutral-900:#f3f5fb;
+  /* Low neutrals are FILLS that stack on the card (chip, track, hover row), so
+     they climb away from `--surface`; high neutrals are TEXT and stay bright. */
+  --neutral-50:#1a2757; --neutral-100:#203063; --neutral-200:#293c74; --neutral-300:#364b8a;
+  --neutral-400:#8492bd; --neutral-500:#a9b6d4; --neutral-600:#c9d1e4; --neutral-700:#dfe4f2;
+  --neutral-800:#f0f3fa; --neutral-900:#fafcff;
 
-  --surface:#101a3d; --surface-subtle:#0a1330; --surface-muted:#0d1636;
-  --surface-raised:#16214a; --surface-cream:#1c2450;
+  /* THE PAGE IS THE DARKEST THING AND EVERY PANEL LIFTS OFF IT — the ordinary
+     dark ramp, back after a stint inverted. Inverted, the cards were darker
+     than the ground they sat on, so their edges depended entirely on a 9 %
+     hairline and their text sat on the deepest navy in the system; both read as
+     murk. Now each level is a real step (~10 lightness apart), so a card is
+     visible as a card before its border is even drawn:
 
-  --ink:#eaf0fb; --ink-subtle:#a9b4cd; --ink-muted:#7581a0; --ink-inverted:#06162e;
+       L0 page    #070f2b  --surface-subtle  (canvas + its glows)
+       L1 inset   #0d1740  --surface-muted   (table headers, tracks, panels)
+       L2 card    #14204d  --surface         (cards, popovers, the header slot)
+       L3 raised  #1c2a5e  --surface-raised  (dialogs, sheets, dropdowns)
 
-  --border:rgb(255 255 255 / .09); --border-strong:rgb(255 255 255 / .15);
-  --input:#0d1636; --input-border:rgb(255 255 255 / .10); --ring:#4aa4f5;
+     The rail and the header carry no fill in this shell (see AppShell), so a
+     darker page also buys the nav labels a much quieter ground to sit on. */
+  --surface:#14204d; --surface-subtle:#070f2b; --surface-muted:#0d1740;
+  --surface-raised:#1c2a5e; --surface-cream:#212f66;
 
-  --success-50:#0d3a2a; --success-500:#2fc78c; --success-600:#58d3a0; --success-700:#7fe0b9;
-  --warning-50:#3a2c08; --warning-500:#e6a41f; --warning-600:#f2bd4d; --warning-700:#f8d27e;
-  --danger-50:#3d1614;  --danger-500:#ff6b6f;  --danger-600:#ff8d90;  --danger-700:#ffa8ab;
-  --info-50:#16234a;    --info-500:#8aa2df;    --info-600:#adbde9;    --info-700:#c7d6f0;
+  /* TYPE RUNS BRIGHT HERE, brighter than the other palettes' dark side: the
+     rail, the header and the page panels have no fill, so a lot of text sits
+     straight on the canvas and its glows instead of on a flat surface. Primary
+     is effectively white; the two quiet steps are held at ~8:1 and ~6:1 against
+     the card so "secondary" still means readable, not faded. */
+  --ink:#f7faff; --ink-subtle:#ccd9ee; --ink-muted:#a6b4d0; --ink-inverted:#06162e;
+
+  /* Hairlines carry the layout in a shell whose rail and header are outlines,
+     so they are drawn to be SEEN — the old 9 % vanished against the canvas. */
+  --border:rgb(255 255 255 / .16); --border-strong:rgb(255 255 255 / .30);
+  --input:#0e1a44; --input-border:rgb(255 255 255 / .20); --ring:#5db0f8;
+
+  --success-50:#114a35; --success-500:#3ad094; --success-600:#63dcaa; --success-700:#8ce7c2;
+  --warning-50:#4a3a0c; --warning-500:#f0b02f; --warning-600:#f7c65d; --warning-700:#fbd98c;
+  --danger-50:#4d1d1a;  --danger-500:#ff7a7e;  --danger-600:#ff9b9e;  --danger-700:#ffb6b8;
+  --info-50:#1d2f63;    --info-500:#96abe4;    --info-600:#b6c4ec;    --info-700:#cedbf3;
 
   --grad:linear-gradient(148deg,#2ccdea 0%,#2aacf3 30%,#3f9bf0 55%,#57a6f4 78%,#6fb5f7 100%);
+}
+
+/* WEIGHT, NOT JUST COLOUR. Light-on-dark text optically thins: the glyph bleeds
+   into the ground, so the same Rubik/Cairo 400 that looks correct on the white
+   page looks like a wireframe on this one. Two corrections, this palette only:
+   the body inherits 500 (all four type families ship a real 500, so nothing is
+   synthesised), and the aggressive grayscale smoothing is dropped for the
+   platform default, which keeps the stems at full mass instead of shaving them
+   (that second one only bites on macOS — Blink ignores it on Windows — so the
+   500 is what has to carry the weight, and does).
+   Both are INHERITED, so any element carrying its own font-* utility — every
+   heading, every `font-semibold` label — still wins and the hierarchy holds. */
+[data-palette="azure2"][data-theme="dark"] body {
+  font-weight: 500;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
 }
 
 [data-palette="azure2"]:not([data-theme="dark"]) .bg-canvas {
@@ -731,12 +775,15 @@
     radial-gradient(680px 480px at -6% 106%, rgb(30 136 229 / 0.10), transparent 60%),
     radial-gradient(500px 380px at 108% 92%, rgb(91 106 216 / 0.10), transparent 62%);
 }
+/* The glows are pulled back a couple of points from the light side's: the rail
+   and the header are outlines, so nav labels sit ON this gradient — it has to
+   stay a ground, not a light source. */
 [data-palette="azure2"][data-theme="dark"] .bg-canvas {
   background-color: var(--surface-subtle);
   background-image:
-    radial-gradient(760px 420px at 88% -6%, rgb(37 203 232 / 0.13), transparent 62%),
-    radial-gradient(680px 480px at -6% 106%, rgb(74 164 245 / 0.11), transparent 60%),
-    radial-gradient(500px 380px at 108% 92%, rgb(135 146 236 / 0.13), transparent 62%);
+    radial-gradient(760px 420px at 88% -6%, rgb(37 203 232 / 0.10), transparent 62%),
+    radial-gradient(680px 480px at -6% 106%, rgb(74 164 245 / 0.09), transparent 60%),
+    radial-gradient(500px 380px at 108% 92%, rgb(135 146 236 / 0.10), transparent 62%);
 }
 
 /* ===========================================================================

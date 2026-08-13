@@ -1,5 +1,5 @@
 /**
- * Wallet glyph for "Porte-monnaie" — a card peeking out behind the wallet body,
+ * Wallet glyph for "المحفظة" — a card peeking out behind the wallet body,
  * with a side pocket and a coin. The wallet body carries the rail gold (money
  * reads warm, and it echoes the Matières folder further up the rail) while the
  * tucked card and the coin stay blue so they separate from it. Fixed hex, see

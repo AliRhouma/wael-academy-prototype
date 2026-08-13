@@ -8,7 +8,7 @@ import { useData } from "@/stores/useData"
 import type { PdfRequest } from "./types"
 
 /**
- * Élève — the "Examens" tab: the devoirs, bacs blancs and corrections of the
+ * Élève — the "امتحانات" tab: the devoirs, bacs blancs and corrections of the
  * matière. Each card leads with its documents (that's what an élève comes for)
  * and offers the correction filmée as a second, clearly separate action so a
  * tap never opens the wrong thing.
@@ -37,8 +37,8 @@ export function ExamensTab({
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={FileCheck2}
-          title="Aucun examen publié"
-          description="Les devoirs, bacs blancs et corrections de cette matière apparaîtront ici dès qu’ils seront prêts."
+          title="ما فماش امتحانات منشورة"
+          description="الفروض والباكات التجريبية والإصلاحات متاع المادّة هذي يظهرو هوني كي يوليو حاضرين."
         />
       </div>
     )
@@ -56,8 +56,8 @@ export function ExamensTab({
               <FileCheck2 className="size-5" />
             </span>
             <div className="min-w-0 flex-1">
-              <Badge tone="info">Examen</Badge>
-              <h3 dir="auto" className="mt-1.5 font-display text-[15px] font-bold leading-snug text-ink">
+              <Badge tone="info">امتحان</Badge>
+              <h3 dir="auto" className="mt-1.5 font-display text-[calc(15px*var(--ts))] font-bold leading-snug text-ink">
                 {exam.title}
               </h3>
             </div>
@@ -72,7 +72,7 @@ export function ExamensTab({
                     onClick={() =>
                       onRead({
                         title: exam.title,
-                        kindLabel: "Examen",
+                        kindLabel: "امتحان",
                         tone: "info",
                         context: subjectName,
                         pdfs: exam.pdfs,
@@ -81,10 +81,10 @@ export function ExamensTab({
                     className="flex w-full items-center gap-2.5 rounded-md border border-border bg-surface-muted px-2.5 py-2 text-start transition hover:border-brand-200 hover:bg-surface"
                   >
                     <FileText className="size-4 shrink-0 text-danger-600" />
-                    <span dir="auto" className="min-w-0 flex-1 truncate text-[13px] font-medium text-ink-subtle">
+                    <span dir="auto" className="min-w-0 flex-1 truncate text-[calc(13px*var(--ts))] font-medium text-ink-subtle">
                       {pdf.name}
                     </span>
-                    <span className="shrink-0 text-[11px] font-medium uppercase tracking-wide text-ink-muted">
+                    <span className="shrink-0 text-[calc(11px*var(--ts))] font-medium uppercase tracking-wide text-ink-muted">
                       PDF
                     </span>
                   </button>
@@ -92,15 +92,15 @@ export function ExamensTab({
               ))}
             </ul>
           ) : (
-            <p className="mt-3 text-[13px] text-ink-muted">Documents à venir</p>
+            <p className="mt-3 text-[calc(13px*var(--ts))] text-ink-muted">وثائق جايّة</p>
           )}
 
           {exam.videoUrl && (
             <Link
               to={examVideoPath(exam.id, subjectId)}
-              className="mt-3 inline-flex h-11 items-center justify-center gap-2 self-start rounded-md border border-border-strong bg-surface px-3.5 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-10"
+              className="mt-3 inline-flex h-11 items-center justify-center gap-2 self-start rounded-md border border-border-strong bg-surface px-3.5 text-[calc(13px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-10"
             >
-              <PlayCircle className="size-4" /> Voir la correction filmée
+              <PlayCircle className="size-4" /> شوف الإصلاح المصوّر
             </Link>
           )}
         </li>

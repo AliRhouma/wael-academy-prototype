@@ -49,7 +49,7 @@ export default function AdminAccessesScreen() {
           ? true
           : a.name.toLowerCase().includes(q) || (a.description?.toLowerCase().includes(q) ?? false),
       )
-      .sort((a, b) => a.name.localeCompare(b.name, "fr"))
+      .sort((a, b) => a.name.localeCompare(b.name, "ar"))
   }, [accesses, query])
 
   function openAdd() {
@@ -65,7 +65,7 @@ export default function AdminAccessesScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeAccess(deleteTarget.id)
-    show("Accès supprimé")
+    show("الصلاحية تمسحت")
     setDeleteTarget(null)
   }
 
@@ -75,7 +75,7 @@ export default function AdminAccessesScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Créer un accès
+      <Plus className="size-4" /> اعمل صلاحية
     </button>
   )
 
@@ -84,8 +84,8 @@ export default function AdminAccessesScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Accès"
-        subtitle={`${accesses.length} règle${accesses.length > 1 ? "s" : ""} d’accès — ce que chaque offre donne à voir aux élèves.`}
+        title="الصلاحيات"
+        subtitle={`${accesses.length} قاعدة صلاحية — شنوّة يوري كل عرض للتلامذة.`}
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -97,7 +97,7 @@ export default function AdminAccessesScreen() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher un accès…"
+              placeholder="لوّج على صلاحية…"
               className={INPUT + " ps-9"}
             />
           </div>
@@ -108,8 +108,8 @@ export default function AdminAccessesScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={KeyRound}
-            title="Aucun accès"
-            description="Créez une règle d’accès (types de ressources + périmètre) puis rattachez-la à une offre."
+            title="ما فماش صلاحيات"
+            description="اعمل قاعدة صلاحية (أنواع الموارد + المجال) وبعد اربطها بعرض."
             action={addButton}
           />
         </div>
@@ -117,8 +117,8 @@ export default function AdminAccessesScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Search}
-            title="Aucun résultat"
-            description="Aucun accès ne correspond à cette recherche."
+            title="ما فماش نتائج"
+            description="ما فماش صلاحية توافق البحث هذا."
           />
         </div>
       ) : (
@@ -135,11 +135,11 @@ export default function AdminAccessesScreen() {
                   <KeyRound className="size-5" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p dir="auto" className="font-display text-[15px] font-bold text-ink">
+                  <p dir="auto" className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">
                     {a.name}
                   </p>
                   {a.description && (
-                    <p dir="auto" className="mt-0.5 line-clamp-2 text-[12px] text-ink-muted">
+                    <p dir="auto" className="mt-0.5 line-clamp-2 text-[calc(12px*var(--ts))] text-ink-muted">
                       {a.description}
                     </p>
                   )}
@@ -150,26 +150,26 @@ export default function AdminAccessesScreen() {
                       </Badge>
                     ))}
                   </div>
-                  <p className="mt-1.5 text-[12px] text-ink-muted">{scopeSummary(a)}</p>
-                  <p className="mt-1.5 text-[12px] text-ink-muted">
+                  <p className="mt-1.5 text-[calc(12px*var(--ts))] text-ink-muted">{scopeSummary(a)}</p>
+                  <p className="mt-1.5 text-[calc(12px*var(--ts))] text-ink-muted">
                     {count > 0
-                      ? `Utilisé par ${count} offre${count > 1 ? "s" : ""}`
-                      : "Utilisé par aucune offre"}
+                      ? `مستعمل في ${count} عرض`
+                      : "ما مستعملش في حتّى عرض"}
                     {hidden > 0 && (
-                      <> · <span className="text-accent2-700">{hidden} élément{hidden > 1 ? "s" : ""} masqué{hidden > 1 ? "s" : ""}</span></>
+                      <> · <span className="text-accent2-700">{hidden} عنصر مخفي</span></>
                     )}
                   </p>
                 </div>
                 <OverflowMenu
                   actions={[
                     {
-                      label: "Contenu",
+                      label: "المحتوى",
                       icon: ListTree,
                       onClick: () => navigate(`/admin/offers/access/${a.id}`),
                     },
-                    { label: "Modifier", icon: Pencil, onClick: () => openEdit(a) },
+                    { label: "بدّل", icon: Pencil, onClick: () => openEdit(a) },
                     {
-                      label: "Supprimer",
+                      label: "امسح",
                       icon: Trash2,
                       tone: "danger",
                       onClick: () => setDeleteTarget(a),
@@ -196,10 +196,10 @@ export default function AdminAccessesScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cet accès ?"
+        title="تحبّ تمسح الصلاحية هذي؟"
         description={
           deleteTarget
-            ? `« ${deleteTarget.name} » sera supprimé et retiré des offres qui l’utilisent.`
+            ? `«${deleteTarget.name}» باش يتمسح ويتنحّى من العروض اللي تستعملو.`
             : undefined
         }
         onConfirm={confirmDelete}

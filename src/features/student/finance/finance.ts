@@ -11,18 +11,18 @@ import {
  * bloqué); a student cares about one more thing — whether it's fully settled.
  * So: soldé > suspendu > en retard > en cours. Derived, never stored.
  */
-export type StudentSubStatus = "soldé" | "suspendu" | "retard" | "cours"
+export type StudentSubStatus = "solde" | "suspendu" | "retard" | "cours"
 
 export const SUB_STATUS: Record<StudentSubStatus, { label: string; tone: BadgeTone }> = {
-  soldé: { label: "Soldé", tone: "success" },
-  suspendu: { label: "Accès suspendu", tone: "danger" },
-  retard: { label: "Tranche en retard", tone: "danger" },
-  cours: { label: "En cours", tone: "brand" },
+  solde: { label: "تسدّد", tone: "success" },
+  suspendu: { label: "الدخول موقّف", tone: "danger" },
+  retard: { label: "قسط متأخّر", tone: "danger" },
+  cours: { label: "قاعدة", tone: "brand" },
 }
 
 export function studentSubStatus(sub: Subscription, transactions: Transaction[]): StudentSubStatus {
-  if (paidTotal(sub, transactions) >= sub.price) return "soldé"
-  if (subscriptionStatus(sub, transactions) === "bloqué") return "suspendu"
+  if (paidTotal(sub, transactions) >= sub.price) return "solde"
+  if (subscriptionStatus(sub, transactions) === "bloque") return "suspendu"
   if (sub.installments.some((i) => installmentStatus(i, transactions) === "overdue")) return "retard"
   return "cours"
 }

@@ -7,7 +7,9 @@ import {
 } from "react"
 import { Toaster } from "sonner"
 import { DEFAULT_PALETTE, PALETTES, type PaletteId } from "./palettes"
+import { DEFAULT_FONT, FONTS, type FontId } from "./fonts"
 import { PaletteDock } from "./PaletteDock"
+import { FontDock } from "./FontDock"
 
 type Theme = "light" | "dark"
 
@@ -18,6 +20,9 @@ interface ThemeContextValue {
   /** Active color palette (id → data-palette on <html>). */
   palette: PaletteId
   setPalette: (palette: PaletteId) => void
+  /** Active typeface (id → data-font on <html>). */
+  font: FontId
+  setFont: (font: FontId) => void
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null)
@@ -31,6 +36,7 @@ export function useTheme(): ThemeContextValue {
 
 const THEME_KEY = "wael-theme"
 const PALETTE_KEY = "wael-palette"
+const FONT_KEY = "wael-font"
 
 function initTheme(): Theme {
   const saved = localStorage.getItem(THEME_KEY)
@@ -43,16 +49,25 @@ function initPalette(): PaletteId {
   return known ? (saved as PaletteId) : DEFAULT_PALETTE
 }
 
+function initFont(): FontId {
+  const saved = localStorage.getItem(FONT_KEY)
+  const known = FONTS.some((f) => f.id === saved)
+  return known ? (saved as FontId) : DEFAULT_FONT
+}
+
 /**
  * App-root providers:
  *  - light/dark theme via `data-theme` on <html> (the design tokens key off it)
  *  - swappable color palette via `data-palette` on <html> (src/styles/palettes.css)
+ *  - swappable typeface via `data-font` on <html> (src/styles/fonts.css)
  *  - the sonner <Toaster/> for action feedback (toasts).
- * Both theme + palette persist to localStorage so a chosen look survives refresh.
+ * Theme, palette and font all persist to localStorage so a chosen look survives
+ * refresh.
  */
 export function Providers({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(initTheme)
   const [palette, setPalette] = useState<PaletteId>(initPalette)
+  const [font, setFont] = useState<FontId>(initFont)
 
   // Tokens in src/styles/index.css switch on [data-theme="dark"].
   useEffect(() => {
@@ -66,14 +81,22 @@ export function Providers({ children }: { children: ReactNode }) {
     localStorage.setItem(PALETTE_KEY, palette)
   }, [palette])
 
+  // Typefaces in src/styles/fonts.css switch on [data-font].
+  useEffect(() => {
+    document.documentElement.setAttribute("data-font", font)
+    localStorage.setItem(FONT_KEY, font)
+  }, [font])
+
   const toggle = () =>
     setTheme((prev) => (prev === "light" ? "dark" : "light"))
 
   return (
-    <ThemeContext.Provider value={{ theme, toggle, setTheme, palette, setPalette }}>
+    <ThemeContext.Provider value={{ theme, toggle, setTheme, palette, setPalette, font, setFont }}>
       {children}
       <PaletteDock />
-      <Toaster position="top-right" theme={theme} richColors closeButton />
+      <FontDock />
+      {/* RTL: toasts land on the reading-flow side — top-left mirrors top-right. */}
+      <Toaster position="top-left" dir="rtl" theme={theme} richColors closeButton />
     </ThemeContext.Provider>
   )
 }

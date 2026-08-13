@@ -18,7 +18,7 @@ export interface OverflowAction {
  */
 export function OverflowMenu({
   actions,
-  label = "Actions",
+  label = "إجراءات",
 }: {
   actions: OverflowAction[]
   label?: string

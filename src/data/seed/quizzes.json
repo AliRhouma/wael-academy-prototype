@@ -1,21 +1,34 @@
 [
   {
     "id": "q-cx-1",
-    "title": "QCM — Module et conjugué",
-    "tags": ["révision", "facile"],
+    "title": "اختيار من متعدّد — الطويلة والمرافق",
+    "tags": [
+      "مراجعة",
+      "سهل"
+    ],
     "durationMin": 15,
     "quizExamId": "qe-cx",
     "questions": [
       {
         "id": "qq-cx-1",
-        "prompt": "Quel est le module du nombre complexe z = 3 + 4i ?",
-        "choices": ["5", "7", "25", "1"],
+        "prompt": "شنوّة طويلة العدد المركّب z = 3 + 4i؟",
+        "choices": [
+          "5",
+          "7",
+          "25",
+          "1"
+        ],
         "correctIndex": 0
       },
       {
         "id": "qq-cx-2",
-        "prompt": "Le conjugué de z = 2 − 5i est :",
-        "choices": ["−2 + 5i", "2 + 5i", "−2 − 5i", "5 − 2i"],
+        "prompt": "مرافق z = 2 − 5i هو:",
+        "choices": [
+          "−2 + 5i",
+          "2 + 5i",
+          "−2 − 5i",
+          "5 − 2i"
+        ],
         "correctIndex": 1
       }
     ],
@@ -24,15 +37,22 @@
   },
   {
     "id": "q-cx-2",
-    "title": "QCM — Forme trigonométrique",
-    "tags": ["moyen"],
+    "title": "اختيار من متعدّد — الشكل المثلثي",
+    "tags": [
+      "متوسّط"
+    ],
     "durationMin": 20,
     "quizExamId": "qe-cx",
     "questions": [
       {
         "id": "qq-cx-3",
-        "prompt": "L'argument de z = i vaut :",
-        "choices": ["0", "π/2", "π", "−π/2"],
+        "prompt": "عمدة z = i تساوي:",
+        "choices": [
+          "0",
+          "π/2",
+          "π",
+          "−π/2"
+        ],
         "correctIndex": 1
       }
     ],
@@ -41,20 +61,33 @@
   },
   {
     "id": "q-lim",
-    "title": "QCM — Limites et continuité",
-    "tags": ["révision", "moyen"],
+    "title": "اختيار من متعدّد — النهايات والاتّصال",
+    "tags": [
+      "مراجعة",
+      "متوسّط"
+    ],
     "durationMin": 20,
     "questions": [
       {
         "id": "qq-lim-1",
-        "prompt": "La limite de (sin x) / x quand x tend vers 0 vaut :",
-        "choices": ["0", "1", "+∞", "N'existe pas"],
+        "prompt": "نهاية (sin x) / x كي x تقرّب لـ 0 تساوي:",
+        "choices": [
+          "0",
+          "1",
+          "+∞",
+          "ما موجودةش"
+        ],
         "correctIndex": 1
       },
       {
         "id": "qq-lim-2",
-        "prompt": "Une fonction continue sur [a, b] est nécessairement :",
-        "choices": ["Dérivable sur [a, b]", "Bornée sur [a, b]", "Monotone", "Paire"],
+        "prompt": "دالة متّصلة على [a, b] بالضرورة تكون:",
+        "choices": [
+          "قابلة للاشتقاق على [a, b]",
+          "محدودة على [a, b]",
+          "رتيبة",
+          "زوجية"
+        ],
         "correctIndex": 1
       }
     ],
@@ -63,14 +96,21 @@
   },
   {
     "id": "q-der",
-    "title": "QCM — Dérivabilité",
-    "tags": ["difficile"],
+    "title": "اختيار من متعدّد — الاشتقاق",
+    "tags": [
+      "صعيب"
+    ],
     "durationMin": 25,
     "questions": [
       {
         "id": "qq-der-1",
-        "prompt": "Si f est dérivable en a, alors f est :",
-        "choices": ["Continue en a", "Constante", "Croissante en a", "Nulle en a"],
+        "prompt": "كان f قابلة للاشتقاق في a، إذن f تكون:",
+        "choices": [
+          "متّصلة في a",
+          "ثابتة",
+          "متزايدة في a",
+          "منعدمة في a"
+        ],
         "correctIndex": 0
       }
     ],
@@ -79,24 +119,31 @@
   },
   {
     "id": "q-proba",
-    "title": "QCM — Probabilités",
-    "tags": ["révision"],
+    "title": "اختيار من متعدّد — الاحتمالات",
+    "tags": [
+      "مراجعة"
+    ],
     "durationMin": 15,
     "questions": [
       {
         "id": "qq-pr-1",
-        "prompt": "On lance un dé équilibré. P(obtenir un nombre pair) vaut :",
-        "choices": ["1/6", "1/3", "1/2", "2/3"],
+        "prompt": "نرمي زهر متوازن. P(نلقاو عدد زوجي) تساوي:",
+        "choices": [
+          "1/6",
+          "1/3",
+          "1/2",
+          "2/3"
+        ],
         "correctIndex": 2
       },
       {
         "id": "qq-pr-2",
-        "prompt": "Deux événements A et B sont indépendants si :",
+        "prompt": "الحادثتين A و B مستقلّتين كان:",
         "choices": [
           "P(A ∩ B) = P(A) × P(B)",
           "P(A ∪ B) = P(A) + P(B)",
           "P(A) = P(B)",
-          "A et B sont incompatibles"
+          "A و B غير متلائمتين"
         ],
         "correctIndex": 0
       }
@@ -104,24 +151,36 @@
     "chapterId": "ch-probabilites",
     "order": 0
   },
-
   {
     "id": "q-rc-1",
-    "title": "QCM — Constante de temps",
-    "tags": ["révision", "électricité"],
+    "title": "اختيار من متعدّد — ثابت الزمن",
+    "tags": [
+      "مراجعة",
+      "كهرباء"
+    ],
     "durationMin": 15,
     "quizExamId": "qe-rc",
     "questions": [
       {
         "id": "qq-rc-1",
-        "prompt": "La constante de temps τ d'un dipôle RC vaut :",
-        "choices": ["R · C", "R / C", "C / R", "R + C"],
+        "prompt": "ثابت الزمن τ متاع ثنائي القطب RC يساوي:",
+        "choices": [
+          "R · C",
+          "R / C",
+          "C / R",
+          "R + C"
+        ],
         "correctIndex": 0
       },
       {
         "id": "qq-rc-2",
-        "prompt": "Lors de la charge d'un condensateur, sa tension :",
-        "choices": ["Reste nulle", "Diminue", "Augmente puis se stabilise", "Oscille"],
+        "prompt": "وقت شحن المكثّف، التوتّر متاعو:",
+        "choices": [
+          "تبقى منعدمة",
+          "تنقص",
+          "تزيد وبعد تستقرّ",
+          "تتذبذب"
+        ],
         "correctIndex": 2
       }
     ],
@@ -130,15 +189,22 @@
   },
   {
     "id": "q-rc-2",
-    "title": "QCM — Énergie du condensateur",
-    "tags": ["moyen"],
+    "title": "اختيار من متعدّد — طاقة المكثّف",
+    "tags": [
+      "متوسّط"
+    ],
     "durationMin": 12,
     "quizExamId": "qe-rc",
     "questions": [
       {
         "id": "qq-rc-3",
-        "prompt": "L'énergie emmagasinée dans un condensateur est proportionnelle à :",
-        "choices": ["U", "U²", "1/U", "√U"],
+        "prompt": "الطاقة المخزّنة في المكثّف متناسبة مع:",
+        "choices": [
+          "U",
+          "U²",
+          "1/U",
+          "√U"
+        ],
         "correctIndex": 1
       }
     ],
@@ -147,14 +213,22 @@
   },
   {
     "id": "q-rl",
-    "title": "QCM — Le dipôle RL",
-    "tags": ["électricité", "moyen"],
+    "title": "اختيار من متعدّد — ثنائي القطب RL",
+    "tags": [
+      "كهرباء",
+      "متوسّط"
+    ],
     "durationMin": 15,
     "questions": [
       {
         "id": "qq-rl-1",
-        "prompt": "L'unité de l'inductance L est :",
-        "choices": ["Le farad", "Le henry", "L'ohm", "Le tesla"],
+        "prompt": "وحدة الذاتية L هي:",
+        "choices": [
+          "الفاراد",
+          "الهنري",
+          "الأوم",
+          "التسلا"
+        ],
         "correctIndex": 1
       }
     ],
@@ -163,18 +237,21 @@
   },
   {
     "id": "q-ondes",
-    "title": "QCM — Les ondes mécaniques",
-    "tags": ["ondes", "révision"],
+    "title": "اختيار من متعدّد — الموجات الميكانيكية",
+    "tags": [
+      "موجات",
+      "مراجعة"
+    ],
     "durationMin": 12,
     "questions": [
       {
         "id": "qq-ond-1",
-        "prompt": "Une onde mécanique se propage :",
+        "prompt": "الموجة الميكانيكية تنتشر:",
         "choices": [
-          "Dans le vide",
-          "Uniquement dans l'air",
-          "Dans un milieu matériel",
-          "Sans transport d'énergie"
+          "في الفراغ",
+          "في الهواء برك",
+          "في وسط مادّي",
+          "بلا نقل للطاقة"
         ],
         "correctIndex": 2
       }
@@ -182,17 +259,24 @@
     "chapterId": "ch-ondes",
     "order": 0
   },
-
   {
     "id": "q-imm",
-    "title": "QCM — L'immunité",
-    "tags": ["révision", "facile"],
+    "title": "اختيار من متعدّد — المناعة",
+    "tags": [
+      "مراجعة",
+      "سهل"
+    ],
     "durationMin": 15,
     "questions": [
       {
         "id": "qq-imm-1",
-        "prompt": "Les anticorps sont produits par :",
-        "choices": ["Les hématies", "Les plasmocytes", "Les neurones", "Les plaquettes"],
+        "prompt": "الأجسام المضادّة تنتجها:",
+        "choices": [
+          "الكريات الحمراء",
+          "الخلايا البلازمية",
+          "العصبونات",
+          "الصفيحات الدموية"
+        ],
         "correctIndex": 1
       }
     ],
@@ -201,38 +285,57 @@
   },
   {
     "id": "q-gen",
-    "title": "QCM — La génétique humaine",
-    "tags": ["difficile"],
+    "title": "اختيار من متعدّد — الوراثة البشرية",
+    "tags": [
+      "صعيب"
+    ],
     "durationMin": 20,
     "questions": [
       {
         "id": "qq-gen-1",
-        "prompt": "Un caractère récessif s'exprime chez un individu :",
-        "choices": ["Hétérozygote", "Homozygote récessif", "Toujours", "Jamais"],
+        "prompt": "الصفة المتنحّية تظهر عند فرد:",
+        "choices": [
+          "مختلف اللواقح",
+          "متماثل اللواقح متنحّي",
+          "ديما",
+          "عمرو"
+        ],
         "correctIndex": 1
       }
     ],
     "chapterId": "ch-genetique-humaine",
     "order": 0
   },
-
   {
     "id": "q-sql-1",
-    "title": "QCM — Clauses SQL",
-    "tags": ["SQL", "pratique"],
+    "title": "اختيار من متعدّد — عبارات SQL",
+    "tags": [
+      "SQL",
+      "تطبيقي"
+    ],
     "durationMin": 10,
     "quizExamId": "qe-sql",
     "questions": [
       {
         "id": "qq-sql-1",
-        "prompt": "Quelle clause filtre les lignes d'une requête SELECT ?",
-        "choices": ["ORDER BY", "WHERE", "GROUP BY", "HAVING"],
+        "prompt": "أنهي عبارة تفلتري سطور طلب SELECT؟",
+        "choices": [
+          "ORDER BY",
+          "WHERE",
+          "GROUP BY",
+          "HAVING"
+        ],
         "correctIndex": 1
       },
       {
         "id": "qq-sql-2",
-        "prompt": "Quel mot-clé supprime les doublons dans un résultat ?",
-        "choices": ["UNIQUE", "DISTINCT", "ONLY", "SET"],
+        "prompt": "أنهي كلمة مفتاحية تنحّي التكرار في النتيجة؟",
+        "choices": [
+          "UNIQUE",
+          "DISTINCT",
+          "ONLY",
+          "SET"
+        ],
         "correctIndex": 1
       }
     ],
@@ -241,19 +344,22 @@
   },
   {
     "id": "q-sql-2",
-    "title": "QCM — Les jointures",
-    "tags": ["SQL", "moyen"],
+    "title": "اختيار من متعدّد — الوصلات (JOIN)",
+    "tags": [
+      "SQL",
+      "متوسّط"
+    ],
     "durationMin": 12,
     "quizExamId": "qe-sql",
     "questions": [
       {
         "id": "qq-sql-3",
-        "prompt": "Une jointure INNER JOIN retourne :",
+        "prompt": "الوصلة INNER JOIN ترجّع:",
         "choices": [
-          "Toutes les lignes des deux tables",
-          "Les lignes correspondantes des deux tables",
-          "Uniquement la table de gauche",
-          "Les lignes sans correspondance"
+          "كل السطور متاع الجدولين",
+          "السطور المتطابقة في الجدولين",
+          "الجدول الأول برك",
+          "السطور اللي ما عندهاش مقابل"
         ],
         "correctIndex": 1
       }
@@ -263,66 +369,94 @@
   },
   {
     "id": "q-reseaux",
-    "title": "QCM — Réseaux : notions de base",
-    "tags": ["réseaux", "révision"],
+    "title": "اختيار من متعدّد — الشبكات: مفاهيم أساسية",
+    "tags": [
+      "شبكات",
+      "مراجعة"
+    ],
     "durationMin": 12,
     "questions": [
       {
         "id": "qq-res-1",
-        "prompt": "Quel protocole traduit un nom de domaine en adresse IP ?",
-        "choices": ["HTTP", "FTP", "DNS", "SMTP"],
+        "prompt": "أنهي بروتوكول يحوّل اسم النطاق لعنوان IP؟",
+        "choices": [
+          "HTTP",
+          "FTP",
+          "DNS",
+          "SMTP"
+        ],
         "correctIndex": 2
       }
     ],
     "chapterId": "ch-reseaux",
     "order": 0
   },
-
   {
     "id": "q-croiss",
-    "title": "QCM — La croissance économique",
-    "tags": ["révision"],
+    "title": "اختيار من متعدّد — النمو الاقتصادي",
+    "tags": [
+      "مراجعة"
+    ],
     "durationMin": 15,
     "questions": [
       {
         "id": "qq-eco-1",
-        "prompt": "Le PIB mesure principalement :",
-        "choices": ["La population", "La richesse produite", "Le taux de chômage", "L'inflation"],
+        "prompt": "الناتج المحلّي الخام يقيس بالأساس:",
+        "choices": [
+          "عدد السكّان",
+          "الثروة المنتَجة",
+          "نسبة البطالة",
+          "التضخّم"
+        ],
         "correctIndex": 1
       }
     ],
     "chapterId": "ch-croissance",
     "order": 0
   },
-
   {
     "id": "q-9th",
-    "title": "QCM — Le théorème de Thalès",
-    "tags": ["révision", "géométrie"],
+    "title": "اختيار من متعدّد — مبرهنة طاليس",
+    "tags": [
+      "مراجعة",
+      "هندسة"
+    ],
     "durationMin": 15,
     "questions": [
       {
         "id": "qq-th-1",
-        "prompt": "Le théorème de Thalès concerne :",
-        "choices": ["Les triangles rectangles", "Les droites parallèles", "Les cercles", "Les probabilités"],
+        "prompt": "مبرهنة طاليس تخصّ:",
+        "choices": [
+          "المثلثات القائمة",
+          "المستقيمات المتوازية",
+          "الدوائر",
+          "الاحتمالات"
+        ],
         "correctIndex": 1
       }
     ],
     "chapterId": "ch-9-thales",
     "order": 0
   },
-
   {
     "id": "q-arh-1",
     "title": "اختبار — بنية النص الحجاجي",
-    "tags": ["مراجعة", "سهل"],
+    "tags": [
+      "مراجعة",
+      "سهل"
+    ],
     "durationMin": 15,
     "quizExamId": "qe-arh",
     "questions": [
       {
         "id": "qq-arh-1",
         "prompt": "ما هو الهدف الأساسي من النص الحجاجي؟",
-        "choices": ["الإقناع", "السرد", "الوصف", "التسلية"],
+        "choices": [
+          "الإقناع",
+          "السرد",
+          "الوصف",
+          "التسلية"
+        ],
         "correctIndex": 0
       }
     ],
@@ -332,14 +466,21 @@
   {
     "id": "q-arh-2",
     "title": "اختبار — الروابط الحجاجية",
-    "tags": ["مراجعة"],
+    "tags": [
+      "مراجعة"
+    ],
     "durationMin": 15,
     "quizExamId": "qe-arh",
     "questions": [
       {
         "id": "qq-arh-2",
         "prompt": "من الروابط الحجاجية الدالة على النتيجة:",
-        "choices": ["لأنّ", "بما أنّ", "إذن", "مثل"],
+        "choices": [
+          "لأنّ",
+          "بما أنّ",
+          "إذن",
+          "مثل"
+        ],
         "correctIndex": 2
       }
     ],
@@ -349,13 +490,20 @@
   {
     "id": "q-arsd",
     "title": "اختبار — النص السردي",
-    "tags": ["مراجعة"],
+    "tags": [
+      "مراجعة"
+    ],
     "durationMin": 15,
     "questions": [
       {
         "id": "qq-arsd-1",
         "prompt": "من عناصر النص السردي:",
-        "choices": ["الحجة", "الشخصيات", "المقدمة المنطقية", "الاستنتاج"],
+        "choices": [
+          "الحجة",
+          "الشخصيات",
+          "المقدمة المنطقية",
+          "الاستنتاج"
+        ],
         "correctIndex": 1
       }
     ],

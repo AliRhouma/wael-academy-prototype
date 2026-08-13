@@ -2,11 +2,11 @@ import { useState, type ReactNode } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "sonner"
 import {
-  ArrowLeft,
+  ArrowRight,
   Bell,
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
+  ChevronLeft,
   Clock,
   Droplet,
   Inbox,
@@ -67,7 +67,7 @@ function Section({
         </span>
         <div>
           <h2 className="font-display text-lg font-bold leading-tight text-ink">{title}</h2>
-          {subtitle && <p className="text-[12px] text-ink-muted">{subtitle}</p>}
+          {subtitle && <p className="text-[calc(12px*var(--ts))] text-ink-muted">{subtitle}</p>}
         </div>
       </div>
       <div className="rounded-lg border border-border bg-surface p-5 shadow-sm sm:p-6">{children}</div>
@@ -79,7 +79,7 @@ function Swatch({ cls, label }: { cls: string; label: string }) {
   return (
     <div className="flex flex-col items-center gap-1.5">
       <div className={cn("size-12 rounded-md border border-border shadow-xs", cls)} />
-      <span className="text-[10px] text-ink-muted">{label}</span>
+      <span className="text-[calc(10px*var(--ts))] text-ink-muted">{label}</span>
     </div>
   )
 }
@@ -87,7 +87,7 @@ function Swatch({ cls, label }: { cls: string; label: string }) {
 function Tile({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-[11px] font-medium text-ink-muted">{label}</span>
+      <span className="text-[calc(11px*var(--ts))] font-medium text-ink-muted">{label}</span>
       <div className="flex flex-wrap items-center gap-3">{children}</div>
     </div>
   )
@@ -137,27 +137,27 @@ const RADII = [
 ]
 
 const CHIP: Record<string, string> = {
-  teal: "border-l-brand-500 bg-brand-50 [--ct:var(--brand-700)]",
-  green: "border-l-emerald-500 bg-emerald-50 [--ct:var(--emerald-700)]",
-  gold: "border-l-accent2-500 bg-accent2-50 [--ct:var(--accent2-700)]",
-  red: "border-l-danger-500 bg-danger-50 [--ct:var(--danger-700)]",
-  navy: "border-l-navy-500 bg-navy-50 [--ct:var(--navy-700)]",
+  teal: "border-s-brand-500 bg-brand-50 [--ct:var(--brand-700)]",
+  green: "border-s-emerald-500 bg-emerald-50 [--ct:var(--emerald-700)]",
+  gold: "border-s-accent2-500 bg-accent2-50 [--ct:var(--accent2-700)]",
+  red: "border-s-danger-500 bg-danger-50 [--ct:var(--danger-700)]",
+  navy: "border-s-navy-500 bg-navy-50 [--ct:var(--navy-700)]",
 }
 
 const PRINCIPLES = [
-  "Chaleur dans les neutres, pas dans les accents — canevas sage, encre vert-noir, ombres vert-forêt (jamais noires).",
-  "Le dégradé est l’ADN de la marque, utilisé avec parcimonie : action principale, nav active, avatar.",
-  "Chaque accent a un seul sens — or = récompense, rouge = alerte, émeraude = positif, navy = information.",
-  "Cause en display uniquement, toujours en 700 ; Rubik pour toute l’interface.",
-  "Doux, aéré, arrondi — rayons généreux, marges confortables, élévation légère.",
-  "Le mouvement est une montée douce ; désactivé sous prefers-reduced-motion.",
+  "الدفا في الحياديات، موش في اللمسات — قماشة مريمية، حبر أخضر-كحل، وظلال خضر غابة (عمرها ما تكون كحلة).",
+  "التدرّج هو الـ ADN متاع العلامة، يتستعمل بالقطرة: الحركة الرئيسية، التنقّل النشط، الأفاتار.",
+  "كل لمسة عندها معنى واحد — ذهبي = مكافأة، أحمر = تنبيه، زمرّدي = إيجابي، كحلي = معلومة.",
+  "خطّ واحد للكل — Playpen Sans Arabic؛ العناوين 700 والمتن 400/500.",
+  "ناعم، مفتوح، مدوّر — انحناءات كريمة، هوامش مريحة وارتفاع خفيف.",
+  "الحركة طلوع ناعم؛ تتوقّف تحت prefers-reduced-motion.",
 ]
 
-type DemoStudent = { id: string; name: string; group: string; status: "Actif" | "En retard" | "Terminé" }
+type DemoStudent = { id: string; name: string; group: string; status: "فعّال" | "متأخّر" | "سالا" }
 const DEMO_ROWS: DemoStudent[] = [
-  { id: "1", name: "Mohamed Ben Salah", group: "Bac Sciences", status: "Actif" },
-  { id: "2", name: "Ines Trabelsi", group: "Terminale", status: "En retard" },
-  { id: "3", name: "Youssef Gharbi", group: "Collège A2", status: "Terminé" },
+  { id: "1", name: "محمد بن صالح", group: "باك علوم", status: "فعّال" },
+  { id: "2", name: "إيناس الطرابلسي", group: "سنة باك", status: "متأخّر" },
+  { id: "3", name: "يوسف الغربي", group: "إعدادي A2", status: "سالا" },
 ]
 
 /* ------------------------------------------------------------------ page */
@@ -180,7 +180,7 @@ export default function DesignSystemPage() {
     await fakeDelay(700)
     setConfirmLoading(false)
     setConfirmOpen(false)
-    toast.success("Élément supprimé")
+    toast.success("العنصر تمسح")
   }
 
   async function handleSave() {
@@ -188,13 +188,13 @@ export default function DesignSystemPage() {
     await fakeDelay(700)
     setSaving(false)
     setSheetOpen(false)
-    toast.success("Modifications enregistrées")
+    toast.success("التبديلات تسجّلت")
   }
 
   const columns: Column<DemoStudent>[] = [
     {
       key: "name",
-      header: "Élève",
+      header: "تلميذ",
       render: (r) => (
         <div className="flex items-center gap-3">
           <Avatar name={r.name} size="sm" />
@@ -202,12 +202,12 @@ export default function DesignSystemPage() {
         </div>
       ),
     },
-    { key: "group", header: "Groupe" },
+    { key: "group", header: "فوج" },
     {
       key: "status",
-      header: "Statut",
+      header: "الحالة",
       render: (r) => (
-        <Badge tone={r.status === "Actif" ? "success" : r.status === "En retard" ? "danger" : "neutral"} dot>
+        <Badge tone={r.status === "فعّال" ? "success" : r.status === "متأخّر" ? "danger" : "neutral"} dot>
           {r.status}
         </Badge>
       ),
@@ -215,16 +215,16 @@ export default function DesignSystemPage() {
   ]
 
   const rowActions = (r: DemoStudent): OverflowAction[] => [
-    { label: "Modifier", icon: Pencil, onClick: () => toast(`Modifier ${r.name}`) },
-    { label: "Supprimer", icon: Trash2, tone: "danger", onClick: () => toast.success(`${r.name} supprimé`) },
+    { label: "بدّل", icon: Pencil, onClick: () => toast(`بدّل ${r.name}`) },
+    { label: "امسح", icon: Trash2, tone: "danger", onClick: () => toast.success(`${r.name} تمسح`) },
   ]
 
   const toc: [string, string][] = [
-    ["principes", "Principes"], ["couleurs", "Couleurs"], ["degrade", "Dégradé"],
-    ["typographie", "Typographie"], ["elevation", "Élévation"], ["rayons", "Rayons"],
-    ["boutons", "Boutons"], ["badges", "Badges & chips"], ["avatars", "Avatars"],
-    ["cartes", "Cartes"], ["champs", "Champs"], ["vide", "État vide"],
-    ["tableau", "Tableau"], ["overlays", "Superpositions"], ["responsive", "Responsive"],
+    ["principes", "المبادئ"], ["couleurs", "الألوان"], ["degrade", "التدرّج"],
+    ["typographie", "الخطّ"], ["elevation", "الارتفاع"], ["rayons", "الانحناءات"],
+    ["boutons", "الأزرار"], ["badges", "الشارات والرقائق"], ["avatars", "الأفاتارات"],
+    ["cartes", "البطاقات"], ["champs", "الحقول"], ["vide", "حالة فارغة"],
+    ["tableau", "الجدول"], ["overlays", "الطبقات"], ["responsive", "متجاوب"],
   ]
 
   return (
@@ -234,24 +234,24 @@ export default function DesignSystemPage() {
         <div className="mb-6 flex items-start gap-4">
           <Link
             to="/courses"
-            aria-label="Retour"
+            aria-label="ارجع"
             className="mt-1 grid size-9 shrink-0 place-items-center rounded-md border border-border bg-surface-muted text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
           >
-            <ArrowLeft className="size-4" />
+            <ArrowRight className="size-4" />
           </Link>
           <PageHeader
             className="flex-1"
-            title="Design System"
-            subtitle="Wael Academy — le système soft : règles, jetons et composants réutilisables."
+            title="نظام التصميم"
+            subtitle="وائل أكاديمي — النظام الناعم: قواعد، توكنات ومكوّنات تتعاود."
             action={
               <button
                 type="button"
                 onClick={toggle}
                 className={btnSecondary}
-                aria-label={theme === "dark" ? "Thème clair" : "Thème sombre"}
+                aria-label={theme === "dark" ? "ثيم فاتح" : "ثيم غامق"}
               >
                 {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
-                {theme === "dark" ? "Clair" : "Sombre"}
+                {theme === "dark" ? "فاتح" : "غامق"}
               </button>
             }
           />
@@ -263,7 +263,7 @@ export default function DesignSystemPage() {
             <a
               key={id}
               href={`#${id}`}
-              className="rounded-full border border-border bg-surface px-3 py-1 text-[12px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
+              className="rounded-full border border-border bg-surface px-3 py-1 text-[calc(12px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
             >
               {label}
             </a>
@@ -272,7 +272,7 @@ export default function DesignSystemPage() {
 
         <div className="flex flex-col gap-8">
           {/* Principles */}
-          <Section id="principes" icon={Sparkles} title="Principes" subtitle="Ce qui garde le produit doux et on-brand.">
+          <Section id="principes" icon={Sparkles} title="المبادئ" subtitle="هذا اللي يخلّي المنتج ناعم ومتماشي مع العلامة.">
             <ul className="grid gap-2.5 sm:grid-cols-2">
               {PRINCIPLES.map((p, i) => (
                 <li key={i} className="flex gap-2.5 text-sm text-ink-subtle">
@@ -284,29 +284,29 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Colours */}
-          <Section id="couleurs" icon={Palette} title="Couleurs" subtitle="Des rôles, pas de la décoration.">
+          <Section id="couleurs" icon={Palette} title="الألوان" subtitle="أدوار، موش زوقة.">
             <div className="flex flex-col gap-5">
-              <Tile label="Brand (teal) — la colonne vertébrale">
+              <Tile label="العلامة (تركوازي) — العمود الفقري">
                 {BRAND.map((c) => (
                   <Swatch key={c} cls={c} label={c.replace("bg-brand-", "")} />
                 ))}
               </Tile>
-              <Tile label="Verts d’appui, or & crème">
+              <Tile label="خضر مساندة، ذهبي وكريمي">
                 {SUPPORT.map((s) => (
                   <Swatch key={s.label} cls={s.cls} label={s.label} />
                 ))}
               </Tile>
-              <Tile label="Statut">
+              <Tile label="الحالة">
                 {STATUS.map((s) => (
                   <Swatch key={s.label} cls={s.cls} label={s.label} />
                 ))}
               </Tile>
-              <Tile label="Neutres (gris chauds, vert-teintés)">
+              <Tile label="الحياديات (رمادي دافي، مشوب بالأخضر)">
                 {NEUTRAL.map((c) => (
                   <Swatch key={c} cls={c} label={c.replace("bg-neutral-", "")} />
                 ))}
               </Tile>
-              <Tile label="Surfaces">
+              <Tile label="الأسطح">
                 {SURFACES.map((s) => (
                   <Swatch key={s.label} cls={s.cls} label={s.label} />
                 ))}
@@ -315,41 +315,41 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Gradient */}
-          <Section id="degrade" icon={Droplet} title="Dégradé" subtitle="L’ADN de la marque — dépensé sur quelques surfaces par vue.">
+          <Section id="degrade" icon={Droplet} title="التدرّج" subtitle="الـ ADN متاع العلامة — يتصرف على كم سطح في كل شاشة.">
             <div className="flex flex-col gap-3">
               <div className="grid h-24 place-items-center rounded-lg bg-grad text-ink-inverted shadow-brand">
                 <span className="font-display text-lg font-bold">bg-grad</span>
               </div>
-              <p className="text-[12px] text-ink-muted">
-                Action principale, nav active, avatar, marque. Jamais en fond de panneau ni derrière du petit texte.
+              <p className="text-[calc(12px*var(--ts))] text-ink-muted">
+                الحركة الرئيسية، التنقّل النشط، الأفاتار، العلامة. عمرو ما يكون خلفية لوحة ولا وراء نصّ صغير.
               </p>
             </div>
           </Section>
 
           {/* Typography */}
-          <Section id="typographie" icon={Type} title="Typographie" subtitle="Deux polices, rôles stricts.">
+          <Section id="typographie" icon={Type} title="الخطّ" subtitle="خطّ واحد، أدوار واضحة.">
             <div className="flex flex-col gap-4">
               <div className="border-b border-border pb-4">
-                <p className="mb-2 text-[11px] font-medium text-ink-muted">Cause — display (700 uniquement)</p>
-                <p className="font-display text-3xl font-bold text-ink">Bonjour, Wael Academy</p>
-                <p className="font-display text-xl font-bold text-ink">Titre de section</p>
+                <p className="mb-2 text-[calc(11px*var(--ts))] font-medium text-ink-muted">Playpen Sans Arabic — العرض (700)</p>
+                <p className="font-display text-3xl font-bold text-ink">أهلا وائل أكاديمي</p>
+                <p className="font-display text-xl font-bold text-ink">عنوان قسم</p>
               </div>
               <div>
-                <p className="mb-2 text-[11px] font-medium text-ink-muted">Rubik — interface</p>
-                <p className="text-base text-ink">Corps de texte principal en Rubik 500.</p>
-                <p className="text-sm text-ink-subtle">Texte secondaire — text-ink-subtle.</p>
-                <p className="text-xs text-ink-muted">Libellé / placeholder — text-ink-muted.</p>
+                <p className="mb-2 text-[calc(11px*var(--ts))] font-medium text-ink-muted">Playpen Sans Arabic — الواجهة</p>
+                <p className="text-base text-ink">نصّ المتن الرئيسي بـ 500.</p>
+                <p className="text-sm text-ink-subtle">نصّ ثانوي — text-ink-subtle.</p>
+                <p className="text-xs text-ink-muted">التسمية / النصّ النائب — text-ink-muted.</p>
               </div>
             </div>
           </Section>
 
           {/* Elevation */}
-          <Section id="elevation" icon={Layers} title="Élévation" subtitle="Ombres douces, vert-teintées — jamais noires.">
+          <Section id="elevation" icon={Layers} title="الارتفاع" subtitle="ظلال ناعمة مشوبة بالأخضر — عمرها ما تكون كحلة.">
             <div className="flex flex-wrap gap-5">
               {SHADOWS.map((s) => (
                 <div key={s.label} className="flex flex-col items-center gap-2">
                   <div className={cn("grid size-16 place-items-center rounded-lg bg-surface", s.cls)}>
-                    <span className="text-[11px] font-medium text-ink-subtle">{s.label}</span>
+                    <span className="text-[calc(11px*var(--ts))] font-medium text-ink-subtle">{s.label}</span>
                   </div>
                 </div>
               ))}
@@ -357,48 +357,48 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Radii */}
-          <Section id="rayons" icon={Square} title="Rayons" subtitle="Coins doux et généreux.">
+          <Section id="rayons" icon={Square} title="الانحناءات" subtitle="زوايا ناعمة وكريمة.">
             <div className="flex flex-wrap gap-5">
               {RADII.map((r) => (
                 <div key={r.label} className="flex flex-col items-center gap-2">
                   <div className={cn("size-16 border border-border bg-brand-50", r.cls)} />
-                  <span className="text-[10px] text-ink-muted">{r.label}</span>
+                  <span className="text-[calc(10px*var(--ts))] text-ink-muted">{r.label}</span>
                 </div>
               ))}
             </div>
           </Section>
 
           {/* Buttons */}
-          <Section id="boutons" icon={Plus} title="Boutons" subtitle="Le dégradé pour l’action héro ; le reste reste discret.">
+          <Section id="boutons" icon={Plus} title="الأزرار" subtitle="التدرّج للحركة الرئيسية؛ والباقي يقعد هادي.">
             <div className="flex flex-col gap-5">
-              <Tile label="Variantes">
+              <Tile label="الأشكال">
                 <button className="inline-flex h-10 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105">
-                  <Plus className="size-4" /> Ajouter
+                  <Plus className="size-4" /> زيد
                 </button>
-                <button className={btnSecondary}>Modifier</button>
+                <button className={btnSecondary}>بدّل</button>
                 <button className="inline-flex items-center gap-2 rounded-md px-3 py-2 font-medium text-danger-600 transition hover:bg-danger-50">
-                  <Trash2 className="size-4" /> Supprimer
+                  <Trash2 className="size-4" /> امسح
                 </button>
                 <button className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink">
                   <Bell className="size-4" />
                 </button>
               </Tile>
-              <Tile label="Steppers (nudge)">
+              <Tile label="المعدّلات (الخطوة)">
                 <button className="grid size-[30px] place-items-center rounded-[9px] border border-border bg-surface-muted text-ink-subtle transition hover:border-brand-200 hover:text-brand-600">
-                  <ChevronLeft className="size-3.5" />
-                </button>
-                <button className="grid size-[30px] place-items-center rounded-[9px] bg-grad text-ink-inverted shadow-brand">
                   <ChevronRight className="size-3.5" />
                 </button>
+                <button className="grid size-[30px] place-items-center rounded-[9px] bg-grad text-ink-inverted shadow-brand">
+                  <ChevronLeft className="size-3.5" />
+                </button>
               </Tile>
-              <Tile label="CTA héro">
-                <button className="group relative flex w-full max-w-xs items-center gap-3 overflow-hidden rounded-lg bg-grad p-4 text-left text-ink-inverted shadow-brand transition-transform duration-200 motion-safe:hover:-translate-y-0.5">
+              <Tile label="زرّ الحدث الرئيسي">
+                <button className="group relative flex w-full max-w-xs items-center gap-3 overflow-hidden rounded-lg bg-grad p-4 text-start text-ink-inverted shadow-brand transition-transform duration-200 motion-safe:hover:-translate-y-0.5">
                   <span className="grid size-9 shrink-0 place-items-center rounded-md bg-white/20">
                     <Plus className="size-[18px]" />
                   </span>
                   <span>
-                    <b className="block font-display text-[14px] font-bold">Ajouter une séance</b>
-                    <span className="text-[11px] text-white/80">Cours, correction ou export</span>
+                    <b className="block font-display text-[calc(14px*var(--ts))] font-bold">زيد حصّة</b>
+                    <span className="text-[calc(11px*var(--ts))] text-white/80">درس، إصلاح ولا تصدير</span>
                   </span>
                 </button>
               </Tile>
@@ -406,26 +406,26 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Badges & chips */}
-          <Section id="badges" icon={Tag} title="Badges & chips" subtitle="Badge kit (§2) + chips de séance.">
+          <Section id="badges" icon={Tag} title="الشارات والرقائق" subtitle="شارة الكيت (§2) + رقائق الحصّة.">
             <div className="flex flex-col gap-5">
-              <Tile label="Badges (kit)">
-                <Badge tone="brand">Brand</Badge>
-                <Badge tone="success" dot>Actif</Badge>
-                <Badge tone="warning">À rendre</Badge>
-                <Badge tone="danger" dot>Aujourd’hui</Badge>
-                <Badge tone="info">Info</Badge>
-                <Badge tone="neutral">Terminé</Badge>
+              <Tile label="الشارات (الكيت)">
+                <Badge tone="brand">العلامة</Badge>
+                <Badge tone="success" dot>فعّال</Badge>
+                <Badge tone="warning">للتسليم</Badge>
+                <Badge tone="danger" dot>اليوم</Badge>
+                <Badge tone="info">معلومة</Badge>
+                <Badge tone="neutral">سالا</Badge>
               </Tile>
-              <Tile label="Chips de séance">
+              <Tile label="رقائق الحصّة">
                 {(["teal", "green", "gold", "red", "navy"] as const).map((v) => (
                   <div
                     key={v}
-                    className={cn("w-44 rounded-sm border-l-4 p-[9px_10px_8px] shadow-sm", CHIP[v])}
+                    className={cn("w-44 rounded-sm border-s-4 p-[9px_10px_8px] shadow-sm", CHIP[v])}
                   >
-                    <span className="font-display text-[10.5px] font-bold leading-[1.45] text-[color:var(--ct)]">
-                      Anatomie — cœur
+                    <span className="font-display text-[calc(10.5px*var(--ts))] font-bold leading-[1.45] text-[color:var(--ct)]">
+                      التشريح — القلب
                     </span>
-                    <span className="mt-1.5 flex items-center gap-1.5 text-[9.5px] text-ink-muted">
+                    <span className="mt-1.5 flex items-center gap-1.5 text-[calc(9.5px*var(--ts))] text-ink-muted">
                       <Clock className="size-2.5 opacity-75" /> 09:00 – 10:30
                     </span>
                   </div>
@@ -435,18 +435,18 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Avatars */}
-          <Section id="avatars" icon={Users} title="Avatars & icon chips" subtitle="Initiales teintées déterministes.">
+          <Section id="avatars" icon={Users} title="الأفاتارات ورقائق الأيقونات" subtitle="أحرف أولى ملوّنة بشكل ثابت.">
             <div className="flex flex-col gap-5">
-              <Tile label="Avatars (kit)">
-                <Avatar name="Mohamed Ben Salah" size="lg" />
-                <Avatar name="Ines Trabelsi" />
-                <Avatar name="Youssef Gharbi" />
-                <Avatar name="Sarra Khelifi" size="sm" />
+              <Tile label="الأفاتارات (الكيت)">
+                <Avatar name="محمد بن صالح" size="lg" />
+                <Avatar name="إيناس الطرابلسي" />
+                <Avatar name="يوسف الغربي" />
+                <Avatar name="سارة الخليفي" size="sm" />
                 <div className="grid size-9 place-items-center rounded-full bg-grad font-display text-sm font-bold text-ink-inverted shadow-[0_0_0_2.5px_var(--surface),0_0_0_4px_var(--brand-100)]">
                   W
                 </div>
               </Tile>
-              <Tile label="Icon chips">
+              <Tile label="رقائق الأيقونات">
                 <span className="grid size-7 place-items-center rounded-[9px] bg-brand-50 text-brand-600">
                   <Bell className="size-3.5" />
                 </span>
@@ -458,55 +458,55 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Cards */}
-          <Section id="cartes" icon={LayoutGrid} title="Cartes" subtitle="Contenu, statistique, promo.">
+          <Section id="cartes" icon={LayoutGrid} title="البطاقات" subtitle="محتوى، إحصائية، ترويج.">
             <div className="grid gap-4 sm:grid-cols-3">
               <div className="rounded-lg border border-border bg-surface p-[18px] shadow-md">
-                <p className="font-display text-[14px] font-bold text-ink">Carte contenu</p>
-                <p className="mt-1 text-[12px] text-ink-muted">Blanc, bord discret, ombre douce.</p>
+                <p className="font-display text-[calc(14px*var(--ts))] font-bold text-ink">بطاقة محتوى</p>
+                <p className="mt-1 text-[calc(12px*var(--ts))] text-ink-muted">أبيض، حافة هادية وظلّ ناعم.</p>
               </div>
               <div className="relative overflow-hidden rounded-md bg-surface p-[14px_12px] shadow-md">
-                <span className="pointer-events-none absolute -right-3.5 -bottom-3.5 size-[52px] rounded-full border-[5px] border-accent2-50" />
-                <b className="block font-display text-[14.5px] font-bold text-ink">Juin</b>
-                <span className="text-[11px] text-ink-muted">96 h de cours</span>
+                <span className="pointer-events-none absolute -end-3.5 -bottom-3.5 size-[52px] rounded-full border-[5px] border-accent2-50" />
+                <b className="block font-display text-[calc(14.5px*var(--ts))] font-bold text-ink">جوان</b>
+                <span className="text-[calc(11px*var(--ts))] text-ink-muted">96 ساعة درس</span>
               </div>
               <div className="rounded-md bg-grad p-[14px_12px] text-ink-inverted shadow-brand">
-                <b className="block font-display text-[14.5px] font-bold">Actif</b>
-                <span className="text-[11px] text-white/80">Variante dégradé</span>
+                <b className="block font-display text-[calc(14.5px*var(--ts))] font-bold">فعّال</b>
+                <span className="text-[calc(11px*var(--ts))] text-white/80">شكل بالتدرّج</span>
               </div>
             </div>
           </Section>
 
           {/* Inputs */}
-          <Section id="champs" icon={Search} title="Champs" subtitle="Recherche, champ, select, toggle, segments.">
+          <Section id="champs" icon={Search} title="الحقول" subtitle="بحث، حقل، اختيار، مفتاح، مقاطع.">
             <div className="flex flex-col gap-5">
-              <Tile label="Recherche">
+              <Tile label="بحث">
                 <div className="flex w-full max-w-sm items-center gap-2 rounded-xl border border-border bg-surface-muted p-[5px_5px_5px_14px] transition focus-within:border-brand-200 focus-within:ring-4 focus-within:ring-brand-500/10">
                   <input
-                    placeholder="Rechercher un étudiant…"
-                    className="min-w-0 flex-1 bg-transparent text-[13px] font-normal text-ink placeholder:text-ink-muted focus:outline-none"
+                    placeholder="لوّج على تلميذ…"
+                    className="min-w-0 flex-1 bg-transparent text-[calc(13px*var(--ts))] font-normal text-ink placeholder:text-ink-muted focus:outline-none"
                   />
                   <button className="grid size-8 shrink-0 place-items-center rounded-[9px] bg-grad text-ink-inverted">
                     <Search className="size-[15px]" />
                   </button>
                 </div>
               </Tile>
-              <Tile label="Champ & select">
+              <Tile label="حقل واختيار">
                 <label className="block w-full max-w-xs">
-                  <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre</span>
+                  <span className="mb-1.5 block text-sm font-medium text-ink-subtle">العنوان</span>
                   <input className="h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20" />
                 </label>
-                <button className="flex h-11 items-center gap-5 self-end rounded-md border border-border-strong bg-surface px-3 text-[12.5px] font-medium text-ink-subtle">
-                  Mois <ChevronDown className="size-3" />
+                <button className="flex h-11 items-center gap-5 self-end rounded-md border border-border-strong bg-surface px-3 text-[calc(12.5px*var(--ts))] font-medium text-ink-subtle">
+                  الشهر <ChevronDown className="size-3" />
                 </button>
               </Tile>
-              <Tile label="Toggle & segments">
+              <Tile label="المفاتيح والمقاطع">
                 <button
                   role="switch"
                   aria-checked={switchOn}
                   onClick={() => setSwitchOn((v) => !v)}
                   className={cn("relative h-6 w-11 rounded-full transition", switchOn ? "bg-brand-500" : "bg-neutral-300")}
                 >
-                  <span className={cn("absolute top-0.5 size-5 rounded-full bg-white shadow transition", switchOn ? "left-[22px]" : "left-0.5")} />
+                  <span className={cn("absolute top-0.5 size-5 rounded-full bg-white shadow transition", switchOn ? "start-[22px]" : "start-0.5")} />
                 </button>
                 <div className="inline-flex gap-1 rounded-[11px] border border-border bg-surface-muted p-1">
                   {([["grille", LayoutGrid], ["liste", List]] as const).map(([id, Icon]) => (
@@ -528,15 +528,15 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Empty state */}
-          <Section id="vide" icon={Inbox} title="État vide" subtitle="Chip neutre + texte discret (kit).">
+          <Section id="vide" icon={Inbox} title="حالة فارغة" subtitle="رقاقة حيادية + نصّ هادي (الكيت).">
             <div className="rounded-lg border border-dashed border-border">
               <EmptyState
                 icon={Inbox}
-                title="Aucune séance ce mois-ci"
-                description="Ajoutez une première séance pour remplir le planning."
+                title="ما فماش حصص الشهر هذا"
+                description="زيد أوّل حصّة باش تعمّر الروزنامة."
                 action={
                   <button className="inline-flex h-10 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105">
-                    <Plus className="size-4" /> Ajouter
+                    <Plus className="size-4" /> زيد
                   </button>
                 }
               />
@@ -544,9 +544,9 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Data table */}
-          <Section id="tableau" icon={Table} title="Tableau de données" subtitle="Générique typé, avec états chargement + vide (kit).">
+          <Section id="tableau" icon={Table} title="جدول معطيات" subtitle="مكوّن عام مصنّف، مع حالتَي التحميل والفراغ (الكيت).">
             <div className="flex flex-col gap-5">
-              <Tile label="Avec données">
+              <Tile label="بمعطيات">
                 <div className="w-full">
                   <DataTable
                     columns={columns}
@@ -558,12 +558,12 @@ export default function DesignSystemPage() {
                 </div>
               </Tile>
               <div className="grid gap-5 lg:grid-cols-2">
-                <Tile label="Chargement">
+                <Tile label="قاعد يشارجي">
                   <div className="w-full">
                     <DataTable columns={columns} rows={[]} rowKey={(r) => r.id} loading loadingRows={3} />
                   </div>
                 </Tile>
-                <Tile label="Vide">
+                <Tile label="فارغ">
                   <div className="w-full">
                     <DataTable columns={columns} rows={[]} rowKey={(r) => r.id} />
                   </div>
@@ -573,7 +573,7 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Overlays */}
-          <Section id="overlays" icon={PanelRight} title="Superpositions" subtitle="Bottom sheet sur mobile, dialog sur bureau — essayez-les.">
+          <Section id="overlays" icon={PanelRight} title="الطبقات" subtitle="شيت تحتاني على الموبايل، ديالوڤ على المكتب — جرّبهم.">
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => setConfirmOpen(true)}
@@ -591,31 +591,31 @@ export default function DesignSystemPage() {
           </Section>
 
           {/* Responsive */}
-          <Section id="responsive" icon={Smartphone} title="Responsive & app-ready" subtitle="Une seule base, mobile-first. Réduisez la fenêtre sous 768px.">
+          <Section id="responsive" icon={Smartphone} title="متجاوب وجاهز كتطبيق" subtitle="قاعدة وحدة، الموبايل أوّلا. صغّر النافذة تحت 768px.">
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2 text-sm">
-                <span className="text-ink-muted">Mode actuel :</span>
+                <span className="text-ink-muted">النمط الحالي:</span>
                 <Badge tone={isMobile ? "brand" : "neutral"} dot>
-                  {isMobile ? "Mobile" : "Bureau"}
+                  {isMobile ? "موبايل" : "مكتب"}
                 </Badge>
               </div>
               <ul className="grid gap-2 text-sm text-ink-subtle sm:grid-cols-2">
-                <li>Tableaux → cartes empilées sous md.</li>
-                <li>Modales/formulaires → bottom sheets sous md.</li>
-                <li>Navigation → barre d’onglets en bas sur mobile.</li>
-                <li>Actions de ligne derrière un menu « … » (jamais au survol).</li>
-                <li>Cibles tactiles ≥ 44px.</li>
-                <li>Zones sûres (encoche / barre) respectées.</li>
+                <li>الجداول ← بطاقات مركّبة تحت md.</li>
+                <li>النوافذ والفورمات ← شيتات تحتانية تحت md.</li>
+                <li>التنقّل ← بار تابات في الأسفل على الموبايل.</li>
+                <li>حركات السطر وراء قائمة «…» (عمرها ما تكون على الهوفر).</li>
+                <li>أهداف اللمس ≥ 44px.</li>
+                <li>المناطق الآمنة (النوتش / البار) محترمة.</li>
               </ul>
-              <p className="text-[12px] text-ink-muted">
-                Le tableau et les superpositions ci-dessus basculent automatiquement — le menu « … » de chaque ligne fonctionne au toucher.
+              <p className="text-[calc(12px*var(--ts))] text-ink-muted">
+                الجدول والطبقات اللي فوق يتبدّلو وحدهم — قائمة «…» متاع كل سطر تخدم باللمس.
               </p>
             </div>
           </Section>
         </div>
 
-        <p className="mt-10 text-center text-[12px] text-ink-muted">
-          Source : <code className="text-ink-subtle">.claude/skills/wael-design-system-soft</code> · jetons dans{" "}
+        <p className="mt-10 text-center text-[calc(12px*var(--ts))] text-ink-muted">
+          المصدر: <code className="text-ink-subtle">.claude/skills/wael-design-system-soft</code> · التوكنات في{" "}
           <code className="text-ink-subtle">src/styles/index.css</code>
         </p>
       </div>
@@ -624,26 +624,26 @@ export default function DesignSystemPage() {
       <ConfirmDialog
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
-        title="Supprimer cet élément ?"
-        description="Cette action est irréversible dans une vraie app."
+        title="تحبّ تمسح العنصر هذا؟"
+        description="العملية هذي ما تترجّعش في تطبيق حقيقي."
         onConfirm={handleConfirm}
         loading={confirmLoading}
       />
       <FormSheet
         open={sheetOpen}
         onOpenChange={setSheetOpen}
-        title="Nouvel étudiant"
-        description="Exemple de formulaire dans un sheet."
+        title="تلميذ جديد"
+        description="مثال فورم داخل شيت."
         onSubmit={handleSave}
         submitting={saving}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom complet</span>
-          <input className="h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20" placeholder="Ex. Ines Trabelsi" />
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">الاسم الكامل</span>
+          <input className="h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20" placeholder="مثال: إيناس الطرابلسي" />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Groupe</span>
-          <input className="h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20" placeholder="Ex. Bac Sciences" />
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">فوج</span>
+          <input className="h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20" placeholder="مثال: باك علوم" />
         </label>
       </FormSheet>
     </div>

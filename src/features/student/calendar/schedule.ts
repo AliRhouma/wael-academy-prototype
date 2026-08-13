@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
-import type { Session } from "@/data/types"
+import type { Homework, Session } from "@/data/types"
+import { useMyHomeworks } from "@/features/student/dashboard/dashboard"
 import { subjectTheme, type SubjectTheme } from "@/features/student/subjectTheme"
 import { subjectTint, type SubjectTint } from "@/features/student/subjectTint"
 import { useData } from "@/stores/useData"
@@ -30,13 +31,13 @@ export function minutesNow(d: Date): number {
   return d.getHours() * 60 + d.getMinutes()
 }
 
-/** "1 h 30" · "2 h" · "45 min" — how long a séance runs. */
+/** "1 سا 30" · "2 سا" · "45 دقيقة" — how long a séance runs. */
 export function formatDuration(start: string, end: string): string {
   const total = Math.max(minutesOf(end) - minutesOf(start), 0)
   const h = Math.floor(total / 60)
   const m = total % 60
-  if (h === 0) return `${m} min`
-  return m === 0 ? `${h} h` : `${h} h ${pad(m)}`
+  if (h === 0) return `${m} دقيقة`
+  return m === 0 ? `${h} سا` : `${h} سا ${pad(m)}`
 }
 
 /**
@@ -61,6 +62,24 @@ export function useNow(): Date {
   return now
 }
 
+/** Below this, a wait is worth watching tick by tick instead of in words. */
+export const TICKING_WINDOW_MS = 12 * 60 * 60 * 1000
+
+/**
+ * One-second heartbeat for a live countdown. Only mounted while a countdown is
+ * actually on screen — `useNow()` alone ticks once a minute, which is right for
+ * the grid and far too slow for "03:12:44".
+ */
+export function useSecond(enabled: boolean): number {
+  const [tick, setTick] = useState(0)
+  useEffect(() => {
+    if (!enabled) return
+    const id = window.setInterval(() => setTick((t) => t + 1), 1000)
+    return () => window.clearInterval(id)
+  }, [enabled])
+  return tick
+}
+
 /* ------------------------------------------------------------------ *
  * State of a séance — the whole screen keys off these three.
  * ------------------------------------------------------------------ */
@@ -77,9 +96,9 @@ export function sessionState(s: Session, now: Date): SessionState {
 }
 
 export const STATE_LABEL: Record<SessionState, string> = {
-  terminee: "Terminée",
-  "en-cours": "En cours",
-  prevue: "Prévue",
+  terminee: "سالات",
+  "en-cours": "قاعدة",
+  prevue: "مبرمجة",
 }
 
 /* ------------------------------------------------------------------ *
@@ -134,23 +153,23 @@ export function formatCountdown(ms: number): string {
 export function formatAway(ms: number): string {
   const past = ms < 0
   const min = Math.round(Math.abs(ms) / 60_000)
-  const say = (v: string) => (past ? `il y a ${v}` : `dans ${v}`)
-  if (min < 1) return "maintenant"
-  if (min < 60) return say(`${min} min`)
+  const say = (v: string) => (past ? `من ${v}` : `بعد ${v}`)
+  if (min < 1) return "توّا"
+  if (min < 60) return say(`${min} دقيقة`)
   const h = Math.floor(min / 60)
   if (h < 24) {
     const m = min % 60
-    return say(m === 0 ? `${h} h` : `${h} h ${pad(m)}`)
+    return say(m === 0 ? `${h} سا` : `${h} سا ${pad(m)}`)
   }
   const d = Math.round(h / 24)
-  return say(d === 1 ? "1 jour" : `${d} jours`)
+  return say(d === 1 ? "نهار" : `${d} يام`)
 }
 
 /** The relative label a card wears, given what state it's in. */
 export function cardTiming(s: Session, now: Date): string {
   const state = sessionState(s, now)
-  if (state === "en-cours") return `se termine ${formatAway(sessionEnd(s).getTime() - now.getTime())}`
-  if (state === "prevue") return `commence ${formatAway(sessionStart(s).getTime() - now.getTime())}`
+  if (state === "en-cours") return `تسالي ${formatAway(sessionEnd(s).getTime() - now.getTime())}`
+  if (state === "prevue") return `تبدا ${formatAway(sessionStart(s).getTime() - now.getTime())}`
   return formatAway(sessionEnd(s).getTime() - now.getTime())
 }
 
@@ -277,6 +296,33 @@ export interface SessionVisual {
   theme: SubjectTheme
   /** The matière artwork's own colour, for the surfaces under the glyph. */
   tint: SubjectTint
+}
+
+/* ------------------------------------------------------------------ *
+ * خدمة (travail à faire) attached to a séance.
+ * ------------------------------------------------------------------ */
+
+/** No خدمة on a séance — one shared array, so callers keep a stable identity. */
+const NO_HOMEWORK: Homework[] = []
+
+/**
+ * MY خدمة, indexed by the séance it hangs on — the calendar's notification
+ * source. Scoped by `useMyHomeworks()`, so a séance only lights up for the
+ * élèves the prof actually sent the work to; the rest of the groupe sees a
+ * plain card. Derived in render, never stored.
+ */
+export function useHomeworkBySession(): (session: Session) => Homework[] {
+  const mine = useMyHomeworks()
+  return useMemo(() => {
+    const byId = new Map<string, Homework[]>()
+    for (const h of mine) {
+      if (!h.sessionId) continue
+      const list = byId.get(h.sessionId)
+      if (list) list.push(h)
+      else byId.set(h.sessionId, [h])
+    }
+    return (session: Session) => byId.get(session.id) ?? NO_HOMEWORK
+  }, [mine])
 }
 
 export function useSessionVisual(): (session: Session) => SessionVisual {

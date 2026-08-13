@@ -1,28 +1,17 @@
-import { useEffect, useState } from "react"
-import { CalendarCheck2, CalendarOff, ChevronRight, Radio } from "lucide-react"
+import { CalendarCheck2, CalendarOff, ChevronLeft, NotebookPen, Radio } from "lucide-react"
+import { HomeworkDot } from "@/features/student/calendar/HomeworkDot"
 import {
+  TICKING_WINDOW_MS,
   dateKey,
   formatAway,
   formatCountdown,
+  useHomeworkBySession,
+  useSecond,
   useSessionVisual,
   type UpNext,
 } from "@/features/student/calendar/schedule"
 import { cn, formatSessionDay } from "@/lib/utils"
 import type { Session } from "@/data/types"
-
-/** Below this, the wait is worth watching tick by tick. */
-const TICKING_WINDOW_MS = 12 * 60 * 60 * 1000
-
-/** One-second heartbeat — only mounted while a countdown is actually on screen. */
-function useSecond(enabled: boolean): number {
-  const [tick, setTick] = useState(0)
-  useEffect(() => {
-    if (!enabled) return
-    const id = window.setInterval(() => setTick((t) => t + 1), 1000)
-    return () => window.clearInterval(id)
-  }, [enabled])
-  return tick
-}
 
 export interface NextUpBannerProps {
   /** The séance the élève is heading towards — null when nothing is left. */
@@ -46,6 +35,7 @@ export interface NextUpBannerProps {
  */
 export function NextUpBanner({ upNext, now, onOpen }: NextUpBannerProps) {
   const visual = useSessionVisual()
+  const homeworkOf = useHomeworkBySession()
   const target = upNext ? (upNext.live ? upNext.endsIn : upNext.startsIn) : 0
   const ticking = Boolean(upNext) && target < TICKING_WINDOW_MS
   useSecond(ticking)
@@ -58,9 +48,9 @@ export function NextUpBanner({ upNext, now, onOpen }: NextUpBannerProps) {
           <CalendarOff className="size-5" />
         </span>
         <div className="min-w-0">
-          <p className="font-display text-[15px] font-bold text-ink">Aucune séance à venir</p>
-          <p className="text-[12px] text-ink-muted">
-            Rien de programmé pour l’instant — profites-en pour réviser un chapitre.
+          <p className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">ما فماش حصص جايّة</p>
+          <p className="text-[calc(12px*var(--ts))] text-ink-muted">
+            ما فماش شيء مبرمج توّا — استغلّ الوقت وراجع فصل.
           </p>
         </div>
       </div>
@@ -71,6 +61,7 @@ export function NextUpBanner({ upNext, now, onOpen }: NextUpBannerProps) {
   // Recomputed on every heartbeat — `now` only refreshes each minute.
   const remaining = (live ? upNext.endsIn : upNext.startsIn) - (Date.now() - now.getTime())
   const { subjectName } = visual(session)
+  const homeworks = homeworkOf(session)
   const isToday = session.date === dateKey(now)
 
   // What it covers, or failing that where it sits — never an empty second line.
@@ -78,8 +69,8 @@ export function NextUpBanner({ upNext, now, onOpen }: NextUpBannerProps) {
     session.description ?? [subjectName, session.room].filter(Boolean).join(" · ")
 
   const when = isToday
-    ? `aujourd’hui à ${session.startTime}`
-    : `${formatSessionDay(session.date)} à ${session.startTime}`
+    ? `اليوم على ${session.startTime}`
+    : `${formatSessionDay(session.date)} على ${session.startTime}`
 
   return (
     <button
@@ -95,17 +86,23 @@ export function NextUpBanner({ upNext, now, onOpen }: NextUpBannerProps) {
     >
       <span
         className={cn(
-          "grid size-11 shrink-0 place-items-center rounded-md",
+          "relative grid size-11 shrink-0 place-items-center rounded-md",
           live ? "bg-danger-50 text-danger-600" : "bg-grad text-ink-inverted shadow-brand",
         )}
       >
         {live ? <Radio className="size-5" /> : <CalendarCheck2 className="size-5" />}
+        {/* The banner is the loudest card on the page — its dot gets the ring
+            that lifts it off the gradient. */}
+        <HomeworkDot
+          count={homeworks.length}
+          className="absolute -end-1 -top-1 size-3 ring-2 ring-surface"
+        />
       </span>
 
       <span className="min-w-0 flex-1">
         <span
           className={cn(
-            "flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[.12em]",
+            "flex items-center gap-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em]",
             live ? "text-danger-600" : "text-accent2-600",
           )}
         >
@@ -116,7 +113,7 @@ export function NextUpBanner({ upNext, now, onOpen }: NextUpBannerProps) {
             </span>
           )}
           <span className="shrink-0 whitespace-nowrap">
-            {live ? "Séance en cours" : "Prochaine séance"}
+            {live ? "حصّة قاعدة" : "الحصّة الجايّة"}
           </span>
           {/* At ~390px the kicker already fills its column. While the countdown
               is ticking it answers "when" on its own, so the date only comes
@@ -133,13 +130,23 @@ export function NextUpBanner({ upNext, now, onOpen }: NextUpBannerProps) {
 
         <span
           dir="auto"
-          className="mt-0.5 block truncate font-display text-[15px] font-bold text-ink sm:text-base"
+          className="mt-0.5 block truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink sm:text-base"
         >
           {session.title}
         </span>
 
-        <span dir="auto" className="mt-0.5 block truncate text-[12px] text-ink-muted">
-          {subtitle || "Séance à venir"}
+        {/* The one place the dot gets words: this is the séance the élève is
+            about to walk into, so "there is work to hand in" is worth a chip. */}
+        <span className="mt-0.5 flex items-center gap-1.5">
+          <span dir="auto" className="min-w-0 truncate text-[calc(12px*var(--ts))] text-ink-muted">
+            {subtitle || "حصّة جايّة"}
+          </span>
+          {homeworks.length > 0 && (
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-sm bg-danger-50 px-1.5 py-0.5 text-[calc(10.5px*var(--ts))] font-medium text-danger-700">
+              <NotebookPen className="size-3" />
+              {homeworks.length === 1 ? "خدمة تتعمل" : `${homeworks.length} خدمات`}
+            </span>
+          )}
         </span>
       </span>
 
@@ -147,18 +154,18 @@ export function NextUpBanner({ upNext, now, onOpen }: NextUpBannerProps) {
         <span
           className={cn(
             "block font-display font-bold tabular-nums leading-none",
-            ticking ? "text-[20px] sm:text-[24px]" : "text-[15px] sm:text-[17px]",
+            ticking ? "text-[calc(20px*var(--ts))] sm:text-[calc(24px*var(--ts))]" : "text-[calc(15px*var(--ts))] sm:text-[calc(17px*var(--ts))]",
             live ? "text-danger-600" : "text-brand-600",
           )}
         >
-          {ticking ? formatCountdown(remaining) : formatAway(remaining).replace(/^dans /, "")}
+          {ticking ? formatCountdown(remaining) : formatAway(remaining).replace(/^بعد /, "")}
         </span>
-        <span className="mt-1 block text-[10.5px] font-medium uppercase tracking-[.1em] text-ink-muted">
-          {live ? "avant la fin" : "avant le début"}
+        <span className="mt-1 block text-[calc(10.5px*var(--ts))] font-medium uppercase tracking-[.1em] text-ink-muted">
+          {live ? "قبل النهاية" : "قبل البداية"}
         </span>
       </span>
 
-      <ChevronRight className="hidden size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600 sm:block" />
+      <ChevronLeft className="hidden size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600 sm:block" />
     </button>
   )
 }

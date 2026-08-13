@@ -1,96 +1,60 @@
 /**
  * Wael's eyes, following the cursor.
  *
- * The portraits render as flat `<img>` (see `icons/subjects.tsx` for why), so
- * nothing inside them can be animated. This draws a TINY overlay SVG — four
- * paths — on the same viewBox, pinned over the portrait's own eyes, and moves
- * the pupils in it.
+ * Every drawing renders as a flat `<img>` (see `icons/subjects.tsx` for why), so
+ * nothing inside it can be animated. This draws a TINY overlay SVG on the same
+ * viewBox, pinned over the drawing's own eyes: it repaints each eye whole, then
+ * slides a copy of the iris inside a clip of that eye's white.
  *
- * Two facts about the supplied art drive the whole implementation:
+ * The repaint is only sound because NOTHING in the art is painted over the eyes
+ * — the overlay would erase it. For badges that is verified per file by
+ * `scripts/extract-eyes.mjs`, which warns when a shape covers them.
  *
- * 1. The white is a CRESCENT, not a disc. The designer drew the sclera *around*
- *    the pupil, so the two shapes are complementary and neither is complete on
- *    its own. Translating the pupil alone would open a hole in the eye. So the
- *    overlay first repaints the FULL white — sclera ∪ pupil, both filled white —
- *    which covers the portrait's static eye, then draws the moving pupil on top.
+ * TWO SOURCES feed one renderer:
  *
- * 2. The eyes are the SAME drawing in all six portraits — identical absolute
- *    coordinates, same head reused — so one geometry serves every matière. Only
- *    the viewBox and the two inks differ per file, and those are tabulated
- *    below, sampled from the files so the overlay is seamless against the art.
+ * - BADGES — geometry generated from the SVG, where the designer flags every eye
+ *   shape with `fill-opacity="0.99"` (see `eyeGeometry.ts`). Each badge poses the
+ *   face differently, so each carries its own numbers, and each eye keeps its own
+ *   multi-part make-up — iris, pupil, shading, catchlight — at its own fills.
+ * - PORTRAITS — the five older illustrations, which reuse ONE head at identical
+ *   coordinates, so a single hand-measured geometry serves all of them.
+ *
+ * BOTH generations draw the white as a RING around the iris, never as a filled
+ * disc, so neither shape is a complete eye on its own. Everything below therefore
+ * works on `sclera ∪ iris`:
+ *
+ * - the REPAINT lays both down in the white's ink, covering the drawn iris. Using
+ *   the ring alone leaves the original iris showing, pinned where it was drawn.
+ * - the CLIP is both too. Clipping to the ring alone punches a hole exactly where
+ *   the iris needs to travel, so only the sliver crossing the ring stays visible.
  *
  * The gaze has two poses:
  *
- * - FRONT — pupils centred in their own whites, which reads as looking straight
- *   out of the screen at you. This is the rest pose, and the pose the eyes LOCK
- *   to while the card is hovered: come near and Wael stops tracking the pointer
- *   and looks at the person holding it.
+ * - FRONT — iris centred in its own white, which reads as looking straight out of
+ *   the screen at you. The rest pose, and the pose the eyes LOCK to while the
+ *   card is hovered: come near and Wael stops tracking the pointer and looks at
+ *   the person holding it.
  * - TRACKING — front, plus a deflection toward the cursor that saturates almost
- *   at once (see REACH), so any real movement swings the pupils to the far edge
- *   of the white rather than nudging them.
+ *   at once (see REACH), so any real movement swings the iris to the far edge of
+ *   the white rather than nudging it.
  *
- * Containment ("never outside the white") is guaranteed structurally, not by
- * arithmetic: each pupil lives in a `<clipPath>` of its OWN eye. The travel
- * budget is then set to the exact room left over from centre, so in practice the
- * pupil kisses the edge without ever being trimmed — the clip is the hard floor.
+ * Containment ("never outside the white") is structural, not arithmetic: each
+ * iris lives in a `<clipPath>` of its OWN eye. Travel is then budgeted to the
+ * room actually left over from centre, so the iris kisses the edge without being
+ * trimmed — the clip is the hard floor, the budget is the intent.
  *
  * The overlay only mounts for a real cursor that wants motion — see `Eyes`.
  * Everywhere else (touch, reduced motion) it renders nothing at all and the
- * untouched portrait shows through, so the feature can only ever add.
+ * untouched drawing shows through, so the feature can only ever add.
  */
 import { useEffect, useRef } from "react"
 import { useMediaQuery } from "@/lib/hooks"
 import type { PortraitId } from "../subjects"
+import { EYES, type EyeGeometry } from "./eyeGeometry"
 
 /* ------------------------------------------------------------------ *
- * Geometry — lifted verbatim from `svg icons/illustrations/`.
+ * Portrait geometry — hand-measured, lifted from `svg icons/illustrations/`.
  * ------------------------------------------------------------------ */
-
-/**
- * Each portrait's frame, straight off the file. The overlay has to land on the
- * same pixels the `<img>` does, and that is NOT always just the viewBox:
- *
- * The English pair ships with `width="2120" height="2016"` — an aspect the
- * viewBox (1479 × 1704) doesn't share. So the browser sizes the image from
- * width/height and the file's OWN `preserveAspectRatio` letterboxes the drawing
- * inside it, all before `object-contain` gets a look in. The four Illustrator
- * exports carry no width/height, so for them the viewBox is the whole story.
- *
- * `size` records that intrinsic box where the file declares one; `frame()` below
- * folds it back into a single viewBox that reproduces the same fit.
- */
-const VIEW: Record<PortraitId, { box: [number, number, number, number]; size?: [number, number] }> = {
-  math: { box: [340, 126, 1484, 1702] },
-  math2: { box: [342, 124, 1480, 1704] },
-  physics: { box: [342, 124, 1482, 1702] },
-  french: { box: [343, 126, 1528, 1700] },
-  english: { box: [342, 124, 1479, 1704], size: [2120, 2016] },
-}
-
-/**
- * The viewBox to draw on so the overlay sits exactly where the `<img>` puts the
- * art — the declared one, widened to the file's intrinsic aspect where that
- * differs, which is precisely the padding the browser adds.
- */
-function frame(portrait: PortraitId): string {
-  const { box, size } = VIEW[portrait]
-  const [x, y, w, h] = box
-  if (!size) return box.join(" ")
-  // The file's own meet-fit, undone: how much user space its viewport covers.
-  const scale = Math.min(size[0] / w, size[1] / h)
-  const vw = size[0] / scale
-  const vh = size[1] / scale
-  return [x - (vw - w) / 2, y - (vh - h) / 2, vw, vh].join(" ")
-}
-
-/** The two inks, sampled per file so the repaint is invisible against the art. */
-const INK: Record<PortraitId, { white: string; pupil: string }> = {
-  math: { white: "#fbfbfb", pupil: "#615452" },
-  math2: { white: "#fefefe", pupil: "#5b4e4c" },
-  physics: { white: "#fefefe", pupil: "#5a4c4a" },
-  french: { white: "#fdfdfc", pupil: "#574d49" },
-  english: { white: "#FCFAF8", pupil: "#564D49" },
-}
 
 // The white crescents. Filled white they cover the portrait's eye; used as a
 // clip they are the box that eye's pupil may never leave.
@@ -107,9 +71,34 @@ const PUPIL_R =
   "M1188 520.002C1179.1 521.562 1161.31 532.372 1152 530.002C1140.19 526.992 1139.75 490.622 1142.01 488.012C1142.56 487.382 1153.11 489.832 1157.78 482.802C1164.76 472.282 1148.4 460.482 1172.05 466.952C1192.32 472.502 1191.37 503.822 1188 520.002Z"
 
 /**
- * FRONT — the shift that centres each pupil in its own white, i.e. eyes forward,
- * looking out of the screen. Measured as (sclera centre − pupil centre) from the
- * rendered bounding boxes:
+ * Each portrait's frame and inks, straight off the file.
+ *
+ * The English pair ships `width="2120" height="2016"` — an aspect its viewBox
+ * (1479 × 1704) doesn't share — so the browser sizes from width/height and the
+ * file's own `preserveAspectRatio` letterboxes the drawing before
+ * `object-contain` gets a look in. `size` records that; `frame()` folds it back
+ * into one viewBox reproducing the same fit. The Illustrator exports carry no
+ * width/height, so for them the viewBox is the whole story.
+ */
+const PORTRAIT_VIEW: Record<PortraitId, { box: [number, number, number, number]; size?: [number, number] }> = {
+  math: { box: [340, 126, 1484, 1702] },
+  math2: { box: [342, 124, 1480, 1704] },
+  physics: { box: [342, 124, 1482, 1702] },
+  french: { box: [343, 126, 1528, 1700] },
+  english: { box: [342, 124, 1479, 1704], size: [2120, 2016] },
+}
+
+/** The two inks, sampled per file so the repaint is invisible against the art. */
+const PORTRAIT_INK: Record<PortraitId, { white: string; pupil: string }> = {
+  math: { white: "#fbfbfb", pupil: "#615452" },
+  math2: { white: "#fefefe", pupil: "#5b4e4c" },
+  physics: { white: "#fefefe", pupil: "#5a4c4a" },
+  french: { white: "#fdfdfc", pupil: "#574d49" },
+  english: { white: "#FCFAF8", pupil: "#564D49" },
+}
+
+/**
+ * FRONT for the portraits, measured from the rendered bounding boxes:
  *
  *   left   sclera [940,438 → 1048,537]  pupil [986,464 → 1035,532]
  *   right  sclera [1127,438 → 1233,537] pupil [1141,465 → 1190,530]
@@ -118,30 +107,80 @@ const PUPIL_R =
  * the book. That is exactly why each eye needs its own transform: one shared
  * translate can move the pair, but it can never UNCROSS them.
  */
-const FRONT_L = { x: -16.5, y: -10.5 }
-const FRONT_R = { x: 14.5, y: -10 }
+const PORTRAIT_FRONT = { l: { x: -16.5, y: -10.5 }, r: { x: 14.5, y: -10 } }
 
-/** Midpoint between the two eyes, in user units — the point the gaze is measured from. */
-const FACE = { x: 1086, y: 488 }
+/** Room left from centre: the ~49-wide pupil has 29.5 / 28.5 of white either
+ *  side, the ~67-tall one has 15.5 / 17 above and below. Tighter eye wins. */
+const PORTRAIT_TRAVEL = { x: 28, y: 15 }
+
+/** Midpoint between the two portrait eyes — where the gaze is measured from. */
+const PORTRAIT_FACE = { x: 1086, y: 488 }
+
+/** The portraits, expressed in the generated badge format so one renderer serves
+ *  both. `sclera` carries crescent + pupil because that union is the whole eye. */
+function portraitGeometry(portrait: PortraitId): EyeGeometry {
+  const { box, size } = PORTRAIT_VIEW[portrait]
+  const ink = PORTRAIT_INK[portrait]
+  const side = (sclera: string, pupil: string, front: { x: number; y: number }) => ({
+    sclera: [{ d: sclera, fill: ink.white }],
+    iris: [{ d: pupil, fill: ink.pupil }],
+    white: ink.white,
+    front,
+  })
+  return {
+    viewBox: box.join(" "),
+    size,
+    face: PORTRAIT_FACE,
+    travel: PORTRAIT_TRAVEL,
+    l: side(SCLERA_L, PUPIL_L, PORTRAIT_FRONT.l),
+    r: side(SCLERA_R, PUPIL_R, PORTRAIT_FRONT.r),
+  }
+}
 
 /**
- * How far a pupil may slide from FRONT, in user units.
- *
- * These are the room that's actually left: centred, the ~49-wide pupil has 29.5
- * (left eye) / 28.5 (right) of white either side, and the ~67-tall pupil has
- * 15.5 / 17 above and below. Taking the tighter eye of each pair means a pupil
- * reaches the very edge of the white at full deflection and is never trimmed —
- * the most extreme look the art physically allows.
+ * The viewBox to draw on so the overlay sits exactly where the `<img>` puts the
+ * art — the declared one, widened to the file's intrinsic aspect where that
+ * differs, which is precisely the padding the browser adds.
  */
-const TRAVEL = { x: 28, y: 15 }
+function frame(geo: EyeGeometry): string {
+  const [x, y, w, h] = geo.viewBox.split(/[\s,]+/).map(Number)
+  if (!geo.size) return geo.viewBox
+  const scale = Math.min(geo.size[0] / w, geo.size[1] / h)
+  const vw = geo.size[0] / scale
+  const vh = geo.size[1] / scale
+  return [x - (vw - w) / 2, y - (vh - h) / 2, vw, vh].join(" ")
+}
 
 /**
  * Distance at which the gaze is fully deflected, as a multiple of the icon's own
- * width. Deliberately short: past a little over half an icon the eyes are
- * already at their limit, so a cursor anywhere else on the page pins them to the
- * extreme and every movement reads as a decisive flick rather than a drift.
+ * width. Deliberately tiny: a fifth of an icon's width is a couple of dozen
+ * pixels, so the pupils are already pinned wherever the cursor realistically is.
+ * The gaze then reads as a snap to the extreme of whatever direction you moved
+ * in, never as a proportional drift toward you.
  */
-const REACH = 0.6
+const REACH = 0.2
+
+/**
+ * How far past the measured room the iris is allowed to push, as a multiple.
+ *
+ * The room is where the iris stops touching the white's edge; a real cartoon
+ * looking hard sideways puts the iris PAST that, cropped by the eye. Going over
+ * is safe because containment is the clip's job, not this number's — the worst
+ * an overshoot can do is flatten the iris against the corner of the eye, which
+ * is exactly the look being asked for.
+ */
+const OVERSHOOT = 1.45
+
+/**
+ * Vertical travel floor, in user units.
+ *
+ * A badge's iris can fill its eye almost edge to edge — Philosophie leaves 2.9
+ * units of room — and honouring that exactly makes the gaze read as purely
+ * horizontal. The clip is the real guarantee, so more is safe: the iris tucks
+ * under the lid instead of stopping short, which is how a drawn eye behaves
+ * anyway.
+ */
+const MIN_TRAVEL_Y = 11
 
 /* ------------------------------------------------------------------ *
  * One pointer listener for the whole app.
@@ -201,19 +240,30 @@ let uid = 0
 
 /**
  * Pupils that track the cursor, sized and positioned by the caller (the parent
- * pins this over the portrait with `absolute inset-0`).
+ * pins this over the drawing with `absolute inset-0`).
  *
- * Renders NOTHING unless the device has a real cursor and the user hasn't asked
- * for less motion — no listener, no extra DOM, portrait untouched.
+ * `subject` selects a generated badge geometry and wins where one exists;
+ * `portrait` is the older hand-measured fallback. Renders NOTHING unless the
+ * device has a real cursor and the user hasn't asked for less motion — no
+ * listener, no extra DOM, drawing untouched.
  */
-export function Eyes({ portrait, className }: { portrait: PortraitId; className?: string }) {
+export function Eyes({
+  portrait,
+  subject,
+  className,
+}: {
+  portrait?: PortraitId
+  subject?: string
+  className?: string
+}) {
   const fine = useMediaQuery("(pointer: fine)")
   const wants = useMediaQuery("(prefers-reduced-motion: no-preference)")
-  if (!fine || !wants) return null
-  return <TrackingEyes portrait={portrait} className={className} />
+  const geo = (subject && EYES[subject]) || (portrait && portraitGeometry(portrait)) || null
+  if (!fine || !wants || !geo) return null
+  return <TrackingEyes geo={geo} className={className} />
 }
 
-function TrackingEyes({ portrait, className }: { portrait: PortraitId; className?: string }) {
+function TrackingEyes({ geo, className }: { geo: EyeGeometry; className?: string }) {
   const svgRef = useRef<SVGSVGElement>(null)
   const leftRef = useRef<SVGGElement>(null)
   const rightRef = useRef<SVGGElement>(null)
@@ -230,13 +280,15 @@ function TrackingEyes({ portrait, className }: { portrait: PortraitId; className
     if (!svg || !left || !right) return
 
     // What counts as "hovered": the card, where there is one (the same `.group`
-    // the smile and the colour flood already key off, so the eyes settle at the
-    // exact moment the rest of the card reacts), else the icon's own box.
+    // the colour flood already keys off, so the eyes settle at the exact moment
+    // the rest of the card reacts), else the icon's own box.
     const host = svg.closest(".group") ?? svg.parentElement
+    const travelX = geo.travel.x * OVERSHOOT
+    const travelY = Math.max(geo.travel.y * OVERSHOOT, MIN_TRAVEL_Y)
 
     const place = (gx: number, gy: number) => {
-      left.style.transform = `translate(${(FRONT_L.x + gx).toFixed(2)}px, ${(FRONT_L.y + gy).toFixed(2)}px)`
-      right.style.transform = `translate(${(FRONT_R.x + gx).toFixed(2)}px, ${(FRONT_R.y + gy).toFixed(2)}px)`
+      left.style.transform = `translate(${(geo.l.front.x + gx).toFixed(2)}px, ${(geo.l.front.y + gy).toFixed(2)}px)`
+      right.style.transform = `translate(${(geo.r.front.x + gx).toFixed(2)}px, ${(geo.r.front.y + gy).toFixed(2)}px)`
     }
 
     return subscribe((clientX, clientY) => {
@@ -251,7 +303,7 @@ function TrackingEyes({ portrait, className }: { portrait: PortraitId; className
       // the gaze stays true while the icon swells on hover.
       const ctm = svg.getScreenCTM()
       if (!ctm) return
-      const face = new DOMPoint(FACE.x, FACE.y).matrixTransform(ctm)
+      const face = new DOMPoint(geo.face.x, geo.face.y).matrixTransform(ctm)
 
       const dx = clientX - face.x
       const dy = clientY - face.y
@@ -263,58 +315,62 @@ function TrackingEyes({ portrait, className }: { portrait: PortraitId; className
       const amount = Math.min(1, distance / (box.width * REACH))
       // px in an SVG transform IS a user unit, so this is viewBox space — the
       // travel budget above holds at every rendered size.
-      place((dx / distance) * amount * TRAVEL.x, (dy / distance) * amount * TRAVEL.y)
+      place((dx / distance) * amount * travelX, (dy / distance) * amount * travelY)
     })
-  }, [])
+  }, [geo])
 
-  const ink = INK[portrait]
-  // Front is also the server/first-paint pose, so the eyes never flash the
-  // drawn book-ward look before the first frame lands.
+  // Front is also the first-paint pose, so the eyes never flash the drawn
+  // book-ward look before the first frame lands.
   const rest = (f: { x: number; y: number }) => ({
     transform: `translate(${f.x}px, ${f.y}px)`,
     // Short, so the eyes feel attached to the cursor rather than dragged behind
     // it, but long enough to smooth the per-frame steps and to make the settle
-    // to front on hover read as a decision.
-    transition: "transform 120ms ease-out",
+    // to front on hover read as a decision. Kept brisk to match how fast the
+    // deflection saturates — a slow ease would blunt the snap.
+    transition: "transform 90ms ease-out",
   })
+
+  /** `flood` drops each shape's own fill so the parent `fill` wins — that is what
+   *  turns the eye's parts into one flat patch for the repaint and the clip. */
+  const paths = (shapes: { d: string; fill: string }[], keyed: string, flood = false) =>
+    shapes.map((s, i) => (
+      <path key={`${keyed}-${i}`} d={s.d} fill={flood ? undefined : s.fill} />
+    ))
 
   return (
     <svg
       ref={svgRef}
-      viewBox={frame(portrait)}
+      viewBox={frame(geo)}
       className={className}
       aria-hidden="true"
-      // Matches the portrait's `object-contain`, so overlay and art fit their
+      // Matches the drawing's `object-contain`, so overlay and art fit their
       // shared box identically and the eyes land on the drawn ones.
       preserveAspectRatio="xMidYMid meet"
       style={{ pointerEvents: "none" }}
     >
       <defs>
-        {/* Sclera ∪ pupil = one complete eye. Per eye, so a pupil can never
-            stray into its neighbour's white however far the travel is pushed. */}
-        <clipPath id={clipL}>
-          <path d={SCLERA_L} />
-          <path d={PUPIL_L} />
-        </clipPath>
-        <clipPath id={clipR}>
-          <path d={SCLERA_R} />
-          <path d={PUPIL_R} />
-        </clipPath>
+        {/* ring ∪ iris = one complete eye, which is the area the iris may move
+            in. Per eye, so it can never stray into its neighbour's white however
+            far the travel is pushed. A clipPath unions its children, so the parts
+            clip as the single shape they look like. */}
+        <clipPath id={clipL}>{paths([...geo.l.sclera, ...geo.l.iris], "cl")}</clipPath>
+        <clipPath id={clipR}>{paths([...geo.r.sclera, ...geo.r.iris], "cr")}</clipPath>
       </defs>
 
-      {/* The repaint: a full white eye, hiding the portrait's fixed pupils. */}
-      <g fill={ink.white}>
-        <path d={SCLERA_L} />
-        <path d={PUPIL_L} />
-        <path d={SCLERA_R} />
-        <path d={PUPIL_R} />
+      {/* The repaint: the same union, flooded in the white's own ink, so the
+          drawn iris underneath is gone and only the moving copy shows. */}
+      <g>
+        <g fill={geo.l.white}>{paths([...geo.l.sclera, ...geo.l.iris], "sl", true)}</g>
+        <g fill={geo.r.white}>{paths([...geo.r.sclera, ...geo.r.iris], "sr", true)}</g>
       </g>
 
-      <g ref={leftRef} clipPath={`url(#${clipL})`} fill={ink.pupil} style={rest(FRONT_L)}>
-        <path d={PUPIL_L} />
+      {/* The moving iris — every part of it, each at its own fill, so a stack of
+          iris + pupil + shading + catchlight travels intact. */}
+      <g ref={leftRef} clipPath={`url(#${clipL})`} style={rest(geo.l.front)}>
+        {paths(geo.l.iris, "il")}
       </g>
-      <g ref={rightRef} clipPath={`url(#${clipR})`} fill={ink.pupil} style={rest(FRONT_R)}>
-        <path d={PUPIL_R} />
+      <g ref={rightRef} clipPath={`url(#${clipR})`} style={rest(geo.r.front)}>
+        {paths(geo.r.iris, "ir")}
       </g>
     </svg>
   )

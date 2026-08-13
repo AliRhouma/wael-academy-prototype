@@ -1,0 +1,116 @@
+/* ===========================================================================
+   Typeface registry — swappable via `data-font` on <html>
+   ---------------------------------------------------------------------------
+   The app reads its type from exactly two live slots:
+
+       --ui-display   headings, big numbers, kickers, the wordmark
+       --ui-sans      everything else
+
+   index.css points `font-family`, `h1–h6`, `.font-display` and `.font-sans` at
+   those two variables, so swapping a `[data-font]` block below re-types the
+   WHOLE app with no reload. `src/app/fonts.ts` is the matching registry the
+   FontDock renders from — add a row there for every block added here.
+
+   Like the palette dock, this is an EXPLORATION tool. Once a face is chosen,
+   fold the winner into :root and delete the rest.
+   =========================================================================== */
+
+/* ---------- Local faces (src/Fonts — resolved + hashed by Vite) ---------- */
+
+/* Tarif Arabic ships a single Extrabold master. Declaring a full 100–900 range
+   maps every requested weight onto that one file, so nothing gets synthesised
+   (`font-synthesis: none` is set globally) and 400 body text still renders.
+
+   `unicode-range` deliberately OMITS U+0030–0039. Tarif draws the Latin digit
+   slots as Arabic-Indic numerals (٠١٢…) — it isn't a `locl` feature, the shapes
+   are baked into those glyphs, so no font-feature-settings can undo it. The app
+   is committed to Western digits (Tunisian usage), so digits are excluded here
+   and fall through to the next family in the stack (Cairo) instead. */
+@font-face {
+  font-family: "Tarif Arabic";
+  src: url("../Fonts/tarif-arabic.extrabold.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-002F, U+003A-10FFFF;
+}
+
+/* Lemon Brush is delivered as a PAIR of single-script files: the Arabic master
+   carries NO Latin, and the "Texture" master carries NO Arabic. Listing both in
+   one stack is what makes it usable — each glyph resolves from the file that
+   actually has it. PERSONAL USE ONLY — see the EULA in src/Fonts. */
+@font-face {
+  font-family: "Lemon Brush Arabic";
+  src: url("../Fonts/LemonBrushArabicPersonalUseOnly-Regular.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lemon Brush Texture";
+  src: url("../Fonts/LemonBrushPersonalUseOnly-Texture.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- The default pair: Cairo, display AND interface -------------------
+   It lives on :root (not in a [data-font] block) so the first paint is already
+   correct — a block would only apply once React writes the attribute, and the
+   page would flash the fallback face first. `cairo` in the registry IS this
+   pair; selecting it simply removes the override.
+
+   Cairo is variable 200–1000 and covers Arabic + Latin, so headings at 700 and
+   body at 400 are real weights out of one file, and the Latin wordmark needs no
+   second family behind it. */
+:root {
+  --ui-display: "Cairo", system-ui, sans-serif;
+  --ui-sans: "Cairo", system-ui, sans-serif;
+}
+
+/* ---------- Alternates ---------- */
+
+/* Tarif everywhere. One weight means body text renders extrabold too — loud on
+   dense screens (tables, forms), but the fastest way to judge the face. */
+[data-font="tarif-all"] {
+  --ui-display: "Tarif Arabic", "Cairo", system-ui, sans-serif;
+  --ui-sans: "Tarif Arabic", "Cairo", system-ui, sans-serif;
+}
+
+/* Tarif for headings only — the extrabold does the shouting, Cairo keeps body
+   copy readable. The safe way to use a single-weight display face. */
+[data-font="tarif"] {
+  --ui-display: "Tarif Arabic", "Cairo", system-ui, sans-serif;
+  --ui-sans: "Cairo", system-ui, sans-serif;
+}
+
+/* Roboto — but Roboto ships NO Arabic (its subsets stop at Latin / Greek /
+   Cyrillic / Vietnamese), so on this app it can only set the Latin: the
+   wordmark, digits and the odd code or English title. Noto Sans Arabic carries
+   every Arabic glyph behind it — it's the companion designed on the same
+   skeleton, so the pairing reads as one face rather than two. */
+[data-font="roboto"] {
+  --ui-display: "Roboto", "Noto Sans Arabic", system-ui, sans-serif;
+  --ui-sans: "Roboto", "Noto Sans Arabic", system-ui, sans-serif;
+}
+
+/* Playpen everywhere — the handwriting face, real weights at every step. */
+[data-font="playpen"] {
+  --ui-display: "Playpen Sans Arabic", system-ui, sans-serif;
+  --ui-sans: "Playpen Sans Arabic", system-ui, sans-serif;
+}
+
+/* Lemon Brush on headings — a brush script, so display only. Arabic file first,
+   Latin texture file second; neither covers the other's script, and neither
+   has digits — Cairo backs both. */
+[data-font="lemon"] {
+  --ui-display: "Lemon Brush Arabic", "Lemon Brush Texture", "Cairo", system-ui, sans-serif;
+  --ui-sans: "Cairo", system-ui, sans-serif;
+}
+
+/* The original system, kept so the new faces can be judged against it: Cause is
+   Latin-only (it holds the wordmark) and Arabic falls through to Tajawal. */
+[data-font="cause"] {
+  --ui-display: "Cause", "Tajawal", system-ui, sans-serif;
+  --ui-sans: "Rubik", "Tajawal", system-ui, sans-serif;
+}

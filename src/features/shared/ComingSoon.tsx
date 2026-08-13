@@ -10,8 +10,8 @@ export function ComingSoon({ title }: { title: string }) {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={Clock}
-          title="Bientôt disponible"
-          description="Cet écran n’est pas encore construit dans le prototype."
+          title="قريب"
+          description="الشاشة هذي مازالت ما تبناتش في النموذج."
         />
       </div>
     </div>

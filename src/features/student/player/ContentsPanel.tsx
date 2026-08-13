@@ -80,7 +80,7 @@ export function ContentsPanel({
       {groups && groups.list.length > 1 && (
         <div
           role="tablist"
-          aria-label="Groupe"
+          aria-label="فوج"
           className="flex gap-1 overflow-x-auto scroll-touch rounded-lg border border-border bg-surface-muted p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {groups.list.map((group) => {
@@ -94,7 +94,7 @@ export function ContentsPanel({
                 aria-selected={on}
                 title={group.title}
                 className={cn(
-                  "inline-flex h-10 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-[12px] font-medium transition",
+                  "inline-flex h-10 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-[calc(12px*var(--ts))] font-medium transition",
                   on ? "bg-surface text-ink shadow-sm" : "text-ink-muted hover:text-ink-subtle",
                 )}
               >
@@ -113,7 +113,7 @@ export function ContentsPanel({
                 </span>
                 <span
                   className={cn(
-                    "rounded-full px-1.5 text-[11px] tabular-nums",
+                    "rounded-full px-1.5 text-[calc(11px*var(--ts))] tabular-nums",
                     on ? "bg-brand-50 text-brand-700" : "bg-neutral-100 text-ink-muted",
                   )}
                 >
@@ -129,7 +129,7 @@ export function ContentsPanel({
       {kinds.length > 0 ? (
         <div
           role="tablist"
-          aria-label="Type de contenu"
+          aria-label="نوع المحتوى"
           className="mt-2.5 flex gap-1 overflow-x-auto scroll-touch rounded-lg border border-border bg-surface-muted p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {kinds.map((k) => {
@@ -144,14 +144,14 @@ export function ContentsPanel({
                 aria-selected={on}
                 onClick={() => setKind(k)}
                 className={cn(
-                  "inline-flex h-9 flex-1 shrink-0 items-center justify-center gap-1.5 rounded-md px-2 text-[12px] font-medium transition",
+                  "inline-flex h-9 flex-1 shrink-0 items-center justify-center gap-1.5 rounded-md px-2 text-[calc(12px*var(--ts))] font-medium transition",
                   on ? "bg-surface text-ink shadow-sm" : "text-ink-muted hover:text-ink-subtle",
                 )}
               >
                 <span className="truncate">{meta.label}</span>
                 <span
                   className={cn(
-                    "rounded-full px-1.5 text-[11px] tabular-nums",
+                    "rounded-full px-1.5 text-[calc(11px*var(--ts))] tabular-nums",
                     on ? "bg-brand-50 text-brand-700" : "bg-neutral-100 text-ink-muted",
                   )}
                 >
@@ -163,17 +163,17 @@ export function ContentsPanel({
         </div>
       ) : (
         <div className="flex items-baseline justify-between gap-2 px-1 pb-2 pt-2.5">
-          <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+          <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
             {label}
           </p>
-          <span className="text-[11px] tabular-nums text-ink-muted">{contents.length}</span>
+          <span className="text-[calc(11px*var(--ts))] tabular-nums text-ink-muted">{contents.length}</span>
         </div>
       )}
 
       {/* ---- Items ---- */}
       {shown.length === 0 ? (
-        <p className="px-1 py-6 text-center text-[13px] text-ink-muted">
-          Rien de ce type dans ce chapitre.
+        <p className="px-1 py-6 text-center text-[calc(13px*var(--ts))] text-ink-muted">
+          ما فماش شيء من النوع هذا في الفصل هذا.
         </p>
       ) : (
         <ul
@@ -225,11 +225,11 @@ function ChapterPicker({ chapters }: { chapters: { activeId: string; list: Chapt
           >
             <Layers3 className="size-4 shrink-0 text-brand-600" />
             <span className="min-w-0 flex-1">
-              <span className="block text-[10px] font-medium uppercase tracking-[.1em] text-ink-muted">
-                Chapitre {index >= 0 ? index + 1 : ""}
+              <span className="block text-[calc(10px*var(--ts))] font-medium uppercase tracking-[.1em] text-ink-muted">
+                الفصل {index >= 0 ? index + 1 : ""}
               </span>
-              <span dir="auto" className="block truncate text-[13px] font-semibold text-ink">
-                {current?.name ?? "Choisir"}
+              <span dir="auto" className="block truncate text-[calc(13px*var(--ts))] font-semibold text-ink">
+                {current?.name ?? "اختار"}
               </span>
             </span>
             <ChevronDown className="size-4 shrink-0 text-ink-muted" />
@@ -247,7 +247,7 @@ function ChapterPicker({ chapters }: { chapters: { activeId: string; list: Chapt
                 <span className="flex w-full min-w-0 items-center gap-2.5">
                   <span
                     className={cn(
-                      "grid size-7 shrink-0 place-items-center rounded-md font-display text-[12px] font-bold tabular-nums",
+                      "grid size-7 shrink-0 place-items-center rounded-md font-display text-[calc(12px*var(--ts))] font-bold tabular-nums",
                       isActive ? "bg-grad text-ink-inverted" : "bg-brand-50 text-brand-600",
                     )}
                   >
@@ -259,8 +259,8 @@ function ChapterPicker({ chapters }: { chapters: { activeId: string; list: Chapt
                   {isActive ? (
                     <Check className="size-4 shrink-0 text-brand-600" />
                   ) : (
-                    <span className="shrink-0 text-[11px] tabular-nums text-ink-muted">
-                      {chapter.count > 0 ? `${chapter.count} vidéo${chapter.count > 1 ? "s" : ""}` : "—"}
+                    <span className="shrink-0 text-[calc(11px*var(--ts))] tabular-nums text-ink-muted">
+                      {chapter.count > 0 ? `${chapter.count} فيديو` : "—"}
                     </span>
                   )}
                 </span>
@@ -294,19 +294,19 @@ function ChapterPicker({ chapters }: { chapters: { activeId: string; list: Chapt
         type="button"
         onClick={goPrev}
         disabled={!goPrev}
-        aria-label="Chapitre précédent"
+        aria-label="الفصل اللي قبل"
         className="grid size-10 shrink-0 place-items-center rounded-md border border-border-strong bg-surface text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 disabled:opacity-40 disabled:hover:border-border-strong disabled:hover:text-ink-subtle"
       >
-        <ChevronDown className="size-4 rotate-90" />
+        <ChevronDown className="size-4 -rotate-90" />
       </button>
       <button
         type="button"
         onClick={goNext}
         disabled={!goNext}
-        aria-label="Chapitre suivant"
+        aria-label="الفصل اللي بعد"
         className="grid size-10 shrink-0 place-items-center rounded-md border border-border-strong bg-surface text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 disabled:opacity-40 disabled:hover:border-border-strong disabled:hover:text-ink-subtle"
       >
-        <ChevronDown className="size-4 -rotate-90" />
+        <ChevronDown className="size-4 rotate-90" />
       </button>
     </div>
   )
@@ -350,7 +350,7 @@ function ContentRow({
               )}
             >
               {active ? (
-                <span className="rounded-full bg-white/95 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-700">
+                <span className="rounded-full bg-white/95 px-2 py-0.5 text-[calc(10px*var(--ts))] font-semibold uppercase tracking-wide text-brand-700">
                   En lecture
                 </span>
               ) : (
@@ -359,7 +359,7 @@ function ContentRow({
                 </span>
               )}
             </span>
-            <span className="absolute bottom-1 end-1 rounded-sm bg-neutral-900/75 px-1.5 py-px text-[10px] font-medium tabular-nums text-white">
+            <span className="absolute bottom-1 end-1 rounded-sm bg-neutral-900/75 px-1.5 py-px text-[calc(10px*var(--ts))] font-medium tabular-nums text-white">
               {index + 1}
             </span>
           </>
@@ -368,24 +368,24 @@ function ContentRow({
 
       <span className="flex min-w-0 flex-col gap-0.5 py-0.5 pe-1">
         {item.kindLabel && (
-          <span className="text-[10px] font-medium uppercase tracking-[.1em] text-ink-muted">
+          <span className="text-[calc(10px*var(--ts))] font-medium uppercase tracking-[.1em] text-ink-muted">
             {item.kindLabel}
           </span>
         )}
         <span
           dir="auto"
           className={cn(
-            "line-clamp-2 text-[13px] font-medium leading-snug",
+            "line-clamp-2 text-[calc(13px*var(--ts))] font-medium leading-snug",
             active ? "text-brand-700" : "text-ink",
           )}
         >
           {item.title}
         </span>
         {!item.playable && (
-          <span className="text-[11px] text-ink-muted">
+          <span className="text-[calc(11px*var(--ts))] text-ink-muted">
             {item.pdfs && item.pdfs.length > 0
-              ? `${item.pdfs.length} document${item.pdfs.length > 1 ? "s" : ""}`
-              : "Document à venir"}
+              ? `${item.pdfs.length} وثيقة`
+              : "وثيقة جايّة"}
           </span>
         )}
       </span>

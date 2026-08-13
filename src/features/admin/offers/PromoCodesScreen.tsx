@@ -15,10 +15,10 @@ import { OffersTabs } from "./OffersTabs"
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
-/** "-20 %" / "-30 DT" — the discount of one per-offer rule. */
+/** "-20 %" / "-30 د.ت" — the discount of one per-offer rule. */
 function ruleLabel(r: PromoOfferRule): string {
   if (r.discountPct != null) return `-${r.discountPct} %`
-  if (r.discountAmount != null) return `-${r.discountAmount} DT`
+  if (r.discountAmount != null) return `-${r.discountAmount} د.ت`
   return "—"
 }
 
@@ -51,7 +51,7 @@ export default function AdminPromoCodesScreen() {
           : p.code.toLowerCase().includes(q) ||
             p.offers.some((r) => offerName.get(r.offerId)?.toLowerCase().includes(q) ?? false),
       )
-      .sort((a, b) => a.code.localeCompare(b.code, "fr"))
+      .sort((a, b) => a.code.localeCompare(b.code, "ar"))
   }, [promoCodes, query, offerName])
 
   function openAdd() {
@@ -67,16 +67,16 @@ export default function AdminPromoCodesScreen() {
   async function copyCode(p: PromoCode) {
     try {
       await navigator.clipboard.writeText(p.code)
-      show(`Code « ${p.code} » copié`)
+      show(`الكود «${p.code}» تنسخ`)
     } catch {
-      show("Impossible de copier le code")
+      show("ما نجّمناش ننسخو الكود")
     }
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removePromoCode(deleteTarget.id)
-    show("Code promo supprimé")
+    show("كود التخفيض تمسح")
     setDeleteTarget(null)
   }
 
@@ -86,7 +86,7 @@ export default function AdminPromoCodesScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Nouveau code promo
+      <Plus className="size-4" /> كود تخفيض جديد
     </button>
   )
 
@@ -95,8 +95,8 @@ export default function AdminPromoCodesScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Codes promo"
-        subtitle={`${promoCodes.length} code${promoCodes.length > 1 ? "s" : ""} — des remises par offre, plafonnées en nombre d’utilisations.`}
+        title="أكواد التخفيض"
+        subtitle={`${promoCodes.length} كود — تخفيضات حسب العرض، محدودة بعدد الاستعمالات.`}
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -108,7 +108,7 @@ export default function AdminPromoCodesScreen() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher un code, une offre…"
+              placeholder="لوّج على كود ولا عرض…"
               className={INPUT + " ps-9"}
             />
           </div>
@@ -119,8 +119,8 @@ export default function AdminPromoCodesScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={TicketPercent}
-            title="Aucun code promo"
-            description="Générez un code, choisissez les offres visées et la remise de chacune."
+            title="ما فماش أكواد تخفيض"
+            description="ولّد كود، اختار العروض المعنية والتخفيض متاع كل وحدة."
             action={addButton}
           />
         </div>
@@ -128,8 +128,8 @@ export default function AdminPromoCodesScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Search}
-            title="Aucun résultat"
-            description="Aucun code ne correspond à cette recherche."
+            title="ما فماش نتائج"
+            description="ما فماش كود يوافق البحث هذا."
           />
         </div>
       ) : (
@@ -151,14 +151,14 @@ export default function AdminPromoCodesScreen() {
                     <button
                       type="button"
                       onClick={() => copyCode(p)}
-                      title="Copier le code"
-                      className="group inline-flex items-center gap-1.5 rounded-md border border-dashed border-border-strong bg-surface-muted px-2.5 py-1 font-display text-[15px] font-bold tracking-[.08em] text-ink transition hover:border-brand-300 hover:text-brand-700"
+                      title="انسخ الكود"
+                      className="group inline-flex items-center gap-1.5 rounded-md border border-dashed border-border-strong bg-surface-muted px-2.5 py-1 font-display text-[calc(15px*var(--ts))] font-bold tracking-[.08em] text-ink transition hover:border-brand-300 hover:text-brand-700"
                     >
                       {p.code}
                       <Copy className="size-3.5 text-ink-muted transition group-hover:text-brand-600" />
                     </button>
                     <Badge tone={exhausted ? "danger" : "success"} dot>
-                      {exhausted ? "Épuisé" : "Actif"}
+                      {exhausted ? "تكمّل" : "فعّال"}
                     </Badge>
                   </div>
 
@@ -167,10 +167,10 @@ export default function AdminPromoCodesScreen() {
                     {p.offers.map((r) => (
                       <li
                         key={r.offerId}
-                        className="flex items-baseline justify-between gap-3 text-[13px]"
+                        className="flex items-baseline justify-between gap-3 text-[calc(13px*var(--ts))]"
                       >
                         <span dir="auto" className="min-w-0 truncate text-ink-subtle">
-                          {offerName.get(r.offerId) ?? "Offre supprimée"}
+                          {offerName.get(r.offerId) ?? "العرض تمسح"}
                         </span>
                         <span className="shrink-0 font-medium tabular-nums text-accent2-700">
                           {ruleLabel(r)}
@@ -181,10 +181,10 @@ export default function AdminPromoCodesScreen() {
 
                   {/* Usage against the cap. */}
                   <div className="mt-2.5">
-                    <p className="text-[12px] tabular-nums text-ink-muted">
+                    <p className="text-[calc(12px*var(--ts))] tabular-nums text-ink-muted">
                       {p.maxUses != null
-                        ? `${used}/${p.maxUses} utilisation${p.maxUses > 1 ? "s" : ""}`
-                        : `${used} utilisation${used > 1 ? "s" : ""} · illimité`}
+                        ? `${used}/${p.maxUses} استعمال`
+                        : `${used} استعمال · بلا حدّ`}
                     </p>
                     {p.maxUses != null && (
                       <div className="mt-1.5 h-1.5 w-full max-w-[180px] overflow-hidden rounded-full bg-neutral-100">
@@ -209,7 +209,7 @@ export default function AdminPromoCodesScreen() {
                           ))}
                         </div>
                         {used > 5 && (
-                          <span className="ms-2 text-[12px] font-medium text-ink-muted">
+                          <span className="ms-2 text-[calc(12px*var(--ts))] font-medium text-ink-muted">
                             +{used - 5}
                           </span>
                         )}
@@ -219,10 +219,10 @@ export default function AdminPromoCodesScreen() {
                 </div>
                 <OverflowMenu
                   actions={[
-                    { label: "Copier le code", icon: Copy, onClick: () => copyCode(p) },
-                    { label: "Modifier", icon: Pencil, onClick: () => openEdit(p) },
+                    { label: "انسخ الكود", icon: Copy, onClick: () => copyCode(p) },
+                    { label: "بدّل", icon: Pencil, onClick: () => openEdit(p) },
                     {
-                      label: "Supprimer",
+                      label: "امسح",
                       icon: Trash2,
                       tone: "danger",
                       onClick: () => setDeleteTarget(p),
@@ -245,9 +245,9 @@ export default function AdminPromoCodesScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer ce code promo ?"
+        title="تحبّ تمسح كود التخفيض هذا؟"
         description={
-          deleteTarget ? `« ${deleteTarget.code} » ne pourra plus être utilisé.` : undefined
+          deleteTarget ? `«${deleteTarget.code}» ما عادش ينجّم يتستعمل.` : undefined
         }
         onConfirm={confirmDelete}
       />

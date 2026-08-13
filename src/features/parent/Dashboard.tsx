@@ -35,10 +35,10 @@ export default function ParentDashboard() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title={`Bonjour, ${firstName}`} subtitle="Le suivi de vos enfants à l’académie" />
+      <PageHeader title={`أهلا ${firstName}`} subtitle="متابعة ولادك في الأكاديمية" />
 
       <section>
-        <h2 className="mb-3 font-display text-base font-bold text-ink">Mes enfants</h2>
+        <h2 className="mb-3 font-display text-base font-bold text-ink">أولادي</h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {children.map((child) => (
             <div
@@ -47,8 +47,8 @@ export default function ParentDashboard() {
             >
               <Avatar name={child.name} size="lg" />
               <div className="min-w-0">
-                <p className="truncate font-display text-[14px] font-bold text-ink">{child.name}</p>
-                <p className="text-[12px] text-ink-muted">
+                <p className="truncate font-display text-[calc(14px*var(--ts))] font-bold text-ink">{child.name}</p>
+                <p className="text-[calc(12px*var(--ts))] text-ink-muted">
                   {child.group} · {child.courseIds?.length ?? 0} cours
                 </p>
               </div>
@@ -58,8 +58,8 @@ export default function ParentDashboard() {
       </section>
 
       <section>
-        <h2 className="mb-3 font-display text-base font-bold text-ink">Séances à venir</h2>
-        <SessionList sessions={childSessions} empty="Aucune séance pour vos enfants" />
+        <h2 className="mb-3 font-display text-base font-bold text-ink">الحصص الجايّة</h2>
+        <SessionList sessions={childSessions} empty="ما فماش حصص لولادك" />
       </section>
     </div>
   )

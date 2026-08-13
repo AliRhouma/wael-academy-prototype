@@ -25,15 +25,15 @@ export function ResourceMenu({
       <DropdownMenu.Trigger asChild>
         <button
           type="button"
-          aria-label={`Documents de la vidéo — ${pdfs.length}`}
+          aria-label={`وثائق الفيديو — ${pdfs.length}`}
           className={cn(
-            "inline-flex h-10 shrink-0 items-center gap-2 rounded-md border border-border-strong bg-surface px-2.5 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3",
+            "inline-flex h-10 shrink-0 items-center gap-2 rounded-md border border-border-strong bg-surface px-2.5 text-[calc(13px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-3",
             className,
           )}
         >
           <FileText className="size-4 shrink-0 text-danger-500" />
-          <span className="hidden sm:inline">Documents</span>
-          <span className="rounded-full bg-neutral-100 px-1.5 text-[11px] tabular-nums text-ink-muted">
+          <span className="hidden sm:inline">وثائق</span>
+          <span className="rounded-full bg-neutral-100 px-1.5 text-[calc(11px*var(--ts))] tabular-nums text-ink-muted">
             {pdfs.length}
           </span>
           <ChevronDown className="size-4 shrink-0" />
@@ -46,8 +46,8 @@ export function ResourceMenu({
           sideOffset={6}
           className="z-[60] max-h-[50dvh] w-[min(20rem,calc(100vw-2rem))] overflow-y-auto scroll-touch rounded-lg border border-border bg-surface-raised p-1.5 shadow-lg"
         >
-          <p className="px-2 pb-1 pt-1.5 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-            Télécharger
+          <p className="px-2 pb-1 pt-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+            حمّل
           </p>
           {pdfs.map((pdf, i) => (
             <DropdownMenu.Item key={i} asChild className="cursor-pointer">

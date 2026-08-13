@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { Link, useSearchParams } from "react-router-dom"
-import { CalendarRange, ChevronRight, MonitorPlay } from "lucide-react"
+import { CalendarRange, ChevronLeft, MonitorPlay } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { SubjectIcon } from "@/components/icons/subjects"
 import { subjectTheme } from "@/features/student/subjectTheme"
@@ -98,21 +98,21 @@ export default function StudentSeancesScreen() {
   return (
     <div className="flex flex-col gap-5">
       {/* Breadcrumb */}
-      <nav aria-label="Fil d’Ariane" className="flex items-center gap-1.5 text-[13px] text-ink-muted">
+      <nav aria-label="مسار التنقّل" className="flex items-center gap-1.5 text-[calc(13px*var(--ts))] text-ink-muted">
         <Link to="/student" className="transition hover:text-brand-600">
-          Accueil
+          الرئيسية
         </Link>
-        <ChevronRight className="size-3.5 shrink-0" />
-        <span className="font-medium text-brand-600">Séances enregistrées</span>
+        <ChevronLeft className="size-3.5 shrink-0" />
+        <span className="font-medium text-brand-600">الحصص المسجّلة</span>
       </nav>
 
       <div>
-        <h1 className="font-display text-[26px] font-bold leading-tight text-ink">
-          Séances enregistrées
+        <h1 className="font-display text-[calc(26px*var(--ts))] font-bold leading-tight text-ink">
+          الحصص المسجّلة
         </h1>
         <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-ink-muted">
-          Toutes les séances déjà données, gardées année après année. Choisis l’année scolaire, puis
-          la matière — tu retrouves ensuite ton groupe et le semestre.
+          الحصص الكل اللي تعملت، محفوظة عام بعد عام. اختار السنة الدراسية، وبعد
+          المادّة — وبعدها تلقى فوجك والثلاثي.
         </p>
       </div>
 
@@ -120,22 +120,22 @@ export default function StudentSeancesScreen() {
         <div className="rounded-xl border border-dashed border-border bg-surface">
           <EmptyState
             icon={MonitorPlay}
-            title="Aucune séance enregistrée"
-            description="Dès qu’une séance de ton année aura eu lieu, son enregistrement apparaîtra ici."
+            title="ما فماش حصص مسجّلة"
+            description="كي تسير حصّة في عامك، التسجيل متاعها يظهر هوني."
           />
         </div>
       ) : (
         <>
           {/* ---- Année scolaire : the archive's first choice ---- */}
           <section className="flex flex-col gap-2.5">
-            <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+            <div className="flex items-center gap-2 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
               <CalendarRange className="size-3.5" />
-              Année scolaire
+              السنة الدراسية
             </div>
 
             <div
               role="tablist"
-              aria-label="Année scolaire"
+              aria-label="السنة الدراسية"
               className="flex gap-1 overflow-x-auto scroll-touch rounded-lg border border-border bg-surface-muted p-1 [scrollbar-width:none] md:w-fit [&::-webkit-scrollbar]:hidden"
             >
               {academicYears.map((year, i) => {
@@ -149,7 +149,7 @@ export default function StudentSeancesScreen() {
                     aria-selected={active}
                     onClick={() => setYear(year)}
                     className={cn(
-                      "inline-flex h-11 shrink-0 items-center gap-2 rounded-md px-3.5 text-[13px] font-semibold transition md:h-10 md:text-sm",
+                      "inline-flex h-11 shrink-0 items-center gap-2 rounded-md px-3.5 text-[calc(13px*var(--ts))] font-semibold transition md:h-10 md:text-sm",
                       active ? "bg-surface text-ink shadow-sm" : "text-ink-muted hover:text-ink-subtle",
                     )}
                   >
@@ -158,16 +158,16 @@ export default function StudentSeancesScreen() {
                     {i === 0 && (
                       <span
                         className={cn(
-                          "rounded-full px-1.5 text-[10px] font-medium uppercase tracking-wide",
+                          "rounded-full px-1.5 text-[calc(10px*var(--ts))] font-medium uppercase tracking-wide",
                           active ? "bg-brand-50 text-brand-700" : "bg-neutral-100 text-ink-muted",
                         )}
                       >
-                        en cours
+                        قاعدة
                       </span>
                     )}
                     <span
                       className={cn(
-                        "rounded-full px-1.5 text-[11px] tabular-nums",
+                        "rounded-full px-1.5 text-[calc(11px*var(--ts))] tabular-nums",
                         active ? "bg-brand-50 text-brand-700" : "bg-neutral-100 text-ink-muted",
                       )}
                     >
@@ -178,10 +178,10 @@ export default function StudentSeancesScreen() {
               })}
             </div>
 
-            <p className="text-[13px] text-ink-muted">
+            <p className="text-[calc(13px*var(--ts))] text-ink-muted">
               {totals.recorded === 0
-                ? "Aucun enregistrement publié sur cette année."
-                : `${totals.recorded} enregistrement${totals.recorded > 1 ? "s" : ""} · ${totals.withContent} matière${totals.withContent > 1 ? "s" : ""}`}
+                ? "ما فماش تسجيلات منشورة في العام هذا."
+                : `${totals.recorded} تسجيل · ${totals.withContent} مادّة`}
               {totals.myGroups.length > 0 && (
                 <>
                   {" · "}
@@ -199,8 +199,8 @@ export default function StudentSeancesScreen() {
               <EmptyState
                 className="py-10"
                 icon={MonitorPlay}
-                title="Aucune matière à ton programme"
-                description="Ton programme n’est pas encore rattaché à une année. Contacte l’assistance et on s’en occupe."
+                title="ما فماش موادّ في برنامجك"
+                description="برنامجك مازال ما تربطش بعام. اتّصل بالمساعدة ونتكفّلو بيها."
               />
             ) : (
               <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
@@ -216,17 +216,28 @@ export default function StudentSeancesScreen() {
                           recorded === 0 && "opacity-70 hover:opacity-100",
                         )}
                       >
+                        {/* The matière's own duotone, not a flat swatch: mixed
+                            into `--surface`, so it's a pastel plate on a white
+                            page and a deep one on a dark page. */}
                         <div
                           className="relative grid h-24 place-items-center overflow-hidden rounded-md md:h-28"
-                          style={{ backgroundColor: tint.panel }}
+                          style={{ backgroundImage: tint.gradient }}
                         >
+                          {/* Hover flood — the same duotone a few steps deeper,
+                              cross-faded so the panel reads as warming up rather
+                              than switching colour. */}
+                          <span
+                            aria-hidden="true"
+                            className="absolute inset-0 opacity-0 transition-opacity duration-300 motion-safe:group-hover:opacity-100"
+                            style={{ backgroundImage: tint.gradientDeep }}
+                          />
                           <span
                             className="absolute size-20 rounded-full blur-2xl transition-transform motion-safe:group-hover:scale-110"
                             style={{ backgroundColor: tint.halo }}
                           />
                           <SubjectIcon name={subject.name} className="relative size-20 md:size-24" />
                           {recorded > 0 && (
-                            <span className="absolute bottom-1.5 end-1.5 inline-flex items-center gap-1 rounded-full bg-surface/95 px-2 py-0.5 text-[11px] font-semibold text-ink-subtle shadow-sm">
+                            <span className="absolute bottom-1.5 end-1.5 inline-flex items-center gap-1 rounded-full bg-surface/95 px-2 py-0.5 text-[calc(11px*var(--ts))] font-semibold text-ink-subtle shadow-sm">
                               <MonitorPlay className="size-3 text-brand-600" />
                               <span className="tabular-nums">{recorded}</span>
                             </span>
@@ -235,17 +246,17 @@ export default function StudentSeancesScreen() {
 
                         <p
                           className={cn(
-                            "mt-2.5 line-clamp-2 text-center font-display text-[13px] font-bold leading-snug md:text-sm",
+                            "mt-2.5 line-clamp-2 text-center font-display text-[calc(13px*var(--ts))] font-bold leading-snug md:text-sm",
                             c.name,
                           )}
                         >
                           {subject.name}
                         </p>
 
-                        <p className="mt-auto pt-2 text-center text-[11px] text-ink-muted">
+                        <p className="mt-auto pt-2 text-center text-[calc(11px*var(--ts))] text-ink-muted">
                           {recorded === 0
-                            ? "Aucun enregistrement"
-                            : `${recorded} séance${recorded > 1 ? "s" : ""} · ${groupCount} groupe${groupCount > 1 ? "s" : ""}`}
+                            ? "ما فماش تسجيلات"
+                            : `${recorded} حصّة · ${groupCount} فوج`}
                         </p>
                       </Link>
                     </li>

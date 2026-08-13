@@ -1,6 +1,6 @@
 /**
  * Wall calendar with two rings and a gold "today" pip, for the élève's
- * "Calendrier". Body rides the rail blue, the pip the rail gold (kicker), the
+ * "الروزنامة". Body rides the rail blue, the pip the rail gold (kicker), the
  * rings sit on the deepest gold so they read against the active gradient pill.
  * Fixed hex, see `navGlyphColors`. Paths only — see ClassementIcon for why.
  */

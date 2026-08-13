@@ -14,32 +14,32 @@ import type { VideoComment, VideoRefKind } from "@/data/types"
 const POOL: { userId: string; body: string; daysAgo: number }[] = [
   {
     userId: "u-student-ines",
-    body: "Merci prof 🙏 j'ai enfin compris la méthode, j'ai refait l'exercice tout seul du premier coup.",
+    body: "يعيشك أستاذ 🙏 فهمت المنهجية أخيرا، عاودت التمرين وحدي من أوّل مرّة.",
     daysAgo: 2,
   },
   {
     userId: "u-st-khalil",
-    body: "Est-ce que ce point tombe souvent au bac ? J'hésite à passer plus de temps dessus.",
+    body: "النقطة هذي تجي برشا في الباك؟ محتار نقعد وقت أكثر عليها ولا لا.",
     daysAgo: 4,
   },
   {
     userId: "u-st-yasmine",
-    body: "Je regarde en 1.25x et c'est parfait. Pensez à télécharger le document, il reprend tout.",
+    body: "نتفرّج بـ 1.25x وباهي برشا. ما تنساوش تحمّلو الوثيقة، فيها الكل.",
     daysAgo: 6,
   },
   {
     userId: "u-student-youssef",
-    body: "La qualité du son est top cette fois 👌",
+    body: "جودة الصوت باهية برشا المرّة هذي 👌",
     daysAgo: 9,
   },
   {
     userId: "u-st-lina",
-    body: "Petite question : à la fin, pourquoi on garde le signe moins ? Si quelqu'un a compris…",
+    body: "سؤال صغير: في الآخر، علاش نخلّيو إشارة الناقص؟ كان فما شكون فهم…",
     daysAgo: 14,
   },
   {
     userId: "u-st-adam",
-    body: "Vidéo revue 3 fois avant le devoir, résultat 16/20 💪",
+    body: "عاودت الفيديو 3 مرّات قبل الفرض، النتيجة 16/20 💪",
     daysAgo: 21,
   },
 ]

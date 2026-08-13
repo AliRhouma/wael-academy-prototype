@@ -10,16 +10,16 @@ import { demoComments } from "./comments"
 /** "il y a 3 jours" — a comment is about recency, not about a calendar date. */
 function ago(iso: string): string {
   const minutes = Math.floor((Date.now() - new Date(iso).getTime()) / 60_000)
-  if (minutes < 1) return "à l’instant"
-  if (minutes < 60) return `il y a ${minutes} min`
+  if (minutes < 1) return "توّا"
+  if (minutes < 60) return `من ${minutes} دقيقة`
   const hours = Math.floor(minutes / 60)
-  if (hours < 24) return `il y a ${hours} h`
+  if (hours < 24) return `من ${hours} سا`
   const days = Math.floor(hours / 24)
   if (days === 1) return "hier"
-  if (days < 30) return `il y a ${days} jours`
+  if (days < 30) return `من ${days} يام`
   const months = Math.round(days / 30)
-  if (months < 12) return `il y a ${months} mois`
-  return `il y a ${Math.round(months / 12)} an${months >= 24 ? "s" : ""}`
+  if (months < 12) return `من ${months} شهر`
+  return `من ${Math.round(months / 12)} عام`
 }
 
 /**
@@ -55,30 +55,30 @@ export function CommentsPanel({ kind, videoId }: { kind: VideoRefKind; videoId: 
     setFocused(false)
   }
 
-  const name = (userId: string) => users.find((u) => u.id === userId)?.name ?? "Élève"
+  const name = (userId: string) => users.find((u) => u.id === userId)?.name ?? "تلميذ"
   const open = focused || body.length > 0
 
   return (
     <section className="rounded-xl border border-border bg-surface p-4 shadow-sm md:p-5">
       <div className="flex items-center gap-2">
         <MessagesSquare className="size-[18px] text-brand-600" />
-        <h2 className="font-display text-[15px] font-bold text-ink">Commentaires</h2>
-        <span className="rounded-full bg-neutral-100 px-2 text-[12px] font-medium tabular-nums text-ink-muted">
+        <h2 className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">التعليقات</h2>
+        <span className="rounded-full bg-neutral-100 px-2 text-[calc(12px*var(--ts))] font-medium tabular-nums text-ink-muted">
           {comments.length}
         </span>
       </div>
 
       {/* ---- Composer ---- */}
       <div className="mt-4 flex items-start gap-3">
-        <Avatar name={user?.name ?? "Élève"} size="sm" />
+        <Avatar name={user?.name ?? "تلميذ"} size="sm" />
         <div className="min-w-0 flex-1">
           <textarea
             value={body}
             onChange={(e) => setBody(e.target.value)}
             onFocus={() => setFocused(true)}
             rows={open ? 3 : 1}
-            aria-label="Ajouter un commentaire"
-            placeholder="Ajouter un commentaire…"
+            aria-label="زيد تعليق"
+            placeholder="زيد تعليق…"
             className="w-full resize-none rounded-md border border-border bg-surface px-3 py-2.5 text-sm text-ink outline-none transition placeholder:text-ink-muted focus:border-brand-200 focus:ring-2 focus:ring-ring"
           />
           {open && (
@@ -89,9 +89,9 @@ export function CommentsPanel({ kind, videoId }: { kind: VideoRefKind; videoId: 
                   setBody("")
                   setFocused(false)
                 }}
-                className="inline-flex h-10 items-center rounded-md px-3 text-[13px] font-medium text-ink-muted transition hover:text-ink-subtle"
+                className="inline-flex h-10 items-center rounded-md px-3 text-[calc(13px*var(--ts))] font-medium text-ink-muted transition hover:text-ink-subtle"
               >
-                Annuler
+                إلغاء
               </button>
               <button
                 type="button"
@@ -117,11 +117,11 @@ export function CommentsPanel({ kind, videoId }: { kind: VideoRefKind; videoId: 
                 <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                   <span
                     dir="auto"
-                    className={cn("text-[13px] font-semibold", isMine ? "text-brand-700" : "text-ink")}
+                    className={cn("text-[calc(13px*var(--ts))] font-semibold", isMine ? "text-brand-700" : "text-ink")}
                   >
-                    {isMine ? "Toi" : name(comment.userId)}
+                    {isMine ? "إنت" : name(comment.userId)}
                   </span>
-                  <span className="text-[12px] text-ink-muted">{ago(comment.createdAt)}</span>
+                  <span className="text-[calc(12px*var(--ts))] text-ink-muted">{ago(comment.createdAt)}</span>
                 </div>
                 <p dir="auto" className="mt-0.5 whitespace-pre-wrap text-sm leading-relaxed text-ink-subtle">
                   {comment.body}
@@ -131,7 +131,7 @@ export function CommentsPanel({ kind, videoId }: { kind: VideoRefKind; videoId: 
                 <button
                   type="button"
                   onClick={() => removeComment(comment.id)}
-                  aria-label="Supprimer mon commentaire"
+                  aria-label="امسح تعليقي"
                   className="grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-danger-600"
                 >
                   <Trash2 className="size-4" />

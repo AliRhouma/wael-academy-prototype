@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { ArrowLeft, BookMarked, ChevronRight, Copy, GraduationCap, Pencil, Plus, Trash2 } from "lucide-react"
+import { ArrowRight, BookMarked, ChevronLeft, Copy, GraduationCap, Pencil, Plus, Trash2 } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
+import { SubjectsIcon } from "@/components/icons/SubjectsIcon"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
 import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
@@ -103,14 +104,14 @@ export default function AdminSubjectsScreen() {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={GraduationCap}
-          title="Classe introuvable"
-          description="Cette classe n’existe pas ou a été supprimée."
+          title="القسم ما تلقاش"
+          description="القسم هذا ما موجودش ولا تمسح."
           action={
             <Link
               to="/admin/curriculum"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
             >
-              <ArrowLeft className="size-4" /> Retour au programme
+              <ArrowRight className="size-4" /> ارجع للبرنامج
             </Link>
           }
         />
@@ -135,10 +136,10 @@ export default function AdminSubjectsScreen() {
     if (!trimmed || !year) return
     if (editing) {
       updateSubject(editing.id, { name: trimmed })
-      show("Matière modifiée")
+      show("المادّة تبدّلت")
     } else {
       addSubject({ yearId: year.id, name: trimmed, order: subjects.length })
-      show("Matière ajoutée")
+      show("المادّة تزادت")
     }
     setFormOpen(false)
   }
@@ -152,14 +153,14 @@ export default function AdminSubjectsScreen() {
   function submitDuplicate() {
     if (!dupTarget) return
     duplicateSubject(dupTarget, { name: dupName.trim(), yearId: dupDest.yearId })
-    show(`Matière dupliquée dans « ${dupInto} »`)
+    show(`المادّة تنسخت في «${dupInto}»`)
     setDupTarget(null)
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removeSubject(deleteTarget.id)
-    show("Matière supprimée")
+    show("المادّة تمسحت")
     setDeleteTarget(null)
   }
 
@@ -169,7 +170,7 @@ export default function AdminSubjectsScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter une matière
+      <Plus className="size-4" /> زيد مادّة
     </button>
   )
 
@@ -181,20 +182,20 @@ export default function AdminSubjectsScreen() {
           onClick={() => navigate("/admin/curriculum")}
           className="mb-3 inline-flex h-9 items-center gap-1.5 rounded-md text-sm font-medium text-ink-subtle transition hover:text-brand-600"
         >
-          <ArrowLeft className="size-4" /> Programme
+          <ArrowRight className="size-4" /> البرنامج
         </button>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+            <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
               {cycleDef(year.cycle).label} · {year.level}
             </p>
-            <h1 dir="auto" className="font-display text-[26px] font-bold leading-tight text-ink">
+            <h1 dir="auto" className="font-display text-[calc(26px*var(--ts))] font-bold leading-tight text-ink">
               {year.name}
             </h1>
             <p className="mt-1 text-sm text-ink-muted">
               {subjects.length > 0
-                ? `${subjects.length} matière${subjects.length > 1 ? "s" : ""} dans cette classe`
-                : "Aucune matière pour le moment"}
+                ? `${subjects.length} مادّة في القسم هذا`
+                : "ما فماش موادّ توّا"}
             </p>
           </div>
           {subjects.length > 0 && <div className="flex shrink-0 items-center gap-2">{addButton}</div>}
@@ -205,8 +206,8 @@ export default function AdminSubjectsScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={BookMarked}
-            title="Aucune matière"
-            description="Ajoutez les matières enseignées dans cette classe (Maths, Français, Physique…)."
+            title="ما فماش موادّ"
+            description="زيد الموادّ اللي تتدرّس في القسم هذا (رياضيات، فرنسية، فيزياء…)."
             action={addButton}
           />
         </div>
@@ -219,11 +220,11 @@ export default function AdminSubjectsScreen() {
             const pCount = pathCount.get(subject.id) ?? 0
             const eCount = examCount.get(subject.id) ?? 0
             const parts = [
-              cCount > 0 && `${cCount} chapitre${cCount > 1 ? "s" : ""}`,
-              lCount > 0 && `${lCount} contenu${lCount > 1 ? "s" : ""}`,
-              qCount > 0 && `${qCount} quiz`,
+              cCount > 0 && `${cCount} فصل`,
+              lCount > 0 && `${lCount} محتوى`,
+              qCount > 0 && `${qCount} كويز`,
               pCount > 0 && `${pCount} parcours`,
-              eCount > 0 && `${eCount} examen${eCount > 1 ? "s" : ""}`,
+              eCount > 0 && `${eCount} امتحان`,
             ].filter(Boolean) as string[]
             return (
               <li key={subject.id}>
@@ -231,25 +232,28 @@ export default function AdminSubjectsScreen() {
                   onClick={() => navigate(subject.id)}
                   className="group flex cursor-pointer items-center gap-3 rounded-lg border border-border bg-surface p-4 shadow-sm transition hover:border-brand-200 hover:shadow-md motion-safe:hover:-translate-y-0.5"
                 >
-                  <span className="grid size-10 shrink-0 place-items-center rounded-md bg-accent2-50 text-accent2-700">
-                    <BookMarked className="size-5" />
+                  {/* The subjects book, same mark as the élève rail and the
+                      élève page title — a matière row looks like a matière
+                      wherever it is listed. */}
+                  <span className="grid size-10 shrink-0 place-items-center rounded-md bg-accent2-50">
+                    <SubjectsIcon className="size-6" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p dir="auto" className="truncate font-display text-[15px] font-bold text-ink">
+                    <p dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
                       {subject.name}
                     </p>
-                    <p className="mt-0.5 text-[12px] text-ink-muted">
-                      {parts.length > 0 ? parts.join(" · ") : "Aucun contenu"}
+                    <p className="mt-0.5 text-[calc(12px*var(--ts))] text-ink-muted">
+                      {parts.length > 0 ? parts.join(" · ") : "ما فماش محتوى"}
                     </p>
                   </div>
-                  <ChevronRight className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
+                  <ChevronLeft className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
                   <div onClick={(e) => e.stopPropagation()}>
                     <OverflowMenu
                       actions={[
-                        { label: "Modifier", icon: Pencil, onClick: () => openEdit(subject) },
-                        { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(subject) },
+                        { label: "بدّل", icon: Pencil, onClick: () => openEdit(subject) },
+                        { label: "اعمل نسخة", icon: Copy, onClick: () => openDuplicate(subject) },
                         {
-                          label: "Supprimer",
+                          label: "امسح",
                           icon: Trash2,
                           tone: "danger",
                           onClick: () => setDeleteTarget(subject),
@@ -267,19 +271,19 @@ export default function AdminSubjectsScreen() {
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier la matière" : "Nouvelle matière"}
-        description={editing ? undefined : `Ajouter une matière à « ${year.name} ».`}
-        submitLabel={editing ? "Enregistrer" : "Ajouter"}
+        title={editing ? "بدّل المادّة" : "مادّة جديدة"}
+        description={editing ? undefined : `زيد مادّة لـ«${year.name}».`}
+        submitLabel={editing ? "سجّل" : "زيد"}
         onSubmit={submit}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom de la matière</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">اسم المادّة</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Ex. Mathématiques · الرياضيات"
+            placeholder="مثال: رياضيات"
             autoFocus
           />
         </label>
@@ -288,23 +292,23 @@ export default function AdminSubjectsScreen() {
       <DuplicateSheet
         open={dupTarget !== null}
         onOpenChange={(o) => !o && setDupTarget(null)}
-        title="Dupliquer la matière"
-        nameLabel="Nom de la copie"
+        title="اعمل نسخة من المادّة"
+        nameLabel="اسم النسخة"
         name={dupName}
         onNameChange={setDupName}
         depth="year"
         destination={dupDest}
         onDestinationChange={setDupDest}
-        note="Chapitres, contenus, quiz, parcours et examens sont copiés avec la matière."
+        note="الفصول والمحتويات والكويزات والمسارات والامتحانات ينتسخو مع المادّة."
         onSubmit={submitDuplicate}
       />
 
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cette matière ?"
+        title="تحبّ تمسح المادّة هذي؟"
         description={
-          deleteTarget ? `« ${deleteTarget.name} » sera définitivement supprimée.` : undefined
+          deleteTarget ? `«${deleteTarget.name}» باش تتمسح نهائيا.` : undefined
         }
         onConfirm={confirmDelete}
       />

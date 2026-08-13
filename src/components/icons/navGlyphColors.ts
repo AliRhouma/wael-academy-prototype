@@ -35,4 +35,20 @@ export const navGlyph = {
   /** Alert red — the "on air" dot and the shopfront awning. */
   red500: "#e5484d",
   red600: "#cc3b40",
+
+  /**
+   * The subjects book (`svg icons/Subjects.svg`) — its three inks, pushed a
+   * couple of stops deeper than the delivered file. The original navy/pale-grey
+   * pair was drawn for a large canvas and went washed at 21px in the rail: the
+   * outline thinned out and the covers dissolved into the sidebar. So the body
+   * is a deeper ink, the covers a blue-grey with real weight instead of a
+   * neutral pale, and the pages a touch brighter to hold the contrast. Same
+   * drawing, stronger read — at rail size AND at 110px in a page title.
+   *
+   * They live here rather than in the component for the same reason as the rest
+   * of this file: one place owns the rail's fixed hexes.
+   */
+  navy: "#1f2b47",
+  paper: "#f7f8f3",
+  paperShade: "#7c8aa6",
 } as const

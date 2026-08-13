@@ -1,70 +1,70 @@
 [
   {
     "id": "g-2sci-excellents",
-    "title": "Excellents — 2ème Sciences",
+    "title": "المتفوّقين — ثانية علوم",
     "academicYear": "2026/2027",
     "yearId": "y-2-sci",
     "studentIds": ["u-st-yasmine", "u-st-aziz", "u-st-nour", "u-st-maryam"]
   },
   {
     "id": "g-2sci-b",
-    "title": "2ème Sciences — Groupe B",
+    "title": "ثانية علوم — فوج ب",
     "academicYear": "2026/2027",
     "yearId": "y-2-sci",
     "studentIds": ["u-st-hamza", "u-st-oussama"]
   },
   {
     "id": "g-bacsci-renfort",
-    "title": "Bac Sciences — Renforcement",
+    "title": "باك علوم — تدارك",
     "academicYear": "2026/2027",
     "yearId": "y-bac-sci",
     "studentIds": ["u-student", "u-student-sarra", "u-st-selim", "u-st-emna", "u-st-wassim"]
   },
   {
     "id": "g-bacsci-elite",
-    "title": "Bac Sciences — Élite",
+    "title": "باك علوم — النخبة",
     "academicYear": "2026/2027",
     "yearId": "y-bac-sci",
     "studentIds": ["u-st-selim", "u-st-emna"]
   },
   {
     "id": "g-bacsci-a",
-    "title": "Bac Sciences — Groupe A",
+    "title": "باك علوم — فوج أ",
     "academicYear": "2026/2027",
     "yearId": "y-bac-sci",
     "studentIds": ["u-student-sarra", "u-st-wassim"]
   },
   {
     "id": "g-bacsci-a-2526",
-    "title": "Bac Sciences — Groupe A",
+    "title": "باك علوم — فوج أ",
     "academicYear": "2025/2026",
     "yearId": "y-bac-sci",
     "studentIds": ["u-student", "u-student-sarra", "u-st-selim"]
   },
   {
     "id": "g-bacsci-soir-2526",
-    "title": "Bac Sciences — Groupe du soir",
+    "title": "باك علوم — فوج الليل",
     "academicYear": "2025/2026",
     "yearId": "y-bac-sci",
     "studentIds": ["u-st-emna", "u-st-wassim"]
   },
   {
     "id": "g-bacmath-elite",
-    "title": "Bac Maths — Élite",
+    "title": "باك رياضيات — النخبة",
     "academicYear": "2026/2027",
     "yearId": "y-bac-math",
     "studentIds": ["u-student-ines", "u-st-khalil", "u-st-syrine"]
   },
   {
     "id": "g-9-a",
-    "title": "9ème année — Groupe A",
+    "title": "تاسعة أساسي — فوج أ",
     "academicYear": "2026/2027",
     "yearId": "y-9",
     "studentIds": ["u-student-youssef", "u-student-amira", "u-st-adam", "u-st-lina"]
   },
   {
     "id": "g-7-soutien",
-    "title": "7ème année — Soutien",
+    "title": "سابعة أساسي — دعم",
     "academicYear": "2025/2026",
     "yearId": "y-7",
     "studentIds": []

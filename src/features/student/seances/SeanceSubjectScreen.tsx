@@ -3,7 +3,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom"
 import {
   CalendarDays,
   ChevronDown,
-  ChevronRight,
+  ChevronLeft,
   Clock3,
   Hourglass,
   MapPin,
@@ -40,7 +40,7 @@ import { useData } from "@/stores/useData"
 
 /** "4 oct. 2025" — a replay is often months old, so the year earns its place. */
 function dayLabel(date: string): string {
-  return new Date(`${date}T00:00:00`).toLocaleDateString("fr-FR", {
+  return new Date(`${date}T00:00:00`).toLocaleDateString("ar-TN-u-nu-latn", {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -168,14 +168,14 @@ export default function StudentSeanceSubjectScreen() {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={MonitorPlay}
-          title="Matière introuvable"
-          description="Cette matière n’existe pas ou n’est plus à ton programme."
+          title="المادّة ما تلقاتش"
+          description="المادّة هذي ما موجودةش ولا ما عادتش في برنامجك."
           action={
             <Link
               to="/student/seances"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
             >
-              Revenir aux séances
+              ارجع للحصص
             </Link>
           }
         />
@@ -188,18 +188,18 @@ export default function StudentSeanceSubjectScreen() {
   return (
     <div className="flex flex-col gap-5">
       {/* Breadcrumb */}
-      <nav aria-label="Fil d’Ariane" className="flex items-center gap-1.5 text-[13px] text-ink-muted">
+      <nav aria-label="مسار التنقّل" className="flex items-center gap-1.5 text-[calc(13px*var(--ts))] text-ink-muted">
         <Link to="/student" className="transition hover:text-brand-600">
-          Accueil
+          الرئيسية
         </Link>
-        <ChevronRight className="size-3.5 shrink-0" />
+        <ChevronLeft className="size-3.5 shrink-0" />
         <Link
           to={`/student/seances?annee=${yearSlug(activeYear)}`}
           className="transition hover:text-brand-600"
         >
-          Séances enregistrées
+          الحصص المسجّلة
         </Link>
-        <ChevronRight className="size-3.5 shrink-0" />
+        <ChevronLeft className="size-3.5 shrink-0" />
         <span dir="auto" className="truncate font-medium text-brand-600">
           {subject.name}
         </span>
@@ -209,7 +209,7 @@ export default function StudentSeanceSubjectScreen() {
       <div className="flex items-center gap-3.5">
         <span
           className="relative grid size-16 shrink-0 place-items-center overflow-hidden rounded-lg md:size-[72px]"
-          style={{ backgroundColor: tint.panel }}
+          style={{ backgroundImage: tint.gradient }}
         >
           <span
             className="absolute size-14 rounded-full blur-2xl"
@@ -218,19 +218,19 @@ export default function StudentSeanceSubjectScreen() {
           <SubjectIcon name={subject.name} className="relative size-[54px] md:size-[62px]" />
         </span>
         <div className="min-w-0">
-          <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-            Séances enregistrées · <span className="tabular-nums">{activeYear}</span>
+          <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+            الحصص المسجّلة · <span className="tabular-nums">{activeYear}</span>
           </p>
           <h1
             dir="auto"
-            className="truncate font-display text-[24px] font-bold leading-tight text-ink md:text-[26px]"
+            className="truncate font-display text-[calc(24px*var(--ts))] font-bold leading-tight text-ink md:text-[calc(26px*var(--ts))]"
           >
             {subject.name}
           </h1>
-          <p className="mt-0.5 text-[13px] text-ink-muted">
+          <p className="mt-0.5 text-[calc(13px*var(--ts))] text-ink-muted">
             {recorded === 0
-              ? "Aucun enregistrement sur cette année"
-              : `${recorded} enregistrement${recorded > 1 ? "s" : ""} · ${groupTabs.length} groupe${groupTabs.length > 1 ? "s" : ""}`}
+              ? "ما فماش تسجيلات في العام هذا"
+              : `${recorded} تسجيل · ${groupTabs.length} فوج`}
           </p>
         </div>
       </div>
@@ -246,14 +246,14 @@ export default function StudentSeanceSubjectScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={MonitorPlay}
-            title="Rien d’enregistré pour cette matière"
-            description={`Aucune séance de ${subject.name} n’a encore été donnée sur ${activeYear}. Essaie une autre année scolaire ou une autre matière.`}
+            title="ما فماش شيء مسجّل للمادّة هذي"
+            description={`مازال ما تعملت حتّى حصّة في ${subject.name} على ${activeYear}. جرّب سنة دراسية أخرى ولا مادّة أخرى.`}
             action={
               <Link
                 to="/student/seances"
                 className="inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-4 text-sm font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
               >
-                Changer d’année scolaire
+                بدّل السنة الدراسية
               </Link>
             }
           />
@@ -266,7 +266,7 @@ export default function StudentSeanceSubjectScreen() {
           {/* ---- Groupes ---- */}
           <div
             role="tablist"
-            aria-label="Groupe"
+            aria-label="فوج"
             className="flex gap-1 overflow-x-auto scroll-touch rounded-lg border border-border bg-surface-muted p-1 [scrollbar-width:none] md:w-fit [&::-webkit-scrollbar]:hidden"
           >
             {groupTabs.map(({ group, mine, count }) => {
@@ -279,7 +279,7 @@ export default function StudentSeanceSubjectScreen() {
                   aria-selected={active}
                   onClick={() => setGroup(group.id)}
                   className={cn(
-                    "inline-flex h-11 shrink-0 items-center gap-2 rounded-md px-3 text-[13px] font-medium transition md:h-10 md:px-3.5",
+                    "inline-flex h-11 shrink-0 items-center gap-2 rounded-md px-3 text-[calc(13px*var(--ts))] font-medium transition md:h-10 md:px-3.5",
                     active ? "bg-surface text-ink shadow-sm" : "text-ink-muted hover:text-ink-subtle",
                   )}
                 >
@@ -290,7 +290,7 @@ export default function StudentSeanceSubjectScreen() {
                   {mine && (
                     <span
                       className={cn(
-                        "rounded-full px-1.5 text-[10px] font-medium uppercase tracking-wide",
+                        "rounded-full px-1.5 text-[calc(10px*var(--ts))] font-medium uppercase tracking-wide",
                         active ? "bg-accent2-50 text-accent2-700" : "bg-neutral-100 text-ink-muted",
                       )}
                     >
@@ -299,7 +299,7 @@ export default function StudentSeanceSubjectScreen() {
                   )}
                   <span
                     className={cn(
-                      "rounded-full px-1.5 text-[11px] tabular-nums",
+                      "rounded-full px-1.5 text-[calc(11px*var(--ts))] tabular-nums",
                       active ? "bg-brand-50 text-brand-700" : "bg-neutral-100 text-ink-muted",
                     )}
                   >
@@ -328,7 +328,7 @@ export default function StudentSeanceSubjectScreen() {
                 <span aria-hidden="true" className="h-6 w-px shrink-0 bg-border" />
                 <div
                   role="tablist"
-                  aria-label="Groupe"
+                  aria-label="فوج"
                   className="flex min-w-0 flex-1 gap-1 overflow-x-auto scroll-touch [scrollbar-width:none] md:flex-none [&::-webkit-scrollbar]:hidden"
                 >
                   {groupTabs.map(({ group, mine }) => {
@@ -342,7 +342,7 @@ export default function StudentSeanceSubjectScreen() {
                         onClick={() => setGroup(group.id)}
                         title={group.title}
                         className={cn(
-                          "inline-flex h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-md px-2 text-[13px] font-medium transition md:flex-none md:px-3.5",
+                          "inline-flex h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-md px-2 text-[calc(13px*var(--ts))] font-medium transition md:flex-none md:px-3.5",
                           active ? "bg-brand-50 text-brand-700" : "text-ink-muted hover:text-ink-subtle",
                         )}
                       >
@@ -398,7 +398,7 @@ export default function StudentSeanceSubjectScreen() {
                     >
                       <span
                         className={cn(
-                          "grid size-10 shrink-0 place-items-center rounded-md font-display text-[15px] font-bold tabular-nums transition",
+                          "grid size-10 shrink-0 place-items-center rounded-md font-display text-[calc(15px*var(--ts))] font-bold tabular-nums transition",
                           empty
                             ? "bg-neutral-100 text-ink-muted"
                             : isOpen
@@ -411,16 +411,16 @@ export default function StudentSeanceSubjectScreen() {
                       <span className="min-w-0 flex-1">
                         <span
                           className={cn(
-                            "block font-display text-[15px] font-bold leading-snug",
+                            "block font-display text-[calc(15px*var(--ts))] font-bold leading-snug",
                             empty ? "text-ink-muted" : isOpen ? "text-brand-700" : "text-ink",
                           )}
                         >
                           Semestre {semester}
                         </span>
-                        <span className="mt-0.5 block text-[12px] text-ink-muted">
+                        <span className="mt-0.5 block text-[calc(12px*var(--ts))] text-ink-muted">
                           {empty
-                            ? "Aucune séance sur ce semestre"
-                            : `${list.length} séance${list.length > 1 ? "s" : ""} · ${playable} enregistrement${playable > 1 ? "s" : ""}`}
+                            ? "ما فماش حصص في الثلاثي هذا"
+                            : `${list.length} حصّة · ${playable} تسجيل`}
                         </span>
                       </span>
                       {!empty && (
@@ -488,7 +488,7 @@ function SeanceCard({
   const duration = durationLabel(session.startTime, session.endTime)
 
   const meta = (
-    <span className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[12px] text-ink-muted">
+    <span className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[calc(12px*var(--ts))] text-ink-muted">
       <span className="inline-flex items-center gap-1">
         <CalendarDays className="size-3.5" />
         <span className="tabular-nums">{dayLabel(session.date)}</span>
@@ -527,19 +527,19 @@ function SeanceCard({
   const body = (
     <span className="min-w-0 flex-1">
       {ready ? (
-        <Badge tone="brand">Enregistrement</Badge>
+        <Badge tone="brand">التسجيل</Badge>
       ) : (
-        <Badge tone="neutral">Bientôt disponible</Badge>
+        <Badge tone="neutral">قريب</Badge>
       )}
       <span
         dir="auto"
-        className="mt-1.5 block text-[14px] font-semibold leading-snug text-ink line-clamp-2"
+        className="mt-1.5 block text-[calc(14px*var(--ts))] font-semibold leading-snug text-ink line-clamp-2"
       >
         {session.title}
       </span>
       {meta}
       {session.description && (
-        <span dir="auto" className="mt-1 block text-[12px] text-ink-subtle line-clamp-2">
+        <span dir="auto" className="mt-1 block text-[calc(12px*var(--ts))] text-ink-subtle line-clamp-2">
           {session.description}
         </span>
       )}

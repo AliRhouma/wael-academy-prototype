@@ -23,7 +23,7 @@ function newQuestion(): QuizQuestion {
   return { id: crypto.randomUUID(), prompt: "", choices: ["", ""], correctIndex: 0 }
 }
 
-/** The "Quiz" tab of a chapter — MCQ quizzes with tags, grouped into examens.
+/** The "كويز" tab of a chapter — MCQ quizzes with tags, grouped into examens.
  * `year` / `subject` are the ones being browsed — they prefill the duplicate
  * destination so a copy defaults to staying right where it is. */
 export function QuizzesPanel({
@@ -154,10 +154,10 @@ export function QuizzesPanel({
     }
     if (editing) {
       updateQuiz(editing.id, patch)
-      show("Quiz modifié")
+      show("الكويز تبدّل")
     } else {
       addQuiz({ ...patch, order: quizzes.length })
-      show("Quiz ajouté")
+      show("الكويز تزاد")
     }
     setQuizOpen(false)
   }
@@ -179,10 +179,10 @@ export function QuizzesPanel({
     if (dupQuiz) {
       // A group belongs to its chapter — a copy that moves leaves it behind.
       duplicateQuiz(dupQuiz, { title, chapterId: dupDest.chapterId })
-      show(`Quiz dupliqué dans « ${dupInto} »`)
+      show(`الكويز تنسخ في «${dupInto}»`)
     } else if (dupGroup) {
       duplicateQuizExam(dupGroup, { title, chapterId: dupDest.chapterId })
-      show(`Examen de quiz dupliqué dans « ${dupInto} »`)
+      show(`اختبار الكويز تنسخ في «${dupInto}»`)
     }
     closeDuplicate()
   }
@@ -204,10 +204,10 @@ export function QuizzesPanel({
     if (!trimmed) return
     if (editingExam) {
       updateQuizExam(editingExam.id, { title: trimmed })
-      show("Examen de quiz modifié")
+      show("اختبار الكويز تبدّل")
     } else {
       addQuizExam({ title: trimmed, chapterId: chapter.id, order: exams.length })
-      show("Examen de quiz créé")
+      show("اختبار الكويز تعمل")
     }
     setExamOpen(false)
   }
@@ -218,7 +218,7 @@ export function QuizzesPanel({
       onClick={() => openAddQuiz()}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter un quiz
+      <Plus className="size-4" /> زيد كويز
     </button>
   )
 
@@ -227,8 +227,8 @@ export function QuizzesPanel({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-ink-muted">
           {quizzes.length > 0
-            ? `${quizzes.length} quiz${exams.length > 0 ? ` · ${exams.length} examen${exams.length > 1 ? "s" : ""}` : ""}`
-            : "Aucun quiz pour le moment"}
+            ? `${quizzes.length} quiz${exams.length > 0 ? ` · ${exams.length} امتحان` : ""}`
+            : "ما فماش كويزات توّا"}
         </p>
         <div className="flex items-center gap-2">
           <button
@@ -236,7 +236,7 @@ export function QuizzesPanel({
             onClick={openAddExam}
             className="inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-3.5 text-sm font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-10"
           >
-            <FolderPlus className="size-4" /> Examen de quiz
+            <FolderPlus className="size-4" /> اختبار كويز
           </button>
           {quizzes.length > 0 && addQuizButton}
         </div>
@@ -246,8 +246,8 @@ export function QuizzesPanel({
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={QUIZ_ICON}
-            title="Aucun quiz"
-            description="Créez des quiz (QCM) avec des tags, et regroupez-les en « examens de quiz »."
+            title="ما فماش كويزات"
+            description="اعمل كويزات (اختيار من متعدّد) بوسوم، وجمّعهم في «اختبارات كويز»."
             action={addQuizButton}
           />
         </div>
@@ -261,31 +261,30 @@ export function QuizzesPanel({
                     <Layers className="size-4" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p dir="auto" className="truncate font-display text-[14px] font-bold text-ink">
+                    <p dir="auto" className="truncate font-display text-[calc(14px*var(--ts))] font-bold text-ink">
                       {g.exam.title}
                     </p>
-                    <p className="text-[12px] text-ink-muted">
-                      {g.items.length} quiz{g.items.length > 1 ? "s" : ""} regroupé
-                      {g.items.length > 1 ? "s" : ""}
+                    <p className="text-[calc(12px*var(--ts))] text-ink-muted">
+                      {g.items.length} كويز مجمّع
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={() => openAddQuiz(g.exam!.id)}
-                    className="inline-flex h-9 items-center gap-1.5 rounded-md px-2.5 text-[13px] font-medium text-brand-600 transition hover:bg-brand-50"
+                    className="inline-flex h-9 items-center gap-1.5 rounded-md px-2.5 text-[calc(13px*var(--ts))] font-medium text-brand-600 transition hover:bg-brand-50"
                   >
-                    <Plus className="size-4" /> <span className="hidden sm:inline">Quiz</span>
+                    <Plus className="size-4" /> <span className="hidden sm:inline">كويز</span>
                   </button>
                   <OverflowMenu
                     actions={[
-                      { label: "Modifier le groupe", icon: Pencil, onClick: () => openEditExam(g.exam!) },
+                      { label: "بدّل المجموعة", icon: Pencil, onClick: () => openEditExam(g.exam!) },
                       {
-                        label: "Dupliquer le groupe",
+                        label: "اعمل نسخة من المجموعة",
                         icon: Copy,
                         onClick: () => openDuplicate({ group: g.exam! }),
                       },
                       {
-                        label: "Supprimer le groupe",
+                        label: "امسح المجموعة",
                         icon: Trash2,
                         tone: "danger",
                         onClick: () => setDeleteExam(g.exam!),
@@ -295,7 +294,7 @@ export function QuizzesPanel({
                 </div>
               ) : (
                 grouped.length > 1 && (
-                  <p className="text-[11px] font-medium uppercase tracking-[.12em] text-ink-muted">
+                  <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-ink-muted">
                     Quiz individuels
                   </p>
                 )
@@ -303,7 +302,7 @@ export function QuizzesPanel({
 
               {g.items.length === 0 ? (
                 <p className="rounded-lg border border-dashed border-border bg-surface px-4 py-4 text-sm text-ink-muted">
-                  Aucun quiz dans ce groupe — ajoutez-en un.
+                  ما فماش كويزات في المجموعة هذي — زيد واحد.
                 </p>
               ) : (
                 <ul className="grid gap-3">
@@ -318,17 +317,16 @@ export function QuizzesPanel({
                           <Icon className="size-5" />
                         </span>
                         <div className="min-w-0 flex-1">
-                          <p dir="auto" className="font-display text-[15px] font-bold text-ink">
+                          <p dir="auto" className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">
                             {quiz.title}
                           </p>
-                          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-ink-muted">
+                          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[calc(12px*var(--ts))] text-ink-muted">
                             <span className="inline-flex items-center gap-1">
-                              <Check className="size-3.5" /> {quiz.questions.length} question
-                              {quiz.questions.length > 1 ? "s" : ""}
+                              <Check className="size-3.5" /> {quiz.questions.length} سؤال
                             </span>
                             {quiz.durationMin != null && (
                               <span className="inline-flex items-center gap-1">
-                                <Clock className="size-3.5" /> {quiz.durationMin} min
+                                <Clock className="size-3.5" /> {quiz.durationMin} دقيقة
                               </span>
                             )}
                           </div>
@@ -337,7 +335,7 @@ export function QuizzesPanel({
                               {quiz.tags.map((t) => (
                                 <span
                                   key={t}
-                                  className="inline-flex items-center gap-1 rounded-md bg-accent2-50 px-2 py-0.5 text-[12px] font-medium text-accent2-700"
+                                  className="inline-flex items-center gap-1 rounded-md bg-accent2-50 px-2 py-0.5 text-[calc(12px*var(--ts))] font-medium text-accent2-700"
                                 >
                                   <Tag className="size-3" />
                                   <span dir="auto">{t}</span>
@@ -348,14 +346,14 @@ export function QuizzesPanel({
                         </div>
                         <OverflowMenu
                           actions={[
-                            { label: "Modifier", icon: Pencil, onClick: () => openEditQuiz(quiz) },
+                            { label: "بدّل", icon: Pencil, onClick: () => openEditQuiz(quiz) },
                             {
-                              label: "Dupliquer",
+                              label: "اعمل نسخة",
                               icon: Copy,
                               onClick: () => openDuplicate({ quiz }),
                             },
                             {
-                              label: "Supprimer",
+                              label: "امسح",
                               icon: Trash2,
                               tone: "danger",
                               onClick: () => setDeleteQuiz(quiz),
@@ -376,25 +374,25 @@ export function QuizzesPanel({
       <FormSheet
         open={quizOpen}
         onOpenChange={setQuizOpen}
-        title={editing ? "Modifier le quiz" : "Nouveau quiz"}
+        title={editing ? "بدّل الكويز" : "كويز جديد"}
         description={
           editing
             ? undefined
             : examId
-              ? `Un QCM ajouté au groupe « ${exams.find((e) => e.id === examId)?.title ?? ""} ».`
-              : "Un QCM catégorisé par tags. Le rattacher à un examen de quiz se fait depuis le groupe."
+              ? `كويز تزاد للمجموعة «${exams.find((e) => e.id === examId)?.title ?? ""}».`
+              : "كويز اختيار من متعدّد مصنّف بوسوم. الربط باختبار كويز يصير من المجموعة."
         }
-        submitLabel={editing ? "Enregistrer" : "Ajouter"}
+        submitLabel={editing ? "سجّل" : "زيد"}
         onSubmit={submitQuiz}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">العنوان</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ex. QCM — Module et conjugué"
+            placeholder="مثال: اختيار من متعدّد — الطويلة والمرافق"
             autoFocus
           />
         </label>
@@ -404,13 +402,13 @@ export function QuizzesPanel({
         <div className={editing ? "grid grid-cols-[1fr_auto] gap-3" : ""}>
           {editing && (
             <div>
-              <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Examen de quiz</span>
+              <span className="mb-1.5 block text-sm font-medium text-ink-subtle">اختبار كويز</span>
               <select
                 className={INPUT + " appearance-none"}
                 value={examId}
                 onChange={(e) => setExamId(e.target.value)}
               >
-                <option value="">— Aucun (individuel) —</option>
+                <option value="">— حتّى واحد (فردي) —</option>
                 {exams.map((e) => (
                   <option key={e.id} value={e.id}>
                     {e.title}
@@ -420,7 +418,7 @@ export function QuizzesPanel({
             </div>
           )}
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Durée</span>
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">المدّة</span>
             <div className="flex items-center gap-1.5">
               <input
                 className={INPUT + " w-20 text-center"}
@@ -430,20 +428,20 @@ export function QuizzesPanel({
                 onChange={(e) => setDuration(e.target.value)}
                 placeholder="15"
               />
-              <span className="text-sm text-ink-muted">min</span>
+              <span className="text-sm text-ink-muted">دقيقة</span>
             </div>
           </label>
         </div>
 
         <div>
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Tags <span className="font-normal text-ink-muted">(catégorisation — Entrée pour ajouter)</span>
+            الوسوم <span className="font-normal text-ink-muted">(تصنيف — اضغط Entrée باش تزيد)</span>
           </span>
           <div className="flex flex-wrap items-center gap-1.5 rounded-md border border-input bg-input-bg px-2 py-2 focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-ring/20">
             {tags.map((t) => (
               <span
                 key={t}
-                className="inline-flex items-center gap-1 rounded-md bg-accent2-50 px-2 py-1 text-[13px] font-medium text-accent2-700"
+                className="inline-flex items-center gap-1 rounded-md bg-accent2-50 px-2 py-1 text-[calc(13px*var(--ts))] font-medium text-accent2-700"
               >
                 <span dir="auto">{t}</span>
                 <button
@@ -463,7 +461,7 @@ export function QuizzesPanel({
               onChange={(e) => setTagDraft(e.target.value)}
               onKeyDown={onTagKey}
               onBlur={commitTag}
-              placeholder={tags.length === 0 ? "révision, facile, chapitre 3…" : "ajouter…"}
+              placeholder={tags.length === 0 ? "مراجعة، سهل، فصل 3…" : "زيد…"}
             />
           </div>
         </div>
@@ -478,7 +476,7 @@ export function QuizzesPanel({
             {questions.map((q, qi) => (
               <div key={q.id} className="rounded-lg border border-border bg-surface-muted p-3">
                 <div className="flex items-start gap-2">
-                  <span className="mt-2 grid size-6 shrink-0 place-items-center rounded-full bg-brand-100 text-[12px] font-bold text-brand-700">
+                  <span className="mt-2 grid size-6 shrink-0 place-items-center rounded-full bg-brand-100 text-[calc(12px*var(--ts))] font-bold text-brand-700">
                     {qi + 1}
                   </span>
                   <input
@@ -488,11 +486,11 @@ export function QuizzesPanel({
                     onChange={(e) =>
                       setQuestions((prev) => prev.map((x, j) => (j === qi ? { ...x, prompt: e.target.value } : x)))
                     }
-                    placeholder="Énoncé de la question"
+                    placeholder="نصّ السؤال"
                   />
                   <button
                     type="button"
-                    aria-label="Retirer la question"
+                    aria-label="نحّي السؤال"
                     onClick={() => setQuestions((prev) => prev.filter((_, j) => j !== qi))}
                     className="mt-1 grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-danger-50 hover:text-danger-600"
                   >
@@ -506,7 +504,7 @@ export function QuizzesPanel({
                       <div key={ci} className="flex items-center gap-2">
                         <button
                           type="button"
-                          aria-label={correct ? "Bonne réponse" : "Marquer comme bonne réponse"}
+                          aria-label={correct ? "إجابة صحيحة" : "علّمها كإجابة صحيحة"}
                           onClick={() =>
                             setQuestions((prev) => prev.map((x, j) => (j === qi ? { ...x, correctIndex: ci } : x)))
                           }
@@ -520,7 +518,7 @@ export function QuizzesPanel({
                           <Check className="size-3.5" />
                         </button>
                         <input
-                          className="h-9 w-full rounded-md border border-input bg-surface px-2.5 text-[13px] text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20 text-start"
+                          className="h-9 w-full rounded-md border border-input bg-surface px-2.5 text-[calc(13px*var(--ts))] text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20 text-start"
                           dir="auto"
                           value={choice}
                           onChange={(e) =>
@@ -532,12 +530,12 @@ export function QuizzesPanel({
                               ),
                             )
                           }
-                          placeholder={`Réponse ${ci + 1}`}
+                          placeholder={`الإجابة ${ci + 1}`}
                         />
                         {q.choices.length > 2 && (
                           <button
                             type="button"
-                            aria-label="Retirer la réponse"
+                            aria-label="نحّي الإجابة"
                             onClick={() =>
                               setQuestions((prev) =>
                                 prev.map((x, j) =>
@@ -570,9 +568,9 @@ export function QuizzesPanel({
                           prev.map((x, j) => (j === qi ? { ...x, choices: [...x.choices, ""] } : x)),
                         )
                       }
-                      className="inline-flex h-8 items-center gap-1.5 self-start rounded-md px-2 text-[13px] font-medium text-brand-600 transition hover:bg-brand-50"
+                      className="inline-flex h-8 items-center gap-1.5 self-start rounded-md px-2 text-[calc(13px*var(--ts))] font-medium text-brand-600 transition hover:bg-brand-50"
                     >
-                      <Plus className="size-3.5" /> Réponse
+                      <Plus className="size-3.5" /> إجابة
                     </button>
                   )}
                 </div>
@@ -583,7 +581,7 @@ export function QuizzesPanel({
               onClick={() => setQuestions((prev) => [...prev, newQuestion()])}
               className="inline-flex h-10 items-center gap-1.5 self-start rounded-md border border-dashed border-border-strong px-3 text-sm font-medium text-ink-subtle transition hover:border-brand-300 hover:text-brand-600"
             >
-              <Plus className="size-4" /> Ajouter une question
+              <Plus className="size-4" /> زيد سؤال
             </button>
           </div>
         </div>
@@ -593,19 +591,19 @@ export function QuizzesPanel({
       <FormSheet
         open={examOpen}
         onOpenChange={setExamOpen}
-        title={editingExam ? "Modifier l'examen de quiz" : "Nouvel examen de quiz"}
-        description={editingExam ? undefined : "Un groupe qui rassemble plusieurs quiz de ce chapitre pour les afficher ensemble."}
-        submitLabel={editingExam ? "Enregistrer" : "Créer"}
+        title={editingExam ? "بدّل اختبار الكويز" : "اختبار كويز جديد"}
+        description={editingExam ? undefined : "مجموعة تلمّ برشا كويزات من الفصل هذا باش تتعرض مع بعضها."}
+        submitLabel={editingExam ? "سجّل" : "اعمل"}
         onSubmit={submitExam}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre du groupe</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">عنوان المجموعة</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={examTitle}
             onChange={(e) => setExamTitle(e.target.value)}
-            placeholder="Ex. Examen de quiz — Révision générale"
+            placeholder="مثال: اختبار كويز — مراجعة عامة"
             autoFocus
           />
         </label>
@@ -614,8 +612,8 @@ export function QuizzesPanel({
       <DuplicateSheet
         open={dupQuiz !== null || dupGroup !== null}
         onOpenChange={(o) => !o && closeDuplicate()}
-        title={dupGroup ? "Dupliquer l’examen de quiz" : "Dupliquer le quiz"}
-        nameLabel="Titre de la copie"
+        title={dupGroup ? "اعمل نسخة من اختبار الكويز" : "اعمل نسخة من الكويز"}
+        nameLabel="عنوان النسخة"
         name={dupName}
         onNameChange={setDupName}
         depth="chapter"
@@ -623,12 +621,12 @@ export function QuizzesPanel({
         onDestinationChange={setDupDest}
         note={
           dupGroup
-            ? "Les quiz regroupés sont copiés avec le groupe."
-            : "Les questions et les tags suivent la copie."
+            ? "الكويزات المجمّعة تنتسخ مع المجموعة."
+            : "الأسئلة والوسوم يتبعو النسخة."
         }
         warning={
           dupQuiz?.quizExamId && dupDest.chapterId !== chapter.id
-            ? "Les examens de quiz appartiennent à leur chapitre : la copie sera un quiz individuel."
+            ? "اختبارات الكويز تابعة لفصلها: النسخة باش تكون كويز فردي."
             : undefined
         }
         onSubmit={submitDuplicate}
@@ -637,16 +635,16 @@ export function QuizzesPanel({
       <ConfirmDialog
         open={deleteQuiz !== null}
         onOpenChange={(o) => !o && setDeleteQuiz(null)}
-        title="Supprimer ce quiz ?"
+        title="تحبّ تمسح الكويز هذا؟"
         description={
           deleteQuiz
-            ? `« ${deleteQuiz.title} » sera définitivement supprimé et retiré des parcours qui l'utilisent.`
+            ? `«${deleteQuiz.title}» باش يتمسح نهائيا ويتنحّى من المسارات اللي تستعملو.`
             : undefined
         }
         onConfirm={() => {
           if (deleteQuiz) {
             removeQuiz(deleteQuiz.id)
-            show("Quiz supprimé")
+            show("الكويز تمسح")
             setDeleteQuiz(null)
           }
         }}
@@ -655,16 +653,16 @@ export function QuizzesPanel({
       <ConfirmDialog
         open={deleteExam !== null}
         onOpenChange={(o) => !o && setDeleteExam(null)}
-        title="Supprimer cet examen de quiz ?"
+        title="تحبّ تمسح اختبار الكويز هذا؟"
         description={
           deleteExam
-            ? `« ${deleteExam.title} » sera supprimé. Ses quiz ne seront pas supprimés — ils redeviennent individuels.`
+            ? `«${deleteExam.title}» باش يتمسح. الكويزات متاعو ما يتمسحوش — يرجعو فرديين.`
             : undefined
         }
         onConfirm={() => {
           if (deleteExam) {
             removeQuizExam(deleteExam.id)
-            show("Examen de quiz supprimé")
+            show("اختبار الكويز تمسح")
             setDeleteExam(null)
           }
         }}

@@ -6,7 +6,7 @@ export interface EmptyStateProps {
   icon: LucideIcon
   title: string
   description?: string
-  /** Optional call-to-action (e.g. an "Ajouter" button). */
+  /** Optional call-to-action (e.g. an "زيد" button). */
   action?: ReactNode
   className?: string
 }

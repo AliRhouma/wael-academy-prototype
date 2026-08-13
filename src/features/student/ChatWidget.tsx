@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { MessageCircle, Send, X } from "lucide-react"
+import { Send, X } from "lucide-react"
+import { ChatIcon } from "@/components/icons/ChatIcon"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { useIsMobile } from "@/lib/hooks"
 import { useAuth } from "@/stores/useAuth"
@@ -70,8 +71,8 @@ export function ChatWidget() {
       <div className="min-h-0 flex-1 space-y-3 overflow-y-auto scroll-touch p-4">
         {thread.length === 0 && (
           <div className="rounded-lg border border-dashed border-border bg-surface-muted/60 px-4 py-5 text-center text-sm text-ink-muted">
-            Une question sur un cours, un paiement, un accès ?<br />
-            Écrivez-nous — l’équipe vous répond ici.
+            عندك سؤال على درس، ولا خلاص، ولا دخول؟<br />
+            اكتبلنا — الفريق يجاوبك هوني.
           </div>
         )}
         {thread.map((m) => {
@@ -79,8 +80,8 @@ export function ChatWidget() {
           return (
             <div key={m.id} className={"flex flex-col " + (mine ? "items-end" : "items-start")}>
               {!mine && (
-                <span className="mb-0.5 ms-1 text-[11px] font-medium text-ink-muted">
-                  {userName.get(m.senderUserId) ?? "Administration"} · Wael Academy
+                <span className="mb-0.5 ms-1 text-[calc(11px*var(--ts))] font-medium text-ink-muted">
+                  {userName.get(m.senderUserId) ?? "الإدارة"} · Wael Academy
                 </span>
               )}
               <div
@@ -94,7 +95,7 @@ export function ChatWidget() {
               >
                 {m.text}
               </div>
-              <span className="mt-0.5 px-1 text-[10px] tabular-nums text-ink-muted">
+              <span className="mt-0.5 px-1 text-[calc(10px*var(--ts))] tabular-nums text-ink-muted">
                 {formatChatTime(m.at)}
               </span>
             </div>
@@ -113,13 +114,13 @@ export function ChatWidget() {
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Écrire un message…"
+          placeholder="اكتب رسالة…"
           dir="auto"
           className={INPUT}
         />
         <button
           type="submit"
-          aria-label="Envoyer"
+          aria-label="ابعث"
           disabled={text.trim() === ""}
           className="grid size-11 shrink-0 place-items-center rounded-full bg-grad text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-40"
         >
@@ -135,12 +136,12 @@ export function ChatWidget() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Ouvrir la messagerie"
+        aria-label="حلّ الرسائل"
         className="fixed bottom-24 end-4 z-40 grid size-14 place-items-center rounded-full bg-grad text-ink-inverted shadow-brand transition hover:brightness-105 motion-safe:hover:-translate-y-0.5 md:bottom-6 md:end-6"
       >
-        <MessageCircle className="size-6" />
+        <ChatIcon className="size-7" />
         {unread > 0 && !open && (
-          <span className="absolute -top-0.5 -end-0.5 grid min-w-5 place-items-center rounded-full bg-danger-500 px-1 text-[11px] font-bold tabular-nums text-white ring-2 ring-surface">
+          <span className="absolute -top-0.5 -end-0.5 grid min-w-5 place-items-center rounded-full bg-danger-500 px-1 text-[calc(11px*var(--ts))] font-bold tabular-nums text-white ring-2 ring-surface">
             {unread}
           </span>
         )}
@@ -153,11 +154,11 @@ export function ChatWidget() {
             className="flex h-[85dvh] flex-col gap-0 rounded-t-xl border-border bg-surface-raised p-0"
           >
             <SheetHeader className="gap-0.5 border-b border-border p-4 text-start">
-              <SheetTitle className="font-display text-[16px] font-bold text-ink">
-                Messagerie
+              <SheetTitle className="font-display text-[calc(16px*var(--ts))] font-bold text-ink">
+                الرسائل
               </SheetTitle>
-              <SheetDescription className="text-[12px] text-ink-muted">
-                Vous échangez avec l’administration de Wael Academy.
+              <SheetDescription className="text-[calc(12px*var(--ts))] text-ink-muted">
+                إنت تتحدّث مع إدارة وائل أكاديمي.
               </SheetDescription>
             </SheetHeader>
             {conversation}
@@ -168,16 +169,16 @@ export function ChatWidget() {
           <div className="fixed bottom-24 end-6 z-50 flex h-[520px] w-[380px] flex-col overflow-hidden rounded-xl border border-border bg-surface-raised shadow-lg">
             <div className="flex items-center gap-3 border-b border-border bg-surface-muted/60 p-4">
               <span className="grid size-9 place-items-center rounded-full bg-grad text-ink-inverted">
-                <MessageCircle className="size-4.5" />
+                <ChatIcon className="size-5" />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="font-display text-[15px] font-bold text-ink">Messagerie</p>
-                <p className="text-[12px] text-ink-muted">L’équipe Wael Academy vous répond ici.</p>
+                <p className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">الرسائل</p>
+                <p className="text-[calc(12px*var(--ts))] text-ink-muted">فريق وائل أكاديمي يجاوبك هوني.</p>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Fermer"
+                aria-label="سكّر"
                 className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
               >
                 <X className="size-4.5" />

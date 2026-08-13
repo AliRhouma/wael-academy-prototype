@@ -1,22 +1,35 @@
 /**
- * Matière art for the élève's screens. Every matière has TWO drawings, and the
- * card uses both:
+ * Matière art for the élève's screens.
  *
- * 1. PORTRAIT (`svg icons/illustrations/`) — the Wael illustration, at rest.
+ * 0. BADGE (`svg icons/wael subject new/*.png`) — the NEWEST generation and the
+ *    one the product leads with: a circular medallion, character inside a
+ *    navy-ringed disc that carries its own backdrop, head breaking out over the
+ *    top. Delivered as PNG (~2100px, transparent surround) despite the folder
+ *    name. It supersedes both layers below wherever a matière has one.
+ *
+ * 1. SCENE (`svg icons/<Matière>.svg`) — the previous generation, and where the
+ *    art is heading: a 4:3 drawing that carries its OWN background — character
+ *    plus scenery, edge to edge on the canvas. A scene is not a figure that sits
+ *    on a card, it IS the card's picture, so the grid runs it full-bleed under
+ *    `object-cover` (see SubjectsScreen) with no tint or halo behind it. Used
+ *    byte for byte: unlike the portraits, nothing was dropped or re-cropped —
+ *    the delivered canvas is already the frame. `Philosophie` is the first.
+ *
+ * 2. PORTRAIT (`svg icons/illustrations/`) — the Wael illustration, at rest.
  *    One per matière that actually depicts it; the rest borrow one (see
  *    `portraitFor`). TWO edits were made to these files: the full-canvas white
  *    backdrop path was dropped, and the viewBox was tightened to the drawing so
  *    Wael isn't swimming in margin. No path was touched. The card is tinted with
  *    the portrait's own dominant colour (see `subjectTint`).
  *
- * 2. GLYPH (`icons/subjects/*Icon.tsx`) — the flat gradient icon, converted from
+ * 3. GLYPH (`icons/subjects/*Icon.tsx`) — the flat gradient icon, converted from
  *    `svg icons/` to the Wael tokens, so it follows the active palette. It is
  *    the HOVER art: the card fills with it (see SubjectsScreen).
  *
- * 3. STROKE FALLBACKS (below) — hand-drawn `currentColor` glyphs, kept only as a
+ * 4. STROKE FALLBACKS (below) — hand-drawn `currentColor` glyphs, kept only as a
  *    safety net now that every matière resolves to a portrait.
  *
- * Portraits render as <img>, not inline SVG: a matière grid shows a dozen at
+ * Badges, scenes and portraits all render as <img>, not inline SVG: a matière grid shows a dozen at
  * once, so the browser rasterises each drawing once per size and the DOM stays
  * at one node per icon. As separate documents they also can't collide — the
  * files reuse class names, which would repaint each other if they were inlined.
@@ -26,15 +39,102 @@
 import type { ReactNode } from "react"
 import { cn } from "@/lib/utils"
 import { Eyes } from "./subjects/Eyes"
+import { SubjectsIcon } from "./SubjectsIcon"
 
 // The designer's folders, one level above `src`. Imported as urls by Vite — the
 // files are used byte for byte, exactly as delivered.
+import mathsScene from "../../../svg icons/maths.svg"
+import philoScene from "../../../svg icons/Philo.svg"
 import anglaisPortrait from "../../../svg icons/illustrations/english not hover.svg"
 import anglaisPortraitHover from "../../../svg icons/illustrations/english on hover.svg"
 import francaisPortrait from "../../../svg icons/illustrations/Frensh.svg"
 import mathPortrait from "../../../svg icons/illustrations/Math.svg"
 import mathAltPortrait from "../../../svg icons/illustrations/Math 2.svg"
 import physiquePortrait from "../../../svg icons/illustrations/physics.svg"
+
+// BADGES — the newest delivery (`svg icons/wael subject new`). PNG, not SVG,
+// despite the folder name; ~2100px square with a transparent surround.
+import algoBadge from "../../../svg icons/wael subject new/Algo.png"
+import arabicBadge from "../../../svg icons/wael subject new/Arabic.png"
+import infoBadge from "../../../svg icons/wael subject new/Info.png"
+import islamicBadge from "../../../svg icons/wael subject new/Islamic.png"
+import physiqueBadge from "../../../svg icons/wael subject new/Physique.png"
+import sciencesBadge from "../../../svg icons/wael subject new/Sciences.png"
+import economieBadge from "../../../svg icons/wael subject new/econimie.png"
+import electriqueBadge from "../../../svg icons/wael subject new/electric.png"
+import francaisBadge from "../../../svg icons/wael subject new/frensh.png"
+import geoBadge from "../../../svg icons/wael subject new/geaography.png"
+import allemandBadge from "../../../svg icons/wael subject new/germany.png"
+import gestionBadge from "../../../svg icons/wael subject new/gestion.png"
+import mathBadge from "../../../svg icons/wael subject new/math.png"
+import mecaniqueBadge from "../../../svg icons/wael subject new/mecanique.png"
+import espagnolBadge from "../../../svg icons/wael subject new/spain.png"
+// Philosophie is the first badge delivered as SVG, with its eye shapes flagged
+// so the gaze overlay can drive them — see `subjects/eyeGeometry.ts`.
+import philoBadge from "../../../svg icons/Group 60.svg"
+
+/**
+ * BADGES, by matière name exactly as seeded — the art the product leads with now.
+ *
+ * A badge is a self-contained circular medallion: the character stands inside a
+ * navy-ringed disc that carries its own backdrop, and his head breaks out over
+ * the top of the ring. That shape decides how it renders — see `SubjectIcon`:
+ *  - `contain`, never `cover`, or the ring gets cropped;
+ *  - NO halo behind it (the disc already is one — a blur would peek out);
+ *  - the gaze overlay only where the badge shipped as SVG with its eye shapes
+ *    flagged (Philosophie so far). Each badge poses the face differently, so it
+ *    needs its OWN measured geometry — see `subjects/eyeGeometry.ts`, generated
+ *    by `scripts/extract-eyes.mjs`. A flat PNG badge keeps its drawn gaze.
+ *
+ * Keyed by name like scenes, not borrowed like portraits: a badge draws its own
+ * matière. Two pairs legitimately SHARE one drawing — تفكير إسلامي with تربية
+ * إسلامية, and الحضارة with them — because the same illustration depicts them.
+ * A matière with no badge falls through to a scene, then to a portrait, so the
+ * grid stays whole while the set fills in.
+ */
+const BADGE_BY_NAME: Record<string, string> = {
+  "رياضيات": mathBadge,
+  "خوارزميات": algoBadge,
+  "إعلامية": infoBadge,
+  "علوم فيزيائية": physiqueBadge,
+  "علوم الحياة والأرض": sciencesBadge,
+  "فرنسية": francaisBadge,
+  "عربية": arabicBadge,
+  "الأدب العربي": arabicBadge,
+  "تربية إسلامية": islamicBadge,
+  "تفكير إسلامي": islamicBadge,
+  "الحضارة العربية والإسلامية": islamicBadge,
+  "تاريخ وجغرافيا": geoBadge,
+  "اقتصاد": economieBadge,
+  "تصرّف": gestionBadge,
+  "ميكانيك": mecaniqueBadge,
+  "تكنولوجيا": mecaniqueBadge,
+  "كهرباء": electriqueBadge,
+  "ألمانية": allemandBadge,
+  "إسبانية": espagnolBadge,
+  "فلسفة": philoBadge,
+}
+
+/** The badge a matière owns, or undefined — the caller then tries a scene. */
+export function badgeFor(name: string): string | undefined {
+  return BADGE_BY_NAME[name]
+}
+
+/**
+ * SCENES, by matière name exactly as seeded. Keyed by NAME, not by a shared id:
+ * a scene draws its own matière and is never borrowed the way a portrait is —
+ * Wael reading Descartes can't stand in for Économie. A matière with no scene
+ * yet falls back to a portrait, so the grid stays whole while the set fills in.
+ */
+const SCENE_BY_NAME: Record<string, string> = {
+  "رياضيات": mathsScene,
+  "فلسفة": philoScene,
+}
+
+/** The 4:3 scene a matière owns, or undefined — the caller then draws a portrait. */
+export function sceneFor(name: string): string | undefined {
+  return SCENE_BY_NAME[name]
+}
 
 /** The five portraits, by id. `subjectTint` colours a card from the same id. */
 export type PortraitId = "math" | "math2" | "physics" | "french" | "english"
@@ -61,11 +161,11 @@ const POOL: PortraitId[] = ["math", "math2", "physics", "french", "english"]
  * elsewhere.
  */
 const PORTRAIT_BY_NAME: Record<string, PortraitId> = {
-  "Mathématiques": "math",
-  "Algorithmique": "math2",
-  "Sciences physiques": "physics",
-  "Français": "french",
-  "Anglais": "english",
+  "رياضيات": "math",
+  "خوارزميات": "math2",
+  "علوم فيزيائية": "physics",
+  "فرنسية": "french",
+  "أنڤليزية": "english",
 }
 
 /**
@@ -124,7 +224,7 @@ function Glyph({ className, children }: { className?: string; children: ReactNod
 
 type FallbackKey =
   | "islamique" | "histoireGeo" | "economie" | "gestion"
-  | "algorithmique" | "adab" | "hadara" | "livre"
+  | "algorithmique" | "adab" | "hadara"
 
 /** Crescent + star — Éducation / Pensée islamique. */
 const Islamique = (
@@ -189,14 +289,6 @@ const Hadara = (
   </>
 )
 
-/** Closed book — last-resort fallback for any unmapped matière. */
-const Livre = (
-  <>
-    <path d="M7 8 A2.5 2.5 0 0 1 9.5 5.5 H25 V26.5 H9.5 A2.5 2.5 0 0 1 7 24 Z" />
-    <path d="M7 24 A2.5 2.5 0 0 1 9.5 21.5 H25" />
-  </>
-)
-
 const FALLBACKS: Record<FallbackKey, ReactNode> = {
   islamique: Islamique,
   histoireGeo: HistoireGeo,
@@ -205,15 +297,14 @@ const FALLBACKS: Record<FallbackKey, ReactNode> = {
   algorithmique: Algorithmique,
   adab: Adab,
   hadara: Hadara,
-  livre: Livre,
 }
 
 const FALLBACK_BY_NAME: Record<string, FallbackKey> = {
-  "Éducation islamique": "islamique",
-  "Pensée islamique": "islamique",
-  "Histoire-Géographie": "histoireGeo",
-  "Économie": "economie",
-  "Gestion": "gestion",
+  "تربية إسلامية": "islamique",
+  "تفكير إسلامي": "islamique",
+  "تاريخ وجغرافيا": "histoireGeo",
+  "اقتصاد": "economie",
+  "تصرّف": "gestion",
   "الأدب العربي": "adab",
   "الحضارة العربية والإسلامية": "hadara",
 }
@@ -235,9 +326,23 @@ const FALLBACK_BY_NAME: Record<string, FallbackKey> = {
  * reduced motion, it renders nothing and the portrait is untouched.
  */
 export function SubjectIcon({ name, className }: { name: string; className?: string }) {
+  const badge = badgeFor(name)
   const id = portraitFor(name)
   const art = PORTRAIT[id]
   const happy = PORTRAIT_HOVER[id]
+
+  // A badge is finished art — it needs no expression swap and no gaze overlay
+  // (see BADGE_BY_NAME), so it renders as one plain, undistorted image.
+  if (badge) {
+    return (
+      <span className={cn("relative block", className)} aria-hidden="true">
+        <img src={badge} alt="" draggable={false} className="size-full object-contain" />
+        {/* Renders only for the badges whose SVG shipped marked eyes; the rest
+            are flat PNG and show the drawn gaze untouched. */}
+        <Eyes subject={name} className="absolute inset-0 size-full object-contain" />
+      </span>
+    )
+  }
 
   if (art) {
     // The portraits aren't square (the tightened viewBoxes are ~1480×1700) and
@@ -267,9 +372,10 @@ export function SubjectIcon({ name, className }: { name: string; className?: str
       </span>
     )
   }
-  return (
-    <Glyph className={cn("text-brand-500", className)}>
-      {FALLBACKS[FALLBACK_BY_NAME[name] ?? "livre"]}
-    </Glyph>
-  )
+  const fallback = FALLBACK_BY_NAME[name]
+  // No art AND no hand-drawn stand-in: the delivered subjects book is the
+  // generic matière mark now — it replaces the stroke "livre" that used to be
+  // the last resort, so an unmapped matière still lands on the real icon set.
+  if (!fallback) return <SubjectsIcon className={className} />
+  return <Glyph className={cn("text-brand-500", className)}>{FALLBACKS[fallback]}</Glyph>
 }

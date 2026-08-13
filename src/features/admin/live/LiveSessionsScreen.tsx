@@ -30,7 +30,7 @@ const INPUT =
 
 /** A muted pill used for a group or a course reference on the card. */
 const REF_CHIP =
-  "inline-flex items-center gap-1.5 rounded-full bg-neutral-100 px-2.5 py-0.5 text-[12px] font-medium text-ink-subtle"
+  "inline-flex items-center gap-1.5 rounded-full bg-neutral-100 px-2.5 py-0.5 text-[calc(12px*var(--ts))] font-medium text-ink-subtle"
 
 /** Admin — sessions en direct: named join links tied to matières, groups & docs. */
 export default function AdminLiveSessionsScreen() {
@@ -82,14 +82,14 @@ export default function AdminLiveSessionsScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeLiveSession(deleteTarget.id)
-    show("Session supprimée")
+    show("الحصّة تمسحت")
     setDeleteTarget(null)
   }
 
   function openResource(id: string) {
     const r = resourceById.get(id)
     if (r?.pdf.url) window.open(r.pdf.url, "_blank", "noopener,noreferrer")
-    else show("Aperçu du document — bientôt")
+    else show("معاينة الوثيقة — قريب")
   }
 
   const addButton = (
@@ -98,7 +98,7 @@ export default function AdminLiveSessionsScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Nouvelle session
+      <Plus className="size-4" /> حصّة مباشرة جديدة
     </button>
   )
 
@@ -107,8 +107,8 @@ export default function AdminLiveSessionsScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Sessions en direct"
-        subtitle={`${liveSessions.length} session${liveSessions.length > 1 ? "s" : ""} — des liens de visioconférence pour vos élèves.`}
+        title="الحصص المباشرة"
+        subtitle={`${liveSessions.length} حصّة مباشرة — روابط فيديو لتلامذتك.`}
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -116,8 +116,8 @@ export default function AdminLiveSessionsScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Radio}
-            title="Aucune session en direct"
-            description="Créez une session : un nom, un lien de visioconférence et sa ou ses matières."
+            title="ما فماش حصص مباشرة"
+            description="اعمل حصّة: اسم ورابط فيديو والمادّة ولا الموادّ متاعها."
             action={addButton}
           />
         </div>
@@ -128,7 +128,7 @@ export default function AdminLiveSessionsScreen() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher une session, une matière…"
+              placeholder="لوّج على حصّة ولا مادّة…"
               className={INPUT + " ps-9"}
             />
           </div>
@@ -137,8 +137,8 @@ export default function AdminLiveSessionsScreen() {
             <div className="rounded-lg border border-dashed border-border bg-surface">
               <EmptyState
                 icon={Search}
-                title="Aucun résultat"
-                description="Aucune session ne correspond à cette recherche."
+                title="ما فماش نتائج"
+                description="ما فماش حصّة توافق البحث هذا."
               />
             </div>
           ) : (
@@ -161,7 +161,7 @@ export default function AdminLiveSessionsScreen() {
                         </span>
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p dir="auto" className="font-display text-[15px] font-bold text-ink">
+                        <p dir="auto" className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">
                           {ls.name}
                         </p>
                         <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -178,9 +178,9 @@ export default function AdminLiveSessionsScreen() {
                       </div>
                       <OverflowMenu
                         actions={[
-                          { label: "Modifier", icon: Pencil, onClick: () => openEdit(ls) },
+                          { label: "بدّل", icon: Pencil, onClick: () => openEdit(ls) },
                           {
-                            label: "Supprimer",
+                            label: "امسح",
                             icon: Trash2,
                             tone: "danger",
                             onClick: () => setDeleteTarget(ls),
@@ -189,7 +189,7 @@ export default function AdminLiveSessionsScreen() {
                       />
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-y border-border/70 py-2 text-[13px] text-ink-subtle">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-y border-border/70 py-2 text-[calc(13px*var(--ts))] text-ink-subtle">
                       <span className="inline-flex items-center gap-1.5">
                         <CalendarDays className="size-4 text-ink-muted" />
                         <span className="capitalize">{formatSessionDay(ls.date)}</span>
@@ -207,7 +207,7 @@ export default function AdminLiveSessionsScreen() {
                       <div>
                         <Badge tone="info">
                           <Tag className="size-3.5" />
-                          <span dir="auto">{offerName.get(ls.offerId) ?? "Offre"}</span>
+                          <span dir="auto">{offerName.get(ls.offerId) ?? "عرض"}</span>
                         </Badge>
                       </div>
                     )}
@@ -236,7 +236,7 @@ export default function AdminLiveSessionsScreen() {
                             key={r.id}
                             type="button"
                             onClick={() => openResource(r.id)}
-                            className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 py-0.5 text-[12px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
+                            className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 py-0.5 text-[calc(12px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
                           >
                             <FileText className="size-3.5 text-danger-500" />
                             <span dir="auto" className="max-w-[12rem] truncate">
@@ -253,7 +253,7 @@ export default function AdminLiveSessionsScreen() {
                       rel="noopener noreferrer"
                       className="mt-auto inline-flex h-10 items-center justify-center gap-2 rounded-md border border-brand-200 bg-brand-50 px-4 text-sm font-medium text-brand-700 transition hover:bg-brand-100"
                     >
-                      <ExternalLink className="size-4" /> Ouvrir le lien
+                      <ExternalLink className="size-4" /> حلّ الرابط
                     </a>
                   </div>
                 )
@@ -273,9 +273,9 @@ export default function AdminLiveSessionsScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cette session ?"
+        title="تحبّ تمسح الحصّة هذي؟"
         description={
-          deleteTarget ? `« ${deleteTarget.name} » sera définitivement supprimée.` : undefined
+          deleteTarget ? `«${deleteTarget.name}» باش تتمسح نهائيا.` : undefined
         }
         onConfirm={confirmDelete}
       />

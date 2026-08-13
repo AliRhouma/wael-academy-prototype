@@ -80,14 +80,16 @@ export function WaelProgress({
           shadow keeps it lifted off both the fill and the empty track. */}
       <span
         className={cn(
-          "pointer-events-none absolute top-1/2 left-0 block overflow-hidden rounded-full",
-          "border-2 shadow-[0_1px_3px_rgb(21_58_45/0.22)] transition-[left] duration-500",
+          "pointer-events-none absolute top-1/2 start-0 block overflow-hidden rounded-full",
+          "border-2 shadow-[0_1px_3px_rgb(21_58_45/0.22)] transition-[inset-inline-start] duration-500",
           s.chip,
           chipClassName,
         )}
         style={{
-          left: `clamp(${s.half}px, ${p}%, calc(100% - ${s.half}px))`,
-          transform: "translate(-50%, -50%)",
+          insetInlineStart: `clamp(${s.half}px, ${p}%, calc(100% - ${s.half}px))`,
+          /* RTL: the offset runs from the right edge, so the chip centres on its
+             mark by shifting +50% (the mirror of the LTR -50%). */
+          transform: "translate(50%, -50%)",
         }}
       >
         <img
@@ -97,8 +99,8 @@ export function WaelProgress({
           /* contain, not cover: the art is taller than wide, and cover ate his
              beard. The whole head has to fit inside the chip's padding. */
           className="size-full object-contain object-center"
-          /* Negative X mirrors him toward the finish. */
-          style={{ transform: "scaleX(-1)" }}
+          /* The finish line is on the LEFT in RTL, and the art already faces
+             that way — no mirroring here (the LTR build needed scaleX(-1)). */
         />
       </span>
     </div>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-label="Silver">
+  <defs>
+    <linearGradient id="s-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f5f7f5"/>
+      <stop offset=".55" stop-color="#d9e3dd"/>
+      <stop offset="1" stop-color="#b6c0ba"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded hexagon: the shared silhouette of every tier medallion. -->
+  <polygon points="48,10 82,29 82,67 48,86 14,67 14,29"
+           fill="url(#s-fill)" stroke="url(#s-fill)" stroke-width="9" stroke-linejoin="round"/>
+  <polygon points="48,18 75,33 75,63 48,78 21,63 21,33"
+           fill="none" stroke="#ffffff" stroke-opacity=".7" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- One spark = the entry rung of the ladder. -->
+  <path d="M48 31 Q51.6 44.4 65 48 Q51.6 51.6 48 65 Q44.4 51.6 31 48 Q44.4 44.4 48 31 Z" fill="#ffffff"/>
+</svg>

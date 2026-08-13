@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Check, KeyRound, Pencil, Plus, Search, Tag, Trash2 } from "lucide-react"
+import { Check, KeyRound, ListChecks, Pencil, Plus, Search, Sparkles, Tag, Trash2 } from "lucide-react"
 import { PageHeader } from "@/components/kit/PageHeader"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { DataTable, type Column } from "@/components/kit/DataTable"
@@ -8,7 +8,7 @@ import { FormSheet } from "@/components/kit/FormSheet"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
-import type { Access, Offer } from "@/data/types"
+import type { Access, Offer, OfferTier } from "@/data/types"
 import { AccessFormSheet } from "./AccessFormSheet"
 import { OffersTabs } from "./OffersTabs"
 import { scopeSummary } from "./accessMeta"
@@ -16,10 +16,10 @@ import { scopeSummary } from "./accessMeta"
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
-/** Format a dinar amount the Tunisian way: "360 DT", no cents unless needed. */
+/** Format a dinar amount the Tunisian way: "360 د.ت", no cents unless needed. */
 function formatPrice(n: number): string {
   const s = Number.isInteger(n) ? n.toString() : n.toFixed(3).replace(/\.?0+$/, "")
-  return `${s} DT`
+  return `${s} د.ت`
 }
 
 /** Shown discount: the stored % when set, else derived from the promo price. */
@@ -30,7 +30,7 @@ function discountPct(o: Offer): number | null {
 }
 
 /** "1 sept. 2026" — compact date for the validity column. */
-const DAY = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" })
+const DAY = new Intl.DateTimeFormat("ar-TN-u-nu-latn", { day: "numeric", month: "short", year: "numeric" })
 const day = (iso: string) => DAY.format(new Date(`${iso}T00:00:00`))
 
 /** The offer's logo — its image when set, else a quiet brand tile. */
@@ -50,6 +50,22 @@ function OfferLogo({ offer }: { offer: Offer }) {
     </span>
   )
 }
+
+/**
+ * The commercial ladder. Each rung ships its own medallion — picking a tier in
+ * the form prefills the logo, so the catalogue card stays visually consistent.
+ */
+const TIERS: { key: OfferTier; label: string; logo: string }[] = [
+  { key: "silver", label: "Silver", logo: "/offers/silver.svg" },
+  { key: "gold", label: "Gold", logo: "/offers/gold.svg" },
+  { key: "early", label: "بدري", logo: "/offers/early.svg" },
+  { key: "integral", label: "وائل للخر", logo: "/offers/integral.svg" },
+]
+const TIER_LOGOS = TIERS.map((t) => t.logo)
+
+/** "a\nb\n" ⇄ ["a","b"] — the textarea editors for features / price notes. */
+const linesToList = (s: string) => s.split("\n").map((l) => l.trim()).filter(Boolean)
+const listToLines = (l?: string[]) => (l ?? []).join("\n")
 
 type PriceFilter = "all" | "promo" | "full"
 
@@ -78,6 +94,15 @@ export default function AdminOffersScreen() {
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   const [period, setPeriod] = useState("")
+  const [tier, setTier] = useState<OfferTier | "">("")
+  const [billing, setBilling] = useState<"" | "monthly" | "annual">("")
+  const [popular, setPopular] = useState(false)
+  const [tagline, setTagline] = useState("")
+  const [audience, setAudience] = useState("")
+  const [priceLabel, setPriceLabel] = useState("")
+  const [pricePeriod, setPricePeriod] = useState("")
+  const [featuresText, setFeaturesText] = useState("")
+  const [priceNotesText, setPriceNotesText] = useState("")
   const [accessIds, setAccessIds] = useState<string[]>([])
   const [accessFormOpen, setAccessFormOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<Offer | null>(null)
@@ -94,7 +119,7 @@ export default function AdminOffersScreen() {
   )
 
   const sortedAccesses = useMemo(
-    () => [...accesses].sort((a, b) => a.name.localeCompare(b.name, "fr")),
+    () => [...accesses].sort((a, b) => a.name.localeCompare(b.name, "ar")),
     [accesses],
   )
 
@@ -115,7 +140,7 @@ export default function AdminOffersScreen() {
             (o.description?.toLowerCase().includes(q) ?? false) ||
             o.yearIds.some((yid) => yearName.get(yid)?.toLowerCase().includes(q) ?? false),
       )
-      .sort((a, b) => a.name.localeCompare(b.name, "fr"))
+      .sort((a, b) => a.name.localeCompare(b.name, "ar"))
   }, [offers, priceFilter, query, yearName])
 
   function openAdd() {
@@ -130,6 +155,15 @@ export default function AdminOffersScreen() {
     setStartDate("")
     setEndDate("")
     setPeriod("")
+    setTier("")
+    setBilling("")
+    setPopular(false)
+    setTagline("")
+    setAudience("")
+    setPriceLabel("")
+    setPricePeriod("")
+    setFeaturesText("")
+    setPriceNotesText("")
     setAccessIds([])
     setFormOpen(true)
   }
@@ -146,8 +180,26 @@ export default function AdminOffersScreen() {
     setStartDate(offer.startDate ?? "")
     setEndDate(offer.endDate ?? "")
     setPeriod(offer.period ?? "")
+    setTier(offer.tier ?? "")
+    setBilling(offer.billing ?? "")
+    setPopular(offer.popular === true)
+    setTagline(offer.tagline ?? "")
+    setAudience(offer.audience ?? "")
+    setPriceLabel(offer.priceLabel ?? "")
+    setPricePeriod(offer.pricePeriod ?? "")
+    setFeaturesText(listToLines(offer.features))
+    setPriceNotesText(listToLines(offer.priceNotes))
     setAccessIds(offer.accessIds)
     setFormOpen(true)
+  }
+
+  /** Picking a tier swaps in its medallion — unless a custom logo was typed. */
+  function pickTier(next: OfferTier) {
+    const chosen = tier === next ? "" : next
+    setTier(chosen)
+    if (logoUrl.trim() === "" || TIER_LOGOS.includes(logoUrl.trim())) {
+      setLogoUrl(chosen === "" ? "" : (TIERS.find((t) => t.key === chosen)?.logo ?? ""))
+    }
   }
 
   function toggleYear(id: string) {
@@ -182,14 +234,23 @@ export default function AdminOffersScreen() {
       startDate: startDate || undefined,
       endDate: endDate || undefined,
       period: period.trim() || undefined,
+      tier: tier || undefined,
+      billing: billing || undefined,
+      popular: popular || undefined,
+      tagline: tagline.trim() || undefined,
+      audience: audience.trim() || undefined,
+      priceLabel: priceLabel.trim() || undefined,
+      pricePeriod: pricePeriod.trim() || undefined,
+      features: linesToList(featuresText).length > 0 ? linesToList(featuresText) : undefined,
+      priceNotes: linesToList(priceNotesText).length > 0 ? linesToList(priceNotesText) : undefined,
       accessIds,
     }
     if (editing) {
       updateOffer(editing.id, patch)
-      show("Offre modifiée")
+      show("العرض تبدّل")
     } else {
       addOffer(patch)
-      show("Offre ajoutée")
+      show("العرض تزاد")
     }
     setFormOpen(false)
   }
@@ -197,24 +258,31 @@ export default function AdminOffersScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeOffer(deleteTarget.id)
-    show("Offre supprimée")
+    show("العرض تمسح")
     setDeleteTarget(null)
   }
 
   const columns: Column<Offer>[] = [
     {
       key: "name",
-      header: "Offre",
+      header: "عرض",
       render: (o) => (
         <div className="flex items-center gap-3">
           <OfferLogo offer={o} />
           <div className="min-w-0">
-            <p dir="auto" className="truncate font-display text-[15px] font-bold text-ink">
-              {o.name}
+            <p className="flex items-center gap-2">
+              <span dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
+                {o.name}
+              </span>
+              {o.popular && (
+                <Badge tone="brand" className="shrink-0">
+                  <Sparkles className="size-3" /> رواج
+                </Badge>
+              )}
             </p>
-            {o.description ? (
-              <p dir="auto" className="mt-0.5 line-clamp-1 text-[12px] text-ink-muted">
-                {o.description}
+            {o.audience || o.description ? (
+              <p dir="auto" className="mt-0.5 line-clamp-1 text-[calc(12px*var(--ts))] text-ink-muted">
+                {o.audience ?? o.description}
               </p>
             ) : null}
           </div>
@@ -223,49 +291,61 @@ export default function AdminOffersScreen() {
     },
     {
       key: "years",
-      header: "Années",
-      render: (o) =>
-        o.yearIds.length > 0 ? (
-          <span className="text-ink-subtle">
-            {o.yearIds.map((yid) => yearName.get(yid) ?? "—").join(" · ")}
-          </span>
-        ) : (
-          <span className="text-ink-muted">—</span>
-        ),
-    },
-    {
-      key: "price",
-      header: "Tarif",
+      header: "السنوات",
       render: (o) => {
-        const pct = discountPct(o)
-        return pct != null ? (
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-display text-[15px] font-bold text-ink tabular-nums">
-              {formatPrice(o.promoPrice ?? o.price)}
-            </span>
-            {o.promoPrice != null && (
-              <span className="text-[12px] text-ink-muted line-through tabular-nums">
-                {formatPrice(o.price)}
-              </span>
-            )}
-            <Badge tone="warning">-{pct}%</Badge>
-          </div>
-        ) : (
-          <span className="font-display text-[15px] font-bold text-ink tabular-nums">
-            {formatPrice(o.price)}
+        if (o.yearIds.length === 0) return <span className="text-ink-muted">—</span>
+        // A catalogue offer can target a dozen years — list two, count the rest,
+        // and keep the whole list in the tooltip so the row stays one line.
+        const names = o.yearIds.map((yid) => yearName.get(yid) ?? "—")
+        const rest = names.length - 2
+        return (
+          <span dir="auto" className="text-ink-subtle" title={names.join(" · ")}>
+            {names.slice(0, 2).join(" · ")}
+            {rest > 0 && <span className="text-ink-muted"> +{rest}</span>}
           </span>
         )
       },
     },
     {
+      key: "price",
+      header: "التعريفة",
+      render: (o) => {
+        const pct = discountPct(o)
+        const suffix = o.pricePeriod ?? (o.billing === "monthly" ? "/ شهر" : o.billing === "annual" ? "سنويّا" : "")
+        return (
+          <div>
+            {o.priceLabel && (
+              <span className="block text-[calc(11px*var(--ts))] text-ink-muted">{o.priceLabel}</span>
+            )}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="whitespace-nowrap font-display text-[calc(15px*var(--ts))] font-bold text-ink tabular-nums">
+                {formatPrice(o.promoPrice ?? o.price)}
+              </span>
+              {pct != null && o.promoPrice != null && (
+                <span className="whitespace-nowrap text-[calc(12px*var(--ts))] text-ink-muted line-through tabular-nums">
+                  {formatPrice(o.price)}
+                </span>
+              )}
+              {pct != null && <Badge tone="warning">-{pct}%</Badge>}
+            </div>
+            {suffix && (
+              <span className="mt-0.5 block whitespace-nowrap text-[calc(11.5px*var(--ts))] text-ink-muted">
+                {suffix}
+              </span>
+            )}
+          </div>
+        )
+      },
+    },
+    {
       key: "validity",
-      header: "Validité",
+      header: "الصلوحية",
       render: (o) =>
         o.period || o.startDate || o.endDate ? (
-          <div className="text-[13px]">
+          <div className="text-[calc(13px*var(--ts))]">
             {o.period && <p className="font-medium text-ink-subtle">{o.period}</p>}
             {(o.startDate || o.endDate) && (
-              <p className="mt-0.5 whitespace-nowrap text-[12px] text-ink-muted">
+              <p className="mt-0.5 whitespace-nowrap text-[calc(12px*var(--ts))] text-ink-muted">
                 {o.startDate ? day(o.startDate) : "…"} → {o.endDate ? day(o.endDate) : "…"}
               </p>
             )}
@@ -276,15 +356,25 @@ export default function AdminOffersScreen() {
     },
     {
       key: "access",
-      header: "Accès",
-      render: (o) =>
-        o.accessIds.length > 0 ? (
-          <Badge tone="info">
-            <KeyRound className="size-3" /> {o.accessIds.length}
-          </Badge>
-        ) : (
-          <span className="text-ink-muted">—</span>
-        ),
+      header: "المحتوى",
+      render: (o) => {
+        const feats = o.features?.length ?? 0
+        if (feats === 0 && o.accessIds.length === 0) return <span className="text-ink-muted">—</span>
+        return (
+          <div className="flex flex-wrap items-center gap-1.5">
+            {feats > 0 && (
+              <Badge tone="success" title="مميزات الكارت">
+                <ListChecks className="size-3" /> {feats}
+              </Badge>
+            )}
+            {o.accessIds.length > 0 && (
+              <Badge tone="info" title="الصلاحيات">
+                <KeyRound className="size-3" /> {o.accessIds.length}
+              </Badge>
+            )}
+          </div>
+        )
+      },
     },
   ]
 
@@ -294,14 +384,14 @@ export default function AdminOffersScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter une offre
+      <Plus className="size-4" /> زيد عرض
     </button>
   )
 
   const filters: { key: PriceFilter; label: string; count: number }[] = [
-    { key: "all", label: "Toutes", count: offers.length },
-    { key: "promo", label: "En promo", count: promoCount },
-    { key: "full", label: "Plein tarif", count: offers.length - promoCount },
+    { key: "all", label: "الكل", count: offers.length },
+    { key: "promo", label: "في تخفيض", count: promoCount },
+    { key: "full", label: "التعريفة الكاملة", count: offers.length - promoCount },
   ]
 
   const isEmpty = offers.length === 0
@@ -309,8 +399,8 @@ export default function AdminOffersScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Offres"
-        subtitle={`${offers.length} offre${offers.length > 1 ? "s" : ""} — abonnements et packs proposés par l’académie.`}
+        title="العروض"
+        subtitle={`${offers.length} عرض — اشتراكات وباكات تقترحهم الأكاديمية.`}
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -322,7 +412,7 @@ export default function AdminOffersScreen() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher une offre, une année…"
+              placeholder="لوّج على عرض ولا عام…"
               className={INPUT + " ps-9"}
             />
           </div>
@@ -333,8 +423,8 @@ export default function AdminOffersScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Tag}
-            title="Aucune offre"
-            description="Créez les abonnements et packs que vos élèves pourront souscrire."
+            title="ما فماش عروض"
+            description="اعمل الاشتراكات والباكات اللي تلامذتك ينجّمو ياخذوهم."
             action={addButton}
           />
         </div>
@@ -374,15 +464,15 @@ export default function AdminOffersScreen() {
             rows={rows}
             rowKey={(o) => o.id}
             rowActions={(o) => [
-              { label: "Modifier", icon: Pencil, onClick: () => openEdit(o) },
-              { label: "Supprimer", icon: Trash2, tone: "danger", onClick: () => setDeleteTarget(o) },
+              { label: "بدّل", icon: Pencil, onClick: () => openEdit(o) },
+              { label: "امسح", icon: Trash2, tone: "danger", onClick: () => setDeleteTarget(o) },
             ]}
             empty={
               <div className="rounded-lg border border-dashed border-border bg-surface">
                 <EmptyState
                   icon={Search}
-                  title="Aucun résultat"
-                  description="Aucune offre ne correspond à ce filtre ou à cette recherche."
+                  title="ما فماش نتائج"
+                  description="ما فماش عرض يوافق الفلتر ولا البحث هذا."
                 />
               </div>
             }
@@ -393,28 +483,84 @@ export default function AdminOffersScreen() {
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier l’offre" : "Nouvelle offre"}
+        title={editing ? "بدّل العرض" : "عرض جديد"}
         description={
-          editing ? undefined : "Nom, tarif et validité — puis les accès qui définissent son contenu."
+          editing ? undefined : "الاسم والتعريفة والصلوحية — وبعد الصلاحيات اللي تحدّد المحتوى."
         }
-        submitLabel={editing ? "Enregistrer" : "Ajouter"}
+        submitLabel={editing ? "سجّل" : "زيد"}
         onSubmit={submit}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom de l’offre</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">اسم العرض</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Ex. Abonnement annuel — Bac Maths"
+            placeholder="مثال: Gold + — باك رياضيات"
             autoFocus
           />
         </label>
 
+        {/* The rung on the ladder — it picks the card's medallion and accent. */}
+        <div>
+          <span className="mb-2 block text-sm font-medium text-ink-subtle">
+            الباقة <span className="font-normal text-ink-muted">(اختياري)</span>
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {TIERS.map((t) => {
+              const on = tier === t.key
+              return (
+                <button
+                  key={t.key}
+                  type="button"
+                  onClick={() => pickTier(t.key)}
+                  className={
+                    "inline-flex min-h-11 items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium transition " +
+                    (on
+                      ? "border-brand-300 bg-brand-50 text-brand-700 ring-2 ring-brand-500/15"
+                      : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
+                  }
+                >
+                  <img src={t.logo} alt="" className="size-6 shrink-0" />
+                  {t.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          role="switch"
+          aria-checked={popular}
+          onClick={() => setPopular((p) => !p)}
+          className="flex min-h-11 w-full items-center justify-between gap-3 rounded-md border border-border bg-surface-muted px-3.5 py-2 text-start transition hover:border-brand-200"
+        >
+          <span className="min-w-0">
+            <span className="block text-sm font-medium text-ink-subtle">وريه كـ «الأكثر رواجا»</span>
+            <span className="block text-[calc(12px*var(--ts))] text-ink-muted">
+              الكارت يوليّ محاط ومسلّط عليه الضوء في صفحة العروض متاع التلميذ.
+            </span>
+          </span>
+          <span
+            className={
+              "relative h-6 w-11 shrink-0 rounded-full transition " +
+              (popular ? "bg-brand-500" : "bg-neutral-300")
+            }
+          >
+            <span
+              className={
+                "absolute top-0.5 size-5 rounded-full bg-white shadow transition-all " +
+                (popular ? "start-[22px]" : "start-0.5")
+              }
+            />
+          </span>
+        </button>
+
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Logo <span className="font-normal text-ink-muted">(lien d’image, optionnel)</span>
+            Logo <span className="font-normal text-ink-muted">(رابط صورة، اختياري)</span>
           </span>
           <div className="flex items-center gap-3">
             <input
@@ -428,7 +574,7 @@ export default function AdminOffersScreen() {
             {logoUrl.trim() !== "" && (
               <img
                 src={logoUrl}
-                alt="Aperçu du logo"
+                alt="نظرة على اللوغو"
                 className="size-11 shrink-0 rounded-md border border-border bg-surface object-cover p-1"
               />
             )}
@@ -437,21 +583,48 @@ export default function AdminOffersScreen() {
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Description <span className="font-normal text-ink-muted">(optionnel)</span>
+            Description <span className="font-normal text-ink-muted">(اختياري)</span>
           </span>
           <textarea
             className={INPUT.replace("h-11", "min-h-[72px]") + " resize-y py-2.5 text-start"}
             dir="auto"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Ce que l’élève obtient avec cette offre…"
+            placeholder="شنوّة ياخذ التلميذ مع العرض هذا…"
             rows={2}
           />
         </label>
 
+        <div className="grid gap-3 md:grid-cols-2">
+          <label className="block">
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
+              الجملة الترويجية <span className="font-normal text-ink-muted">(اخت.)</span>
+            </span>
+            <input
+              className={INPUT + " text-start"}
+              dir="auto"
+              value={tagline}
+              onChange={(e) => setTagline(e.target.value)}
+              placeholder="مثال: العام الكامل بسومة أرخص من الشهري."
+            />
+          </label>
+          <label className="block">
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
+              موجّه لـ <span className="font-normal text-ink-muted">(اخت.)</span>
+            </span>
+            <input
+              className={INPUT + " text-start"}
+              dir="auto"
+              value={audience}
+              onChange={(e) => setAudience(e.target.value)}
+              placeholder="مثال: لأقسام الثانوي"
+            />
+          </label>
+        </div>
+
         <div>
           <span className="mb-2 block text-sm font-medium text-ink-subtle">
-            Années <span className="font-normal text-ink-muted">({yearIds.length}) · optionnel</span>
+            السنوات <span className="font-normal text-ink-muted">({yearIds.length}) · optionnel</span>
           </span>
           <div className="flex flex-wrap gap-2">
             {sortedYears.map((y) => {
@@ -477,12 +650,12 @@ export default function AdminOffersScreen() {
 
         <div className="grid grid-cols-2 gap-3">
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Prix (DT)</span>
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">السومة (د.ت)</span>
             <input
               className={INPUT + " tabular-nums"}
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              placeholder="Ex. 480"
+              placeholder="مثال: 480"
               inputMode="decimal"
               dir="ltr"
             />
@@ -490,7 +663,7 @@ export default function AdminOffersScreen() {
 
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Prix promo <span className="font-normal text-ink-muted">(opt.)</span>
+              سومة التخفيض <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               className={
@@ -500,22 +673,64 @@ export default function AdminOffersScreen() {
               }
               value={promoPrice}
               onChange={(e) => setPromoPrice(e.target.value)}
-              placeholder="Ex. 360"
+              placeholder="مثال: 360"
               inputMode="decimal"
               dir="ltr"
             />
           </label>
         </div>
         {promoInvalid && (
-          <p className="text-[12px] font-medium text-danger-600">
-            Le prix promo doit être un montant inférieur au prix.
+          <p className="text-[calc(12px*var(--ts))] font-medium text-danger-600">
+            سومة التخفيض لازمها تكون أقلّ من السومة.
           </p>
         )}
+
+        {/* How the price READS on the card: "ابتداءً من  850 د.ت  سنويّا". */}
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+          <label className="block">
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
+              قبل السومة <span className="font-normal text-ink-muted">(اخت.)</span>
+            </span>
+            <input
+              className={INPUT + " text-start"}
+              dir="auto"
+              value={priceLabel}
+              onChange={(e) => setPriceLabel(e.target.value)}
+              placeholder="ابتداءً من"
+            />
+          </label>
+          <label className="block">
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
+              بعد السومة <span className="font-normal text-ink-muted">(اخت.)</span>
+            </span>
+            <input
+              className={INPUT + " text-start"}
+              dir="auto"
+              value={pricePeriod}
+              onChange={(e) => setPricePeriod(e.target.value)}
+              placeholder="عند الخلاص بالحاضر"
+            />
+          </label>
+          <label className="col-span-2 block md:col-span-1">
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
+              نسق الخلاص <span className="font-normal text-ink-muted">(اخت.)</span>
+            </span>
+            <select
+              className={INPUT + " text-start"}
+              value={billing}
+              onChange={(e) => setBilling(e.target.value as typeof billing)}
+            >
+              <option value="">— بلا نسق —</option>
+              <option value="monthly">شهري</option>
+              <option value="annual">سنوي</option>
+            </select>
+          </label>
+        </div>
 
         <div className="grid grid-cols-2 gap-3">
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Remise (%) <span className="font-normal text-ink-muted">(opt.)</span>
+              التخفيض (%) <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               className={
@@ -527,7 +742,7 @@ export default function AdminOffersScreen() {
               }
               value={discount}
               onChange={(e) => setDiscount(e.target.value)}
-              placeholder="Ex. 25"
+              placeholder="مثال: 25"
               inputMode="numeric"
               dir="ltr"
             />
@@ -535,26 +750,26 @@ export default function AdminOffersScreen() {
 
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Période <span className="font-normal text-ink-muted">(opt.)</span>
+              المدّة <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               className={INPUT}
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
-              placeholder="Ex. 3 mois"
+              placeholder="مثال: 3 شهور"
             />
           </label>
         </div>
         {discountInvalid && (
-          <p className="text-[12px] font-medium text-danger-600">
-            La remise doit être un pourcentage entre 1 et 99.
+          <p className="text-[calc(12px*var(--ts))] font-medium text-danger-600">
+            التخفيض لازمو يكون نسبة بين 1 و 99.
           </p>
         )}
 
         <div className="grid grid-cols-2 gap-3">
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Début <span className="font-normal text-ink-muted">(opt.)</span>
+              البداية <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               type="date"
@@ -566,7 +781,7 @@ export default function AdminOffersScreen() {
           </label>
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Fin <span className="font-normal text-ink-muted">(opt.)</span>
+              النهاية <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               type="date"
@@ -581,29 +796,64 @@ export default function AdminOffersScreen() {
           </label>
         </div>
         {datesInvalid && (
-          <p className="text-[12px] font-medium text-danger-600">
-            La date de fin doit être après la date de début.
+          <p className="text-[calc(12px*var(--ts))] font-medium text-danger-600">
+            تاريخ النهاية لازمو يكون بعد تاريخ البداية.
           </p>
         )}
+
+        {/* The card's checklist — one feature per line, in the order shown. */}
+        <label className="block">
+          <span className="mb-1.5 flex items-center justify-between text-sm font-medium text-ink-subtle">
+            <span className="inline-flex items-center gap-1.5">
+              <ListChecks className="size-4 text-ink-muted" />
+              المميزات <span className="font-normal text-ink-muted">(سطر لكل ميزة)</span>
+            </span>
+            <span className="text-[calc(12px*var(--ts))] font-normal tabular-nums text-ink-muted">
+              {linesToList(featuresText).length}
+            </span>
+          </span>
+          <textarea
+            className={INPUT.replace("h-11", "min-h-[104px]") + " resize-y py-2.5 text-start leading-relaxed"}
+            dir="auto"
+            value={featuresText}
+            onChange={(e) => setFeaturesText(e.target.value)}
+            placeholder={"فيديوهات تفسير الدروس\nتمارين مرفقة بالإصلاح وكويزات تفاعلية\nمجلات تلاخيص الدروس"}
+            rows={4}
+          />
+        </label>
+
+        <label className="block">
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
+            ملاحظات تحت السومة <span className="font-normal text-ink-muted">(سطر لكل ملاحظة، اخت.)</span>
+          </span>
+          <textarea
+            className={INPUT.replace("h-11", "min-h-[72px]") + " resize-y py-2.5 text-start leading-relaxed"}
+            dir="auto"
+            value={priceNotesText}
+            onChange={(e) => setPriceNotesText(e.target.value)}
+            placeholder={"• السومة بالحاضر.\n• مع إمكانية الخلاص بالتقسيط — كلّمنا."}
+            rows={2}
+          />
+        </label>
 
         {/* The offer's accesses: reuse existing rules or create one on the fly. */}
         <div>
           <span className="mb-2 flex items-center justify-between text-sm font-medium text-ink-subtle">
             <span className="inline-flex items-center gap-1.5">
               <KeyRound className="size-4 text-ink-muted" />
-              Accès <span className="font-normal text-ink-muted">({accessIds.length}) · optionnel</span>
+              الصلاحيات <span className="font-normal text-ink-muted">({accessIds.length}) · optionnel</span>
             </span>
             <button
               type="button"
               onClick={() => setAccessFormOpen(true)}
-              className="text-[12px] font-medium text-brand-600 hover:underline"
+              className="text-[calc(12px*var(--ts))] font-medium text-brand-600 hover:underline"
             >
-              + Créer un accès
+              + اعمل صلاحية
             </button>
           </span>
           {sortedAccesses.length === 0 ? (
             <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-              Aucun accès pour le moment — créez-en un pour définir ce que l’offre montre.
+              ما فماش صلاحيات توّا — اعمل وحدة باش تحدّد شنوّة يوري العرض.
             </p>
           ) : (
             <div className="max-h-56 overflow-y-auto scroll-touch rounded-md border border-border">
@@ -631,7 +881,7 @@ export default function AdminOffersScreen() {
                           <span dir="auto" className="block truncate text-sm font-medium text-ink">
                             {a.name}
                           </span>
-                          <span className="block truncate text-[12px] text-ink-muted">
+                          <span className="block truncate text-[calc(12px*var(--ts))] text-ink-muted">
                             {scopeSummary(a)}
                           </span>
                         </span>
@@ -660,9 +910,9 @@ export default function AdminOffersScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cette offre ?"
+        title="تحبّ تمسح العرض هذا؟"
         description={
-          deleteTarget ? `« ${deleteTarget.name} » sera définitivement supprimée.` : undefined
+          deleteTarget ? `«${deleteTarget.name}» باش تتمسح نهائيا.` : undefined
         }
         onConfirm={confirmDelete}
       />

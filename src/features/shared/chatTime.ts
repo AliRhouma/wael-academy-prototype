@@ -6,8 +6,8 @@ export function formatChatTime(iso: string): string {
     d.getFullYear() === now.getFullYear() &&
     d.getMonth() === now.getMonth() &&
     d.getDate() === now.getDate()
-  const time = d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
+  const time = d.toLocaleTimeString("ar-TN-u-nu-latn", { hour: "2-digit", minute: "2-digit", hour12: false })
   if (sameDay) return time
-  const day = d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" })
+  const day = d.toLocaleDateString("ar-TN-u-nu-latn", { day: "numeric", month: "short" })
   return `${day} ${time}`
 }

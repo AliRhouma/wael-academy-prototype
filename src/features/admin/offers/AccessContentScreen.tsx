@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { ArrowLeft, Check, Eye, EyeOff, KeyRound, ListTree, SlidersHorizontal, Video } from "lucide-react"
+import { ArrowRight, Check, Eye, EyeOff, KeyRound, ListTree, SlidersHorizontal, Video } from "lucide-react"
 import { PageHeader } from "@/components/kit/PageHeader"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { useToast } from "@/components/kit/Toast"
@@ -11,13 +11,13 @@ import { AccessFormSheet } from "./AccessFormSheet"
 
 /** Singular label of one tree leaf, by its resource kind. */
 const LEAF_LABEL: Record<string, string> = {
-  cours: "Cours",
-  exercice: "Exercice",
-  serie: "Série",
-  resume: "Résumé",
-  quiz: "Quiz",
-  quizExam: "Examen de quiz",
-  path: "Parcours",
+  cours: "دروس",
+  exercice: "تمرين",
+  serie: "سلسلة",
+  resume: "ملخّص",
+  quiz: "كويز",
+  quizExam: "اختبار كويز",
+  path: "مسارات",
 }
 
 interface Leaf {
@@ -62,7 +62,7 @@ function LeafRow({
         >
           {leaf.title}
         </span>
-        <span className="shrink-0 text-[11px] font-medium uppercase tracking-wide text-ink-muted">
+        <span className="shrink-0 text-[calc(11px*var(--ts))] font-medium uppercase tracking-wide text-ink-muted">
           {LEAF_LABEL[leaf.kind] ?? leaf.kind}
         </span>
       </button>
@@ -179,14 +179,14 @@ export default function AdminAccessContentScreen() {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={KeyRound}
-          title="Accès introuvable"
-          description="Cette règle d’accès n’existe plus."
+          title="الصلاحية ما تلقاتش"
+          description="قاعدة الصلاحية هذي ما عادتش موجودة."
           action={
             <Link
               to="/admin/offers/access"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
             >
-              <ArrowLeft className="size-4 rtl:rotate-180" /> Retour aux accès
+              <ArrowRight className="size-4" /> ارجع للصلاحيات
             </Link>
           }
         />
@@ -219,17 +219,17 @@ export default function AdminAccessContentScreen() {
         to="/admin/offers/access"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-subtle transition hover:text-brand-600"
       >
-        <ArrowLeft className="size-4 rtl:rotate-180" /> Accès
+        <ArrowRight className="size-4" /> الصلاحيات
       </Link>
 
       <PageHeader
         title={access.name}
         subtitle={
           isEmpty
-            ? "Aucune ressource ne correspond aux filtres de cet accès."
-            : `${allIds.length} ressource${allIds.length > 1 ? "s" : ""} dans le périmètre · ${
-                hiddenCount > 0 ? `${hiddenCount} masquée${hiddenCount > 1 ? "s" : ""}` : "aucune masquée"
-              } — décochez pour masquer.`
+            ? "ما فماش مورد يوافق فلاتر الصلاحية هذي."
+            : `${allIds.length} مورد في المجال · ${
+                hiddenCount > 0 ? `${hiddenCount} مخفية` : "ما فماش وحدة مخفية"
+              } — نحّي العلامة باش تخبّي.`
         }
         action={
           <button
@@ -237,7 +237,7 @@ export default function AdminAccessContentScreen() {
             onClick={() => setFiltersOpen(true)}
             className="inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-10"
           >
-            <SlidersHorizontal className="size-4" /> Modifier les filtres
+            <SlidersHorizontal className="size-4" /> بدّل الفلاتر
           </button>
         }
       />
@@ -246,8 +246,8 @@ export default function AdminAccessContentScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={ListTree}
-            title="Périmètre vide"
-            description="Élargissez les filtres (types, niveaux, matières…) pour voir des ressources ici."
+            title="المجال فارغ"
+            description="وسّع الفلاتر (الأنواع، المستويات، الموادّ…) باش تشوف موارد هوني."
           />
         </div>
       ) : (
@@ -255,7 +255,7 @@ export default function AdminAccessContentScreen() {
           {/* -------- Syllabus content: Niveau → Matière → Chapitre -------- */}
           {tree.yearBlocks.map(({ year, subjectBlocks }) => (
             <section key={year.id}>
-              <h2 className="mb-2 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+              <h2 className="mb-2 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
                 {year.name}
               </h2>
               <div className="grid gap-3">
@@ -266,7 +266,7 @@ export default function AdminAccessContentScreen() {
                   >
                     <p
                       dir="auto"
-                      className="border-b border-border bg-surface-muted px-4 py-2.5 font-display text-[14px] font-bold text-ink"
+                      className="border-b border-border bg-surface-muted px-4 py-2.5 font-display text-[calc(14px*var(--ts))] font-bold text-ink"
                     >
                       {subject.name}
                     </p>
@@ -276,11 +276,11 @@ export default function AdminAccessContentScreen() {
                         return (
                           <div key={chapter.id} className="py-1.5">
                             <p className="flex items-center justify-between px-3 py-1.5">
-                              <span dir="auto" className="text-[13px] font-medium text-ink-subtle">
+                              <span dir="auto" className="text-[calc(13px*var(--ts))] font-medium text-ink-subtle">
                                 {chapter.name}
                               </span>
-                              <span className="text-[11px] tabular-nums text-ink-muted">
-                                {shown}/{leaves.length}
+                              <span className="text-[calc(11px*var(--ts))] tabular-nums text-ink-muted">
+                                <span className="num">{shown}/{leaves.length}</span>
                               </span>
                             </p>
                             <ul>
@@ -298,8 +298,8 @@ export default function AdminAccessContentScreen() {
                       })}
                       {pathLeaves.length > 0 && (
                         <div className="py-1.5">
-                          <p className="px-3 py-1.5 text-[13px] font-medium text-ink-subtle">
-                            Parcours
+                          <p className="px-3 py-1.5 text-[calc(13px*var(--ts))] font-medium text-ink-subtle">
+                            مسارات
                           </p>
                           <ul>
                             {pathLeaves.map((leaf) => (
@@ -323,8 +323,8 @@ export default function AdminAccessContentScreen() {
           {/* -------- Recorded séances -------- */}
           {tree.sessionLeaves.length > 0 && (
             <section>
-              <h2 className="mb-2 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-                <Video className="size-3.5" /> Séances enregistrées
+              <h2 className="mb-2 flex items-center gap-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+                <Video className="size-3.5" /> الحصص المسجّلة
               </h2>
               <div className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
                 <ul className="divide-y divide-border">
@@ -357,7 +357,7 @@ export default function AdminAccessContentScreen() {
                             >
                               {s.title}
                             </span>
-                            <span className="block truncate text-[12px] text-ink-muted">
+                            <span className="block truncate text-[calc(12px*var(--ts))] text-ink-muted">
                               <span className="capitalize">{formatSessionDay(s.date)}</span> ·{" "}
                               <span className="tabular-nums">{s.startTime}</span> ·{" "}
                               <span className="tabular-nums">{s.academicYear}</span>

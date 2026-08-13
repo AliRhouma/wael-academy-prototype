@@ -24,25 +24,25 @@ const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
 const ROLE: Record<Role, { label: string; tone: BadgeTone }> = {
-  admin: { label: "Admin", tone: "info" },
-  teacher: { label: "Enseignant", tone: "brand" },
-  parent: { label: "Parent", tone: "warning" },
-  student: { label: "Élève", tone: "neutral" },
+  admin: { label: "أدمين", tone: "info" },
+  teacher: { label: "أستاذ", tone: "brand" },
+  parent: { label: "ولي", tone: "warning" },
+  student: { label: "تلميذ", tone: "neutral" },
 }
 
 /** Field → French label, used to write the history summary of an edit. */
 const FIELD_LABEL: Record<string, string> = {
-  name: "Nom",
-  phone: "Téléphone",
-  email: "Email",
-  yearIds: "Années",
-  city: "Ville",
-  town: "Localité",
-  school: "École",
-  moyenneGenerale: "Moyenne générale",
+  name: "الاسم",
+  phone: "التليفون",
+  email: "الإيميل",
+  yearIds: "السنوات",
+  city: "المدينة",
+  town: "المنطقة",
+  school: "المدرسة",
+  moyenneGenerale: "المعدّل العام",
 }
 
-const LONG_DAY = new Intl.DateTimeFormat("fr-FR", {
+const LONG_DAY = new Intl.DateTimeFormat("ar-TN-u-nu-latn", {
   day: "numeric",
   month: "long",
   year: "numeric",
@@ -60,11 +60,11 @@ function Field({
 }) {
   return (
     <div className="min-w-0">
-      <p className="flex items-center gap-1.5 text-[12px] font-medium uppercase tracking-[.08em] text-ink-muted">
+      <p className="flex items-center gap-1.5 text-[calc(12px*var(--ts))] font-medium uppercase tracking-[.08em] text-ink-muted">
         <Icon className="size-3.5 shrink-0" /> {label}
       </p>
-      <p className="mt-1 truncate text-[15px] text-ink" dir="auto">
-        {value != null && value !== "" ? value : <span className="text-ink-muted">Non renseigné</span>}
+      <p className="mt-1 truncate text-[calc(15px*var(--ts))] text-ink" dir="auto">
+        {value != null && value !== "" ? value : <span className="text-ink-muted">ما تعمّرش</span>}
       </p>
     </div>
   )
@@ -81,7 +81,7 @@ function Card({ title, children }: { title: string; children: ReactNode }) {
 
 /**
  * "Mon profil" — the signed-in user's own record: a read-only view of every
- * detail, with one "Modifier" action that opens the same FormSheet the admin
+ * detail, with one "بدّل" action that opens the same FormSheet the admin
  * uses. Shared across roles (reached from the avatar menu in the shell); the
  * student-only fields (année, école, moyenne) show only for élèves.
  */
@@ -153,7 +153,7 @@ export default function ProfileScreen() {
 
     // Phone is the unique identifier across the academy — refuse a duplicate.
     if (users.some((u) => u.phone.trim() === trimmedPhone && u.id !== user.id)) {
-      setPhoneError("Ce numéro est déjà utilisé par un autre compte.")
+      setPhoneError("الرقم هذا مستعمل من قبل في حساب آخر.")
       return
     }
 
@@ -192,13 +192,13 @@ export default function ProfileScreen() {
 
     if (changes.length === 0) {
       setOpen(false)
-      show("Aucune modification")
+      show("ما فماش تبديل")
       return
     }
 
     updateUser(user.id, patch, changes)
     setOpen(false)
-    show("Profil mis à jour")
+    show("البروفايل تحدّث")
   }
 
   const editButton = (
@@ -207,7 +207,7 @@ export default function ProfileScreen() {
       onClick={openEdit}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Pencil className="size-4" /> Modifier
+      <Pencil className="size-4" /> بدّل
     </button>
   )
 
@@ -221,10 +221,10 @@ export default function ProfileScreen() {
             <Avatar
               name={user.name}
               size="lg"
-              className="size-20 text-2xl ring-4 ring-surface md:size-[88px] md:text-[26px]"
+              className="size-20 text-2xl ring-4 ring-surface md:size-[88px] md:text-[calc(26px*var(--ts))]"
             />
             <div className="min-w-0 flex-1 pb-0.5">
-              <h1 dir="auto" className="truncate font-display text-[22px] font-bold leading-tight text-ink md:text-[26px]">
+              <h1 dir="auto" className="truncate font-display text-[calc(22px*var(--ts))] font-bold leading-tight text-ink md:text-[calc(26px*var(--ts))]">
                 {user.name}
               </h1>
               <div className="mt-1.5 flex flex-wrap items-center gap-2">
@@ -241,7 +241,7 @@ export default function ProfileScreen() {
             <div className="mt-5 flex items-center gap-3 rounded-md bg-accent2-50 px-4 py-3">
               <Sparkles className="size-[18px] shrink-0 text-accent2-600" />
               <p className="text-sm text-accent2-700">
-                Moyenne générale{" "}
+                المعدّل العام{" "}
                 <span className="font-display text-base font-bold tabular-nums">
                   {user.moyenneGenerale.toFixed(2).replace(".", ",")}
                 </span>{" "}
@@ -252,33 +252,33 @@ export default function ProfileScreen() {
         </div>
       </section>
 
-      <Card title="Informations personnelles">
-        <Field icon={UserRound} label="Nom complet" value={user.name} />
+      <Card title="المعلومات الشخصية">
+        <Field icon={UserRound} label="الاسم الكامل" value={user.name} />
         <Field
           icon={Phone}
-          label="Numéro"
+          label="الرقم"
           value={
             <span dir="ltr" className="tabular-nums">
               {user.phone}
             </span>
           }
         />
-        <Field icon={AtSign} label="Email" value={user.email} />
-        {showYears && <Field icon={GraduationCap} label="Année" value={yearLabel} />}
-        {isStudent && <Field icon={School} label="École" value={user.school} />}
-        <Field icon={MapPin} label="Ville" value={user.city} />
-        <Field icon={MapPin} label="Localité" value={user.town} />
+        <Field icon={AtSign} label="الإيميل" value={user.email} />
+        {showYears && <Field icon={GraduationCap} label="العام" value={yearLabel} />}
+        {isStudent && <Field icon={School} label="المدرسة" value={user.school} />}
+        <Field icon={MapPin} label="المدينة" value={user.city} />
+        <Field icon={MapPin} label="المنطقة" value={user.town} />
       </Card>
 
-      <Card title="Compte">
-        <Field icon={UserRound} label="Rôle" value={ROLE[user.role].label} />
-        <Field icon={GraduationCap} label="Membre depuis" value={LONG_DAY.format(new Date(user.createdAt))} />
+      <Card title="الحساب">
+        <Field icon={UserRound} label="الدور" value={ROLE[user.role].label} />
+        <Field icon={GraduationCap} label="منخرط من" value={LONG_DAY.format(new Date(user.createdAt))} />
         <Field
           icon={Pencil}
-          label="Dernière modification"
+          label="آخر تبديل"
           value={
             user.updatedAt === user.createdAt
-              ? "Profil jamais modifié"
+              ? "البروفايل عمرو ما تبدّل"
               : LONG_DAY.format(new Date(user.updatedAt))
           }
         />
@@ -287,25 +287,25 @@ export default function ProfileScreen() {
       <FormSheet
         open={open}
         onOpenChange={setOpen}
-        title="Modifier mon profil"
-        description="Vos informations sont visibles par l’administration de l’académie."
+        title="بدّل البروفايل"
+        description="معلوماتك تشوفها إدارة الأكاديمية."
         onSubmit={submit}
-        submitLabel="Mettre à jour"
+        submitLabel="حدّث"
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom complet</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">الاسم الكامل</span>
           <input
             className={INPUT}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Ex. Mohamed Ben Salah"
+            placeholder="مثال: محمد بن صالح"
             autoFocus
           />
         </label>
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Numéro <span className="font-normal text-ink-muted">(unique)</span>
+            الرقم <span className="font-normal text-ink-muted">(وحيد)</span>
           </span>
           <input
             className={
@@ -317,7 +317,7 @@ export default function ProfileScreen() {
               setPhone(e.target.value)
               if (phoneError) setPhoneError("")
             }}
-            placeholder="Ex. +216 29 340 118"
+            placeholder="مثال: +216 29 340 118"
             type="tel"
             dir="ltr"
           />
@@ -326,13 +326,13 @@ export default function ProfileScreen() {
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Email <span className="font-normal text-ink-muted">(optionnel)</span>
+            الإيميل <span className="font-normal text-ink-muted">(اختياري)</span>
           </span>
           <input
             className={INPUT}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Ex. mohamed@exemple.tn"
+            placeholder="مثال: mohamed@exemple.tn"
             type="email"
             dir="ltr"
           />
@@ -340,14 +340,14 @@ export default function ProfileScreen() {
 
         {showYears && isStudent && (
           <label className="block">
-            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Année</span>
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">العام</span>
             <div className="relative">
               <select
                 className={INPUT + " appearance-none pe-10"}
                 value={yearIds[0] ?? ""}
                 onChange={(e) => setYearIds(e.target.value ? [e.target.value] : [])}
               >
-                <option value="">— Choisir une année —</option>
+                <option value="">— اختار عام —</option>
                 {sortedYears.map((y) => (
                   <option key={y.id} value={y.id}>
                     {y.name}
@@ -361,7 +361,7 @@ export default function ProfileScreen() {
 
         {showYears && !isStudent && (
           <div>
-            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Années</span>
+            <span className="mb-1.5 block text-sm font-medium text-ink-subtle">السنوات</span>
             <div className="flex flex-wrap gap-2">
               {sortedYears.map((y) => {
                 const on = yearIds.includes(y.id)
@@ -389,24 +389,24 @@ export default function ProfileScreen() {
         <div className="grid grid-cols-2 gap-3">
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Ville <span className="font-normal text-ink-muted">(opt.)</span>
+              المدينة <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               className={INPUT}
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              placeholder="Ex. Tunis"
+              placeholder="مثال: تونس"
             />
           </label>
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Localité <span className="font-normal text-ink-muted">(opt.)</span>
+              المنطقة <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               className={INPUT}
               value={town}
               onChange={(e) => setTown(e.target.value)}
-              placeholder="Ex. El Omrane"
+              placeholder="مثال: العمران"
             />
           </label>
         </div>
@@ -415,24 +415,24 @@ export default function ProfileScreen() {
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
               <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-                École <span className="font-normal text-ink-muted">(opt.)</span>
+                المدرسة <span className="font-normal text-ink-muted">(اخت.)</span>
               </span>
               <input
                 className={INPUT}
                 value={school}
                 onChange={(e) => setSchool(e.target.value)}
-                placeholder="Ex. Lycée Bourguiba"
+                placeholder="مثال: معهد بورقيبة"
               />
             </label>
             <label className="block">
               <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-                Moyenne <span className="font-normal text-ink-muted">/ 20 (opt.)</span>
+                المعدّل <span className="font-normal text-ink-muted">/ 20 (اخت.)</span>
               </span>
               <input
                 className={INPUT}
                 value={moyenne}
                 onChange={(e) => setMoyenne(e.target.value)}
-                placeholder="Ex. 14,50"
+                placeholder="مثال: 14,50"
                 type="number"
                 min={0}
                 max={20}

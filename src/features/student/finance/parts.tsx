@@ -11,10 +11,10 @@ import {
 } from "@/features/shared/payments/paymentLib"
 
 const INST_STATUS: Record<InstallmentStatus, { label: string; tone: BadgeTone }> = {
-  paid: { label: "Payée", tone: "success" },
-  partial: { label: "Partielle", tone: "warning" },
-  overdue: { label: "En retard", tone: "danger" },
-  upcoming: { label: "À venir", tone: "neutral" },
+  paid: { label: "تخلّصت", tone: "success" },
+  partial: { label: "جزئية", tone: "warning" },
+  overdue: { label: "متأخّر", tone: "danger" },
+  upcoming: { label: "الجايّة", tone: "neutral" },
 }
 
 /** The offer's logo — its image when set, else a quiet brand tile (as in Offres). */
@@ -88,7 +88,7 @@ export function Echeancier({
             )}
             <span
               className={
-                "z-[1] grid size-8 shrink-0 place-items-center rounded-full font-display text-[13px] font-bold " +
+                "z-[1] grid size-8 shrink-0 place-items-center rounded-full font-display text-[calc(13px*var(--ts))] font-bold " +
                 node
               }
             >
@@ -108,21 +108,21 @@ export function Echeancier({
               }
             >
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                <p className="font-display text-[16px] font-bold tabular-nums text-ink">
+                <p className="font-display text-[calc(16px*var(--ts))] font-bold tabular-nums text-ink">
                   {formatDT(inst.amount)}
                 </p>
                 <Badge tone={INST_STATUS[st].tone} dot>
                   {INST_STATUS[st].label}
                 </Badge>
                 {isNext && st !== "overdue" && (
-                  <span className="text-[11px] font-medium uppercase tracking-[.1em] text-accent2-600">
-                    Prochaine
+                  <span className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.1em] text-accent2-600">
+                    الجاي
                   </span>
                 )}
               </div>
 
-              <p className="mt-1 flex flex-wrap items-center gap-x-2 text-[12px] text-ink-muted">
-                <span>Tranche {i + 1} — avant le {formatDay(inst.dueDate)}</span>
+              <p className="mt-1 flex flex-wrap items-center gap-x-2 text-[calc(12px*var(--ts))] text-ink-muted">
+                <span>القسط {i + 1} — قبل {formatDay(inst.dueDate)}</span>
                 {st !== "paid" && (
                   <span
                     className={
@@ -138,8 +138,8 @@ export function Echeancier({
               {covered > 0 && covered < inst.amount && (
                 <div className="mt-2">
                   <ProgressBar pct={Math.round((covered / inst.amount) * 100)} />
-                  <p className="mt-1 text-[12px] tabular-nums text-ink-subtle">
-                    {formatDT(covered)} versés · reste {formatDT(inst.amount - covered)}
+                  <p className="mt-1 text-[calc(12px*var(--ts))] tabular-nums text-ink-subtle">
+                    {formatDT(covered)} تخلّصو · الباقي {formatDT(inst.amount - covered)}
                   </p>
                 </div>
               )}
@@ -173,19 +173,19 @@ export function TransactionItem({
       </span>
       <div className="min-w-0 flex-1">
         <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          <span className="font-display text-[16px] font-bold tabular-nums text-ink">
+          <span className="font-display text-[calc(16px*var(--ts))] font-bold tabular-nums text-ink">
             {formatDT(tx.amount)}
           </span>
-          <span className="text-[13px] text-ink-muted">{formatDay(tx.date)}</span>
-          {trancheNo && <Badge tone="brand">Tranche {trancheNo}</Badge>}
+          <span className="text-[calc(13px*var(--ts))] text-ink-muted">{formatDay(tx.date)}</span>
+          {trancheNo && <Badge tone="brand">القسط {trancheNo}</Badge>}
         </p>
         {context && (
-          <p dir="auto" className="mt-0.5 truncate text-[12px] font-medium text-ink-subtle">
+          <p dir="auto" className="mt-0.5 truncate text-[calc(12px*var(--ts))] font-medium text-ink-subtle">
             {context}
           </p>
         )}
         {tx.remarks && (
-          <p dir="auto" className="mt-0.5 text-[12px] text-ink-muted">
+          <p dir="auto" className="mt-0.5 text-[calc(12px*var(--ts))] text-ink-muted">
             {tx.remarks}
           </p>
         )}
@@ -218,7 +218,7 @@ export function TransactionItem({
       </div>
       {/* The count lives in the section header on phones — keep the row breathable. */}
       <Badge tone="success" className="mt-1 hidden shrink-0 sm:inline-flex">
-        Validé
+        متحقّق
       </Badge>
     </li>
   )

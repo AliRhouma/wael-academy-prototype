@@ -2,8 +2,8 @@ import { useMemo, useState } from "react"
 import {
   CalendarDays,
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
+  ChevronLeft,
   Pencil,
   Plus,
   Trash2,
@@ -24,7 +24,7 @@ import { SessionFormSheet } from "@/features/admin/sessions/SessionFormSheet"
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
-const WEEKDAYS = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"]
+const WEEKDAYS = ["الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"]
 
 /**
  * Calendar event colors — distinct token-based hues so sessions read by subject
@@ -90,16 +90,16 @@ export default function AdminCalendarScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeSession(deleteTarget.id)
-    show("Séance supprimée")
+    show("الحصّة تمسحت")
     setDeleteTarget(null)
   }
 
   const sortedTeachers = useMemo(
-    () => [...teachers].sort((a, b) => a.name.localeCompare(b.name, "fr")),
+    () => [...teachers].sort((a, b) => a.name.localeCompare(b.name, "ar")),
     [teachers],
   )
   const sortedGroups = useMemo(
-    () => [...groups].sort((a, b) => a.title.localeCompare(b.title, "fr")),
+    () => [...groups].sort((a, b) => a.title.localeCompare(b.title, "ar")),
     [groups],
   )
 
@@ -155,7 +155,7 @@ export default function AdminCalendarScreen() {
     [y, mo, startWeekday],
   )
 
-  const monthLabel = cursor.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })
+  const monthLabel = cursor.toLocaleDateString("ar-TN-u-nu-latn", { month: "long", year: "numeric" })
   const daySessions = byDay.get(selected) ?? []
 
   function goMonth(delta: number) {
@@ -172,15 +172,15 @@ export default function AdminCalendarScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Calendrier"
-        subtitle="L’emploi du temps des séances — filtrez par enseignant et par groupe."
+        title="الروزنامة"
+        subtitle="جدول أوقات الحصص — فلتر حسب الأستاذ والفوج."
         action={
           <button
             type="button"
             onClick={openAddForSelected}
             className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
           >
-            <Plus className="size-4" /> Planifier une séance
+            <Plus className="size-4" /> برمج حصّة
           </button>
         }
       />
@@ -189,7 +189,7 @@ export default function AdminCalendarScreen() {
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="block">
           <span className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-ink-subtle">
-            <UserRound className="size-4 text-ink-muted" /> Enseignant
+            <UserRound className="size-4 text-ink-muted" /> أستاذ
           </span>
           <div className="relative">
             <select
@@ -197,7 +197,7 @@ export default function AdminCalendarScreen() {
               value={teacherFilter}
               onChange={(e) => setTeacherFilter(e.target.value)}
             >
-              <option value="all">Tous les enseignants</option>
+              <option value="all">الأساتذة الكل</option>
               {sortedTeachers.map((t) => (
                 <option key={t.id} value={t.id}>
                   {t.name}
@@ -211,7 +211,7 @@ export default function AdminCalendarScreen() {
 
         <label className="block">
           <span className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-ink-subtle">
-            <UsersRound className="size-4 text-ink-muted" /> Groupe
+            <UsersRound className="size-4 text-ink-muted" /> فوج
           </span>
           <div className="relative">
             <select
@@ -219,7 +219,7 @@ export default function AdminCalendarScreen() {
               value={groupFilter}
               onChange={(e) => setGroupFilter(e.target.value)}
             >
-              <option value="all">Tous les groupes</option>
+              <option value="all">الأفواج الكل</option>
               {sortedGroups.map((g) => (
                 <option key={g.id} value={g.id}>
                   {g.title}
@@ -239,23 +239,23 @@ export default function AdminCalendarScreen() {
             <button
               type="button"
               onClick={() => goMonth(-1)}
-              aria-label="Mois précédent"
-              className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
-            >
-              <ChevronLeft className="size-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => goMonth(1)}
-              aria-label="Mois suivant"
+              aria-label="الشهر اللي قبل"
               className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
             >
               <ChevronRight className="size-5" />
             </button>
+            <button
+              type="button"
+              onClick={() => goMonth(1)}
+              aria-label="الشهر اللي بعد"
+              className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
+            >
+              <ChevronLeft className="size-5" />
+            </button>
             <h2 className="ms-1 font-display text-lg font-bold capitalize text-ink">{monthLabel}</h2>
           </div>
           <button type="button" onClick={goToday} className={resetBtn}>
-            Aujourd’hui
+            اليوم
           </button>
         </div>
 
@@ -264,7 +264,7 @@ export default function AdminCalendarScreen() {
           {WEEKDAYS.map((d) => (
             <div
               key={d}
-              className="pb-1 text-center text-[11px] font-medium uppercase tracking-wide text-ink-muted"
+              className="pb-1 text-center text-[calc(11px*var(--ts))] font-medium uppercase tracking-wide text-ink-muted"
             >
               {d}
             </div>
@@ -294,7 +294,7 @@ export default function AdminCalendarScreen() {
               >
                 <span
                   className={
-                    "grid size-6 shrink-0 place-items-center rounded-full text-[12px] font-medium tabular-nums " +
+                    "grid size-6 shrink-0 place-items-center rounded-full text-[calc(12px*var(--ts))] font-medium tabular-nums " +
                     (isToday
                       ? "bg-danger-500 text-danger-foreground"
                       : isSelected
@@ -313,7 +313,7 @@ export default function AdminCalendarScreen() {
                         <span
                           key={s.id}
                           className={
-                            "truncate rounded px-1.5 py-0.5 text-[10px] font-medium leading-tight " +
+                            "truncate rounded px-1.5 py-0.5 text-[calc(10px*var(--ts))] font-medium leading-tight " +
                             colorFor(s).chip
                           }
                         >
@@ -321,8 +321,8 @@ export default function AdminCalendarScreen() {
                         </span>
                       ))}
                       {items.length > 2 && (
-                        <span className="px-1 text-[10px] font-medium text-ink-muted">
-                          +{items.length - 2} autre{items.length - 2 > 1 ? "s" : ""}
+                        <span className="px-1 text-[calc(10px*var(--ts))] font-medium text-ink-muted">
+                          +{items.length - 2} أخرى
                         </span>
                       )}
                     </span>
@@ -333,7 +333,7 @@ export default function AdminCalendarScreen() {
                         <span key={s.id} className={"size-1.5 rounded-full " + colorFor(s).dot} />
                       ))}
                       {items.length > 3 && (
-                        <span className="text-[9px] font-medium text-ink-muted">+</span>
+                        <span className="text-[calc(9px*var(--ts))] font-medium text-ink-muted">+</span>
                       )}
                     </span>
                   </>
@@ -346,13 +346,13 @@ export default function AdminCalendarScreen() {
         {/* Color legend — which matière each color stands for (this view). */}
         {legendSubjects.length > 0 && (
           <div className="mt-3 flex flex-wrap items-center gap-x-3.5 gap-y-1.5 border-t border-border pt-3">
-            <span className="text-[11px] font-medium uppercase tracking-wide text-ink-muted">
-              Matières
+            <span className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-wide text-ink-muted">
+              الموادّ
             </span>
             {legendSubjects.map((su) => (
               <span
                 key={su.id}
-                className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-subtle"
+                className="inline-flex items-center gap-1.5 text-[calc(11px*var(--ts))] font-medium text-ink-subtle"
               >
                 <span
                   className={"size-2 rounded-full " + (colorBySubject.get(su.id)?.dot ?? "bg-brand-500")}
@@ -375,18 +375,18 @@ export default function AdminCalendarScreen() {
             onClick={openAddForSelected}
             className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md border border-border-strong bg-surface px-3 text-sm font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
           >
-            <Plus className="size-4" /> Ajouter
+            <Plus className="size-4" /> زيد
           </button>
         </div>
         {daySessions.length === 0 ? (
           <div className="rounded-lg border border-dashed border-border bg-surface">
             <EmptyState
               icon={CalendarDays}
-              title="Aucune séance ce jour"
+              title="ما فماش حصص نهارها"
               description={
                 teacherFilter !== "all" || groupFilter !== "all"
-                  ? "Aucune séance ne correspond aux filtres pour cette date."
-                  : "Cliquez « Ajouter » pour planifier une séance ce jour."
+                  ? "ما فماش حصّة توافق الفلاتر في التاريخ هذا."
+                  : "اضغط على «زيد» باش تبرمج حصّة نهارها."
               }
             />
           </div>
@@ -399,9 +399,9 @@ export default function AdminCalendarScreen() {
                 actions={
                   <OverflowMenu
                     actions={[
-                      { label: "Modifier", icon: Pencil, onClick: () => openEdit(s) },
+                      { label: "بدّل", icon: Pencil, onClick: () => openEdit(s) },
                       {
-                        label: "Supprimer",
+                        label: "امسح",
                         icon: Trash2,
                         tone: "danger",
                         onClick: () => setDeleteTarget(s),
@@ -426,9 +426,9 @@ export default function AdminCalendarScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cette séance ?"
+        title="تحبّ تمسح الحصّة هذي؟"
         description={
-          deleteTarget ? `« ${deleteTarget.title} » sera définitivement supprimée.` : undefined
+          deleteTarget ? `«${deleteTarget.title}» باش تتمسح نهائيا.` : undefined
         }
         onConfirm={confirmDelete}
       />

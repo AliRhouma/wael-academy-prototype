@@ -1,86 +1,188 @@
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { Link } from "react-router-dom"
-import { CalendarClock, ChevronRight, PartyPopper, Receipt, Wallet } from "lucide-react"
+import { ChevronDown, Wallet } from "lucide-react"
 import { PageHeader } from "@/components/kit/PageHeader"
 import { EmptyState } from "@/components/kit/EmptyState"
-import { Badge } from "@/components/kit/Badge"
 import { useAuth } from "@/stores/useAuth"
 import { useData } from "@/stores/useData"
+import type { Installment, Subscription, Transaction } from "@/data/types"
 import {
-  dueInLabel,
   formatDT,
   formatDay,
-  installmentStatus,
+  paidTotal,
+  todayISO,
 } from "@/features/shared/payments/paymentLib"
-import { SUB_STATUS, nextDue, subFinance, type SubFinance } from "./finance"
-import { Echeancier, OfferLogo, ProgressBar, TransactionItem } from "./parts"
 
-/** One purchased offer — what it cost, what's paid, what's next. */
-function OfferCard({ fin }: { fin: SubFinance }) {
-  const { sub, offer, paid, left, pct, status, nextInstallment } = fin
+/**
+ * Côté élève une tranche n'a que trois états — payée, pas encore payée, ou pas
+ * payée alors que la date est passée. Pas de "partielle" ici : une avance ne
+ * solde pas la tranche, donc elle reste "مزال" tant qu'elle n'est pas couverte.
+ */
+type TrancheState = "paid" | "due" | "expired"
+
+function trancheState(inst: Installment, transactions: Transaction[]): TrancheState {
+  const covered = transactions
+    .filter((t) => t.installmentId === inst.id)
+    .reduce((s, t) => s + t.amount, 0)
+  if (covered >= inst.amount) return "paid"
+  return inst.dueDate < todayISO() ? "expired" : "due"
+}
+
+/** "2026-12-15" → "15/12/2026" — the offer's end date, en chiffres. */
+function shortDate(iso: string): string {
+  const [y, m, d] = iso.split("-")
+  return `${d}/${m}/${y}`
+}
+
+/** Access end date: the deadline set by l'admin, else the last planned tranche. */
+function endDate(sub: Subscription): string | undefined {
+  if (sub.deadline) return sub.deadline
+  return sub.installments.length > 0
+    ? sub.installments[sub.installments.length - 1].dueDate
+    : undefined
+}
+
+/** One offer = one dropdown: name + price + end date, unfolding its échéancier. */
+function OfferRow({
+  sub,
+  offerName,
+  transactions,
+  open,
+  onToggle,
+}: {
+  sub: Subscription
+  offerName: string
+  transactions: Transaction[]
+  open: boolean
+  onToggle: () => void
+}) {
+  const end = endDate(sub)
+  const panelId = `sub-${sub.id}`
+
+  const paid = paidTotal(sub, transactions)
+  const left = Math.max(0, sub.price - paid)
+  /** A late tranche turns the "reste à payer" red — same signal as l'admin. */
+  const late = sub.installments.some((i) => trancheState(i, transactions) === "expired")
+
   return (
-    <Link
-      to={`/student/porte-monnaie/${sub.id}`}
-      className="group flex flex-col gap-3 rounded-lg border border-border bg-surface p-4 shadow-sm transition hover:border-brand-200 hover:shadow-md motion-safe:hover:-translate-y-0.5"
-    >
-      <div className="flex items-start gap-3">
-        <OfferLogo offer={offer} />
+    <div className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm transition hover:border-brand-200">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={panelId}
+        className="flex w-full items-center gap-3 p-4 text-start transition hover:bg-surface-muted/60"
+      >
         <div className="min-w-0 flex-1">
-          <p dir="auto" className="font-display text-[15px] font-bold leading-snug text-ink">
-            {offer?.name ?? "Offre supprimée"}
+          <p
+            dir="auto"
+            className="font-display text-[calc(15px*var(--ts))] font-bold leading-snug text-ink"
+          >
+            {offerName}
           </p>
-          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-ink-muted">
-            {offer?.period && <span>{offer.period}</span>}
-            {sub.tag && (
-              <>
-                {offer?.period && <span aria-hidden>·</span>}
-                <span>{sub.tag}</span>
-              </>
-            )}
-            {sub.deadline && (
-              <>
-                <span aria-hidden>·</span>
-                <span>jusqu’au {formatDay(sub.deadline)}</span>
-              </>
-            )}
+          <p className="mt-1 text-[calc(12px*var(--ts))] text-ink-muted">
+            تاريخ نهاية العرض :{" "}
+            <span className="font-medium tabular-nums text-ink-subtle">
+              {end ? shortDate(end) : "—"}
+            </span>
           </p>
         </div>
-        <ChevronRight className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600 rtl:rotate-180" />
-      </div>
 
-      <div>
-        <div className="flex items-baseline justify-between gap-2">
-          <p className="font-display text-[17px] font-bold tabular-nums text-ink">
+        <div className="shrink-0 text-end">
+          <p className="font-display text-[calc(17px*var(--ts))] font-bold tabular-nums text-ink">
             {formatDT(sub.price)}
           </p>
-          <p className="text-[12px] tabular-nums text-ink-subtle">
-            {formatDT(paid)} payés
-            {left > 0 && <span className="text-ink-muted"> · reste {formatDT(left)}</span>}
+          <p
+            className={
+              "mt-0.5 text-[calc(12px*var(--ts))] font-medium tabular-nums " +
+              (left === 0 ? "text-success-700" : late ? "text-danger-600" : "text-ink-subtle")
+            }
+          >
+            {left === 0 ? "تخلّص الكل" : `مزال ${formatDT(left)}`}
           </p>
         </div>
-        <ProgressBar pct={pct} className="mt-2" />
-      </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <Badge tone={SUB_STATUS[status].tone} dot>
-          {SUB_STATUS[status].label}
-        </Badge>
-        {nextInstallment ? (
-          <p className="text-[12px] tabular-nums text-ink-muted">
-            Prochaine : {formatDT(nextInstallment.amount)} · {formatDay(nextInstallment.dueDate)}
-          </p>
-        ) : (
-          <p className="text-[12px] text-ink-muted">Aucune tranche en attente</p>
-        )}
-      </div>
-    </Link>
+        <ChevronDown
+          aria-hidden
+          className={
+            "size-5 shrink-0 text-ink-muted transition-transform duration-200 " +
+            (open ? "rotate-180 text-brand-600" : "")
+          }
+        />
+      </button>
+
+      {open && (
+        <div id={panelId} className="border-t border-border bg-surface-muted/40 px-4 py-3">
+          {sub.installments.length === 0 ? (
+            <p className="text-[calc(13px*var(--ts))] text-ink-muted">
+              ما فماش أقساط مبرمجة — خلاص حرّ.
+            </p>
+          ) : (
+            <ul className="divide-y divide-border/70">
+              {sub.installments.map((inst) => {
+                const st = trancheState(inst, transactions)
+                return (
+                  <li
+                    key={inst.id}
+                    className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 py-2 text-[calc(13px*var(--ts))]"
+                  >
+                    <span
+                      aria-hidden
+                      className={
+                        "size-1.5 shrink-0 self-center rounded-full " +
+                        (st === "paid"
+                          ? "bg-success-600"
+                          : st === "expired"
+                            ? "bg-danger-600"
+                            : "bg-neutral-300")
+                      }
+                    />
+                    <span
+                      className={
+                        "font-display text-[calc(15px*var(--ts))] font-bold tabular-nums " +
+                        (st === "expired" ? "text-danger-600" : "text-ink")
+                      }
+                    >
+                      {formatDT(inst.amount)}
+                    </span>
+                    <span
+                      className={
+                        "font-medium " +
+                        (st === "paid"
+                          ? "text-success-700"
+                          : st === "expired"
+                            ? "text-danger-600"
+                            : "text-ink-subtle")
+                      }
+                    >
+                      {st === "paid" ? "تخلّصت" : st === "expired" ? "موش خالص" : "مزال"}
+                    </span>
+                    {st === "expired" ? (
+                      <span className="tabular-nums font-medium text-danger-600">
+                        — تاريخ الخلاص فات ! (قبل {formatDay(inst.dueDate)})
+                      </span>
+                    ) : (
+                      st === "due" && (
+                        <span className="tabular-nums text-ink-muted">
+                          — تاريخ الخلاص قبل {formatDay(inst.dueDate)}
+                        </span>
+                      )
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+        </div>
+      )}
+    </div>
   )
 }
 
 /**
- * Élève — le porte-monnaie : ce qu'il a acheté, ce que ça coûte, quand tombent
- * les tranches et quels paiements sont validés. Read-only : l'académie encaisse,
- * l'élève suit.
+ * Élève — المحفظة : une liste dépliante, rien d'autre. Chaque ligne est une
+ * offre achetée (titre, prix, date de fin) ; on la déplie pour voir ses tranches
+ * payées / non payées avec leurs dates — même lecture que /admin/payments.
  */
 export default function StudentFinanceScreen() {
   const user = useAuth((s) => s.currentUser)
@@ -88,42 +190,33 @@ export default function StudentFinanceScreen() {
   const transactions = useData((s) => s.transactions)
   const offers = useData((s) => s.offers)
 
+  const [openId, setOpenId] = useState<string | null>(null)
+
+  const offerName = useMemo(() => new Map(offers.map((o) => [o.id, o.name])), [offers])
+
   const items = useMemo(
     () =>
       subscriptions
         .filter((sub) => sub.userId === user?.id)
-        .map((sub) => subFinance(sub, offers, transactions))
-        .sort((a, b) => b.sub.createdAt.localeCompare(a.sub.createdAt)),
-    [subscriptions, offers, transactions, user],
+        .sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    [subscriptions, user],
   )
-
-  const engaged = items.reduce((s, f) => s + f.sub.price, 0)
-  const paid = items.reduce((s, f) => s + f.paid, 0)
-  const left = Math.max(0, engaged - paid)
-  const pct = engaged > 0 ? Math.min(100, Math.round((paid / engaged) * 100)) : 0
-
-  const hasInstallments = items.some((f) => f.sub.installments.length > 0)
-  const validated = items.flatMap((f) => f.transactions).sort((a, b) => b.date.localeCompare(a.date))
-  const recent = validated.slice(0, 4)
-  const subOf = useMemo(() => new Map(items.map((f) => [f.sub.id, f])), [items])
-
-  const next = nextDue(items)
 
   if (items.length === 0) {
     return (
       <div className="flex flex-col gap-6">
-        <PageHeader title="Porte-monnaie" subtitle="Vos offres, vos tranches et vos paiements." />
+        <PageHeader title="المحفظة" subtitle="عروضك وأقساطك." />
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Wallet}
-            title="Aucun abonnement pour l’instant"
-            description="Dès que vous souscrivez à une offre, vous retrouverez ici son montant, l’échéancier de vos tranches et tous vos paiements."
+            title="ما فماش اشتراكات توّا"
+            description="كي تشترك في عرض، تلقى هوني المبلغ متاعو وروزنامة أقساطك."
             action={
               <Link
                 to="/student/offres"
                 className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
               >
-                Découvrir les offres
+                اكتشف العروض
               </Link>
             }
           />
@@ -134,151 +227,20 @@ export default function StudentFinanceScreen() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader
-        title="Porte-monnaie"
-        subtitle={`${items.length} offre${items.length > 1 ? "s" : ""} — montants, échéancier des tranches et paiements validés.`}
-      />
+      <PageHeader title="المحفظة" subtitle={`${items.length} عرض — أُنقر على عرض باش تشوف أقساطو.`} />
 
-      {/* ---- Solde + prochaine échéance ---- */}
-      <section className="rounded-xl border border-border bg-surface p-5 shadow-md md:flex md:items-stretch md:gap-8 md:p-6">
-        <div className="min-w-0 md:flex-1">
-          <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-            Reste à payer
-          </p>
-          <p className="mt-1.5 font-display text-[34px] font-bold leading-none tabular-nums text-ink md:text-[40px]">
-            {formatDT(left)}
-          </p>
-          <ProgressBar pct={pct} className="mt-4" />
-          <p className="mt-2 text-[13px] tabular-nums text-ink-subtle">
-            <span className="font-medium text-brand-600">{formatDT(paid)} payés</span> sur{" "}
-            {formatDT(engaged)} engagés · {pct}%
-          </p>
-        </div>
-
-        <div className="mt-5 border-t border-border pt-5 md:mt-0 md:w-[46%] md:shrink-0 md:border-s md:border-t-0 md:ps-8 md:pt-0">
-          {next ? (
-            <>
-              <p className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-                <CalendarClock className="size-3.5" /> Prochaine échéance
-              </p>
-              <p className="mt-1.5 flex flex-wrap items-baseline gap-x-2">
-                <span className="font-display text-[26px] font-bold leading-none tabular-nums text-ink">
-                  {formatDT(next.inst.amount)}
-                </span>
-                <span
-                  className={
-                    "text-[13px] font-medium tabular-nums " +
-                    (installmentStatus(next.inst, transactions) === "overdue"
-                      ? "text-danger-600"
-                      : "text-brand-600")
-                  }
-                >
-                  {dueInLabel(next.inst.dueDate)}
-                </span>
-              </p>
-              <p className="mt-1 text-[13px] text-ink-muted">
-                avant le {formatDay(next.inst.dueDate)}
-              </p>
-              <Link
-                to={`/student/porte-monnaie/${next.fin.sub.id}`}
-                dir="auto"
-                className="mt-3 inline-flex items-center gap-1.5 text-[13px] font-medium text-brand-600 transition hover:text-brand-700"
-              >
-                {next.fin.offer?.name ?? "Voir l’abonnement"}
-                <ChevronRight className="size-4 rtl:rotate-180" />
-              </Link>
-            </>
-          ) : (
-            <div className="flex h-full flex-col justify-center">
-              <span className="grid size-10 place-items-center rounded-md bg-success-50 text-success-700">
-                <PartyPopper className="size-5" />
-              </span>
-              <p className="mt-3 font-display text-[17px] font-bold text-ink">Tout est réglé</p>
-              <p className="mt-1 text-[13px] text-ink-muted">
-                Aucune tranche en attente — profitez de vos cours.
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ---- Mes offres ---- */}
-      <section>
-        <h2 className="mb-3 font-display text-base font-bold text-ink">
-          {items.length > 1 ? "Mes offres" : "Mon offre"}
-        </h2>
-        <div className={"grid gap-3 " + (items.length > 1 ? "md:grid-cols-2" : "")}>
-          {items.map((fin) => (
-            <OfferCard key={fin.sub.id} fin={fin} />
-          ))}
-        </div>
-      </section>
-
-      {/* ---- Échéancier global ---- */}
-      {hasInstallments && (
-        <section>
-          <h2 className="mb-3 font-display text-base font-bold text-ink">Planning des tranches</h2>
-          <div className="flex flex-col gap-4">
-            {items
-              .filter((f) => f.sub.installments.length > 0)
-              .map((fin) => (
-                <div key={fin.sub.id}>
-                  {/* With a single offer the name is already right above — don't repeat it. */}
-                  {items.length > 1 && (
-                    <div className="mb-2 flex items-center justify-between gap-3">
-                      <p
-                        dir="auto"
-                        className="min-w-0 truncate text-[13px] font-medium text-ink-subtle"
-                      >
-                        {fin.offer?.name ?? "Offre supprimée"}
-                      </p>
-                      <span className="shrink-0 text-[12px] tabular-nums text-ink-muted">
-                        {fin.left > 0 ? `reste ${formatDT(fin.left)}` : "soldé"}
-                      </span>
-                    </div>
-                  )}
-                  <Echeancier sub={fin.sub} transactions={transactions} />
-                </div>
-              ))}
-          </div>
-        </section>
-      )}
-
-      {/* ---- Derniers paiements ---- */}
-      <section>
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <h2 className="font-display text-base font-bold text-ink">Mes paiements</h2>
-          <span className="text-[12px] tabular-nums text-ink-muted">
-            {validated.length} validé{validated.length > 1 ? "s" : ""} · {formatDT(paid)}
-          </span>
-        </div>
-        {recent.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-border bg-surface">
-            <EmptyState
-              icon={Receipt}
-              title="Aucun paiement enregistré"
-              description="Vos reçus apparaîtront ici dès votre premier versement à l’académie."
-            />
-          </div>
-        ) : (
-          <div className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
-            <ul className="divide-y divide-border">
-              {recent.map((tx) => {
-                const fin = subOf.get(tx.subscriptionId)
-                const idx = fin?.sub.installments.findIndex((i) => i.id === tx.installmentId) ?? -1
-                return (
-                  <TransactionItem
-                    key={tx.id}
-                    tx={tx}
-                    trancheNo={idx >= 0 ? idx + 1 : undefined}
-                    context={fin?.offer?.name}
-                  />
-                )
-              })}
-            </ul>
-          </div>
-        )}
-      </section>
+      <div className="flex flex-col gap-3">
+        {items.map((sub) => (
+          <OfferRow
+            key={sub.id}
+            sub={sub}
+            offerName={offerName.get(sub.offerId) ?? "العرض تمسح"}
+            transactions={transactions}
+            open={openId === sub.id}
+            onToggle={() => setOpenId((cur) => (cur === sub.id ? null : sub.id))}
+          />
+        ))}
+      </div>
     </div>
   )
 }

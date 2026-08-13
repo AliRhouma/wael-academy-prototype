@@ -4,30 +4,21 @@
     "subscriptionId": "sub-mohamed-bacmath",
     "date": "2026-06-21",
     "amount": 150,
-    "remarks": "Première tranche payée à l'inscription, en espèces.",
+    "remarks": "القسط الأوّل تخلّص وقت التسجيل، كاش.",
     "installmentId": "inst-mo-1",
     "resources": [
-      { "name": "Reçu N°2031", "notes": "Encaissé à l'accueil" }
+      { "name": "وصل عدد 2031", "notes": "تخلّص في الاستقبال" }
     ]
-  },
-  {
-    "id": "tx-mo-2",
-    "subscriptionId": "sub-mohamed-bacmath",
-    "date": "2026-07-28",
-    "amount": 60,
-    "remarks": "Avance sur la 2ème tranche — payée par carte.",
-    "installmentId": "inst-mo-2",
-    "resources": [{ "name": "Reçu N°2118", "url": "https://example.tn/recu-2118.pdf" }]
   },
   {
     "id": "tx-in-1",
     "subscriptionId": "sub-ines-bacmath",
     "date": "2026-07-01",
     "amount": 480,
-    "remarks": "Totalité réglée par virement bancaire.",
+    "remarks": "خلّصت الكل بتحويل بنكي.",
     "installmentId": "inst-in-1",
     "resources": [
-      { "name": "Preuve de virement", "url": "https://example.tn/virement-4471.pdf", "notes": "Réf. 4471" }
+      { "name": "إثبات التحويل", "url": "https://example.tn/virement-4471.pdf", "notes": "مرجع 4471" }
     ]
   },
   {
@@ -35,7 +26,7 @@
     "subscriptionId": "sub-emna-bacsci",
     "date": "2026-07-05",
     "amount": 40,
-    "remarks": "Acompte partiel sur la première tranche — reste 50 DT.",
+    "remarks": "تسبقة جزئية على القسط الأوّل — باقي 50 د.",
     "installmentId": "inst-em-1",
     "resources": []
   }

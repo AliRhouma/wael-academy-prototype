@@ -1,8 +1,8 @@
 [
   {
     "id": "p-math-analyse",
-    "title": "Parcours — Démarrer en Analyse",
-    "description": "Un chemin guidé pour maîtriser l'analyse, étape par étape : cours, exercices, puis quiz de validation.",
+    "title": "مسار — ابدا في التحليل",
+    "description": "طريق موجّه باش تتحكّم في التحليل، مرحلة مرحلة: درس، تمارين، وبعد كويز باش تتأكّد.",
     "subjectId": "subj-bac-math-mathematiques",
     "yearId": "y-bac-math",
     "items": [
@@ -16,8 +16,8 @@
   },
   {
     "id": "p-math-complexes",
-    "title": "Parcours — Les nombres complexes de A à Z",
-    "description": "Du cours au quiz : tout ce qu'il faut pour être prêt sur les nombres complexes.",
+    "title": "مسار — الأعداد المركّبة من الألف للياء",
+    "description": "من الدرس للكويز: كل اللي تحتاجو باش تولّي حاضر في الأعداد المركّبة.",
     "subjectId": "subj-bac-math-mathematiques",
     "yearId": "y-bac-math",
     "items": [
@@ -29,8 +29,8 @@
   },
   {
     "id": "p-phys-elec",
-    "title": "Parcours — L'électricité pas à pas",
-    "description": "Du dipôle RC au dipôle RL : cours, exercices et quiz pour construire des bases solides en électricité.",
+    "title": "مسار — الكهرباء خطوة بخطوة",
+    "description": "من ثنائي القطب RC لـ RL: دروس وتمارين وكويزات باش تبني قاعدة قوية في الكهرباء.",
     "subjectId": "subj-bac-math-sciences-physiques",
     "yearId": "y-bac-math",
     "items": [
@@ -43,8 +43,8 @@
   },
   {
     "id": "p-svt-bio",
-    "title": "Parcours — Immunité & génétique",
-    "description": "Un parcours de révision en biologie : résumés, exercices et quiz.",
+    "title": "مسار — المناعة والوراثة",
+    "description": "مسار مراجعة في البيولوجيا: ملخّصات وتمارين وكويزات.",
     "subjectId": "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
     "yearId": "y-bac-sci",
     "items": [
@@ -57,8 +57,8 @@
   },
   {
     "id": "p-info-bdd",
-    "title": "Parcours — Bases de données & SQL",
-    "description": "Cours, TP puis quiz : construisez vos premières requêtes SQL avec méthode.",
+    "title": "مسار — قواعد البيانات و SQL",
+    "description": "درس، تطبيقات، وبعد كويز: اكتب أوّل طلبات SQL متاعك بمنهجية.",
     "subjectId": "subj-bac-info-informatique",
     "yearId": "y-bac-info",
     "items": [
@@ -70,8 +70,8 @@
   },
   {
     "id": "p-9-geo",
-    "title": "Parcours — Géométrie 9ème",
-    "description": "Thalès et trigonométrie : un chemin simple pour les élèves de 9ème année.",
+    "title": "مسار — هندسة التاسعة",
+    "description": "طاليس وحساب المثلثات: طريق ساهل لتلامذة التاسعة أساسي.",
     "subjectId": "subj-9-mathematiques",
     "yearId": "y-9",
     "items": [

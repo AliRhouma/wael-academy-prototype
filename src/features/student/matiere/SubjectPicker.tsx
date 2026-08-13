@@ -37,7 +37,7 @@ export function SubjectPicker({
     <button
       type="button"
       onClick={onClick}
-      aria-label={`Matière : ${active.name}. Changer de matière`}
+      aria-label={`المادّة: ${active.name}. بدّل المادّة`}
       className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-md border border-border-strong bg-surface ps-1.5 pe-2 transition hover:border-brand-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <span
@@ -49,7 +49,7 @@ export function SubjectPicker({
       <span
         dir="auto"
         className={cn(
-          "max-w-[4.5rem] truncate text-[13px] font-semibold sm:max-w-[9rem]",
+          "max-w-[4.5rem] truncate text-[calc(13px*var(--ts))] font-semibold sm:max-w-[9rem]",
           theme.name,
         )}
       >
@@ -103,7 +103,7 @@ export function SubjectPicker({
             className="max-h-[80dvh] gap-0 rounded-t-xl border-border bg-surface-raised p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
           >
             <SheetTitle className="px-3 py-2 font-display text-base font-bold text-ink">
-              Changer de matière
+              بدّل المادّة
             </SheetTitle>
             <div className="flex flex-col gap-0.5 overflow-y-auto scroll-touch">
               {subjects.map((subject) => (

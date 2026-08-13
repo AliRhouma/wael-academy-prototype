@@ -21,11 +21,11 @@ const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
 const CHIP =
-  "inline-flex items-center gap-1 rounded-md border border-border bg-surface-muted px-2 py-1 text-[12px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
+  "inline-flex items-center gap-1 rounded-md border border-border bg-surface-muted px-2 py-1 text-[calc(12px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
 
 type KindFilter = LessonKind | "all"
 
-/** The "Contenus" tab of a chapter — its cours, exercices, séries & résumés.
+/** The "المحتويات" tab of a chapter — its cours, exercices, séries & résumés.
  * `year` / `subject` are the ones being browsed — they prefill the duplicate
  * destination so a copy defaults to staying right where it is. */
 export function LessonsPanel({
@@ -71,7 +71,7 @@ export function LessonsPanel({
 
   function openDoc(pdf: ResourceLink) {
     if (pdf.url) window.open(pdf.url, "_blank", "noopener,noreferrer")
-    else show("Aperçu du document — bientôt")
+    else show("معاينة الوثيقة — قريب")
   }
 
   function openAdd() {
@@ -107,10 +107,10 @@ export function LessonsPanel({
     }
     if (editing) {
       updateLesson(editing.id, patch)
-      show("Contenu modifié")
+      show("المحتوى تبدّل")
     } else {
       addLesson({ ...patch, order: lessons.length })
-      show("Contenu ajouté")
+      show("المحتوى تزاد")
     }
     setFormOpen(false)
   }
@@ -124,14 +124,14 @@ export function LessonsPanel({
   function submitDuplicate() {
     if (!dupTarget) return
     duplicateLesson(dupTarget, { title: dupName.trim(), chapterId: dupDest.chapterId })
-    show(`Contenu dupliqué dans « ${dupInto} »`)
+    show(`المحتوى تنسخ في «${dupInto}»`)
     setDupTarget(null)
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removeLesson(deleteTarget.id)
-    show("Contenu supprimé")
+    show("المحتوى تمسح")
     setDeleteTarget(null)
   }
 
@@ -141,12 +141,12 @@ export function LessonsPanel({
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter un contenu
+      <Plus className="size-4" /> زيد محتوى
     </button>
   )
 
   const filters: { key: KindFilter; label: string; count: number }[] = [
-    { key: "all", label: "Tout", count: lessons.length },
+    { key: "all", label: "الكل", count: lessons.length },
     ...LESSON_KIND_ORDER.map((k) => ({
       key: k as KindFilter,
       label: LESSON_KINDS[k].label,
@@ -159,8 +159,8 @@ export function LessonsPanel({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <p className="text-sm text-ink-muted">
           {lessons.length > 0
-            ? `${lessons.length} contenu${lessons.length > 1 ? "s" : ""}`
-            : "Aucun contenu pour le moment"}
+            ? `${lessons.length} محتوى`
+            : "ما فماش محتوى توّا"}
         </p>
         {lessons.length > 0 && addButton}
       </div>
@@ -201,8 +201,8 @@ export function LessonsPanel({
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={BookOpen}
-            title="Aucun contenu"
-            description="Ajoutez des cours, exercices, séries et résumés — avec vidéo et documents PDF."
+            title="ما فماش محتوى"
+            description="زيد دروس وتمارين وسلاسل وملخّصات — مع فيديو ووثائق PDF."
             action={addButton}
           />
         </div>
@@ -210,8 +210,8 @@ export function LessonsPanel({
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={BookOpen}
-            title="Rien dans ce filtre"
-            description="Aucun contenu de ce type dans ce chapitre."
+            title="ما فماش شيء في الفلتر هذا"
+            description="ما فماش محتوى من النوع هذا في الفصل هذا."
           />
         </div>
       ) : (
@@ -229,7 +229,7 @@ export function LessonsPanel({
                 </span>
                 <div className="min-w-0 flex-1">
                   <Badge tone={meta.tone}>{meta.label}</Badge>
-                  <p dir="auto" className="mt-1 font-display text-[15px] font-bold text-ink">
+                  <p dir="auto" className="mt-1 font-display text-[calc(15px*var(--ts))] font-bold text-ink">
                     {lesson.title}
                   </p>
                   {(lesson.videoUrl || lesson.pdfs.length > 0) && (
@@ -241,7 +241,7 @@ export function LessonsPanel({
                           rel="noopener noreferrer"
                           className={CHIP}
                         >
-                          <Video className="size-3.5" /> Vidéo
+                          <Video className="size-3.5" /> فيديو
                         </a>
                       )}
                       {lesson.pdfs.map((pdf, i) => (
@@ -255,10 +255,10 @@ export function LessonsPanel({
                 </div>
                 <OverflowMenu
                   actions={[
-                    { label: "Modifier", icon: Pencil, onClick: () => openEdit(lesson) },
-                    { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(lesson) },
+                    { label: "بدّل", icon: Pencil, onClick: () => openEdit(lesson) },
+                    { label: "اعمل نسخة", icon: Copy, onClick: () => openDuplicate(lesson) },
                     {
-                      label: "Supprimer",
+                      label: "امسح",
                       icon: Trash2,
                       tone: "danger",
                       onClick: () => setDeleteTarget(lesson),
@@ -274,17 +274,17 @@ export function LessonsPanel({
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier le contenu" : "Nouveau contenu"}
+        title={editing ? "بدّل المحتوى" : "محتوى جديد"}
         description={
           editing
             ? undefined
-            : "Cours & exercice portent une vidéo ; série & résumé sont sans vidéo (PDF uniquement)."
+            : "الدرس والتمرين فيهم فيديو؛ السلسلة والملخّص بلا فيديو (PDF برك)."
         }
-        submitLabel={editing ? "Enregistrer" : "Ajouter"}
+        submitLabel={editing ? "سجّل" : "زيد"}
         onSubmit={submit}
       >
         <div>
-          <span className="mb-2 block text-sm font-medium text-ink-subtle">Type de contenu</span>
+          <span className="mb-2 block text-sm font-medium text-ink-subtle">نوع المحتوى</span>
           <div className="grid grid-cols-2 gap-2">
             {LESSON_KIND_ORDER.map((k) => {
               const meta = LESSON_KINDS[k]
@@ -310,13 +310,13 @@ export function LessonsPanel({
         </div>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">العنوان</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ex. Cours — Limites et continuité · درس النص الحجاجي"
+            placeholder="مثال: درس — النهايات والاتّصال"
             autoFocus
           />
         </label>
@@ -324,7 +324,7 @@ export function LessonsPanel({
         {kindHasVideo && (
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Vidéo <span className="font-normal text-ink-muted">(un seul lien, optionnel)</span>
+              فيديو <span className="font-normal text-ink-muted">(رابط واحد، اختياري)</span>
             </span>
             <input
               className={INPUT}
@@ -339,7 +339,7 @@ export function LessonsPanel({
 
         <div>
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Documents (PDF) <span className="font-normal text-ink-muted">(cours, énoncé, corrigé…)</span>
+            وثائق (PDF) <span className="font-normal text-ink-muted">(درس، نصّ، إصلاح…)</span>
           </span>
           <div className="flex flex-col gap-2">
             {pdfs.map((pdf, i) => (
@@ -352,11 +352,11 @@ export function LessonsPanel({
                   onChange={(e) =>
                     setPdfs((prev) => prev.map((p, j) => (j === i ? { ...p, name: e.target.value } : p)))
                   }
-                  placeholder="Nom du document (ex. Énoncé)"
+                  placeholder="اسم الوثيقة (مثال: النصّ)"
                 />
                 <button
                   type="button"
-                  aria-label="Retirer le document"
+                  aria-label="نحّي الوثيقة"
                   onClick={() => setPdfs((prev) => prev.filter((_, j) => j !== i))}
                   className="grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-danger-50 hover:text-danger-600"
                 >
@@ -369,7 +369,7 @@ export function LessonsPanel({
               onClick={() => setPdfs((prev) => [...prev, { name: "" }])}
               className="inline-flex h-10 items-center gap-1.5 self-start rounded-md border border-dashed border-border-strong px-3 text-sm font-medium text-ink-subtle transition hover:border-brand-300 hover:text-brand-600"
             >
-              <Plus className="size-4" /> Ajouter un document
+              <Plus className="size-4" /> زيد وثيقة
             </button>
           </div>
         </div>
@@ -378,24 +378,24 @@ export function LessonsPanel({
       <DuplicateSheet
         open={dupTarget !== null}
         onOpenChange={(o) => !o && setDupTarget(null)}
-        title="Dupliquer le contenu"
-        nameLabel="Titre de la copie"
+        title="اعمل نسخة من المحتوى"
+        nameLabel="عنوان النسخة"
         name={dupName}
         onNameChange={setDupName}
         depth="chapter"
         destination={dupDest}
         onDestinationChange={setDupDest}
-        note="La vidéo et les documents PDF suivent la copie."
+        note="الفيديو ووثائق PDF يتبعو النسخة."
         onSubmit={submitDuplicate}
       />
 
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer ce contenu ?"
+        title="تحبّ تمسح المحتوى هذا؟"
         description={
           deleteTarget
-            ? `« ${deleteTarget.title} » sera définitivement supprimé et retiré des parcours qui l'utilisent.`
+            ? `«${deleteTarget.title}» باش يتمسح نهائيا ويتنحّى من المسارات اللي تستعملو.`
             : undefined
         }
         onConfirm={confirmDelete}

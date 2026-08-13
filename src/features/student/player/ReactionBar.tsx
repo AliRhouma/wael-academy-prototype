@@ -56,9 +56,9 @@ export function ReactionBar({ kind, videoId }: { kind: VideoRefKind; videoId: st
         type="button"
         onClick={() => vote("like")}
         aria-pressed={mine === "like"}
-        aria-label="J’aime"
+        aria-label="نعجبني"
         className={cn(
-          "inline-flex h-full items-center gap-2 rounded-s-full px-3.5 text-[13px] font-medium transition",
+          "inline-flex h-full items-center gap-2 rounded-s-full px-3.5 text-[calc(13px*var(--ts))] font-medium transition",
           mine === "like" ? "text-brand-700" : "text-ink-subtle hover:text-brand-600",
         )}
       >
@@ -72,7 +72,7 @@ export function ReactionBar({ kind, videoId }: { kind: VideoRefKind; videoId: st
         type="button"
         onClick={() => vote("dislike")}
         aria-pressed={mine === "dislike"}
-        aria-label="Je n’aime pas"
+        aria-label="ما يعجبنيش"
         className={cn(
           "inline-flex h-full items-center rounded-e-full px-3.5 transition",
           mine === "dislike" ? "text-danger-600" : "text-ink-subtle hover:text-ink",

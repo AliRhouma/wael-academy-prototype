@@ -33,21 +33,21 @@ function ResourceForm({
   return (
     <div className="space-y-3 rounded-md border border-brand-200 bg-brand-50/40 p-3">
       <label className="block">
-        <span className="mb-1.5 block text-[13px] font-medium text-ink-subtle">
-          Nom <span className="font-normal text-ink-muted">(optionnel)</span>
+        <span className="mb-1.5 block text-[calc(13px*var(--ts))] font-medium text-ink-subtle">
+          الاسم <span className="font-normal text-ink-muted">(اختياري)</span>
         </span>
         <input
           className={INPUT + " text-start"}
           dir="auto"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Ex. Fiche de révision — Intégrales"
+          placeholder="مثال: بطاقة مراجعة — التكاملات"
           autoFocus
         />
       </label>
 
       <div>
-        <span className="mb-1.5 block text-[13px] font-medium text-ink-subtle">Fichier PDF</span>
+        <span className="mb-1.5 block text-[calc(13px*var(--ts))] font-medium text-ink-subtle">ملفّ PDF</span>
         <input
           ref={fileRef}
           type="file"
@@ -64,7 +64,7 @@ function ResourceForm({
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="shrink-0 text-[12px] font-medium text-brand-600 hover:underline"
+              className="shrink-0 text-[calc(12px*var(--ts))] font-medium text-brand-600 hover:underline"
             >
               Remplacer
             </button>
@@ -75,7 +75,7 @@ function ResourceForm({
             onClick={() => fileRef.current?.click()}
             className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md border border-dashed border-border-strong bg-surface px-4 text-sm font-medium text-ink-subtle transition hover:border-brand-300 hover:text-brand-600"
           >
-            <Upload className="size-4" /> Choisir un PDF
+            <Upload className="size-4" /> اختار PDF
           </button>
         )}
       </div>
@@ -86,7 +86,7 @@ function ResourceForm({
           onClick={onCancel}
           className="inline-flex h-10 items-center rounded-md border border-border-strong bg-surface px-3.5 text-sm font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
         >
-          Annuler
+          إلغاء
         </button>
         <button
           type="button"
@@ -94,7 +94,7 @@ function ResourceForm({
           onClick={() => onSave(name.trim() || undefined, fileName.trim())}
           className="inline-flex h-10 items-center gap-1.5 rounded-md bg-grad px-3.5 text-sm font-medium text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-50"
         >
-          <Check className="size-4" /> {initial ? "Enregistrer" : "Ajouter"}
+          <Check className="size-4" /> {initial ? "سجّل" : "زيد"}
         </button>
       </div>
     </div>
@@ -126,7 +126,7 @@ export function ResourcePicker({
 
   const picked = useMemo(() => new Set(resourceIds), [resourceIds])
   const sorted = useMemo(
-    () => [...resources].sort((a, b) => resourceLabel(a).localeCompare(resourceLabel(b), "fr")),
+    () => [...resources].sort((a, b) => resourceLabel(a).localeCompare(resourceLabel(b), "ar")),
     [resources],
   )
 
@@ -164,9 +164,9 @@ export function ResourcePicker({
           <button
             type="button"
             onClick={() => setEditing("new")}
-            className="inline-flex h-9 items-center gap-1.5 rounded-md border border-border-strong bg-surface px-3 text-[13px] font-medium text-brand-600 transition hover:border-brand-200"
+            className="inline-flex h-9 items-center gap-1.5 rounded-md border border-border-strong bg-surface px-3 text-[calc(13px*var(--ts))] font-medium text-brand-600 transition hover:border-brand-200"
           >
-            <Plus className="size-4" /> Nouvelle
+            <Plus className="size-4" /> جديد
           </button>
         )}
       </div>
@@ -179,7 +179,7 @@ export function ResourcePicker({
 
       {sorted.length === 0 && editing !== "new" ? (
         <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-          Aucune ressource. Ajoutez un document PDF avec « Nouvelle ».
+          ما فماش موارد. زيد وثيقة PDF بـ«جديد».
         </p>
       ) : (
         <ul className="flex flex-col gap-2">
@@ -203,21 +203,21 @@ export function ResourcePicker({
                   className="flex items-center gap-2 rounded-md border border-danger-200 bg-danger-50 px-3 py-2.5"
                 >
                   <span className="min-w-0 flex-1 text-sm text-danger-700">
-                    Supprimer « <span dir="auto" className="font-medium">{resourceLabel(r)}</span> » ?
+                    تحبّ تمسح «<span dir="auto" className="font-medium">{resourceLabel(r)}</span>»؟
                   </span>
                   <button
                     type="button"
                     onClick={() => setConfirmDelete(null)}
-                    className="shrink-0 rounded-md px-2.5 py-1 text-[13px] font-medium text-ink-subtle hover:bg-surface"
+                    className="shrink-0 rounded-md px-2.5 py-1 text-[calc(13px*var(--ts))] font-medium text-ink-subtle hover:bg-surface"
                   >
-                    Annuler
+                    إلغاء
                   </button>
                   <button
                     type="button"
                     onClick={() => doDelete(r.id)}
-                    className="shrink-0 rounded-md bg-danger-600 px-2.5 py-1 text-[13px] font-medium text-ink-inverted hover:brightness-105"
+                    className="shrink-0 rounded-md bg-danger-600 px-2.5 py-1 text-[calc(13px*var(--ts))] font-medium text-ink-inverted hover:brightness-105"
                   >
-                    Supprimer
+                    امسح
                   </button>
                 </li>
               )
@@ -254,7 +254,7 @@ export function ResourcePicker({
                       {resourceLabel(r)}
                     </span>
                     {r.name && (
-                      <span dir="auto" className="block truncate text-[12px] text-ink-muted">
+                      <span dir="auto" className="block truncate text-[calc(12px*var(--ts))] text-ink-muted">
                         {r.pdf.name}
                       </span>
                     )}
@@ -263,7 +263,7 @@ export function ResourcePicker({
                 <div className="flex shrink-0 items-center">
                   <button
                     type="button"
-                    aria-label="Modifier la ressource"
+                    aria-label="بدّل المورد"
                     onClick={() => setEditing(r.id)}
                     className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
                   >
@@ -271,7 +271,7 @@ export function ResourcePicker({
                   </button>
                   <button
                     type="button"
-                    aria-label="Supprimer la ressource"
+                    aria-label="امسح المورد"
                     onClick={() => setConfirmDelete(r.id)}
                     className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-danger-50 hover:text-danger-600"
                   >

@@ -1,6 +1,6 @@
 import type { ReactElement } from "react"
 import { createBrowserRouter, Link } from "react-router-dom"
-import { ChevronRight, GraduationCap, Palette } from "lucide-react"
+import { ChevronLeft, GraduationCap, Palette } from "lucide-react"
 import type { Role } from "@/data/types"
 import type { NavItem } from "@/app/nav/types"
 import WorkspaceLayout from "@/features/workspace/WorkspaceLayout"
@@ -35,6 +35,7 @@ import TeacherDashboard from "@/features/teacher/Dashboard"
 import TeacherSessionsScreen from "@/features/teacher/SessionsScreen"
 import ParentDashboard from "@/features/parent/Dashboard"
 import StudentDashboard from "@/features/student/Dashboard"
+import StudentOffersScreen from "@/features/student/offres/OffersScreen"
 import StudentSubjectsScreen from "@/features/student/SubjectsScreen"
 import StudentCalendarScreen from "@/features/student/calendar/CalendarScreen"
 import StudentSubjectDetailScreen from "@/features/student/SubjectDetailScreen"
@@ -56,15 +57,15 @@ function CoursesList() {
             <GraduationCap className="size-6" />
           </span>
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">Wael Academy</p>
-            <h1 className="font-display text-[26px] font-bold text-ink">Cours</h1>
+            <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">Wael Academy</p>
+            <h1 className="font-display text-[calc(26px*var(--ts))] font-bold text-ink">الدروس</h1>
           </div>
           <Link
             to="/design-system"
-            aria-label="Design system"
-            className="ms-auto inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-3 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 sm:h-9 sm:px-3.5"
+            aria-label="نظام التصميم"
+            className="ms-auto inline-flex h-11 items-center gap-2 rounded-md border border-border-strong bg-surface px-3 text-[calc(13px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 sm:h-9 sm:px-3.5"
           >
-            <Palette className="size-4" /> <span className="hidden sm:inline">Design system</span>
+            <Palette className="size-4" /> <span className="hidden sm:inline">نظام التصميم</span>
           </Link>
         </header>
 
@@ -76,10 +77,10 @@ function CoursesList() {
                 className="group flex items-center gap-4 rounded-lg border border-border bg-surface p-[18px] shadow-sm transition hover:border-brand-200 hover:shadow-md motion-safe:hover:-translate-y-0.5"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-display text-[15px] font-bold text-ink">{c.name}</p>
-                  <p className="text-[12px] text-ink-muted">{c.level}</p>
+                  <p className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">{c.name}</p>
+                  <p className="text-[calc(12px*var(--ts))] text-ink-muted">{c.level}</p>
                 </div>
-                <ChevronRight className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
+                <ChevronLeft className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
               </Link>
             </li>
           ))}
@@ -97,7 +98,7 @@ function SectionPlaceholder({ title }: { title: string }) {
         <GraduationCap className="size-5" />
       </span>
       <h2 className="mt-4 font-display text-lg font-bold text-ink">{title}</h2>
-      <p className="mt-1 text-sm text-ink-muted">Écran à construire — le cadre et la navigation sont prêts.</p>
+      <p className="mt-1 text-sm text-ink-muted">الشاشة مازالت باش تتبنى — الإطار والتنقّل حاضرين.</p>
     </div>
   )
 }
@@ -106,10 +107,10 @@ function NotFound() {
   return (
     <div className="grid min-h-dvh place-items-center bg-canvas px-4 text-center">
       <div>
-        <h1 className="font-display text-2xl font-bold text-ink">Page introuvable</h1>
-        <p className="mt-2 text-sm text-ink-muted">Cette page n’existe pas encore.</p>
+        <h1 className="font-display text-2xl font-bold text-ink">الصفحة ما تلقاتش</h1>
+        <p className="mt-2 text-sm text-ink-muted">الصفحة هاذي مازالت ما موجودةش.</p>
         <Link to="/" className="mt-4 inline-block text-sm font-medium text-brand-600 hover:underline">
-          Retour à l’accueil
+          ارجع للرئيسية
         </Link>
       </div>
     </div>
@@ -190,6 +191,7 @@ export const router = createBrowserRouter([
     studentNav,
     <StudentDashboard />,
     {
+      offres: <StudentOffersScreen />,
       matieres: <StudentSubjectsScreen />,
       calendrier: <StudentCalendarScreen />,
       seances: <StudentSeancesScreen />,
@@ -207,10 +209,10 @@ export const router = createBrowserRouter([
     path: "/courses/:id",
     element: <WorkspaceLayout />,
     children: [
-      { index: true, element: <SectionPlaceholder title="Aperçu du cours" /> },
-      { path: "planning", element: <SectionPlaceholder title="Planning des séances" /> },
-      { path: "students", element: <SectionPlaceholder title="Élèves inscrits" /> },
-      { path: "grades", element: <SectionPlaceholder title="Notes & évaluations" /> },
+      { index: true, element: <SectionPlaceholder title="نظرة على الدرس" /> },
+      { path: "planning", element: <SectionPlaceholder title="روزنامة الحصص" /> },
+      { path: "students", element: <SectionPlaceholder title="التلامذة المسجّلين" /> },
+      { path: "grades", element: <SectionPlaceholder title="الأعداد والتقييمات" /> },
     ],
   },
   { path: "/design-system", element: <DesignSystemPage /> },

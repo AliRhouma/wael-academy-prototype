@@ -1,13 +1,13 @@
 import type { Installment, Subscription, Transaction } from "@/data/types"
 
-/** Format a dinar amount the Tunisian way: "360 DT", no cents unless needed. */
+/** Format a dinar amount the Tunisian way: "360 د.ت", no cents unless needed. */
 export function formatDT(n: number): string {
   const s = Number.isInteger(n) ? n.toString() : n.toFixed(3).replace(/\.?0+$/, "")
-  return `${s} DT`
+  return `${s} د.ت`
 }
 
 /** "15 juin 2026" — dates on the payment screens. */
-const DAY = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" })
+const DAY = new Intl.DateTimeFormat("ar-TN-u-nu-latn", { day: "numeric", month: "short", year: "numeric" })
 export const formatDay = (iso: string) => DAY.format(new Date(`${iso}T00:00:00`))
 
 /** Today as "YYYY-MM-DD" (local). */
@@ -37,20 +37,21 @@ export function daysUntil(iso: string, today = todayISO()): number {
   return Math.round((b.getTime() - a.getTime()) / 86_400_000)
 }
 
-/** "3 mois et 12 j" / "18 jours" — a day count in words (months of 30 days). */
+/** "3 شهر و12 يوم" / "18 يام" — a day count in words (months of 30 days).
+ */
 function spanLabel(days: number): string {
-  if (days < 30) return `${days} jour${days > 1 ? "s" : ""}`
+  if (days < 30) return `${days} يام`
   const months = Math.floor(days / 30)
   const rest = days % 30
-  return rest > 0 ? `${months} mois et ${rest} j` : `${months} mois`
+  return rest > 0 ? `${months} شهر و${rest} يوم` : `${months} شهر`
 }
 
-/** Countdown to a due date: "dans 18 jours", "aujourd'hui", "en retard de 1 mois et 7 j". */
+/** Countdown to a due date: "بعد 18 يام", "اليوم", "متأخّر بـ شهر و7 يام". */
 export function dueInLabel(iso: string, today = todayISO()): string {
   const d = daysUntil(iso, today)
-  if (d < 0) return `en retard de ${spanLabel(-d)}`
-  if (d === 0) return "aujourd'hui"
-  return `dans ${spanLabel(d)}`
+  if (d < 0) return `متأخّر بـ ${spanLabel(-d)}`
+  if (d === 0) return "اليوم"
+  return `بعد ${spanLabel(d)}`
 }
 
 export type InstallmentStatus = "paid" | "partial" | "overdue" | "upcoming"
@@ -67,7 +68,7 @@ export function installmentStatus(
   return paid > 0 ? "partial" : "upcoming"
 }
 
-export type SubscriptionStatus = "actif" | "bloqué"
+export type SubscriptionStatus = "actif" | "bloque"
 
 /**
  * Display status of a subscription — BINARY: actif or bloqué. Blocked when the
@@ -79,12 +80,12 @@ export function subscriptionStatus(
   transactions: Transaction[],
   today = todayISO(),
 ): SubscriptionStatus {
-  if (sub.state === "blocked") return "bloqué"
+  if (sub.state === "blocked") return "bloque"
   const settled = paidTotal(sub, transactions) >= sub.price
   if (
     !settled &&
     sub.installments.some((i) => installmentStatus(i, transactions, today) === "overdue")
   )
-    return "bloqué"
+    return "bloque"
   return "actif"
 }

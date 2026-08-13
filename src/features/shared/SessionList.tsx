@@ -15,7 +15,7 @@ export function SessionList({ sessions, empty }: { sessions: Session[]; empty?: 
   if (sessions.length === 0) {
     return (
       <div className="rounded-lg border border-dashed border-border bg-surface">
-        <EmptyState icon={CalendarDays} title={empty ?? "Aucune séance à venir"} />
+        <EmptyState icon={CalendarDays} title={empty ?? "ما فماش حصص جايّة"} />
       </div>
     )
   }
@@ -37,14 +37,14 @@ export function SessionList({ sessions, empty }: { sessions: Session[]; empty?: 
               <CalendarDays className="size-4" />
             </span>
             <div className="min-w-0 flex-1">
-              <p dir="auto" className="truncate font-display text-[13px] font-bold text-ink">
+              <p dir="auto" className="truncate font-display text-[calc(13px*var(--ts))] font-bold text-ink">
                 {s.title}
               </p>
-              <p dir="auto" className="truncate text-[12px] text-ink-muted">
+              <p dir="auto" className="truncate text-[calc(12px*var(--ts))] text-ink-muted">
                 {context || "—"}
               </p>
             </div>
-            <span className="shrink-0 text-end text-[11px] text-ink-muted">
+            <span className="shrink-0 text-end text-[calc(11px*var(--ts))] text-ink-muted">
               {formatSessionDay(s.date)}
               <br />
               <span className="tabular-nums">{formatTimeRange(s.startTime, s.endTime)}</span>

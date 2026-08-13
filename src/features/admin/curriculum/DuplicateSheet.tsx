@@ -100,14 +100,14 @@ export function DestinationPicker({
 
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface-muted p-3.5">
-      <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+      <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
         Destination
       </p>
 
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Classe</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">القسم</span>
         <select className={SELECT} value={value.yearId} onChange={(e) => pickYear(e.target.value)}>
-          <option value="">— Choisir une classe —</option>
+          <option value="">— اختار قسم —</option>
           {cycleGroups
             .filter((g) => g.years.length > 0)
             .map((g) => (
@@ -124,14 +124,14 @@ export function DestinationPicker({
 
       {depth !== "year" && (
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Matière</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">المادّة</span>
           {!value.yearId ? (
             <p className="rounded-md border border-dashed border-border bg-surface px-3 py-2.5 text-sm text-ink-muted">
-              Choisissez d’abord une classe.
+              اختار قسم في البداية.
             </p>
           ) : subjects.length === 0 ? (
             <p className="rounded-md border border-dashed border-border bg-surface px-3 py-2.5 text-sm text-ink-muted">
-              Cette classe n’a aucune matière — créez-en une d’abord.
+              القسم هذا ما عندوش موادّ — اعمل وحدة في البداية.
             </p>
           ) : (
             <select
@@ -151,14 +151,14 @@ export function DestinationPicker({
 
       {depth === "chapter" && (
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Chapitre</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">الفصل</span>
           {!value.subjectId ? (
             <p className="rounded-md border border-dashed border-border bg-surface px-3 py-2.5 text-sm text-ink-muted">
-              Choisissez d’abord une matière.
+              اختار مادّة في البداية.
             </p>
           ) : chapters.length === 0 ? (
             <p className="rounded-md border border-dashed border-border bg-surface px-3 py-2.5 text-sm text-ink-muted">
-              Cette matière n’a aucun chapitre — créez-en un d’abord.
+              المادّة هذي ما عندهاش فصول — اعمل واحد في البداية.
             </p>
           ) : (
             <select
@@ -182,9 +182,9 @@ export function DestinationPicker({
 export interface DuplicateSheetProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  /** "Dupliquer le chapitre" */
+  /** "اعمل نسخة من الفصل" */
   title: string
-  /** "Nom du chapitre" / "Titre du contenu" */
+  /** "اسم الفصل" / "Titre du contenu" */
   nameLabel: string
   name: string
   onNameChange: (value: string) => void
@@ -204,7 +204,7 @@ export interface DuplicateSheetProps {
 }
 
 /**
- * The shared "Dupliquer" modal: name the copy, then say where it goes. Bottom
+ * The shared "اعمل نسخة" modal: name the copy, then say where it goes. Bottom
  * sheet on mobile / dialog on desktop via `FormSheet`. Submitting is a no-op
  * until the name and every required destination level are filled.
  */
@@ -227,15 +227,15 @@ export function DuplicateSheet({
   /** What still stands in the way — doubles as the message and the guard. */
   const missing =
     name.trim() === ""
-      ? "Donnez un nom à la copie."
+      ? "أعطي اسم للنسخة."
       : blocker
         ? blocker
         : depth && destination && !isDestinationReady(destination, depth)
           ? !destination.yearId
-            ? "Choisissez la classe de destination."
+            ? "اختار القسم اللي باش تنسخ ليه."
             : depth !== "year" && !destination.subjectId
-              ? "Choisissez la matière de destination."
-              : "Choisissez le chapitre de destination."
+              ? "اختار المادّة اللي باش تنسخ ليها."
+              : "اختار الفصل اللي باش تنسخ ليه."
           : undefined
 
   return (
@@ -243,8 +243,8 @@ export function DuplicateSheet({
       open={open}
       onOpenChange={onOpenChange}
       title={title}
-      description="Une copie indépendante — nommez-la et choisissez où elle doit aller."
-      submitLabel="Dupliquer"
+      description="نسخة مستقلّة — سمّيها واختار وين تمشي."
+      submitLabel="اعمل نسخة"
       onSubmit={() => !missing && onSubmit()}
     >
       <label className="block">
@@ -265,14 +265,14 @@ export function DuplicateSheet({
       )}
 
       {(missing ?? warning) && (
-        <p className="flex items-start gap-2 rounded-md border border-border bg-accent2-50 px-3 py-2.5 text-[13px] text-ink-subtle">
+        <p className="flex items-start gap-2 rounded-md border border-border bg-accent2-50 px-3 py-2.5 text-[calc(13px*var(--ts))] text-ink-subtle">
           <AlertTriangle className="mt-0.5 size-4 shrink-0 text-accent2-700" />
           <span>{missing ?? warning}</span>
         </p>
       )}
 
       {note && (
-        <p className="flex items-start gap-2 text-[13px] text-ink-muted">
+        <p className="flex items-start gap-2 text-[calc(13px*var(--ts))] text-ink-muted">
           <Copy className="mt-0.5 size-4 shrink-0" />
           <span>{note}</span>
         </p>

@@ -82,14 +82,14 @@ export function ScopePicker({ yearIds, subjectIds, onYearsChange, onSubjectsChan
     <>
       <div>
         <span className="mb-2 block text-sm font-medium text-ink-subtle">
-          Classes <span className="font-normal text-ink-muted">({yearIds.length})</span>
+          الأقسام <span className="font-normal text-ink-muted">({yearIds.length})</span>
         </span>
         <div className="flex flex-col gap-3">
           {cycleGroups
             .filter((g) => g.years.length > 0)
             .map((g) => (
               <div key={g.cycle.key}>
-                <p className="mb-1.5 text-[11px] font-medium uppercase tracking-[.1em] text-accent2-600">
+                <p className="mb-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.1em] text-accent2-600">
                   {g.cycle.label}
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -110,11 +110,11 @@ export function ScopePicker({ yearIds, subjectIds, onYearsChange, onSubjectsChan
 
       <div>
         <span className="mb-2 block text-sm font-medium text-ink-subtle">
-          Matières <span className="font-normal text-ink-muted">({subjectIds.length})</span>
+          الموادّ <span className="font-normal text-ink-muted">({subjectIds.length})</span>
         </span>
         {yearIds.length === 0 ? (
           <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-            Choisissez d’abord une ou plusieurs classes.
+            اختار قسم ولا كثر في البداية.
           </p>
         ) : (
           <div className="flex flex-col gap-3">
@@ -124,7 +124,7 @@ export function ScopePicker({ yearIds, subjectIds, onYearsChange, onSubjectsChan
                 <div key={y.id}>
                   <p
                     dir="auto"
-                    className="mb-1.5 text-[11px] font-medium uppercase tracking-[.1em] text-ink-muted"
+                    className="mb-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.1em] text-ink-muted"
                   >
                     {y.name}
                   </p>

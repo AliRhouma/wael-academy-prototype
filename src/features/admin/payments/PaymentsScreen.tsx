@@ -45,18 +45,18 @@ const FILTER_SELECT =
 
 /** Derived status → badge tone + label — binary: actif ou bloqué. */
 const STATUS: Record<SubscriptionStatus, { label: string; tone: BadgeTone }> = {
-  actif: { label: "Actif", tone: "success" },
-  bloqué: { label: "Bloqué", tone: "danger" },
+  actif: { label: "فعّال", tone: "success" },
+  bloque: { label: "موقّف", tone: "danger" },
 }
 
 type StatusFilter = "all" | SubscriptionStatus
 
 /** Tranche status → badge, matching the detail page. */
 const INST_STATUS: Record<InstallmentStatus, { label: string; tone: BadgeTone }> = {
-  paid: { label: "Payée", tone: "success" },
-  partial: { label: "Partielle", tone: "warning" },
-  overdue: { label: "En retard", tone: "danger" },
-  upcoming: { label: "À venir", tone: "neutral" },
+  paid: { label: "تخلّصت", tone: "success" },
+  partial: { label: "جزئية", tone: "warning" },
+  overdue: { label: "متأخّر", tone: "danger" },
+  upcoming: { label: "الجايّة", tone: "neutral" },
 }
 
 /**
@@ -107,15 +107,15 @@ export default function AdminPaymentsScreen() {
   const offerOptions = useMemo(() => {
     const ids = [...new Set(subscriptions.map((sub) => sub.offerId))]
     return ids
-      .map((id) => ({ id, name: offerName.get(id) ?? "Offre supprimée" }))
-      .sort((a, b) => a.name.localeCompare(b.name, "fr"))
+      .map((id) => ({ id, name: offerName.get(id) ?? "العرض تمسح" }))
+      .sort((a, b) => a.name.localeCompare(b.name, "ar"))
   }, [subscriptions, offerName])
 
   /** Distinct payment-mode tags — the options of the Mode filter. */
   const tagOptions = useMemo(
     () =>
       [...new Set(subscriptions.map((sub) => sub.tag).filter((t): t is string => Boolean(t)))].sort(
-        (a, b) => a.localeCompare(b, "fr"),
+        (a, b) => a.localeCompare(b, "ar"),
       ),
     [subscriptions],
   )
@@ -149,8 +149,8 @@ export default function AdminPaymentsScreen() {
       )
       .sort(
         (a, b) =>
-          (userName.get(a.userId) ?? "").localeCompare(userName.get(b.userId) ?? "", "fr") ||
-          (offerName.get(a.offerId) ?? "").localeCompare(offerName.get(b.offerId) ?? "", "fr"),
+          (userName.get(a.userId) ?? "").localeCompare(userName.get(b.userId) ?? "", "ar") ||
+          (offerName.get(a.offerId) ?? "").localeCompare(offerName.get(b.offerId) ?? "", "ar"),
       )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subscriptions, transactions, statusFilter, offerFilter, tagFilter, dueFilter, query, statusOf, userName, offerName])
@@ -183,13 +183,13 @@ export default function AdminPaymentsScreen() {
   function toggleBlock(sub: Subscription) {
     const next = sub.state === "blocked" ? "active" : "blocked"
     updateSubscription(sub.id, { state: next })
-    show(next === "blocked" ? "Abonnement bloqué — accès suspendu" : "Abonnement réactivé")
+    show(next === "blocked" ? "الاشتراك موقّف — الدخول مسكّر" : "الاشتراك ترجّع فعّل")
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removeSubscription(deleteTarget.id)
-    show("Abonnement supprimé")
+    show("الاشتراك تمسح")
     setDeleteTarget(null)
   }
 
@@ -197,8 +197,8 @@ export default function AdminPaymentsScreen() {
   function renderEcheancier(sub: Subscription) {
     if (sub.installments.length === 0) {
       return (
-        <p className="px-4 py-3 text-[13px] text-ink-muted md:ps-14">
-          Aucune tranche planifiée — paiement libre.
+        <p className="px-4 py-3 text-[calc(13px*var(--ts))] text-ink-muted md:ps-14">
+          ما فماش أقساط مبرمجة — خلاص حرّ.
         </p>
       )
     }
@@ -214,18 +214,18 @@ export default function AdminPaymentsScreen() {
           return (
             <li
               key={inst.id}
-              className="flex flex-wrap items-center gap-x-3 gap-y-1 px-2 py-2 text-[13px]"
+              className="flex flex-wrap items-center gap-x-3 gap-y-1 px-2 py-2 text-[calc(13px*var(--ts))]"
             >
-              <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand-50 font-display text-[12px] font-bold text-brand-700">
+              <span className="grid size-6 shrink-0 place-items-center rounded-full bg-brand-50 font-display text-[calc(12px*var(--ts))] font-bold text-brand-700">
                 {i + 1}
               </span>
               <span className="font-medium tabular-nums text-ink">
                 {formatDT(inst.amount)}
                 {instPaid > 0 && instPaid < inst.amount && (
-                  <span className="font-normal text-ink-muted"> — payé {formatDT(instPaid)}</span>
+                  <span className="font-normal text-ink-muted"> — تخلّص {formatDT(instPaid)}</span>
                 )}
               </span>
-              <span className="text-ink-muted">avant le {formatDay(inst.dueDate)}</span>
+              <span className="text-ink-muted">قبل {formatDay(inst.dueDate)}</span>
               <Badge tone={INST_STATUS[st].tone} dot>
                 {INST_STATUS[st].label}
               </Badge>
@@ -253,16 +253,16 @@ export default function AdminPaymentsScreen() {
   const columns: Column<Subscription>[] = [
     {
       key: "student",
-      header: "Élève",
+      header: "تلميذ",
       render: (sub) => (
         <div className="flex items-center gap-3">
           <Avatar name={userName.get(sub.userId) ?? "?"} />
           <div className="min-w-0">
-            <p dir="auto" className="truncate font-display text-[15px] font-bold text-ink">
-              {userName.get(sub.userId) ?? "Élève supprimé"}
+            <p dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
+              {userName.get(sub.userId) ?? "التلميذ تمسح"}
             </p>
-            <p dir="auto" className="mt-0.5 line-clamp-1 text-[12px] text-ink-muted">
-              {offerName.get(sub.offerId) ?? "Offre supprimée"}
+            <p dir="auto" className="mt-0.5 line-clamp-1 text-[calc(12px*var(--ts))] text-ink-muted">
+              {offerName.get(sub.offerId) ?? "العرض تمسح"}
             </p>
           </div>
         </div>
@@ -270,31 +270,31 @@ export default function AdminPaymentsScreen() {
     },
     {
       key: "tag",
-      header: "Mode",
+      header: "النمط",
       render: (sub) =>
         sub.tag ? <Badge tone="neutral">{sub.tag}</Badge> : <span className="text-ink-muted">—</span>,
     },
     {
       key: "price",
-      header: "Montant",
+      header: "المبلغ",
       render: (sub) => (
-        <span className="font-display text-[15px] font-bold text-ink tabular-nums">
+        <span className="font-display text-[calc(15px*var(--ts))] font-bold text-ink tabular-nums">
           {formatDT(sub.price)}
         </span>
       ),
     },
     {
       key: "paid",
-      header: "Payé",
+      header: "تخلّص",
       render: (sub) => {
         const paid = paidTotal(sub, transactions)
         const pct = sub.price > 0 ? Math.min(100, Math.round((paid / sub.price) * 100)) : 0
         const left = Math.max(0, sub.price - paid)
         return (
           <div className="min-w-[120px]">
-            <p className="text-[13px] tabular-nums text-ink-subtle">
+            <p className="text-[calc(13px*var(--ts))] tabular-nums text-ink-subtle">
               <span className="font-medium text-ink">{formatDT(paid)}</span>
-              {left > 0 && <span className="text-ink-muted"> · reste {formatDT(left)}</span>}
+              {left > 0 && <span className="text-ink-muted"> · الباقي {formatDT(left)}</span>}
             </p>
             <div className="mt-1.5 h-1.5 w-full max-w-[140px] overflow-hidden rounded-full bg-neutral-100">
               <div className="h-full rounded-full bg-grad" style={{ width: `${pct}%` }} />
@@ -305,21 +305,21 @@ export default function AdminPaymentsScreen() {
     },
     {
       key: "deadline",
-      header: "Échéance",
+      header: "الأجل",
       render: (sub) => {
         const nextInst = sub.installments.find(
           (i) => installmentStatus(i, transactions) !== "paid",
         )
         return (
-          <div className="text-[13px]">
+          <div className="text-[calc(13px*var(--ts))]">
             {sub.deadline ? (
               <p className="whitespace-nowrap text-ink-subtle">{formatDay(sub.deadline)}</p>
             ) : (
               <p className="text-ink-muted">—</p>
             )}
             {nextInst && (
-              <p className="mt-0.5 whitespace-nowrap text-[12px] text-ink-muted">
-                Proch. tranche : {formatDT(nextInst.amount)} · {formatDay(nextInst.dueDate)}
+              <p className="mt-0.5 whitespace-nowrap text-[calc(12px*var(--ts))] text-ink-muted">
+                القسط الجاي: {formatDT(nextInst.amount)} · {formatDay(nextInst.dueDate)}
               </p>
             )}
           </div>
@@ -328,7 +328,7 @@ export default function AdminPaymentsScreen() {
     },
     {
       key: "status",
-      header: "Statut",
+      header: "الحالة",
       render: (sub) => {
         const st = statusOf.get(sub.id)!
         return (
@@ -346,15 +346,15 @@ export default function AdminPaymentsScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Nouvel abonnement
+      <Plus className="size-4" /> اشتراك جديد
     </button>
   )
 
   const filters: { key: StatusFilter; label: string; count: number }[] = [
-    { key: "all", label: "Tous", count: subscriptions.length },
+    { key: "all", label: "الكل", count: subscriptions.length },
     ...(Object.keys(STATUS) as SubscriptionStatus[]).map((st) => ({
       key: st as StatusFilter,
-      label: STATUS[st].label + "s",
+      label: STATUS[st].label,
       count: countByStatus.get(st) ?? 0,
     })),
   ]
@@ -364,8 +364,8 @@ export default function AdminPaymentsScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Paiements"
-        subtitle={`${subscriptions.length} abonnement${subscriptions.length > 1 ? "s" : ""} — montants convenus, tranches et transactions encaissées.`}
+        title="الخلاص"
+        subtitle={`${subscriptions.length} اشتراك — مبالغ متّفق عليها، أقساط ومعاملات مخلّصة.`}
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -373,8 +373,8 @@ export default function AdminPaymentsScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={CreditCard}
-            title="Aucun abonnement"
-            description="Inscrivez un élève à une offre, fixez le montant et l’échéancier de paiement."
+            title="ما فماش اشتراكات"
+            description="سجّل تلميذ في عرض، حدّد المبلغ وروزنامة الخلاص."
             action={addButton}
           />
         </div>
@@ -415,7 +415,7 @@ export default function AdminPaymentsScreen() {
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Rechercher un élève, une offre…"
+                placeholder="لوّج على تلميذ ولا عرض…"
                 className={INPUT + " ps-9"}
               />
             </div>
@@ -429,7 +429,7 @@ export default function AdminPaymentsScreen() {
                 value={offerFilter}
                 onChange={(e) => setOfferFilter(e.target.value)}
               >
-                <option value="all">Toutes les offres</option>
+                <option value="all">العروض الكل</option>
                 {offerOptions.map((o) => (
                   <option key={o.id} value={o.id}>
                     {o.name}
@@ -445,7 +445,7 @@ export default function AdminPaymentsScreen() {
                 value={tagFilter}
                 onChange={(e) => setTagFilter(e.target.value)}
               >
-                <option value="all">Tous les modes</option>
+                <option value="all">الطرق الكل</option>
                 {tagOptions.map((t) => (
                   <option key={t} value={t}>
                     {t}
@@ -461,10 +461,10 @@ export default function AdminPaymentsScreen() {
                 value={dueFilter}
                 onChange={(e) => setDueFilter(e.target.value as typeof dueFilter)}
               >
-                <option value="all">Toute échéance</option>
-                <option value="overdue">Tranche en retard</option>
-                <option value="30">Tranche dans les 30 jours</option>
-                <option value="90">Tranche dans les 90 jours</option>
+                <option value="all">أيّ أجل</option>
+                <option value="overdue">قسط متأخّر</option>
+                <option value="30">قسط في 30 يوم</option>
+                <option value="90">قسط في 90 يوم</option>
               </select>
               <ChevronDown className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
             </div>
@@ -475,12 +475,12 @@ export default function AdminPaymentsScreen() {
                 onClick={resetFilters}
                 className="inline-flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-medium text-ink-muted transition hover:bg-surface-muted hover:text-danger-600"
               >
-                <FilterX className="size-4" /> Réinitialiser
+                <FilterX className="size-4" /> صفّر
               </button>
             )}
 
-            <span className="ms-auto text-[12px] tabular-nums text-ink-muted">
-              {rows.length} résultat{rows.length > 1 ? "s" : ""}
+            <span className="ms-auto text-[calc(12px*var(--ts))] tabular-nums text-ink-muted">
+              {rows.length} نتيجة
             </span>
           </div>
 
@@ -489,25 +489,25 @@ export default function AdminPaymentsScreen() {
             rows={rows}
             rowKey={(sub) => sub.id}
             renderDetail={renderEcheancier}
-            detailLabel="Échéancier"
+            detailLabel="روزنامة الخلاص"
             onRowClick={(sub) => navigate(`/admin/payments/${sub.id}`)}
             rowActions={(sub) => [
               {
-                label: "Détail & transactions",
+                label: "التفاصيل والمعاملات",
                 icon: ListTree,
                 onClick: () => navigate(`/admin/payments/${sub.id}`),
               },
               {
-                label: "Ajouter une transaction",
+                label: "زيد معاملة",
                 icon: Plus,
                 onClick: () => setTxTarget(sub),
               },
-              { label: "Modifier", icon: Pencil, onClick: () => openEdit(sub) },
+              { label: "بدّل", icon: Pencil, onClick: () => openEdit(sub) },
               sub.state === "blocked"
-                ? { label: "Réactiver", icon: CircleCheck, onClick: () => toggleBlock(sub) }
-                : { label: "Bloquer l’accès", icon: Ban, onClick: () => toggleBlock(sub) },
+                ? { label: "رجّع فعّل", icon: CircleCheck, onClick: () => toggleBlock(sub) }
+                : { label: "وقّف الدخول", icon: Ban, onClick: () => toggleBlock(sub) },
               {
-                label: "Supprimer",
+                label: "امسح",
                 icon: Trash2,
                 tone: "danger",
                 onClick: () => setDeleteTarget(sub),
@@ -517,8 +517,8 @@ export default function AdminPaymentsScreen() {
               <div className="rounded-lg border border-dashed border-border bg-surface">
                 <EmptyState
                   icon={Search}
-                  title="Aucun résultat"
-                  description="Aucun abonnement ne correspond à ce filtre ou à cette recherche."
+                  title="ما فماش نتائج"
+                  description="ما فماش اشتراك يوافق الفلتر ولا البحث هذا."
                 />
               </div>
             }
@@ -544,10 +544,10 @@ export default function AdminPaymentsScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cet abonnement ?"
+        title="تحبّ تمسح الاشتراك هذا؟"
         description={
           deleteTarget
-            ? `L’abonnement de « ${userName.get(deleteTarget.userId) ?? "?"} » et ses transactions seront supprimés.`
+            ? `اشتراك «${userName.get(deleteTarget.userId) ?? "?"}» والمعاملات متاعو باش يتمسحو.`
             : undefined
         }
         onConfirm={confirmDelete}

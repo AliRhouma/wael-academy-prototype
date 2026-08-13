@@ -10,7 +10,7 @@ const TINTS = [
 ] as const
 
 const SIZES = {
-  sm: "size-8 text-[11px]",
+  sm: "size-8 text-[calc(11px*var(--ts))]",
   md: "size-9 text-xs",
   lg: "size-11 text-sm",
 } as const
@@ -34,7 +34,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
   size?: keyof typeof SIZES
 }
 
-/** Deterministic tinted-initials avatar; Cause initials (design system §10). */
+/** Deterministic tinted-initials avatar; display-face initials (design system §10). */
 export function Avatar({ name, size = "md", className, ...props }: AvatarProps) {
   return (
     <span

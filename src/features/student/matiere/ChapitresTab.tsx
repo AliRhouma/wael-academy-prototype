@@ -22,15 +22,15 @@ import type { PdfRequest } from "./types"
 type Drawer = "cours" | "exercice" | "resume" | "serie" | "quiz"
 
 const DRAWERS: { key: Drawer; label: string }[] = [
-  { key: "cours", label: "Cours" },
-  { key: "exercice", label: "Exercice" },
-  { key: "resume", label: "Résumé" },
-  { key: "serie", label: "Série d’exercices" },
-  { key: "quiz", label: "Quiz" },
+  { key: "cours", label: "دروس" },
+  { key: "exercice", label: "تمرين" },
+  { key: "resume", label: "ملخّص" },
+  { key: "serie", label: "سلسلة تمارين" },
+  { key: "quiz", label: "كويز" },
 ]
 
 /**
- * Élève — the "Chapitres" tab: every chapitre of the matière, stacked, each
+ * Élève — the "الفصول" tab: every chapitre of the matière, stacked, each
  * expanding in place into its five drawers.
  *
  * One chapter opens at a time: the drawers are dense, and two open cards make
@@ -92,8 +92,8 @@ export function ChapitresTab({
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={Layers3}
-          title="Programme à venir"
-          description="Les chapitres de cette matière ne sont pas encore publiés. Reviens bientôt."
+          title="البرنامج جاي"
+          description="فصول المادّة هذي مازالت ما تنشرتش. عاود ادخل قريب."
         />
       </div>
     )
@@ -126,7 +126,7 @@ export function ChapitresTab({
               >
                 <span
                   className={cn(
-                    "grid size-10 shrink-0 place-items-center rounded-md font-display text-[15px] font-bold tabular-nums transition",
+                    "grid size-10 shrink-0 place-items-center rounded-md font-display text-[calc(15px*var(--ts))] font-bold tabular-nums transition",
                     open ? "bg-grad text-ink-inverted shadow-brand" : "bg-brand-50 text-brand-600",
                   )}
                 >
@@ -136,16 +136,16 @@ export function ChapitresTab({
                   <span
                     dir="auto"
                     className={cn(
-                      "block truncate font-display text-[15px] font-bold leading-snug",
+                      "block truncate font-display text-[calc(15px*var(--ts))] font-bold leading-snug",
                       open ? "text-brand-700" : "text-ink",
                     )}
                   >
                     {chapter.name}
                   </span>
-                  <span className="mt-0.5 block text-[12px] text-ink-muted">
+                  <span className="mt-0.5 block text-[calc(12px*var(--ts))] text-ink-muted">
                     {contentCount === 0 && quizCount === 0
-                      ? "Contenus à venir"
-                      : `${contentCount} contenu${contentCount > 1 ? "s" : ""} · ${quizCount} quiz`}
+                      ? "محتويات جايّة"
+                      : `${contentCount} محتوى · ${quizCount} كويز`}
                   </span>
                 </span>
                 <ChevronDown
@@ -175,7 +175,7 @@ export function ChapitresTab({
                         onClick={() => setDrawer(d.key)}
                         aria-current={active ? "true" : undefined}
                         className={cn(
-                          "inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[13px] font-medium transition",
+                          "inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border px-3 text-[calc(13px*var(--ts))] font-medium transition",
                           active
                             ? "border-transparent bg-grad text-ink-inverted shadow-brand"
                             : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600",
@@ -185,7 +185,7 @@ export function ChapitresTab({
                         {d.label}
                         <span
                           className={cn(
-                            "rounded-full px-1.5 text-[11px] tabular-nums",
+                            "rounded-full px-1.5 text-[calc(11px*var(--ts))] tabular-nums",
                             active ? "bg-white/20 text-ink-inverted" : "bg-neutral-100 text-ink-muted",
                           )}
                         >
@@ -236,7 +236,7 @@ function DrawerContent({
   onQuiz: (quiz: Quiz) => void
 }) {
   if (drawer === "quiz") {
-    if (quizzes.length === 0) return <DrawerEmpty label="quiz" />
+    if (quizzes.length === 0) return <DrawerEmpty label="كويز" />
     return (
       <ul className="grid gap-2.5 md:grid-cols-2">
         {quizzes.map((quiz) => (
@@ -250,17 +250,17 @@ function DrawerContent({
                 <QUIZ_ICON className="size-5" />
               </span>
               <span className="min-w-0 flex-1">
-                <span dir="auto" className="block text-[14px] font-semibold leading-snug text-ink">
+                <span dir="auto" className="block text-[calc(14px*var(--ts))] font-semibold leading-snug text-ink">
                   {quiz.title}
                 </span>
-                <span className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[12px] text-ink-muted">
+                <span className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[calc(12px*var(--ts))] text-ink-muted">
                   <span className="tabular-nums">{quiz.questions.length} questions</span>
                   {quiz.durationMin && (
                     <>
                       <span>·</span>
                       <span className="inline-flex items-center gap-1 tabular-nums">
                         <Timer className="size-3.5" />
-                        {quiz.durationMin} min
+                        {quiz.durationMin} دقيقة
                       </span>
                     </>
                   )}
@@ -283,7 +283,7 @@ function DrawerContent({
   }
 
   const meta = LESSON_KINDS[drawer]
-  if (lessons.length === 0) return <DrawerEmpty label={meta.label.toLowerCase()} />
+  if (lessons.length === 0) return <DrawerEmpty label={meta.label} />
 
   /* --- Cours & exercice: video cards --- */
   if (meta.hasVideo) {
@@ -318,20 +318,20 @@ function DrawerContent({
                   <Badge tone={meta.tone}>{meta.label}</Badge>
                   <span
                     dir="auto"
-                    className="mt-1.5 block text-[14px] font-semibold leading-snug text-ink line-clamp-2"
+                    className="mt-1.5 block text-[calc(14px*var(--ts))] font-semibold leading-snug text-ink line-clamp-2"
                   >
                     {lesson.title}
                   </span>
-                  <span className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[12px] text-ink-muted">
+                  <span className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[calc(12px*var(--ts))] text-ink-muted">
                     <span className="inline-flex items-center gap-1">
-                      <Clock3 className="size-3.5" /> Vidéo
+                      <Clock3 className="size-3.5" /> فيديو
                     </span>
                     {lesson.pdfs.length > 0 && (
                       <>
                         <span>·</span>
                         <span className="inline-flex items-center gap-1">
                           <FileText className="size-3.5" />
-                          {lesson.pdfs.length} document{lesson.pdfs.length > 1 ? "s" : ""}
+                          {lesson.pdfs.length} وثيقة
                         </span>
                       </>
                     )}
@@ -373,14 +373,14 @@ function DrawerContent({
                 <Badge tone={meta.tone}>{meta.label}</Badge>
                 <span
                   dir="auto"
-                  className="mt-1.5 block text-[14px] font-semibold leading-snug text-ink line-clamp-2"
+                  className="mt-1.5 block text-[calc(14px*var(--ts))] font-semibold leading-snug text-ink line-clamp-2"
                 >
                   {lesson.title}
                 </span>
-                <span className="mt-1 block text-[12px] text-ink-muted">
+                <span className="mt-1 block text-[calc(12px*var(--ts))] text-ink-muted">
                   {empty
-                    ? "Document à venir"
-                    : `${lesson.pdfs.length} document${lesson.pdfs.length > 1 ? "s" : ""} · PDF`}
+                    ? "وثيقة جايّة"
+                    : `${lesson.pdfs.length} وثيقة · PDF`}
                 </span>
               </span>
             </button>
@@ -394,9 +394,9 @@ function DrawerContent({
 function DrawerEmpty({ label }: { label: string }) {
   return (
     <div className="rounded-lg border border-dashed border-border bg-surface px-5 py-9 text-center">
-      <p className="text-sm font-medium text-ink-subtle">Rien en {label} pour ce chapitre</p>
-      <p className="mt-1 text-[13px] text-ink-muted">
-        Ce chapitre n’a pas encore de contenu de ce type — regarde les autres onglets.
+      <p className="text-sm font-medium text-ink-subtle">ما فماش {label} في الفصل هذا</p>
+      <p className="mt-1 text-[calc(13px*var(--ts))] text-ink-muted">
+        الفصل هذا مازال ما عندوش محتوى من النوع هذا — شوف التابات الأخرى.
       </p>
     </div>
   )

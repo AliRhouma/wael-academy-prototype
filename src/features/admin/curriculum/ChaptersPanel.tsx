@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { ChevronRight, Copy, Layers3, Pencil, Plus, Trash2 } from "lucide-react"
+import { ChevronLeft, Copy, Layers3, Pencil, Plus, Trash2 } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu } from "@/components/kit/OverflowMenu"
 import { Badge } from "@/components/kit/Badge"
@@ -21,7 +21,7 @@ import {
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
-/** The "Chapitres" tab of a subject — shared syllabus chapters; each opens its
+/** The "الفصول" tab of a subject — shared syllabus chapters; each opens its
  * own page where contenus & quiz are created. */
 export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject }) {
   const navigate = useNavigate()
@@ -93,7 +93,7 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
     if (!trimmed || pickedSubjects.length === 0 || pickedYears.length === 0) return
     if (editing) {
       updateChapter(editing.id, { name: trimmed, subjectIds: pickedSubjects, yearIds: pickedYears })
-      show("Chapitre modifié")
+      show("الفصل تبدّل")
     } else {
       addChapter({
         name: trimmed,
@@ -101,7 +101,7 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
         yearIds: pickedYears,
         order: chapters.length,
       })
-      show("Chapitre ajouté")
+      show("الفصل تزاد")
     }
     setFormOpen(false)
   }
@@ -119,14 +119,14 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
       subjectIds: [dupDest.subjectId],
       yearIds: [dupDest.yearId],
     })
-    show(`Chapitre dupliqué dans « ${dupInto} »`)
+    show(`الفصل تنسخ في «${dupInto}»`)
     setDupTarget(null)
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removeChapter(deleteTarget.id)
-    show("Chapitre supprimé")
+    show("الفصل تمسح")
     setDeleteTarget(null)
   }
 
@@ -136,7 +136,7 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter un chapitre
+      <Plus className="size-4" /> زيد فصل
     </button>
   )
 
@@ -145,8 +145,8 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
       <div className="flex items-center justify-between gap-4">
         <p className="text-sm text-ink-muted">
           {chapters.length > 0
-            ? `${chapters.length} chapitre${chapters.length > 1 ? "s" : ""}`
-            : "Aucun chapitre pour le moment"}
+            ? `${chapters.length} فصل`
+            : "ما فماش فصول توّا"}
         </p>
         {chapters.length > 0 && addButton}
       </div>
@@ -155,8 +155,8 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Layers3}
-            title="Aucun chapitre"
-            description="Ajoutez les chapitres du programme, puis ouvrez-les pour y créer contenus et quiz."
+            title="ما فماش فصول"
+            description="زيد فصول البرنامج، وبعد حلّهم باش تعمل فيهم محتويات وكويزات."
             action={addButton}
           />
         </div>
@@ -167,8 +167,8 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
             const lc = lessonCount.get(chapter.id) ?? 0
             const qc = quizCount.get(chapter.id) ?? 0
             const parts = [
-              lc > 0 && `${lc} contenu${lc > 1 ? "s" : ""}`,
-              qc > 0 && `${qc} quiz`,
+              lc > 0 && `${lc} محتوى`,
+              qc > 0 && `${qc} كويز`,
             ].filter(Boolean) as string[]
             return (
               <li key={chapter.id}>
@@ -180,7 +180,7 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
                     <Layers3 className="size-5" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p dir="auto" className="font-display text-[15px] font-bold text-ink">
+                    <p dir="auto" className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">
                       {chapter.name}
                     </p>
                     <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
@@ -193,18 +193,18 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
                         </Badge>
                       ))}
                     </div>
-                    <p className="mt-1.5 text-[12px] text-ink-muted">
-                      {parts.length > 0 ? parts.join(" · ") : "Aucun contenu — ouvrez pour en ajouter"}
+                    <p className="mt-1.5 text-[calc(12px*var(--ts))] text-ink-muted">
+                      {parts.length > 0 ? parts.join(" · ") : "ما فماش محتوى — حلّ باش تزيد"}
                     </p>
                   </div>
-                  <ChevronRight className="mt-2 size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
+                  <ChevronLeft className="mt-2 size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
                   <div onClick={(e) => e.stopPropagation()}>
                     <OverflowMenu
                       actions={[
-                        { label: "Modifier", icon: Pencil, onClick: () => openEdit(chapter) },
-                        { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(chapter) },
+                        { label: "بدّل", icon: Pencil, onClick: () => openEdit(chapter) },
+                        { label: "اعمل نسخة", icon: Copy, onClick: () => openDuplicate(chapter) },
                         {
-                          label: "Supprimer",
+                          label: "امسح",
                           icon: Trash2,
                           tone: "danger",
                           onClick: () => setDeleteTarget(chapter),
@@ -222,23 +222,23 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier le chapitre" : "Nouveau chapitre"}
+        title={editing ? "بدّل الفصل" : "فصل جديد"}
         description={
           editing
             ? undefined
-            : `Ajouté à « ${subject.name} » — ${year.name}.`
+            : `تزاد لـ«${subject.name}» — ${year.name}.`
         }
-        submitLabel={editing ? "Enregistrer" : "Ajouter"}
+        submitLabel={editing ? "سجّل" : "زيد"}
         onSubmit={submit}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom du chapitre</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">اسم الفصل</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Ex. Limites et continuité · النص الحجاجي"
+            placeholder="مثال: النهايات والاتّصال · النص الحجاجي"
             autoFocus
           />
         </label>
@@ -258,24 +258,24 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
       <DuplicateSheet
         open={dupTarget !== null}
         onOpenChange={(o) => !o && setDupTarget(null)}
-        title="Dupliquer le chapitre"
-        nameLabel="Nom de la copie"
+        title="اعمل نسخة من الفصل"
+        nameLabel="اسم النسخة"
         name={dupName}
         onNameChange={setDupName}
         depth="subject"
         destination={dupDest}
         onDestinationChange={setDupDest}
-        note="Les contenus, les quiz et les examens de quiz du chapitre sont copiés avec lui."
+        note="محتويات الفصل وكويزاتو واختباراتو ينتسخو معاه."
         onSubmit={submitDuplicate}
       />
 
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer ce chapitre ?"
+        title="تحبّ تمسح الفصل هذا؟"
         description={
           deleteTarget
-            ? `« ${deleteTarget.name} » et tout son contenu (contenus & quiz) seront définitivement supprimés.`
+            ? `«${deleteTarget.name}» والمحتوى متاعو الكل (محتويات وكويزات) باش يتمسحو نهائيا.`
             : undefined
         }
         onConfirm={confirmDelete}

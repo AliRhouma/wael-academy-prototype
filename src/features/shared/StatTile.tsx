@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import type { LucideIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-/** A small stat card (icon chip + Cause number + label); optionally a link. */
+/** A small stat card (icon chip + display-face number + label); optionally a link. */
 export function StatTile({
   icon: Icon,
   label,
@@ -26,7 +26,7 @@ export function StatTile({
       </span>
       <div className="min-w-0">
         <p className="font-display text-2xl font-bold leading-none text-ink">{value}</p>
-        <p className="mt-1 truncate text-[12px] text-ink-muted">{label}</p>
+        <p className="mt-1 truncate text-[calc(12px*var(--ts))] text-ink-muted">{label}</p>
       </div>
     </div>
   )

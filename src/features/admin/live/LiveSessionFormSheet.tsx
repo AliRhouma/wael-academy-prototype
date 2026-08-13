@@ -57,7 +57,7 @@ export function LiveSessionFormSheet({
   const [resourceIds, setResourceIds] = useState<string[]>([])
 
   const sortedOffers = useMemo(
-    () => [...offers].sort((a, b) => a.name.localeCompare(b.name, "fr")),
+    () => [...offers].sort((a, b) => a.name.localeCompare(b.name, "ar")),
     [offers],
   )
 
@@ -116,10 +116,10 @@ export function LiveSessionFormSheet({
     }
     if (editing) {
       updateLiveSession(editing.id, patch)
-      onSaved("Session modifiée")
+      onSaved("الحصّة تبدّلت")
     } else {
       addLiveSession(patch)
-      onSaved("Session créée")
+      onSaved("الحصّة تعملت")
     }
     onOpenChange(false)
   }
@@ -128,29 +128,29 @@ export function LiveSessionFormSheet({
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      title={editing ? "Modifier la session" : "Nouvelle session en direct"}
+      title={editing ? "بدّل الحصّة" : "حصّة مباشرة جديدة"}
       description={
         editing
           ? undefined
-          : "Un lien de visioconférence, ses matières, et — au besoin — des groupes, années et ressources."
+          : "رابط فيديو، الموادّ متاعو، وكان لزم — أفواج وسنوات وموارد."
       }
-      submitLabel={editing ? "Enregistrer" : "Créer"}
+      submitLabel={editing ? "سجّل" : "اعمل"}
       onSubmit={submit}
     >
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom de la session</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">اسم الحصّة</span>
         <input
           className={INPUT + " text-start"}
           dir="auto"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Ex. Révision en direct — Intégrales"
+          placeholder="مثال: مراجعة مباشرة — التكاملات"
           autoFocus
         />
       </label>
 
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Lien de la session</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">رابط الحصّة</span>
         <div className="relative">
           <Link2 className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
           <input
@@ -169,15 +169,15 @@ export function LiveSessionFormSheet({
           />
         </div>
         {urlInvalid && (
-          <p className="mt-1.5 text-[12px] font-medium text-danger-600">
-            Le lien doit commencer par http:// ou https://.
+          <p className="mt-1.5 text-[calc(12px*var(--ts))] font-medium text-danger-600">
+            الرابط لازمو يبدا بـ http:// ولا https://.
           </p>
         )}
       </label>
 
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Date</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">التاريخ</span>
           <input
             type="date"
             className={INPUT}
@@ -187,7 +187,7 @@ export function LiveSessionFormSheet({
           />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Heure</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">الساعة</span>
           <input
             type="time"
             className={INPUT + " tabular-nums"}
@@ -199,7 +199,7 @@ export function LiveSessionFormSheet({
       </div>
 
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Année scolaire</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">السنة الدراسية</span>
         <div className="relative">
           <select
             className={INPUT + " appearance-none pe-10"}
@@ -225,7 +225,7 @@ export function LiveSessionFormSheet({
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-          Offre <span className="font-normal text-ink-muted">(optionnel)</span>
+          عرض <span className="font-normal text-ink-muted">(اختياري)</span>
         </span>
         <div className="relative">
           <select
@@ -233,7 +233,7 @@ export function LiveSessionFormSheet({
             value={offerId}
             onChange={(e) => setOfferId(e.target.value)}
           >
-            <option value="">— Aucune —</option>
+            <option value="">— حتّى وحدة —</option>
             {sortedOffers.map((o) => (
               <option key={o.id} value={o.id}>
                 {o.name}

@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react"
-import { ChevronRight, Inbox } from "lucide-react"
+import { ChevronLeft, Inbox } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu, type OverflowAction } from "@/components/kit/OverflowMenu"
@@ -30,15 +30,15 @@ export interface DataTableProps<T> {
    * Independent of `onRowClick` (the chevron stops propagation).
    */
   renderDetail?: (row: T) => ReactNode
-  /** Label of the mobile detail toggle (default "Détails"). */
+  /** Label of the mobile detail toggle (default "التفاصيل"). */
   detailLabel?: string
   className?: string
 }
 
 const ALIGN = {
-  left: "text-left",
+  left: "text-start",
   center: "text-center",
-  right: "text-right",
+  right: "text-end",
 } as const
 
 function cell<T>(col: Column<T>, row: T): ReactNode {
@@ -61,7 +61,7 @@ export function DataTable<T>({
   onRowClick,
   rowActions,
   renderDetail,
-  detailLabel = "Détails",
+  detailLabel = "التفاصيل",
   className,
 }: DataTableProps<T>) {
   const isEmpty = !loading && rows.length === 0
@@ -134,15 +134,15 @@ export function DataTable<T>({
                             <td className="w-10 py-2 pe-0 ps-2" onClick={(e) => e.stopPropagation()}>
                               <button
                                 type="button"
-                                aria-label={open ? "Replier" : "Déplier"}
+                                aria-label={open ? "طوي" : "حلّ"}
                                 aria-expanded={open}
                                 onClick={() => toggleExpand(key)}
                                 className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
                               >
-                                <ChevronRight
+                                <ChevronLeft
                                   className={cn(
-                                    "size-4 transition-transform rtl:rotate-180",
-                                    open && "rotate-90 rtl:rotate-90",
+                                    "size-4 transition-transform",
+                                    open && "-rotate-90",
                                   )}
                                 />
                               </button>
@@ -223,13 +223,13 @@ export function DataTable<T>({
                           type="button"
                           aria-expanded={open}
                           onClick={() => toggleExpand(key)}
-                          className="mt-3 flex min-h-11 w-full items-center justify-between rounded-md bg-surface-muted px-3 py-2 text-[13px] font-medium text-ink-subtle transition hover:text-brand-600"
+                          className="mt-3 flex min-h-11 w-full items-center justify-between rounded-md bg-surface-muted px-3 py-2 text-[calc(13px*var(--ts))] font-medium text-ink-subtle transition hover:text-brand-600"
                         >
                           {detailLabel}
-                          <ChevronRight
+                          <ChevronLeft
                             className={cn(
-                              "size-4 transition-transform rtl:rotate-180",
-                              open && "rotate-90 rtl:rotate-90",
+                              "size-4 transition-transform",
+                              open && "-rotate-90",
                             )}
                           />
                         </button>
@@ -249,7 +249,7 @@ export function DataTable<T>({
       {isEmpty &&
         (empty ?? (
           <div className="rounded-lg border border-border bg-surface shadow-sm">
-            <EmptyState icon={Inbox} title="Aucune donnée" description="Rien à afficher pour le moment." />
+            <EmptyState icon={Inbox} title="ما فماش معطيات" description="ما فماش شيء نوريوه توّا." />
           </div>
         ))}
     </div>

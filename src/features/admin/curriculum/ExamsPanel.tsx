@@ -21,9 +21,9 @@ const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
 const CHIP =
-  "inline-flex items-center gap-1 rounded-md border border-border bg-surface-muted px-2 py-1 text-[12px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
+  "inline-flex items-center gap-1 rounded-md border border-border bg-surface-muted px-2 py-1 text-[calc(12px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
 
-/** The "Examens" tab of a subject — assessments with PDF documents + a video. */
+/** The "امتحانات" tab of a subject — assessments with PDF documents + a video. */
 export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) {
   const years = useData((s) => s.years)
   const allExams = useData((s) => s.exams)
@@ -62,7 +62,7 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
 
   function openDoc(pdf: ResourceLink) {
     if (pdf.url) window.open(pdf.url, "_blank", "noopener,noreferrer")
-    else show("Aperçu du document — bientôt")
+    else show("معاينة الوثيقة — قريب")
   }
 
   function openAdd() {
@@ -100,10 +100,10 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
     }
     if (editing) {
       updateExam(editing.id, patch)
-      show("Examen modifié")
+      show("الامتحان تبدّل")
     } else {
       addExam({ ...patch, order: exams.length })
-      show("Examen ajouté")
+      show("الامتحان تزاد")
     }
     setFormOpen(false)
   }
@@ -121,14 +121,14 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
       subjectIds: [dupDest.subjectId],
       yearIds: [dupDest.yearId],
     })
-    show(`Examen dupliqué dans « ${dupInto} »`)
+    show(`الامتحان تنسخ في «${dupInto}»`)
     setDupTarget(null)
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removeExam(deleteTarget.id)
-    show("Examen supprimé")
+    show("الامتحان تمسح")
     setDeleteTarget(null)
   }
 
@@ -138,7 +138,7 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter un examen
+      <Plus className="size-4" /> زيد امتحان
     </button>
   )
 
@@ -147,8 +147,8 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
       <div className="flex items-center justify-between gap-4">
         <p className="text-sm text-ink-muted">
           {exams.length > 0
-            ? `${exams.length} examen${exams.length > 1 ? "s" : ""}`
-            : "Aucun examen pour le moment"}
+            ? `${exams.length} امتحان`
+            : "ما فماش امتحانات توّا"}
         </p>
         {exams.length > 0 && addButton}
       </div>
@@ -157,8 +157,8 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={ClipboardList}
-            title="Aucun examen"
-            description="Ajoutez devoirs et examens (énoncé, corrigé, vidéo) — ex. Devoir de synthèse N°1."
+            title="ما فماش امتحانات"
+            description="زيد فروض وامتحانات (نصّ، إصلاح، فيديو) — مثال: فرض تأليفي عدد 1."
             action={addButton}
           />
         </div>
@@ -175,7 +175,7 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
                   <ClipboardList className="size-5" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p dir="auto" className="font-display text-[15px] font-bold text-ink">
+                  <p dir="auto" className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">
                     {exam.title}
                   </p>
                   <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
@@ -188,8 +188,8 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
                       </Badge>
                     ))}
                     {exam.subjectIds.length > 1 && (
-                      <span className="text-[12px] text-ink-muted">
-                        · {exam.subjectIds.length} matières
+                      <span className="text-[calc(12px*var(--ts))] text-ink-muted">
+                        · {exam.subjectIds.length} مادّة
                       </span>
                     )}
                   </div>
@@ -208,7 +208,7 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
                           rel="noopener noreferrer"
                           className={CHIP}
                         >
-                          <Video className="size-3.5" /> Vidéo
+                          <Video className="size-3.5" /> فيديو
                         </a>
                       )}
                     </div>
@@ -216,10 +216,10 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
                 </div>
                 <OverflowMenu
                   actions={[
-                    { label: "Modifier", icon: Pencil, onClick: () => openEdit(exam) },
-                    { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(exam) },
+                    { label: "بدّل", icon: Pencil, onClick: () => openEdit(exam) },
+                    { label: "اعمل نسخة", icon: Copy, onClick: () => openDuplicate(exam) },
                     {
-                      label: "Supprimer",
+                      label: "امسح",
                       icon: Trash2,
                       tone: "danger",
                       onClick: () => setDeleteTarget(exam),
@@ -235,31 +235,31 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier l’examen" : "Nouvel examen"}
+        title={editing ? "بدّل الامتحان" : "امتحان جديد"}
         description={
           editing
             ? undefined
-            : `Documents PDF et vidéo — ajouté à « ${subject.name} » — ${year.name}.`
+            : `وثائق PDF وفيديو — تزاد لـ«${subject.name}» — ${year.name}.`
         }
-        submitLabel={editing ? "Enregistrer" : "Ajouter"}
+        submitLabel={editing ? "سجّل" : "زيد"}
         onSubmit={submit}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">العنوان</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ex. Devoir de synthèse N°1 · فرض تأليفي عدد 1"
+            placeholder="مثال: فرض تأليفي عدد 1"
             autoFocus
           />
         </label>
 
         <div>
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Documents (PDF){" "}
-            <span className="font-normal text-ink-muted">(énoncé, corrigé, barème…)</span>
+            وثائق (PDF){" "}
+            <span className="font-normal text-ink-muted">(نصّ، إصلاح، سلّم تنقيط…)</span>
           </span>
           <div className="flex flex-col gap-2">
             {pdfs.map((pdf, i) => (
@@ -272,11 +272,11 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
                   onChange={(e) =>
                     setPdfs((prev) => prev.map((p, j) => (j === i ? { ...p, name: e.target.value } : p)))
                   }
-                  placeholder="Nom du document (ex. Énoncé)"
+                  placeholder="اسم الوثيقة (مثال: النصّ)"
                 />
                 <button
                   type="button"
-                  aria-label="Retirer le document"
+                  aria-label="نحّي الوثيقة"
                   onClick={() => setPdfs((prev) => prev.filter((_, j) => j !== i))}
                   className="grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-danger-50 hover:text-danger-600"
                 >
@@ -289,14 +289,14 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
               onClick={() => setPdfs((prev) => [...prev, { name: "" }])}
               className="inline-flex h-10 items-center gap-1.5 self-start rounded-md border border-dashed border-border-strong px-3 text-sm font-medium text-ink-subtle transition hover:border-brand-300 hover:text-brand-600"
             >
-              <Plus className="size-4" /> Ajouter un document
+              <Plus className="size-4" /> زيد وثيقة
             </button>
           </div>
         </div>
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Vidéo <span className="font-normal text-ink-muted">(un seul lien, optionnel)</span>
+            فيديو <span className="font-normal text-ink-muted">(رابط واحد، اختياري)</span>
           </span>
           <input
             className={INPUT}
@@ -323,23 +323,23 @@ export function ExamsPanel({ year, subject }: { year: Year; subject: Subject }) 
       <DuplicateSheet
         open={dupTarget !== null}
         onOpenChange={(o) => !o && setDupTarget(null)}
-        title="Dupliquer l’examen"
-        nameLabel="Titre de la copie"
+        title="اعمل نسخة من الامتحان"
+        nameLabel="عنوان النسخة"
         name={dupName}
         onNameChange={setDupName}
         depth="subject"
         destination={dupDest}
         onDestinationChange={setDupDest}
-        note="Les documents PDF et la vidéo suivent la copie."
+        note="وثائق PDF والفيديو يتبعو النسخة."
         onSubmit={submitDuplicate}
       />
 
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cet examen ?"
+        title="تحبّ تمسح الامتحان هذا؟"
         description={
-          deleteTarget ? `« ${deleteTarget.title} » sera définitivement supprimé.` : undefined
+          deleteTarget ? `«${deleteTarget.title}» باش يتمسح نهائيا.` : undefined
         }
         onConfirm={confirmDelete}
       />

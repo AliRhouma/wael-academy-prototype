@@ -15,10 +15,12 @@ import { Avatar } from "@/components/kit/Avatar"
 import { Badge } from "@/components/kit/Badge"
 import { SubjectIcon } from "@/components/icons/subjects"
 import { useSessionLabels } from "@/features/shared/session/sessionLabels"
+import { SessionHomework } from "@/features/student/calendar/SessionHomework"
 import {
   STATE_LABEL,
   formatDuration,
   sessionState,
+  useHomeworkBySession,
   useSessionVisual,
   type SessionState,
 } from "@/features/student/calendar/schedule"
@@ -45,7 +47,7 @@ function Row({ icon, label, children }: { icon: ReactNode; label: string; childr
         {icon}
       </span>
       <div className="min-w-0">
-        <p className="text-[11px] font-medium uppercase tracking-[.12em] text-ink-muted">{label}</p>
+        <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-ink-muted">{label}</p>
         <div className="truncate text-sm font-medium text-ink">{children}</div>
       </div>
     </div>
@@ -77,9 +79,11 @@ export function SessionDetailSheet({
   const isMobile = useIsMobile()
   const { teacherName, groupNames } = useSessionLabels()
   const visual = useSessionVisual()
+  const homeworkOf = useHomeworkBySession()
 
   if (!session) return null
 
+  const homeworks = homeworkOf(session)
   const state = sessionState(session, now)
   const { subjectName, theme, tint } = visual(session)
   const teacher = teacherName(session.teacherId)
@@ -106,14 +110,14 @@ export function SessionDetailSheet({
             {STATE_LABEL[state]}
           </Badge>
           {subjectName && (
-            <span dir="auto" className={cn("text-[12px] font-medium", theme.name)}>
+            <span dir="auto" className={cn("text-[calc(12px*var(--ts))] font-medium", theme.name)}>
               {subjectName}
             </span>
           )}
         </div>
         <h2
           dir="auto"
-          className="mt-1.5 font-display text-[19px] font-bold leading-snug text-ink"
+          className="mt-1.5 font-display text-[calc(19px*var(--ts))] font-bold leading-snug text-ink"
         >
           {session.title}
         </h2>
@@ -124,12 +128,12 @@ export function SessionDetailSheet({
   const body = (
     <div className="min-h-0 flex-1 space-y-5 overflow-y-auto scroll-touch p-5">
       <div className="grid gap-4 sm:grid-cols-2">
-        <Row icon={<CalendarDays className="size-[18px]" />} label="Date">
+        <Row icon={<CalendarDays className="size-[18px]" />} label="التاريخ">
           <span className="inline-block first-letter:uppercase">
             {formatSessionDayLong(session.date)}
           </span>
         </Row>
-        <Row icon={<Clock3 className="size-[18px]" />} label="Horaire">
+        <Row icon={<Clock3 className="size-[18px]" />} label="التوقيت">
           <span className="tabular-nums">
             {formatTimeRange(session.startTime, session.endTime)}
           </span>
@@ -146,23 +150,23 @@ export function SessionDetailSheet({
               <Hourglass className="size-[18px]" />
             )
           }
-          label="Enseignant"
+          label="أستاذ"
         >
           {teacher ? (
             <span dir="auto">{teacher}</span>
           ) : (
-            <span className="text-ink-muted">À confirmer</span>
+            <span className="text-ink-muted">في انتظار التأكيد</span>
           )}
         </Row>
-        <Row icon={<MapPin className="size-[18px]" />} label="Lieu">
-          {session.room ?? <span className="text-ink-muted">Non précisé</span>}
+        <Row icon={<MapPin className="size-[18px]" />} label="البلاصة">
+          {session.room ?? <span className="text-ink-muted">ما تحدّدش</span>}
         </Row>
       </div>
 
       {groups.length > 0 && (
         <div>
-          <p className="mb-2 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-            Groupe
+          <p className="mb-2 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+            فوج
           </p>
           <div className="flex flex-wrap gap-1.5">
             {groups.map((g) => (
@@ -176,7 +180,7 @@ export function SessionDetailSheet({
       )}
 
       <div>
-        <p className="mb-2 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+        <p className="mb-2 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
           Au programme
         </p>
         {session.description ? (
@@ -185,10 +189,13 @@ export function SessionDetailSheet({
           </p>
         ) : (
           <p className="text-sm text-ink-muted">
-            L’enseignant n’a pas encore détaillé le contenu de cette séance.
+            الأستاذ مازال ما فصّلش محتوى الحصّة هذي.
           </p>
         )}
       </div>
+
+      {/* What the red dot on the card was about. */}
+      <SessionHomework homeworks={homeworks} sessionDate={session.date} />
     </div>
   )
 
@@ -200,11 +207,11 @@ export function SessionDetailSheet({
         onClick={() => onWatchRecording(session)}
         className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 sm:w-auto"
       >
-        <PlayCircle className="size-[18px]" /> Voir l’enregistrement
+        <PlayCircle className="size-[18px]" /> شوف التسجيل
       </button>
     ) : (
       <span className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md border border-dashed border-border-strong px-4 text-sm font-medium text-ink-muted sm:w-auto">
-        <Hourglass className="size-4" /> Enregistrement en préparation
+        <Hourglass className="size-4" /> التسجيل في التحضير
       </span>
     )
   ) : (
@@ -219,11 +226,11 @@ export function SessionDetailSheet({
             <span className="absolute inline-flex size-full rounded-full bg-white/70 motion-safe:animate-ping" />
             <span className="relative inline-flex size-2.5 rounded-full bg-white" />
           </span>
-          Rejoindre maintenant
+          ادخل توّا
         </>
       ) : (
         <>
-          <Video className="size-[18px]" /> Participer à la séance
+          <Video className="size-[18px]" /> ادخل للحصّة
         </>
       )}
     </button>
@@ -237,10 +244,10 @@ export function SessionDetailSheet({
         onClick={() => onOpenChange(false)}
         className="inline-flex h-11 w-full items-center justify-center rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 sm:w-auto"
       >
-        Fermer
+        سكّر
       </button>
       {isDone && hasReplay && (
-        <p className="text-[12px] text-ink-muted sm:me-auto">Replay disponible pendant 30 jours.</p>
+        <p className="text-[calc(12px*var(--ts))] text-ink-muted sm:me-auto">التسجيل متوفّر 30 يوم.</p>
       )}
     </div>
   )

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { CalendarDays, CalendarRange, ChevronLeft, ChevronRight } from "lucide-react"
+import { CalendarDays, CalendarRange, ChevronRight, ChevronLeft } from "lucide-react"
 import { useToast } from "@/components/kit/Toast"
 import { DayTimeline } from "@/features/student/calendar/DayTimeline"
 import { MonthGrid } from "@/features/student/calendar/MonthGrid"
@@ -24,12 +24,12 @@ import { useData } from "@/stores/useData"
 type View = "jour" | "mois"
 
 const VIEWS: { key: View; label: string; icon: typeof CalendarDays }[] = [
-  { key: "jour", label: "Jour", icon: CalendarDays },
-  { key: "mois", label: "Mois", icon: CalendarRange },
+  { key: "jour", label: "النهار", icon: CalendarDays },
+  { key: "mois", label: "الشهر", icon: CalendarRange },
 ]
 
 /**
- * Élève — « Mon calendrier ».
+ * Élève — « الروزنامة متاعي ».
  *
  * THE PAGE ITSELF NEVER SCROLLS. It's a fixed column that fills the shell:
  * header, countdown banner and day picker are pinned, and the only scrollport on
@@ -147,18 +147,18 @@ export default function StudentCalendarScreen() {
       {/* Header — compact on purpose; vertical space here is spent on the grid. */}
       <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <div className="min-w-0">
-          <h1 className="font-display text-[22px] font-bold leading-tight text-ink md:text-[26px]">
-            Mon calendrier
+          <h1 className="font-display text-[calc(22px*var(--ts))] font-bold leading-tight text-ink md:text-[calc(26px*var(--ts))]">
+            روزنامتي
           </h1>
           <p className="hidden text-sm text-ink-muted md:block">
-            Tes séances, jour par jour — rejoins celles à venir, revois celles qui sont passées.
+            حصصك، نهار بنهار — ادخل للجايّة وعاود اللي فاتت.
           </p>
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
           <div
             role="tablist"
-            aria-label="Vue du calendrier"
+            aria-label="عرض الروزنامة"
             className="flex items-center gap-1 rounded-lg border border-border bg-surface-muted p-1"
           >
             {VIEWS.map((v) => {
@@ -172,7 +172,7 @@ export default function StudentCalendarScreen() {
                   aria-selected={active}
                   onClick={() => setView(v.key)}
                   className={cn(
-                    "inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-[13px] font-medium transition",
+                    "inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-[calc(13px*var(--ts))] font-medium transition",
                     active ? "bg-surface text-ink shadow-sm" : "text-ink-muted hover:text-ink-subtle",
                   )}
                 >
@@ -186,9 +186,9 @@ export default function StudentCalendarScreen() {
           <button
             type="button"
             onClick={() => goToDay(today)}
-            className="inline-flex h-11 items-center rounded-md border border-border-strong bg-surface px-3.5 text-[13px] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-10"
+            className="inline-flex h-11 items-center rounded-md border border-border-strong bg-surface px-3.5 text-[calc(13px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-10"
           >
-            Aujourd’hui
+            اليوم
           </button>
         </div>
       </div>
@@ -209,37 +209,37 @@ export default function StudentCalendarScreen() {
             <button
               type="button"
               onClick={() => goDay(-1)}
-              aria-label="Jour précédent"
+              aria-label="النهار اللي قبل"
               className={navBtn}
             >
-              <ChevronLeft className="size-5" />
-            </button>
-            <button type="button" onClick={() => goDay(1)} aria-label="Jour suivant" className={navBtn}>
               <ChevronRight className="size-5" />
+            </button>
+            <button type="button" onClick={() => goDay(1)} aria-label="النهار اللي بعد" className={navBtn}>
+              <ChevronLeft className="size-5" />
             </button>
 
             {/* `first-letter:uppercase`, not `capitalize` — French writes
                 "samedi 1 août", so only the very first letter may change. */}
-            <h2 className="ms-1 min-w-0 truncate font-display text-[15px] font-bold text-ink first-letter:uppercase sm:text-base">
-              {selected === today ? "Aujourd’hui" : formatSessionDayLong(selected)}
+            <h2 className="ms-1 min-w-0 truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink first-letter:uppercase sm:text-base">
+              {selected === today ? "اليوم" : formatSessionDayLong(selected)}
             </h2>
             {selected === today && (
-              <span className="hidden shrink-0 truncate text-[12px] text-ink-muted sm:inline">
+              <span className="hidden shrink-0 truncate text-[calc(12px*var(--ts))] text-ink-muted sm:inline">
                 {formatSessionDayLong(selected)}
               </span>
             )}
 
             <span
               className={cn(
-                "ms-auto shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium",
+                "ms-auto shrink-0 rounded-full px-2 py-0.5 text-[calc(11px*var(--ts))] font-medium",
                 daySessions.length === 0
                   ? "bg-neutral-100 text-ink-muted"
                   : "bg-brand-50 text-brand-700",
               )}
             >
               {daySessions.length === 0
-                ? "aucune séance"
-                : `${daySessions.length} séance${daySessions.length > 1 ? "s" : ""}`}
+                ? "ما فماش حصص"
+                : `${daySessions.length} حصّة`}
             </span>
           </div>
 

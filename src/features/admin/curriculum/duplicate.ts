@@ -1,5 +1,5 @@
 /**
- * "Dupliquer" for every piece of the programme. A copy is a real, independent
+ * "اعمل نسخة" for every piece of the programme. A copy is a real, independent
  * row (new ids) that can land ANYWHERE: the screens ask for a name and a
  * destination (another classe / matière / chapitre) and pass them in here.
  *

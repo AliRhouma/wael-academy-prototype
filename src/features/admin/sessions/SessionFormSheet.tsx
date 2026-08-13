@@ -77,7 +77,7 @@ export function SessionFormSheet({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
-  const sortedTeachers = [...teachers].sort((a, b) => a.name.localeCompare(b.name, "fr"))
+  const sortedTeachers = [...teachers].sort((a, b) => a.name.localeCompare(b.name, "ar"))
 
   const timeInvalid = startTime !== "" && endTime !== "" && endTime <= startTime
   const canSubmit =
@@ -106,10 +106,10 @@ export function SessionFormSheet({
     }
     if (editing) {
       updateSession(editing.id, patch)
-      onSaved("Séance modifiée")
+      onSaved("الحصّة تبدّلت")
     } else {
       addSession(patch)
-      onSaved("Séance planifiée")
+      onSaved("الحصّة تبرمجت")
     }
     onOpenChange(false)
   }
@@ -118,43 +118,43 @@ export function SessionFormSheet({
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      title={editing ? "Modifier la séance" : "Nouvelle séance"}
+      title={editing ? "بدّل الحصّة" : "حصّة جديدة"}
       description={
         editing
           ? undefined
-          : "Un créneau pour un ou plusieurs groupes, avec sa matière et son enseignant."
+          : "وقت لفوج ولا كثر، مع المادّة والأستاذ."
       }
-      submitLabel={editing ? "Enregistrer" : "Planifier"}
+      submitLabel={editing ? "سجّل" : "برمج"}
       onSubmit={submit}
     >
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">العنوان</span>
         <input
           className={INPUT + " text-start"}
           dir="auto"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Ex. Révision — Intégrales"
+          placeholder="مثال: مراجعة — التكاملات"
           autoFocus
         />
       </label>
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-          Description <span className="font-normal text-ink-muted">(optionnel)</span>
+          Description <span className="font-normal text-ink-muted">(اختياري)</span>
         </span>
         <textarea
           className={INPUT.replace("h-11", "min-h-[84px]") + " resize-y py-2.5 text-start"}
           dir="auto"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Le programme de la séance…"
+          placeholder="برنامج الحصّة…"
           rows={3}
         />
       </label>
 
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Année scolaire</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">السنة الدراسية</span>
         <div className="relative">
           <select
             className={INPUT + " appearance-none pe-10 tabular-nums"}
@@ -173,7 +173,7 @@ export function SessionFormSheet({
       </label>
 
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Date</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">التاريخ</span>
         <input
           type="date"
           className={INPUT}
@@ -185,7 +185,7 @@ export function SessionFormSheet({
 
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Début</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">البداية</span>
           <input
             type="time"
             className={INPUT + " tabular-nums"}
@@ -195,7 +195,7 @@ export function SessionFormSheet({
           />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Fin</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">النهاية</span>
           <input
             type="time"
             className={
@@ -210,14 +210,14 @@ export function SessionFormSheet({
         </label>
       </div>
       {timeInvalid && (
-        <p className="text-[12px] font-medium text-danger-600">
-          L’heure de fin doit être après l’heure de début.
+        <p className="text-[calc(12px*var(--ts))] font-medium text-danger-600">
+          ساعة النهاية لازمها تكون بعد ساعة البداية.
         </p>
       )}
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-          Enseignant <span className="font-normal text-ink-muted">(optionnel)</span>
+          أستاذ <span className="font-normal text-ink-muted">(اختياري)</span>
         </span>
         <div className="relative">
           <select
@@ -225,7 +225,7 @@ export function SessionFormSheet({
             value={teacherId}
             onChange={(e) => setTeacherId(e.target.value)}
           >
-            <option value="">— Aucun —</option>
+            <option value="">— حتّى واحد —</option>
             {sortedTeachers.map((t) => (
               <option key={t.id} value={t.id}>
                 {t.name}

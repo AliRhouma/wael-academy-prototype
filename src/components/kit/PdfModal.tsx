@@ -8,7 +8,7 @@ export interface PdfModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   title: string
-  /** Type label — "Résumé", "Série d'exercices", "Devoir de synthèse"… */
+  /** Type label — "ملخّص", "Série d'exercices", "Devoir de synthèse"… */
   kindLabel?: string
   tone?: BadgeTone
   /** Where it sits — e.g. the chapter name. */
@@ -59,7 +59,7 @@ export function PdfModal({
               <div className="mb-1 flex flex-wrap items-center gap-2">
                 <Badge tone={tone}>{kindLabel}</Badge>
                 {context && (
-                  <span dir="auto" className="text-[12px] text-ink-muted">
+                  <span dir="auto" className="text-[calc(12px*var(--ts))] text-ink-muted">
                     {context}
                   </span>
                 )}
@@ -67,7 +67,7 @@ export function PdfModal({
             )}
             <DialogTitle
               dir="auto"
-              className="font-display text-[17px] font-bold leading-snug text-ink"
+              className="font-display text-[calc(17px*var(--ts))] font-bold leading-snug text-ink"
             >
               {title}
             </DialogTitle>
@@ -75,7 +75,7 @@ export function PdfModal({
           <button
             type="button"
             onClick={() => onOpenChange(false)}
-            aria-label="Fermer"
+            aria-label="سكّر"
             className="grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
           >
             <X className="size-4.5" />
@@ -85,10 +85,10 @@ export function PdfModal({
         {/* The documents */}
         <div className="min-h-0 flex-1 overflow-y-auto scroll-touch p-4 sm:p-5">
           <div className="flex items-center gap-2">
-            <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-              {pdfs.length > 1 ? "Documents" : "Document"}
+            <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+              {pdfs.length > 1 ? "وثائق" : "وثيقة"}
             </p>
-            <span className="rounded-full bg-neutral-100 px-1.5 text-[11px] tabular-nums text-ink-muted">
+            <span className="rounded-full bg-neutral-100 px-1.5 text-[calc(11px*var(--ts))] tabular-nums text-ink-muted">
               {pdfs.length}
             </span>
           </div>
@@ -110,7 +110,7 @@ export function PdfModal({
                     <p dir="auto" className="truncate text-sm font-semibold text-ink">
                       {pdf.name}
                     </p>
-                    <p className="mt-0.5 truncate text-[12px] text-ink-muted">
+                    <p className="mt-0.5 truncate text-[calc(12px*var(--ts))] text-ink-muted">
                       PDF · <span dir="auto">{pdfFileName(pdf.name)}</span>
                     </p>
                   </div>
@@ -120,8 +120,8 @@ export function PdfModal({
                       href={src}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Ouvrir ${pdf.name} dans un onglet`}
-                      title="Ouvrir dans un onglet"
+                      aria-label={`حلّ ${pdf.name} في تاب جديد`}
+                      title="حلّ في تاب جديد"
                       className="grid size-11 place-items-center rounded-md border border-border-strong bg-surface text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
                     >
                       <ExternalLink className="size-4" />
@@ -131,7 +131,7 @@ export function PdfModal({
                       download={pdfFileName(pdf.name)}
                       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 text-sm font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
                     >
-                      <Download className="size-4" /> Télécharger
+                      <Download className="size-4" /> حمّل
                     </a>
                   </div>
                 </li>

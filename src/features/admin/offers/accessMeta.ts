@@ -13,14 +13,14 @@ export const TYPE_ORDER: AccessResourceType[] = [
 ]
 
 export const TYPE_LABEL: Record<AccessResourceType, string> = {
-  cours: "Cours",
-  exercice: "Exercices",
-  serie: "Séries",
-  resume: "Résumés",
-  quiz: "Quiz",
-  quizExam: "Examens de quiz",
-  path: "Parcours",
-  recordedSession: "Séances enregistrées",
+  cours: "دروس",
+  exercice: "تمارين",
+  serie: "سلاسل",
+  resume: "ملخّصات",
+  quiz: "كويز",
+  quizExam: "اختبارات كويز",
+  path: "مسارات",
+  recordedSession: "الحصص المسجّلة",
 }
 
 /** The four Lesson kinds among the access types. */
@@ -35,13 +35,13 @@ export function hasContentTypes(a: Pick<Access, "types">): boolean {
 export function scopeSummary(a: Access): string {
   const parts: string[] = []
   if (hasContentTypes(a)) {
-    parts.push(a.yearIds.length > 0 ? `${a.yearIds.length} niveau${a.yearIds.length > 1 ? "x" : ""}` : "tous les niveaux")
-    if (a.subjectIds.length > 0) parts.push(`${a.subjectIds.length} matière${a.subjectIds.length > 1 ? "s" : ""}`)
-    if (a.chapterIds.length > 0) parts.push(`${a.chapterIds.length} chapitre${a.chapterIds.length > 1 ? "s" : ""}`)
+    parts.push(a.yearIds.length > 0 ? `${a.yearIds.length} مستوى` : "المستويات الكل")
+    if (a.subjectIds.length > 0) parts.push(`${a.subjectIds.length} مادّة`)
+    if (a.chapterIds.length > 0) parts.push(`${a.chapterIds.length} فصل`)
   }
   if (a.types.includes("recordedSession")) {
-    parts.push(a.academicYears.length > 0 ? a.academicYears.join(", ") : "toutes années scolaires")
-    if (a.groupIds.length > 0) parts.push(`${a.groupIds.length} groupe${a.groupIds.length > 1 ? "s" : ""}`)
+    parts.push(a.academicYears.length > 0 ? a.academicYears.join(", ") : "السنوات الدراسية الكل")
+    if (a.groupIds.length > 0) parts.push(`${a.groupIds.length} فوج`)
   }
   return parts.join(" · ")
 }

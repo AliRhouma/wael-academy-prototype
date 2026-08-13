@@ -41,8 +41,8 @@ export function FormSheet({
   description,
   children,
   onSubmit,
-  submitLabel = "Enregistrer",
-  cancelLabel = "Annuler",
+  submitLabel = "سجّل",
+  cancelLabel = "إلغاء",
   submitting = false,
 }: FormSheetProps) {
   const isMobile = useIsMobile()
@@ -73,7 +73,7 @@ export function FormSheet({
         disabled={submitting}
         className="inline-flex h-11 w-full items-center justify-center rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-60 sm:w-auto"
       >
-        {submitting ? "Enregistrement…" : submitLabel}
+        {submitting ? "قاعد يسجّل…" : submitLabel}
       </button>
     </div>
   )

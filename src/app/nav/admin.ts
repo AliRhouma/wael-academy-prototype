@@ -4,16 +4,16 @@ import { OffresIcon } from "@/components/icons/OffresIcon"
 import type { NavItem } from "./types"
 
 export const adminNav: NavItem[] = [
-  { label: "Tableau de bord", path: "/admin", icon: DashboardIcon, colored: true },
-  { label: "Programme", path: "/admin/curriculum", icon: Layers },
-  { label: "Utilisateurs", path: "/admin/users", icon: Users },
-  { label: "Groupes", path: "/admin/groups", icon: UsersRound },
-  { label: "Cours", path: "/admin/courses", icon: BookOpen },
-  { label: "Séances", path: "/admin/sessions", icon: CalendarDays },
-  { label: "Sessions en direct", path: "/admin/live", icon: Radio },
-  { label: "Calendrier", path: "/admin/calendar", icon: CalendarRange },
-  { label: "Messagerie", path: "/admin/messages", icon: MessagesSquare },
-  { label: "Offres", path: "/admin/offers", icon: OffresIcon, colored: true },
-  { label: "Paiements", path: "/admin/payments", icon: CreditCard },
-  { label: "Réglages", path: "/admin/settings", icon: Settings },
+  { label: "لوحة القيادة", path: "/admin", icon: DashboardIcon, colored: true },
+  { label: "البرنامج", path: "/admin/curriculum", icon: Layers },
+  { label: "المستعملين", path: "/admin/users", icon: Users },
+  { label: "الأفواج", path: "/admin/groups", icon: UsersRound },
+  { label: "الدروس", path: "/admin/courses", icon: BookOpen },
+  { label: "الحصص", path: "/admin/sessions", icon: CalendarDays },
+  { label: "الحصص المباشرة", path: "/admin/live", icon: Radio },
+  { label: "الروزنامة", path: "/admin/calendar", icon: CalendarRange },
+  { label: "الرسائل", path: "/admin/messages", icon: MessagesSquare },
+  { label: "العروض", path: "/admin/offers", icon: OffresIcon, colored: true },
+  { label: "الخلاص", path: "/admin/payments", icon: CreditCard },
+  { label: "الإعدادات", path: "/admin/settings", icon: Settings },
 ]

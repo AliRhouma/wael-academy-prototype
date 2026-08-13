@@ -31,6 +31,18 @@ export function useIsMobile(): boolean {
 }
 
 /**
+ * True when the visitor has asked their OS for less motion.
+ *
+ * Use it where the `motion-safe:` variant isn't enough — i.e. when reduced
+ * motion should change WHAT IS RENDERED, not just whether it animates. The
+ * matières belt is the case: a stopped conveyor would leave most of the list
+ * parked off-window, so that screen renders a plain grid instead.
+ */
+export function usePrefersReducedMotion(): boolean {
+  return useMediaQuery("(prefers-reduced-motion: reduce)")
+}
+
+/**
  * Tells a `sticky` element when it has actually stuck, so it can restyle
  * itself (grow a background, fold into a compact form…).
  *

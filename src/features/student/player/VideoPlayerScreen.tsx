@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { ArrowLeft, ChevronRight, MonitorPlay } from "lucide-react"
+import { ArrowRight, ChevronLeft, MonitorPlay } from "lucide-react"
 import { Badge } from "@/components/kit/Badge"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { PdfModal } from "@/components/kit/PdfModal"
@@ -56,14 +56,14 @@ export default function StudentVideoPlayerScreen() {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={MonitorPlay}
-          title="Vidéo introuvable"
-          description="Cette vidéo n’existe pas ou n’est plus à ton programme."
+          title="الفيديو ما تلقاش"
+          description="الفيديو هذا ما موجودش ولا ما عادش في برنامجك."
           action={
             <Link
               to="/student/matieres"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
             >
-              Revenir aux matières
+              ارجع للموادّ
             </Link>
           }
         />
@@ -78,7 +78,7 @@ export default function StudentVideoPlayerScreen() {
   function openPdf(item: PlayerVideo) {
     setPdf({
       title: item.title,
-      kindLabel: item.kindLabel ?? "Document",
+      kindLabel: item.kindLabel ?? "وثيقة",
       tone: item.tone ?? "brand",
       context: item.context,
       pdfs: item.pdfs ?? [],
@@ -102,19 +102,19 @@ export default function StudentVideoPlayerScreen() {
       <div className="flex min-w-0 items-center gap-2">
         <Link
           to={source.back.to}
-          aria-label={`Retour — ${source.back.label}`}
-          title={`Retour — ${source.back.label}`}
+          aria-label={`ارجع — ${source.back.label}`}
+          title={`ارجع — ${source.back.label}`}
           className="grid size-9 shrink-0 place-items-center rounded-full border border-border-strong bg-surface text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
         >
-          <ArrowLeft className="size-4" />
+          <ArrowRight className="size-4" />
         </Link>
         <nav
-          aria-label="Fil d’Ariane"
-          className="flex min-w-0 flex-wrap items-center gap-1.5 text-[13px] text-ink-muted"
+          aria-label="مسار التنقّل"
+          className="flex min-w-0 flex-wrap items-center gap-1.5 text-[calc(13px*var(--ts))] text-ink-muted"
         >
           {source.crumbs.map((crumb, i) => (
             <span key={i} className="flex min-w-0 items-center gap-1.5">
-              {i > 0 && <ChevronRight className="size-3.5 shrink-0" />}
+              {i > 0 && <ChevronLeft className="size-3.5 shrink-0" />}
               {crumb.to ? (
                 <Link to={crumb.to} className="truncate transition hover:text-brand-600">
                   {crumb.label}
@@ -147,14 +147,14 @@ export default function StudentVideoPlayerScreen() {
             <div className="min-w-0">
               <h1
                 dir="auto"
-                className="font-display text-[22px] font-bold leading-snug text-ink md:text-[24px]"
+                className="font-display text-[calc(22px*var(--ts))] font-bold leading-snug text-ink md:text-[calc(24px*var(--ts))]"
               >
                 {active.title}
               </h1>
               <div className="mt-1.5 flex flex-wrap items-center gap-2">
                 {active.kindLabel && <Badge tone={active.tone ?? "brand"}>{active.kindLabel}</Badge>}
                 {active.context && (
-                  <span dir="auto" className="text-[12px] text-ink-muted">
+                  <span dir="auto" className="text-[calc(12px*var(--ts))] text-ink-muted">
                     {active.context}
                   </span>
                 )}

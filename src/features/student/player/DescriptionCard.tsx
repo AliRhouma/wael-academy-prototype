@@ -29,7 +29,7 @@ export function DescriptionCard({ video }: { video: PlayerVideo }) {
 
   return (
     <section className="rounded-xl border border-border bg-surface-muted/60 p-4">
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px]">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[calc(13px*var(--ts))]">
         <span className="font-semibold text-ink">{video.kindLabel}</span>
         {video.context && (
           <>
@@ -48,17 +48,17 @@ export function DescriptionCard({ video }: { video: PlayerVideo }) {
       </div>
 
       <div className="mt-3 flex items-center gap-2">
-        <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-          Documents
+        <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+          وثائق
         </p>
-        <span className="rounded-full bg-neutral-100 px-1.5 text-[11px] tabular-nums text-ink-muted">
+        <span className="rounded-full bg-neutral-100 px-1.5 text-[calc(11px*var(--ts))] tabular-nums text-ink-muted">
           {pdfs.length}
         </span>
       </div>
 
       {pdfs.length === 0 ? (
-        <p className="mt-2 text-[13px] text-ink-muted">
-          Aucun document joint à cette vidéo pour le moment.
+        <p className="mt-2 text-[calc(13px*var(--ts))] text-ink-muted">
+          ما فماش وثائق مربوطة بالفيديو هذا توّا.
         </p>
       ) : (
         <ul className="mt-2 flex flex-col gap-2">
@@ -81,7 +81,7 @@ export function DescriptionCard({ video }: { video: PlayerVideo }) {
               <a
                 href={pdfSrc(pdf)}
                 download={pdfFileName(pdf.name)}
-                aria-label={`Télécharger ${pdf.name}`}
+                aria-label={`حمّل ${pdf.name}`}
                 className="grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-brand-600"
               >
                 <Download className="size-4" />
@@ -90,7 +90,7 @@ export function DescriptionCard({ video }: { video: PlayerVideo }) {
                 href={pdfSrc(pdf)}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Ouvrir ${pdf.name} dans un onglet`}
+                aria-label={`حلّ ${pdf.name} في تاب جديد`}
                 className="grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-brand-600"
               >
                 <ExternalLink className="size-4" />
@@ -104,16 +104,16 @@ export function DescriptionCard({ video }: { video: PlayerVideo }) {
                 type="button"
                 onClick={() => setExpanded((v) => !v)}
                 aria-expanded={expanded}
-                className="inline-flex h-10 items-center gap-1.5 rounded-md px-2 text-[13px] font-semibold text-brand-600 transition hover:bg-surface hover:text-brand-700"
+                className="inline-flex h-10 items-center gap-1.5 rounded-md px-2 text-[calc(13px*var(--ts))] font-semibold text-brand-600 transition hover:bg-surface hover:text-brand-700"
               >
-                {expanded ? "Voir moins" : `Voir tout (${pdfs.length})`}
+                {expanded ? "شوف أقلّ" : `شوف الكل (${pdfs.length})`}
                 <ChevronDown
                   className={cn("size-4 transition-transform duration-200", expanded && "rotate-180")}
                 />
               </button>
               {!expanded && (
-                <span className="ms-1 text-[12px] text-ink-muted">
-                  +{hidden} document{hidden > 1 ? "s" : ""}
+                <span className="ms-1 text-[calc(12px*var(--ts))] text-ink-muted">
+                  +{hidden} وثيقة
                 </span>
               )}
             </li>

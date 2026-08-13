@@ -1,10 +1,16 @@
 import { useEffect, useRef } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { dateKey, sessionState, type SessionVisual } from "@/features/student/calendar/schedule"
+import { ChevronRight, ChevronLeft } from "lucide-react"
+import { HomeworkDot, homeworkAria } from "@/features/student/calendar/HomeworkDot"
+import {
+  dateKey,
+  sessionState,
+  useHomeworkBySession,
+  type SessionVisual,
+} from "@/features/student/calendar/schedule"
 import { cn, formatSessionDayLong } from "@/lib/utils"
 import type { Session } from "@/data/types"
 
-const WEEKDAYS = ["lun", "mar", "mer", "jeu", "ven", "sam", "dim"]
+const WEEKDAYS = ["الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"]
 
 export interface MonthGridProps {
   /** Any date inside the month drawn. */
@@ -57,8 +63,9 @@ export function MonthGrid({
   const mo = cursor.getMonth()
   const startWeekday = (new Date(y, mo, 1).getDay() + 6) % 7 // Monday = 0
   const cells = Array.from({ length: 42 }, (_, i) => new Date(y, mo, 1 - startWeekday + i))
-  const monthLabel = cursor.toLocaleDateString("fr-FR", { month: "long", year: "numeric" })
+  const monthLabel = cursor.toLocaleDateString("ar-TN-u-nu-latn", { month: "long", year: "numeric" })
 
+  const homeworkOf = useHomeworkBySession()
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const selectedRef = useRef<HTMLDivElement | null>(null)
 
@@ -80,20 +87,20 @@ export function MonthGrid({
         <button
           type="button"
           onClick={() => onCursorChange(new Date(y, mo - 1, 1))}
-          aria-label="Mois précédent"
-          className={navBtn}
-        >
-          <ChevronLeft className="size-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => onCursorChange(new Date(y, mo + 1, 1))}
-          aria-label="Mois suivant"
+          aria-label="الشهر اللي قبل"
           className={navBtn}
         >
           <ChevronRight className="size-5" />
         </button>
-        <h2 className="ms-1 font-display text-[15px] font-bold text-ink first-letter:uppercase sm:text-base">
+        <button
+          type="button"
+          onClick={() => onCursorChange(new Date(y, mo + 1, 1))}
+          aria-label="الشهر اللي بعد"
+          className={navBtn}
+        >
+          <ChevronLeft className="size-5" />
+        </button>
+        <h2 className="ms-1 font-display text-[calc(15px*var(--ts))] font-bold text-ink first-letter:uppercase sm:text-base">
           {monthLabel}
         </h2>
       </div>
@@ -102,7 +109,7 @@ export function MonthGrid({
         {WEEKDAYS.map((d) => (
           <div
             key={d}
-            className="pb-1 text-center text-[10.5px] font-medium uppercase tracking-wide text-ink-muted"
+            className="pb-1 text-center text-[calc(10.5px*var(--ts))] font-medium uppercase tracking-wide text-ink-muted"
           >
             {d}
           </div>
@@ -133,8 +140,11 @@ export function MonthGrid({
 
           const countLabel =
             items.length === 0
-              ? "aucune séance"
-              : `${items.length} séance${items.length > 1 ? "s" : ""}`
+              ? "ما فماش حصص"
+              : `${items.length} حصّة`
+
+          /** How much خدمة the whole day carries — the mobile cell's dot. */
+          const dayHomework = items.reduce((n, s) => n + homeworkOf(s).length, 0)
 
           return (
             // A DIV, not a button: the séance cards inside are buttons of their
@@ -162,7 +172,9 @@ export function MonthGrid({
                 type="button"
                 onClick={() => onPickDay(key)}
                 aria-current={isToday ? "date" : undefined}
-                aria-label={`${formatSessionDayLong(key)} — ${countLabel}`}
+                aria-label={[formatSessionDayLong(key), countLabel, homeworkAria(dayHomework)]
+                  .filter(Boolean)
+                  .join(" — ")}
                 className={cn(
                   "flex w-full flex-1 flex-col items-start gap-1 rounded-md text-start",
                   items.length > 0 && "sm:flex-none",
@@ -170,7 +182,7 @@ export function MonthGrid({
               >
                 <span
                   className={cn(
-                    "grid size-6 shrink-0 place-items-center rounded-full text-[12px] font-semibold tabular-nums",
+                    "grid size-6 shrink-0 place-items-center rounded-full text-[calc(12px*var(--ts))] font-semibold tabular-nums",
                     isToday
                       ? "bg-danger-500 text-danger-foreground"
                       : isSelected
@@ -196,8 +208,12 @@ export function MonthGrid({
                       />
                     ))}
                     {items.length > 3 && (
-                      <span className="text-[9px] font-semibold leading-none text-ink-muted">+</span>
+                      <span className="text-[calc(9px*var(--ts))] font-semibold leading-none text-ink-muted">+</span>
                     )}
+                    {/* fما خدمة somewhere in the day — bigger than the matière
+                        dots and in the alert colour, so it never reads as a
+                        seventh matière. */}
+                    <HomeworkDot count={dayHomework} className="ms-0.5 size-2" />
                   </span>
                 )}
               </button>
@@ -209,12 +225,18 @@ export function MonthGrid({
                       const { subjectName, theme } = visual(s)
                       const state = sessionState(s, now)
                       const done = state === "terminee"
+                      const homeworks = homeworkOf(s)
                       return (
                         <button
                           key={s.id}
                           type="button"
                           onClick={() => onOpenSession(s)}
-                          aria-label={`${s.title} — ${s.startTime} à ${s.endTime}`}
+                          aria-label={[
+                            `${s.title} — من ${s.startTime} لـ ${s.endTime}`,
+                            homeworkAria(homeworks.length),
+                          ]
+                            .filter(Boolean)
+                            .join("، ")}
                           className={cn(
                             "relative flex min-w-0 flex-col overflow-hidden rounded-md border py-1 pe-1.5 ps-2 text-start shadow-xs transition",
                             "hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
@@ -233,14 +255,23 @@ export function MonthGrid({
                               done && "opacity-40",
                             )}
                           />
-                          <span className="flex items-center gap-1">
+                          <HomeworkDot
+                            count={homeworks.length}
+                            className={cn("absolute end-1 top-1 size-2", done && "opacity-50")}
+                          />
+                          <span
+                            className={cn(
+                              "flex items-center gap-1",
+                              homeworks.length > 0 && "pe-3.5",
+                            )}
+                          >
                             <span
                               className={cn(
-                                "text-[10px] font-semibold tabular-nums",
+                                "text-[calc(10px*var(--ts))] font-semibold tabular-nums",
                                 done ? "text-ink-muted" : "text-ink-subtle",
                               )}
                             >
-                              {s.startTime} – {s.endTime}
+                              <span className="num">{s.startTime} – {s.endTime}</span>
                             </span>
                             {state === "en-cours" && (
                               <span className="relative flex size-1.5 shrink-0">
@@ -252,13 +283,13 @@ export function MonthGrid({
                           <span
                             dir="auto"
                             className={cn(
-                              "truncate text-[11px] font-medium leading-snug",
+                              "truncate text-[calc(11px*var(--ts))] font-medium leading-snug",
                               done ? "text-ink-subtle" : "text-ink",
                             )}
                           >
                             {s.title}
                           </span>
-                          <span dir="auto" className="truncate text-[10px] text-ink-muted">
+                          <span dir="auto" className="truncate text-[calc(10px*var(--ts))] text-ink-muted">
                             {[subjectName, s.room].filter(Boolean).join(" · ")}
                           </span>
                         </button>

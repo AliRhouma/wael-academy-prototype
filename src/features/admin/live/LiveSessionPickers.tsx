@@ -72,7 +72,7 @@ export function SubjectPicker({
   return (
     <div>
       <span className="mb-2 block text-sm font-medium text-ink-subtle">
-        Matières <span className="font-normal text-ink-muted">({subjectIds.length})</span>
+        الموادّ <span className="font-normal text-ink-muted">({subjectIds.length})</span>
       </span>
 
       <div className="relative mb-3">
@@ -80,7 +80,7 @@ export function SubjectPicker({
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Rechercher une matière…"
+          placeholder="لوّج على مادّة…"
           className={INPUT + " ps-9"}
           dir="auto"
         />
@@ -88,7 +88,7 @@ export function SubjectPicker({
 
       {groups.length === 0 ? (
         <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-          Aucune matière ne correspond à cette recherche.
+          ما فماش مادّة توافق البحث هذا.
         </p>
       ) : (
         <div className="max-h-72 space-y-3 overflow-y-auto scroll-touch rounded-md border border-border bg-surface-muted/40 p-3">
@@ -96,7 +96,7 @@ export function SubjectPicker({
             <div key={year.id}>
               <p
                 dir="auto"
-                className="mb-1.5 text-[11px] font-medium uppercase tracking-[.1em] text-ink-muted"
+                className="mb-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.1em] text-ink-muted"
               >
                 {year.name}
               </p>
@@ -130,7 +130,7 @@ export function GroupPicker({
   const groups = useData((s) => s.groups)
   const picked = useMemo(() => new Set(groupIds), [groupIds])
   const sorted = useMemo(
-    () => [...groups].sort((a, b) => a.title.localeCompare(b.title, "fr")),
+    () => [...groups].sort((a, b) => a.title.localeCompare(b.title, "ar")),
     [groups],
   )
 
@@ -142,12 +142,12 @@ export function GroupPicker({
     <div>
       <span className="mb-2 flex items-center gap-1.5 text-sm font-medium text-ink-subtle">
         <UsersRound className="size-4 text-ink-muted" />
-        Groupes d’élèves{" "}
+        أفواج التلامذة{" "}
         <span className="font-normal text-ink-muted">({groupIds.length}) · optionnel</span>
       </span>
       {sorted.length === 0 ? (
         <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-          Aucun groupe pour le moment. Créez-en un depuis « Groupes ».
+          ما فماش أفواج توّا. اعمل واحد من «الأفواج».
         </p>
       ) : (
         <div className="flex flex-wrap gap-2">
@@ -188,12 +188,12 @@ export function YearPicker({
     <div>
       <span className="mb-2 flex items-center gap-1.5 text-sm font-medium text-ink-subtle">
         <GraduationCap className="size-4 text-ink-muted" />
-        Années{" "}
+        السنوات{" "}
         <span className="font-normal text-ink-muted">({yearIds.length}) · optionnel</span>
       </span>
       {sorted.length === 0 ? (
         <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-          Aucune année dans le programme.
+          ما فماش سنوات في البرنامج.
         </p>
       ) : (
         <div className="flex flex-wrap gap-2">
@@ -210,7 +210,7 @@ export function YearPicker({
 
 /** Display label for a resource — its friendly name, else the PDF file name. */
 export function resourceLabel(r: { name?: string; pdf: { name: string } }): string {
-  return r.name?.trim() || r.pdf.name || "Document"
+  return r.name?.trim() || r.pdf.name || "وثيقة"
 }
 
 // Années scolaires moved to the shared module — re-exported so existing

@@ -1,17 +1,17 @@
 [
   {
     "id": "res-fiche-integrales",
-    "name": "Fiche de révision — Intégrales",
+    "name": "ورقة مراجعة — التكاملات",
     "pdf": { "name": "fiche-integrales.pdf" }
   },
   {
     "id": "res-td-complexes",
-    "name": "TD — Nombres complexes",
+    "name": "أعمال موجّهة — الأعداد المركّبة",
     "pdf": { "name": "td-complexes-serie-3.pdf" }
   },
   {
     "id": "res-corrige-ds1",
-    "name": "Corrigé — DS N°1",
+    "name": "إصلاح — فرض مراقبة عدد 1",
     "pdf": { "name": "corrige-ds1.pdf" }
   },
   {
@@ -20,7 +20,7 @@
   },
   {
     "id": "res-methode-dissertation",
-    "name": "Méthode de la dissertation",
+    "name": "منهجية المقال الفلسفي",
     "pdf": { "name": "methode-dissertation-philo.pdf" }
   }
 ]

@@ -1,4 +1,4 @@
-import { ArrowRight, History } from "lucide-react"
+import { ArrowLeft, History } from "lucide-react"
 import {
   Sheet,
   SheetContent,
@@ -17,22 +17,23 @@ import { Avatar } from "@/components/kit/Avatar"
 import { useIsMobile } from "@/lib/hooks"
 import type { User } from "@/data/types"
 
-/** "12 févr. 2026 à 14:22" — every history stamp uses the same long form. */
-const WHEN = new Intl.DateTimeFormat("fr-FR", {
+/** "12 فيفري 2026 على 14:22" — every history stamp uses the same long form. */
+const WHEN = new Intl.DateTimeFormat("ar-TN-u-nu-latn", {
   day: "numeric",
   month: "short",
   year: "numeric",
   hour: "2-digit",
   minute: "2-digit",
+  hour12: false,
 })
 
 function when(iso: string) {
-  return WHEN.format(new Date(iso)).replace(",", " à")
+  return WHEN.format(new Date(iso)).replace("،", " على")
 }
 
 /**
  * Read-only timeline of a user's profile changes — newest first, ending on the
- * "Compte créé" node. Mobile: bottom sheet; desktop: centered dialog (same
+ * "الحساب تعمل" node. Mobile: bottom sheet; desktop: centered dialog (same
  * split as FormSheet). Opened from the row's "…" menu on the users table.
  */
 export function UserHistorySheet({
@@ -51,13 +52,13 @@ export function UserHistorySheet({
       <div className="flex items-center gap-3">
         <Avatar name={user.name} />
         <div className="min-w-0">
-          <p dir="auto" className="truncate font-display text-[15px] font-bold text-ink">
+          <p dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
             {user.name}
           </p>
           <p className="text-sm text-ink-muted">
             {user.history.length === 0
-              ? "Aucune modification depuis la création."
-              : `${user.history.length} modification${user.history.length > 1 ? "s" : ""}`}
+              ? "ما فماش تبديل من وقت ما تعمل."
+              : `${user.history.length} تبديل`}
           </p>
         </div>
       </div>
@@ -72,22 +73,22 @@ export function UserHistorySheet({
             <div className="mt-1.5 space-y-1.5">
               {h.changes.map((c, j) => (
                 <div key={j} className="rounded-md bg-surface-muted px-3 py-2">
-                  <p className="text-[12px] font-medium text-ink-muted">{c.field}</p>
+                  <p className="text-[calc(12px*var(--ts))] font-medium text-ink-muted">{c.field}</p>
                   <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-sm">
                     {c.before ? (
                       <span dir="auto" className="break-all text-ink-muted line-through">
                         {c.before}
                       </span>
                     ) : (
-                      <span className="italic text-ink-muted">vide</span>
+                      <span className="italic text-ink-muted">فارغ</span>
                     )}
-                    <ArrowRight className="size-3.5 shrink-0 text-ink-muted rtl:rotate-180" />
+                    <ArrowLeft className="size-3.5 shrink-0 text-ink-muted" />
                     {c.after ? (
                       <span dir="auto" className="break-all font-medium text-ink">
                         {c.after}
                       </span>
                     ) : (
-                      <span className="italic text-ink-muted">vide</span>
+                      <span className="italic text-ink-muted">فارغ</span>
                     )}
                   </p>
                 </div>
@@ -97,8 +98,8 @@ export function UserHistorySheet({
         ))}
         <li className="relative">
           <span className="absolute -start-[27px] top-1 size-3 rounded-full border-2 border-surface-raised bg-grad" />
-          <p className="text-sm font-medium text-ink">Compte créé</p>
-          <p className="mt-0.5 text-[12px] text-ink-muted">{when(user.createdAt)}</p>
+          <p className="text-sm font-medium text-ink">الحساب تعمل</p>
+          <p className="mt-0.5 text-[calc(12px*var(--ts))] text-ink-muted">{when(user.createdAt)}</p>
         </li>
       </ol>
     </div>
@@ -111,14 +112,14 @@ export function UserHistorySheet({
         onClick={() => onOpenChange(false)}
         className="inline-flex h-11 w-full items-center justify-center rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 sm:w-auto"
       >
-        Fermer
+        سكّر
       </button>
     </div>
   )
 
   const title = (
     <span className="inline-flex items-center gap-2">
-      <History className="size-[18px] text-brand-600" /> Historique des modifications
+      <History className="size-[18px] text-brand-600" /> تاريخ التبديلات
     </span>
   )
 
@@ -133,7 +134,7 @@ export function UserHistorySheet({
             <SheetHeader className="gap-1 border-b border-border p-5 text-start">
               <SheetTitle className="font-display text-lg font-bold text-ink">{title}</SheetTitle>
               <SheetDescription className="text-sm text-ink-muted">
-                Chaque enregistrement du profil laisse une trace datée.
+                كل تسجيل للبروفايل يخلّي أثر مؤرّخ.
               </SheetDescription>
             </SheetHeader>
             {body}
@@ -151,7 +152,7 @@ export function UserHistorySheet({
           <DialogHeader className="gap-1 border-b border-border p-5 text-start sm:text-start">
             <DialogTitle className="font-display text-lg font-bold text-ink">{title}</DialogTitle>
             <DialogDescription className="text-sm text-ink-muted">
-              Chaque enregistrement du profil laisse une trace datée.
+              كل تسجيل للبروفايل يخلّي أثر مؤرّخ.
             </DialogDescription>
           </DialogHeader>
           {body}

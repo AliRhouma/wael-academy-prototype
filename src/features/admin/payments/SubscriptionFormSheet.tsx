@@ -103,11 +103,11 @@ export function SubscriptionFormSheet({
     () =>
       users
         .filter((u) => u.role === "student")
-        .sort((a, b) => a.name.localeCompare(b.name, "fr")),
+        .sort((a, b) => a.name.localeCompare(b.name, "ar")),
     [users],
   )
   const sortedOffers = useMemo(
-    () => [...offers].sort((a, b) => a.name.localeCompare(b.name, "fr")),
+    () => [...offers].sort((a, b) => a.name.localeCompare(b.name, "ar")),
     [offers],
   )
 
@@ -180,10 +180,10 @@ export function SubscriptionFormSheet({
     }
     if (editing) {
       updateSubscription(editing.id, patch)
-      onSaved("Abonnement modifié")
+      onSaved("الاشتراك تبدّل")
     } else {
       addSubscription(patch)
-      onSaved("Abonnement créé")
+      onSaved("الاشتراك تعمل")
     }
     onOpenChange(false)
   }
@@ -192,24 +192,24 @@ export function SubscriptionFormSheet({
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      title={editing ? "Modifier l’abonnement" : "Nouvel abonnement"}
+      title={editing ? "بدّل الاشتراك" : "اشتراك جديد"}
       description={
         editing
           ? undefined
-          : "Inscrivez un élève à une offre : montant convenu, mode de paiement et échéancier."
+          : "سجّل تلميذ في عرض: المبلغ المتّفق عليه وطريقة الخلاص وروزنامة الأقساط."
       }
-      submitLabel={editing ? "Enregistrer" : "Créer"}
+      submitLabel={editing ? "سجّل" : "اعمل"}
       onSubmit={submit}
     >
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Élève</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">تلميذ</span>
         <div className="relative">
           <select
             className={INPUT + " appearance-none pe-10"}
             value={userId}
             onChange={(e) => setUserId(e.target.value)}
           >
-            <option value="">— Choisir un élève —</option>
+            <option value="">— اختار تلميذ —</option>
             {students.map((u) => (
               <option key={u.id} value={u.id}>
                 {u.name}
@@ -221,14 +221,14 @@ export function SubscriptionFormSheet({
       </label>
 
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Offre</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">عرض</span>
         <div className="relative">
           <select
             className={INPUT + " appearance-none pe-10"}
             value={offerId}
             onChange={(e) => pickOffer(e.target.value)}
           >
-            <option value="">— Choisir une offre —</option>
+            <option value="">— اختار عرض —</option>
             {sortedOffers.map((o) => (
               <option key={o.id} value={o.id}>
                 {o.name}
@@ -242,40 +242,40 @@ export function SubscriptionFormSheet({
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Montant à payer (DT)
+            المبلغ للخلاص (د.ت)
           </span>
           <input
             className={INPUT + " tabular-nums"}
             value={price}
             onChange={(e) => setPrice(e.target.value)}
-            placeholder="Ex. 360"
+            placeholder="مثال: 360"
             inputMode="decimal"
             dir="ltr"
           />
         </label>
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Mode <span className="font-normal text-ink-muted">(opt.)</span>
+            النمط <span className="font-normal text-ink-muted">(اخت.)</span>
           </span>
           <input
             className={INPUT}
             value={tag}
             onChange={(e) => setTag(e.target.value)}
-            placeholder="Ex. Par tranches, Cash…"
+            placeholder="مثال: بالأقساط، كاش…"
           />
         </label>
       </div>
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-          Description du contrat <span className="font-normal text-ink-muted">(optionnel)</span>
+          وصف العقد <span className="font-normal text-ink-muted">(اختياري)</span>
         </span>
         <textarea
           className={INPUT.replace("h-11", "min-h-[72px]") + " resize-y py-2.5 text-start"}
           dir="auto"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Ex. 3 tranches sur l’année, première à l’inscription…"
+          placeholder="مثال: 3 أقساط على العام، الأوّل وقت التسجيل…"
           rows={2}
         />
       </label>
@@ -284,26 +284,26 @@ export function SubscriptionFormSheet({
       <div>
         <span className="mb-2 flex items-center justify-between gap-2 text-sm font-medium text-ink-subtle">
           <span>
-            Échéancier{" "}
-            <span className="font-normal text-ink-muted">({installments.length} tranche{installments.length > 1 ? "s" : ""})</span>
+            روزنامة الخلاص{" "}
+            <span className="font-normal text-ink-muted">({installments.length} قسط)</span>
           </span>
           <span className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setGenOpen((o) => !o)}
               className={
-                "inline-flex items-center gap-1 text-[12px] font-medium hover:underline " +
+                "inline-flex items-center gap-1 text-[calc(12px*var(--ts))] font-medium hover:underline " +
                 (genOpen ? "text-accent2-700" : "text-brand-600")
               }
             >
-              <Wand2 className="size-3.5" /> Génération rapide
+              <Wand2 className="size-3.5" /> توليد سريع
             </button>
             <button
               type="button"
               onClick={addRow}
-              className="inline-flex items-center gap-1 text-[12px] font-medium text-brand-600 hover:underline"
+              className="inline-flex items-center gap-1 text-[calc(12px*var(--ts))] font-medium text-brand-600 hover:underline"
             >
-              <Plus className="size-3.5" /> Ajouter une tranche
+              <Plus className="size-3.5" /> زيد قسط
             </button>
           </span>
         </span>
@@ -313,8 +313,8 @@ export function SubscriptionFormSheet({
           <div className="mb-3 rounded-md border border-brand-200 bg-brand-50/40 p-3">
             <div className="grid grid-cols-2 gap-3">
               <label className="block">
-                <span className="mb-1.5 block text-[12px] font-medium text-ink-subtle">
-                  Première échéance
+                <span className="mb-1.5 block text-[calc(12px*var(--ts))] font-medium text-ink-subtle">
+                  الأجل الأوّل
                 </span>
                 <input
                   type="date"
@@ -325,43 +325,43 @@ export function SubscriptionFormSheet({
                 />
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-[12px] font-medium text-ink-subtle">Répéter</span>
+                <span className="mb-1.5 block text-[calc(12px*var(--ts))] font-medium text-ink-subtle">عاود</span>
                 <div className="relative">
                   <select
                     className={INPUT + " appearance-none pe-10"}
                     value={genEvery}
                     onChange={(e) => setGenEvery(e.target.value)}
                   >
-                    <option value="1">Tous les mois</option>
-                    <option value="2">Tous les 2 mois</option>
-                    <option value="3">Tous les 3 mois</option>
-                    <option value="6">Tous les 6 mois</option>
+                    <option value="1">كل شهر</option>
+                    <option value="2">كل شهرين</option>
+                    <option value="3">كل 3 شهور</option>
+                    <option value="6">كل 6 شهور</option>
                   </select>
                   <ChevronDown className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
                 </div>
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-[12px] font-medium text-ink-subtle">
-                  Nombre de tranches
+                <span className="mb-1.5 block text-[calc(12px*var(--ts))] font-medium text-ink-subtle">
+                  عدد الأقساط
                 </span>
                 <input
                   className={INPUT + " tabular-nums"}
                   value={genCount}
                   onChange={(e) => setGenCount(e.target.value)}
-                  placeholder="Ex. 3"
+                  placeholder="مثال: 3"
                   inputMode="numeric"
                   dir="ltr"
                 />
               </label>
               <label className="block">
-                <span className="mb-1.5 block text-[12px] font-medium text-ink-subtle">
-                  Montant par tranche (DT)
+                <span className="mb-1.5 block text-[calc(12px*var(--ts))] font-medium text-ink-subtle">
+                  المبلغ في كل قسط (د.ت)
                 </span>
                 <input
                   className={INPUT + " tabular-nums"}
                   value={genAmount}
                   onChange={(e) => setGenAmount(e.target.value)}
-                  placeholder="Ex. 150"
+                  placeholder="مثال: 150"
                   inputMode="decimal"
                   dir="ltr"
                 />
@@ -373,15 +373,15 @@ export function SubscriptionFormSheet({
                 <button
                   type="button"
                   onClick={splitPrice}
-                  className="text-[12px] font-medium text-brand-600 hover:underline"
+                  className="text-[calc(12px*var(--ts))] font-medium text-brand-600 hover:underline"
                 >
-                  Répartir {formatDT(priceNum)} sur {genCountNum} tranche{genCountNum > 1 ? "s" : ""}
+                  قسّم {formatDT(priceNum)} على {genCountNum} قسط
                 </button>
               ) : (
                 <span />
               )}
               {genValid && (
-                <span className="text-[12px] tabular-nums text-ink-muted">
+                <span className="text-[calc(12px*var(--ts))] tabular-nums text-ink-muted">
                   {genCountNum} × {formatDT(genAmountNum)} = {formatDT(genCountNum * genAmountNum)}
                 </span>
               )}
@@ -394,11 +394,11 @@ export function SubscriptionFormSheet({
               className="mt-2 inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-grad px-4 text-sm font-medium text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-50"
             >
               <Wand2 className="size-4" />
-              Générer {genCountNum >= 1 ? `${genCountNum} tranche${genCountNum > 1 ? "s" : ""}` : "les tranches"}
+              ولّد {genCountNum >= 1 ? `${genCountNum} قسط` : "الأقساط"}
             </button>
             {installments.length > 0 && (
-              <p className="mt-1.5 text-center text-[12px] text-ink-muted">
-                Remplacera les {installments.length} tranche{installments.length > 1 ? "s" : ""} actuelle{installments.length > 1 ? "s" : ""}.
+              <p className="mt-1.5 text-center text-[calc(12px*var(--ts))] text-ink-muted">
+                باش يعوّض {installments.length} قسط الحاليين.
               </p>
             )}
           </div>
@@ -406,20 +406,20 @@ export function SubscriptionFormSheet({
 
         {installments.length === 0 ? (
           <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-            Aucune tranche — paiement libre (ex. cash en une fois).
+            ما فماش أقساط — خلاص حرّ (مثال: كاش مرّة وحدة).
           </p>
         ) : (
           <div className="space-y-2">
             {installments.map((row, i) => (
               <div key={row.id} className="flex items-center gap-2">
-                <span className="w-7 shrink-0 text-center text-[12px] font-medium tabular-nums text-ink-muted">
+                <span className="w-7 shrink-0 text-center text-[calc(12px*var(--ts))] font-medium tabular-nums text-ink-muted">
                   {i + 1}
                 </span>
                 <input
                   className={INPUT + " flex-1 tabular-nums"}
                   value={row.amount}
                   onChange={(e) => patchRow(row.id, { amount: e.target.value })}
-                  placeholder="Montant (DT)"
+                  placeholder="المبلغ (د.ت)"
                   inputMode="decimal"
                   dir="ltr"
                 />
@@ -433,7 +433,7 @@ export function SubscriptionFormSheet({
                 <button
                   type="button"
                   onClick={() => removeRow(row.id)}
-                  aria-label="Retirer la tranche"
+                  aria-label="نحّي القسط"
                   className="grid size-11 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-danger-50 hover:text-danger-600"
                 >
                   <Trash2 className="size-4" />
@@ -443,13 +443,13 @@ export function SubscriptionFormSheet({
           </div>
         )}
         {rowsInvalid && (
-          <p className="mt-1.5 text-[12px] font-medium text-danger-600">
-            Chaque tranche doit avoir un montant et une date.
+          <p className="mt-1.5 text-[calc(12px*var(--ts))] font-medium text-danger-600">
+            كل قسط لازمو مبلغ وتاريخ.
           </p>
         )}
         {planMismatch && (
-          <p className="mt-1.5 text-[12px] font-medium text-accent2-700">
-            La somme des tranches ({formatDT(planTotal)}) diffère du montant à payer (
+          <p className="mt-1.5 text-[calc(12px*var(--ts))] font-medium text-accent2-700">
+            مجموع الأقساط ({formatDT(planTotal)}) ما يتوافقش مع المبلغ للخلاص (
             {formatDT(priceNum)}).
           </p>
         )}
@@ -458,7 +458,7 @@ export function SubscriptionFormSheet({
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Échéance d’accès <span className="font-normal text-ink-muted">(opt.)</span>
+            أجل الدخول <span className="font-normal text-ink-muted">(اخت.)</span>
           </span>
           <input
             type="date"
@@ -469,15 +469,15 @@ export function SubscriptionFormSheet({
           />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">État</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">الحالة</span>
           <div className="relative">
             <select
               className={INPUT + " appearance-none pe-10"}
               value={state}
               onChange={(e) => setState(e.target.value as SubscriptionState)}
             >
-              <option value="active">Actif</option>
-              <option value="blocked">Bloqué</option>
+              <option value="active">فعّال</option>
+              <option value="blocked">موقّف</option>
             </select>
             <ChevronDown className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted" />
           </div>

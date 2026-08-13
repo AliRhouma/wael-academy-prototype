@@ -72,7 +72,7 @@ export default function AdminSessionsScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeSession(deleteTarget.id)
-    show("Séance supprimée")
+    show("الحصّة تمسحت")
     setDeleteTarget(null)
   }
 
@@ -82,14 +82,14 @@ export default function AdminSessionsScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Planifier une séance
+      <Plus className="size-4" /> برمج حصّة
     </button>
   )
 
   const filters: { key: TimeFilter; label: string; count: number }[] = [
-    { key: "upcoming", label: "À venir", count: counts.upcoming },
-    { key: "past", label: "Passées", count: counts.past },
-    { key: "all", label: "Toutes", count: counts.all },
+    { key: "upcoming", label: "الجايّة", count: counts.upcoming },
+    { key: "past", label: "اللي فاتو", count: counts.past },
+    { key: "all", label: "الكل", count: counts.all },
   ]
 
   const isEmpty = sessions.length === 0
@@ -98,8 +98,8 @@ export default function AdminSessionsScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Séances"
-        subtitle={`${sessions.length} séance${sessions.length > 1 ? "s" : ""} — l’emploi du temps des groupes de l’académie.`}
+        title="الحصص"
+        subtitle={`${sessions.length} حصّة — جدول أوقات أفواج الأكاديمية.`}
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -107,8 +107,8 @@ export default function AdminSessionsScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={CalendarDays}
-            title="Aucune séance"
-            description="Planifiez une séance pour un ou plusieurs groupes d’élèves."
+            title="ما فماش حصص"
+            description="برمج حصّة لفوج ولا كثر من فوج تلامذة."
             action={addButton}
           />
         </div>
@@ -149,7 +149,7 @@ export default function AdminSessionsScreen() {
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Rechercher une séance, un enseignant…"
+                placeholder="لوّج على حصّة ولا أستاذ…"
                 className={INPUT + " ps-9"}
               />
             </div>
@@ -159,15 +159,15 @@ export default function AdminSessionsScreen() {
             <div className="rounded-lg border border-dashed border-border bg-surface">
               <EmptyState
                 icon={Search}
-                title="Aucune séance"
-                description="Aucune séance ne correspond à ce filtre ou à cette recherche."
+                title="ما فماش حصص"
+                description="ما فماش حصّة توافق الفلتر ولا البحث هذا."
               />
             </div>
           ) : (
             <div className="flex flex-col gap-6">
               {rows.map(([day, daySessions]) => (
                 <section key={day}>
-                  <h2 className="mb-2 text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+                  <h2 className="mb-2 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
                     {formatSessionDayLong(day)}
                   </h2>
                   <div className="flex flex-col gap-3">
@@ -178,9 +178,9 @@ export default function AdminSessionsScreen() {
                         actions={
                           <OverflowMenu
                             actions={[
-                              { label: "Modifier", icon: Pencil, onClick: () => openEdit(s) },
+                              { label: "بدّل", icon: Pencil, onClick: () => openEdit(s) },
                               {
-                                label: "Supprimer",
+                                label: "امسح",
                                 icon: Trash2,
                                 tone: "danger",
                                 onClick: () => setDeleteTarget(s),
@@ -208,9 +208,9 @@ export default function AdminSessionsScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cette séance ?"
+        title="تحبّ تمسح الحصّة هذي؟"
         description={
-          deleteTarget ? `« ${deleteTarget.title} » sera définitivement supprimée.` : undefined
+          deleteTarget ? `«${deleteTarget.title}» باش تتمسح نهائيا.` : undefined
         }
         onConfirm={confirmDelete}
       />

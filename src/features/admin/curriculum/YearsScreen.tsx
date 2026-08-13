@@ -2,7 +2,7 @@ import { useMemo, useState, type ReactNode } from "react"
 import { useNavigate } from "react-router-dom"
 import {
   BookOpen,
-  ChevronRight,
+  ChevronLeft,
   Copy,
   GraduationCap,
   Layers,
@@ -91,20 +91,20 @@ function YearCard({
         <BookOpen className="size-5" />
       </span>
       <div className="min-w-0 flex-1">
-        <p dir="auto" className="truncate font-display text-[15px] font-bold text-ink">
+        <p dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
           {label}
         </p>
-        <p className="mt-0.5 text-[12px] text-ink-muted">
-          {count > 0 ? `${count} matière${count > 1 ? "s" : ""}` : "Aucune matière"}
+        <p className="mt-0.5 text-[calc(12px*var(--ts))] text-ink-muted">
+          {count > 0 ? `${count} مادّة` : "ما فماش موادّ"}
         </p>
       </div>
-      <ChevronRight className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
+      <ChevronLeft className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
       <div onClick={(e) => e.stopPropagation()}>
         <OverflowMenu
           actions={[
-            { label: "Modifier", icon: Pencil, onClick: onEdit },
-            { label: "Dupliquer", icon: Copy, onClick: onDuplicate },
-            { label: "Supprimer", icon: Trash2, tone: "danger", onClick: onDelete },
+            { label: "بدّل", icon: Pencil, onClick: onEdit },
+            { label: "اعمل نسخة", icon: Copy, onClick: onDuplicate },
+            { label: "امسح", icon: Trash2, tone: "danger", onClick: onDelete },
           ]}
         />
       </div>
@@ -192,10 +192,10 @@ export default function AdminYearsScreen() {
     }
     if (editing) {
       updateYear(editing.id, patch)
-      show("Classe modifiée")
+      show("القسم تبدّل")
     } else {
       addYear(patch)
-      show("Classe ajoutée")
+      show("القسم تزاد")
     }
     setFormOpen(false)
   }
@@ -255,14 +255,14 @@ export default function AdminYearsScreen() {
       // Same slot → sits right after the original; elsewhere → its own slot.
       order: dupSameSlot ? undefined : yearOrder(dupCycle, dupLevel, dupSection || undefined),
     })
-    show(`« ${copy.name} » créée avec les matières de « ${dupTarget.name} »`)
+    show(`«${copy.name}» تعملت بموادّ «${dupTarget.name}»`)
     setDupTarget(null)
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removeYear(deleteTarget.id)
-    show("Classe supprimée")
+    show("القسم تمسح")
     setDeleteTarget(null)
   }
 
@@ -273,15 +273,15 @@ export default function AdminYearsScreen() {
       onClick={() => openAdd()}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter une classe
+      <Plus className="size-4" /> زيد قسم
     </button>
   )
 
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Programme"
-        subtitle="Collège, secondaire et bac — chaque classe regroupe ses matières."
+        title="البرنامج"
+        subtitle="إعدادي وثانوي وباك — كل قسم يجمع موادّو."
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -289,8 +289,8 @@ export default function AdminYearsScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Layers}
-            title="Aucune classe"
-            description="Commencez par créer une classe du programme (ex. 7ème année, Bac — Mathématiques)."
+            title="ما فماش أقسام"
+            description="ابدا بإنشاء قسم من البرنامج (مثال: سابعة أساسي، باك — رياضيات)."
             action={addButton}
           />
         </div>
@@ -306,27 +306,27 @@ export default function AdminYearsScreen() {
                     <Icon className="size-[18px]" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h2 className="font-display text-[17px] font-bold leading-tight text-ink">
+                    <h2 className="font-display text-[calc(17px*var(--ts))] font-bold leading-tight text-ink">
                       {def.label}
                     </h2>
-                    <p className="mt-0.5 truncate text-[12px] text-ink-muted">{def.hint}</p>
+                    <p className="mt-0.5 truncate text-[calc(12px*var(--ts))] text-ink-muted">{def.hint}</p>
                   </div>
-                  <span className="shrink-0 rounded-full bg-neutral-100 px-2.5 py-1 text-[12px] font-medium tabular-nums text-ink-muted">
-                    {cycleYears.length} classe{cycleYears.length > 1 ? "s" : ""}
+                  <span className="shrink-0 rounded-full bg-neutral-100 px-2.5 py-1 text-[calc(12px*var(--ts))] font-medium tabular-nums text-ink-muted">
+                    {cycleYears.length} قسم
                   </span>
                   <button
                     type="button"
                     onClick={() => openAdd(def.key)}
-                    className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-[13px] font-medium text-brand-600 transition hover:bg-brand-50"
+                    className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-[calc(13px*var(--ts))] font-medium text-brand-600 transition hover:bg-brand-50"
                   >
                     <Plus className="size-4" />
-                    <span className="hidden sm:inline">Classe</span>
+                    <span className="hidden sm:inline">قسم</span>
                   </button>
                 </div>
 
                 {levelGroups.length === 0 ? (
                   <p className="rounded-lg border border-dashed border-border bg-surface px-4 py-5 text-sm text-ink-muted">
-                    Aucune classe dans ce cycle — ajoutez-en une.
+                    ما فماش أقسام في المرحلة هذي — زيد واحد.
                   </p>
                 ) : (
                   <div className="flex flex-col gap-5">
@@ -335,11 +335,11 @@ export default function AdminYearsScreen() {
                         {lg.sectioned && (
                           <p
                             dir="auto"
-                            className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600"
+                            className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600"
                           >
                             {lg.level}
                             <span className="ms-2 font-normal normal-case tracking-normal text-ink-muted">
-                              {lg.years.length} section{lg.years.length > 1 ? "s" : ""}
+                              {lg.years.length} شعبة
                             </span>
                           </p>
                         )}
@@ -369,17 +369,17 @@ export default function AdminYearsScreen() {
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier la classe" : "Nouvelle classe"}
+        title={editing ? "بدّل القسم" : "قسم جديد"}
         description={
           editing
             ? undefined
-            : "Choisissez le cycle, puis le niveau — et sa section à partir de la 2ème année."
+            : "اختار المرحلة، وبعد المستوى — والشعبة من الثانية ثانوي."
         }
-        submitLabel={editing ? "Enregistrer" : "Ajouter"}
+        submitLabel={editing ? "سجّل" : "زيد"}
         onSubmit={submit}
       >
         <div>
-          <span className="mb-2 block text-sm font-medium text-ink-subtle">Cycle</span>
+          <span className="mb-2 block text-sm font-medium text-ink-subtle">المرحلة</span>
           <div className="grid grid-cols-3 gap-2">
             {CYCLES.map((c) => {
               const Icon = CYCLE_STYLE[c.key].icon
@@ -404,7 +404,7 @@ export default function AdminYearsScreen() {
         </div>
 
         <div>
-          <span className="mb-2 block text-sm font-medium text-ink-subtle">Niveau</span>
+          <span className="mb-2 block text-sm font-medium text-ink-subtle">المستوى</span>
           <div className="flex flex-wrap gap-2">
             {levels.map((l) => (
               <Choice key={l.name} active={level === l.name} onClick={() => pickLevel(l.name)}>
@@ -418,12 +418,12 @@ export default function AdminYearsScreen() {
           <span className="mb-2 block text-sm font-medium text-ink-subtle">
             Section{" "}
             <span className="font-normal text-ink-muted">
-              {sections.length > 0 ? "(obligatoire)" : "(aucune à ce niveau)"}
+              {sections.length > 0 ? "(إجباري)" : "(ما فماش في المستوى هذا)"}
             </span>
           </span>
           {sections.length === 0 ? (
             <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-              {level || "Ce niveau"} n’a pas de sections — la classe porte le niveau seul.
+              {level || "المستوى هذا"} ما عندوش شعب — القسم يحمل المستوى برك.
             </p>
           ) : (
             <div className="flex flex-wrap gap-2">
@@ -437,7 +437,7 @@ export default function AdminYearsScreen() {
         </div>
 
         <p className="rounded-md border border-border bg-surface-muted px-3 py-2.5 text-sm text-ink-subtle">
-          Nom de la classe :{" "}
+          اسم القسم:{" "}
           <span dir="auto" className="font-display font-bold text-ink">
             {level ? yearName(level, section || undefined) : "—"}
           </span>
@@ -447,28 +447,28 @@ export default function AdminYearsScreen() {
       <DuplicateSheet
         open={dupTarget !== null}
         onOpenChange={(o) => !o && setDupTarget(null)}
-        title="Dupliquer la classe"
-        nameLabel="Nom de la copie"
+        title="اعمل نسخة من القسم"
+        nameLabel="اسم النسخة"
         name={dupName}
         onNameChange={(v) => {
           setDupName(v)
           setDupNamed(true)
         }}
-        note="Toutes les matières de la classe — et leur contenu — sont copiées."
+        note="موادّ القسم الكل — والمحتوى متاعهم — ينتسخو."
         blocker={
           dupSections.length > 0 && !dupSection
-            ? "Choisissez la section de destination."
+            ? "اختار الشعبة اللي باش تنسخ ليها."
             : undefined
         }
         onSubmit={submitDuplicate}
       >
         <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface-muted p-3.5">
-          <p className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
+          <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
             Destination
           </p>
 
           <div>
-            <span className="mb-2 block text-sm font-medium text-ink-subtle">Cycle</span>
+            <span className="mb-2 block text-sm font-medium text-ink-subtle">المرحلة</span>
             <div className="grid grid-cols-3 gap-2">
               {CYCLES.map((c) => {
                 const Icon = CYCLE_STYLE[c.key].icon
@@ -493,7 +493,7 @@ export default function AdminYearsScreen() {
           </div>
 
           <div>
-            <span className="mb-2 block text-sm font-medium text-ink-subtle">Niveau</span>
+            <span className="mb-2 block text-sm font-medium text-ink-subtle">المستوى</span>
             <div className="flex flex-wrap gap-2">
               {cycleDef(dupCycle).levels.map((l) => (
                 <Choice
@@ -508,10 +508,10 @@ export default function AdminYearsScreen() {
           </div>
 
           <div>
-            <span className="mb-2 block text-sm font-medium text-ink-subtle">Section</span>
+            <span className="mb-2 block text-sm font-medium text-ink-subtle">الشعبة</span>
             {dupSections.length === 0 ? (
               <p className="rounded-md border border-dashed border-border bg-surface px-3 py-2.5 text-sm text-ink-muted">
-                {dupLevel || "Ce niveau"} n’a pas de sections.
+                {dupLevel || "المستوى هذا"} ما عندوش شعب.
               </p>
             ) : (
               <div className="flex flex-wrap gap-2">
@@ -529,10 +529,10 @@ export default function AdminYearsScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cette classe ?"
+        title="تحبّ تمسح القسم هذا؟"
         description={
           deleteTarget
-            ? `« ${deleteTarget.name} » et ses ${countFor(deleteTarget)} matière(s) seront supprimées. Cette action est définitive.`
+            ? `«${deleteTarget.name}» و${countFor(deleteTarget)} مادّة متاعو باش يتمسحو. العملية هاذي نهائية.`
             : undefined
         }
         onConfirm={confirmDelete}

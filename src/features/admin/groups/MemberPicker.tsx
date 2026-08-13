@@ -37,7 +37,7 @@ export function MemberPicker({
     () =>
       users
         .filter((u) => u.role === "student")
-        .sort((a, b) => a.name.localeCompare(b.name, "fr")),
+        .sort((a, b) => a.name.localeCompare(b.name, "ar")),
     [users],
   )
 
@@ -63,7 +63,7 @@ export function MemberPicker({
   return (
     <div>
       <span className="mb-2 block text-sm font-medium text-ink-subtle">
-        Élèves <span className="font-normal text-ink-muted">({studentIds.length})</span>
+        التلامذة <span className="font-normal text-ink-muted">({studentIds.length})</span>
       </span>
 
       <div className="flex flex-col gap-2 sm:flex-row">
@@ -72,7 +72,7 @@ export function MemberPicker({
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Rechercher un élève…"
+            placeholder="لوّج على تلميذ…"
             className={INPUT + " ps-9"}
           />
         </div>
@@ -82,7 +82,7 @@ export function MemberPicker({
             value={yearFilter}
             onChange={(e) => setYearFilter(e.target.value)}
           >
-            <option value="all">Toutes les années</option>
+            <option value="all">السنوات الكل</option>
             {sortedYears.map((y) => (
               <option key={y.id} value={y.id}>
                 {y.name}
@@ -95,7 +95,7 @@ export function MemberPicker({
 
       <div className="mt-2 max-h-64 overflow-y-auto scroll-touch rounded-md border border-border">
         {visible.length === 0 ? (
-          <p className="px-3 py-6 text-center text-sm text-ink-muted">Aucun élève trouvé.</p>
+          <p className="px-3 py-6 text-center text-sm text-ink-muted">ما تلقا حتّى تلميذ.</p>
         ) : (
           <ul className="divide-y divide-border">
             {visible.map((u) => {
@@ -112,7 +112,7 @@ export function MemberPicker({
                       <span dir="auto" className="block truncate text-sm font-medium text-ink">
                         {u.name}
                       </span>
-                      <span className="block truncate text-[12px] text-ink-muted">
+                      <span className="block truncate text-[calc(12px*var(--ts))] text-ink-muted">
                         {u.yearIds?.[0] ? yearName.get(u.yearIds[0]) ?? "—" : "—"}
                       </span>
                     </span>

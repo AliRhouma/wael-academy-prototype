@@ -6,6 +6,7 @@ import type {
   Course,
   Exam,
   Group,
+  Homework,
   Lesson,
   LiveSession,
   Offer,
@@ -48,6 +49,7 @@ import chatMessagesSeed from "@/data/seed/chat-messages.json"
 import transactionsSeed from "@/data/seed/transactions.json"
 import resourcesSeed from "@/data/seed/resources.json"
 import liveSessionsSeed from "@/data/seed/live-sessions.json"
+import homeworksSeed from "@/data/seed/homeworks.json"
 import videoCommentsSeed from "@/data/seed/video-comments.json"
 
 /**
@@ -78,6 +80,7 @@ interface DataState {
   users: User[]
   resources: Resource[]
   liveSessions: LiveSession[]
+  homeworks: Homework[]
   videoComments: VideoComment[]
   videoReactions: VideoReaction[]
 
@@ -189,6 +192,11 @@ interface DataState {
   addLiveSession: (input: Omit<LiveSession, "id">) => LiveSession
   updateLiveSession: (id: string, patch: Partial<Omit<LiveSession, "id">>) => void
   removeLiveSession: (id: string) => void
+
+  // Homeworks (خدمة / travail à faire) CRUD — sentAt stamped by the store.
+  addHomework: (input: Omit<Homework, "id" | "sentAt">) => Homework
+  updateHomework: (id: string, patch: Partial<Omit<Homework, "id" | "sentAt">>) => void
+  removeHomework: (id: string) => void
 
   // Users CRUD — the store owns the audit fields: `addUser` stamps
   // createdAt/updatedAt, `updateUser` bumps updatedAt and prepends a history
@@ -307,6 +315,7 @@ export const useData = create<DataState>()((set) => ({
   users: usersSeed as User[],
   resources: resourcesSeed as Resource[],
   liveSessions: liveSessionsSeed as LiveSession[],
+  homeworks: homeworksSeed as Homework[],
   videoComments: videoCommentsSeed as VideoComment[],
   // Nobody has voted yet in the seed — the displayed count starts from the
   // video's own base (see `baseLikes`) and this only carries real votes.
@@ -343,6 +352,11 @@ export const useData = create<DataState>()((set) => ({
         ),
         // A group whose home year is gone loses that link.
         groups: s.groups.map((g) => (g.yearId === id ? { ...g, yearId: undefined } : g)),
+        // Homework of a dead matière goes; the rest just lose the dead année.
+        homeworks: s.homeworks
+          .filter((h) => !droppedSubjects.has(h.subjectId))
+          .map((h) => ({ ...h, yearIds: h.yearIds.filter((yid) => yid !== id) }))
+          .filter((h) => h.yearIds.length > 0),
       }
     }),
 
@@ -368,6 +382,8 @@ export const useData = create<DataState>()((set) => ({
         sessions: pruneScoped(s.sessions, dropped, empty),
         // Live sessions drop the dead subject; ones left with none are pruned.
         liveSessions: pruneLiveSubjects(s.liveSessions, dropped),
+        // A homework belongs to exactly one matière — no matière, no homework.
+        homeworks: s.homeworks.filter((h) => h.subjectId !== id),
       }
     }),
 
@@ -572,6 +588,11 @@ export const useData = create<DataState>()((set) => ({
           ? { ...ls, groupIds: ls.groupIds.filter((gid) => gid !== id) }
           : ls,
       ),
+      // …and from every homework that went out to it. An empty groupIds means
+      // "the whole année", which is the right fallback here too.
+      homeworks: s.homeworks.map((h) =>
+        h.groupIds.includes(id) ? { ...h, groupIds: h.groupIds.filter((gid) => gid !== id) } : h,
+      ),
       // …and from every access rule that filtered on it.
       accesses: s.accesses.map((a) =>
         a.groupIds.includes(id)
@@ -587,7 +608,14 @@ export const useData = create<DataState>()((set) => ({
   },
   updateSession: (id, patch) =>
     set((s) => ({ sessions: s.sessions.map((ses) => (ses.id === id ? { ...ses, ...patch } : ses)) })),
-  removeSession: (id) => set((s) => ({ sessions: s.sessions.filter((ses) => ses.id !== id) })),
+  removeSession: (id) =>
+    set((s) => ({
+      sessions: s.sessions.filter((ses) => ses.id !== id),
+      // The خدمة survives its séance — it just stops hanging on it.
+      homeworks: s.homeworks.map((h) =>
+        h.sessionId === id ? { ...h, sessionId: undefined } : h,
+      ),
+    })),
 
   addResource: (input) => {
     const resource: Resource = { id: crypto.randomUUID(), ...input }
@@ -640,6 +668,20 @@ export const useData = create<DataState>()((set) => ({
     })),
   removeLiveSession: (id) =>
     set((s) => ({ liveSessions: s.liveSessions.filter((ls) => ls.id !== id) })),
+
+  addHomework: (input) => {
+    const homework: Homework = {
+      id: crypto.randomUUID(),
+      ...input,
+      sentAt: new Date().toISOString(),
+    }
+    set((s) => ({ homeworks: [...s.homeworks, homework] }))
+    return homework
+  },
+  updateHomework: (id, patch) =>
+    set((s) => ({ homeworks: s.homeworks.map((h) => (h.id === id ? { ...h, ...patch } : h)) })),
+  removeHomework: (id) =>
+    set((s) => ({ homeworks: s.homeworks.filter((h) => h.id !== id) })),
 
   addUser: (input) => {
     const now = new Date().toISOString()

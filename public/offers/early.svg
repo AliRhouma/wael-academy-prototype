@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-label="بدري">
+  <defs>
+    <linearGradient id="e-fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#33a084"/>
+      <stop offset=".55" stop-color="#1a9e6e"/>
+      <stop offset="1" stop-color="#0e6b4e"/>
+    </linearGradient>
+  </defs>
+  <polygon points="48,10 82,29 82,67 48,86 14,67 14,29"
+           fill="url(#e-fill)" stroke="url(#e-fill)" stroke-width="9" stroke-linejoin="round"/>
+  <polygon points="48,18 75,33 75,63 48,78 21,63 21,33"
+           fill="none" stroke="#ffffff" stroke-opacity=".45" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Sunrise: "بدري" — catch it early. -->
+  <path d="M32 58 a16 16 0 0 1 32 0 Z" fill="#ffffff"/>
+  <g stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-opacity=".85">
+    <path d="M48 27v6"/>
+    <path d="M31.6 33.6l4.2 4.2"/>
+    <path d="M64.4 33.6l-4.2 4.2"/>
+  </g>
+  <path d="M26 65h44" stroke="#fbeecb" stroke-width="4" stroke-linecap="round"/>
+</svg>

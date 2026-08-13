@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "./palettes.css"; /* alternate palettes — swappable via data-palette on <html> */
+@import "./fonts.css"; /* alternate typefaces — swappable via data-font on <html> */
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -12,8 +13,8 @@
    tokened component themes for light/dark automatically.
 
    The look: a warm, soft education dashboard on the Wael Academy brand —
-   green → teal → navy gradient, gold + red accents, cream warmth, Cause
-   display type, Rubik interface type, low-contrast green-tinted elevation.
+   green → teal → navy gradient, gold + red accents, cream warmth, Cairo
+   throughout, low-contrast green-tinted elevation.
 
    Light is the primary theme. Dark tokens are defined via `[data-theme="dark"]`.
    Toggle by setting `data-theme="dark"` on <html>.
@@ -21,18 +22,22 @@
 
 /* ---------- Fonts ---------- */
 /* Load once, at the app root:
-   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Cause:wght@400;700&display=swap" rel="stylesheet">
-   Cause is the display face; headings run 700. Rubik is the interface face. */
+   Cairo is the default, display and interface alike — variable 200–1000 over
+   Arabic + Latin. The live slots are --ui-display / --ui-sans (fonts.css), which
+   the FontDock re-points at runtime. */
 
 /* ===========================================================================
    :root  —  Light theme tokens
    =========================================================================== */
 :root {
   /* ---- Base ---- */
-  font-family: "Rubik", system-ui, sans-serif;
+  /* --ui-display / --ui-sans are the LIVE type slots (see fonts.css); the
+     default pair is set there on :root so a [data-font] block can replace it. */
+  font-family: var(--ui-sans);
   font-weight: 400;
-  line-height: 1.5;
+  /* Arabic sits taller than Latin (ascenders + descenders on nearly every word),
+     so the base leading is a touch looser than the Latin original (1.5). */
+  line-height: 1.6;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -98,6 +103,8 @@
      `-fill` is the hover flood — deeper, so the change is felt. */
   --tint-strength: 100%;
   --tint-fill-strength: 100%;
+  /* The concentric rings behind a matière's drawing (see subjectTint.ts). */
+  --tint-ring-strength: 100%;
 
   --ink: #101012;        /* primary text */
   --ink-subtle: #5b6360; /* secondary text */
@@ -304,8 +311,50 @@
   --shadow-xl: var(--shadow-xl);
 
   /* ---- Fonts ---- */
-  --font-display: "Cause", "Comic Sans MS", cursive;
-  --font-sans: "Rubik", system-ui, sans-serif;
+  /* One family for both roles: Playpen Sans Arabic covers Arabic AND Latin, so
+     the wordmark and the Arabic copy share a single hand — no fallback seam. */
+  --font-display: var(--ui-display);
+  --font-sans: var(--ui-sans);
+}
+
+/* ===========================================================================
+   TYPE SCALE — one knob for the size of every word in the app
+   ---------------------------------------------------------------------------
+   `--ts` multiplies EVERY font size. Set it here and nothing else has to move:
+     1     the sizes as originally drawn
+     1.25  a comfortable bump
+     2     double
+
+   It works on both halves of the type in this codebase:
+
+   • the NAMED sizes (`text-sm`, `text-base`, …). Tailwind v4 emits
+     `.text-sm { font-size: var(--text-sm) }`, so redefining those seven
+     variables re-sizes every use at once. Their line-heights are unitless
+     RATIOS (`calc(1.25 / .875)`), so they follow on their own — leading stays
+     proportional at any scale.
+
+   • the ARBITRARY ones (`text-[13px]`, of which this app has ~500). Those bake
+     the number into the class name and can't be reached from here, so each one
+     carries the multiplier itself: `text-[calc(13px*var(--ts))]`.
+
+   A WORD OF WARNING at 2: box heights, icon sizes and padding do NOT scale with
+   this — they're spacing utilities, not type. Buttons, chips and table rows were
+   drawn around the original sizes, so doubled text crowds them and some labels
+   will wrap. That's inherent to scaling type alone; if it's too tight, this
+   number is the only thing to change.
+   =========================================================================== */
+:root {
+  /* 2 → 1 → 1.5. Half again over the sizes the screens were drawn at: clearly
+     bigger type, and short of the 2 that pushed labels out of their chips. */
+  --ts: 1.5;
+
+  --text-xs: calc(0.75rem * var(--ts));
+  --text-sm: calc(0.875rem * var(--ts));
+  --text-base: calc(1rem * var(--ts));
+  --text-lg: calc(1.125rem * var(--ts));
+  --text-xl: calc(1.25rem * var(--ts));
+  --text-2xl: calc(1.5rem * var(--ts));
+  --text-3xl: calc(1.875rem * var(--ts));
 }
 
 /* ===========================================================================
@@ -325,16 +374,15 @@
     @apply bg-background text-foreground antialiased;
     font-weight: 400;
   }
-  /* Display face is Cause; headings run 700. */
+  /* Headings run 700 of the same family — Playpen is variable, so it's real. */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: "Cause", "Comic Sans MS", cursive;
+    font-family: var(--ui-display);
     font-weight: 700;
-    letter-spacing: -0.004em;
     color: var(--ink);
   }
   ::selection {
@@ -365,14 +413,21 @@
 
 @layer utilities {
   .font-display {
-    font-family: "Cause", "Comic Sans MS", cursive;
+    font-family: var(--ui-display);
   }
   .font-sans {
-    font-family: "Rubik", system-ui, sans-serif;
+    font-family: var(--ui-sans);
   }
-  /* The brand gradient as a fill — nav-active, CTA, avatar, search button. */
+  /* The brand fill — nav-active, CTA, avatar, brand plate, search button.
+     FLAT, deliberately. It used to paint `--grad`, the palette's five-stop
+     gradient; every one of those surfaces is now one solid `--brand-500`. The
+     name is kept because 120-odd call sites read it and the choice is one line
+     to reverse — swap the value back to `var(--grad)`.
+     `--grad` itself is untouched and still holds each palette's gradient, for
+     the places that genuinely want a ramp rather than a fill (the landing
+     headline paints text with it). */
   .bg-grad {
-    background: var(--grad);
+    background: var(--brand-500);
   }
   /* The signature "warm canvas" — page background with cream + green glows. */
   .bg-canvas {
@@ -453,6 +508,9 @@
      so the card still visibly lifts under the pointer. */
   --tint-strength: 16%;
   --tint-fill-strength: 30%;
+  /* The rings are a light wash ON a dark card, so they read as glow rather than
+     tint — half strength is enough to feel them without lighting the grid up. */
+  --tint-ring-strength: 45%;
 
   --ink: #f0f3f1;
   --ink-subtle: #b7bfba;
@@ -533,11 +591,62 @@
   .pb-safe { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
   .pl-safe { padding-left: max(0px, env(safe-area-inset-left)); }
   .pr-safe { padding-right: max(0px, env(safe-area-inset-right)); }
+  /* Logical twins — these mirror with `dir`, so prefer them over pl-/pr-safe. */
+  .ps-safe { padding-inline-start: max(0px, env(safe-area-inset-left)); }
+  .pe-safe { padding-inline-end: max(0px, env(safe-area-inset-right)); }
 
   /* Momentum scrolling for internal scroll containers in iOS webviews. */
   .scroll-touch {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
+  }
+
+  /* ---- Squared paper for the shell's content area (AppShell <main>) --------
+     WAS a cahier ruling — full-width lines every 32px. Lines have a direction,
+     and that was the problem: a rule running edge to edge behind a grid of
+     cards either lines up with a card edge (and reads as a mistake) or misses
+     it by a hair (and reads as a worse mistake), and on a wide desktop shell it
+     dragged the eye horizontally across a page whose content is columns.
+
+     A DOT LATTICE says the same thing — squared exercise-book paper, the
+     Tunisian cahier — with none of that. It has no direction, so it never
+     argues with an edge; it disappears under content and only shows in the gaps
+     between cards, which is exactly where texture is wanted. Two lattices, not
+     one: the 32px field is the shell's own spacing beat, and a second, softer
+     dot every 128px lands dead centre between four of them, giving the field a
+     slow second rhythm so it reads as paper rather than as a screen pattern.
+
+     `local` attachment pins the lattice to the CONTENT, so it scrolls with the
+     page the way print on paper does instead of standing still behind it.
+
+     Raw rgb rather than a token — same call as `.bg-canvas` above: a texture
+     wash at ~5-13% alpha is a value no semantic colour carries, and the alpha
+     is the whole point. The hue is the system's own navy (#173f6d). In dark it
+     flips to a white wash — navy dots on a deep ground would just disappear. */
+  .bg-paper {
+    background-image:
+      radial-gradient(circle at center, rgb(23 63 109 / 0.17) 1.1px, transparent 1.2px),
+      radial-gradient(circle at center, rgb(23 63 109 / 0.09) 1.9px, transparent 2px);
+    background-size: 32px 32px, 128px 128px;
+    background-position: 16px 16px, 80px 80px;
+    background-attachment: local;
+  }
+  [data-theme="dark"] .bg-paper {
+    background-image:
+      radial-gradient(circle at center, rgb(255 255 255 / 0.12) 1.1px, transparent 1.2px),
+      radial-gradient(circle at center, rgb(255 255 255 / 0.06) 1.9px, transparent 2px);
+  }
+
+  /* A tinted ground for a page built out of panels — the élève dashboard.
+     COLOUR ONLY, so it composes with `.bg-paper` above rather than replacing
+     it: the dot lattice still runs, it just runs on the theme's palest step
+     instead of the cool canvas.
+     It used to be a fixed parchment hex. Bound to `--brand-50` it follows
+     `data-palette` — زبرجد grounds the page in its blue-green, crépuscule in
+     its violet — and it follows dark mode too, where every ramp inverts and
+     `--brand-50` is the DEEPEST step rather than the palest. */
+  .bg-tint {
+    background-color: var(--brand-50);
   }
 
   /* Diagonal "speed" stripes over a progress fill (RunnerProgress). The tile is
@@ -561,14 +670,144 @@
       animation: wael-stripes 700ms linear infinite;
     }
   }
+
+  /* ---- The matière card's living backdrop (StudentSubjectsScreen) ----------
+     Three layers, all coloured by the matière's OWN measured tint (see
+     subjectTint.ts) and all animating transform/opacity only, so a full grid of
+     them stays on the compositor and costs nothing to scroll.
+
+       .wael-rings   the concentric ring ladder, breathing in place;
+       .wael-ripple  one ring swelling out from BEHIND the drawing and fading,
+                     the way a drop lands in water. Two of them, half a cycle
+                     apart, so a card is never quite still;
+       .wael-aura    a soft off-centre glow drifting a slow figure behind
+                     everything, so the backdrop has depth instead of being a
+                     flat swatch with rings drawn on it.
+
+     Each takes its colour from a `--ripple` / `--aura` custom property the card
+     sets inline — the tint is measured per matière in JS, so it can't live in a
+     stylesheet. Under prefers-reduced-motion nothing moves and the ripples stay
+     invisible: what's left is the static ring ladder, which is a finished design
+     on its own. */
+  .wael-ripple {
+    border: 1.5px solid var(--ripple, transparent);
+    opacity: 0;
+  }
+  .wael-aura {
+    background: radial-gradient(circle closest-side, var(--aura, transparent), transparent);
+    opacity: 0.75;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .wael-rings {
+      animation: wael-breathe 9s ease-in-out infinite;
+    }
+    .wael-ripple {
+      animation: wael-ripple 5.6s ease-out infinite;
+    }
+    .wael-aura {
+      animation: wael-drift 14s ease-in-out infinite;
+    }
+  }
+
+  /* ---- One drifting letter (FloatingLetters, the Arabic matière card) -------
+     `--rise` / `--sway` / `--peak` come off the element: every letter travels
+     its own distance at its own weight (see the table in FloatingLetters.tsx),
+     which is what makes the layer read as depth rather than as one sheet of
+     glyphs sliding past.
+
+     It takes its colour from `--ink`, so it flips with the theme on its own —
+     near-white on the dark plates, deep navy on the light ones — and the alpha
+     lives in the opacity, never in the colour, so the value stays composited.
+
+     Still, at rest: under prefers-reduced-motion the letters hold their
+     starting positions at peak opacity, which is a scattered alphabet behind
+     the drawing — the same idea, just not moving. */
+  .wael-letter {
+    color: var(--ink);
+    opacity: var(--peak, 0.16);
+    will-change: transform, opacity;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .wael-letter {
+      /* Duration and delay are per-letter, set inline. */
+      animation-name: wael-letter;
+      animation-timing-function: cubic-bezier(0.4, 0, 0.35, 1);
+      animation-iteration-count: infinite;
+    }
+  }
 }
 
+/* The ripple starts INSIDE the medallion (0.86) — hidden behind the drawing —
+   and only becomes visible as it clears the disc, so it reads as coming out
+   from under the art rather than being drawn on the card. It ends past the 4:3
+   corner (1.9), so it leaves the box instead of stopping in it. */
+@keyframes wael-ripple {
+  0% {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  20% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+/* A breath, not a pulse: 4.5 % over nine seconds is felt more than seen. */
+@keyframes wael-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.045);
+  }
+}
+
+/* Percent translation on a layer that is 140 % of the box, so the glow wanders
+   a long way without its soft edge ever entering frame. */
+@keyframes wael-drift {
+  0%,
+  100% {
+    transform: translate(-6%, -4%) scale(1);
+  }
+  33% {
+    transform: translate(7%, 3%) scale(1.08);
+  }
+  66% {
+    transform: translate(2%, 6%) scale(0.96);
+  }
+}
+
+/* A letter's climb: in from nothing at the bottom of its lane, out into nothing
+   near the top. It fades for MOST of the trip (in over the first fifth, out over
+   the last third) rather than popping — a glyph that appears at full strength
+   reads as a bug on a card this small. The sway is applied at the far end only,
+   so the path curves instead of tracking a straight diagonal. */
+@keyframes wael-letter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  20%,
+  66% {
+    opacity: var(--peak, 0.16);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--sway, 0px), calc(-1 * var(--rise, 60px)), 0);
+  }
+}
+
+/* RTL: the fill grows right→left, so the stripes must drift the same way. */
 @keyframes wael-stripes {
   from {
     background-position: 0 0;
   }
   to {
-    background-position: 8px 0;
+    background-position: -8px 0;
   }
 }
 
@@ -576,5 +815,41 @@
   /* App-like: no grey tap flash on touch. */
   body {
     -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ===========================================================================
+   Arabic / RTL base (non-token — PRESERVE across token syncs)
+   ---------------------------------------------------------------------------
+   The product ships in Tunisian Arabic with <html lang="ar-TN" dir="rtl">.
+   Arabic is a joined script, so anything that pulls glyphs apart or fakes a
+   weight breaks the letterforms. These rules undo the Latin typographic
+   habits baked into the utility classes; they change NO token values.
+   =========================================================================== */
+@layer base {
+  /* Tracking severs the connections between joined Arabic letters. The kicker
+     pattern (`uppercase tracking-[.12em]`) is all over the app, so neutralize
+     it globally rather than hunting every site. `!important` is needed to beat
+     the equally-specific Tailwind `tracking-*` utilities. */
+  [dir="rtl"] * {
+    letter-spacing: normal !important;
+  }
+
+  /* Arabic has no letter case — `uppercase`/`capitalize` are no-ops on Arabic
+     glyphs but would still shout at any Latin fragment (a subject code, "PDF")
+     sitting inside an Arabic string. Leave those alone at their own size. */
+
+  /* Latin runs inside Arabic text (names, "Bac", codes, times) must not drag
+     the surrounding line direction around. */
+  [dir="rtl"] :is(input, textarea) {
+    text-align: start;
+  }
+
+  /* Numbers, prices, dates, and times stay Western digits (Tunisian usage) and
+     must always read left-to-right even mid-sentence. */
+  .num {
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
   }
 }

@@ -51,7 +51,7 @@ export function GroupPicker({
     () =>
       [...groups]
         .filter((g) => !g.yearId || years.has(g.yearId) || picked.has(g.id))
-        .sort((a, b) => a.title.localeCompare(b.title, "fr")),
+        .sort((a, b) => a.title.localeCompare(b.title, "ar")),
     [groups, years, picked],
   )
 
@@ -62,15 +62,15 @@ export function GroupPicker({
   return (
     <div>
       <span className="mb-2 block text-sm font-medium text-ink-subtle">
-        Groupes <span className="font-normal text-ink-muted">({groupIds.length})</span>
+        الأفواج <span className="font-normal text-ink-muted">({groupIds.length})</span>
       </span>
       {yearIds.length === 0 ? (
         <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-          Choisissez d’abord une ou plusieurs années.
+          اختار عام ولا كثر في البداية.
         </p>
       ) : visible.length === 0 ? (
         <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-          Aucun groupe pour ces années. Créez-en un depuis « Groupes ».
+          ما فماش أفواج في السنوات هذي. اعمل واحد من «الأفواج».
         </p>
       ) : (
         <div className="flex flex-wrap gap-2">

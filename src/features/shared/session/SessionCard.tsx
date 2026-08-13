@@ -20,7 +20,7 @@ export function SessionCard({ session, actions }: { session: Session; actions?: 
 
   // Date tile parts (e.g. "lun." / "20").
   const day = new Date(`${session.date}T00:00:00`)
-  const weekday = day.toLocaleDateString("fr-FR", { weekday: "short" }).replace(".", "")
+  const weekday = day.toLocaleDateString("ar-TN-u-nu-latn", { weekday: "short" }).replace(".", "")
   const dayNum = day.getDate()
 
   return (
@@ -31,25 +31,25 @@ export function SessionCard({ session, actions }: { session: Session; actions?: 
           (isPast ? "bg-neutral-100 text-ink-muted" : "bg-brand-50 text-brand-700")
         }
       >
-        <span className="text-[10px] font-medium uppercase tracking-wide">{weekday}</span>
-        <span className="font-display text-[18px] font-bold">{dayNum}</span>
+        <span className="text-[calc(10px*var(--ts))] font-medium uppercase tracking-wide">{weekday}</span>
+        <span className="font-display text-[calc(18px*var(--ts))] font-bold">{dayNum}</span>
       </div>
 
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
-          <p dir="auto" className="min-w-0 font-display text-[15px] font-bold text-ink">
+          <p dir="auto" className="min-w-0 font-display text-[calc(15px*var(--ts))] font-bold text-ink">
             {session.title}
           </p>
           {actions}
         </div>
 
-        <p className="mt-0.5 text-[12px] text-ink-muted">
+        <p className="mt-0.5 text-[calc(12px*var(--ts))] text-ink-muted">
           <span className="tabular-nums text-ink-subtle">
             {formatTimeRange(session.startTime, session.endTime)}
           </span>
           {teacher ? <> · {teacher}</> : null}
           <> · <span className="tabular-nums">{session.academicYear}</span></>
-          {isPast ? <> · <span className="text-ink-muted">passée</span></> : null}
+          {isPast ? <> · <span className="text-ink-muted">فاتت</span></> : null}
         </p>
 
         {groups.length > 0 && (
@@ -64,13 +64,13 @@ export function SessionCard({ session, actions }: { session: Session; actions?: 
         )}
 
         {subjects.length > 0 && (
-          <p dir="auto" className="mt-1.5 text-[12px] text-ink-muted">
+          <p dir="auto" className="mt-1.5 text-[calc(12px*var(--ts))] text-ink-muted">
             {subjects.join(" · ")}
           </p>
         )}
 
         {session.description ? (
-          <p dir="auto" className="mt-1.5 line-clamp-2 text-[12px] text-ink-subtle">
+          <p dir="auto" className="mt-1.5 line-clamp-2 text-[calc(12px*var(--ts))] text-ink-subtle">
             {session.description}
           </p>
         ) : null}

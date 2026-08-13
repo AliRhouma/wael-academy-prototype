@@ -1,0 +1,171 @@
+[
+  {
+    "id": "hw-physique-ondes",
+    "title": "سلسلة تمارين — الموجات الميكانيكية المتقدّمة",
+    "note": "إعملوا التمارين 1، 2 و 4. التمرين 5 اختياري لللي يحبّ يزيد.",
+    "teacherId": "t-mourad",
+    "subjectId": "subj-bac-sci-sciences-physiques",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [{ "name": "سلسلة 9 — الموجات الميكانيكية" }],
+    "sentAt": "2026-08-11T08:20:00.000Z",
+    "dueDate": "2026-08-13",
+    "sessionId": "ses-42"
+  },
+  {
+    "id": "hw-philo-technique",
+    "title": "تحليل نصّ — الفنّ والتقنية",
+    "teacherId": "t-hedi",
+    "subjectId": "subj-bac-sci-philosophie",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": [],
+    "pdfs": [{ "name": "نصّ التحليل — الفنّ والتقنية" }],
+    "sentAt": "2026-08-11T07:05:00.000Z"
+  },
+  {
+    "id": "hw-math-integrales",
+    "title": "تمارين على التكاملات — سلسلة عدد 7",
+    "note": "ركّزوا على التكامل بالتجزئة. الإصلاح باش يتعمل في الحصّة الجايّة.",
+    "teacherId": "t-karim",
+    "subjectId": "subj-bac-sci-mathematiques",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [
+      { "name": "سلسلة 7 — التكاملات" },
+      { "name": "تذكير بالدرس — الدوال الأصلية" }
+    ],
+    "sentAt": "2026-08-10T19:05:00.000Z",
+    "dueDate": "2026-08-12",
+    "sessionId": "ses-41"
+  },
+  {
+    "id": "hw-anglais-writing",
+    "title": "Writing task — Opinion essay (280 words)",
+    "note": "Topic: « Social media does more harm than good to teenagers. »",
+    "teacherId": "t-nabil",
+    "subjectId": "subj-bac-sci-anglais",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [{ "name": "Writing task — guidelines & useful phrases" }],
+    "sentAt": "2026-08-10T15:40:00.000Z",
+    "dueDate": "2026-08-12"
+  },
+  {
+    "id": "hw-anglais-speaking",
+    "title": "Speaking — prepare your topic card",
+    "note": "Two minutes, no notes. Bring three arguments and one personal example.",
+    "teacherId": "t-nabil",
+    "subjectId": "subj-bac-sci-anglais",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [{ "name": "Mock oral exam — topic cards & marking grid" }],
+    "sentAt": "2026-08-11T06:30:00.000Z",
+    "dueDate": "2026-08-14",
+    "sessionId": "ses-43"
+  },
+  {
+    "id": "hw-svt-immunite",
+    "title": "تحضير الدرس — الاستجابة المناعية النوعية",
+    "teacherId": "t-amel",
+    "subjectId": "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [{ "name": "وثيقة التحضير — المناعة النوعية" }],
+    "sentAt": "2026-08-09T11:10:00.000Z",
+    "dueDate": "2026-08-11",
+    "sessionId": "ses-40"
+  },
+  {
+    "id": "hw-francais-commentaire",
+    "title": "Commentaire composé — « Le Dormeur du val » : introduction et les deux axes",
+    "note": "Rendez au moins l'introduction rédigée, même si les axes restent au brouillon.",
+    "teacherId": "t-sonia",
+    "subjectId": "subj-bac-sci-francais",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [{ "name": "Le Dormeur du val — texte & consignes" }],
+    "sentAt": "2026-08-07T17:30:00.000Z",
+    "dueDate": "2026-08-09"
+  },
+  {
+    "id": "hw-math-suites",
+    "title": "المتتاليات — سلسلة عدد 8",
+    "note": "التمارين من 1 ل 5. جيبوا معاكم الآلة الحاسبة، باش نشوفوا التقارب عدديًا في الحصّة.",
+    "teacherId": "t-karim",
+    "subjectId": "subj-bac-sci-mathematiques",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [{ "name": "سلسلة 8 — المتتاليات العددية" }],
+    "sentAt": "2026-08-11T09:40:00.000Z",
+    "dueDate": "2026-08-18",
+    "sessionId": "ses-47"
+  },
+  {
+    "id": "hw-philo-methodologie",
+    "title": "تحضير — منهجية تحليل النصّ الفلسفي",
+    "note": "إقرا النصّ مرّتين وحضّر الإشكالية متاعك مكتوبة. ما نبداوش الحصّة قبل ما نسمعوهم الكلّ.",
+    "teacherId": "t-hedi",
+    "subjectId": "subj-bac-sci-philosophie",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [
+      { "name": "نصّ الحصّة — العمل والحرّية" },
+      { "name": "منهجية تحليل النصّ — الخطوات" }
+    ],
+    "sentAt": "2026-08-10T18:10:00.000Z",
+    "dueDate": "2026-08-19",
+    "sessionId": "ses-48"
+  },
+  {
+    "id": "hw-physique-rlc",
+    "title": "تحضير الأشغال التطبيقية — الدارة RLC",
+    "note": "عمّروا جدول القيس قبل ما تجيوا للمخبر، وإلّا الحصّة تولّي كلّها حساب.",
+    "teacherId": "t-mourad",
+    "subjectId": "subj-bac-sci-sciences-physiques",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [
+      { "name": "بروتوكول الأشغال التطبيقية — RLC" },
+      { "name": "جدول القيس — للتعمير" }
+    ],
+    "sentAt": "2026-08-11T10:05:00.000Z",
+    "dueDate": "2026-08-20",
+    "sessionId": "ses-49"
+  },
+  {
+    "id": "hw-svt-exercices",
+    "title": "المناعة — تمارين تركيبية على نمط الباك",
+    "teacherId": "t-amel",
+    "subjectId": "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
+    "yearIds": ["y-bac-sci"],
+    "groupIds": ["g-bacsci-renfort"],
+    "pdfs": [{ "name": "تمارين تركيبية — المناعة النوعية" }],
+    "sentAt": "2026-08-11T10:30:00.000Z",
+    "dueDate": "2026-08-24",
+    "sessionId": "ses-51"
+  },
+  {
+    "id": "hw-bacmath-arithmetique",
+    "title": "حسابيات — مسائل على نمط الباك",
+    "teacherId": "t-karim",
+    "subjectId": "subj-bac-math-mathematiques",
+    "yearIds": ["y-bac-math"],
+    "groupIds": ["g-bacmath-elite"],
+    "pdfs": [{ "name": "سلسلة الحسابيات — مسائل الباك" }],
+    "sentAt": "2026-08-10T20:15:00.000Z",
+    "dueDate": "2026-08-12",
+    "sessionId": "ses-45"
+  },
+  {
+    "id": "hw-9-physique-lumiere",
+    "title": "تمارين — انكسار الضوء",
+    "teacherId": "t-mourad",
+    "subjectId": "subj-9-sciences-physiques",
+    "yearIds": ["y-9"],
+    "groupIds": ["g-9-a"],
+    "pdfs": [{ "name": "تمارين — انكسار الضوء" }],
+    "sentAt": "2026-08-09T16:00:00.000Z",
+    "dueDate": "2026-08-13",
+    "sessionId": "ses-46"
+  }
+]

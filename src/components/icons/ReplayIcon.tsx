@@ -1,5 +1,5 @@
 /**
- * Two stacked screens with a play mark for "Séances enregistrées" — an archive
+ * Two stacked screens with a play mark for "الحصص المسجّلة" — an archive
  * of replays, not a live broadcast (that's LiveIcon). The back card rides the
  * rail gold, the front one the rail blue, and the play triangle is punched
  * out as an evenodd hole so it survives the active pill, where every path is

@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { Link, useParams } from "react-router-dom"
 import {
-  ArrowLeft,
+  ArrowRight,
   CalendarClock,
   CircleCheck,
   Info,
@@ -35,19 +35,19 @@ function MoneyRow({
 }) {
   return (
     <div className="flex items-baseline justify-between gap-4 py-2">
-      <span className={"text-[13px] " + (strong ? "font-medium text-ink" : "text-ink-muted")}>
+      <span className={"text-[calc(13px*var(--ts))] " + (strong ? "font-medium text-ink" : "text-ink-muted")}>
         {label}
       </span>
       <span
         className={
           "tabular-nums " +
           (strong
-            ? "font-display text-[17px] font-bold text-ink"
+            ? "font-display text-[calc(17px*var(--ts))] font-bold text-ink"
             : tone === "positive"
-              ? "text-[14px] font-medium text-success-700"
+              ? "text-[calc(14px*var(--ts))] font-medium text-success-700"
               : tone === "muted"
-                ? "text-[14px] text-ink-muted line-through"
-                : "text-[14px] text-ink-subtle")
+                ? "text-[calc(14px*var(--ts))] text-ink-muted line-through"
+                : "text-[calc(14px*var(--ts))] text-ink-subtle")
         }
       >
         {value}
@@ -77,14 +77,14 @@ export default function StudentSubscriptionScreen() {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={Wallet}
-          title="Abonnement introuvable"
-          description="Cet abonnement n’est plus disponible."
+          title="الاشتراك ما تلقاش"
+          description="الاشتراك هذا ما عادش متوفّر."
           action={
             <Link
               to="/student/porte-monnaie"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
             >
-              <ArrowLeft className="size-4 rtl:rotate-180" /> Retour au porte-monnaie
+              <ArrowRight className="size-4" /> ارجع للمحفظة
             </Link>
           }
         />
@@ -105,17 +105,17 @@ export default function StudentSubscriptionScreen() {
         to="/student/porte-monnaie"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-subtle transition hover:text-brand-600"
       >
-        <ArrowLeft className="size-4 rtl:rotate-180" /> Porte-monnaie
+        <ArrowRight className="size-4" /> المحفظة
       </Link>
 
       {/* ---- L'offre achetée ---- */}
       <div className="flex items-start gap-3.5">
         <OfferLogo offer={offer} size={12} />
         <div className="min-w-0 flex-1">
-          <h1 dir="auto" className="font-display text-[22px] font-bold leading-tight text-ink">
-            {offer?.name ?? "Offre supprimée"}
+          <h1 dir="auto" className="font-display text-[calc(22px*var(--ts))] font-bold leading-tight text-ink">
+            {offer?.name ?? "العرض تمسح"}
           </h1>
-          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-ink-muted">
+          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[calc(13px*var(--ts))] text-ink-muted">
             {offer?.period && <span>{offer.period}</span>}
             {sub.tag && (
               <>
@@ -127,7 +127,7 @@ export default function StudentSubscriptionScreen() {
               <>
                 <span aria-hidden>·</span>
                 <span className="inline-flex items-center gap-1">
-                  <CalendarClock className="size-3.5" /> accès jusqu’au {formatDay(sub.deadline)}
+                  <CalendarClock className="size-3.5" /> الدخول لين {formatDay(sub.deadline)}
                 </span>
               </>
             )}
@@ -149,54 +149,54 @@ export default function StudentSubscriptionScreen() {
       {status === "suspendu" && (
         <div className="flex items-start gap-3 rounded-lg border border-danger-500/25 bg-danger-50 p-4">
           <TriangleAlert className="mt-0.5 size-5 shrink-0 text-danger-600" />
-          <p className="text-[13px] text-ink-subtle">
-            <span className="font-medium text-danger-700">Accès suspendu.</span> Une tranche est en
-            retard — contactez l’administration via{" "}
+          <p className="text-[calc(13px*var(--ts))] text-ink-subtle">
+            <span className="font-medium text-danger-700">الدخول موقّف.</span> فما قسط
+            متأخّر — اتّصل بالإدارة عبر{" "}
             <Link to="/student/assistance" className="font-medium text-brand-600 hover:underline">
-              l’assistance
+              المساعدة
             </Link>{" "}
-            pour régulariser.
+            باش تسوّي وضعيتك.
           </p>
         </div>
       )}
 
       {/* ---- Le prix ---- */}
       <section className="rounded-xl border border-border bg-surface p-5 shadow-md">
-        <h2 className="text-[11px] font-medium uppercase tracking-[.12em] text-accent2-600">
-          Ce que coûte cette offre
+        <h2 className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
+          قدّاش تسوى العرض هذا
         </h2>
 
         <div className="mt-2 divide-y divide-border">
           {offer && saved > 0 && (
             <>
-              <MoneyRow label="Prix affiché" value={formatDT(offer.price)} tone="muted" />
+              <MoneyRow label="السومة المعروضة" value={formatDT(offer.price)} tone="muted" />
               <MoneyRow
-                label={`Remise accordée${offer.discountPct ? ` (-${offer.discountPct}%)` : ""}`}
+                label={`تخفيض ممنوح${offer.discountPct ? ` (-${offer.discountPct}%)` : ""}`}
                 value={`− ${formatDT(saved)}`}
                 tone="positive"
               />
             </>
           )}
-          <MoneyRow label="Montant convenu" value={formatDT(sub.price)} strong />
+          <MoneyRow label="المبلغ المتّفق عليه" value={formatDT(sub.price)} strong />
         </div>
 
         <div className="mt-4 border-t border-border pt-4">
           <ProgressBar pct={pct} />
           <div className="mt-2 flex flex-wrap items-baseline justify-between gap-2">
-            <p className="text-[13px] tabular-nums text-ink-subtle">
-              <span className="font-medium text-brand-600">{formatDT(paid)} payés</span> · {pct}%
+            <p className="text-[calc(13px*var(--ts))] tabular-nums text-ink-subtle">
+              <span className="font-medium text-brand-600">{formatDT(paid)} تخلّصو</span> · {pct}%
             </p>
-            <p className="text-[13px] tabular-nums text-ink-subtle">
+            <p className="text-[calc(13px*var(--ts))] tabular-nums text-ink-subtle">
               {left > 0 ? (
                 <>
-                  Reste{" "}
-                  <span className="font-display text-[17px] font-bold text-ink">
+                  الباقي{" "}
+                  <span className="font-display text-[calc(17px*var(--ts))] font-bold text-ink">
                     {formatDT(left)}
                   </span>
                 </>
               ) : (
                 <span className="inline-flex items-center gap-1.5 font-medium text-success-700">
-                  <CircleCheck className="size-4" /> Intégralement réglé
+                  <CircleCheck className="size-4" /> تخلّص بالكامل
                 </span>
               )}
             </p>
@@ -204,13 +204,13 @@ export default function StudentSubscriptionScreen() {
         </div>
 
         {nextInstallment && (
-          <p className="mt-4 flex flex-wrap items-center gap-x-1.5 rounded-md bg-brand-50 px-3.5 py-2.5 text-[13px] text-brand-700">
+          <p className="mt-4 flex flex-wrap items-center gap-x-1.5 rounded-md bg-brand-50 px-3.5 py-2.5 text-[calc(13px*var(--ts))] text-brand-700">
             <CalendarClock className="size-4 shrink-0" />
             <span className="font-medium tabular-nums">
-              Prochaine tranche : {formatDT(nextInstallment.amount)}
+              القسط الجاي: {formatDT(nextInstallment.amount)}
             </span>
             <span className="text-ink-subtle">
-              avant le {formatDay(nextInstallment.dueDate)} — {dueInLabel(nextInstallment.dueDate)}
+              قبل {formatDay(nextInstallment.dueDate)} — {dueInLabel(nextInstallment.dueDate)}
             </span>
           </p>
         )}
@@ -219,7 +219,7 @@ export default function StudentSubscriptionScreen() {
       {sub.description && (
         <p
           dir="auto"
-          className="flex items-start gap-2.5 rounded-lg border border-border bg-surface-muted/60 px-4 py-3 text-[13px] text-ink-subtle"
+          className="flex items-start gap-2.5 rounded-lg border border-border bg-surface-muted/60 px-4 py-3 text-[calc(13px*var(--ts))] text-ink-subtle"
         >
           <Info className="mt-0.5 size-4 shrink-0 text-ink-muted" />
           {sub.description}
@@ -229,17 +229,16 @@ export default function StudentSubscriptionScreen() {
       {/* ---- Échéancier ---- */}
       <section>
         <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-display text-base font-bold text-ink">Planning des tranches</h2>
+          <h2 className="font-display text-base font-bold text-ink">روزنامة الأقساط</h2>
           {sub.installments.length > 0 && (
-            <span className="text-[12px] tabular-nums text-ink-muted">
-              {paidCount}/{sub.installments.length} payée
-              {sub.installments.length > 1 ? "s" : ""}
+            <span className="text-[calc(12px*var(--ts))] tabular-nums text-ink-muted">
+              <span className="num">{paidCount}/{sub.installments.length}</span> تخلّصو
             </span>
           )}
         </div>
         {sub.installments.length === 0 ? (
           <p className="rounded-lg border border-dashed border-border bg-surface px-4 py-6 text-center text-sm text-ink-muted">
-            Aucune tranche planifiée — paiement libre auprès de l’académie.
+            ما فماش أقساط مبرمجة — خلاص حرّ عند الأكاديمية.
           </p>
         ) : (
           <Echeancier sub={sub} transactions={transactions} />
@@ -249,17 +248,17 @@ export default function StudentSubscriptionScreen() {
       {/* ---- Transactions ---- */}
       <section>
         <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="font-display text-base font-bold text-ink">Mes paiements</h2>
-          <span className="text-[12px] tabular-nums text-ink-muted">
-            {txs.length} validé{txs.length > 1 ? "s" : ""} · {formatDT(paid)}
+          <h2 className="font-display text-base font-bold text-ink">خلاصاتي</h2>
+          <span className="text-[calc(12px*var(--ts))] tabular-nums text-ink-muted">
+            {txs.length} متحقّق · {formatDT(paid)}
           </span>
         </div>
         {txs.length === 0 ? (
           <div className="rounded-lg border border-dashed border-border bg-surface">
             <EmptyState
               icon={Receipt}
-              title="Aucun paiement pour l’instant"
-              description="Votre premier versement et son reçu s’afficheront ici."
+              title="ما فماش خلاص توّا"
+              description="أوّل خلاص متاعك والوصل متاعو يظهرو هوني."
             />
           </div>
         ) : (

@@ -33,12 +33,12 @@ function useItemLookup(subjectLessons: Lesson[], subjectQuizzes: Quiz[]) {
       }
       const q = quizzes.get(item.refId)
       if (!q) return null
-      return { title: q.title, label: "Quiz", icon: QUIZ_ICON, tone: "info" as const }
+      return { title: q.title, label: "كويز", icon: QUIZ_ICON, tone: "info" as const }
     }
   }, [subjectLessons, subjectQuizzes])
 }
 
-/** The "Parcours" tab — ordered learning paths built from the subject's content. */
+/** The "مسارات" tab — ordered learning paths built from the subject's content. */
 export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) {
   const allPaths = useData((s) => s.paths)
   const allChapters = useData((s) => s.chapters)
@@ -134,10 +134,10 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
     }
     if (editing) {
       updatePath(editing.id, patch)
-      show("Parcours modifié")
+      show("المسار تبدّل")
     } else {
       addPath({ ...patch, order: paths.length })
-      show("Parcours créé")
+      show("المسار تعمل")
     }
     setFormOpen(false)
   }
@@ -157,8 +157,8 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
     })
     show(
       dropped > 0
-        ? `Parcours dupliqué dans « ${dupInto} » — ${dropped} étape${dropped > 1 ? "s" : ""} non reprise${dropped > 1 ? "s" : ""}`
-        : `Parcours dupliqué dans « ${dupInto} »`,
+        ? `المسار تنسخ في «${dupInto}» — ${dropped} مرحلة ما تعاودتش`
+        : `المسار تنسخ في «${dupInto}»`,
     )
     setDupTarget(null)
   }
@@ -166,7 +166,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
   function confirmDelete() {
     if (!deleteTarget) return
     removePath(deleteTarget.id)
-    show("Parcours supprimé")
+    show("المسار تمسح")
     setDeleteTarget(null)
   }
 
@@ -181,7 +181,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Créer un parcours
+      <Plus className="size-4" /> اعمل مسار
     </button>
   )
 
@@ -191,7 +191,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
         <p className="text-sm text-ink-muted">
           {paths.length > 0
             ? `${paths.length} parcours`
-            : "Aucun parcours pour le moment"}
+            : "ما فماش مسارات توّا"}
         </p>
         {paths.length > 0 && addButton}
       </div>
@@ -200,8 +200,8 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Route}
-            title="Aucun parcours"
-            description="Composez un chemin ordonné (cours → exercice → quiz…) que l'élève suit pas à pas."
+            title="ما فماش مسارات"
+            description="ركّب طريق مرتّب (درس ← تمرين ← كويز…) التلميذ يتبعو خطوة خطوة."
             action={addButton}
           />
         </div>
@@ -219,24 +219,24 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
                     <Route className="size-5" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p dir="auto" className="font-display text-[15px] font-bold text-ink">
+                    <p dir="auto" className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">
                       {path.title}
                     </p>
                     {path.description && (
-                      <p dir="auto" className="mt-0.5 text-[13px] text-ink-muted">
+                      <p dir="auto" className="mt-0.5 text-[calc(13px*var(--ts))] text-ink-muted">
                         {path.description}
                       </p>
                     )}
-                    <p className="mt-1 text-[12px] font-medium text-brand-600">
-                      {steps.length} étape{steps.length > 1 ? "s" : ""}
+                    <p className="mt-1 text-[calc(12px*var(--ts))] font-medium text-brand-600">
+                      {steps.length} مرحلة
                     </p>
                   </div>
                   <OverflowMenu
                     actions={[
-                      { label: "Modifier", icon: Pencil, onClick: () => openEdit(path) },
-                      { label: "Dupliquer", icon: Copy, onClick: () => openDuplicate(path) },
+                      { label: "بدّل", icon: Pencil, onClick: () => openEdit(path) },
+                      { label: "اعمل نسخة", icon: Copy, onClick: () => openDuplicate(path) },
                       {
-                        label: "Supprimer",
+                        label: "امسح",
                         icon: Trash2,
                         tone: "danger",
                         onClick: () => setDeleteTarget(path),
@@ -251,7 +251,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
                       const Icon = step.icon
                       return (
                         <li key={i} className="flex items-center gap-2.5">
-                          <span className="grid size-6 shrink-0 place-items-center rounded-full bg-neutral-100 text-[11px] font-bold text-ink-subtle tabular-nums">
+                          <span className="grid size-6 shrink-0 place-items-center rounded-full bg-neutral-100 text-[calc(11px*var(--ts))] font-bold text-ink-subtle tabular-nums">
                             {i + 1}
                           </span>
                           <span
@@ -262,10 +262,10 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
                           >
                             <Icon className="size-4" />
                           </span>
-                          <span dir="auto" className="min-w-0 flex-1 truncate text-[13px] text-ink-subtle">
+                          <span dir="auto" className="min-w-0 flex-1 truncate text-[calc(13px*var(--ts))] text-ink-subtle">
                             {step.title}
                           </span>
-                          <span className="shrink-0 text-[11px] font-medium uppercase tracking-wide text-ink-muted">
+                          <span className="shrink-0 text-[calc(11px*var(--ts))] font-medium uppercase tracking-wide text-ink-muted">
                             {step.label}
                           </span>
                         </li>
@@ -282,44 +282,44 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier le parcours" : "Nouveau parcours"}
-        description={editing ? undefined : "Un chemin ordonné de contenus et de quiz de cette matière."}
-        submitLabel={editing ? "Enregistrer" : "Créer"}
+        title={editing ? "بدّل المسار" : "مسار جديد"}
+        description={editing ? undefined : "طريق مرتّب من محتويات وكويزات المادّة هذي."}
+        submitLabel={editing ? "سجّل" : "اعمل"}
         onSubmit={submit}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">العنوان</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Ex. Parcours — Démarrer en Analyse"
+            placeholder="مثال: مسار — ابدا في التحليل"
             autoFocus
           />
         </label>
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Description <span className="font-normal text-ink-muted">(optionnel)</span>
+            Description <span className="font-normal text-ink-muted">(اختياري)</span>
           </span>
           <textarea
             className="min-h-[72px] w-full rounded-md border border-input bg-input-bg px-3.5 py-2.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20 text-start"
             dir="auto"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Ce que l'élève va accomplir en suivant ce parcours…"
+            placeholder="شنوّة باش يحقّق التلميذ كي يتبع المسار هذا…"
           />
         </label>
 
         {/* Ordered steps builder */}
         <div>
           <span className="mb-2 block text-sm font-medium text-ink-subtle">
-            Étapes du parcours <span className="font-normal text-ink-muted">({items.length})</span>
+            مراحل المسار <span className="font-normal text-ink-muted">({items.length})</span>
           </span>
           {items.length === 0 ? (
             <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-              Aucune étape — ajoutez des contenus et quiz ci-dessous, puis ordonnez-les.
+              ما فماش مراحل — زيد محتويات وكويزات من تحت، وبعد رتّبهم.
             </p>
           ) : (
             <ol className="flex flex-col gap-1.5">
@@ -332,7 +332,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
                     key={it.id}
                     className="flex items-center gap-2 rounded-md border border-border bg-surface p-1.5 ps-2.5"
                   >
-                    <span className="text-[12px] font-bold text-ink-subtle tabular-nums">{i + 1}</span>
+                    <span className="text-[calc(12px*var(--ts))] font-bold text-ink-subtle tabular-nums">{i + 1}</span>
                     <span
                       className={
                         "grid size-7 shrink-0 place-items-center rounded-md " +
@@ -341,13 +341,13 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
                     >
                       <Icon className="size-4" />
                     </span>
-                    <span dir="auto" className="min-w-0 flex-1 truncate text-[13px] text-ink">
+                    <span dir="auto" className="min-w-0 flex-1 truncate text-[calc(13px*var(--ts))] text-ink">
                       {info.title}
                     </span>
                     <div className="flex shrink-0 items-center">
                       <button
                         type="button"
-                        aria-label="Monter"
+                        aria-label="طلّع"
                         disabled={i === 0}
                         onClick={() => move(i, -1)}
                         className="grid size-8 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink disabled:opacity-30"
@@ -356,7 +356,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
                       </button>
                       <button
                         type="button"
-                        aria-label="Descendre"
+                        aria-label="نزّل"
                         disabled={i === items.length - 1}
                         onClick={() => move(i, 1)}
                         className="grid size-8 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink disabled:opacity-30"
@@ -365,7 +365,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
                       </button>
                       <button
                         type="button"
-                        aria-label="Retirer l'étape"
+                        aria-label="نحّي المرحلة"
                         onClick={() => removeItem(it.id)}
                         className="grid size-8 place-items-center rounded-md text-ink-muted transition hover:bg-danger-50 hover:text-danger-600"
                       >
@@ -382,13 +382,13 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
         {/* Available content to add */}
         {nothingToAdd ? (
           <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-            Cette matière n'a pas encore de contenus ni de quiz à ajouter.
+            المادّة هذي مازال ما عندهاش محتويات ولا كويزات باش تزيدهم.
           </p>
         ) : (
           <div className="flex flex-col gap-4">
             {availableLessons.length > 0 && (
               <AddGroup
-                heading="Contenus"
+                heading="المحتويات"
                 rows={availableLessons.map((l) => ({
                   id: l.id,
                   title: l.title,
@@ -401,11 +401,11 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
             )}
             {availableQuizzes.length > 0 && (
               <AddGroup
-                heading="Quiz"
+                heading="كويز"
                 rows={availableQuizzes.map((q) => ({
                   id: q.id,
                   title: q.title,
-                  label: "Quiz",
+                  label: "كويز",
                   Icon: QUIZ_ICON,
                   tone: "info" as const,
                   onAdd: () => addItem("quiz", q.id),
@@ -413,7 +413,7 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
               />
             )}
             {availableLessons.length === 0 && availableQuizzes.length === 0 && (
-              <p className="text-sm text-ink-muted">Tout le contenu de la matière est déjà dans le parcours.</p>
+              <p className="text-sm text-ink-muted">محتوى المادّة الكل راهو موجود في المسار.</p>
             )}
           </div>
         )}
@@ -422,17 +422,17 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
       <DuplicateSheet
         open={dupTarget !== null}
         onOpenChange={(o) => !o && setDupTarget(null)}
-        title="Dupliquer le parcours"
-        nameLabel="Titre de la copie"
+        title="اعمل نسخة من المسار"
+        nameLabel="عنوان النسخة"
         name={dupName}
         onNameChange={setDupName}
         depth="subject"
         destination={dupDest}
         onDestinationChange={setDupDest}
-        note="Les étapes pointent vers les contenus et quiz de la matière."
+        note="المراحل تشير لمحتويات وكويزات المادّة."
         warning={
           dupDest.subjectId && dupDest.subjectId !== subject.id
-            ? "Dans une autre matière, seules les étapes qui y existent sont reprises — les autres sont laissées de côté."
+            ? "في مادّة أخرى، كان المراحل اللي موجودة فيها هي اللي تتاخذ — الباقي يتحطّ على جنب."
             : undefined
         }
         onSubmit={submitDuplicate}
@@ -441,8 +441,8 @@ export function PathsPanel({ year, subject }: { year: Year; subject: Subject }) 
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer ce parcours ?"
-        description={deleteTarget ? `« ${deleteTarget.title} » sera définitivement supprimé.` : undefined}
+        title="تحبّ تمسح المسار هذا؟"
+        description={deleteTarget ? `«${deleteTarget.title}» باش يتمسح نهائيا.` : undefined}
         onConfirm={confirmDelete}
       />
 
@@ -464,7 +464,7 @@ type AddRow = {
 function AddGroup({ heading, rows }: { heading: string; rows: AddRow[] }) {
   return (
     <div>
-      <p className="mb-1.5 text-[11px] font-medium uppercase tracking-[.1em] text-ink-muted">{heading}</p>
+      <p className="mb-1.5 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.1em] text-ink-muted">{heading}</p>
       <ul className="flex flex-col gap-1.5">
         {rows.map((row) => {
           const Icon = row.Icon
@@ -483,10 +483,10 @@ function AddGroup({ heading, rows }: { heading: string; rows: AddRow[] }) {
                 >
                   <Icon className="size-4" />
                 </span>
-                <span dir="auto" className="min-w-0 flex-1 truncate text-[13px] text-ink-subtle">
+                <span dir="auto" className="min-w-0 flex-1 truncate text-[calc(13px*var(--ts))] text-ink-subtle">
                   {row.title}
                 </span>
-                <span className="shrink-0 text-[11px] font-medium uppercase tracking-wide text-ink-muted">
+                <span className="shrink-0 text-[calc(11px*var(--ts))] font-medium uppercase tracking-wide text-ink-muted">
                   {row.label}
                 </span>
                 <Plus className="size-4 shrink-0 text-brand-600" />

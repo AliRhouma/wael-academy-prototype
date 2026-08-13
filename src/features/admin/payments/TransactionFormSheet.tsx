@@ -106,10 +106,10 @@ export function TransactionFormSheet({
     }
     if (editing) {
       updateTransaction(editing.id, patch)
-      onSaved("Transaction modifiée")
+      onSaved("المعاملة تبدّلت")
     } else {
       addTransaction(patch)
-      onSaved("Transaction enregistrée")
+      onSaved("المعاملة تسجّلت")
     }
     onOpenChange(false)
   }
@@ -120,38 +120,38 @@ export function TransactionFormSheet({
     const inst = subscription.installments[index]
     const status = installmentStatus(inst, transactions)
     const suffix =
-      status === "paid" ? " · payée" : status === "partial" ? " · partielle" : status === "overdue" ? " · en retard" : ""
-    return `Tranche ${index + 1} — ${formatDT(inst.amount)} · avant le ${formatDay(inst.dueDate)}${suffix}`
+      status === "paid" ? " · تخلّصت" : status === "partial" ? " · جزئية" : status === "overdue" ? " · متأخّرة" : ""
+    return `القسط ${index + 1} — ${formatDT(inst.amount)} · قبل ${formatDay(inst.dueDate)}${suffix}`
   }
 
   return (
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      title={editing ? "Modifier la transaction" : "Nouvelle transaction"}
+      title={editing ? "بدّل المعاملة" : "معاملة جديدة"}
       description={
         subscription
-          ? `Paiement sur l’abonnement — ${formatDT(subscription.price)} à payer au total.`
+          ? `خلاص على الاشتراك — ${formatDT(subscription.price)} للخلاص في المجموع.`
           : undefined
       }
-      submitLabel={editing ? "Enregistrer" : "Encaisser"}
+      submitLabel={editing ? "سجّل" : "خلّص"}
       onSubmit={submit}
     >
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Montant (DT)</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">المبلغ (د.ت)</span>
           <input
             className={INPUT + " tabular-nums"}
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            placeholder="Ex. 150"
+            placeholder="مثال: 150"
             inputMode="decimal"
             dir="ltr"
             autoFocus
           />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Date</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">التاريخ</span>
           <input
             type="date"
             className={INPUT}
@@ -165,7 +165,7 @@ export function TransactionFormSheet({
       {subscription && subscription.installments.length > 0 && (
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Tranche concernée <span className="font-normal text-ink-muted">(optionnel)</span>
+            القسط المعني <span className="font-normal text-ink-muted">(اختياري)</span>
           </span>
           <div className="relative">
             <select
@@ -173,7 +173,7 @@ export function TransactionFormSheet({
               value={installmentId}
               onChange={(e) => setInstallmentId(e.target.value)}
             >
-              <option value="">— Paiement libre —</option>
+              <option value="">— خلاص حرّ —</option>
               {subscription.installments.map((inst, i) => (
                 <option key={inst.id} value={inst.id}>
                   {installmentLabel(i)}
@@ -187,14 +187,14 @@ export function TransactionFormSheet({
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-          Remarques <span className="font-normal text-ink-muted">(optionnel)</span>
+          Remarques <span className="font-normal text-ink-muted">(اختياري)</span>
         </span>
         <textarea
           className={INPUT.replace("h-11", "min-h-[72px]") + " resize-y py-2.5 text-start"}
           dir="auto"
           value={remarks}
           onChange={(e) => setRemarks(e.target.value)}
-          placeholder="Ex. payé à l’accueil, virement reçu…"
+          placeholder="مثال: تخلّص في الاستقبال، وصل تحويل…"
           rows={2}
         />
       </label>
@@ -209,9 +209,9 @@ export function TransactionFormSheet({
           <button
             type="button"
             onClick={addResource}
-            className="inline-flex items-center gap-1 text-[12px] font-medium text-brand-600 hover:underline"
+            className="inline-flex items-center gap-1 text-[calc(12px*var(--ts))] font-medium text-brand-600 hover:underline"
           >
-            <Plus className="size-3.5" /> Ajouter
+            <Plus className="size-3.5" /> زيد
           </button>
         </span>
 
@@ -224,13 +224,13 @@ export function TransactionFormSheet({
                     className={INPUT + " flex-1"}
                     value={r.name}
                     onChange={(e) => patchResource(r.key, { name: e.target.value })}
-                    placeholder="Nom — ex. Reçu N°2031"
+                    placeholder="الاسم — مثال: وصل عدد 2031"
                     dir="auto"
                   />
                   <button
                     type="button"
                     onClick={() => removeResource(r.key)}
-                    aria-label="Retirer le justificatif"
+                    aria-label="نحّي الإثبات"
                     className="grid size-11 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-danger-50 hover:text-danger-600"
                   >
                     <Trash2 className="size-4" />
@@ -240,7 +240,7 @@ export function TransactionFormSheet({
                   className={INPUT + " mt-2"}
                   value={r.url}
                   onChange={(e) => patchResource(r.key, { url: e.target.value })}
-                  placeholder="Lien (optionnel) — https://…"
+                  placeholder="الرابط (اختياري) — https://…"
                   type="url"
                   dir="ltr"
                 />
@@ -248,7 +248,7 @@ export function TransactionFormSheet({
                   className={INPUT + " mt-2"}
                   value={r.notes}
                   onChange={(e) => patchResource(r.key, { notes: e.target.value })}
-                  placeholder="Notes (optionnel)"
+                  placeholder="ملاحظات (اختياري)"
                   dir="auto"
                 />
               </div>
@@ -256,8 +256,8 @@ export function TransactionFormSheet({
           </div>
         )}
         {resourcesInvalid && (
-          <p className="mt-1.5 text-[12px] font-medium text-danger-600">
-            Chaque justificatif doit avoir un nom.
+          <p className="mt-1.5 text-[calc(12px*var(--ts))] font-medium text-danger-600">
+            كل إثبات لازمو اسم.
           </p>
         )}
       </div>

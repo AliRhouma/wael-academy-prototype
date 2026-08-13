@@ -28,10 +28,10 @@ const INPUT =
 
 /** Role → French label + badge tone (each tone means one thing — foundations §2). */
 const ROLE: Record<Role, { label: string; tone: BadgeTone }> = {
-  admin: { label: "Admin", tone: "info" },
-  teacher: { label: "Enseignant", tone: "brand" },
-  parent: { label: "Parent", tone: "warning" },
-  student: { label: "Élève", tone: "neutral" },
+  admin: { label: "أدمين", tone: "info" },
+  teacher: { label: "أستاذ", tone: "brand" },
+  parent: { label: "ولي", tone: "warning" },
+  student: { label: "تلميذ", tone: "neutral" },
 }
 
 const ROLE_ORDER: Role[] = ["admin", "teacher", "parent", "student"]
@@ -40,39 +40,39 @@ const ROLE_ORDER: Role[] = ["admin", "teacher", "parent", "student"]
 const dash = <span className="text-ink-muted">—</span>
 
 /** "12 sept. 2025" — compact date for the audit columns. */
-const DAY = new Intl.DateTimeFormat("fr-FR", { day: "numeric", month: "short", year: "numeric" })
+const DAY = new Intl.DateTimeFormat("ar-TN-u-nu-latn", { day: "numeric", month: "short", year: "numeric" })
 const day = (iso: string) => DAY.format(new Date(iso))
 
 /**
  * The table's columns, as toggleable defs. `locked` columns (the identity cell)
- * can't be hidden; `defaultOn: false` ones start hidden behind the "Colonnes"
+ * can't be hidden; `defaultOn: false` ones start hidden behind the "الأعمدة"
  * menu so the default view stays scannable.
  */
 const COLUMN_DEFS: { key: string; label: string; locked?: boolean; defaultOn: boolean }[] = [
-  { key: "name", label: "Utilisateur", locked: true, defaultOn: true },
-  { key: "role", label: "Rôle", defaultOn: true },
-  { key: "phone", label: "Numéro", defaultOn: true },
-  { key: "email", label: "Email", defaultOn: true },
-  { key: "years", label: "Année(s)", defaultOn: true },
-  { key: "city", label: "Ville", defaultOn: false },
-  { key: "town", label: "Localité", defaultOn: false },
-  { key: "school", label: "École", defaultOn: false },
-  { key: "moyenne", label: "Moyenne générale", defaultOn: false },
-  { key: "createdAt", label: "Créé le", defaultOn: false },
-  { key: "updatedAt", label: "Modifié le", defaultOn: true },
+  { key: "name", label: "مستعمل", locked: true, defaultOn: true },
+  { key: "role", label: "الدور", defaultOn: true },
+  { key: "phone", label: "الرقم", defaultOn: true },
+  { key: "email", label: "الإيميل", defaultOn: true },
+  { key: "years", label: "السنة/السنوات", defaultOn: true },
+  { key: "city", label: "المدينة", defaultOn: false },
+  { key: "town", label: "المنطقة", defaultOn: false },
+  { key: "school", label: "المدرسة", defaultOn: false },
+  { key: "moyenne", label: "المعدّل العام", defaultOn: false },
+  { key: "createdAt", label: "تعمل نهار", defaultOn: false },
+  { key: "updatedAt", label: "تبدّل نهار", defaultOn: true },
 ]
 
 /** Field → French label, used to write the history summary of an edit. */
 const FIELD_LABEL: Record<string, string> = {
-  name: "Nom",
-  phone: "Téléphone",
-  email: "Email",
-  role: "Rôle",
-  yearIds: "Années",
-  city: "Ville",
-  town: "Localité",
-  school: "École",
-  moyenneGenerale: "Moyenne générale",
+  name: "الاسم",
+  phone: "التليفون",
+  email: "الإيميل",
+  role: "الدور",
+  yearIds: "السنوات",
+  city: "المدينة",
+  town: "المنطقة",
+  school: "المدرسة",
+  moyenneGenerale: "المعدّل العام",
 }
 
 /** Admin — the people of the academy: one table over every role, filterable. */
@@ -138,7 +138,7 @@ export default function AdminUsersScreen() {
       .sort(
         (a, b) =>
           ROLE_ORDER.indexOf(a.role) - ROLE_ORDER.indexOf(b.role) ||
-          a.name.localeCompare(b.name, "fr"),
+          a.name.localeCompare(b.name, "ar"),
       )
   }, [users, roleFilter, query])
 
@@ -188,7 +188,7 @@ export default function AdminUsersScreen() {
     // Phone is the unique identifier — refuse a duplicate with an inline error.
     const taken = users.some((u) => u.phone.trim() === trimmedPhone && u.id !== editing?.id)
     if (taken) {
-      setPhoneError("Ce numéro est déjà utilisé par un autre utilisateur.")
+      setPhoneError("الرقم هذا مستعمل من قبل في مستعمل آخر.")
       return
     }
 
@@ -239,10 +239,10 @@ export default function AdminUsersScreen() {
         // A no-op pair (both empty, e.g. "" vs undefined) isn't a real change.
         .filter((c) => c.before !== c.after)
       updateUser(editing.id, patch, changes)
-      show("Utilisateur modifié")
+      show("المستعمل تبدّل")
     } else {
       addUser(patch)
-      show("Utilisateur ajouté")
+      show("المستعمل تزاد")
     }
     setFormOpen(false)
   }
@@ -250,18 +250,18 @@ export default function AdminUsersScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeUser(deleteTarget.id)
-    show("Utilisateur supprimé")
+    show("المستعمل تمسح")
     setDeleteTarget(null)
   }
 
   const allColumns: Column<User>[] = [
     {
       key: "name",
-      header: "Utilisateur",
+      header: "مستعمل",
       render: (u) => (
         <div className="flex items-center gap-3">
           <Avatar name={u.name} />
-          <span dir="auto" className="min-w-0 truncate font-display text-[15px] font-bold text-ink">
+          <span dir="auto" className="min-w-0 truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
             {u.name}
           </span>
         </div>
@@ -269,12 +269,12 @@ export default function AdminUsersScreen() {
     },
     {
       key: "role",
-      header: "Rôle",
+      header: "الدور",
       render: (u) => <Badge tone={ROLE[u.role].tone}>{ROLE[u.role].label}</Badge>,
     },
     {
       key: "phone",
-      header: "Numéro",
+      header: "الرقم",
       render: (u) => (
         <span dir="ltr" className="tabular-nums text-ink-subtle">
           {u.phone}
@@ -283,12 +283,12 @@ export default function AdminUsersScreen() {
     },
     {
       key: "email",
-      header: "Email",
+      header: "الإيميل",
       render: (u) => (u.email ? <span className="text-ink-subtle">{u.email}</span> : dash),
     },
     {
       key: "years",
-      header: "Année(s)",
+      header: "السنة/السنوات",
       render: (u) =>
         u.yearIds && u.yearIds.length > 0 ? (
           <span className="text-ink-subtle">
@@ -300,22 +300,22 @@ export default function AdminUsersScreen() {
     },
     {
       key: "city",
-      header: "Ville",
+      header: "المدينة",
       render: (u) => (u.city ? <span className="text-ink-subtle">{u.city}</span> : dash),
     },
     {
       key: "town",
-      header: "Localité",
+      header: "المنطقة",
       render: (u) => (u.town ? <span className="text-ink-subtle">{u.town}</span> : dash),
     },
     {
       key: "school",
-      header: "École",
+      header: "المدرسة",
       render: (u) => (u.school ? <span className="text-ink-subtle">{u.school}</span> : dash),
     },
     {
       key: "moyenne",
-      header: "Moyenne",
+      header: "المعدّل",
       render: (u) =>
         u.moyenneGenerale != null ? (
           <span className="tabular-nums text-ink-subtle">
@@ -328,12 +328,12 @@ export default function AdminUsersScreen() {
     },
     {
       key: "createdAt",
-      header: "Créé le",
+      header: "تعمل نهار",
       render: (u) => <span className="whitespace-nowrap text-ink-subtle">{day(u.createdAt)}</span>,
     },
     {
       key: "updatedAt",
-      header: "Modifié le",
+      header: "تبدّل نهار",
       render: (u) => (
         <span className="whitespace-nowrap text-ink-subtle">
           {day(u.updatedAt)}
@@ -355,12 +355,12 @@ export default function AdminUsersScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> Ajouter un utilisateur
+      <Plus className="size-4" /> زيد مستعمل
     </button>
   )
 
   const filters: { key: Role | "all"; label: string; count: number }[] = [
-    { key: "all", label: "Tous", count: users.length },
+    { key: "all", label: "الكل", count: users.length },
     ...ROLE_ORDER.map((r) => ({
       key: r,
       label: `${ROLE[r].label}s`,
@@ -375,8 +375,8 @@ export default function AdminUsersScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Utilisateurs"
-        subtitle={`${users.length} personne${users.length > 1 ? "s" : ""} — élèves, enseignants, parents et administration.`}
+        title="المستعملين"
+        subtitle={`${users.length} شخص — تلامذة وأساتذة وأولياء وإدارة.`}
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -384,8 +384,8 @@ export default function AdminUsersScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={UsersIcon}
-            title="Aucun utilisateur"
-            description="Ajoutez les élèves, enseignants et parents de l’académie."
+            title="ما فماش مستعملين"
+            description="زيد التلامذة والأساتذة والأولياء متاع الأكاديمية."
             action={addButton}
           />
         </div>
@@ -428,7 +428,7 @@ export default function AdminUsersScreen() {
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Rechercher un nom, numéro…"
+                  placeholder="لوّج على اسم ولا رقم…"
                   className={INPUT + " ps-9"}
                 />
               </div>
@@ -438,12 +438,12 @@ export default function AdminUsersScreen() {
                 <DropdownMenu.Trigger asChild>
                   <button
                     type="button"
-                    aria-label="Choisir les colonnes"
-                    title="Colonnes affichées"
+                    aria-label="اختار الأعمدة"
+                    title="الأعمدة المعروضة"
                     className="inline-flex h-11 shrink-0 items-center gap-2 rounded-md border border-border-strong bg-surface px-3.5 text-sm font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
                   >
                     <Settings2 className="size-4" />
-                    <span className="hidden sm:inline">Colonnes</span>
+                    <span className="hidden sm:inline">الأعمدة</span>
                     <span className="rounded-full bg-neutral-100 px-1.5 text-xs tabular-nums text-ink-muted">
                       {visibleCols.size}
                     </span>
@@ -456,7 +456,7 @@ export default function AdminUsersScreen() {
                     className="z-50 min-w-[14rem] rounded-lg border border-border bg-surface-raised p-1.5 shadow-lg"
                   >
                     <DropdownMenu.Label className="px-3 py-2 text-xs font-medium uppercase tracking-wide text-ink-muted">
-                      Colonnes affichées
+                      الأعمدة المعروضة
                     </DropdownMenu.Label>
                     {COLUMN_DEFS.map((def) => {
                       const on = visibleCols.has(def.key)
@@ -505,16 +505,16 @@ export default function AdminUsersScreen() {
             rows={rows}
             rowKey={(u) => u.id}
             rowActions={(u) => [
-              { label: "Historique", icon: History, onClick: () => setHistoryTarget(u) },
-              { label: "Modifier", icon: Pencil, onClick: () => openEdit(u) },
-              { label: "Supprimer", icon: Trash2, tone: "danger", onClick: () => setDeleteTarget(u) },
+              { label: "التاريخ", icon: History, onClick: () => setHistoryTarget(u) },
+              { label: "بدّل", icon: Pencil, onClick: () => openEdit(u) },
+              { label: "امسح", icon: Trash2, tone: "danger", onClick: () => setDeleteTarget(u) },
             ]}
             empty={
               <div className="rounded-lg border border-dashed border-border bg-surface">
                 <EmptyState
                   icon={Search}
-                  title="Aucun résultat"
-                  description="Aucun utilisateur ne correspond à ce filtre ou à cette recherche."
+                  title="ما فماش نتائج"
+                  description="ما فماش مستعمل يوافق الفلتر ولا البحث هذا."
                 />
               </div>
             }
@@ -525,26 +525,26 @@ export default function AdminUsersScreen() {
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "Modifier l’utilisateur" : "Nouvel utilisateur"}
-        description={editing ? undefined : "Ajoutez une personne à l’académie."}
-        submitLabel={editing ? "Enregistrer" : "Ajouter"}
+        title={editing ? "بدّل المستعمل" : "مستعمل جديد"}
+        description={editing ? undefined : "زيد واحد للأكاديمية."}
+        submitLabel={editing ? "سجّل" : "زيد"}
         onSubmit={submit}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom complet</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">الاسم الكامل</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Ex. Mohamed Ben Salah · محمد بن صالح"
+            placeholder="مثال: محمد بن صالح"
             autoFocus
           />
         </label>
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Numéro <span className="font-normal text-ink-muted">(unique)</span>
+            الرقم <span className="font-normal text-ink-muted">(وحيد)</span>
           </span>
           <input
             className={
@@ -556,7 +556,7 @@ export default function AdminUsersScreen() {
               setPhone(e.target.value)
               if (phoneError) setPhoneError("")
             }}
-            placeholder="Ex. +216 29 340 118"
+            placeholder="مثال: +216 29 340 118"
             type="tel"
             dir="ltr"
           />
@@ -565,20 +565,20 @@ export default function AdminUsersScreen() {
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Email <span className="font-normal text-ink-muted">(optionnel)</span>
+            الإيميل <span className="font-normal text-ink-muted">(اختياري)</span>
           </span>
           <input
             className={INPUT}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Ex. mohamed@exemple.tn"
+            placeholder="مثال: mohamed@exemple.tn"
             type="email"
             dir="ltr"
           />
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Rôle</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">الدور</span>
           <div className="relative">
             <select
               className={INPUT + " appearance-none pe-10"}
@@ -599,7 +599,7 @@ export default function AdminUsersScreen() {
         {showYears && isStudent && (
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Année <span className="font-normal text-ink-muted">(optionnel)</span>
+              العام <span className="font-normal text-ink-muted">(اختياري)</span>
             </span>
             <div className="relative">
               <select
@@ -607,7 +607,7 @@ export default function AdminUsersScreen() {
                 value={yearIds[0] ?? ""}
                 onChange={(e) => setYearIds(e.target.value ? [e.target.value] : [])}
               >
-                <option value="">— Choisir une année —</option>
+                <option value="">— اختار عام —</option>
                 {sortedYears.map((y) => (
                   <option key={y.id} value={y.id}>
                     {y.name}
@@ -622,9 +622,9 @@ export default function AdminUsersScreen() {
         {showYears && !isStudent && (
           <div>
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Années{" "}
+              السنوات{" "}
               <span className="font-normal text-ink-muted">
-                ({role === "teacher" ? "niveaux enseignés" : "niveaux des enfants"} — optionnel)
+                ({role === "teacher" ? "المستويات اللي يدرّسها" : "مستويات الولاد"} — optionnel)
               </span>
             </span>
             <div className="flex flex-wrap gap-2">
@@ -654,24 +654,24 @@ export default function AdminUsersScreen() {
         <div className="grid grid-cols-2 gap-3">
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Ville <span className="font-normal text-ink-muted">(opt.)</span>
+              المدينة <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               className={INPUT}
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              placeholder="Ex. Tunis"
+              placeholder="مثال: تونس"
             />
           </label>
           <label className="block">
             <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-              Localité <span className="font-normal text-ink-muted">(opt.)</span>
+              المنطقة <span className="font-normal text-ink-muted">(اخت.)</span>
             </span>
             <input
               className={INPUT}
               value={town}
               onChange={(e) => setTown(e.target.value)}
-              placeholder="Ex. El Menzah 6"
+              placeholder="مثال: المنزه 6"
             />
           </label>
         </div>
@@ -680,24 +680,24 @@ export default function AdminUsersScreen() {
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
               <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-                École <span className="font-normal text-ink-muted">(opt.)</span>
+                المدرسة <span className="font-normal text-ink-muted">(اخت.)</span>
               </span>
               <input
                 className={INPUT}
                 value={school}
                 onChange={(e) => setSchool(e.target.value)}
-                placeholder="Ex. Lycée Bourguiba"
+                placeholder="مثال: معهد بورقيبة"
               />
             </label>
             <label className="block">
               <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-                Moyenne <span className="font-normal text-ink-muted">/ 20 (opt.)</span>
+                المعدّل <span className="font-normal text-ink-muted">/ 20 (اخت.)</span>
               </span>
               <input
                 className={INPUT}
                 value={moyenne}
                 onChange={(e) => setMoyenne(e.target.value)}
-                placeholder="Ex. 14,50"
+                placeholder="مثال: 14,50"
                 type="number"
                 min={0}
                 max={20}
@@ -714,9 +714,9 @@ export default function AdminUsersScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="Supprimer cet utilisateur ?"
+        title="تحبّ تمسح المستعمل هذا؟"
         description={
-          deleteTarget ? `« ${deleteTarget.name} » sera définitivement supprimé.` : undefined
+          deleteTarget ? `«${deleteTarget.name}» باش يتمسح نهائيا.` : undefined
         }
         onConfirm={confirmDelete}
       />

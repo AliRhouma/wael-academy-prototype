@@ -1,14 +1,15 @@
 import { Link, useNavigate } from "react-router-dom"
 import { BookOpen, GraduationCap, Shield, Users } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import { WaelLockup } from "@/components/icons/WaelLogo"
 import { useAuth } from "@/stores/useAuth"
 import type { Role } from "@/data/types"
 
 const ROLES: { role: Role; label: string; desc: string; icon: LucideIcon }[] = [
-  { role: "admin", label: "Administration", desc: "Gérer l’académie, les utilisateurs et les paiements.", icon: Shield },
-  { role: "teacher", label: "Enseignant", desc: "Vos cours, vos séances et vos élèves.", icon: GraduationCap },
-  { role: "parent", label: "Parent", desc: "Suivre vos enfants et leurs séances.", icon: Users },
-  { role: "student", label: "Élève", desc: "Vos cours, votre emploi du temps et vos notes.", icon: BookOpen },
+  { role: "admin", label: "الإدارة", desc: "سيّر الأكاديمية والمستعملين والخلاص.", icon: Shield },
+  { role: "teacher", label: "أستاذ", desc: "دروسك وحصصك وتلامذتك.", icon: GraduationCap },
+  { role: "parent", label: "ولي", desc: "تابع ولادك وحصصهم.", icon: Users },
+  { role: "student", label: "تلميذ", desc: "دروسك وجدول أوقاتك وأعدادك.", icon: BookOpen },
 ]
 
 /** Demo entry ("/roles"): pick one of four filtered views over the same academy. */
@@ -25,12 +26,20 @@ export function RoleSwitcher() {
     <div className="min-h-dvh bg-canvas">
       <div className="mx-auto flex min-h-dvh w-full max-w-[720px] flex-col justify-center px-4 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[max(2.5rem,env(safe-area-inset-top))] sm:px-6">
         <header className="mb-8 text-center">
-          <span className="mx-auto grid size-14 place-items-center rounded-[16px] bg-grad text-ink-inverted shadow-brand">
-            <GraduationCap className="size-7" />
+          {/* THE FULL LOCKUP, not the chip — this is the app's front door, the
+              one screen with room for the whole mark and the only place its
+              draw-on animation gets to play. It replaces a lucide mortarboard
+              and a typeset "Wael Academy" kicker, both of which were standing in
+              for a logo the academy already has.
+
+              On the gradient plaque because the delivered art is white: one
+              treatment that holds in light and dark, and the same brand fill the
+              shell's mark wears two clicks later. */}
+          <span className="mx-auto grid w-[min(15rem,80%)] place-items-center rounded-2xl bg-grad px-6 py-5 shadow-brand">
+            <WaelLockup className="w-full" />
           </span>
-          <p className="mt-4 text-[11px] font-medium uppercase tracking-[.14em] text-accent2-600">Wael Academy</p>
-          <h1 className="mt-1 font-display text-[26px] font-bold text-ink">Choisissez votre espace</h1>
-          <p className="mt-1 text-sm text-ink-muted">Quatre vues sur une même académie.</p>
+          <h1 className="mt-5 font-display text-[calc(26px*var(--ts))] font-bold text-ink">اختار فضاءك</h1>
+          <p className="mt-1 text-sm text-ink-muted">أربع نظرات على نفس الأكاديمية.</p>
         </header>
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -45,19 +54,19 @@ export function RoleSwitcher() {
                 <Icon className="size-5" />
               </span>
               <span className="min-w-0">
-                <span className="block font-display text-[15px] font-bold text-ink">{label}</span>
-                <span className="block text-[12px] text-ink-muted">{desc}</span>
+                <span className="block font-display text-[calc(15px*var(--ts))] font-bold text-ink">{label}</span>
+                <span className="block text-[calc(12px*var(--ts))] text-ink-muted">{desc}</span>
               </span>
             </button>
           ))}
         </div>
 
-        <p className="mt-8 flex items-center justify-center gap-4 text-center text-[12px] text-ink-muted">
+        <p className="mt-8 flex items-center justify-center gap-4 text-center text-[calc(12px*var(--ts))] text-ink-muted">
           <Link to="/" className="font-medium text-brand-600 hover:underline">
-            ← Page d’accueil
+            → الصفحة الرئيسية
           </Link>
           <Link to="/design-system" className="font-medium text-brand-600 hover:underline">
-            Design system
+            نظام التصميم
           </Link>
         </p>
       </div>

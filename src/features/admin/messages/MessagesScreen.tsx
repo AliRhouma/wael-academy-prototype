@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { ArrowLeft, MessagesSquare, Send } from "lucide-react"
+import { ArrowRight, MessagesSquare, Send } from "lucide-react"
 import { PageHeader } from "@/components/kit/PageHeader"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { Avatar } from "@/components/kit/Avatar"
@@ -95,26 +95,26 @@ export default function AdminMessagesScreen() {
               <Avatar name={student?.name ?? "?"} />
               <span className="min-w-0 flex-1">
                 <span className="flex items-baseline justify-between gap-2">
-                  <span dir="auto" className="truncate font-display text-[14px] font-bold text-ink">
-                    {student?.name ?? "Élève supprimé"}
+                  <span dir="auto" className="truncate font-display text-[calc(14px*var(--ts))] font-bold text-ink">
+                    {student?.name ?? "التلميذ تمسح"}
                   </span>
-                  <span className="shrink-0 text-[11px] tabular-nums text-ink-muted">
+                  <span className="shrink-0 text-[calc(11px*var(--ts))] tabular-nums text-ink-muted">
                     {formatChatTime(t.last.at)}
                   </span>
                 </span>
                 <span
                   dir="auto"
                   className={
-                    "mt-0.5 block truncate text-[12px] " +
+                    "mt-0.5 block truncate text-[calc(12px*var(--ts))] " +
                     (t.unread > 0 ? "font-medium text-ink" : "text-ink-muted")
                   }
                 >
-                  {lastMine ? "Vous : " : ""}
+                  {lastMine ? "إنت: " : ""}
                   {t.last.text}
                 </span>
               </span>
               {t.unread > 0 && (
-                <span className="grid min-w-5 shrink-0 place-items-center rounded-full bg-brand-600 px-1.5 py-0.5 text-[11px] font-bold tabular-nums text-ink-inverted">
+                <span className="grid min-w-5 shrink-0 place-items-center rounded-full bg-brand-600 px-1.5 py-0.5 text-[calc(11px*var(--ts))] font-bold tabular-nums text-ink-inverted">
                   {t.unread}
                 </span>
               )}
@@ -132,17 +132,17 @@ export default function AdminMessagesScreen() {
         <button
           type="button"
           onClick={() => setSelectedId(null)}
-          aria-label="Retour aux conversations"
+          aria-label="ارجع للمحادثات"
           className="grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink md:hidden"
         >
-          <ArrowLeft className="size-4.5 rtl:rotate-180" />
+          <ArrowRight className="size-4.5" />
         </button>
         <Avatar name={userById.get(selected.studentUserId)?.name ?? "?"} />
         <div className="min-w-0">
-          <p dir="auto" className="truncate font-display text-[15px] font-bold text-ink">
-            {userById.get(selected.studentUserId)?.name ?? "Élève supprimé"}
+          <p dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
+            {userById.get(selected.studentUserId)?.name ?? "التلميذ تمسح"}
           </p>
-          <p className="text-[12px] text-ink-muted">Élève</p>
+          <p className="text-[calc(12px*var(--ts))] text-ink-muted">تلميذ</p>
         </div>
       </div>
 
@@ -157,9 +157,9 @@ export default function AdminMessagesScreen() {
             >
               {/* Admin replies are SIGNED — who answered what. */}
               {!fromStudent && (
-                <span className="mb-0.5 me-1 flex items-center gap-1.5 text-[11px] font-medium text-ink-muted">
-                  {sender?.name ?? "Administration"}
-                  <Avatar name={sender?.name ?? "?"} size="sm" className="!size-4 text-[8px]" />
+                <span className="mb-0.5 me-1 flex items-center gap-1.5 text-[calc(11px*var(--ts))] font-medium text-ink-muted">
+                  {sender?.name ?? "الإدارة"}
+                  <Avatar name={sender?.name ?? "?"} size="sm" className="!size-4 text-[calc(8px*var(--ts))]" />
                 </span>
               )}
               <div
@@ -173,7 +173,7 @@ export default function AdminMessagesScreen() {
               >
                 {m.text}
               </div>
-              <span className="mt-0.5 px-1 text-[10px] tabular-nums text-ink-muted">
+              <span className="mt-0.5 px-1 text-[calc(10px*var(--ts))] tabular-nums text-ink-muted">
                 {formatChatTime(m.at)}
               </span>
             </div>
@@ -192,13 +192,13 @@ export default function AdminMessagesScreen() {
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={`Répondre en tant que ${currentUser?.name ?? "admin"}…`}
+          placeholder={`جاوب باسم ${currentUser?.name ?? "الأدمين"}…`}
           dir="auto"
           className={INPUT}
         />
         <button
           type="submit"
-          aria-label="Envoyer"
+          aria-label="ابعث"
           disabled={text.trim() === ""}
           className="grid size-11 shrink-0 place-items-center rounded-full bg-grad text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-40"
         >
@@ -211,13 +211,13 @@ export default function AdminMessagesScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="Messagerie"
+        title="الرسائل"
         subtitle={
           isEmpty
-            ? "Les questions des élèves arrivent ici."
-            : `${threads.length} conversation${threads.length > 1 ? "s" : ""}${
-                totalUnread > 0 ? ` · ${totalUnread} message${totalUnread > 1 ? "s" : ""} non lu${totalUnread > 1 ? "s" : ""}` : ""
-              } — chaque réponse est signée par l’admin qui l’envoie.`
+            ? "أسئلة التلامذة تجي هوني."
+            : `${threads.length} محادثة${
+                totalUnread > 0 ? ` · ${totalUnread} رسالة ما تقراتش` : ""
+              } — كل جواب ممضي باسم الأدمين اللي بعثو.`
         }
       />
 
@@ -225,8 +225,8 @@ export default function AdminMessagesScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={MessagesSquare}
-            title="Aucune conversation"
-            description="Quand un élève écrit depuis sa bulle de messagerie, sa conversation apparaît ici."
+            title="ما فماش محادثات"
+            description="كي تلميذ يكتب من فقاعة الرسائل متاعو، المحادثة متاعو تظهر هوني."
           />
         </div>
       ) : (
@@ -248,11 +248,11 @@ export default function AdminMessagesScreen() {
                 <span className="grid size-12 place-items-center rounded-full bg-brand-50 text-brand-600">
                   <MessagesSquare className="size-5" />
                 </span>
-                <p className="font-display text-[15px] font-bold text-ink">
-                  Sélectionnez une conversation
+                <p className="font-display text-[calc(15px*var(--ts))] font-bold text-ink">
+                  اختار محادثة
                 </p>
                 <p className="text-sm text-ink-muted">
-                  Les réponses partent au nom de {currentUser?.name ?? "l’admin connecté"}.
+                  الأجوبة تتبعث باسم {currentUser?.name ?? "الأدمين المتّصل"}.
                 </p>
               </div>
             )}
@@ -263,7 +263,7 @@ export default function AdminMessagesScreen() {
       {totalUnread > 0 && !selected && (
         <div className="md:hidden">
           <Badge tone="brand" dot>
-            {totalUnread} non lu{totalUnread > 1 ? "s" : ""}
+            {totalUnread} ما تقراتش
           </Badge>
         </div>
       )}

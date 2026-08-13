@@ -69,7 +69,7 @@ export function PromoCodeFormSheet({ open, onOpenChange, editing, onSaved }: Pro
   }, [open])
 
   const sortedOffers = useMemo(
-    () => [...offers].sort((a, b) => a.name.localeCompare(b.name, "fr")),
+    () => [...offers].sort((a, b) => a.name.localeCompare(b.name, "ar")),
     [offers],
   )
   const offerName = useMemo(() => new Map(offers.map((o) => [o.id, o.name])), [offers])
@@ -90,10 +90,10 @@ export function PromoCodeFormSheet({ open, onOpenChange, editing, onSaved }: Pro
   function ruleError(r: RuleDraft): string | null {
     const hasPct = r.pct.trim() !== ""
     const hasAmount = r.amount.trim() !== ""
-    if (hasPct && hasAmount) return "Choisissez % OU montant, pas les deux."
-    if (!hasPct && !hasAmount) return "Indiquez une remise (% ou montant)."
-    if (hasPct && !(Number(r.pct) > 0 && Number(r.pct) < 100)) return "Le % doit être entre 1 et 99."
-    if (hasAmount && !(Number(r.amount) > 0)) return "Le montant doit être positif."
+    if (hasPct && hasAmount) return "اختار النسبة ولا المبلغ، موش الزوز."
+    if (!hasPct && !hasAmount) return "حدّد التخفيض (نسبة ولا مبلغ)."
+    if (hasPct && !(Number(r.pct) > 0 && Number(r.pct) < 100)) return "النسبة لازمها بين 1 و 99."
+    if (hasAmount && !(Number(r.amount) > 0)) return "المبلغ لازمو يكون موجب."
     return null
   }
 
@@ -119,10 +119,10 @@ export function PromoCodeFormSheet({ open, onOpenChange, editing, onSaved }: Pro
     }
     if (editing) {
       updatePromoCode(editing.id, patch)
-      onSaved("Code promo modifié")
+      onSaved("كود التخفيض تبدّل")
     } else {
       addPromoCode({ ...patch, usedByUserIds: [] })
-      onSaved("Code promo créé")
+      onSaved("كود التخفيض تعمل")
     }
     onOpenChange(false)
   }
@@ -131,48 +131,48 @@ export function PromoCodeFormSheet({ open, onOpenChange, editing, onSaved }: Pro
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      title={editing ? "Modifier le code promo" : "Nouveau code promo"}
+      title={editing ? "بدّل كود التخفيض" : "كود تخفيض جديد"}
       description={
         editing
           ? undefined
-          : "Générez un code, choisissez les offres visées et la remise de chacune."
+          : "ولّد كود، اختار العروض المعنية والتخفيض متاع كل وحدة."
       }
-      submitLabel={editing ? "Enregistrer" : "Créer le code"}
+      submitLabel={editing ? "سجّل" : "اعمل الكود"}
       onSubmit={submit}
     >
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Code</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">الكود</span>
         <div className="flex items-center gap-2">
           <input
             className={
               INPUT +
-              " flex-1 font-display text-[15px] font-bold tracking-[.08em] uppercase" +
+              " flex-1 font-display text-[calc(15px*var(--ts))] font-bold tracking-[.08em] uppercase" +
               (codeTaken ? " border-danger-600 focus:border-danger-600 focus:ring-danger-600/20" : "")
             }
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
-            placeholder="Ex. RENTREE26"
+            placeholder="مثال: RENTREE26"
             dir="ltr"
             autoFocus
           />
           <button
             type="button"
             onClick={() => setCode(generateCode())}
-            title="Générer un code"
+            title="ولّد كود"
             className="inline-flex h-11 shrink-0 items-center gap-2 rounded-md border border-border-strong bg-surface px-3.5 text-sm font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
           >
-            <Dices className="size-4" /> Générer
+            <Dices className="size-4" /> ولّد
           </button>
         </div>
         {codeTaken && (
-          <span className="mt-1.5 block text-sm text-danger-600">Ce code existe déjà.</span>
+          <span className="mt-1.5 block text-sm text-danger-600">الكود هذا موجود من قبل.</span>
         )}
       </label>
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
           Nombre max d’utilisateurs{" "}
-          <span className="font-normal text-ink-muted">(vide = illimité)</span>
+          <span className="font-normal text-ink-muted">(فارغ = بلا حدّ)</span>
         </span>
         <input
           className={
@@ -182,13 +182,13 @@ export function PromoCodeFormSheet({ open, onOpenChange, editing, onSaved }: Pro
           }
           value={maxUses}
           onChange={(e) => setMaxUses(e.target.value)}
-          placeholder="Ex. 50"
+          placeholder="مثال: 50"
           inputMode="numeric"
           dir="ltr"
         />
         {maxUsesInvalid && (
           <span className="mt-1.5 block text-sm text-danger-600">
-            Le maximum doit être un nombre entier positif.
+            الحدّ الأقصى لازمو يكون عدد صحيح موجب.
           </span>
         )}
       </label>
@@ -197,7 +197,7 @@ export function PromoCodeFormSheet({ open, onOpenChange, editing, onSaved }: Pro
       <div>
         <span className="mb-2 flex items-center gap-1.5 text-sm font-medium text-ink-subtle">
           <Tag className="size-4 text-ink-muted" />
-          Offres visées <span className="font-normal text-ink-muted">({rules.length})</span>
+          العروض المعنية <span className="font-normal text-ink-muted">({rules.length})</span>
         </span>
         <div className="flex flex-wrap gap-2">
           {sortedOffers.map((o) => {
@@ -220,8 +220,8 @@ export function PromoCodeFormSheet({ open, onOpenChange, editing, onSaved }: Pro
           })}
         </div>
         {rules.length === 0 && (
-          <p className="mt-1.5 text-[12px] text-ink-muted">
-            Sélectionnez au moins une offre à remiser.
+          <p className="mt-1.5 text-[calc(12px*var(--ts))] text-ink-muted">
+            اختار على الأقلّ عرض واحد باش تخفّض فيه.
           </p>
         )}
       </div>
@@ -233,37 +233,37 @@ export function PromoCodeFormSheet({ open, onOpenChange, editing, onSaved }: Pro
             return (
               <div key={r.offerId} className="rounded-md border border-border bg-surface-muted/40 p-3">
                 <p dir="auto" className="mb-2 text-sm font-medium text-ink">
-                  {offerName.get(r.offerId) ?? "Offre supprimée"}
+                  {offerName.get(r.offerId) ?? "العرض تمسح"}
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <label className="block">
-                    <span className="mb-1.5 block text-[12px] font-medium text-ink-subtle">
-                      Remise en %
+                    <span className="mb-1.5 block text-[calc(12px*var(--ts))] font-medium text-ink-subtle">
+                      التخفيض بالنسبة %
                     </span>
                     <input
                       className={INPUT + " tabular-nums"}
                       value={r.pct}
                       onChange={(e) => patchRule(r.offerId, { pct: e.target.value })}
-                      placeholder="Ex. 20"
+                      placeholder="مثال: 20"
                       inputMode="numeric"
                       dir="ltr"
                     />
                   </label>
                   <label className="block">
-                    <span className="mb-1.5 block text-[12px] font-medium text-ink-subtle">
-                      OU montant (DT)
+                    <span className="mb-1.5 block text-[calc(12px*var(--ts))] font-medium text-ink-subtle">
+                      ولا مبلغ (د.ت)
                     </span>
                     <input
                       className={INPUT + " tabular-nums"}
                       value={r.amount}
                       onChange={(e) => patchRule(r.offerId, { amount: e.target.value })}
-                      placeholder="Ex. 30"
+                      placeholder="مثال: 30"
                       inputMode="decimal"
                       dir="ltr"
                     />
                   </label>
                 </div>
-                {err && <p className="mt-1.5 text-[12px] font-medium text-danger-600">{err}</p>}
+                {err && <p className="mt-1.5 text-[calc(12px*var(--ts))] font-medium text-danger-600">{err}</p>}
               </div>
             )
           })}
