@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { AppShell } from "@/components/AppShell"
 import { ChatWidget } from "@/features/student/ChatWidget"
 import { useAuth } from "@/stores/useAuth"
+import { dirOf, localeOf } from "@/i18n/locale"
 import type { Role } from "@/data/types"
 import type { NavItem } from "@/app/nav/types"
 
@@ -19,6 +20,25 @@ export function RoleLayout({ role, nav }: { role: Role; nav: NavItem[] }) {
   useEffect(() => {
     if (currentRole !== role) setRole(role)
   }, [role, currentRole, setRole])
+
+  /**
+   * Language and direction are properties of the ROLE (see i18n/locale.ts): the
+   * élève space is Arabic RTL, the back-office is French LTR. Stamping <html>
+   * rather than a wrapper is what makes the logical utilities (ms-/me-/ps-/pe-)
+   * mirror the whole shell, the sheets and the dropdowns in one move.
+   */
+  useEffect(() => {
+    const apply = (locale: "ar" | "fr") => {
+      const root = document.documentElement
+      root.setAttribute("lang", locale === "ar" ? "ar-TN" : "fr-TN")
+      root.setAttribute("dir", dirOf(locale))
+    }
+    apply(localeOf(role))
+    // Leaving a role — for the switcher, the landing page or another role —
+    // hands the document back to Arabic. React runs this cleanup before the
+    // next layout's effect, so role-to-role still lands on the right one.
+    return () => apply("ar")
+  }, [role])
 
   if (currentRole !== role || !currentUser) return null
 

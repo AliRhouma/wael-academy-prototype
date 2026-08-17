@@ -246,7 +246,7 @@ export default function AdminSubjectsScreen() {
                       {parts.length > 0 ? parts.join(" · ") : "ما فماش محتوى"}
                     </p>
                   </div>
-                  <ChevronLeft className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
+                  <ChevronLeft className="size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600 ltr:rotate-180" />
                   <div onClick={(e) => e.stopPropagation()}>
                     <OverflowMenu
                       actions={[

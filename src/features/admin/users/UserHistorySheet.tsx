@@ -28,12 +28,12 @@ const WHEN = new Intl.DateTimeFormat("ar-TN-u-nu-latn", {
 })
 
 function when(iso: string) {
-  return WHEN.format(new Date(iso)).replace("،", " على")
+  return WHEN.format(new Date(iso)).replace("،", " à")
 }
 
 /**
  * Read-only timeline of a user's profile changes — newest first, ending on the
- * "الحساب تعمل" node. Mobile: bottom sheet; desktop: centered dialog (same
+ * "Compte créé" node. Mobile: bottom sheet; desktop: centered dialog (same
  * split as FormSheet). Opened from the row's "…" menu on the users table.
  */
 export function UserHistorySheet({
@@ -57,7 +57,7 @@ export function UserHistorySheet({
           </p>
           <p className="text-sm text-ink-muted">
             {user.history.length === 0
-              ? "ما فماش تبديل من وقت ما تعمل."
+              ? "Aucune modification depuis la création."
               : `${user.history.length} تبديل`}
           </p>
         </div>
@@ -80,7 +80,7 @@ export function UserHistorySheet({
                         {c.before}
                       </span>
                     ) : (
-                      <span className="italic text-ink-muted">فارغ</span>
+                      <span className="italic text-ink-muted">vide</span>
                     )}
                     <ArrowLeft className="size-3.5 shrink-0 text-ink-muted" />
                     {c.after ? (
@@ -88,7 +88,7 @@ export function UserHistorySheet({
                         {c.after}
                       </span>
                     ) : (
-                      <span className="italic text-ink-muted">فارغ</span>
+                      <span className="italic text-ink-muted">vide</span>
                     )}
                   </p>
                 </div>
@@ -98,7 +98,7 @@ export function UserHistorySheet({
         ))}
         <li className="relative">
           <span className="absolute -start-[27px] top-1 size-3 rounded-full border-2 border-surface-raised bg-grad" />
-          <p className="text-sm font-medium text-ink">الحساب تعمل</p>
+          <p className="text-sm font-medium text-ink">Compte créé</p>
           <p className="mt-0.5 text-[calc(12px*var(--ts))] text-ink-muted">{when(user.createdAt)}</p>
         </li>
       </ol>

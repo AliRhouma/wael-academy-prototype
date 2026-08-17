@@ -106,10 +106,10 @@ export function SessionFormSheet({
     }
     if (editing) {
       updateSession(editing.id, patch)
-      onSaved("الحصّة تبدّلت")
+      onSaved("Séance modifiée")
     } else {
       addSession(patch)
-      onSaved("الحصّة تبرمجت")
+      onSaved("Séance programmée")
     }
     onOpenChange(false)
   }
@@ -118,43 +118,43 @@ export function SessionFormSheet({
     <FormSheet
       open={open}
       onOpenChange={onOpenChange}
-      title={editing ? "بدّل الحصّة" : "حصّة جديدة"}
+      title={editing ? "Modifier la séance" : "Nouvelle séance"}
       description={
         editing
           ? undefined
-          : "وقت لفوج ولا كثر، مع المادّة والأستاذ."
+          : "Un créneau pour un ou plusieurs groupes, avec la matière et l'enseignant."
       }
-      submitLabel={editing ? "سجّل" : "برمج"}
+      submitLabel={editing ? "Enregistrer" : "Programmer"}
       onSubmit={submit}
     >
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">العنوان</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Titre</span>
         <input
           className={INPUT + " text-start"}
           dir="auto"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="مثال: مراجعة — التكاملات"
+          placeholder="ex. Révision — les intégrales"
           autoFocus
         />
       </label>
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-          Description <span className="font-normal text-ink-muted">(اختياري)</span>
+          Description <span className="font-normal text-ink-muted">(optionnel)</span>
         </span>
         <textarea
           className={INPUT.replace("h-11", "min-h-[84px]") + " resize-y py-2.5 text-start"}
           dir="auto"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="برنامج الحصّة…"
+          placeholder="Programme de la séance…"
           rows={3}
         />
       </label>
 
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">السنة الدراسية</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Année scolaire</span>
         <div className="relative">
           <select
             className={INPUT + " appearance-none pe-10 tabular-nums"}
@@ -173,7 +173,7 @@ export function SessionFormSheet({
       </label>
 
       <label className="block">
-        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">التاريخ</span>
+        <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Date</span>
         <input
           type="date"
           className={INPUT}
@@ -185,7 +185,7 @@ export function SessionFormSheet({
 
       <div className="grid grid-cols-2 gap-3">
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">البداية</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Début</span>
           <input
             type="time"
             className={INPUT + " tabular-nums"}
@@ -195,7 +195,7 @@ export function SessionFormSheet({
           />
         </label>
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">النهاية</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Fin</span>
           <input
             type="time"
             className={
@@ -217,7 +217,7 @@ export function SessionFormSheet({
 
       <label className="block">
         <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-          أستاذ <span className="font-normal text-ink-muted">(اختياري)</span>
+          أستاذ <span className="font-normal text-ink-muted">(optionnel)</span>
         </span>
         <div className="relative">
           <select
@@ -225,7 +225,7 @@ export function SessionFormSheet({
             value={teacherId}
             onChange={(e) => setTeacherId(e.target.value)}
           >
-            <option value="">— حتّى واحد —</option>
+            <option value="">— Aucun —</option>
             {sortedTeachers.map((t) => (
               <option key={t.id} value={t.id}>
                 {t.name}

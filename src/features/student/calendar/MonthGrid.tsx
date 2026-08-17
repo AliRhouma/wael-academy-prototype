@@ -29,7 +29,7 @@ export interface MonthGridProps {
 
 /**
  * Élève — the whole month, read as séance cards rather than as a density map.
- * Each day carries a real card per séance (heure, titre, matière, salle) with
+ * Each day carries a real card per séance (heure et matière) with
  * the matière's colour rail and the same quiet-when-done treatment as the day
  * timeline, so a month is browsable without opening anything.
  *
@@ -118,7 +118,7 @@ export function MonthGrid({
 
       {/*
         The grid is the scrollport now. Rows are tall enough for real séance
-        cards (heure, titre, matière, salle) and GROW past that when a day holds
+        cards (heure et matière) and GROW past that when a day holds
         more — nothing is ever hidden behind a "+2". The month simply gets taller
         than the card and scrolls inside it, so the page itself still doesn't.
         At ~390px a seventh of the screen can't hold a card, so mobile keeps the
@@ -280,6 +280,10 @@ export function MonthGrid({
                               </span>
                             )}
                           </span>
+                          {/* La matière, et rien de plus — le titre et la salle
+                              sont dans la fiche. Une cellule de mois fait un
+                              septième de la largeur : deux lignes tronquées y
+                              valent moins qu'une lisible. */}
                           <span
                             dir="auto"
                             className={cn(
@@ -287,10 +291,7 @@ export function MonthGrid({
                               done ? "text-ink-subtle" : "text-ink",
                             )}
                           >
-                            {s.title}
-                          </span>
-                          <span dir="auto" className="truncate text-[calc(10px*var(--ts))] text-ink-muted">
-                            {[subjectName, s.room].filter(Boolean).join(" · ")}
+                            {subjectName}
                           </span>
                         </button>
                       )

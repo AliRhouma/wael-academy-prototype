@@ -1,546 +1,5 @@
 [
   {
-    "id": "ses-01",
-    "title": "مراجعة — التكاملات",
-    "description": "تمارين على نمط الباك في الحساب التكاملي والدوال الأصلية.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-20",
-    "startTime": "09:00",
-    "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-karim",
-    "room": "قاعة A3",
-    "recordingUrl": "https://www.youtube.com/watch?v=2R51u2FKTz8",
-    "publishedAt": "2026-07-21T10:00:00.000Z"
-  },
-  {
-    "id": "ses-02",
-    "title": "المتتاليات العددية",
-    "academicYear": "2026/2027",
-    "date": "2026-07-21",
-    "startTime": "14:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-math"],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "groupIds": ["g-bacmath-elite"],
-    "teacherId": "t-karim"
-  },
-  {
-    "id": "ses-03",
-    "title": "الدوال — الاشتقاق",
-    "academicYear": "2026/2027",
-    "date": "2026-07-22",
-    "startTime": "08:30",
-    "endTime": "10:00",
-    "yearIds": ["y-2-sci"],
-    "subjectIds": ["subj-2-sci-mathematiques"],
-    "groupIds": ["g-2sci-excellents"],
-    "teacherId": "t-karim"
-  },
-  {
-    "id": "ses-04",
-    "title": "فرض تجريبي — رياضيات",
-    "description": "فرض تأليفي مشترك بين الشعب العلمية.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-25",
-    "startTime": "09:00",
-    "endTime": "11:00",
-    "yearIds": ["y-bac-sci", "y-bac-math"],
-    "subjectIds": ["subj-bac-sci-mathematiques", "subj-bac-math-mathematiques"],
-    "groupIds": ["g-bacsci-renfort", "g-bacmath-elite"],
-    "teacherId": "t-karim",
-    "room": "قاعة الامتحانات",
-    "semester": 1,
-    "recordingUrl": "https://www.youtube.com/watch?v=3Ej21PFBmKk"
-  },
-  {
-    "id": "ses-05",
-    "title": "الهندسة في الفضاء",
-    "academicYear": "2026/2027",
-    "date": "2026-07-16",
-    "startTime": "10:00",
-    "endTime": "11:30",
-    "yearIds": ["y-9"],
-    "subjectIds": ["subj-9-mathematiques"],
-    "groupIds": ["g-9-a"],
-    "teacherId": "t-karim"
-  },
-  {
-    "id": "ses-06",
-    "title": "الأعداد المركّبة",
-    "description": "الشكل الجبري، الطويلة والعمدة.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-28",
-    "startTime": "14:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-math"],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "groupIds": ["g-bacmath-elite"],
-    "teacherId": "t-karim"
-  },
-  {
-    "id": "ses-07",
-    "title": "الإحصاء الوصفي",
-    "academicYear": "2026/2027",
-    "date": "2026-08-03",
-    "startTime": "08:30",
-    "endTime": "10:00",
-    "yearIds": ["y-2-sci"],
-    "subjectIds": ["subj-2-sci-mathematiques"],
-    "groupIds": ["g-2sci-excellents", "g-2sci-b"],
-    "teacherId": "t-karim"
-  },
-  {
-    "id": "ses-08",
-    "title": "أشغال تطبيقية — البصريات الهندسية",
-    "description": "تجربة: العدسات الرقيقة وتكوّن الصور.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-21",
-    "startTime": "14:00",
-    "endTime": "15:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-leila",
-    "room": "مخبر 1",
-    "recordingUrl": "https://www.youtube.com/watch?v=AVT5DcI3rcE"
-  },
-  {
-    "id": "ses-09",
-    "title": "كهرباء — دارات RC",
-    "academicYear": "2026/2027",
-    "date": "2026-07-24",
-    "startTime": "10:00",
-    "endTime": "11:30",
-    "yearIds": ["y-2-sci"],
-    "subjectIds": ["subj-2-sci-sciences-physiques"],
-    "groupIds": ["g-2sci-excellents"],
-    "teacherId": "t-leila"
-  },
-  {
-    "id": "ses-10",
-    "title": "ميكانيك — القوى",
-    "academicYear": "2026/2027",
-    "date": "2026-07-27",
-    "startTime": "09:00",
-    "endTime": "10:30",
-    "yearIds": ["y-9"],
-    "subjectIds": ["subj-9-sciences-physiques"],
-    "groupIds": ["g-9-a"],
-    "teacherId": "t-leila"
-  },
-  {
-    "id": "ses-11",
-    "title": "الموجات الميكانيكية المتقدّمة",
-    "academicYear": "2026/2027",
-    "date": "2026-07-30",
-    "startTime": "14:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-math"],
-    "subjectIds": ["subj-bac-math-sciences-physiques"],
-    "groupIds": ["g-bacmath-elite"],
-    "teacherId": "t-leila"
-  },
-  {
-    "id": "ses-12",
-    "title": "كيمياء — حركية التفاعلات",
-    "description": "سرعة التفاعل، العوامل الحركية واستغلال منحنى تجريبي. جيب معاك الآلة الحاسبة.",
-    "academicYear": "2026/2027",
-    "date": "2026-08-05",
-    "startTime": "09:00",
-    "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-leila",
-    "room": "مخبر 2"
-  },
-  {
-    "id": "ses-13",
-    "title": "الفهم الكتابي",
-    "academicYear": "2026/2027",
-    "date": "2026-07-18",
-    "startTime": "11:00",
-    "endTime": "12:00",
-    "yearIds": ["y-2-sci"],
-    "subjectIds": ["subj-2-sci-francais"],
-    "groupIds": ["g-2sci-excellents", "g-2sci-b"],
-    "teacherId": "t-sonia"
-  },
-  {
-    "id": "ses-14",
-    "title": "المقال — المنهجية",
-    "description": "الخطّة الجدلية: أطروحة، نقيض، تركيب.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-26",
-    "startTime": "10:00",
-    "endTime": "11:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-francais"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-sonia",
-    "room": "قاعة C2",
-    "recordingUrl": "https://www.youtube.com/watch?v=DzidvUhAGpY",
-    "publishedAt": "2026-07-27T08:00:00.000Z"
-  },
-  {
-    "id": "ses-15",
-    "title": "تحليل نصّ",
-    "academicYear": "2026/2027",
-    "date": "2026-07-29",
-    "startTime": "09:00",
-    "endTime": "10:00",
-    "yearIds": ["y-9"],
-    "subjectIds": ["subj-9-francais"],
-    "groupIds": ["g-9-a"],
-    "teacherId": "t-sonia"
-  },
-  {
-    "id": "ses-16",
-    "title": "التعبير الشفوي",
-    "academicYear": "2026/2027",
-    "date": "2026-08-07",
-    "startTime": "11:00",
-    "endTime": "12:00",
-    "yearIds": ["y-2-sci"],
-    "subjectIds": ["subj-2-sci-francais"],
-    "groupIds": ["g-2sci-b"],
-    "teacherId": "t-sonia"
-  },
-  {
-    "id": "ses-17",
-    "title": "تدريب على المحادثة (Speaking)",
-    "description": "نقاش موجّه: technology & society.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-22",
-    "startTime": "15:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-anglais"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-nabil",
-    "room": "أونلاين",
-    "recordingUrl": "https://www.youtube.com/watch?v=F82qXP7dBa8"
-  },
-  {
-    "id": "ses-18",
-    "title": "مراجعة القواعد (Grammar)",
-    "academicYear": "2026/2027",
-    "date": "2026-07-31",
-    "startTime": "10:00",
-    "endTime": "11:00",
-    "yearIds": ["y-9"],
-    "subjectIds": ["subj-9-anglais"],
-    "groupIds": ["g-9-a"],
-    "teacherId": "t-nabil"
-  },
-  {
-    "id": "ses-19",
-    "title": "الفهم القرائي (Reading)",
-    "academicYear": "2026/2027",
-    "date": "2026-08-04",
-    "startTime": "08:30",
-    "endTime": "09:30",
-    "yearIds": ["y-2-sci"],
-    "subjectIds": ["subj-2-sci-anglais"],
-    "groupIds": ["g-2sci-excellents"],
-    "teacherId": "t-nabil"
-  },
-  {
-    "id": "ses-20",
-    "title": "ورشة كتابة (Writing)",
-    "description": "كتابة موجّهة لمقال حجاجي: الخطّة، أدوات الربط والقراءة المتبادلة.",
-    "academicYear": "2026/2027",
-    "date": "2026-08-10",
-    "startTime": "15:00",
-    "endTime": "16:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-anglais"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-nabil",
-    "room": "أونلاين"
-  },
-  {
-    "id": "ses-21",
-    "title": "أشغال تطبيقية كيمياء — معايرة حمضية قاعدية",
-    "description": "تجربة بالثنائي: تحضير السحّاحة، تحديد نقطة التكافؤ واستغلال المنحنى pH = f(V).",
-    "academicYear": "2026/2027",
-    "date": "2026-07-27",
-    "startTime": "08:30",
-    "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-leila",
-    "room": "مخبر 1",
-    "recordingUrl": "https://www.youtube.com/watch?v=GQsmDZE5dV4",
-    "publishedAt": "2026-07-28T19:00:00.000Z"
-  },
-  {
-    "id": "ses-22",
-    "title": "الدوال الأسّية",
-    "description": "الخاصيات الجبرية، المشتقّ، النهايات وأوّل المعادلات. سلسلة تمارين نوزّعوها في آخر الحصّة.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-28",
-    "startTime": "14:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-karim",
-    "room": "قاعة A3",
-    "recordingUrl": "https://www.youtube.com/watch?v=GqxaJ8sY6lA",
-    "publishedAt": "2026-08-09T14:25:00.000Z"
-  },
-  {
-    "id": "ses-23",
-    "title": "علوم الحياة — الوراثة والخلط الصبغي",
-    "description": "الانقسام الاختزالي، الخلط بين الصبغيات وداخلها، وبعد قراءة شجرة نسب.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-30",
-    "startTime": "10:00",
-    "endTime": "11:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-leila",
-    "room": "قاعة B12",
-    "recordingUrl": "https://www.youtube.com/watch?v=JniICVZWGQk",
-    "publishedAt": "2026-08-09T20:10:00.000Z"
-  },
-  {
-    "id": "ses-24",
-    "title": "الموجات والتداخل",
-    "description": "تراكب زوز موجات، شروط التداخل وتمارين على نمط الباك على الشقّين.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-31",
-    "startTime": "09:00",
-    "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-leila",
-    "room": "قاعة B12",
-    "recordingUrl": "https://www.youtube.com/watch?v=Juluo572AZg",
-    "publishedAt": "2026-08-10T18:45:00.000Z"
-  },
-  {
-    "id": "ses-25",
-    "title": "فلسفة — الفنّ والتقنية",
-    "description": "حصّة افتتاح الفصل: الفرق بين الفنّ والتقنية، وبعد شغل على مقولة لبرغسون. الأستاذ باش يتأكّد قبل العودة المدرسية.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-31",
-    "startTime": "15:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-philosophie"],
-    "groupIds": ["g-bacsci-renfort"],
-    "room": "قاعة C2",
-    "recordingUrl": "https://www.youtube.com/watch?v=LtmNaSI0Qg8",
-    "publishedAt": "2026-08-10T12:00:00.000Z"
-  },
-  {
-    "id": "ses-26",
-    "title": "الاحتمالات الشرطية",
-    "description": "الشجرة الموزونة، صيغة الاحتمالات الكلّية والاستقلالية. نكمّلو بموضوع باك 2024 نصلحوه مع بعضنا.",
-    "academicYear": "2026/2027",
-    "date": "2026-08-01",
-    "startTime": "08:30",
-    "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-karim",
-    "room": "قاعة A3",
-    "recordingUrl": "https://www.youtube.com/watch?v=2R51u2FKTz8",
-    "publishedAt": "2026-08-11T09:30:00.000Z"
-  },
-  {
-    "id": "ses-27",
-    "title": "إصلاح الفرض التأليفي عدد 2",
-    "description": "رجوع سؤال بسؤال: الأغلاط اللي تتكرّر برشا، سلّم تنقيط مفصّل وتسليم الأوراق.",
-    "academicYear": "2026/2027",
-    "date": "2026-08-01",
-    "startTime": "11:00",
-    "endTime": "12:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-leila",
-    "room": "قاعة B12"
-  },
-  {
-    "id": "ses-28",
-    "title": "تدريب شفوي — مواضيع الباك",
-    "description": "تدريب على الاختبار الشفوي: عرض 3 دقائق على موضوع بالقرعة، وبعد أسئلة اللجنة.",
-    "academicYear": "2026/2027",
-    "date": "2026-08-01",
-    "startTime": "14:00",
-    "endTime": "15:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-anglais"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-nabil",
-    "room": "أونلاين"
-  },
-  {
-    "id": "ses-29",
-    "title": "التحضير للشفوي متاع الباك",
-    "description": "قراءة تحليلية لمقتطف وبعد مقابلة: كيفاش تتصرّف في وقت الكلام، إعادة الصياغة والمزالق اللي تتجنّبها.",
-    "academicYear": "2026/2027",
-    "date": "2026-08-01",
-    "startTime": "17:00",
-    "endTime": "18:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-francais"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-sonia",
-    "room": "قاعة C2"
-  },
-  {
-    "id": "ses-30",
-    "title": "فرض مراقبة عدد 3 — رياضيات",
-    "description": "ساعتين على المتتاليات والدوال الأسّية والاحتمالات. الآلة الحاسبة مسموحة وجدول الصيغ نعطيوهولكم.",
-    "academicYear": "2026/2027",
-    "date": "2026-08-03",
-    "startTime": "08:30",
-    "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-karim",
-    "room": "قاعة الامتحانات"
-  },
-  {
-    "id": "ses-31",
-    "title": "علوم الحياة — علم المناعة",
-    "description": "الاستجابة المناعية النوعية: اللمفاويات B و T، الذاكرة المناعية ورسم حوصلي باش يتكمّل.",
-    "academicYear": "2026/2027",
-    "date": "2026-08-07",
-    "startTime": "10:00",
-    "endTime": "11:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-renfort"],
-    "teacherId": "t-leila",
-    "room": "قاعة B12"
-  },
-  {
-    "id": "ses-rec-01",
-    "title": "الأعداد المركّبة — المقاربة الهندسية",
-    "description": "الطويلة والعمدة وتحويلات المستوي. زوز تمارين باك نصلحوهم في آخر الحصّة.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-07",
-    "startTime": "14:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-elite"],
-    "teacherId": "t-karim",
-    "room": "قاعة A5",
-    "semester": 1,
-    "recordingUrl": "https://www.youtube.com/watch?v=N3rldR7r3k0",
-    "publishedAt": "2026-07-08T20:00:00.000Z"
-  },
-  {
-    "id": "ses-rec-02",
-    "title": "حسابيات — مسائل على نمط الباك",
-    "description": "القابلية للقسمة، التوافقات ومبرهنة فيرما الصغرى، على مواضيع آخر خمس دورات.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-14",
-    "startTime": "14:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-elite"],
-    "teacherId": "t-karim",
-    "room": "قاعة A5",
-    "semester": 1,
-    "recordingUrl": "https://www.youtube.com/watch?v=NML7T8-2gNQ"
-  },
-  {
-    "id": "ses-rec-03",
-    "title": "فيزياء نووية — التناقص الإشعاعي",
-    "description": "قانون التناقص، فترة نصف العمر والتأريخ. استغلال منحنى تجريبي.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-16",
-    "startTime": "14:00",
-    "endTime": "15:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-elite"],
-    "teacherId": "t-leila",
-    "room": "مخبر 2",
-    "semester": 1,
-    "recordingUrl": "https://www.youtube.com/watch?v=O8LR7NsHzWs",
-    "publishedAt": "2026-08-10T09:15:00.000Z"
-  },
-  {
-    "id": "ses-rec-04",
-    "title": "منهجية المقال (Essay)",
-    "description": "كيفاش تبني إشكالية، ترتّب حججك وتهزّ بالك من المقدّمة.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-19",
-    "startTime": "17:00",
-    "endTime": "18:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-francais"],
-    "groupIds": ["g-bacsci-elite"],
-    "teacherId": "t-sonia",
-    "room": "قاعة C2",
-    "semester": 1,
-    "recordingUrl": "https://www.youtube.com/watch?v=SUhReGbMD_I"
-  },
-  {
-    "id": "ses-rec-05",
-    "title": "الدوال اللوغاريتمية — الأساسيات",
-    "description": "التعريف، الخاصيات الجبرية وأوّل المعادلات. حصّة تدارك.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-10",
-    "startTime": "08:30",
-    "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-a"],
-    "teacherId": "t-karim",
-    "room": "قاعة A1",
-    "semester": 1,
-    "recordingUrl": "https://www.youtube.com/watch?v=VJfV67SV4zo"
-  },
-  {
-    "id": "ses-rec-06",
-    "title": "المنعكس العضلي",
-    "description": "من المستقبل للمنفّذ: مسار الرسالة العصبية، المشبك وتسجيل كهربائي مشروح.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-17",
-    "startTime": "10:00",
-    "endTime": "11:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-a"],
-    "teacherId": "t-amel",
-    "room": "قاعة B12",
-    "semester": 1,
-    "recordingUrl": "https://www.youtube.com/watch?v=VPzGidiQ1os"
-  },
-  {
-    "id": "ses-rec-07",
-    "title": "المتتاليات التراجعية — المنهجيات",
-    "description": "الاستدلال بالتراجع، الرتابة والتقارب. التسجيل مازال في المونتاج.",
-    "academicYear": "2026/2027",
-    "date": "2026-07-27",
-    "startTime": "09:00",
-    "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-a"],
-    "teacherId": "t-karim",
-    "room": "قاعة A1",
-    "semester": 1
-  },
-  {
     "id": "ses-rec-10",
     "title": "المتتاليات العددية — التقارب",
     "description": "النهايات، مبرهنة الحصر والمتتاليات المتجاورة. أوّل حصّة في البرنامج.",
@@ -548,13 +7,41 @@
     "date": "2025-10-04",
     "startTime": "09:00",
     "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة A3",
     "semester": 1,
     "recordingUrl": "https://www.youtube.com/watch?v=WDNr-SEFae0"
+  },
+  {
+    "id": "ses-rec-15",
+    "title": "حساب المثلثات — تذكير ومعادلات",
+    "description": "الدائرة المثلثية، صيغ الجمع وحلّ المعادلات. حصّة الليل.",
+    "academicYear": "2025/2026",
+    "date": "2025-10-07",
+    "startTime": "18:00",
+    "endTime": "19:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-soir-2526"
+    ],
+    "teacherId": "t-karim",
+    "room": "أونلاين",
+    "semester": 1,
+    "recordingUrl": "https://www.youtube.com/watch?v=i1tmJkjKxu0"
   },
   {
     "id": "ses-rec-11",
@@ -564,9 +51,15 @@
     "date": "2025-10-11",
     "startTime": "10:00",
     "endTime": "11:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-leila",
     "room": "مخبر 1",
     "semester": 1,
@@ -580,9 +73,15 @@
     "date": "2025-11-08",
     "startTime": "09:00",
     "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة A3",
     "semester": 1,
@@ -596,9 +95,15 @@
     "date": "2025-11-15",
     "startTime": "08:30",
     "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-amel",
     "room": "قاعة B12",
     "semester": 1,
@@ -612,29 +117,19 @@
     "date": "2025-12-06",
     "startTime": "15:00",
     "endTime": "17:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-philosophie"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-hedi",
     "room": "قاعة C2",
     "semester": 1,
     "recordingUrl": "https://www.youtube.com/watch?v=hdCxgcvikIw"
-  },
-  {
-    "id": "ses-rec-15",
-    "title": "حساب المثلثات — تذكير ومعادلات",
-    "description": "الدائرة المثلثية، صيغ الجمع وحلّ المعادلات. حصّة الليل.",
-    "academicYear": "2025/2026",
-    "date": "2025-10-07",
-    "startTime": "18:00",
-    "endTime": "19:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-soir-2526"],
-    "teacherId": "t-karim",
-    "room": "أونلاين",
-    "semester": 1,
-    "recordingUrl": "https://www.youtube.com/watch?v=i1tmJkjKxu0"
   },
   {
     "id": "ses-rec-20",
@@ -644,9 +139,15 @@
     "date": "2026-01-17",
     "startTime": "09:00",
     "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة A3",
     "semester": 2,
@@ -660,13 +161,41 @@
     "date": "2026-01-24",
     "startTime": "10:00",
     "endTime": "11:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-leila",
     "room": "مخبر 1",
     "semester": 2,
     "recordingUrl": "https://www.youtube.com/watch?v=jvWmA-oGwC0"
+  },
+  {
+    "id": "ses-rec-24",
+    "title": "دارة RC — الشحن والتفريغ",
+    "description": "ثابت الزمن، المعادلة التفاضلية وقراءة راسم الذبذبات. حصّة الليل.",
+    "academicYear": "2025/2026",
+    "date": "2026-02-10",
+    "startTime": "18:00",
+    "endTime": "19:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-soir-2526"
+    ],
+    "teacherId": "t-leila",
+    "room": "أونلاين",
+    "semester": 2,
+    "recordingUrl": "https://www.youtube.com/watch?v=pk3U2t2obg8"
   },
   {
     "id": "ses-rec-22",
@@ -676,9 +205,15 @@
     "date": "2026-02-21",
     "startTime": "09:00",
     "endTime": "11:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة الامتحانات",
     "semester": 2,
@@ -692,29 +227,19 @@
     "date": "2026-03-07",
     "startTime": "08:30",
     "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-amel",
     "room": "قاعة B12",
     "semester": 2,
     "recordingUrl": "https://www.youtube.com/watch?v=ox_GS9JRJNI"
-  },
-  {
-    "id": "ses-rec-24",
-    "title": "دارة RC — الشحن والتفريغ",
-    "description": "ثابت الزمن، المعادلة التفاضلية وقراءة راسم الذبذبات. حصّة الليل.",
-    "academicYear": "2025/2026",
-    "date": "2026-02-10",
-    "startTime": "18:00",
-    "endTime": "19:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-soir-2526"],
-    "teacherId": "t-leila",
-    "room": "أونلاين",
-    "semester": 2,
-    "recordingUrl": "https://www.youtube.com/watch?v=pk3U2t2obg8"
   },
   {
     "id": "ses-rec-30",
@@ -724,9 +249,15 @@
     "date": "2026-04-11",
     "startTime": "09:00",
     "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة A3",
     "semester": 3,
@@ -740,9 +271,15 @@
     "date": "2026-04-25",
     "startTime": "10:00",
     "endTime": "11:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-leila",
     "room": "مخبر 2",
     "semester": 3,
@@ -756,9 +293,15 @@
     "date": "2026-05-09",
     "startTime": "08:30",
     "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-amel",
     "room": "قاعة B12",
     "semester": 3,
@@ -772,9 +315,15 @@
     "date": "2026-05-16",
     "startTime": "09:00",
     "endTime": "11:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة الامتحانات",
     "semester": 3,
@@ -789,9 +338,15 @@
     "date": "2026-05-23",
     "startTime": "15:00",
     "endTime": "17:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-philosophie"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-hedi",
     "room": "قاعة C2",
     "semester": 3,
@@ -805,9 +360,15 @@
     "date": "2026-06-06",
     "startTime": "18:00",
     "endTime": "20:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-soir-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-soir-2526"
+    ],
     "teacherId": "t-karim",
     "room": "أونلاين",
     "semester": 3,
@@ -821,12 +382,977 @@
     "date": "2026-06-13",
     "startTime": "08:30",
     "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-a-2526"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-a-2526"
+    ],
     "teacherId": "t-amel",
     "room": "قاعة B12",
     "semester": 3
+  },
+  {
+    "id": "ses-rec-01",
+    "title": "الأعداد المركّبة — المقاربة الهندسية",
+    "description": "الطويلة والعمدة وتحويلات المستوي. زوز تمارين باك نصلحوهم في آخر الحصّة.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-07",
+    "startTime": "14:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-elite"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A5",
+    "semester": 1,
+    "recordingUrl": "https://www.youtube.com/watch?v=N3rldR7r3k0",
+    "publishedAt": "2026-07-08T20:00:00.000Z"
+  },
+  {
+    "id": "ses-rec-05",
+    "title": "الدوال اللوغاريتمية — الأساسيات",
+    "description": "التعريف، الخاصيات الجبرية وأوّل المعادلات. حصّة تدارك.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-10",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A1",
+    "semester": 1,
+    "recordingUrl": "https://www.youtube.com/watch?v=VJfV67SV4zo"
+  },
+  {
+    "id": "ses-rec-02",
+    "title": "حسابيات — مسائل على نمط الباك",
+    "description": "القابلية للقسمة، التوافقات ومبرهنة فيرما الصغرى، على مواضيع آخر خمس دورات.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-14",
+    "startTime": "14:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-elite"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A5",
+    "semester": 1,
+    "recordingUrl": "https://www.youtube.com/watch?v=NML7T8-2gNQ"
+  },
+  {
+    "id": "ses-05",
+    "title": "الهندسة في الفضاء",
+    "academicYear": "2026/2027",
+    "date": "2026-07-16",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-9"
+    ],
+    "subjectIds": [
+      "subj-9-mathematiques"
+    ],
+    "groupIds": [
+      "g-9-a"
+    ],
+    "teacherId": "t-karim"
+  },
+  {
+    "id": "ses-rec-03",
+    "title": "فيزياء نووية — التناقص الإشعاعي",
+    "description": "قانون التناقص، فترة نصف العمر والتأريخ. استغلال منحنى تجريبي.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-16",
+    "startTime": "14:00",
+    "endTime": "15:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-elite"
+    ],
+    "teacherId": "t-leila",
+    "room": "مخبر 2",
+    "semester": 1,
+    "recordingUrl": "https://www.youtube.com/watch?v=O8LR7NsHzWs",
+    "publishedAt": "2026-08-10T09:15:00.000Z"
+  },
+  {
+    "id": "ses-rec-06",
+    "title": "المنعكس العضلي",
+    "description": "من المستقبل للمنفّذ: مسار الرسالة العصبية، المشبك وتسجيل كهربائي مشروح.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-17",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-a"
+    ],
+    "teacherId": "t-amel",
+    "room": "قاعة B12",
+    "semester": 1,
+    "recordingUrl": "https://www.youtube.com/watch?v=VPzGidiQ1os"
+  },
+  {
+    "id": "ses-13",
+    "title": "الفهم الكتابي",
+    "academicYear": "2026/2027",
+    "date": "2026-07-18",
+    "startTime": "11:00",
+    "endTime": "12:00",
+    "yearIds": [
+      "y-2-sci"
+    ],
+    "subjectIds": [
+      "subj-2-sci-francais"
+    ],
+    "groupIds": [
+      "g-2sci-excellents",
+      "g-2sci-b"
+    ],
+    "teacherId": "t-sonia"
+  },
+  {
+    "id": "ses-rec-04",
+    "title": "منهجية المقال (Essay)",
+    "description": "كيفاش تبني إشكالية، ترتّب حججك وتهزّ بالك من المقدّمة.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-19",
+    "startTime": "17:00",
+    "endTime": "18:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-francais"
+    ],
+    "groupIds": [
+      "g-bacsci-elite"
+    ],
+    "teacherId": "t-sonia",
+    "room": "قاعة C2",
+    "semester": 1,
+    "recordingUrl": "https://www.youtube.com/watch?v=SUhReGbMD_I"
+  },
+  {
+    "id": "ses-01",
+    "title": "مراجعة — التكاملات",
+    "description": "تمارين على نمط الباك في الحساب التكاملي والدوال الأصلية.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-20",
+    "startTime": "09:00",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3",
+    "recordingUrl": "https://www.youtube.com/watch?v=2R51u2FKTz8",
+    "publishedAt": "2026-07-21T10:00:00.000Z"
+  },
+  {
+    "id": "ses-02",
+    "title": "المتتاليات العددية",
+    "academicYear": "2026/2027",
+    "date": "2026-07-21",
+    "startTime": "14:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-math"
+    ],
+    "subjectIds": [
+      "subj-bac-math-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacmath-elite"
+    ],
+    "teacherId": "t-karim"
+  },
+  {
+    "id": "ses-08",
+    "title": "أشغال تطبيقية — البصريات الهندسية",
+    "description": "تجربة: العدسات الرقيقة وتكوّن الصور.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-21",
+    "startTime": "14:00",
+    "endTime": "15:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-leila",
+    "room": "مخبر 1",
+    "recordingUrl": "https://www.youtube.com/watch?v=AVT5DcI3rcE"
+  },
+  {
+    "id": "ses-03",
+    "title": "الدوال — الاشتقاق",
+    "academicYear": "2026/2027",
+    "date": "2026-07-22",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-2-sci"
+    ],
+    "subjectIds": [
+      "subj-2-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-2sci-excellents"
+    ],
+    "teacherId": "t-karim"
+  },
+  {
+    "id": "ses-17",
+    "title": "تدريب على المحادثة (Speaking)",
+    "description": "نقاش موجّه: technology & society.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-22",
+    "startTime": "15:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-nabil",
+    "room": "أونلاين",
+    "recordingUrl": "https://www.youtube.com/watch?v=F82qXP7dBa8"
+  },
+  {
+    "id": "ses-09",
+    "title": "كهرباء — دارات RC",
+    "academicYear": "2026/2027",
+    "date": "2026-07-24",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-2-sci"
+    ],
+    "subjectIds": [
+      "subj-2-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-2sci-excellents"
+    ],
+    "teacherId": "t-leila"
+  },
+  {
+    "id": "ses-04",
+    "title": "فرض تجريبي — رياضيات",
+    "description": "فرض تأليفي مشترك بين الشعب العلمية.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-25",
+    "startTime": "09:00",
+    "endTime": "11:00",
+    "yearIds": [
+      "y-bac-sci",
+      "y-bac-math"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques",
+      "subj-bac-math-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort",
+      "g-bacmath-elite"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة الامتحانات",
+    "semester": 1,
+    "recordingUrl": "https://www.youtube.com/watch?v=3Ej21PFBmKk"
+  },
+  {
+    "id": "ses-14",
+    "title": "المقال — المنهجية",
+    "description": "الخطّة الجدلية: أطروحة، نقيض، تركيب.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-26",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-francais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-sonia",
+    "room": "قاعة C2",
+    "recordingUrl": "https://www.youtube.com/watch?v=DzidvUhAGpY",
+    "publishedAt": "2026-07-27T08:00:00.000Z"
+  },
+  {
+    "id": "ses-21",
+    "title": "أشغال تطبيقية كيمياء — معايرة حمضية قاعدية",
+    "description": "تجربة بالثنائي: تحضير السحّاحة، تحديد نقطة التكافؤ واستغلال المنحنى pH = f(V).",
+    "academicYear": "2026/2027",
+    "date": "2026-07-27",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-leila",
+    "room": "مخبر 1",
+    "recordingUrl": "https://www.youtube.com/watch?v=GQsmDZE5dV4",
+    "publishedAt": "2026-07-28T19:00:00.000Z"
+  },
+  {
+    "id": "ses-10",
+    "title": "ميكانيك — القوى",
+    "academicYear": "2026/2027",
+    "date": "2026-07-27",
+    "startTime": "09:00",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-9"
+    ],
+    "subjectIds": [
+      "subj-9-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-9-a"
+    ],
+    "teacherId": "t-leila"
+  },
+  {
+    "id": "ses-rec-07",
+    "title": "المتتاليات التراجعية — المنهجيات",
+    "description": "الاستدلال بالتراجع، الرتابة والتقارب. التسجيل مازال في المونتاج.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-27",
+    "startTime": "09:00",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-a"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A1",
+    "semester": 1
+  },
+  {
+    "id": "ses-27",
+    "title": "إصلاح الفرض التأليفي عدد 2",
+    "description": "رجوع سؤال بسؤال: الأغلاط اللي تتكرّر برشا، سلّم تنقيط مفصّل وتسليم الأوراق.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-28",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-leila",
+    "room": "قاعة B12"
+  },
+  {
+    "id": "ses-06",
+    "title": "الأعداد المركّبة",
+    "description": "الشكل الجبري، الطويلة والعمدة.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-28",
+    "startTime": "14:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-math"
+    ],
+    "subjectIds": [
+      "subj-bac-math-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacmath-elite"
+    ],
+    "teacherId": "t-karim"
+  },
+  {
+    "id": "ses-22",
+    "title": "الدوال الأسّية",
+    "description": "الخاصيات الجبرية، المشتقّ، النهايات وأوّل المعادلات. سلسلة تمارين نوزّعوها في آخر الحصّة.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-28",
+    "startTime": "14:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3",
+    "recordingUrl": "https://www.youtube.com/watch?v=GqxaJ8sY6lA",
+    "publishedAt": "2026-08-09T14:25:00.000Z"
+  },
+  {
+    "id": "ses-15",
+    "title": "تحليل نصّ",
+    "academicYear": "2026/2027",
+    "date": "2026-07-29",
+    "startTime": "09:00",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-9"
+    ],
+    "subjectIds": [
+      "subj-9-francais"
+    ],
+    "groupIds": [
+      "g-9-a"
+    ],
+    "teacherId": "t-sonia"
+  },
+  {
+    "id": "ses-28",
+    "title": "تدريب شفوي — مواضيع الباك",
+    "description": "تدريب على الاختبار الشفوي: عرض 3 دقائق على موضوع بالقرعة، وبعد أسئلة اللجنة.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-29",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-nabil",
+    "room": "أونلاين"
+  },
+  {
+    "id": "ses-29",
+    "title": "التحضير للشفوي متاع الباك",
+    "description": "قراءة تحليلية لمقتطف وبعد مقابلة: كيفاش تتصرّف في وقت الكلام، إعادة الصياغة والمزالق اللي تتجنّبها.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-30",
+    "startTime": "09:00",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-francais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-sonia",
+    "room": "قاعة C2"
+  },
+  {
+    "id": "ses-23",
+    "title": "علوم الحياة — الوراثة والخلط الصبغي",
+    "description": "الانقسام الاختزالي، الخلط بين الصبغيات وداخلها، وبعد قراءة شجرة نسب.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-30",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-leila",
+    "room": "قاعة B12",
+    "recordingUrl": "https://www.youtube.com/watch?v=JniICVZWGQk",
+    "publishedAt": "2026-08-09T20:10:00.000Z"
+  },
+  {
+    "id": "ses-11",
+    "title": "الموجات الميكانيكية المتقدّمة",
+    "academicYear": "2026/2027",
+    "date": "2026-07-30",
+    "startTime": "14:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-math"
+    ],
+    "subjectIds": [
+      "subj-bac-math-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacmath-elite"
+    ],
+    "teacherId": "t-leila"
+  },
+  {
+    "id": "ses-24",
+    "title": "الموجات والتداخل",
+    "description": "تراكب زوز موجات، شروط التداخل وتمارين على نمط الباك على الشقّين.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-31",
+    "startTime": "09:00",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-leila",
+    "room": "قاعة B12",
+    "recordingUrl": "https://www.youtube.com/watch?v=Juluo572AZg",
+    "publishedAt": "2026-08-10T18:45:00.000Z"
+  },
+  {
+    "id": "ses-18",
+    "title": "مراجعة القواعد (Grammar)",
+    "academicYear": "2026/2027",
+    "date": "2026-07-31",
+    "startTime": "10:00",
+    "endTime": "11:00",
+    "yearIds": [
+      "y-9"
+    ],
+    "subjectIds": [
+      "subj-9-anglais"
+    ],
+    "groupIds": [
+      "g-9-a"
+    ],
+    "teacherId": "t-nabil"
+  },
+  {
+    "id": "ses-25",
+    "title": "فلسفة — الفنّ والتقنية",
+    "description": "حصّة افتتاح الفصل: الفرق بين الفنّ والتقنية، وبعد شغل على مقولة لبرغسون. الأستاذ باش يتأكّد قبل العودة المدرسية.",
+    "academicYear": "2026/2027",
+    "date": "2026-07-31",
+    "startTime": "15:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "room": "قاعة C2",
+    "recordingUrl": "https://www.youtube.com/watch?v=LtmNaSI0Qg8",
+    "publishedAt": "2026-08-10T12:00:00.000Z"
+  },
+  {
+    "id": "ses-26",
+    "title": "الاحتمالات الشرطية",
+    "description": "الشجرة الموزونة، صيغة الاحتمالات الكلّية والاستقلالية. نكمّلو بموضوع باك 2024 نصلحوه مع بعضنا.",
+    "academicYear": "2026/2027",
+    "date": "2026-08-01",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3",
+    "recordingUrl": "https://www.youtube.com/watch?v=2R51u2FKTz8",
+    "publishedAt": "2026-08-11T09:30:00.000Z"
+  },
+  {
+    "id": "ses-07",
+    "title": "الإحصاء الوصفي",
+    "academicYear": "2026/2027",
+    "date": "2026-08-03",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-2-sci"
+    ],
+    "subjectIds": [
+      "subj-2-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-2sci-excellents",
+      "g-2sci-b"
+    ],
+    "teacherId": "t-karim"
+  },
+  {
+    "id": "ses-30",
+    "title": "فرض مراقبة عدد 3 — رياضيات",
+    "description": "ساعتين على المتتاليات والدوال الأسّية والاحتمالات. الآلة الحاسبة مسموحة وجدول الصيغ نعطيوهولكم.",
+    "academicYear": "2026/2027",
+    "date": "2026-08-03",
+    "startTime": "08:30",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة الامتحانات"
+  },
+  {
+    "id": "ses-100",
+    "title": "الدارة RLC الحرّة — أشغال تطبيقية",
+    "academicYear": "2026/2027",
+    "date": "2026-08-03",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "مخبر الفيزياء",
+    "recordingUrl": "https://www.youtube.com/watch?v=NML7T8-2gNQ",
+    "publishedAt": "2026-08-04T18:30:00.000Z"
+  },
+  {
+    "id": "ses-19",
+    "title": "الفهم القرائي (Reading)",
+    "academicYear": "2026/2027",
+    "date": "2026-08-04",
+    "startTime": "08:30",
+    "endTime": "09:30",
+    "yearIds": [
+      "y-2-sci"
+    ],
+    "subjectIds": [
+      "subj-2-sci-anglais"
+    ],
+    "groupIds": [
+      "g-2sci-excellents"
+    ],
+    "teacherId": "t-nabil"
+  },
+  {
+    "id": "ses-101",
+    "title": "المناعة — الاستجابة المناعية الخلطية",
+    "academicYear": "2026/2027",
+    "date": "2026-08-04",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-amel",
+    "room": "مخبر 1",
+    "recordingUrl": "https://www.youtube.com/watch?v=O8LR7NsHzWs",
+    "publishedAt": "2026-08-05T18:30:00.000Z"
+  },
+  {
+    "id": "ses-102",
+    "title": "Commentaire composé — la méthode pas à pas",
+    "academicYear": "2026/2027",
+    "date": "2026-08-04",
+    "startTime": "14:00",
+    "endTime": "15:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-francais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-sonia",
+    "room": "قاعة C4",
+    "recordingUrl": "https://www.youtube.com/watch?v=SUhReGbMD_I",
+    "publishedAt": "2026-08-05T18:30:00.000Z"
+  },
+  {
+    "id": "ses-12",
+    "title": "كيمياء — حركية التفاعلات",
+    "description": "سرعة التفاعل، العوامل الحركية واستغلال منحنى تجريبي. جيب معاك الآلة الحاسبة.",
+    "academicYear": "2026/2027",
+    "date": "2026-08-05",
+    "startTime": "09:00",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-leila",
+    "room": "مخبر 2"
+  },
+  {
+    "id": "ses-103",
+    "title": "Reading comprehension — Bac past papers",
+    "academicYear": "2026/2027",
+    "date": "2026-08-06",
+    "startTime": "09:00",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-nabil",
+    "room": "قاعة A1"
+  },
+  {
+    "id": "ses-104",
+    "title": "التذبذبات الكهربائية القسرية",
+    "academicYear": "2026/2027",
+    "date": "2026-08-06",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "مخبر 1",
+    "recordingUrl": "https://www.youtube.com/watch?v=VPzGidiQ1os",
+    "publishedAt": "2026-08-07T18:30:00.000Z"
+  },
+  {
+    "id": "ses-105",
+    "title": "الأعداد المركّبة — الشكل المثلثي",
+    "academicYear": "2026/2027",
+    "date": "2026-08-07",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3",
+    "recordingUrl": "https://www.youtube.com/watch?v=WDNr-SEFae0",
+    "publishedAt": "2026-08-08T18:30:00.000Z"
+  },
+  {
+    "id": "ses-31",
+    "title": "علوم الحياة — علم المناعة",
+    "description": "الاستجابة المناعية النوعية: اللمفاويات B و T، الذاكرة المناعية ورسم حوصلي باش يتكمّل.",
+    "academicYear": "2026/2027",
+    "date": "2026-08-07",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-leila",
+    "room": "قاعة B12"
+  },
+  {
+    "id": "ses-16",
+    "title": "التعبير الشفوي",
+    "academicYear": "2026/2027",
+    "date": "2026-08-07",
+    "startTime": "11:00",
+    "endTime": "12:00",
+    "yearIds": [
+      "y-2-sci"
+    ],
+    "subjectIds": [
+      "subj-2-sci-francais"
+    ],
+    "groupIds": [
+      "g-2sci-b"
+    ],
+    "teacherId": "t-sonia"
+  },
+  {
+    "id": "ses-106",
+    "title": "منهجية تحليل النصّ الفلسفي",
+    "academicYear": "2026/2027",
+    "date": "2026-08-08",
+    "startTime": "10:00",
+    "endTime": "12:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-hedi",
+    "room": "قاعة C2",
+    "recordingUrl": "https://www.youtube.com/watch?v=b-QOe3JHjQA",
+    "publishedAt": "2026-08-09T18:30:00.000Z"
+  },
+  {
+    "id": "ses-107",
+    "title": "المتتاليات — الاستدلال بالتراجع",
+    "academicYear": "2026/2027",
+    "date": "2026-08-10",
+    "startTime": "09:00",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3"
+  },
+  {
+    "id": "ses-20",
+    "title": "ورشة كتابة (Writing)",
+    "description": "كتابة موجّهة لمقال حجاجي: الخطّة، أدوات الربط والقراءة المتبادلة.",
+    "academicYear": "2026/2027",
+    "date": "2026-08-10",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-nabil",
+    "room": "أونلاين"
+  },
+  {
+    "id": "ses-108",
+    "title": "الموجات الضوئية — ظاهرة الحيود",
+    "academicYear": "2026/2027",
+    "date": "2026-08-11",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "مخبر الفيزياء",
+    "recordingUrl": "https://www.youtube.com/watch?v=gGH6mUq-ioc",
+    "publishedAt": "2026-08-12T18:30:00.000Z"
   },
   {
     "id": "ses-40",
@@ -836,9 +1362,15 @@
     "date": "2026-08-11",
     "startTime": "16:00",
     "endTime": "17:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-amel",
     "room": "قاعة B12"
   },
@@ -849,11 +1381,36 @@
     "date": "2026-08-12",
     "startTime": "09:00",
     "endTime": "11:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة A3"
+  },
+  {
+    "id": "ses-45",
+    "title": "حسابيات — إصلاح مسائل الباك",
+    "academicYear": "2026/2027",
+    "date": "2026-08-12",
+    "startTime": "14:00",
+    "endTime": "16:00",
+    "yearIds": [
+      "y-bac-math"
+    ],
+    "subjectIds": [
+      "subj-bac-math-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacmath-elite"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A1"
   },
   {
     "id": "ses-42",
@@ -862,11 +1419,78 @@
     "date": "2026-08-13",
     "startTime": "08:30",
     "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-mourad",
     "room": "مخبر الفيزياء"
+  },
+  {
+    "id": "ses-46",
+    "title": "انكسار الضوء — تمارين",
+    "academicYear": "2026/2027",
+    "date": "2026-08-13",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-9"
+    ],
+    "subjectIds": [
+      "subj-9-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-9-a"
+    ],
+    "teacherId": "t-mourad",
+    "room": "قاعة C4"
+  },
+  {
+    "id": "ses-109",
+    "title": "علم الوراثة البشرية — الأمراض الوراثية",
+    "academicYear": "2026/2027",
+    "date": "2026-08-13",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-amel",
+    "room": "قاعة C2",
+    "recordingUrl": "https://www.youtube.com/watch?v=hdCxgcvikIw",
+    "publishedAt": "2026-08-14T18:30:00.000Z"
+  },
+  {
+    "id": "ses-110",
+    "title": "الدوال اللوغاريتمية — دراسة وتمارين",
+    "academicYear": "2026/2027",
+    "date": "2026-08-14",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A5",
+    "recordingUrl": "https://www.youtube.com/watch?v=i1tmJkjKxu0",
+    "publishedAt": "2026-08-15T18:30:00.000Z"
   },
   {
     "id": "ses-43",
@@ -875,11 +1499,36 @@
     "date": "2026-08-14",
     "startTime": "15:00",
     "endTime": "16:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-anglais"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-nabil",
     "room": "على الخطّ"
+  },
+  {
+    "id": "ses-111",
+    "title": "الشعور واللاشعور — تحليل",
+    "academicYear": "2026/2027",
+    "date": "2026-08-15",
+    "startTime": "10:00",
+    "endTime": "12:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-hedi",
+    "room": "قاعة C2"
   },
   {
     "id": "ses-44",
@@ -889,37 +1538,39 @@
     "date": "2026-08-17",
     "startTime": "09:00",
     "endTime": "11:00",
-    "yearIds": ["y-bac-sci", "y-bac-math"],
-    "subjectIds": ["subj-bac-sci-mathematiques", "subj-bac-math-mathematiques"],
-    "groupIds": ["g-bacsci-renfort", "g-bacmath-elite"],
+    "yearIds": [
+      "y-bac-sci",
+      "y-bac-math"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques",
+      "subj-bac-math-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort",
+      "g-bacmath-elite"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة الامتحانات"
   },
   {
-    "id": "ses-45",
-    "title": "حسابيات — إصلاح مسائل الباك",
+    "id": "ses-112",
+    "title": "الكيمياء — التفاعلات الحمضية القاعدية",
     "academicYear": "2026/2027",
-    "date": "2026-08-12",
-    "startTime": "14:00",
-    "endTime": "16:00",
-    "yearIds": ["y-bac-math"],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "groupIds": ["g-bacmath-elite"],
-    "teacherId": "t-karim",
-    "room": "قاعة A1"
-  },
-  {
-    "id": "ses-46",
-    "title": "انكسار الضوء — تمارين",
-    "academicYear": "2026/2027",
-    "date": "2026-08-13",
-    "startTime": "10:00",
-    "endTime": "11:30",
-    "yearIds": ["y-9"],
-    "subjectIds": ["subj-9-sciences-physiques"],
-    "groupIds": ["g-9-a"],
+    "date": "2026-08-17",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-mourad",
-    "room": "قاعة C4"
+    "room": "مخبر 2"
   },
   {
     "id": "ses-47",
@@ -929,11 +1580,36 @@
     "date": "2026-08-18",
     "startTime": "09:00",
     "endTime": "10:30",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-mathematiques"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-karim",
     "room": "قاعة A3"
+  },
+  {
+    "id": "ses-113",
+    "title": "L'essai argumentatif — plan et transitions",
+    "academicYear": "2026/2027",
+    "date": "2026-08-18",
+    "startTime": "14:00",
+    "endTime": "15:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-francais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-sonia",
+    "room": "قاعة C4"
   },
   {
     "id": "ses-48",
@@ -943,9 +1619,15 @@
     "date": "2026-08-19",
     "startTime": "14:00",
     "endTime": "16:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-philosophie"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-hedi",
     "room": "قاعة B12"
   },
@@ -957,11 +1639,55 @@
     "date": "2026-08-20",
     "startTime": "08:30",
     "endTime": "10:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-mourad",
     "room": "مخبر الفيزياء"
+  },
+  {
+    "id": "ses-114",
+    "title": "الدوال الأسّية — تطبيقات على نمط الباك",
+    "academicYear": "2026/2027",
+    "date": "2026-08-20",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3"
+  },
+  {
+    "id": "ses-115",
+    "title": "الهندسة في الفضاء — الجداء السلّمي",
+    "academicYear": "2026/2027",
+    "date": "2026-08-21",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A5"
   },
   {
     "id": "ses-50",
@@ -970,11 +1696,36 @@
     "date": "2026-08-21",
     "startTime": "15:00",
     "endTime": "16:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-anglais"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-nabil",
     "room": "على الخطّ"
+  },
+  {
+    "id": "ses-116",
+    "title": "العلم والحقيقة",
+    "academicYear": "2026/2027",
+    "date": "2026-08-22",
+    "startTime": "10:00",
+    "endTime": "12:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-hedi",
+    "room": "قاعة C4"
   },
   {
     "id": "ses-51",
@@ -984,10 +1735,531 @@
     "date": "2026-08-24",
     "startTime": "09:00",
     "endTime": "11:00",
-    "yearIds": ["y-bac-sci"],
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
     "teacherId": "t-amel",
     "room": "قاعة B12"
+  },
+  {
+    "id": "ses-117",
+    "title": "معايرة حمض–قاعدة — أشغال مخبرية",
+    "academicYear": "2026/2027",
+    "date": "2026-08-24",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "مخبر 2"
+  },
+  {
+    "id": "ses-118",
+    "title": "الوراثة عند ثنائيات الصيغة الصبغية",
+    "academicYear": "2026/2027",
+    "date": "2026-08-25",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-amel",
+    "room": "قاعة C2"
+  },
+  {
+    "id": "ses-119",
+    "title": "Étude de texte — le registre polémique",
+    "academicYear": "2026/2027",
+    "date": "2026-08-25",
+    "startTime": "14:00",
+    "endTime": "15:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-francais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-sonia",
+    "room": "قاعة C2"
+  },
+  {
+    "id": "ses-120",
+    "title": "الحساب التكاملي — الدوال الأصلية",
+    "academicYear": "2026/2027",
+    "date": "2026-08-26",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3"
+  },
+  {
+    "id": "ses-121",
+    "title": "Writing workshop — the argumentative essay",
+    "academicYear": "2026/2027",
+    "date": "2026-08-27",
+    "startTime": "09:00",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-nabil",
+    "room": "قاعة A1"
+  },
+  {
+    "id": "ses-122",
+    "title": "الميكانيك — قوانين نيوتن الثلاثة",
+    "academicYear": "2026/2027",
+    "date": "2026-08-27",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "قاعة B12"
+  },
+  {
+    "id": "ses-123",
+    "title": "فرض تأليفي عدد 1 — رياضيات",
+    "academicYear": "2026/2027",
+    "date": "2026-08-28",
+    "startTime": "08:30",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة الامتحانات",
+    "description": "فرض تأليفي مشترك بين الشعب العلمية. جيبوا الآلة الحاسبة والمسطرة."
+  },
+  {
+    "id": "ses-124",
+    "title": "الدولة والحقّ",
+    "academicYear": "2026/2027",
+    "date": "2026-08-29",
+    "startTime": "10:00",
+    "endTime": "12:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-hedi",
+    "room": "قاعة C2"
+  },
+  {
+    "id": "ses-125",
+    "title": "إصلاح فرض المراقبة عدد 4",
+    "academicYear": "2026/2027",
+    "date": "2026-08-31",
+    "startTime": "09:00",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A5"
+  },
+  {
+    "id": "ses-126",
+    "title": "التحوّلات النووية — النشاط الإشعاعي",
+    "academicYear": "2026/2027",
+    "date": "2026-08-31",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "قاعة B12"
+  },
+  {
+    "id": "ses-127",
+    "title": "التكاثر عند الإنسان — التنظيم الهرموني",
+    "academicYear": "2026/2027",
+    "date": "2026-09-01",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-amel",
+    "room": "قاعة C4"
+  },
+  {
+    "id": "ses-128",
+    "title": "Préparation à l'oral — présenter une œuvre",
+    "academicYear": "2026/2027",
+    "date": "2026-09-01",
+    "startTime": "14:00",
+    "endTime": "15:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-francais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-sonia",
+    "room": "أونلاين"
+  },
+  {
+    "id": "ses-129",
+    "title": "تمارين تركيبية — تحليل",
+    "academicYear": "2026/2027",
+    "date": "2026-09-02",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3"
+  },
+  {
+    "id": "ses-130",
+    "title": "Language in context — tenses review",
+    "academicYear": "2026/2027",
+    "date": "2026-09-03",
+    "startTime": "09:00",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-nabil",
+    "room": "أونلاين"
+  },
+  {
+    "id": "ses-131",
+    "title": "المجموعات الكيميائية في حالة توازن",
+    "academicYear": "2026/2027",
+    "date": "2026-09-03",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "مخبر 2"
+  },
+  {
+    "id": "ses-132",
+    "title": "فرض تأليفي عدد 1 — علوم فيزيائية",
+    "academicYear": "2026/2027",
+    "date": "2026-09-04",
+    "startTime": "08:30",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "قاعة الامتحانات",
+    "description": "الفرض يغطّي الميكانيك والكيمياء."
+  },
+  {
+    "id": "ses-133",
+    "title": "الحرّية والمسؤولية",
+    "academicYear": "2026/2027",
+    "date": "2026-09-05",
+    "startTime": "10:00",
+    "endTime": "12:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-hedi",
+    "room": "قاعة C4"
+  },
+  {
+    "id": "ses-134",
+    "title": "المستقيمات والمستويات في الفضاء",
+    "academicYear": "2026/2027",
+    "date": "2026-09-07",
+    "startTime": "09:00",
+    "endTime": "10:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A5"
+  },
+  {
+    "id": "ses-135",
+    "title": "التذبذبات الكهربائية القسرية",
+    "academicYear": "2026/2027",
+    "date": "2026-09-07",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "مخبر 1"
+  },
+  {
+    "id": "ses-136",
+    "title": "النقل العصبي — المشابك",
+    "academicYear": "2026/2027",
+    "date": "2026-09-08",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-amel",
+    "room": "مخبر 1"
+  },
+  {
+    "id": "ses-137",
+    "title": "Commentaire composé — la méthode pas à pas",
+    "academicYear": "2026/2027",
+    "date": "2026-09-08",
+    "startTime": "14:00",
+    "endTime": "15:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-francais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-sonia",
+    "room": "قاعة C4"
+  },
+  {
+    "id": "ses-138",
+    "title": "الأعداد المركّبة — الشكل المثلثي",
+    "academicYear": "2026/2027",
+    "date": "2026-09-09",
+    "startTime": "10:00",
+    "endTime": "11:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3"
+  },
+  {
+    "id": "ses-139",
+    "title": "Speaking — mock oral exam",
+    "academicYear": "2026/2027",
+    "date": "2026-09-10",
+    "startTime": "09:00",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-anglais"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-nabil",
+    "room": "قاعة A1"
+  },
+  {
+    "id": "ses-140",
+    "title": "الموجات الضوئية — ظاهرة الحيود",
+    "academicYear": "2026/2027",
+    "date": "2026-09-10",
+    "startTime": "15:00",
+    "endTime": "16:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-mourad",
+    "room": "مخبر الفيزياء"
+  },
+  {
+    "id": "ses-141",
+    "title": "المتتاليات — الاستدلال بالتراجع",
+    "academicYear": "2026/2027",
+    "date": "2026-09-11",
+    "startTime": "08:30",
+    "endTime": "10:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-mathematiques"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-karim",
+    "room": "قاعة A3"
+  },
+  {
+    "id": "ses-142",
+    "title": "الجيولوجيا — تشوّهات القشرة الأرضية",
+    "academicYear": "2026/2027",
+    "date": "2026-09-11",
+    "startTime": "14:00",
+    "endTime": "15:30",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-amel",
+    "room": "قاعة C2"
+  },
+  {
+    "id": "ses-143",
+    "title": "منهجية تحليل النصّ الفلسفي",
+    "academicYear": "2026/2027",
+    "date": "2026-09-12",
+    "startTime": "10:00",
+    "endTime": "12:00",
+    "yearIds": [
+      "y-bac-sci"
+    ],
+    "subjectIds": [
+      "subj-bac-sci-philosophie"
+    ],
+    "groupIds": [
+      "g-bacsci-renfort"
+    ],
+    "teacherId": "t-hedi",
+    "room": "قاعة C2"
   }
 ]

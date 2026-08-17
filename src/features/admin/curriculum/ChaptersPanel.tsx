@@ -197,7 +197,7 @@ export function ChaptersPanel({ year, subject }: { year: Year; subject: Subject 
                       {parts.length > 0 ? parts.join(" · ") : "ما فماش محتوى — حلّ باش تزيد"}
                     </p>
                   </div>
-                  <ChevronLeft className="mt-2 size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600" />
+                  <ChevronLeft className="mt-2 size-5 shrink-0 text-ink-muted transition group-hover:text-brand-600 ltr:rotate-180" />
                   <div onClick={(e) => e.stopPropagation()}>
                     <OverflowMenu
                       actions={[

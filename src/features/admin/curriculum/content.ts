@@ -7,10 +7,10 @@ export const LESSON_KINDS: Record<
   LessonKind,
   { label: string; icon: LucideIcon; tone: BadgeTone; hasVideo: boolean }
 > = {
-  cours: { label: "دروس", icon: BookOpen, tone: "brand", hasVideo: true },
-  exercice: { label: "تمرين", icon: PencilRuler, tone: "info", hasVideo: true },
-  serie: { label: "سلسلة", icon: FileText, tone: "warning", hasVideo: false },
-  resume: { label: "ملخّص", icon: ScrollText, tone: "success", hasVideo: false },
+  cours: { label: "Cours", icon: BookOpen, tone: "brand", hasVideo: true },
+  exercice: { label: "Exercice", icon: PencilRuler, tone: "info", hasVideo: true },
+  serie: { label: "Série", icon: FileText, tone: "warning", hasVideo: false },
+  resume: { label: "Résumé", icon: ScrollText, tone: "success", hasVideo: false },
 }
 
 /** Ordered list of kinds for filters / selects. */

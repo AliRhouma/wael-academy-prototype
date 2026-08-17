@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { CalendarOff, CheckCircle2, Hourglass, PlayCircle, Video } from "lucide-react"
+import { CalendarOff } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { SubjectIcon } from "@/components/icons/subjects"
 import { HomeworkDot, homeworkAria } from "@/features/student/calendar/HomeworkDot"
@@ -7,7 +7,6 @@ import {
   PX_PER_MIN,
   STATE_LABEL,
   cardTiming,
-  formatDuration,
   layoutDay,
   minutesNow,
   minutesOf,
@@ -38,12 +37,6 @@ const CARD_SKIN: Record<SessionState, string> = {
   prevue: "border-border bg-surface hover:border-brand-200",
 }
 
-const PILL: Record<SessionState, string> = {
-  terminee: "bg-neutral-100 text-neutral-600",
-  "en-cours": "bg-danger-50 text-danger-700",
-  prevue: "bg-brand-50 text-brand-700",
-}
-
 /**
  * Élève — one day on a real time axis: an hour gutter, a card per séance placed
  * at its actual time and sized by its actual duration, and a red « maintenant »
@@ -52,9 +45,10 @@ const PILL: Record<SessionState, string> = {
  * The grid owns the ONLY scrollport on the page, and parks itself on the séance
  * the élève is heading towards — the next one to start, or "maintenant" once the
  * day is behind them. A calendar that opens at 07:00 when it's 15:00 is a
- * calendar you have to fight. Cards are generous on purpose: this is one élève's
- * day, not the academy's whole board, so there is room to read the matière, the
- * enseignant and the salle without opening anything.
+ * calendar you have to fight. A card says the matière and the heure and stops
+ * there — the title, the salle, the durée and the description are one tap away
+ * in the fiche, and on the grid they buried the only question the élève is
+ * actually asking: « quoi, et à quelle heure ? ».
  */
 export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: DayTimelineProps) {
   const visual = useSessionVisual()
@@ -138,7 +132,6 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
             const state = sessionState(session, now)
             const { subjectName, theme, tint } = visual(session)
             const done = state === "terminee"
-            const hasReplay = Boolean(session.recordingUrl)
             const isNext = session.id === nextId && state !== "en-cours"
             const homeworks = homeworkOf(session)
 
@@ -163,7 +156,7 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                     .filter(Boolean)
                     .join("، ")}
                   className={cn(
-                    "group relative flex size-full items-start gap-3 overflow-hidden rounded-lg border p-3 ps-4 text-start shadow-sm transition",
+                    "group relative flex size-full items-center gap-3 overflow-hidden rounded-lg border p-3 ps-4 text-start shadow-sm transition",
                     "hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
                     "motion-safe:hover:-translate-y-0.5",
                     CARD_SKIN[state],
@@ -202,104 +195,33 @@ export function DayTimeline({ day, sessions, now, isToday, nextId, onOpen }: Day
                     <SubjectIcon name={subjectName ?? ""} className="relative size-9" />
                   </span>
 
-                  <span className="flex min-w-0 flex-1 flex-col self-stretch">
-                    <span
-                      className={cn(
-                        "flex flex-wrap items-center gap-x-2 gap-y-1",
-                        homeworks.length > 0 && "pe-5",
-                      )}
-                    >
-                      <span className="text-[calc(12px*var(--ts))] font-semibold tabular-nums text-ink-subtle">
-                        <span className="num">{session.startTime} – {session.endTime}</span>
-                      </span>
-                      <span
-                        className={cn(
-                          "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[calc(10.5px*var(--ts))] font-medium",
-                          PILL[state],
-                        )}
-                      >
-                        {state === "en-cours" && (
-                          <span className="relative flex size-1.5">
-                            <span className="absolute inline-flex size-full rounded-full bg-danger-500 motion-safe:animate-ping" />
-                            <span className="relative inline-flex size-1.5 rounded-full bg-danger-500" />
-                          </span>
-                        )}
-                        {done && <CheckCircle2 className="size-2.5" />}
-                        {STATE_LABEL[state]}
-                      </span>
-
-                      {/* How far away it is, in words — the countdown at card
-                          level, so the grid answers "when?" without a tap. */}
-                      <span
-                        className={cn(
-                          "text-[calc(11px*var(--ts))] font-medium",
-                          state === "en-cours"
-                            ? "text-danger-600"
-                            : isNext
-                              ? "text-brand-600"
-                              : "text-ink-muted",
-                        )}
-                      >
-                        {cardTiming(session, now)}
-                      </span>
-                    </span>
-
+                  {/* Matière and heure — nothing else. Le titre, la salle, la
+                      durée et la description vivent dans la fiche qu'un tap
+                      ouvre; sur la grille ils noyaient la seule question que
+                      l'élève pose ici : « quoi, et à quelle heure ? ». */}
+                  <span
+                    className={cn(
+                      "flex min-w-0 flex-1 flex-col justify-center gap-0.5",
+                      homeworks.length > 0 && "pe-5",
+                    )}
+                  >
                     <span
                       dir="auto"
                       className={cn(
-                        "mt-1 line-clamp-2 font-display text-[calc(15px*var(--ts))] font-bold leading-snug",
+                        "truncate font-display text-[calc(15px*var(--ts))] font-bold leading-snug",
                         done ? "text-ink-subtle" : "text-ink",
                       )}
                     >
-                      {session.title}
+                      {subjectName}
                     </span>
 
-                    <span dir="auto" className="mt-0.5 truncate text-[calc(12px*var(--ts))] text-ink-muted">
-                      {[subjectName, session.room].filter(Boolean).join(" · ")}
-                      {subjectName || session.room ? " · " : ""}
-                      {formatDuration(session.startTime, session.endTime)}
-                    </span>
-
-                    {/* A long séance gets a tall card — let it earn the height
-                        instead of leaving a hole under the title. Desktop only:
-                        at ~390px the card is narrow enough that the title already
-                        eats the budget, and a clipped half-line reads as a bug. */}
-                    {height >= 150 && session.description && (
-                      <span className="hidden min-h-0 sm:block">
-                        <span
-                          dir="auto"
-                          className="mt-1.5 line-clamp-2 text-[calc(12px*var(--ts))] leading-relaxed text-ink-subtle"
-                        >
-                          {session.description}
-                        </span>
-                      </span>
-                    )}
-
-                    {/* The promise the modal keeps. */}
                     <span
                       className={cn(
-                        "mt-2 inline-flex items-center gap-1.5 text-[calc(12px*var(--ts))] font-medium",
-                        done && !hasReplay
-                          ? "text-ink-muted"
-                          : "text-brand-600 group-hover:text-brand-700",
+                        "text-[calc(12px*var(--ts))] font-semibold tabular-nums",
+                        state === "en-cours" ? "text-danger-600" : "text-ink-muted",
                       )}
                     >
-                      {done ? (
-                        hasReplay ? (
-                          <>
-                            <PlayCircle className="size-3.5" /> شوف التسجيل
-                          </>
-                        ) : (
-                          <>
-                            <Hourglass className="size-3.5" /> التسجيل في التحضير
-                          </>
-                        )
-                      ) : (
-                        <>
-                          <Video className="size-3.5" />
-                          {state === "en-cours" ? "ادخل توّا" : "ادخل"}
-                        </>
-                      )}
+                      <span className="num">{session.startTime} – {session.endTime}</span>
                     </span>
                   </span>
                 </button>

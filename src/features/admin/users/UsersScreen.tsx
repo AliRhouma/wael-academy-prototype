@@ -28,10 +28,10 @@ const INPUT =
 
 /** Role → French label + badge tone (each tone means one thing — foundations §2). */
 const ROLE: Record<Role, { label: string; tone: BadgeTone }> = {
-  admin: { label: "أدمين", tone: "info" },
-  teacher: { label: "أستاذ", tone: "brand" },
-  parent: { label: "ولي", tone: "warning" },
-  student: { label: "تلميذ", tone: "neutral" },
+  admin: { label: "Admin", tone: "info" },
+  teacher: { label: "Enseignant", tone: "brand" },
+  parent: { label: "Parent", tone: "warning" },
+  student: { label: "Élève", tone: "neutral" },
 }
 
 const ROLE_ORDER: Role[] = ["admin", "teacher", "parent", "student"]
@@ -45,34 +45,34 @@ const day = (iso: string) => DAY.format(new Date(iso))
 
 /**
  * The table's columns, as toggleable defs. `locked` columns (the identity cell)
- * can't be hidden; `defaultOn: false` ones start hidden behind the "الأعمدة"
+ * can't be hidden; `defaultOn: false` ones start hidden behind the "Colonnes"
  * menu so the default view stays scannable.
  */
 const COLUMN_DEFS: { key: string; label: string; locked?: boolean; defaultOn: boolean }[] = [
-  { key: "name", label: "مستعمل", locked: true, defaultOn: true },
-  { key: "role", label: "الدور", defaultOn: true },
-  { key: "phone", label: "الرقم", defaultOn: true },
-  { key: "email", label: "الإيميل", defaultOn: true },
-  { key: "years", label: "السنة/السنوات", defaultOn: true },
-  { key: "city", label: "المدينة", defaultOn: false },
-  { key: "town", label: "المنطقة", defaultOn: false },
-  { key: "school", label: "المدرسة", defaultOn: false },
-  { key: "moyenne", label: "المعدّل العام", defaultOn: false },
-  { key: "createdAt", label: "تعمل نهار", defaultOn: false },
-  { key: "updatedAt", label: "تبدّل نهار", defaultOn: true },
+  { key: "name", label: "Utilisateur", locked: true, defaultOn: true },
+  { key: "role", label: "Rôle", defaultOn: true },
+  { key: "phone", label: "Téléphone", defaultOn: true },
+  { key: "email", label: "E-mail", defaultOn: true },
+  { key: "years", label: "Année(s)", defaultOn: true },
+  { key: "city", label: "Ville", defaultOn: false },
+  { key: "town", label: "Quartier", defaultOn: false },
+  { key: "school", label: "École", defaultOn: false },
+  { key: "moyenne", label: "Moyenne générale", defaultOn: false },
+  { key: "createdAt", label: "Créé le", defaultOn: false },
+  { key: "updatedAt", label: "Modifié le", defaultOn: true },
 ]
 
 /** Field → French label, used to write the history summary of an edit. */
 const FIELD_LABEL: Record<string, string> = {
-  name: "الاسم",
-  phone: "التليفون",
-  email: "الإيميل",
-  role: "الدور",
-  yearIds: "السنوات",
-  city: "المدينة",
-  town: "المنطقة",
-  school: "المدرسة",
-  moyenneGenerale: "المعدّل العام",
+  name: "Nom",
+  phone: "Téléphone",
+  email: "E-mail",
+  role: "Rôle",
+  yearIds: "Années",
+  city: "Ville",
+  town: "Quartier",
+  school: "École",
+  moyenneGenerale: "Moyenne générale",
 }
 
 /** Admin — the people of the academy: one table over every role, filterable. */
@@ -188,7 +188,7 @@ export default function AdminUsersScreen() {
     // Phone is the unique identifier — refuse a duplicate with an inline error.
     const taken = users.some((u) => u.phone.trim() === trimmedPhone && u.id !== editing?.id)
     if (taken) {
-      setPhoneError("الرقم هذا مستعمل من قبل في مستعمل آخر.")
+      setPhoneError("Ce numéro est déjà utilisé par un autre utilisateur.")
       return
     }
 
@@ -239,10 +239,10 @@ export default function AdminUsersScreen() {
         // A no-op pair (both empty, e.g. "" vs undefined) isn't a real change.
         .filter((c) => c.before !== c.after)
       updateUser(editing.id, patch, changes)
-      show("المستعمل تبدّل")
+      show("Utilisateur modifié")
     } else {
       addUser(patch)
-      show("المستعمل تزاد")
+      show("Utilisateur ajouté")
     }
     setFormOpen(false)
   }
@@ -250,14 +250,14 @@ export default function AdminUsersScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeUser(deleteTarget.id)
-    show("المستعمل تمسح")
+    show("Utilisateur supprimé")
     setDeleteTarget(null)
   }
 
   const allColumns: Column<User>[] = [
     {
       key: "name",
-      header: "مستعمل",
+      header: "Utilisateur",
       render: (u) => (
         <div className="flex items-center gap-3">
           <Avatar name={u.name} />
@@ -269,12 +269,12 @@ export default function AdminUsersScreen() {
     },
     {
       key: "role",
-      header: "الدور",
+      header: "Rôle",
       render: (u) => <Badge tone={ROLE[u.role].tone}>{ROLE[u.role].label}</Badge>,
     },
     {
       key: "phone",
-      header: "الرقم",
+      header: "Téléphone",
       render: (u) => (
         <span dir="ltr" className="tabular-nums text-ink-subtle">
           {u.phone}
@@ -283,12 +283,12 @@ export default function AdminUsersScreen() {
     },
     {
       key: "email",
-      header: "الإيميل",
+      header: "E-mail",
       render: (u) => (u.email ? <span className="text-ink-subtle">{u.email}</span> : dash),
     },
     {
       key: "years",
-      header: "السنة/السنوات",
+      header: "Année(s)",
       render: (u) =>
         u.yearIds && u.yearIds.length > 0 ? (
           <span className="text-ink-subtle">
@@ -300,22 +300,22 @@ export default function AdminUsersScreen() {
     },
     {
       key: "city",
-      header: "المدينة",
+      header: "Ville",
       render: (u) => (u.city ? <span className="text-ink-subtle">{u.city}</span> : dash),
     },
     {
       key: "town",
-      header: "المنطقة",
+      header: "Quartier",
       render: (u) => (u.town ? <span className="text-ink-subtle">{u.town}</span> : dash),
     },
     {
       key: "school",
-      header: "المدرسة",
+      header: "École",
       render: (u) => (u.school ? <span className="text-ink-subtle">{u.school}</span> : dash),
     },
     {
       key: "moyenne",
-      header: "المعدّل",
+      header: "Moyenne",
       render: (u) =>
         u.moyenneGenerale != null ? (
           <span className="tabular-nums text-ink-subtle">
@@ -328,12 +328,12 @@ export default function AdminUsersScreen() {
     },
     {
       key: "createdAt",
-      header: "تعمل نهار",
+      header: "Créé le",
       render: (u) => <span className="whitespace-nowrap text-ink-subtle">{day(u.createdAt)}</span>,
     },
     {
       key: "updatedAt",
-      header: "تبدّل نهار",
+      header: "Modifié le",
       render: (u) => (
         <span className="whitespace-nowrap text-ink-subtle">
           {day(u.updatedAt)}
@@ -360,7 +360,7 @@ export default function AdminUsersScreen() {
   )
 
   const filters: { key: Role | "all"; label: string; count: number }[] = [
-    { key: "all", label: "الكل", count: users.length },
+    { key: "all", label: "Tous", count: users.length },
     ...ROLE_ORDER.map((r) => ({
       key: r,
       label: `${ROLE[r].label}s`,
@@ -375,7 +375,7 @@ export default function AdminUsersScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="المستعملين"
+        title="Utilisateurs"
         subtitle={`${users.length} شخص — تلامذة وأساتذة وأولياء وإدارة.`}
         action={!isEmpty ? addButton : undefined}
       />
@@ -384,8 +384,8 @@ export default function AdminUsersScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={UsersIcon}
-            title="ما فماش مستعملين"
-            description="زيد التلامذة والأساتذة والأولياء متاع الأكاديمية."
+            title="Aucun utilisateur"
+            description="Ajoutez les élèves, les enseignants et les parents de l'académie."
             action={addButton}
           />
         </div>
@@ -428,7 +428,7 @@ export default function AdminUsersScreen() {
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="لوّج على اسم ولا رقم…"
+                  placeholder="Rechercher un nom ou un numéro…"
                   className={INPUT + " ps-9"}
                 />
               </div>
@@ -438,12 +438,12 @@ export default function AdminUsersScreen() {
                 <DropdownMenu.Trigger asChild>
                   <button
                     type="button"
-                    aria-label="اختار الأعمدة"
-                    title="الأعمدة المعروضة"
+                    aria-label="Choisir les colonnes"
+                    title="Colonnes affichées"
                     className="inline-flex h-11 shrink-0 items-center gap-2 rounded-md border border-border-strong bg-surface px-3.5 text-sm font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
                   >
                     <Settings2 className="size-4" />
-                    <span className="hidden sm:inline">الأعمدة</span>
+                    <span className="hidden sm:inline">Colonnes</span>
                     <span className="rounded-full bg-neutral-100 px-1.5 text-xs tabular-nums text-ink-muted">
                       {visibleCols.size}
                     </span>
@@ -505,16 +505,16 @@ export default function AdminUsersScreen() {
             rows={rows}
             rowKey={(u) => u.id}
             rowActions={(u) => [
-              { label: "التاريخ", icon: History, onClick: () => setHistoryTarget(u) },
-              { label: "بدّل", icon: Pencil, onClick: () => openEdit(u) },
-              { label: "امسح", icon: Trash2, tone: "danger", onClick: () => setDeleteTarget(u) },
+              { label: "Historique", icon: History, onClick: () => setHistoryTarget(u) },
+              { label: "Modifier", icon: Pencil, onClick: () => openEdit(u) },
+              { label: "Supprimer", icon: Trash2, tone: "danger", onClick: () => setDeleteTarget(u) },
             ]}
             empty={
               <div className="rounded-lg border border-dashed border-border bg-surface">
                 <EmptyState
                   icon={Search}
-                  title="ما فماش نتائج"
-                  description="ما فماش مستعمل يوافق الفلتر ولا البحث هذا."
+                  title="Aucun résultat"
+                  description="Aucun utilisateur ne correspond à ce filtre ou à cette recherche."
                 />
               </div>
             }
@@ -525,9 +525,9 @@ export default function AdminUsersScreen() {
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "بدّل المستعمل" : "مستعمل جديد"}
-        description={editing ? undefined : "زيد واحد للأكاديمية."}
-        submitLabel={editing ? "سجّل" : "زيد"}
+        title={editing ? "Modifier l'utilisateur" : "Nouvel utilisateur"}
+        description={editing ? undefined : "Ajoutez quelqu'un à l'académie."}
+        submitLabel={editing ? "Enregistrer" : "Ajouter"}
         onSubmit={submit}
       >
         <label className="block">

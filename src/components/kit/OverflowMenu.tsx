@@ -2,6 +2,7 @@ import { MoreVertical } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { DropdownMenu } from "radix-ui"
 import { cn } from "@/lib/utils"
+import { useT } from "@/i18n/strings"
 
 export interface OverflowAction {
   label: string
@@ -18,11 +19,12 @@ export interface OverflowAction {
  */
 export function OverflowMenu({
   actions,
-  label = "إجراءات",
+  label,
 }: {
   actions: OverflowAction[]
   label?: string
 }) {
+  const t = useT()
   if (actions.length === 0) return null
 
   return (
@@ -30,7 +32,7 @@ export function OverflowMenu({
       <DropdownMenu.Trigger asChild>
         <button
           type="button"
-          aria-label={label}
+          aria-label={label ?? t.actions}
           className="grid size-11 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring md:size-9"
         >
           <MoreVertical className="size-[18px]" />

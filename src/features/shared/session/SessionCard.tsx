@@ -4,6 +4,7 @@ import { Badge } from "@/components/kit/Badge"
 import { formatSessionDay, formatTimeRange, nowStamp, sessionStamp } from "@/lib/utils"
 import type { Session } from "@/data/types"
 import { useSessionLabels } from "./sessionLabels"
+import { tagOf, useLocale } from "@/i18n/locale"
 
 /**
  * One séance as a card — a date tile, title + time range + teacher, then the
@@ -12,6 +13,7 @@ import { useSessionLabels } from "./sessionLabels"
  * omit it for read-only agendas. Past sessions read a touch quieter.
  */
 export function SessionCard({ session, actions }: { session: Session; actions?: ReactNode }) {
+  const locale = useLocale()
   const { teacherName, subjectNames, groupNames } = useSessionLabels()
   const teacher = teacherName(session.teacherId)
   const groups = groupNames(session.groupIds)
@@ -20,7 +22,7 @@ export function SessionCard({ session, actions }: { session: Session; actions?: 
 
   // Date tile parts (e.g. "lun." / "20").
   const day = new Date(`${session.date}T00:00:00`)
-  const weekday = day.toLocaleDateString("ar-TN-u-nu-latn", { weekday: "short" }).replace(".", "")
+  const weekday = day.toLocaleDateString(tagOf(locale), { weekday: "short" }).replace(".", "")
   const dayNum = day.getDate()
 
   return (
@@ -49,7 +51,7 @@ export function SessionCard({ session, actions }: { session: Session; actions?: 
           </span>
           {teacher ? <> · {teacher}</> : null}
           <> · <span className="tabular-nums">{session.academicYear}</span></>
-          {isPast ? <> · <span className="text-ink-muted">فاتت</span></> : null}
+          {isPast ? <> · <span className="text-ink-muted">{locale === "ar" ? "فاتت" : "passée"}</span></> : null}
         </p>
 
         {groups.length > 0 && (

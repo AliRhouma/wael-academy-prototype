@@ -34,20 +34,20 @@ function ResourceForm({
     <div className="space-y-3 rounded-md border border-brand-200 bg-brand-50/40 p-3">
       <label className="block">
         <span className="mb-1.5 block text-[calc(13px*var(--ts))] font-medium text-ink-subtle">
-          الاسم <span className="font-normal text-ink-muted">(اختياري)</span>
+          الاسم <span className="font-normal text-ink-muted">(optionnel)</span>
         </span>
         <input
           className={INPUT + " text-start"}
           dir="auto"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="مثال: بطاقة مراجعة — التكاملات"
+          placeholder="ex. Fiche de révision — les intégrales"
           autoFocus
         />
       </label>
 
       <div>
-        <span className="mb-1.5 block text-[calc(13px*var(--ts))] font-medium text-ink-subtle">ملفّ PDF</span>
+        <span className="mb-1.5 block text-[calc(13px*var(--ts))] font-medium text-ink-subtle">Fichier PDF</span>
         <input
           ref={fileRef}
           type="file"
@@ -94,7 +94,7 @@ function ResourceForm({
           onClick={() => onSave(name.trim() || undefined, fileName.trim())}
           className="inline-flex h-10 items-center gap-1.5 rounded-md bg-grad px-3.5 text-sm font-medium text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-50"
         >
-          <Check className="size-4" /> {initial ? "سجّل" : "زيد"}
+          <Check className="size-4" /> {initial ? "Enregistrer" : "Ajouter"}
         </button>
       </div>
     </div>
@@ -263,7 +263,7 @@ export function ResourcePicker({
                 <div className="flex shrink-0 items-center">
                   <button
                     type="button"
-                    aria-label="بدّل المورد"
+                    aria-label="Modifier la ressource"
                     onClick={() => setEditing(r.id)}
                     className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
                   >
@@ -271,7 +271,7 @@ export function ResourcePicker({
                   </button>
                   <button
                     type="button"
-                    aria-label="امسح المورد"
+                    aria-label="Supprimer la ressource"
                     onClick={() => setConfirmDelete(r.id)}
                     className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-danger-50 hover:text-danger-600"
                   >

@@ -7,6 +7,8 @@ import { Badge } from "@/components/kit/Badge"
 import { Avatar } from "@/components/kit/Avatar"
 import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
+import { formatDT } from "@/features/shared/payments/paymentLib"
+import { allRows } from "@/features/shared/promo/promoLib"
 import { useData } from "@/stores/useData"
 import type { PromoCode, PromoOfferRule } from "@/data/types"
 import { PromoCodeFormSheet } from "./PromoCodeFormSheet"
@@ -18,7 +20,7 @@ const INPUT =
 /** "-20 %" / "-30 د.ت" — the discount of one per-offer rule. */
 function ruleLabel(r: PromoOfferRule): string {
   if (r.discountPct != null) return `-${r.discountPct} %`
-  if (r.discountAmount != null) return `-${r.discountAmount} د.ت`
+  if (r.discountAmount != null) return `-${r.discountAmount} DT`
   return "—"
 }
 
@@ -31,6 +33,7 @@ export default function AdminPromoCodesScreen() {
   const promoCodes = useData((s) => s.promoCodes)
   const offers = useData((s) => s.offers)
   const users = useData((s) => s.users)
+  const redemptions = useData((s) => s.promoRedemptions)
   const removePromoCode = useData((s) => s.removePromoCode)
   const { show, toast } = useToast()
 
@@ -41,6 +44,14 @@ export default function AdminPromoCodesScreen() {
 
   const offerName = useMemo(() => new Map(offers.map((o) => [o.id, o.name])), [offers])
   const userName = useMemo(() => new Map(users.map((u) => [u.id, u.name])), [users])
+
+  /** Dinars each code has earned its provider — summed from real redemptions. */
+  const earnedByCode = useMemo(() => {
+    const map = new Map<string, number>()
+    for (const r of allRows(redemptions, promoCodes, offers, users))
+      map.set(r.code.id, (map.get(r.code.id) ?? 0) + r.providerGets)
+    return map
+  }, [redemptions, promoCodes, offers, users])
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -67,16 +78,16 @@ export default function AdminPromoCodesScreen() {
   async function copyCode(p: PromoCode) {
     try {
       await navigator.clipboard.writeText(p.code)
-      show(`الكود «${p.code}» تنسخ`)
+      show(`Code « ${p.code} » copié`)
     } catch {
-      show("ما نجّمناش ننسخو الكود")
+      show("Impossible de copier le code")
     }
   }
 
   function confirmDelete() {
     if (!deleteTarget) return
     removePromoCode(deleteTarget.id)
-    show("كود التخفيض تمسح")
+    show("Code promo supprimé")
     setDeleteTarget(null)
   }
 
@@ -86,7 +97,7 @@ export default function AdminPromoCodesScreen() {
       onClick={openAdd}
       className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 md:h-10"
     >
-      <Plus className="size-4" /> كود تخفيض جديد
+      <Plus className="size-4" /> Nouveau code promo
     </button>
   )
 
@@ -95,8 +106,8 @@ export default function AdminPromoCodesScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="أكواد التخفيض"
-        subtitle={`${promoCodes.length} كود — تخفيضات حسب العرض، محدودة بعدد الاستعمالات.`}
+        title="Codes promo"
+        subtitle={`${promoCodes.length} codes — remises par offre, limitées en nombre d'utilisations.`}
         action={!isEmpty ? addButton : undefined}
       />
 
@@ -108,7 +119,7 @@ export default function AdminPromoCodesScreen() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="لوّج على كود ولا عرض…"
+              placeholder="Rechercher un code ou une offre…"
               className={INPUT + " ps-9"}
             />
           </div>
@@ -119,8 +130,8 @@ export default function AdminPromoCodesScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={TicketPercent}
-            title="ما فماش أكواد تخفيض"
-            description="ولّد كود، اختار العروض المعنية والتخفيض متاع كل وحدة."
+            title="Aucun code promo"
+            description="Générez un code, choisissez les offres concernées et la remise de chacune."
             action={addButton}
           />
         </div>
@@ -128,8 +139,8 @@ export default function AdminPromoCodesScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Search}
-            title="ما فماش نتائج"
-            description="ما فماش كود يوافق البحث هذا."
+            title="Aucun résultat"
+            description="Aucun code ne correspond à cette recherche."
           />
         </div>
       ) : (
@@ -151,15 +162,35 @@ export default function AdminPromoCodesScreen() {
                     <button
                       type="button"
                       onClick={() => copyCode(p)}
-                      title="انسخ الكود"
+                      title="Copier le code"
                       className="group inline-flex items-center gap-1.5 rounded-md border border-dashed border-border-strong bg-surface-muted px-2.5 py-1 font-display text-[calc(15px*var(--ts))] font-bold tracking-[.08em] text-ink transition hover:border-brand-300 hover:text-brand-700"
                     >
                       {p.code}
                       <Copy className="size-3.5 text-ink-muted transition group-hover:text-brand-600" />
                     </button>
                     <Badge tone={exhausted ? "danger" : "success"} dot>
-                      {exhausted ? "تكمّل" : "فعّال"}
+                      {exhausted ? "Épuisé" : "Actif"}
                     </Badge>
+                  </div>
+
+                  {/* Who earns on it. A code with no provider is a house
+                      campaign — say so rather than leaving a blank line. */}
+                  <div className="mt-2 flex items-center gap-2">
+                    {p.providerUserId ? (
+                      <>
+                        <Avatar name={userName.get(p.providerUserId) ?? "?"} size="sm" />
+                        <span className="min-w-0 flex-1 truncate text-[calc(12.5px*var(--ts))] text-ink-subtle">
+                          {userName.get(p.providerUserId) ?? "Utilisateur supprimé"}
+                        </span>
+                        <span className="shrink-0 font-display text-[calc(13px*var(--ts))] font-bold tabular-nums text-success-700">
+                          <span className="num">+{formatDT(earnedByCode.get(p.id) ?? 0)}</span>
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-[calc(12.5px*var(--ts))] text-ink-muted">
+                        Code de l'académie — sans fournisseur
+                      </span>
+                    )}
                   </div>
 
                   {/* Per-offer discounts. */}
@@ -170,10 +201,15 @@ export default function AdminPromoCodesScreen() {
                         className="flex items-baseline justify-between gap-3 text-[calc(13px*var(--ts))]"
                       >
                         <span dir="auto" className="min-w-0 truncate text-ink-subtle">
-                          {offerName.get(r.offerId) ?? "العرض تمسح"}
+                          {offerName.get(r.offerId) ?? "Offre supprimée"}
                         </span>
                         <span className="shrink-0 font-medium tabular-nums text-accent2-700">
                           {ruleLabel(r)}
+                          {r.cases && r.cases.length > 0 && (
+                            <span className="ms-1.5 font-normal text-ink-muted">
+                              · <span className="num">{r.cases.length}</span> formule(s)
+                            </span>
+                          )}
                         </span>
                       </li>
                     ))}
@@ -183,8 +219,8 @@ export default function AdminPromoCodesScreen() {
                   <div className="mt-2.5">
                     <p className="text-[calc(12px*var(--ts))] tabular-nums text-ink-muted">
                       {p.maxUses != null
-                        ? `${used}/${p.maxUses} استعمال`
-                        : `${used} استعمال · بلا حدّ`}
+                        ? `${used}/${p.maxUses} utilisations`
+                        : `${used} utilisations · illimité`}
                     </p>
                     {p.maxUses != null && (
                       <div className="mt-1.5 h-1.5 w-full max-w-[180px] overflow-hidden rounded-full bg-neutral-100">
@@ -219,10 +255,10 @@ export default function AdminPromoCodesScreen() {
                 </div>
                 <OverflowMenu
                   actions={[
-                    { label: "انسخ الكود", icon: Copy, onClick: () => copyCode(p) },
-                    { label: "بدّل", icon: Pencil, onClick: () => openEdit(p) },
+                    { label: "Copier le code", icon: Copy, onClick: () => copyCode(p) },
+                    { label: "Modifier", icon: Pencil, onClick: () => openEdit(p) },
                     {
-                      label: "امسح",
+                      label: "Supprimer",
                       icon: Trash2,
                       tone: "danger",
                       onClick: () => setDeleteTarget(p),
@@ -245,9 +281,9 @@ export default function AdminPromoCodesScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="تحبّ تمسح كود التخفيض هذا؟"
+        title="Supprimer ce code promo ?"
         description={
-          deleteTarget ? `«${deleteTarget.code}» ما عادش ينجّم يتستعمل.` : undefined
+          deleteTarget ? `« ${deleteTarget.code} » ne pourra plus être utilisé.` : undefined
         }
         onConfirm={confirmDelete}
       />

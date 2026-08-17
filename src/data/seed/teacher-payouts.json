@@ -1,0 +1,54 @@
+[
+  {
+    "id": "pay-leila-juil",
+    "teacherId": "t-leila",
+    "amount": 520,
+    "periodStart": "2026-07-01",
+    "periodEnd": "2026-07-31",
+    "note": "جويلية — حصص المراجعة الصيفية",
+    "createdAt": "2026-08-02T09:00:00.000Z"
+  },
+  {
+    "id": "pay-leila-aout",
+    "teacherId": "t-leila",
+    "amount": 140,
+    "periodStart": "2026-08-01",
+    "periodEnd": "2026-08-31",
+    "note": "أوت — شهر خفيف، عطلة",
+    "createdAt": "2026-08-14T17:20:00.000Z"
+  },
+  {
+    "id": "pay-sonia-juil",
+    "teacherId": "t-sonia",
+    "amount": 300,
+    "periodStart": "2026-07-01",
+    "periodEnd": "2026-07-31",
+    "createdAt": "2026-08-01T10:30:00.000Z"
+  },
+  {
+    "id": "pay-sonia-aout",
+    "teacherId": "t-sonia",
+    "amount": 260,
+    "periodStart": "2026-08-01",
+    "periodEnd": "2026-08-31",
+    "note": "زدنا 20 د.ت على التحضير للشفوي",
+    "createdAt": "2026-08-15T08:45:00.000Z"
+  },
+  {
+    "id": "pay-amel-aout",
+    "teacherId": "t-amel",
+    "amount": 340,
+    "periodStart": "2026-08-01",
+    "periodEnd": "2026-08-31",
+    "createdAt": "2026-08-13T12:15:00.000Z"
+  },
+  {
+    "id": "pay-amel-prime",
+    "teacherId": "t-amel",
+    "amount": 150,
+    "periodStart": "2026-06-01",
+    "periodEnd": "2026-06-30",
+    "note": "منحة تصحيح الباك التجريبي — بلا حصص",
+    "createdAt": "2026-07-04T15:00:00.000Z"
+  }
+]

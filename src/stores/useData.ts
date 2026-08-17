@@ -12,6 +12,7 @@ import type {
   Offer,
   Path,
   PromoCode,
+  PromoRedemption,
   Quiz,
   QuizExam,
   Resource,
@@ -20,6 +21,9 @@ import type {
   Subject,
   Subscription,
   Teacher,
+  TeacherPayMode,
+  TeacherPayout,
+  TeacherRate,
   Transaction,
   User,
   UserFieldChange,
@@ -29,6 +33,8 @@ import type {
 } from "@/data/types"
 import studentsSeed from "@/data/seed/students.json"
 import teachersSeed from "@/data/seed/teachers.json"
+import teacherRatesSeed from "@/data/seed/teacher-rates.json"
+import teacherPayoutsSeed from "@/data/seed/teacher-payouts.json"
 import coursesSeed from "@/data/seed/courses.json"
 import groupsSeed from "@/data/seed/groups.json"
 import sessionsSeed from "@/data/seed/sessions.json"
@@ -45,6 +51,7 @@ import usersSeed from "@/data/seed/users.json"
 import accessesSeed from "@/data/seed/accesses.json"
 import subscriptionsSeed from "@/data/seed/subscriptions.json"
 import promoCodesSeed from "@/data/seed/promo-codes.json"
+import promoRedemptionsSeed from "@/data/seed/promo-redemptions.json"
 import chatMessagesSeed from "@/data/seed/chat-messages.json"
 import transactionsSeed from "@/data/seed/transactions.json"
 import resourcesSeed from "@/data/seed/resources.json"
@@ -76,6 +83,8 @@ interface DataState {
   subscriptions: Subscription[]
   transactions: Transaction[]
   promoCodes: PromoCode[]
+  /** Every USE of a promo code — the provider's earnings are derived from these. */
+  promoRedemptions: PromoRedemption[]
   chatMessages: ChatMessage[]
   users: User[]
   resources: Resource[]
@@ -83,6 +92,10 @@ interface DataState {
   homeworks: Homework[]
   videoComments: VideoComment[]
   videoReactions: VideoReaction[]
+  /** AUTO mode — price-per-séance history, one row per change. */
+  teacherRates: TeacherRate[]
+  /** MANUAL mode — an amount the admin handed a prof for a period. */
+  teacherPayouts: TeacherPayout[]
 
   // Years CRUD
   addYear: (input: Omit<Year, "id">) => Year
@@ -155,6 +168,10 @@ interface DataState {
   updatePromoCode: (id: string, patch: Partial<Omit<PromoCode, "id">>) => void
   removePromoCode: (id: string) => void
 
+  /** Redeem a code — records the use and adds the user to its used-by list. */
+  addPromoRedemption: (input: Omit<PromoRedemption, "id">) => PromoRedemption
+  removePromoRedemption: (id: string) => void
+
   // Chat messages (messagerie élève ↔ administration)
   /** Sends a message — `at` is stamped by the store. */
   addChatMessage: (input: Omit<ChatMessage, "id" | "at">) => ChatMessage
@@ -187,6 +204,24 @@ interface DataState {
     ref: { kind: VideoComment["kind"]; videoId: string; userId: string },
     value: "like" | "dislike" | null,
   ) => void
+
+  /**
+   * Teacher pay — ADMIN side. The prof's own screen only reads the numbers
+   * these produce; it never learns which mode is set.
+   */
+  setTeacherPayMode: (teacherId: string, mode: TeacherPayMode) => void
+  addTeacherRate: (input: Omit<TeacherRate, "id" | "createdAt">) => TeacherRate
+  updateTeacherRate: (
+    id: string,
+    patch: Partial<Omit<TeacherRate, "id" | "teacherId" | "createdAt">>,
+  ) => void
+  removeTeacherRate: (id: string) => void
+  addTeacherPayout: (input: Omit<TeacherPayout, "id" | "createdAt">) => TeacherPayout
+  updateTeacherPayout: (
+    id: string,
+    patch: Partial<Omit<TeacherPayout, "id" | "teacherId" | "createdAt">>,
+  ) => void
+  removeTeacherPayout: (id: string) => void
 
   // Live sessions (sessions en direct) CRUD
   addLiveSession: (input: Omit<LiveSession, "id">) => LiveSession
@@ -311,6 +346,7 @@ export const useData = create<DataState>()((set) => ({
   subscriptions: subscriptionsSeed as Subscription[],
   transactions: transactionsSeed as Transaction[],
   promoCodes: promoCodesSeed as PromoCode[],
+  promoRedemptions: promoRedemptionsSeed as PromoRedemption[],
   chatMessages: chatMessagesSeed as ChatMessage[],
   users: usersSeed as User[],
   resources: resourcesSeed as Resource[],
@@ -320,6 +356,8 @@ export const useData = create<DataState>()((set) => ({
   // Nobody has voted yet in the seed — the displayed count starts from the
   // video's own base (see `baseLikes`) and this only carries real votes.
   videoReactions: [],
+  teacherRates: teacherRatesSeed as TeacherRate[],
+  teacherPayouts: teacherPayoutsSeed as TeacherPayout[],
 
   addYear: (input) => {
     const year: Year = { id: crypto.randomUUID(), ...input }
@@ -484,6 +522,8 @@ export const useData = create<DataState>()((set) => ({
         promoCodes: s.promoCodes
           .map((p) => ({ ...p, offers: p.offers.filter((r) => r.offerId !== id) }))
           .filter((p) => p.offers.length > 0),
+        // …and the uses recorded against it — they can no longer be priced.
+        promoRedemptions: s.promoRedemptions.filter((r) => r.offerId !== id),
       }
     }),
 
@@ -513,7 +553,27 @@ export const useData = create<DataState>()((set) => ({
   updatePromoCode: (id, patch) =>
     set((s) => ({ promoCodes: s.promoCodes.map((p) => (p.id === id ? { ...p, ...patch } : p)) })),
   removePromoCode: (id) =>
-    set((s) => ({ promoCodes: s.promoCodes.filter((p) => p.id !== id) })),
+    set((s) => ({
+      promoCodes: s.promoCodes.filter((p) => p.id !== id),
+      // The code is gone, so its uses can't be priced any more.
+      promoRedemptions: s.promoRedemptions.filter((r) => r.promoCodeId !== id),
+    })),
+
+  addPromoRedemption: (input) => {
+    const redemption: PromoRedemption = { id: crypto.randomUUID(), ...input }
+    set((s) => ({
+      promoRedemptions: [...s.promoRedemptions, redemption],
+      // Keep the code's own used-by list in step — it caps `maxUses`.
+      promoCodes: s.promoCodes.map((p) =>
+        p.id === input.promoCodeId && !p.usedByUserIds.includes(input.userId)
+          ? { ...p, usedByUserIds: [...p.usedByUserIds, input.userId] }
+          : p,
+      ),
+    }))
+    return redemption
+  },
+  removePromoRedemption: (id) =>
+    set((s) => ({ promoRedemptions: s.promoRedemptions.filter((r) => r.id !== id) })),
 
   addChatMessage: (input) => {
     const message: ChatMessage = {
@@ -657,6 +717,48 @@ export const useData = create<DataState>()((set) => ({
       }
     }),
 
+  /**
+   * Switching mode KEEPS both histories. A prof flipped from manual to auto and
+   * back finds their old payouts intact — the mode only decides which of the two
+   * the screens read, never deletes the other.
+   */
+  setTeacherPayMode: (teacherId, mode) =>
+    set((s) => ({
+      teachers: s.teachers.map((t) => (t.id === teacherId ? { ...t, payMode: mode } : t)),
+    })),
+
+  addTeacherRate: (input) => {
+    const rate: TeacherRate = {
+      id: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      ...input,
+    }
+    set((s) => ({ teacherRates: [...s.teacherRates, rate] }))
+    return rate
+  },
+  updateTeacherRate: (id, patch) =>
+    set((s) => ({
+      teacherRates: s.teacherRates.map((r) => (r.id === id ? { ...r, ...patch } : r)),
+    })),
+  removeTeacherRate: (id) =>
+    set((s) => ({ teacherRates: s.teacherRates.filter((r) => r.id !== id) })),
+
+  addTeacherPayout: (input) => {
+    const payout: TeacherPayout = {
+      id: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      ...input,
+    }
+    set((s) => ({ teacherPayouts: [...s.teacherPayouts, payout] }))
+    return payout
+  },
+  updateTeacherPayout: (id, patch) =>
+    set((s) => ({
+      teacherPayouts: s.teacherPayouts.map((p) => (p.id === id ? { ...p, ...patch } : p)),
+    })),
+  removeTeacherPayout: (id) =>
+    set((s) => ({ teacherPayouts: s.teacherPayouts.filter((p) => p.id !== id) })),
+
   addLiveSession: (input) => {
     const liveSession: LiveSession = { id: crypto.randomUUID(), ...input }
     set((s) => ({ liveSessions: [...s.liveSessions, liveSession] }))
@@ -737,6 +839,8 @@ export const useData = create<DataState>()((set) => ({
             ? { ...p, usedByUserIds: p.usedByUserIds.filter((uid) => uid !== id) }
             : p,
         ),
+        // …and every use they made, so nobody keeps earning off a ghost.
+        promoRedemptions: s.promoRedemptions.filter((r) => r.userId !== id),
         // A deleted student's conversation goes too.
         chatMessages: s.chatMessages.filter((m) => m.studentUserId !== id),
       }

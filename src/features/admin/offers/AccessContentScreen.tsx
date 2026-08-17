@@ -358,7 +358,7 @@ export default function AdminAccessContentScreen() {
                               {s.title}
                             </span>
                             <span className="block truncate text-[calc(12px*var(--ts))] text-ink-muted">
-                              <span className="capitalize">{formatSessionDay(s.date)}</span> ·{" "}
+                              <span className="capitalize">{formatSessionDay(s.date, "fr")}</span> ·{" "}
                               <span className="tabular-nums">{s.startTime}</span> ·{" "}
                               <span className="tabular-nums">{s.academicYear}</span>
                               {s.groupIds.length > 0 && (

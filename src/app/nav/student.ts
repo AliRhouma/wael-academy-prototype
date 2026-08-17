@@ -5,6 +5,7 @@ import { CalendrierIcon } from "@/components/icons/CalendrierIcon"
 import { ReplayIcon } from "@/components/icons/ReplayIcon"
 import { PorteMonnaieIcon } from "@/components/icons/PorteMonnaieIcon"
 import { FavorisIcon } from "@/components/icons/FavorisIcon"
+import { Ticket } from "lucide-react"
 import type { NavItem } from "./types"
 
 /**
@@ -25,4 +26,5 @@ export const studentNav: NavItem[] = [
   { label: "حصص مسجّلة", path: "/student/seances", icon: ReplayIcon, colored: true },
   { label: "المحفظة", path: "/student/porte-monnaie", icon: PorteMonnaieIcon, colored: true },
   { label: "مفضّلاتي", path: "/student/favoris", icon: FavorisIcon, colored: true },
+  { label: "كوداتي", path: "/student/codes", icon: Ticket },
 ]

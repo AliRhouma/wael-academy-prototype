@@ -20,16 +20,16 @@ export default function TeacherDashboard() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title={`أهلا ${firstName}`} subtitle="دروسك والحصص الجايّة" />
+      <PageHeader title={`Bonjour ${firstName}`} subtitle="Vos cours et vos prochaines séances" />
 
       <div className="grid grid-cols-2 gap-3">
-        <StatTile icon={BookOpen} label="دروسي" value={myCourses.length} />
-        <StatTile icon={CalendarDays} label="الحصص الجايّة" value={mySessions.length} />
+        <StatTile icon={BookOpen} label="Mes cours" value={myCourses.length} />
+        <StatTile icon={CalendarDays} label="Séances à venir" value={mySessions.length} />
       </div>
 
       <section>
-        <h2 className="mb-3 font-display text-base font-bold text-ink">الحصص الجايّة</h2>
-        <SessionList sessions={mySessions} empty="ما فماش حصص مبرمجة" />
+        <h2 className="mb-3 font-display text-base font-bold text-ink">Séances à venir</h2>
+        <SessionList sessions={mySessions} empty="Aucune séance programmée" />
       </section>
     </div>
   )

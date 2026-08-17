@@ -94,10 +94,10 @@ export default function AdminGroupsScreen() {
     }
     if (editing) {
       updateGroup(editing.id, patch)
-      show("الفوج تبدّل")
+      show("Groupe modifié")
     } else {
       addGroup(patch)
-      show("الفوج تعمل")
+      show("Groupe créé")
     }
     setFormOpen(false)
   }
@@ -105,7 +105,7 @@ export default function AdminGroupsScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeGroup(deleteTarget.id)
-    show("الفوج تمسح")
+    show("Groupe supprimé")
     setDeleteTarget(null)
   }
 
@@ -124,7 +124,7 @@ export default function AdminGroupsScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="الأفواج"
+        title="Groupes"
         subtitle={`${groups.length} فوج تلامذة — أقسام مسمّاة باش تنظّم الحصص.`}
         action={!isEmpty ? addButton : undefined}
       />
@@ -133,8 +133,8 @@ export default function AdminGroupsScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={UsersRound}
-            title="ما فماش أفواج"
-            description="اعمل فوج تلامذة (مثال: «المتفوّقين — ثانية علوم») باش تبرمج حصصو."
+            title="Aucun groupe"
+            description="Créez un groupe d'élèves (ex. « Les excellents — 2e sciences ») pour programmer ses séances."
             action={addButton}
           />
         </div>
@@ -159,7 +159,7 @@ export default function AdminGroupsScreen() {
                           : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
                       }
                     >
-                      {y === "all" ? "السنوات الدراسية الكل" : y}
+                      {y === "all" ? "Toutes les années" : y}
                     </button>
                   )
                 })}
@@ -172,7 +172,7 @@ export default function AdminGroupsScreen() {
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="لوّج على فوج ولا عام…"
+                placeholder="Rechercher un groupe ou une année…"
                 className={INPUT + " ps-9"}
               />
             </div>
@@ -182,8 +182,8 @@ export default function AdminGroupsScreen() {
             <div className="rounded-lg border border-dashed border-border bg-surface">
               <EmptyState
                 icon={Search}
-                title="ما فماش نتائج"
-                description="ما فماش فوج يوافق البحث هذا."
+                title="Aucun résultat"
+                description="Aucun groupe ne correspond à cette recherche."
               />
             </div>
           ) : (
@@ -208,7 +208,7 @@ export default function AdminGroupsScreen() {
                         <span className="text-[calc(12px*var(--ts))] text-ink-muted">
                           {members.length > 0
                             ? `${members.length} تلميذ`
-                            : "ما فماش تلامذة"}
+                            : "Aucun élève"}
                         </span>
                       </div>
 
@@ -234,9 +234,9 @@ export default function AdminGroupsScreen() {
                     </div>
                     <OverflowMenu
                       actions={[
-                        { label: "بدّل", icon: Pencil, onClick: () => openEdit(g) },
+                        { label: "Modifier", icon: Pencil, onClick: () => openEdit(g) },
                         {
-                          label: "امسح",
+                          label: "Supprimer",
                           icon: Trash2,
                           tone: "danger",
                           onClick: () => setDeleteTarget(g),
@@ -254,27 +254,27 @@ export default function AdminGroupsScreen() {
       <FormSheet
         open={formOpen}
         onOpenChange={setFormOpen}
-        title={editing ? "بدّل الفوج" : "فوج جديد"}
+        title={editing ? "Modifier le groupe" : "Nouveau groupe"}
         description={
-          editing ? undefined : "اسم وقائمة التلامذة اللي فيه."
+          editing ? undefined : "Un nom et la liste des élèves qui le composent."
         }
-        submitLabel={editing ? "سجّل" : "اعمل"}
+        submitLabel={editing ? "Enregistrer" : "Créer"}
         onSubmit={submit}
       >
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">اسم الفوج</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Nom du groupe</span>
           <input
             className={INPUT + " text-start"}
             dir="auto"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="مثال: المتفوّقين — ثانية علوم"
+            placeholder="ex. Les excellents — 2e sciences"
             autoFocus
           />
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">السنة الدراسية</span>
+          <span className="mb-1.5 block text-sm font-medium text-ink-subtle">Année scolaire</span>
           <div className="relative">
             <select
               className={INPUT + " appearance-none pe-10 tabular-nums"}
@@ -294,7 +294,7 @@ export default function AdminGroupsScreen() {
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            المستوى <span className="font-normal text-ink-muted">(اختياري)</span>
+            المستوى <span className="font-normal text-ink-muted">(optionnel)</span>
           </span>
           <div className="relative">
             <select
@@ -302,7 +302,7 @@ export default function AdminGroupsScreen() {
               value={yearId}
               onChange={(e) => setYearId(e.target.value)}
             >
-              <option value="">— حتّى وحدة —</option>
+              <option value="">— Aucune —</option>
               {sortedYears.map((y) => (
                 <option key={y.id} value={y.id}>
                   {y.name}
@@ -323,7 +323,7 @@ export default function AdminGroupsScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="تحبّ تمسح الفوج هذا؟"
+        title="Supprimer ce groupe ?"
         description={
           deleteTarget
             ? `«${deleteTarget.title}» باش يتمسح ويتنحّى من حصصو.`

@@ -1,5 +1,6 @@
 import { CalendarDays } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
+import { useLocale } from "@/i18n/locale"
 import { formatSessionDay, formatTimeRange, sessionStamp } from "@/lib/utils"
 import type { Session } from "@/data/types"
 import { useSessionLabels } from "@/features/shared/session/sessionLabels"
@@ -10,12 +11,13 @@ import { useSessionLabels } from "@/features/shared/session/sessionLabels"
  * already-scoped, pre-filtered list.
  */
 export function SessionList({ sessions, empty }: { sessions: Session[]; empty?: string }) {
+  const locale = useLocale()
   const { subjectNames, groupNames } = useSessionLabels()
 
   if (sessions.length === 0) {
     return (
       <div className="rounded-lg border border-dashed border-border bg-surface">
-        <EmptyState icon={CalendarDays} title={empty ?? "ما فماش حصص جايّة"} />
+        <EmptyState icon={CalendarDays} title={empty ?? (locale === "ar" ? "ما فماش حصص جايّة" : "Aucune séance à venir")} />
       </div>
     )
   }
@@ -45,7 +47,7 @@ export function SessionList({ sessions, empty }: { sessions: Session[]; empty?: 
               </p>
             </div>
             <span className="shrink-0 text-end text-[calc(11px*var(--ts))] text-ink-muted">
-              {formatSessionDay(s.date)}
+              {formatSessionDay(s.date, locale)}
               <br />
               <span className="tabular-nums">{formatTimeRange(s.startTime, s.endTime)}</span>
             </span>

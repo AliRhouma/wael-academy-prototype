@@ -37,14 +37,14 @@ export default function AdminChapterDetailScreen() {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={Layers3}
-          title="الفصل ما تلقاش"
-          description="الفصل هذا ما موجودش ولا تمسح."
+          title="Chapitre introuvable"
+          description="Ce chapitre n'existe pas ou a été supprimé."
           action={
             <Link
               to={subjectId && yearId ? `/admin/curriculum/${yearId}/${subjectId}` : "/admin/curriculum"}
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
             >
-              <ArrowRight className="size-4" /> ارجع
+              <ArrowRight className="size-4" /> Retour
             </Link>
           }
         />
@@ -53,8 +53,8 @@ export default function AdminChapterDetailScreen() {
   }
 
   const tabs: { key: Tab; label: string; count: number; icon: typeof BookOpen }[] = [
-    { key: "lessons", label: "المحتويات", count: lessonCount, icon: BookOpen },
-    { key: "quizzes", label: "كويز", count: quizCount, icon: ListChecks },
+    { key: "lessons", label: "Contenus", count: lessonCount, icon: BookOpen },
+    { key: "quizzes", label: "Quiz", count: quizCount, icon: ListChecks },
   ]
 
   return (
@@ -67,7 +67,7 @@ export default function AdminChapterDetailScreen() {
         >
           <ArrowRight className="size-4" /> <span dir="auto">{subject.name}</span>
         </button>
-        <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">الفصل</p>
+        <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">Chapitre</p>
         <h1 dir="auto" className="font-display text-[calc(26px*var(--ts))] font-bold leading-tight text-ink">
           {chapter.name}
         </h1>
@@ -81,7 +81,7 @@ export default function AdminChapterDetailScreen() {
             </Badge>
           ))}
           {chapter.subjectIds.length > 1 && (
-            <span className="text-[calc(12px*var(--ts))] text-ink-muted">· {chapter.subjectIds.length} مادّة</span>
+            <span className="text-[calc(12px*var(--ts))] text-ink-muted">· {chapter.subjectIds.length} matière(s)</span>
           )}
         </div>
       </div>

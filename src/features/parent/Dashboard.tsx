@@ -35,10 +35,10 @@ export default function ParentDashboard() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title={`أهلا ${firstName}`} subtitle="متابعة ولادك في الأكاديمية" />
+      <PageHeader title={`Bonjour ${firstName}`} subtitle="Le suivi de vos enfants à l'académie" />
 
       <section>
-        <h2 className="mb-3 font-display text-base font-bold text-ink">أولادي</h2>
+        <h2 className="mb-3 font-display text-base font-bold text-ink">Mes enfants</h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {children.map((child) => (
             <div
@@ -58,8 +58,8 @@ export default function ParentDashboard() {
       </section>
 
       <section>
-        <h2 className="mb-3 font-display text-base font-bold text-ink">الحصص الجايّة</h2>
-        <SessionList sessions={childSessions} empty="ما فماش حصص لولادك" />
+        <h2 className="mb-3 font-display text-base font-bold text-ink">Séances à venir</h2>
+        <SessionList sessions={childSessions} empty="Aucune séance à venir pour vos enfants" />
       </section>
     </div>
   )

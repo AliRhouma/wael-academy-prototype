@@ -24,7 +24,7 @@ import { SessionFormSheet } from "@/features/admin/sessions/SessionFormSheet"
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
-const WEEKDAYS = ["الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"]
+const WEEKDAYS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 
 /**
  * Calendar event colors — distinct token-based hues so sessions read by subject
@@ -90,7 +90,7 @@ export default function AdminCalendarScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeSession(deleteTarget.id)
-    show("الحصّة تمسحت")
+    show("Séance supprimée")
     setDeleteTarget(null)
   }
 
@@ -172,8 +172,8 @@ export default function AdminCalendarScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="الروزنامة"
-        subtitle="جدول أوقات الحصص — فلتر حسب الأستاذ والفوج."
+        title="Calendrier"
+        subtitle="L'emploi du temps des séances — filtrez par enseignant et par groupe."
         action={
           <button
             type="button"
@@ -197,7 +197,7 @@ export default function AdminCalendarScreen() {
               value={teacherFilter}
               onChange={(e) => setTeacherFilter(e.target.value)}
             >
-              <option value="all">الأساتذة الكل</option>
+              <option value="all">Tous les enseignants</option>
               {sortedTeachers.map((t) => (
                 <option key={t.id} value={t.id}>
                   {t.name}
@@ -219,7 +219,7 @@ export default function AdminCalendarScreen() {
               value={groupFilter}
               onChange={(e) => setGroupFilter(e.target.value)}
             >
-              <option value="all">الأفواج الكل</option>
+              <option value="all">Tous les groupes</option>
               {sortedGroups.map((g) => (
                 <option key={g.id} value={g.id}>
                   {g.title}
@@ -239,18 +239,18 @@ export default function AdminCalendarScreen() {
             <button
               type="button"
               onClick={() => goMonth(-1)}
-              aria-label="الشهر اللي قبل"
+              aria-label="Mois précédent"
               className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
             >
-              <ChevronRight className="size-5" />
+              <ChevronRight className="size-5 ltr:rotate-180" />
             </button>
             <button
               type="button"
               onClick={() => goMonth(1)}
-              aria-label="الشهر اللي بعد"
+              aria-label="Mois suivant"
               className="grid size-9 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
             >
-              <ChevronLeft className="size-5" />
+              <ChevronLeft className="size-5 ltr:rotate-180" />
             </button>
             <h2 className="ms-1 font-display text-lg font-bold capitalize text-ink">{monthLabel}</h2>
           </div>
@@ -368,7 +368,7 @@ export default function AdminCalendarScreen() {
       <section>
         <div className="mb-3 flex items-center justify-between gap-3">
           <h2 className="font-display text-base font-bold capitalize text-ink">
-            {formatSessionDayLong(selected)}
+            {formatSessionDayLong(selected, "fr")}
           </h2>
           <button
             type="button"
@@ -382,11 +382,11 @@ export default function AdminCalendarScreen() {
           <div className="rounded-lg border border-dashed border-border bg-surface">
             <EmptyState
               icon={CalendarDays}
-              title="ما فماش حصص نهارها"
+              title="Aucune séance ce jour-là"
               description={
                 teacherFilter !== "all" || groupFilter !== "all"
-                  ? "ما فماش حصّة توافق الفلاتر في التاريخ هذا."
-                  : "اضغط على «زيد» باش تبرمج حصّة نهارها."
+                  ? "Aucune séance ne correspond aux filtres à cette date."
+                  : "Cliquez sur « Ajouter » pour en programmer une."
               }
             />
           </div>
@@ -399,9 +399,9 @@ export default function AdminCalendarScreen() {
                 actions={
                   <OverflowMenu
                     actions={[
-                      { label: "بدّل", icon: Pencil, onClick: () => openEdit(s) },
+                      { label: "Modifier", icon: Pencil, onClick: () => openEdit(s) },
                       {
-                        label: "امسح",
+                        label: "Supprimer",
                         icon: Trash2,
                         tone: "danger",
                         onClick: () => setDeleteTarget(s),
@@ -426,7 +426,7 @@ export default function AdminCalendarScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="تحبّ تمسح الحصّة هذي؟"
+        title="Supprimer cette séance ?"
         description={
           deleteTarget ? `«${deleteTarget.title}» باش تتمسح نهائيا.` : undefined
         }

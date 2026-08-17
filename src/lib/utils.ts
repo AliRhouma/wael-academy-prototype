@@ -1,3 +1,4 @@
+import { tagOf, type Locale } from "@/i18n/locale"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -15,8 +16,8 @@ export function fakeDelay(ms = 400): Promise<void> {
 }
 
 /** Format an ISO date-time as a short French label (e.g. "lun. 20 juil., 09:00"). */
-export function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString("ar-TN-u-nu-latn", {
+export function formatDateTime(iso: string, locale: Locale = "ar"): string {
+  return new Date(iso).toLocaleString(tagOf(locale), {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -39,8 +40,8 @@ export function nowStamp(): string {
 }
 
 /** Format a "YYYY-MM-DD" day as a short French label (e.g. "lun. 20 juil."). */
-export function formatSessionDay(date: string): string {
-  return new Date(`${date}T00:00:00`).toLocaleDateString("ar-TN-u-nu-latn", {
+export function formatSessionDay(date: string, locale: Locale = "ar"): string {
+  return new Date(`${date}T00:00:00`).toLocaleDateString(tagOf(locale), {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -48,8 +49,8 @@ export function formatSessionDay(date: string): string {
 }
 
 /** Format a "YYYY-MM-DD" day as a full French label (e.g. "lundi 20 juillet 2026"). */
-export function formatSessionDayLong(date: string): string {
-  return new Date(`${date}T00:00:00`).toLocaleDateString("ar-TN-u-nu-latn", {
+export function formatSessionDayLong(date: string, locale: Locale = "ar"): string {
+  return new Date(`${date}T00:00:00`).toLocaleDateString(tagOf(locale), {
     weekday: "long",
     day: "numeric",
     month: "long",

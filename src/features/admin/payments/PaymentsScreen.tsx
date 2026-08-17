@@ -45,7 +45,7 @@ const FILTER_SELECT =
 
 /** Derived status → badge tone + label — binary: actif ou bloqué. */
 const STATUS: Record<SubscriptionStatus, { label: string; tone: BadgeTone }> = {
-  actif: { label: "فعّال", tone: "success" },
+  actif: { label: "Actif", tone: "success" },
   bloque: { label: "موقّف", tone: "danger" },
 }
 
@@ -285,7 +285,7 @@ export default function AdminPaymentsScreen() {
     },
     {
       key: "paid",
-      header: "تخلّص",
+      header: "Payé",
       render: (sub) => {
         const paid = paidTotal(sub, transactions)
         const pct = sub.price > 0 ? Math.min(100, Math.round((paid / sub.price) * 100)) : 0
@@ -328,7 +328,7 @@ export default function AdminPaymentsScreen() {
     },
     {
       key: "status",
-      header: "الحالة",
+      header: "Statut",
       render: (sub) => {
         const st = statusOf.get(sub.id)!
         return (
@@ -351,7 +351,7 @@ export default function AdminPaymentsScreen() {
   )
 
   const filters: { key: StatusFilter; label: string; count: number }[] = [
-    { key: "all", label: "الكل", count: subscriptions.length },
+    { key: "all", label: "Tous", count: subscriptions.length },
     ...(Object.keys(STATUS) as SubscriptionStatus[]).map((st) => ({
       key: st as StatusFilter,
       label: STATUS[st].label,
@@ -364,7 +364,7 @@ export default function AdminPaymentsScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="الخلاص"
+        title="Paiements"
         subtitle={`${subscriptions.length} اشتراك — مبالغ متّفق عليها، أقساط ومعاملات مخلّصة.`}
         action={!isEmpty ? addButton : undefined}
       />
@@ -502,12 +502,12 @@ export default function AdminPaymentsScreen() {
                 icon: Plus,
                 onClick: () => setTxTarget(sub),
               },
-              { label: "بدّل", icon: Pencil, onClick: () => openEdit(sub) },
+              { label: "Modifier", icon: Pencil, onClick: () => openEdit(sub) },
               sub.state === "blocked"
                 ? { label: "رجّع فعّل", icon: CircleCheck, onClick: () => toggleBlock(sub) }
                 : { label: "وقّف الدخول", icon: Ban, onClick: () => toggleBlock(sub) },
               {
-                label: "امسح",
+                label: "Supprimer",
                 icon: Trash2,
                 tone: "danger",
                 onClick: () => setDeleteTarget(sub),
@@ -517,7 +517,7 @@ export default function AdminPaymentsScreen() {
               <div className="rounded-lg border border-dashed border-border bg-surface">
                 <EmptyState
                   icon={Search}
-                  title="ما فماش نتائج"
+                  title="Aucun résultat"
                   description="ما فماش اشتراك يوافق الفلتر ولا البحث هذا."
                 />
               </div>

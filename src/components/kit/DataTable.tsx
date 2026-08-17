@@ -3,6 +3,7 @@ import { ChevronLeft, Inbox } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { OverflowMenu, type OverflowAction } from "@/components/kit/OverflowMenu"
+import { useT } from "@/i18n/strings"
 
 export interface Column<T> {
   key: string
@@ -30,7 +31,7 @@ export interface DataTableProps<T> {
    * Independent of `onRowClick` (the chevron stops propagation).
    */
   renderDetail?: (row: T) => ReactNode
-  /** Label of the mobile detail toggle (default "التفاصيل"). */
+  /** Label of the mobile detail toggle — defaults to the space's own word. */
   detailLabel?: string
   className?: string
 }
@@ -61,13 +62,14 @@ export function DataTable<T>({
   onRowClick,
   rowActions,
   renderDetail,
-  detailLabel = "التفاصيل",
+  detailLabel,
   className,
 }: DataTableProps<T>) {
   const isEmpty = !loading && rows.length === 0
   const skeletons = Array.from({ length: loadingRows })
   const [head, ...rest] = columns
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
+  const t = useT()
 
   function toggleExpand(key: string) {
     setExpanded((prev) => {
@@ -225,7 +227,7 @@ export function DataTable<T>({
                           onClick={() => toggleExpand(key)}
                           className="mt-3 flex min-h-11 w-full items-center justify-between rounded-md bg-surface-muted px-3 py-2 text-[calc(13px*var(--ts))] font-medium text-ink-subtle transition hover:text-brand-600"
                         >
-                          {detailLabel}
+                          {detailLabel ?? t.details}
                           <ChevronLeft
                             className={cn(
                               "size-4 transition-transform",

@@ -82,14 +82,14 @@ export default function AdminLiveSessionsScreen() {
   function confirmDelete() {
     if (!deleteTarget) return
     removeLiveSession(deleteTarget.id)
-    show("الحصّة تمسحت")
+    show("Séance supprimée")
     setDeleteTarget(null)
   }
 
   function openResource(id: string) {
     const r = resourceById.get(id)
     if (r?.pdf.url) window.open(r.pdf.url, "_blank", "noopener,noreferrer")
-    else show("معاينة الوثيقة — قريب")
+    else show("Aperçu du document — bientôt")
   }
 
   const addButton = (
@@ -107,7 +107,7 @@ export default function AdminLiveSessionsScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="الحصص المباشرة"
+        title="Séances en direct"
         subtitle={`${liveSessions.length} حصّة مباشرة — روابط فيديو لتلامذتك.`}
         action={!isEmpty ? addButton : undefined}
       />
@@ -116,8 +116,8 @@ export default function AdminLiveSessionsScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={Radio}
-            title="ما فماش حصص مباشرة"
-            description="اعمل حصّة: اسم ورابط فيديو والمادّة ولا الموادّ متاعها."
+            title="Aucune séance en direct"
+            description="Créez une séance : un nom, un lien vidéo et sa ou ses matières."
             action={addButton}
           />
         </div>
@@ -128,7 +128,7 @@ export default function AdminLiveSessionsScreen() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="لوّج على حصّة ولا مادّة…"
+              placeholder="Rechercher une séance ou une matière…"
               className={INPUT + " ps-9"}
             />
           </div>
@@ -137,8 +137,8 @@ export default function AdminLiveSessionsScreen() {
             <div className="rounded-lg border border-dashed border-border bg-surface">
               <EmptyState
                 icon={Search}
-                title="ما فماش نتائج"
-                description="ما فماش حصّة توافق البحث هذا."
+                title="Aucun résultat"
+                description="Aucune séance ne correspond à cette recherche."
               />
             </div>
           ) : (
@@ -178,9 +178,9 @@ export default function AdminLiveSessionsScreen() {
                       </div>
                       <OverflowMenu
                         actions={[
-                          { label: "بدّل", icon: Pencil, onClick: () => openEdit(ls) },
+                          { label: "Modifier", icon: Pencil, onClick: () => openEdit(ls) },
                           {
-                            label: "امسح",
+                            label: "Supprimer",
                             icon: Trash2,
                             tone: "danger",
                             onClick: () => setDeleteTarget(ls),
@@ -192,7 +192,7 @@ export default function AdminLiveSessionsScreen() {
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-y border-border/70 py-2 text-[calc(13px*var(--ts))] text-ink-subtle">
                       <span className="inline-flex items-center gap-1.5">
                         <CalendarDays className="size-4 text-ink-muted" />
-                        <span className="capitalize">{formatSessionDay(ls.date)}</span>
+                        <span className="capitalize">{formatSessionDay(ls.date, "fr")}</span>
                       </span>
                       <span className="inline-flex items-center gap-1.5 tabular-nums">
                         <Clock className="size-4 text-ink-muted" />
@@ -207,7 +207,7 @@ export default function AdminLiveSessionsScreen() {
                       <div>
                         <Badge tone="info">
                           <Tag className="size-3.5" />
-                          <span dir="auto">{offerName.get(ls.offerId) ?? "عرض"}</span>
+                          <span dir="auto">{offerName.get(ls.offerId) ?? "Voir"}</span>
                         </Badge>
                       </div>
                     )}
@@ -273,7 +273,7 @@ export default function AdminLiveSessionsScreen() {
       <ConfirmDialog
         open={deleteTarget !== null}
         onOpenChange={(o) => !o && setDeleteTarget(null)}
-        title="تحبّ تمسح الحصّة هذي؟"
+        title="Supprimer cette séance ?"
         description={
           deleteTarget ? `«${deleteTarget.name}» باش تتمسح نهائيا.` : undefined
         }

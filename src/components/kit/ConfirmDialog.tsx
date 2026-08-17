@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { useIsMobile } from "@/lib/hooks"
+import { useT } from "@/i18n/strings"
 import { cn } from "@/lib/utils"
 
 export interface ConfirmDialogProps {
@@ -38,13 +39,14 @@ export function ConfirmDialog({
   onOpenChange,
   title,
   description,
-  confirmLabel = "امسح",
-  cancelLabel = "إلغاء",
+  confirmLabel,
+  cancelLabel,
   onConfirm,
   loading = false,
   tone = "danger",
 }: ConfirmDialogProps) {
   const isMobile = useIsMobile()
+  const t = useT()
 
   const icon = (
     <span
@@ -65,7 +67,7 @@ export function ConfirmDialog({
         disabled={loading}
         className="inline-flex h-11 w-full items-center justify-center rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 disabled:opacity-60 sm:w-auto"
       >
-        {cancelLabel}
+        {cancelLabel ?? t.cancel}
       </button>
       <button
         type="button"
@@ -78,7 +80,7 @@ export function ConfirmDialog({
             : "bg-grad text-ink-inverted shadow-brand hover:brightness-105",
         )}
       >
-        {loading ? "شويّة…" : confirmLabel}
+        {loading ? "…" : (confirmLabel ?? t.confirm)}
       </button>
     </div>
   )

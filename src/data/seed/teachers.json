@@ -1,9 +1,9 @@
 [
-  { "id": "t-karim", "name": "كريم بوعزيز", "subject": "رياضيات", "civility": "m" },
-  { "id": "t-mourad", "name": "مراد بن عمّار", "subject": "فيزياء", "civility": "m" },
-  { "id": "t-leila", "name": "ليلى الحمدي", "subject": "فيزياء", "civility": "f" },
-  { "id": "t-sonia", "name": "سنية الغربي", "subject": "فرنسية", "civility": "f" },
-  { "id": "t-nabil", "name": "نبيل المرزوقي", "subject": "أنڤليزية", "civility": "m" },
-  { "id": "t-amel", "name": "آمال بن يوسف", "subject": "علوم", "civility": "f" },
+  { "id": "t-karim", "name": "كريم بوعزيز", "subject": "رياضيات", "civility": "m", "payMode": "auto" },
+  { "id": "t-mourad", "name": "مراد بن عمّار", "subject": "فيزياء", "civility": "m", "payMode": "auto" },
+  { "id": "t-leila", "name": "ليلى الحمدي", "subject": "فيزياء", "civility": "f", "payMode": "manual" },
+  { "id": "t-sonia", "name": "سنية الغربي", "subject": "فرنسية", "civility": "f", "payMode": "manual" },
+  { "id": "t-nabil", "name": "نبيل المرزوقي", "subject": "أنڤليزية", "civility": "m", "payMode": "auto" },
+  { "id": "t-amel", "name": "آمال بن يوسف", "subject": "علوم", "civility": "f", "payMode": "manual" },
   { "id": "t-hedi", "name": "الهادي منصور", "subject": "فلسفة", "civility": "m" }
 ]

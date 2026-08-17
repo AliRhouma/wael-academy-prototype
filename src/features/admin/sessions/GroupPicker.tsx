@@ -62,15 +62,15 @@ export function GroupPicker({
   return (
     <div>
       <span className="mb-2 block text-sm font-medium text-ink-subtle">
-        الأفواج <span className="font-normal text-ink-muted">({groupIds.length})</span>
+        Groupes <span className="font-normal text-ink-muted">({groupIds.length})</span>
       </span>
       {yearIds.length === 0 ? (
         <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-          اختار عام ولا كثر في البداية.
+          Choisissez d'abord une année ou plus.
         </p>
       ) : visible.length === 0 ? (
         <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-          ما فماش أفواج في السنوات هذي. اعمل واحد من «الأفواج».
+          Aucun groupe pour ces années. Créez-en un depuis « Groupes ».
         </p>
       ) : (
         <div className="flex flex-wrap gap-2">

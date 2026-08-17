@@ -28,6 +28,11 @@ export interface Teacher {
    * فيزياء بعثلك خدمة"), and a sentence has to be gendered right.
    */
   civility?: "m" | "f"
+  /**
+   * How this prof is paid for their séances — set by the admin, invisible to
+   * the prof. Absent = not configured yet, which the admin screen flags.
+   */
+  payMode?: TeacherPayMode
 }
 
 /**
@@ -477,12 +482,70 @@ export type OfferTier = "silver" | "gold" | "early" | "integral"
  * What a promo code does to ONE offer — each targeted offer is configured
  * alone, with EITHER a percentage OR a fixed amount off (exactly one is set).
  */
+/**
+ * A figure that may be written either way — "20%" or "5 د.ت". Both sides of a
+ * promo case use it, which is what lets a case be hybrid: the bénéficiaire in
+ * percent, the provider in dinars, or the other way round.
+ */
+export interface PromoValue {
+  kind: "pct" | "amount"
+  /** Percent of the offer price when `pct`, dinars when `amount`. */
+  value: number
+}
+
+/**
+ * One arrangement on a promo code, for one offer: what the bénéficiaire hands
+ * over and what the provider takes home.
+ *
+ * `beneficiaryPays` is the SHARE STILL DUE, not the discount — "20%" means the
+ * bénéficiaire pays a fifth of the price and saves the other four fifths. The
+ * two fields are independent, so the academy's own cut is simply whatever is
+ * left; it can be zero, and the admin form says so when it is.
+ *
+ * A code carries several cases per offer because the provider gets to choose
+ * how generous to be: give more away and keep less, or the reverse.
+ */
+export interface PromoCase {
+  id: Id
+  /** What the bénéficiaire actually pays. */
+  beneficiaryPays: PromoValue
+  /** What the provider earns on that sale. */
+  providerGets: PromoValue
+  /** Optional name the admin gives the arrangement — "عرض الصديق". */
+  label?: string
+}
+
 export interface PromoOfferRule {
   offerId: Id
   /** Discount in % (1–99) — exclusive with `discountAmount`. */
   discountPct?: number
   /** Discount in dinars (TND) — exclusive with `discountPct`. */
   discountAmount?: number
+  /**
+   * The (bénéficiaire, provider) arrangements available on this offer. Empty
+   * means the code is a plain discount with nothing in it for the provider.
+   */
+  cases?: PromoCase[]
+}
+
+/**
+ * ONE use of a promo code — who used it, on which offer, under which case.
+ *
+ * The dinars are NOT stored: what the bénéficiaire paid and what the provider
+ * earned are recomputed from the offer's price and the case every time they're
+ * displayed, so editing a case corrects the history instead of leaving it
+ * stale. Only the facts of the transaction live here.
+ */
+export interface PromoRedemption {
+  id: Id
+  promoCodeId: Id
+  offerId: Id
+  /** The `User` who redeemed it — never the provider themselves. */
+  userId: Id
+  /** The case that applied; absent = the offer's plain discount, provider earns nothing. */
+  caseId?: Id
+  /** Day of the redemption — "YYYY-MM-DD". */
+  date: string
 }
 
 /**
@@ -500,6 +563,12 @@ export interface PromoCode {
   maxUses?: number
   /** Users who used this code — zero or more. */
   usedByUserIds: Id[]
+  /**
+   * Who owns the code and earns on it — a `User` of ANY role: an élève sharing
+   * with a classmate, a prof sharing with their students, a parent, the academy
+   * itself. Absent = a house code nobody earns from (a campaign).
+   */
+  providerUserId?: Id
 }
 
 /** One planned payment line of a subscription — "300 DT avant le 15 juin". */
@@ -684,4 +753,56 @@ export interface VideoReaction {
   videoId: Id
   userId: Id
   value: "like" | "dislike"
+}
+
+/**
+ * How the academy pays a prof for their séances. ADMIN-ONLY: the prof never
+ * sees which mode they are on — their « الفلوس » page shows the same table of
+ * periods either way, only the numbers behind it are produced differently.
+ *
+ * - `manual` — the admin enters an amount per period by hand.
+ * - `auto`   — the admin sets a price per séance and the total is computed.
+ */
+export type TeacherPayMode = "manual" | "auto"
+
+/**
+ * MANUAL mode — one amount the admin hands a prof for a period. The number of
+ * séances the period covers is NOT stored: it is counted from the séances in
+ * that date range whenever the row is displayed.
+ */
+export interface TeacherPayout {
+  id: Id
+  teacherId: Id
+  /** Dinars for the whole period. */
+  amount: number
+  /** Period covered, inclusive — "YYYY-MM-DD". */
+  periodStart: string
+  periodEnd: string
+  /** Why this amount — the admin's own note, shown to the prof as-is. */
+  note?: string
+  /** ISO timestamp of when the admin recorded it. */
+  createdAt: string
+}
+
+/**
+ * AUTO mode — the price of ONE séance, from `effectiveFrom` onwards. A prof has
+ * a list of these; the price applied to a séance is the one with the LATEST
+ * `effectiveFrom` on or before that séance's date.
+ *
+ * The date is free — a new price may start in the PAST, which re-prices séances
+ * already given. That is deliberate: a rise agreed in September that runs from
+ * July is normal, and the periods simply recompute.
+ *
+ * Séances dated before the earliest rate have no price at all; they show up as
+ * « بلا سومة » rather than as zero, so the gap is visible instead of silent.
+ */
+export interface TeacherRate {
+  id: Id
+  teacherId: Id
+  /** Dinars per séance. */
+  amount: number
+  /** Applies to séances from this day on, inclusive — "YYYY-MM-DD". */
+  effectiveFrom: string
+  /** ISO timestamp of when the admin recorded it. */
+  createdAt: string
 }

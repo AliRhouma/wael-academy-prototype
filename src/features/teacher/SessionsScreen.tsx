@@ -44,21 +44,21 @@ export default function TeacherSessionsScreen() {
   const nothingShown = rows.length === 0
 
   const filters: { key: TimeFilter; label: string; count: number }[] = [
-    { key: "upcoming", label: "الجايّة", count: counts.upcoming },
-    { key: "past", label: "اللي فاتو", count: counts.past },
-    { key: "all", label: "الكل", count: counts.all },
+    { key: "upcoming", label: "À venir", count: counts.upcoming },
+    { key: "past", label: "Passées", count: counts.past },
+    { key: "all", label: "Toutes", count: counts.all },
   ]
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title="حصصي" subtitle={`جدول أوقاتك، ${firstName}.`} />
+      <PageHeader title="Mes séances" subtitle={`Votre emploi du temps, ${firstName}.`} />
 
       {isEmpty ? (
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={CalendarDays}
-            title="ما فماش حصص"
-            description="مازال ما تسنّدتلك حتّى حصّة. الإدارة قاعدة تبرمجهم."
+            title="Aucune séance"
+            description="Aucune séance ne vous est encore assignée. L'administration les programme."
           />
         </div>
       ) : (
@@ -96,8 +96,8 @@ export default function TeacherSessionsScreen() {
             <div className="rounded-lg border border-dashed border-border bg-surface">
               <EmptyState
                 icon={CalendarDays}
-                title={timeFilter === "upcoming" ? "ما فماش حصص جايّة" : "ما فماش حصص"}
-                description="ما فماش شيء نوريوه في الفلتر هذا."
+                title={timeFilter === "upcoming" ? "Aucune séance à venir" : "Aucune séance"}
+                description="Rien à afficher avec ce filtre."
               />
             </div>
           ) : (
@@ -105,7 +105,7 @@ export default function TeacherSessionsScreen() {
               {rows.map(([day, daySessions]) => (
                 <section key={day}>
                   <h2 className="mb-2 text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
-                    {formatSessionDayLong(day)}
+                    {formatSessionDayLong(day, "fr")}
                   </h2>
                   <div className="flex flex-col gap-3">
                     {daySessions.map((s) => (

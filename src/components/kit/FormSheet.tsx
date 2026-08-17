@@ -14,6 +14,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { useIsMobile } from "@/lib/hooks"
+import { useT } from "@/i18n/strings"
+import { useLocale } from "@/i18n/locale"
 
 export interface FormSheetProps {
   open: boolean
@@ -41,11 +43,13 @@ export function FormSheet({
   description,
   children,
   onSubmit,
-  submitLabel = "سجّل",
-  cancelLabel = "إلغاء",
+  submitLabel,
+  cancelLabel,
   submitting = false,
 }: FormSheetProps) {
   const isMobile = useIsMobile()
+  const t = useT()
+  const locale = useLocale()
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -66,14 +70,18 @@ export function FormSheet({
         disabled={submitting}
         className="inline-flex h-11 w-full items-center justify-center rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 disabled:opacity-60 sm:w-auto"
       >
-        {cancelLabel}
+        {cancelLabel ?? t.cancel}
       </button>
       <button
         type="submit"
         disabled={submitting}
         className="inline-flex h-11 w-full items-center justify-center rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-60 sm:w-auto"
       >
-        {submitting ? "قاعد يسجّل…" : submitLabel}
+        {submitting
+          ? locale === "ar"
+            ? "قاعد يسجّل…"
+            : "Enregistrement…"
+          : (submitLabel ?? t.save)}
       </button>
     </div>
   )

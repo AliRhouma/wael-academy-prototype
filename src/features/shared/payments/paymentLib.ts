@@ -1,14 +1,38 @@
 import type { Installment, Subscription, Transaction } from "@/data/types"
+import { tagOf, useLocale, type Locale } from "@/i18n/locale"
 
-/** Format a dinar amount the Tunisian way: "360 د.ت", no cents unless needed. */
-export function formatDT(n: number): string {
+/**
+ * Money and dates are written differently on each side of the app: the élève
+ * reads "360 د.ت" in Arabic, the back-office reads "360 DT" in French. The
+ * plain functions default to Arabic so the many existing élève call sites are
+ * untouched; French screens and the shared ones use `useMoney()`, which binds
+ * the formatters to whichever space is on screen.
+ */
+
+/** Format a dinar amount: "360 د.ت" in Arabic, "360 DT" in French. */
+export function formatDT(n: number, locale: Locale = "ar"): string {
   const s = Number.isInteger(n) ? n.toString() : n.toFixed(3).replace(/\.?0+$/, "")
-  return `${s} د.ت`
+  return locale === "ar" ? `${s} د.ت` : `${s} DT`
 }
 
-/** "15 juin 2026" — dates on the payment screens. */
-const DAY = new Intl.DateTimeFormat("ar-TN-u-nu-latn", { day: "numeric", month: "short", year: "numeric" })
-export const formatDay = (iso: string) => DAY.format(new Date(`${iso}T00:00:00`))
+const DAY_FMT: Record<Locale, Intl.DateTimeFormat> = {
+  ar: new Intl.DateTimeFormat(tagOf("ar"), { day: "numeric", month: "short", year: "numeric" }),
+  fr: new Intl.DateTimeFormat(tagOf("fr"), { day: "numeric", month: "short", year: "numeric" }),
+}
+
+/** "15 juin 2026" / "15 جوان 2026" — dates on the payment screens. */
+export const formatDay = (iso: string, locale: Locale = "ar") =>
+  DAY_FMT[locale].format(new Date(`${iso}T00:00:00`))
+
+/** Money + date formatters bound to the space currently on screen. */
+export function useMoney() {
+  const locale = useLocale()
+  return {
+    locale,
+    dt: (n: number) => formatDT(n, locale),
+    day: (iso: string) => formatDay(iso, locale),
+  }
+}
 
 /** Today as "YYYY-MM-DD" (local). */
 export function todayISO(): string {

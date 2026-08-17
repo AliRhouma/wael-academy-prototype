@@ -80,7 +80,7 @@ export function SubjectPicker({
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="لوّج على مادّة…"
+          placeholder="Rechercher une matière…"
           className={INPUT + " ps-9"}
           dir="auto"
         />
@@ -210,7 +210,7 @@ export function YearPicker({
 
 /** Display label for a resource — its friendly name, else the PDF file name. */
 export function resourceLabel(r: { name?: string; pdf: { name: string } }): string {
-  return r.name?.trim() || r.pdf.name || "وثيقة"
+  return r.name?.trim() || r.pdf.name || "Document"
 }
 
 // Années scolaires moved to the shared module — re-exported so existing

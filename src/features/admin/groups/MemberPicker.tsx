@@ -63,7 +63,7 @@ export function MemberPicker({
   return (
     <div>
       <span className="mb-2 block text-sm font-medium text-ink-subtle">
-        التلامذة <span className="font-normal text-ink-muted">({studentIds.length})</span>
+        Élèves <span className="font-normal text-ink-muted">({studentIds.length})</span>
       </span>
 
       <div className="flex flex-col gap-2 sm:flex-row">
@@ -72,7 +72,7 @@ export function MemberPicker({
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="لوّج على تلميذ…"
+            placeholder="Rechercher un élève…"
             className={INPUT + " ps-9"}
           />
         </div>
@@ -82,7 +82,7 @@ export function MemberPicker({
             value={yearFilter}
             onChange={(e) => setYearFilter(e.target.value)}
           >
-            <option value="all">السنوات الكل</option>
+            <option value="all">Toutes les années</option>
             {sortedYears.map((y) => (
               <option key={y.id} value={y.id}>
                 {y.name}
@@ -95,7 +95,7 @@ export function MemberPicker({
 
       <div className="mt-2 max-h-64 overflow-y-auto scroll-touch rounded-md border border-border">
         {visible.length === 0 ? (
-          <p className="px-3 py-6 text-center text-sm text-ink-muted">ما تلقا حتّى تلميذ.</p>
+          <p className="px-3 py-6 text-center text-sm text-ink-muted">Aucun élève trouvé.</p>
         ) : (
           <ul className="divide-y divide-border">
             {visible.map((u) => {

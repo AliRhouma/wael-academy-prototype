@@ -31,8 +31,14 @@ import AdminGroupsScreen from "@/features/admin/groups/GroupsScreen"
 import AdminSessionsScreen from "@/features/admin/sessions/SessionsScreen"
 import AdminLiveSessionsScreen from "@/features/admin/live/LiveSessionsScreen"
 import AdminCalendarScreen from "@/features/admin/planning/CalendarScreen"
+import AdminTeacherPayScreen from "@/features/admin/teacher-pay/TeacherPayScreen"
+import AdminTeacherPayDetailScreen from "@/features/admin/teacher-pay/TeacherPayDetailScreen"
 import TeacherDashboard from "@/features/teacher/Dashboard"
 import TeacherSessionsScreen from "@/features/teacher/SessionsScreen"
+import TeacherMoneyScreen from "@/features/teacher/money/MoneyScreen"
+import TeacherPromoScreen from "@/features/teacher/PromoScreen"
+import StudentPromoScreen from "@/features/student/PromoScreen"
+import ParentPromoScreen from "@/features/parent/PromoScreen"
 import ParentDashboard from "@/features/parent/Dashboard"
 import StudentDashboard from "@/features/student/Dashboard"
 import StudentOffersScreen from "@/features/student/offres/OffersScreen"
@@ -169,6 +175,7 @@ export const router = createBrowserRouter([
       calendar: <AdminCalendarScreen />,
       offers: <AdminOffersScreen />,
       payments: <AdminPaymentsScreen />,
+      "teacher-pay": <AdminTeacherPayScreen />,
       messages: <AdminMessagesScreen />,
     },
     [
@@ -179,12 +186,17 @@ export const router = createBrowserRouter([
       { path: "offers/access/:accessId", element: <AdminAccessContentScreen /> },
       { path: "offers/promos", element: <AdminPromoCodesScreen /> },
       { path: "payments/:subscriptionId", element: <AdminSubscriptionDetailScreen /> },
+      { path: "teacher-pay/:teacherId", element: <AdminTeacherPayDetailScreen /> },
     ],
   ),
   roleRoute("/teacher", "teacher", teacherNav, <TeacherDashboard />, {
     sessions: <TeacherSessionsScreen />,
+    money: <TeacherMoneyScreen />,
+    codes: <TeacherPromoScreen />,
   }),
-  roleRoute("/parent", "parent", parentNav, <ParentDashboard />),
+  roleRoute("/parent", "parent", parentNav, <ParentDashboard />, {
+    codes: <ParentPromoScreen />,
+  }),
   roleRoute(
     "/student",
     "student",
@@ -196,6 +208,7 @@ export const router = createBrowserRouter([
       calendrier: <StudentCalendarScreen />,
       seances: <StudentSeancesScreen />,
       "porte-monnaie": <StudentFinanceScreen />,
+      codes: <StudentPromoScreen />,
     },
     [
       { path: "matieres/:subjectId", element: <StudentSubjectDetailScreen /> },

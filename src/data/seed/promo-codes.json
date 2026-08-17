@@ -1,5 +1,143 @@
 [
   {
+    "id": "promo-karim",
+    "code": "KARIM-MATH",
+    "providerUserId": "u-teacher",
+    "offers": [
+      {
+        "offerId": "offer-bac-math-annuel",
+        "discountPct": 15,
+        "cases": [
+          {
+            "id": "case-k1",
+            "label": "عرض التلميذ",
+            "beneficiaryPays": { "kind": "pct", "value": 85 },
+            "providerGets": { "kind": "amount", "value": 40 }
+          },
+          {
+            "id": "case-k2",
+            "label": "عرض الفوج",
+            "beneficiaryPays": { "kind": "pct", "value": 75 },
+            "providerGets": { "kind": "pct", "value": 5 }
+          }
+        ]
+      },
+      {
+        "offerId": "offer-bac-sci-trimestre",
+        "discountPct": 10,
+        "cases": [
+          {
+            "id": "case-k3",
+            "label": "ثلاثي",
+            "beneficiaryPays": { "kind": "pct", "value": 90 },
+            "providerGets": { "kind": "amount", "value": 15 }
+          }
+        ]
+      }
+    ],
+    "usedByUserIds": ["u-st-khalil", "u-st-syrine", "u-student-ines", "u-st-selim", "u-st-emna"]
+  },
+  {
+    "id": "promo-nabil",
+    "code": "NABIL-ENG",
+    "providerUserId": "u-teacher-nabil",
+    "offers": [
+      {
+        "offerId": "offer-gold-secondaire",
+        "discountPct": 20,
+        "cases": [
+          {
+            "id": "case-n1",
+            "label": "قولد",
+            "beneficiaryPays": { "kind": "pct", "value": 80 },
+            "providerGets": { "kind": "pct", "value": 10 }
+          }
+        ]
+      },
+      {
+        "offerId": "offer-silver-secondaire",
+        "discountAmount": 9,
+        "cases": [
+          {
+            "id": "case-n2",
+            "label": "سيلفر — سومة قارّة",
+            "beneficiaryPays": { "kind": "amount", "value": 50 },
+            "providerGets": { "kind": "amount", "value": 5 }
+          }
+        ]
+      }
+    ],
+    "usedByUserIds": ["u-student-farah", "u-st-aziz", "u-st-nour"]
+  },
+  {
+    "id": "promo-med",
+    "code": "MED-BAC26",
+    "providerUserId": "u-student",
+    "offers": [
+      {
+        "offerId": "offer-bac-sci-trimestre",
+        "discountPct": 15,
+        "cases": [
+          {
+            "id": "case-m1",
+            "label": "بين الأصحاب",
+            "beneficiaryPays": { "kind": "pct", "value": 85 },
+            "providerGets": { "kind": "amount", "value": 10 }
+          },
+          {
+            "id": "case-m2",
+            "label": "عرض قوي — عدد محدود",
+            "beneficiaryPays": { "kind": "pct", "value": 20 },
+            "providerGets": { "kind": "pct", "value": 10 }
+          }
+        ]
+      }
+    ],
+    "maxUses": 10,
+    "usedByUserIds": ["u-st-wassim", "u-student-sarra", "u-st-selim", "u-st-emna"]
+  },
+  {
+    "id": "promo-syrine",
+    "code": "SYRINE-MATH",
+    "providerUserId": "u-st-syrine",
+    "offers": [
+      {
+        "offerId": "offer-bac-math-annuel",
+        "discountPct": 10,
+        "cases": [
+          {
+            "id": "case-s1",
+            "label": "زوز أصحاب",
+            "beneficiaryPays": { "kind": "pct", "value": 90 },
+            "providerGets": { "kind": "amount", "value": 20 }
+          }
+        ]
+      }
+    ],
+    "maxUses": 5,
+    "usedByUserIds": ["u-student", "u-st-khalil"]
+  },
+  {
+    "id": "promo-fatma",
+    "code": "FATMA-FAM",
+    "providerUserId": "u-parent",
+    "offers": [
+      {
+        "offerId": "offer-9-rentree",
+        "discountPct": 20,
+        "cases": [
+          {
+            "id": "case-f1",
+            "label": "عرض العايلة",
+            "beneficiaryPays": { "kind": "pct", "value": 80 },
+            "providerGets": { "kind": "pct", "value": 12 }
+          }
+        ]
+      }
+    ],
+    "usedByUserIds": ["u-student-youssef", "u-student-amira"]
+  },
+  {
     "id": "promo-rentree26",
     "code": "RENTREE26",
     "offers": [
@@ -13,18 +151,14 @@
   {
     "id": "promo-duo",
     "code": "WAEL-DUO24",
-    "offers": [
-      { "offerId": "offer-bac-sci-trimestre", "discountAmount": 30 }
-    ],
+    "offers": [{ "offerId": "offer-bac-sci-trimestre", "discountAmount": 30 }],
     "maxUses": 2,
     "usedByUserIds": ["u-st-emna", "u-st-selim"]
   },
   {
     "id": "promo-welcome",
     "code": "WAEL-K7F2M",
-    "offers": [
-      { "offerId": "offer-7-decouverte", "discountPct": 50 }
-    ],
+    "offers": [{ "offerId": "offer-7-decouverte", "discountPct": 50 }],
     "usedByUserIds": []
   }
 ]

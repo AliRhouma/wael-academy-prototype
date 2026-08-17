@@ -96,7 +96,7 @@ export default function AdminMessagesScreen() {
               <span className="min-w-0 flex-1">
                 <span className="flex items-baseline justify-between gap-2">
                   <span dir="auto" className="truncate font-display text-[calc(14px*var(--ts))] font-bold text-ink">
-                    {student?.name ?? "التلميذ تمسح"}
+                    {student?.name ?? "Élève supprimé"}
                   </span>
                   <span className="shrink-0 text-[calc(11px*var(--ts))] tabular-nums text-ink-muted">
                     {formatChatTime(t.last.at)}
@@ -109,7 +109,7 @@ export default function AdminMessagesScreen() {
                     (t.unread > 0 ? "font-medium text-ink" : "text-ink-muted")
                   }
                 >
-                  {lastMine ? "إنت: " : ""}
+                  {lastMine ? "Vous : " : ""}
                   {t.last.text}
                 </span>
               </span>
@@ -132,7 +132,7 @@ export default function AdminMessagesScreen() {
         <button
           type="button"
           onClick={() => setSelectedId(null)}
-          aria-label="ارجع للمحادثات"
+          aria-label="Retour aux conversations"
           className="grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink md:hidden"
         >
           <ArrowRight className="size-4.5" />
@@ -140,9 +140,9 @@ export default function AdminMessagesScreen() {
         <Avatar name={userById.get(selected.studentUserId)?.name ?? "?"} />
         <div className="min-w-0">
           <p dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
-            {userById.get(selected.studentUserId)?.name ?? "التلميذ تمسح"}
+            {userById.get(selected.studentUserId)?.name ?? "Élève supprimé"}
           </p>
-          <p className="text-[calc(12px*var(--ts))] text-ink-muted">تلميذ</p>
+          <p className="text-[calc(12px*var(--ts))] text-ink-muted">Élève</p>
         </div>
       </div>
 
@@ -158,7 +158,7 @@ export default function AdminMessagesScreen() {
               {/* Admin replies are SIGNED — who answered what. */}
               {!fromStudent && (
                 <span className="mb-0.5 me-1 flex items-center gap-1.5 text-[calc(11px*var(--ts))] font-medium text-ink-muted">
-                  {sender?.name ?? "الإدارة"}
+                  {sender?.name ?? "Administration"}
                   <Avatar name={sender?.name ?? "?"} size="sm" className="!size-4 text-[calc(8px*var(--ts))]" />
                 </span>
               )}
@@ -192,13 +192,13 @@ export default function AdminMessagesScreen() {
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={`جاوب باسم ${currentUser?.name ?? "الأدمين"}…`}
+          placeholder={`جاوب باسم ${currentUser?.name ?? "Admin"}…`}
           dir="auto"
           className={INPUT}
         />
         <button
           type="submit"
-          aria-label="ابعث"
+          aria-label="Envoyer"
           disabled={text.trim() === ""}
           className="grid size-11 shrink-0 place-items-center rounded-full bg-grad text-ink-inverted shadow-brand transition hover:brightness-105 disabled:opacity-40"
         >
@@ -211,10 +211,10 @@ export default function AdminMessagesScreen() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
-        title="الرسائل"
+        title="Messages"
         subtitle={
           isEmpty
-            ? "أسئلة التلامذة تجي هوني."
+            ? "Les questions des élèves arrivent ici."
             : `${threads.length} محادثة${
                 totalUnread > 0 ? ` · ${totalUnread} رسالة ما تقراتش` : ""
               } — كل جواب ممضي باسم الأدمين اللي بعثو.`
@@ -225,8 +225,8 @@ export default function AdminMessagesScreen() {
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
             icon={MessagesSquare}
-            title="ما فماش محادثات"
-            description="كي تلميذ يكتب من فقاعة الرسائل متاعو، المحادثة متاعو تظهر هوني."
+            title="Aucune conversation"
+            description="Dès qu'un élève écrit depuis sa bulle de messagerie, sa conversation apparaît ici."
           />
         </div>
       ) : (
@@ -252,7 +252,7 @@ export default function AdminMessagesScreen() {
                   اختار محادثة
                 </p>
                 <p className="text-sm text-ink-muted">
-                  الأجوبة تتبعث باسم {currentUser?.name ?? "الأدمين المتّصل"}.
+                  الأجوبة تتبعث باسم {currentUser?.name ?? "Admin connecté"}.
                 </p>
               </div>
             )}

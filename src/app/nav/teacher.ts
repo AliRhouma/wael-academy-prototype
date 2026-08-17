@@ -1,10 +1,12 @@
-import { BookOpen, CalendarDays, GraduationCap } from "lucide-react"
+import { BookOpen, CalendarDays, GraduationCap, Ticket, Wallet } from "lucide-react"
 import { DashboardIcon } from "@/components/icons/DashboardIcon"
 import type { NavItem } from "./types"
 
 export const teacherNav: NavItem[] = [
-  { label: "لوحة القيادة", path: "/teacher", icon: DashboardIcon, colored: true },
-  { label: "دروسي", path: "/teacher/courses", icon: BookOpen },
-  { label: "حصصي", path: "/teacher/sessions", icon: CalendarDays },
-  { label: "تلامذتي", path: "/teacher/students", icon: GraduationCap },
+  { label: "Tableau de bord", path: "/teacher", icon: DashboardIcon, colored: true },
+  { label: "Mes cours", path: "/teacher/courses", icon: BookOpen },
+  { label: "Mes séances", path: "/teacher/sessions", icon: CalendarDays },
+  { label: "Mes élèves", path: "/teacher/students", icon: GraduationCap },
+  { label: "Ma paie", path: "/teacher/money", icon: Wallet },
+  { label: "Mes codes", path: "/teacher/codes", icon: Ticket },
 ]

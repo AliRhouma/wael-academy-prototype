@@ -82,7 +82,7 @@ export function ScopePicker({ yearIds, subjectIds, onYearsChange, onSubjectsChan
     <>
       <div>
         <span className="mb-2 block text-sm font-medium text-ink-subtle">
-          الأقسام <span className="font-normal text-ink-muted">({yearIds.length})</span>
+          Classes <span className="font-normal text-ink-muted">({yearIds.length})</span>
         </span>
         <div className="flex flex-col gap-3">
           {cycleGroups
@@ -110,11 +110,11 @@ export function ScopePicker({ yearIds, subjectIds, onYearsChange, onSubjectsChan
 
       <div>
         <span className="mb-2 block text-sm font-medium text-ink-subtle">
-          الموادّ <span className="font-normal text-ink-muted">({subjectIds.length})</span>
+          Matières <span className="font-normal text-ink-muted">({subjectIds.length})</span>
         </span>
         {yearIds.length === 0 ? (
           <p className="rounded-md border border-dashed border-border bg-surface-muted px-3 py-3 text-sm text-ink-muted">
-            اختار قسم ولا كثر في البداية.
+            Choisissez d'abord une classe ou plus.
           </p>
         ) : (
           <div className="flex flex-col gap-3">

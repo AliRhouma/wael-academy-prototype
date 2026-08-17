@@ -1,0 +1,44 @@
+[
+  {
+    "id": "rate-karim-1",
+    "teacherId": "t-karim",
+    "amount": 40,
+    "effectiveFrom": "2025-11-01",
+    "createdAt": "2025-10-27T09:15:00.000Z"
+  },
+  {
+    "id": "rate-karim-2",
+    "teacherId": "t-karim",
+    "amount": 50,
+    "effectiveFrom": "2026-01-01",
+    "createdAt": "2025-12-20T16:40:00.000Z"
+  },
+  {
+    "id": "rate-karim-3",
+    "teacherId": "t-karim",
+    "amount": 60,
+    "effectiveFrom": "2026-08-01",
+    "createdAt": "2026-08-10T11:05:00.000Z"
+  },
+  {
+    "id": "rate-mourad-1",
+    "teacherId": "t-mourad",
+    "amount": 55,
+    "effectiveFrom": "2026-08-01",
+    "createdAt": "2026-07-25T08:30:00.000Z"
+  },
+  {
+    "id": "rate-nabil-1",
+    "teacherId": "t-nabil",
+    "amount": 45,
+    "effectiveFrom": "2026-07-01",
+    "createdAt": "2026-06-26T14:10:00.000Z"
+  },
+  {
+    "id": "rate-nabil-2",
+    "teacherId": "t-nabil",
+    "amount": 52,
+    "effectiveFrom": "2026-09-01",
+    "createdAt": "2026-08-12T10:00:00.000Z"
+  }
+]

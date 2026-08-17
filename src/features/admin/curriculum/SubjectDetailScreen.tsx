@@ -31,14 +31,14 @@ export default function AdminSubjectDetailScreen() {
       <div className="rounded-lg border border-dashed border-border bg-surface">
         <EmptyState
           icon={GraduationCap}
-          title="المادّة ما تلقاتش"
-          description="المادّة هذي ما موجودةش ولا تمسحت."
+          title="Matière introuvable"
+          description="Cette matière n'existe pas ou a été supprimée."
           action={
             <Link
               to="/admin/curriculum"
               className="inline-flex h-11 items-center gap-2 rounded-md bg-grad px-4 font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
             >
-              <ArrowRight className="size-4" /> ارجع للبرنامج
+              <ArrowRight className="size-4" /> Retour au cursus
             </Link>
           }
         />
@@ -47,9 +47,9 @@ export default function AdminSubjectDetailScreen() {
   }
 
   const tabs: { key: Tab; label: string; count: number; icon: typeof Layers3 }[] = [
-    { key: "chapters", label: "الفصول", count: chapterCount, icon: Layers3 },
-    { key: "paths", label: "مسارات", count: pathCount, icon: Route },
-    { key: "exams", label: "امتحانات", count: examCount, icon: ClipboardList },
+    { key: "chapters", label: "Chapitres", count: chapterCount, icon: Layers3 },
+    { key: "paths", label: "Parcours", count: pathCount, icon: Route },
+    { key: "exams", label: "Examens", count: examCount, icon: ClipboardList },
   ]
 
   return (
@@ -62,7 +62,7 @@ export default function AdminSubjectDetailScreen() {
         >
           <ArrowRight className="size-4" /> <span dir="auto">{year.name}</span>
         </button>
-        <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">المادّة</p>
+        <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">Matière</p>
         <h1 dir="auto" className="font-display text-[calc(26px*var(--ts))] font-bold leading-tight text-ink">
           {subject.name}
         </h1>

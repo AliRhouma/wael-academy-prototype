@@ -15,16 +15,17 @@ import { WaelEmblem, WaelLockupH } from "@/components/icons/WaelLogo"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { Avatar } from "@/components/kit/Avatar"
 import { useAuth } from "@/stores/useAuth"
+import { useT } from "@/i18n/strings"
 import { useData } from "@/stores/useData"
 import { cn } from "@/lib/utils"
 import type { Role } from "@/data/types"
 import type { NavItem } from "@/app/nav/types"
 
-const ROLE_LABEL: Record<Role, string> = {
-  admin: "الإدارة",
-  teacher: "أستاذ",
-  parent: "ولي",
-  student: "تلميذ",
+const ROLE_KEY: Record<Role, "roleAdmin" | "roleTeacher" | "roleParent" | "roleStudent"> = {
+  admin: "roleAdmin",
+  teacher: "roleTeacher",
+  parent: "roleParent",
+  student: "roleStudent",
 }
 
 const MAX_BAR = 5 // items shown in the mobile bottom bar before overflowing to the "زيادة" sheet
@@ -175,12 +176,13 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
   const user = useData((s) => s.users.find((u) => u.id === currentUserId)) ?? currentUser
   const [moreOpen, setMoreOpen] = useState(false)
   const [expanded, setExpanded] = useState(true)
+  const t = useT()
 
   const overflow = nav.length > MAX_BAR
   const barItems = overflow ? nav.slice(0, MAX_BAR - 1) : nav
   const moreItems = overflow ? nav.slice(MAX_BAR - 1) : []
 
-  const roleLabel = currentRole ? ROLE_LABEL[currentRole] : ""
+  const roleLabel = currentRole ? t[ROLE_KEY[currentRole]] : ""
   const switchRole = () => navigate("/roles")
 
   function signOut() {
@@ -236,7 +238,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
                 <button
                   type="button"
                   onClick={() => setExpanded(false)}
-                  aria-label="صغّر القائمة"
+                  aria-label={t.collapseMenu}
                   className="grid size-7 shrink-0 place-items-center rounded-full bg-white/15 text-white/80 backdrop-blur-sm transition hover:bg-white/25 hover:text-white"
                 >
                   <ChevronsRight className="size-4" />
@@ -250,7 +252,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
             <button
               type="button"
               onClick={() => setExpanded(true)}
-              aria-label="كبّر القائمة"
+              aria-label={t.expandMenu}
               className="grid size-8 shrink-0 place-items-center rounded-full border border-border bg-surface text-ink-subtle shadow-sm transition hover:border-brand-200 hover:text-brand-600"
             >
               <ChevronsLeft className="size-4" />
@@ -273,7 +275,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
               <DropdownMenu.Trigger asChild>
                 <button
                   type="button"
-                  aria-label="حسابي"
+                  aria-label={t.myAccount}
                   title={expanded ? undefined : user.name}
                   className={cn(
                     "group mb-1 flex w-full items-center rounded-md transition hover:bg-brand-50",
@@ -320,13 +322,13 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
                     onSelect={() => navigate(`/${currentRole}/profil`)}
                     className="flex min-h-[44px] cursor-pointer items-center gap-2.5 rounded-md px-3 text-sm text-ink outline-none transition data-[highlighted]:bg-surface-muted"
                   >
-                    <UserRound className="size-4 shrink-0" /> بروفايلي
+                    <UserRound className="size-4 shrink-0" /> {t.myProfile}
                   </DropdownMenu.Item>
                   <DropdownMenu.Item
                     onSelect={signOut}
                     className="flex min-h-[44px] cursor-pointer items-center gap-2.5 rounded-md px-3 text-sm text-danger-600 outline-none transition data-[highlighted]:bg-danger-50"
                   >
-                    <LogOut className="size-4 shrink-0" /> اخرج
+                    <LogOut className="size-4 shrink-0" /> {t.signOut}
                   </DropdownMenu.Item>
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
@@ -335,13 +337,13 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
           <button
             type="button"
             onClick={switchRole}
-            title={expanded ? undefined : "بدّل الدور"}
+            title={expanded ? undefined : t.switchRole}
             className={cn(
               "flex w-full items-center rounded-md text-sm font-medium text-ink-subtle transition hover:bg-brand-50 hover:text-brand-600",
               expanded ? "gap-2.5 px-3.5 py-3" : "justify-center py-3",
             )}
           >
-            <Repeat className="size-[18px] shrink-0 text-ink-muted" /> {expanded && "بدّل الدور"}
+            <Repeat className="size-[18px] shrink-0 text-ink-muted" /> {expanded && t.switchRole}
           </button>
         </div>
       </aside>
@@ -386,7 +388,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
             className="flex min-h-[52px] flex-1 flex-col items-center justify-center gap-0.5 rounded-md text-[calc(11px*var(--ts))] font-medium text-ink-muted"
           >
             <MoreHorizontal className="size-[22px]" />
-            <span>زيادة</span>
+            <span>{t.more}</span>
           </button>
         </div>
       </nav>
@@ -394,7 +396,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
       {/* Overflow "More" sheet (mobile only) */}
       <Sheet open={moreOpen} onOpenChange={setMoreOpen}>
         <SheetContent side="bottom" className="gap-0 rounded-t-xl border-border bg-surface-raised p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-          <SheetTitle className="px-3 py-2 font-display text-base font-bold text-ink">زيادة</SheetTitle>
+          <SheetTitle className="px-3 py-2 font-display text-base font-bold text-ink">{t.more}</SheetTitle>
 
           {/* Who you are, and the two things you can do about it. On a phone
               there is no rail and no bar, so this sheet is the whole account. */}
@@ -453,14 +455,14 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
               }}
               className="flex min-h-[48px] items-center gap-3 rounded-md px-3 text-sm font-medium text-ink-subtle transition hover:bg-surface-muted"
             >
-              <Repeat className="size-5" /> بدّل الدور
+              <Repeat className="size-5" /> {t.switchRole}
             </button>
             <button
               type="button"
               onClick={signOut}
               className="flex min-h-[48px] items-center gap-3 rounded-md px-3 text-sm font-medium text-danger-600 transition hover:bg-danger-50"
             >
-              <LogOut className="size-5" /> اخرج
+              <LogOut className="size-5" /> {t.signOut}
             </button>
           </div>
         </SheetContent>
