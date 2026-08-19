@@ -9,11 +9,8 @@ import {
   Pencil,
   Phone,
   School,
-  Sparkles,
   UserRound,
 } from "lucide-react"
-import { Avatar } from "@/components/kit/Avatar"
-import { Badge, type BadgeTone } from "@/components/kit/Badge"
 import { FormSheet } from "@/components/kit/FormSheet"
 import { useToast } from "@/components/kit/Toast"
 import { useAuth } from "@/stores/useAuth"
@@ -23,11 +20,13 @@ import type { Role, User, UserFieldChange } from "@/data/types"
 const INPUT =
   "h-11 w-full rounded-md border border-input bg-input-bg px-3.5 text-ink placeholder:text-ink-muted focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-ring/20"
 
-const ROLE: Record<Role, { label: string; tone: BadgeTone }> = {
-  admin: { label: "أدمين", tone: "info" },
-  teacher: { label: "أستاذ", tone: "brand" },
-  parent: { label: "ولي", tone: "warning" },
-  student: { label: "تلميذ", tone: "neutral" },
+/** Just the word now — the badges that used to wear a tone are gone with the
+ *  banner, and the rôle is read as a field like every other one. */
+const ROLE: Record<Role, string> = {
+  admin: "أدمين",
+  teacher: "أستاذ",
+  parent: "ولي",
+  student: "تلميذ",
 }
 
 /** Field → French label, used to write the history summary of an edit. */
@@ -213,44 +212,21 @@ export default function ProfileScreen() {
 
   return (
     <div className="mx-auto flex w-full max-w-[880px] flex-col gap-5">
-      {/* Identity — the one thing you came to check, with the one action. */}
-      <section className="overflow-hidden rounded-xl border border-border bg-surface shadow-sm">
-        <div className="h-20 bg-grad md:h-24" />
-        <div className="px-5 pb-5 md:px-6 md:pb-6">
-          <div className="-mt-10 flex flex-wrap items-end gap-4">
-            <Avatar
-              name={user.name}
-              size="lg"
-              className="size-20 text-2xl ring-4 ring-surface md:size-[88px] md:text-[calc(26px*var(--ts))]"
-            />
-            <div className="min-w-0 flex-1 pb-0.5">
-              <h1 dir="auto" className="truncate font-display text-[calc(22px*var(--ts))] font-bold leading-tight text-ink md:text-[calc(26px*var(--ts))]">
-                {user.name}
-              </h1>
-              <div className="mt-1.5 flex flex-wrap items-center gap-2">
-                <Badge tone={ROLE[user.role].tone} dot>
-                  {ROLE[user.role].label}
-                </Badge>
-                {yearLabel && <Badge tone="brand">{yearLabel}</Badge>}
-              </div>
-            </div>
-            <div className="shrink-0 pb-0.5">{editButton}</div>
-          </div>
-
-          {isStudent && user.moyenneGenerale != null && (
-            <div className="mt-5 flex items-center gap-3 rounded-md bg-accent2-50 px-4 py-3">
-              <Sparkles className="size-[18px] shrink-0 text-accent2-600" />
-              <p className="text-sm text-accent2-700">
-                المعدّل العام{" "}
-                <span className="font-display text-base font-bold tabular-nums">
-                  {user.moyenneGenerale.toFixed(2).replace(".", ",")}
-                </span>{" "}
-                / 20
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
+      {/* THE NAME, AND THE ONE ACTION. The banner that used to head this page
+          carried a gradient, a big avatar, a role badge, an année badge and a
+          moyenne strip — and every one of those facts is stated again, in
+          words, in the cards right below it. A profile whose first screenful is
+          a duplicate of its second reads as decoration; the name says whose
+          page this is, and « بدّل » says what you can do about it. */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1
+          dir="auto"
+          className="min-w-0 flex-1 truncate font-display text-[calc(22px*var(--ts))] font-bold leading-tight text-ink md:text-[calc(26px*var(--ts))]"
+        >
+          {user.name}
+        </h1>
+        <div className="shrink-0">{editButton}</div>
+      </div>
 
       <Card title="المعلومات الشخصية">
         <Field icon={UserRound} label="الاسم الكامل" value={user.name} />
@@ -271,7 +247,7 @@ export default function ProfileScreen() {
       </Card>
 
       <Card title="الحساب">
-        <Field icon={UserRound} label="الدور" value={ROLE[user.role].label} />
+        <Field icon={UserRound} label="الدور" value={ROLE[user.role]} />
         <Field icon={GraduationCap} label="منخرط من" value={LONG_DAY.format(new Date(user.createdAt))} />
         <Field
           icon={Pencil}

@@ -5,8 +5,6 @@ import {
   ChevronDown,
   ChevronLeft,
   Clock3,
-  Hourglass,
-  MapPin,
   MonitorPlay,
   Play,
   UserRound,
@@ -18,7 +16,6 @@ import { ShellHeaderPortal } from "@/components/AppShell"
 import { SubjectIcon } from "@/components/icons/subjects"
 import { subjectTint } from "@/features/student/subjectTint"
 import { SubjectPicker } from "@/features/student/matiere/SubjectPicker"
-import { SubjectSwitcher } from "@/features/student/matiere/SubjectSwitcher"
 import { useSessionLabels } from "@/features/shared/session/sessionLabels"
 import { seanceVideoPath } from "@/features/student/player/links"
 import {
@@ -31,7 +28,6 @@ import {
   yearFromSlug,
   yearSlug,
 } from "@/features/student/seances/replays"
-import { videoSrc, youtubeId } from "@/data/media"
 import { useStuck } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 import type { Session } from "@/data/types"
@@ -190,7 +186,7 @@ export default function StudentSeanceSubjectScreen() {
       {/* Breadcrumb */}
       <nav aria-label="مسار التنقّل" className="flex items-center gap-1.5 text-[calc(13px*var(--ts))] text-ink-muted">
         <Link to="/student" className="transition hover:text-brand-600">
-          الرئيسية
+          الصفحة الرئيسية
         </Link>
         <ChevronLeft className="size-3.5 shrink-0" />
         <Link
@@ -207,15 +203,18 @@ export default function StudentSeanceSubjectScreen() {
 
       {/* Identity */}
       <div className="flex items-center gap-3.5">
-        <span
-          className="relative grid size-16 shrink-0 place-items-center overflow-hidden rounded-lg md:size-[72px]"
-          style={{ backgroundImage: tint.gradient }}
-        >
+        {/* No plate under the drawing — it carries its own disc, and a tinted
+            square behind a circular badge is just a second card showing round
+            the edges of the first. What stays is the halo: a blur has no edge,
+            so it reads as the artwork's own colour bleeding onto the page
+            rather than as something the artwork is sitting on. Same identity
+            block as the matière page. */}
+        <span className="relative grid size-16 shrink-0 place-items-center md:size-[72px]">
           <span
             className="absolute size-14 rounded-full blur-2xl"
             style={{ backgroundColor: tint.halo }}
           />
-          <SubjectIcon name={subject.name} className="relative size-[54px] md:size-[62px]" />
+          <SubjectIcon name={subject.name} className="relative size-[62px] md:size-[72px]" />
         </span>
         <div className="min-w-0">
           <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-600">
@@ -230,17 +229,10 @@ export default function StudentSeanceSubjectScreen() {
           <p className="mt-0.5 text-[calc(13px*var(--ts))] text-ink-muted">
             {recorded === 0
               ? "ما فماش تسجيلات في العام هذا"
-              : `${recorded} تسجيل · ${groupTabs.length} فوج`}
+              : `${recorded} تسجيل · ${groupTabs.length} مجموعة`}
           </p>
         </div>
       </div>
-
-      {/* Switch to another matière — the same rail as the matière page */}
-      <SubjectSwitcher
-        subjects={siblings}
-        activeId={subject.id}
-        hrefFor={(s) => `/student/seances/${s.id}?annee=${yearSlug(activeYear)}`}
-      />
 
       {groupTabs.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border bg-surface">
@@ -264,12 +256,18 @@ export default function StudentSeanceSubjectScreen() {
           <div ref={sentinelRef} aria-hidden="true" className="-mt-px h-px" />
 
           {/* ---- Groupes ---- */}
+          {/* EACH GROUPE ITS OWN BUTTON. They used to share one bordered track,
+              which draws the ROW as the object and leaves the chips inside it
+              looking like segments of a caption; separated and each given its
+              own edge, every one of them reads as a thing to press. The two
+              states are told apart by fill, not by presence of an edge — the
+              border stays on both so nothing resizes when the choice moves. */}
           <div
             role="tablist"
-            aria-label="فوج"
-            className="flex gap-1 overflow-x-auto scroll-touch rounded-lg border border-border bg-surface-muted p-1 [scrollbar-width:none] md:w-fit [&::-webkit-scrollbar]:hidden"
+            aria-label="المجموعة"
+            className="flex gap-2 overflow-x-auto scroll-touch pb-1 [scrollbar-width:none] md:w-fit [&::-webkit-scrollbar]:hidden"
           >
-            {groupTabs.map(({ group, mine, count }) => {
+            {groupTabs.map(({ group, count }) => {
               const active = group.id === activeGroupId
               return (
                 <button
@@ -278,29 +276,26 @@ export default function StudentSeanceSubjectScreen() {
                   role="tab"
                   aria-selected={active}
                   onClick={() => setGroup(group.id)}
+                  title={group.title}
                   className={cn(
-                    "inline-flex h-11 shrink-0 items-center gap-2 rounded-md px-3 text-[calc(13px*var(--ts))] font-medium transition md:h-10 md:px-3.5",
-                    active ? "bg-surface text-ink shadow-sm" : "text-ink-muted hover:text-ink-subtle",
+                    "inline-flex h-11 shrink-0 items-center gap-2 rounded-[12px] border-2 px-3.5 text-[calc(13px*var(--ts))] font-medium transition md:h-11",
+                    active
+                      ? "border-brand-600 bg-grad text-white shadow-brand"
+                      : "border-brand-200 bg-surface text-ink-subtle shadow-sm hover:border-brand-600 hover:text-brand-600",
                   )}
                 >
-                  <UsersRound className={cn("size-4 shrink-0", active && "text-brand-600")} />
+                  <UsersRound className="size-4 shrink-0" />
+                  {/* The LEVEL only — « Élite », « Rattrapage ». The class in
+                      front of it (« Bac Sciences ») is the page you are
+                      already on, so printing it on every tab said nothing and
+                      cost the row its width. The full title rides the tooltip. */}
                   <span dir="auto" className="max-w-[11rem] truncate">
-                    {group.title}
+                    {shortGroupLabel(group.title)}
                   </span>
-                  {mine && (
-                    <span
-                      className={cn(
-                        "rounded-full px-1.5 text-[calc(10px*var(--ts))] font-medium uppercase tracking-wide",
-                        active ? "bg-accent2-50 text-accent2-700" : "bg-neutral-100 text-ink-muted",
-                      )}
-                    >
-                      mon groupe
-                    </span>
-                  )}
                   <span
                     className={cn(
                       "rounded-full px-1.5 text-[calc(11px*var(--ts))] tabular-nums",
-                      active ? "bg-brand-50 text-brand-700" : "bg-neutral-100 text-ink-muted",
+                      active ? "bg-white/20 text-white" : "bg-neutral-100 text-ink-muted",
                     )}
                   >
                     {count}
@@ -328,10 +323,10 @@ export default function StudentSeanceSubjectScreen() {
                 <span aria-hidden="true" className="h-6 w-px shrink-0 bg-border" />
                 <div
                   role="tablist"
-                  aria-label="فوج"
+                  aria-label="المجموعة"
                   className="flex min-w-0 flex-1 gap-1 overflow-x-auto scroll-touch [scrollbar-width:none] md:flex-none [&::-webkit-scrollbar]:hidden"
                 >
-                  {groupTabs.map(({ group, mine }) => {
+                  {groupTabs.map(({ group }) => {
                     const active = group.id === activeGroupId
                     return (
                       <button
@@ -346,16 +341,6 @@ export default function StudentSeanceSubjectScreen() {
                           active ? "bg-brand-50 text-brand-700" : "text-ink-muted hover:text-ink-subtle",
                         )}
                       >
-                        {/* My own groupe keeps a marker even condensed. */}
-                        {mine && (
-                          <span
-                            aria-hidden="true"
-                            className={cn(
-                              "size-1.5 shrink-0 rounded-full",
-                              active ? "bg-accent2-500" : "bg-neutral-300",
-                            )}
-                          />
-                        )}
                         <span dir="auto" className="truncate">
                           {shortGroupLabel(group.title)}
                         </span>
@@ -417,10 +402,21 @@ export default function StudentSeanceSubjectScreen() {
                         >
                           Semestre {semester}
                         </span>
-                        <span className="mt-0.5 block text-[calc(12px*var(--ts))] text-ink-muted">
-                          {empty
-                            ? "ما فماش حصص في الثلاثي هذا"
-                            : `${list.length} حصّة · ${playable} تسجيل`}
+                        {/* The RECORDINGS, not the séances. This page is the
+                            library — a séance with nothing online is a row the
+                            élève cannot open, so counting it here promised more
+                            than the semestre holds.
+                            The play mark rides HERE, once for the whole
+                            semestre, instead of on each of its rows. */}
+                        <span className="mt-0.5 flex items-center gap-1 text-[calc(12px*var(--ts))] text-ink-muted">
+                          {empty ? (
+                            "ما فماش حصص في الثلاثي هذا"
+                          ) : (
+                            <>
+                              <Play className="size-3 shrink-0 fill-current" />
+                              <span className="tabular-nums">{playable} تسجيل</span>
+                            </>
+                          )}
                         </span>
                       </span>
                       {!empty && (
@@ -472,6 +468,11 @@ export default function StudentSeanceSubjectScreen() {
  * One séance in the list. A published replay is a button with a thumbnail; one
  * still being edited stays in place, visibly waiting — hiding it would make the
  * semestre look incomplete, and the élève knows the séance happened.
+ *
+ * The card carries the title and three facts — date, length, enseignant. The
+ * salle and the séance's description used to ride along too: a room number is
+ * meaningless once the séance is a video, and the description repeated the
+ * title in longer words. Both were paid for in the height of every row.
  */
 function SeanceCard({
   session,
@@ -484,7 +485,6 @@ function SeanceCard({
   to: string
 }) {
   const ready = Boolean(session.recordingUrl)
-  const thumbId = ready ? youtubeId(videoSrc(session.recordingUrl)) : undefined
   const duration = durationLabel(session.startTime, session.endTime)
 
   const meta = (
@@ -511,69 +511,41 @@ function SeanceCard({
           </span>
         </>
       )}
-      {/* The salle is a nice-to-know on a replay — it goes first when space is short. */}
-      {session.room && (
-        <>
-          <span className="hidden md:inline">·</span>
-          <span dir="auto" className="hidden items-center gap-1 md:inline-flex">
-            <MapPin className="size-3.5" />
-            {session.room}
-          </span>
-        </>
-      )}
     </span>
   )
 
   const body = (
     <span className="min-w-0 flex-1">
-      {ready ? (
-        <Badge tone="brand">التسجيل</Badge>
-      ) : (
-        <Badge tone="neutral">قريب</Badge>
+      {/* Only the séance that is NOT yet online wears a badge. « التسجيل » sat
+          on every published card, which is every card the élève can press —
+          a label that never varies carries nothing, and the play button on the
+          thumbnail already says the same thing. « قريب » stays: it is the one
+          case where the card behaves differently from its neighbours. */}
+      {!ready && (
+        <span className="mb-1.5 block">
+          <Badge tone="neutral">قريب</Badge>
+        </span>
       )}
       <span
         dir="auto"
-        className="mt-1.5 block text-[calc(14px*var(--ts))] font-semibold leading-snug text-ink line-clamp-2"
+        className="block text-[calc(14px*var(--ts))] font-semibold leading-snug text-ink line-clamp-2"
       >
         {session.title}
       </span>
       {meta}
-      {session.description && (
-        <span dir="auto" className="mt-1 block text-[calc(12px*var(--ts))] text-ink-subtle line-clamp-2">
-          {session.description}
-        </span>
-      )}
     </span>
   )
 
-  const thumb = (
-    <span className="relative block aspect-video w-28 shrink-0 overflow-hidden rounded-md bg-neutral-200 md:w-36">
-      {thumbId && (
-        <img
-          src={`https://i.ytimg.com/vi/${thumbId}/mqdefault.jpg`}
-          alt=""
-          loading="lazy"
-          className="size-full object-cover"
-        />
-      )}
-      {ready ? (
-        <span className="absolute inset-0 grid place-items-center bg-neutral-900/25 transition group-hover:bg-neutral-900/40">
-          <span className="grid size-9 place-items-center rounded-full bg-white/95 text-brand-600 shadow-md transition motion-safe:group-hover:scale-110">
-            <Play className="size-4 translate-x-px fill-current" />
-          </span>
-        </span>
-      ) : (
-        <span className="absolute inset-0 grid place-items-center bg-neutral-100 text-ink-muted">
-          <Hourglass className="size-5" />
-        </span>
-      )}
-    </span>
-  )
-
+  // No still, and no play tile in its place. Every seeded replay points at the
+  // same video, so the thumbnails came out as a column of the identical grey
+  // rectangle — and swapping that for one identical icon would only have made
+  // the repetition tidier. What tells these rows apart is the title and the
+  // date; the semestre header above says the whole list plays. The two states
+  // stay legible without either: « قريب » wears a dashed edge and a badge, a
+  // published one is a pressable card that lifts.
   if (!ready) {
     return (
-      <div className="flex w-full items-center gap-3 rounded-lg border border-dashed border-border bg-surface p-2.5 text-start md:gap-4 md:p-3">
-        {thumb}
+      <div className="w-full rounded-lg border border-dashed border-border bg-surface p-3 text-start">
         {body}
       </div>
     )
@@ -582,9 +554,8 @@ function SeanceCard({
   return (
     <Link
       to={to}
-      className="group flex w-full items-center gap-3 rounded-lg border border-border bg-surface p-2.5 text-start shadow-sm transition hover:border-brand-200 hover:shadow-md md:gap-4 md:p-3"
+      className="group block w-full rounded-lg border border-border bg-surface p-3 text-start shadow-sm transition hover:border-brand-200 hover:shadow-md"
     >
-      {thumb}
       {body}
     </Link>
   )

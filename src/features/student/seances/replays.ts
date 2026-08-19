@@ -45,7 +45,14 @@ export function isPast(session: Session): boolean {
   return sessionStamp(session) < nowStamp()
 }
 
-/** "1 h 30" · "45 min" — how long the séance ran. */
+/**
+ * "1:30" · "45 min" — how long the séance ran.
+ *
+ * Hours are written as a clock span, not as "1 h 30": the `h` is a French
+ * abbreviation sitting inside an Arabic line, and it read as a stray letter
+ * rather than as a unit. A colon needs no language. Under an hour there are no
+ * hours to punctuate, so those stay spelled out in minutes.
+ */
 export function durationLabel(start: string, end: string): string {
   const [sh, sm] = start.split(":").map(Number)
   const [eh, em] = end.split(":").map(Number)
@@ -54,7 +61,7 @@ export function durationLabel(start: string, end: string): string {
   const h = Math.floor(total / 60)
   const m = total % 60
   if (h === 0) return `${m} min`
-  return m === 0 ? `${h} h` : `${h} h ${String(m).padStart(2, "0")}`
+  return `${h}:${String(m).padStart(2, "0")}`
 }
 
 /**

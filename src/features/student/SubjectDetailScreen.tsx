@@ -21,7 +21,7 @@ type Tab = "parcours" | "chapitres" | "examens"
 
 const TABS: { key: Tab; label: string; icon: typeof Route }[] = [
   { key: "parcours", label: "مسارات", icon: Route },
-  { key: "chapitres", label: "الفصول", icon: Layers3 },
+  { key: "chapitres", label: "الدروس", icon: Layers3 },
   { key: "examens", label: "امتحانات", icon: FileCheck2 },
 ]
 
@@ -44,14 +44,12 @@ export default function StudentSubjectDetailScreen() {
   const { show, toast } = useToast()
 
   const subjects = useData((s) => s.subjects)
-  const years = useData((s) => s.years)
   const chapters = useData((s) => s.chapters)
   const lessons = useData((s) => s.lessons)
   const paths = useData((s) => s.paths)
   const exams = useData((s) => s.exams)
 
   const subject = subjects.find((s) => s.id === subjectId)
-  const year = years.find((y) => y.id === subject?.yearId)
   const tint = subjectTint(subject?.name ?? "", subject?.category)
 
   /** Sibling matières — the switcher's rail. */
@@ -119,30 +117,24 @@ export default function StudentSubjectDetailScreen() {
   }
 
   return (
-    /* THE PAGE IS THE MATIÈRE'S OWN GROUND — the same duotone its card wears in
-       the grid, so opening a card lands you inside the colour you tapped
-       instead of on the generic canvas. It's a panel, not a wash on the shell:
-       rounded and bordered like every other section card, which also means the
-       notebook ruling stops at its edge instead of running under the title.
-
-       IN DARK THE PLATE IS DROPPED AND THE FRAME STAYS. The duotone is washed to
-       `--tint-strength: 16%` on the dark side, and at that strength every
-       matière lands on the same dull grey-navy — no identity left to carry, and
-       lighter than the cards laid on it, so a card read as a hole in a slab
-       rather than as a panel lifted off a page. Emptied, the rail's idiom takes
-       over: an outline the canvas and its glows show through, cards lifting off
-       it properly. The shadow goes with the fill — a drop shadow under a
-       transparent panel is a smudge cast by nothing.
-       (`!` because the plate is an inline style; an important author rule is
-       what outranks one.) */
-    <div
-      className="flex flex-col gap-5 rounded-xl border border-border p-4 shadow-sm md:p-5 dark:bg-none! dark:shadow-none"
-      style={{ backgroundImage: tint.gradient }}
-    >
+    /* ONE FRAME, NO GROUND. The panel used to be painted — first a per-matière
+       duotone, then the brand gradient veiled down (`.bg-grad-wash`) so eight
+       matières stopped meaning eight page colours. Both were a plate under the
+       content, and a plate is a second surface for the white cards to sit on;
+       the page ended up in three layers deep before any content was read.
+       What the plate was really doing was drawing an edge round the matière's
+       chapter list, and an edge is enough on its own — so only the edge is
+       left, in the dashboard panels' idiom: the 3px `--brand-200` rule at their
+       28px radius (see CreamPanel). The notebook ruling of the shell now runs
+       straight through it, which is exactly what dark mode already did once its
+       fill was dropped — the two themes stopped being two treatments.
+       The matière's own colour has not left the screen: the halo under its
+       drawing still comes from the artwork. */
+    <div className="flex flex-col gap-5 rounded-[28px] border-[3px] border-brand-200 p-4 md:p-5">
       {/* Breadcrumb */}
       <nav aria-label="مسار التنقّل" className="flex items-center gap-1.5 text-[calc(13px*var(--ts))] text-ink-subtle">
         <Link to="/student" className="transition hover:text-brand-600">
-          الرئيسية
+          الصفحة الرئيسية
         </Link>
         <ChevronLeft className="size-3.5 shrink-0" />
         <Link to="/student/matieres" className="transition hover:text-brand-600">
@@ -154,33 +146,32 @@ export default function StudentSubjectDetailScreen() {
         </span>
       </nav>
 
-      {/* Identity — retuned for the coloured ground it now sits on: the drawing
-          lost its tinted plate (a third colour between the art and a page
-          already wearing that hue) and the meta line stepped up from -muted to
-          -subtle, which grey loses on the gradient's deep end. */}
-      <div className="flex items-center gap-3.5">
-        <span className="relative grid size-16 shrink-0 place-items-center md:size-[72px]">
+      {/* Identity — THE DRAWING AND THE NAME, and nothing else.
+          The année kicker and the "X فصل · Y محتوى" line both went: the
+          breadcrumb above already says which matière this is, and the tab row
+          below carries the same counts on the tabs that open them, which is
+          where a number is worth reading because it is attached to the thing it
+          counts. What is left is one line of text, so the artwork can take the
+          height the three lines used to need — it is the only thing on this
+          page that identifies the matière at a glance.
+          The drawing carries its own colour and nothing else does: no tinted
+          plate behind it (that was a third colour between the art and the
+          frame), just the halo bleeding out of the artwork. */}
+      <div className="flex items-center gap-4">
+        <span className="relative grid size-20 shrink-0 place-items-center md:size-24">
           <span
-            className="absolute size-14 rounded-full blur-2xl"
+            className="absolute size-16 rounded-full blur-2xl md:size-20"
             style={{ backgroundColor: tint.halo }}
           />
-          <SubjectIcon name={subject.name} className="relative size-[62px] md:size-[72px]" />
+          <SubjectIcon name={subject.name} className="relative size-20 md:size-24" />
         </span>
         <div className="min-w-0">
-          <p className="text-[calc(11px*var(--ts))] font-medium uppercase tracking-[.12em] text-accent2-700">
-            {year?.name ?? "المادّة"}
-          </p>
           <h1
             dir="auto"
             className="truncate font-display text-[calc(24px*var(--ts))] font-bold leading-tight text-ink md:text-[calc(26px*var(--ts))]"
           >
             {subject.name}
           </h1>
-          <p className="mt-0.5 text-[calc(13px*var(--ts))] font-medium text-ink-subtle">
-            {counts.chapitres === 0
-              ? "البرنامج جاي"
-              : `${counts.chapitres} فصل · ${counts.contenus} محتوى`}
-          </p>
         </div>
       </div>
 
@@ -198,11 +189,11 @@ export default function StudentSubjectDetailScreen() {
       <div
         role="tablist"
         aria-label="شعب المادّة"
-        /* Translucent, not `bg-surface-muted`: a solid grey slab would sit ON
-           the matière's colour; a white veil lets it through underneath. In dark
-           there is no colour under it any more — just the canvas — so it goes
-           solid and the control reads as one object instead of a smear. */
-        className="flex w-full gap-1 rounded-lg border border-border bg-surface/60 p-1 md:w-auto md:self-start dark:bg-surface"
+        /* A solid track, the standard control ground. It was a white veil while
+           this panel was painted — the point was to let the matière's colour
+           through it — but on the bare page a 60% white sits a hair off the
+           active pill's solid white, and the selected tab stopped reading. */
+        className="flex w-full gap-1 rounded-lg border border-border bg-surface-muted p-1 md:w-auto md:self-start dark:bg-surface"
       >
         {TABS.map((t) => {
           const active = tab === t.key

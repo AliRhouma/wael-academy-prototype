@@ -5,7 +5,6 @@ import { DropdownMenu } from "radix-ui"
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { SubjectIcon } from "@/components/icons/subjects"
 import { subjectTheme } from "@/features/student/subjectTheme"
-import { subjectTint } from "@/features/student/subjectTint"
 import { useIsMobile } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 import type { Subject } from "@/data/types"
@@ -40,12 +39,12 @@ export function SubjectPicker({
       aria-label={`المادّة: ${active.name}. بدّل المادّة`}
       className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-md border border-border-strong bg-surface ps-1.5 pe-2 transition hover:border-brand-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <span
-        className="grid size-7 shrink-0 place-items-center rounded-[8px]"
-        style={{ backgroundColor: subjectTint(active.name, active.category).panel }}
-      >
-        <SubjectIcon name={active.name} className="size-6" />
-      </span>
+      {/* The drawing, straight on the control. A badge is ALREADY a card — a
+          navy-ringed disc with its own backdrop — so the tinted rounded plate
+          that used to sit under it read as a second card behind the first, at
+          24px, where the two edges are a millimetre apart. Same rule the
+          matière grid and the page's own identity block already follow. */}
+      <SubjectIcon name={active.name} className="size-7 shrink-0" />
       <span
         dir="auto"
         className={cn(
@@ -73,12 +72,7 @@ export function SubjectPicker({
           isActive ? "bg-brand-50" : "hover:bg-surface-muted data-[highlighted]:bg-surface-muted",
         )}
       >
-        <span
-          className="grid size-8 shrink-0 place-items-center rounded-[9px]"
-          style={{ backgroundColor: subjectTint(subject.name, subject.category).panel }}
-        >
-          <SubjectIcon name={subject.name} className="size-7" />
-        </span>
+        <SubjectIcon name={subject.name} className="size-8 shrink-0" />
         <span
           dir="auto"
           className={cn(

@@ -1,5 +1,6 @@
-import { Check, Paperclip, Receipt, Tag, TriangleAlert } from "lucide-react"
+import { Check, Paperclip, Receipt, TriangleAlert } from "lucide-react"
 import type { Offer, Subscription, Transaction } from "@/data/types"
+import { OfferMark } from "@/features/shared/offers/OfferMark"
 import { Badge, type BadgeTone } from "@/components/kit/Badge"
 import {
   dueInLabel,
@@ -17,23 +18,9 @@ const INST_STATUS: Record<InstallmentStatus, { label: string; tone: BadgeTone }>
   upcoming: { label: "الجايّة", tone: "neutral" },
 }
 
-/** The offer's logo — its image when set, else a quiet brand tile (as in Offres). */
+/** The offer's mark — the same tile the catalogue wears (see `OfferMark`). */
 export function OfferLogo({ offer, size = 10 }: { offer?: Offer; size?: 10 | 12 }) {
-  const box = size === 12 ? "size-12" : "size-10"
-  if (offer?.logoUrl) {
-    return (
-      <img
-        src={offer.logoUrl}
-        alt=""
-        className={`${box} shrink-0 rounded-md border border-border bg-surface object-cover p-1`}
-      />
-    )
-  }
-  return (
-    <span className={`${box} grid shrink-0 place-items-center rounded-md bg-brand-50 text-brand-600`}>
-      <Tag className={size === 12 ? "size-6" : "size-5"} />
-    </span>
-  )
+  return <OfferMark offer={offer} size={size === 12 ? "md" : "sm"} />
 }
 
 /** A thin token-driven progress bar — the gradient is the paid share. */

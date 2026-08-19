@@ -73,32 +73,40 @@ function OfferRow({
         aria-controls={panelId}
         className="flex w-full items-center gap-3 p-4 text-start transition hover:bg-surface-muted/60"
       >
+        {/* Le prix appartient au titre, pas au bord de la carte : c'est ce que
+            CETTE offre coûte, et rangé à l'autre bout de la ligne il se lisait
+            comme une colonne — l'œil devait faire l'aller-retour pour appairer
+            un montant à un nom. Collé au nom sur la même ligne de base, la
+            paire se lit d'un coup. `flex-wrap` : sur un téléphone un nom long
+            pousse le montant à la ligne au lieu de l'écraser. */}
         <div className="min-w-0 flex-1">
-          <p
-            dir="auto"
-            className="font-display text-[calc(15px*var(--ts))] font-bold leading-snug text-ink"
-          >
-            {offerName}
-          </p>
-          <p className="mt-1 text-[calc(12px*var(--ts))] text-ink-muted">
-            تاريخ نهاية العرض :{" "}
-            <span className="font-medium tabular-nums text-ink-subtle">
-              {end ? shortDate(end) : "—"}
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <p
+              dir="auto"
+              className="font-display text-[calc(15px*var(--ts))] font-bold leading-snug text-ink"
+            >
+              {offerName}
+            </p>
+            <p className="font-display text-[calc(17px*var(--ts))] font-bold tabular-nums text-ink">
+              {formatDT(sub.price)}
+            </p>
+          </div>
+          {/* Deuxième ligne = les deux méta : jusqu'à quand, et ce qui reste. */}
+          <p className="mt-1 flex flex-wrap items-baseline gap-x-2 text-[calc(12px*var(--ts))] text-ink-muted">
+            <span>
+              تاريخ نهاية العرض :{" "}
+              <span className="font-medium tabular-nums text-ink-subtle">
+                {end ? shortDate(end) : "—"}
+              </span>
             </span>
-          </p>
-        </div>
-
-        <div className="shrink-0 text-end">
-          <p className="font-display text-[calc(17px*var(--ts))] font-bold tabular-nums text-ink">
-            {formatDT(sub.price)}
-          </p>
-          <p
-            className={
-              "mt-0.5 text-[calc(12px*var(--ts))] font-medium tabular-nums " +
-              (left === 0 ? "text-success-700" : late ? "text-danger-600" : "text-ink-subtle")
-            }
-          >
-            {left === 0 ? "تخلّص الكل" : `مزال ${formatDT(left)}`}
+            <span
+              className={
+                "font-medium tabular-nums " +
+                (left === 0 ? "text-success-700" : late ? "text-danger-600" : "text-ink-subtle")
+              }
+            >
+              · {left === 0 ? "تخلّص الكل" : `مزال ${formatDT(left)}`}
+            </span>
           </p>
         </div>
 
@@ -181,8 +189,9 @@ function OfferRow({
 
 /**
  * Élève — المحفظة : une liste dépliante, rien d'autre. Chaque ligne est une
- * offre achetée (titre, prix, date de fin) ; on la déplie pour voir ses tranches
- * payées / non payées avec leurs dates — même lecture que /admin/payments.
+ * offre achetée (titre + prix côte à côte, date de fin, reste à payer), dépliée
+ * par défaut sur ses tranches payées / non payées avec leurs dates — même
+ * lecture que /admin/payments. On replie ce qu'on ne veut plus voir.
  */
 export default function StudentFinanceScreen() {
   const user = useAuth((s) => s.currentUser)
@@ -190,7 +199,15 @@ export default function StudentFinanceScreen() {
   const transactions = useData((s) => s.transactions)
   const offers = useData((s) => s.offers)
 
-  const [openId, setOpenId] = useState<string | null>(null)
+  /**
+   * L'échéancier est la raison d'être de la page, donc il est OUVERT à l'arrivée
+   * — un élève qui vient ici veut voir ce qu'il doit et quand, pas cliquer pour
+   * le demander. On mémorise donc ce qui est REPLIÉ, pas ce qui est ouvert :
+   * l'ensemble vide = tout ouvert, et une offre ajoutée après coup arrive
+   * ouverte elle aussi. Plusieurs peuvent l'être à la fois : replier l'une pour
+   * en voir une autre serait un accordéon, et il n'y a que quelques lignes.
+   */
+  const [collapsed, setCollapsed] = useState<Set<string>>(() => new Set())
 
   const offerName = useMemo(() => new Map(offers.map((o) => [o.id, o.name])), [offers])
 
@@ -227,7 +244,10 @@ export default function StudentFinanceScreen() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title="المحفظة" subtitle={`${items.length} عرض — أُنقر على عرض باش تشوف أقساطو.`} />
+      <PageHeader
+        title="المحفظة"
+        subtitle={`${items.length} عرض — أقساط كل عرض باينة، أُنقر على عرض باش تطويه.`}
+      />
 
       <div className="flex flex-col gap-3">
         {items.map((sub) => (
@@ -236,8 +256,14 @@ export default function StudentFinanceScreen() {
             sub={sub}
             offerName={offerName.get(sub.offerId) ?? "العرض تمسح"}
             transactions={transactions}
-            open={openId === sub.id}
-            onToggle={() => setOpenId((cur) => (cur === sub.id ? null : sub.id))}
+            open={!collapsed.has(sub.id)}
+            onToggle={() =>
+              setCollapsed((cur) => {
+                const next = new Set(cur)
+                if (!next.delete(sub.id)) next.add(sub.id)
+                return next
+              })
+            }
           />
         ))}
       </div>

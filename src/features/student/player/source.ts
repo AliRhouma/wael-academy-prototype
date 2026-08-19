@@ -113,13 +113,13 @@ export function usePlayerSource(kind: VideoRefKind, id: string): PlayerSource | 
           label: subjectName(subjectId) ?? "المادّة",
         },
         crumbs: [
-          { to: "/student", label: "الرئيسية" },
+          { to: "/student", label: "الصفحة الرئيسية" },
           { to: "/student/matieres", label: "الموادّ" },
           {
             to: `/student/matieres/${subjectId}?tab=chapitres`,
             label: subjectName(subjectId) ?? "المادّة",
           },
-          { label: chapter?.name ?? "الفصل" },
+          { label: chapter?.name ?? "الدرس" },
         ],
       }
     }
@@ -160,7 +160,7 @@ export function usePlayerSource(kind: VideoRefKind, id: string): PlayerSource | 
           label: subjectName(subjectId) ?? "المادّة",
         },
         crumbs: [
-          { to: "/student", label: "الرئيسية" },
+          { to: "/student", label: "الصفحة الرئيسية" },
           { to: "/student/matieres", label: "الموادّ" },
           {
             to: `/student/matieres/${subjectId}?tab=examens`,
@@ -263,7 +263,7 @@ export function usePlayerSource(kind: VideoRefKind, id: string): PlayerSource | 
       groups: groupId ? { activeId: groupId, list: groupTabs } : undefined,
       back: { to: backTo, label: group?.title ?? "الحصص" },
       crumbs: [
-        { to: "/student", label: "الرئيسية" },
+        { to: "/student", label: "الصفحة الرئيسية" },
         { to: "/student/seances", label: "الحصص المسجّلة" },
         { to: backTo, label: subjectName(subjectId) ?? "المادّة" },
         { label: `الثلاثي ${semester}` },

@@ -5,14 +5,13 @@ import {
   Clock3,
   FileText,
   Layers3,
-  Play,
   Timer,
+  type LucideIcon,
 } from "lucide-react"
 import { EmptyState } from "@/components/kit/EmptyState"
 import { Badge } from "@/components/kit/Badge"
 import { LESSON_KINDS, QUIZ_ICON } from "@/features/admin/curriculum/content"
 import { lessonVideoPath } from "@/features/student/player/links"
-import { videoSrc, youtubeId } from "@/data/media"
 import { cn } from "@/lib/utils"
 import { useData } from "@/stores/useData"
 import type { Chapter, Lesson, Quiz } from "@/data/types"
@@ -21,16 +20,25 @@ import type { PdfRequest } from "./types"
 /** The five drawers of an open chapter, in the order the élève works through them. */
 type Drawer = "cours" | "exercice" | "resume" | "serie" | "quiz"
 
-const DRAWERS: { key: Drawer; label: string }[] = [
-  { key: "cours", label: "دروس" },
-  { key: "exercice", label: "تمرين" },
-  { key: "resume", label: "ملخّص" },
-  { key: "serie", label: "سلسلة تمارين" },
-  { key: "quiz", label: "كويز" },
+/**
+ * Each drawer carries the mark of what it holds — and that mark is why the rows
+ * below no longer do. A drawer is ONE kind of thing, so every card in it wore
+ * the identical glyph: twelve copies of the same play button down the left of
+ * the list, saying nothing that the chip above hadn't already said, and stealing
+ * the eye from the only part of a row that differs — its title. Moved up here,
+ * each icon appears exactly once and now marks a CHOICE, which is the job an
+ * icon is actually good at.
+ */
+const DRAWERS: { key: Drawer; label: string; icon: LucideIcon }[] = [
+  { key: "cours", label: "دروس", icon: LESSON_KINDS.cours.icon },
+  { key: "exercice", label: "تمرين", icon: LESSON_KINDS.exercice.icon },
+  { key: "resume", label: "ملخّص", icon: LESSON_KINDS.resume.icon },
+  { key: "serie", label: "سلسلة تمارين", icon: LESSON_KINDS.serie.icon },
+  { key: "quiz", label: "كويز", icon: QUIZ_ICON },
 ]
 
 /**
- * Élève — the "الفصول" tab: every chapitre of the matière, stacked, each
+ * Élève — the "الدروس" tab: every chapitre of the matière, stacked, each
  * expanding in place into its five drawers.
  *
  * One chapter opens at a time: the drawers are dense, and two open cards make
@@ -144,7 +152,7 @@ export function ChapitresTab({
                   </span>
                   <span className="mt-0.5 block text-[calc(12px*var(--ts))] text-ink-muted">
                     {contentCount === 0 && quizCount === 0
-                      ? "محتويات جايّة"
+                      ? "محتوى متوفر قريبا"
                       : `${contentCount} محتوى · ${quizCount} كويز`}
                   </span>
                 </span>
@@ -182,6 +190,7 @@ export function ChapitresTab({
                           !active && count === 0 && "opacity-55",
                         )}
                       >
+                        <d.icon className="size-4 shrink-0" />
                         {d.label}
                         <span
                           className={cn(
@@ -246,9 +255,6 @@ function DrawerContent({
               onClick={() => onQuiz(quiz)}
               className="group flex h-full w-full items-start gap-3 rounded-lg border border-border bg-surface p-3 text-start shadow-sm transition hover:border-accent2-500/40 hover:shadow-md"
             >
-              <span className="grid size-10 shrink-0 place-items-center rounded-md bg-accent2-50 text-accent2-600">
-                <QUIZ_ICON className="size-5" />
-              </span>
               <span className="min-w-0 flex-1">
                 <span dir="auto" className="block text-[calc(14px*var(--ts))] font-semibold leading-snug text-ink">
                   {quiz.title}
@@ -290,29 +296,13 @@ function DrawerContent({
     return (
       <ul className="grid gap-2.5">
         {lessons.map((lesson) => {
-          const thumbId = youtubeId(videoSrc(lesson.videoUrl))
           return (
             <li key={lesson.id}>
               {/* A vidéo is a PAGE — a real link, so it can be opened in a tab. */}
               <Link
                 to={lessonVideoPath(lesson.id, subjectId)}
-                className="group flex w-full items-center gap-3 rounded-lg border border-border bg-surface p-2.5 text-start shadow-sm transition hover:border-brand-200 hover:shadow-md md:gap-4 md:p-3"
+                className="group flex w-full items-start gap-3 rounded-lg border border-border bg-surface p-3 text-start shadow-sm transition hover:border-brand-200 hover:shadow-md"
               >
-                <span className="relative block aspect-video w-28 shrink-0 overflow-hidden rounded-md bg-neutral-200 md:w-36">
-                  {thumbId && (
-                    <img
-                      src={`https://i.ytimg.com/vi/${thumbId}/mqdefault.jpg`}
-                      alt=""
-                      loading="lazy"
-                      className="size-full object-cover"
-                    />
-                  )}
-                  <span className="absolute inset-0 grid place-items-center bg-neutral-900/25 transition group-hover:bg-neutral-900/40">
-                    <span className="grid size-9 place-items-center rounded-full bg-white/95 text-brand-600 shadow-md transition motion-safe:group-hover:scale-110">
-                      <Play className="size-4 translate-x-px fill-current" />
-                    </span>
-                  </span>
-                </span>
 
                 <span className="min-w-0 flex-1">
                   <Badge tone={meta.tone}>{meta.label}</Badge>
@@ -366,9 +356,6 @@ function DrawerContent({
               }
               className="group flex h-full w-full items-start gap-3 rounded-lg border border-border bg-surface p-3 text-start shadow-sm transition hover:border-brand-200 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:border-border disabled:hover:shadow-sm"
             >
-              <span className="grid size-10 shrink-0 place-items-center rounded-md bg-danger-50 text-danger-600">
-                <meta.icon className="size-5" />
-              </span>
               <span className="min-w-0 flex-1">
                 <Badge tone={meta.tone}>{meta.label}</Badge>
                 <span
