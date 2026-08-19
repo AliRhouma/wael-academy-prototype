@@ -1,56 +1,51 @@
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { CalendarDays, CalendarRange, ChevronRight, ChevronLeft } from "lucide-react"
 import { useToast } from "@/components/kit/Toast"
-import { DayTimeline } from "@/features/student/calendar/DayTimeline"
+import { DayList } from "@/features/student/calendar/DayList"
 import { MonthGrid } from "@/features/student/calendar/MonthGrid"
-import { NextUpBanner } from "@/features/student/calendar/NextUpBanner"
-import { SessionDetailSheet } from "@/features/student/calendar/SessionDetailSheet"
 import { seanceVideoPath } from "@/features/student/player/links"
 import {
-  addDays,
   dateKey,
   minutesOf,
   nextUp,
   useNow,
   useSessionVisual,
 } from "@/features/student/calendar/schedule"
+import { useDemoToggle } from "@/lib/demoToggle"
 import { useIsMobile } from "@/lib/hooks"
-import { cn, formatSessionDayLong } from "@/lib/utils"
 import type { Session } from "@/data/types"
 import { useAuth } from "@/stores/useAuth"
 import { useData } from "@/stores/useData"
 
-type View = "jour" | "mois"
-
-const VIEWS: { key: View; label: string; icon: typeof CalendarDays }[] = [
-  { key: "jour", label: "النهار", icon: CalendarDays },
-  { key: "mois", label: "الشهر", icon: CalendarRange },
-]
-
 /**
- * Élève — « الروزنامة متاعي ».
+ * Élève — « روزنامتي ».
  *
- * THE PAGE ITSELF NEVER SCROLLS. It's a fixed column that fills the shell:
- * header, countdown banner and day picker are pinned, and the only scrollport on
- * screen is the calendar section at the bottom (`flex-1 min-h-0`). Everything
- * that tells the élève *when* stays visible while they move through the day.
+ * TWO SECTIONS, and that is the whole page: the month on two thirds of the
+ * width, the day picked out of it on the last third. Both wear the frame the
+ * dashboard's panels wear (`CreamPanel`), so the calendar reads as the same
+ * product as the home screen rather than as a tool bolted next to it.
  *
- * Three layers, in the order the élève reads them:
- *   1. the countdown — what's next and in how long;
- *   2. one line of navigation — arrows + the date in « Jour », the month toolbar
- *      in « Mois ». « Jour » deliberately has NO week strip: it cost ~130px of
- *      the only thing that matters here, and « Mois » is the better way to jump
- *      around anyway;
- *   3. the calendar itself — the timeline parked on the next séance, or the
- *      month of séance cards.
+ * The split is the point. The grid shows nothing but MATIÈRE BADGES — the
+ * fastest thing on the screen to recognise — so a month is scanned, not read;
+ * clicking a day fills the panel beside it with the séances in full. Neither
+ * half tries to do both jobs any more.
  *
- * The two views open where each form factor needs them: « Jour » on a phone,
- * « Mois » on desktop, where a month of cards is genuinely readable.
+ * What this replaced: a « Jour / Mois » toggle over an hour-axis timeline and a
+ * month of miniature séance cards. Two views of the same day, each half-legible
+ * at its size, and a switch between them the élève had to work. Side by side,
+ * there is nothing to switch.
  *
- * Referenced for spacing & density: AdminCalendarScreen (month arithmetic,
- * "today" in red), StudentSubjectDetailScreen (segmented control),
- * StudentSubjectsScreen (matière panel + halo).
+ * There is no fiche behind the cards any more: a card carries its own actions
+ * (rejoindre, les exercices, le replay), so the modal that used to open on a tap
+ * had nothing left to add. See `DayList`.
+ *
+ * The page SCROLLS normally now (the old one was a fixed column with its own
+ * inner scrollports). Six rows of badges fit without one, and the day panel
+ * sticks to the top of the viewport on desktop, so scrolling the month never
+ * costs the élève the day they were reading.
+ *
+ * Referenced for spacing & density: StudentDashboard (panel grid, header),
+ * WeekAgenda (rows, cream inks).
  */
 export default function StudentCalendarScreen() {
   const now = useNow()
@@ -58,6 +53,22 @@ export default function StudentCalendarScreen() {
   const isMobile = useIsMobile()
   const navigate = useNavigate()
   const { show, toast } = useToast()
+
+  /**
+   * HOW THE MONTH IS DRAWN, and each form factor opens on the one it can
+   * actually carry.
+   *
+   * Desktop lands on CARDS: a cell is ~90px there, which is enough for an hour
+   * and a matière, and a month you can read in full is worth the height it
+   * costs. A phone lands on DOTS: a seventh of 390px is ~43px, and a card in
+   * that is two truncated words — the dots say the same thing at a size that
+   * fits, and the day panel one tap below says the rest.
+   *
+   * The « 1 » key flips whichever one you got — a prototype switch, so it has no
+   * on-screen affordance (see `useDemoToggle`, which lists every key in use).
+   * Initial only: a resize never yanks the élève out of the view they are in.
+   */
+  const monthCards = useDemoToggle(["Digit1", "Numpad1"], !isMobile)
 
   const user = useAuth((s) => s.currentUser)
   const sessions = useData((s) => s.sessions)
@@ -89,195 +100,107 @@ export default function StudentCalendarScreen() {
 
   /**
    * Open on today — unless today is empty, in which case the next day that
-   * isn't. Landing on a blank grid teaches the élève nothing.
+   * isn't. Landing on a blank panel teaches the élève nothing.
    */
   const [selected, setSelected] = useState(() => {
     if (byDay.has(today)) return today
     const next = [...byDay.keys()].filter((d) => d >= today).sort()[0]
     return next ?? today
   })
-  /**
-   * Where each form factor is most useful on arrival: the phone gets « Jour »
-   * (a month of cards can't be read a seventh of 390px at a time), the desktop
-   * gets « Mois », which there shows every séance in full. Initial only — a
-   * resize never yanks the élève out of the view they chose.
-   */
-  const [view, setView] = useState<View>(() => (isMobile ? "jour" : "mois"))
-  const [monthCursor, setMonthCursor] = useState(
-    () => new Date(now.getFullYear(), now.getMonth(), 1),
-  )
+  /** The month drawn — the one the opening selection falls in, not today's. */
+  const [monthCursor, setMonthCursor] = useState(() => {
+    const d = new Date(`${selected}T00:00:00`)
+    return new Date(d.getFullYear(), d.getMonth(), 1)
+  })
 
-  const [detail, setDetail] = useState<Session | null>(null)
+  const dayPanel = useRef<HTMLDivElement | null>(null)
 
-  const selectedDate = new Date(`${selected}T00:00:00`)
   const daySessions = byDay.get(selected) ?? []
 
-  /** What the countdown points at — the séance running now, or the next one. */
+  /** The séance the élève is heading towards — marked in the day panel. */
   const up = useMemo(() => nextUp(mySessions, now), [mySessions, now])
 
-  function goDay(delta: number) {
-    setSelected(dateKey(addDays(selectedDate, delta)))
-  }
-
-  /** Jump to a day and show it on the timeline — from the month grid or "today". */
-  function goToDay(day: string) {
+  /**
+   * Pick a day. The month follows the selection (picking the greyed-out tail of
+   * the previous month walks the grid back to it, rather than selecting a day
+   * that is no longer drawn), and on a phone — where the panel sits BELOW the
+   * grid instead of beside it — the panel is brought into view, because
+   * otherwise a tap looks like it did nothing.
+   */
+  function pickDay(day: string) {
     setSelected(day)
-    setMonthCursor(new Date(`${day}T00:00:00`))
-    setView("jour")
+    const d = new Date(`${day}T00:00:00`)
+    setMonthCursor((c) =>
+      c.getFullYear() === d.getFullYear() && c.getMonth() === d.getMonth()
+        ? c
+        : new Date(d.getFullYear(), d.getMonth(), 1),
+    )
+    if (isMobile) {
+      requestAnimationFrame(() =>
+        dayPanel.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+      )
+    }
   }
 
   /** The replay lives on its own page, with its notes and the avis of the groupe. */
   function openReplay(session: Session) {
-    setDetail(null)
     navigate(seanceVideoPath(session.id, { subjectId: session.subjectIds[0] }))
   }
 
   function join(session: Session) {
-    setDetail(null)
-    show(`Tu rejoins « ${session.title} »`)
+    show(`تو تدخل لـ « ${session.title} »`)
   }
 
-  const navBtn =
-    "grid size-9 shrink-0 place-items-center rounded-md text-ink-muted transition hover:bg-surface-muted hover:text-ink"
-
   return (
-    // h-full + min-h-0 all the way down: the shell's <main> gets an exact-height
-    // child, so nothing outside the calendar section can ever scroll.
-    <div className="flex h-full min-h-0 flex-col gap-3 md:gap-4">
-      {/* Header — compact on purpose; vertical space here is spent on the grid. */}
-      <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-2">
+    <div className="flex flex-col gap-4 md:gap-5">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <div className="min-w-0">
           <h1 className="font-display text-[calc(22px*var(--ts))] font-bold leading-tight text-ink md:text-[calc(26px*var(--ts))]">
             روزنامتي
           </h1>
           <p className="hidden text-sm text-ink-muted md:block">
-            حصصك، نهار بنهار — ادخل للجايّة وعاود اللي فاتت.
+            اختار نهار من الروزنامة وشوف حصصو.
           </p>
         </div>
 
-        <div className="flex shrink-0 items-center gap-2">
-          <div
-            role="tablist"
-            aria-label="عرض الروزنامة"
-            className="flex items-center gap-1 rounded-lg border border-border bg-surface-muted p-1"
-          >
-            {VIEWS.map((v) => {
-              const active = view === v.key
-              const Icon = v.icon
-              return (
-                <button
-                  key={v.key}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setView(v.key)}
-                  className={cn(
-                    "inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-[calc(13px*var(--ts))] font-medium transition",
-                    active ? "bg-surface text-ink shadow-sm" : "text-ink-muted hover:text-ink-subtle",
-                  )}
-                >
-                  <Icon className={cn("size-4", active && "text-brand-600")} />
-                  {v.label}
-                </button>
-              )
-            })}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => goToDay(today)}
-            className="inline-flex h-11 items-center rounded-md border border-border-strong bg-surface px-3.5 text-[calc(13px*var(--ts))] font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600 md:h-10"
-          >
-            اليوم
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => pickDay(today)}
+          className="inline-flex h-11 shrink-0 items-center rounded-full border-2 border-brand-200 bg-surface px-4 text-[calc(13px*var(--ts))] font-semibold text-ink-subtle transition hover:border-brand-500 hover:text-brand-600 md:h-10"
+        >
+          اليوم
+        </button>
       </div>
 
-      <div className="shrink-0">
-        <NextUpBanner upNext={up} now={now} onOpen={setDetail} />
-      </div>
+      {/* Two thirds / one third — the grid is the page, the day is the read.
+          `items-start` so the panel keeps its own height and can stick. */}
+      <div className="grid items-start gap-4 lg:grid-cols-3">
+        <MonthGrid
+          className="lg:col-span-2"
+          cursor={monthCursor}
+          onCursorChange={setMonthCursor}
+          byDay={byDay}
+          today={today}
+          selected={selected}
+          now={now}
+          visual={visual}
+          onPickDay={pickDay}
+          variant={monthCards ? "cards" : "dots"}
+        />
 
-      {view === "jour" ? (
-        <>
-          {/*
-            One line for the whole day navigation — arrows, the date, the count.
-            The week strip that used to sit here cost ~130px of the only thing
-            that matters on this screen, the day itself; « Mois » is the wider
-            view when the élève wants to jump around.
-          */}
-          <div className="flex shrink-0 items-center gap-1.5">
-            <button
-              type="button"
-              onClick={() => goDay(-1)}
-              aria-label="النهار اللي قبل"
-              className={navBtn}
-            >
-              <ChevronRight className="size-5" />
-            </button>
-            <button type="button" onClick={() => goDay(1)} aria-label="النهار اللي بعد" className={navBtn}>
-              <ChevronLeft className="size-5" />
-            </button>
-
-            {/* `first-letter:uppercase`, not `capitalize` — French writes
-                "samedi 1 août", so only the very first letter may change. */}
-            <h2 className="ms-1 min-w-0 truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink first-letter:uppercase sm:text-base">
-              {selected === today ? "اليوم" : formatSessionDayLong(selected)}
-            </h2>
-            {selected === today && (
-              <span className="hidden shrink-0 truncate text-[calc(12px*var(--ts))] text-ink-muted sm:inline">
-                {formatSessionDayLong(selected)}
-              </span>
-            )}
-
-            <span
-              className={cn(
-                "ms-auto shrink-0 rounded-full px-2 py-0.5 text-[calc(11px*var(--ts))] font-medium",
-                daySessions.length === 0
-                  ? "bg-neutral-100 text-ink-muted"
-                  : "bg-brand-50 text-brand-700",
-              )}
-            >
-              {daySessions.length === 0
-                ? "ما فماش حصص"
-                : `${daySessions.length} حصّة`}
-            </span>
-          </div>
-
-          {/* The ONE scrollport on this page. */}
-          <div className="min-h-0 flex-1">
-            <DayTimeline
-              day={selected}
-              sessions={daySessions}
-              now={now}
-              isToday={selected === today}
-              nextId={up?.session.id}
-              onOpen={setDetail}
-            />
-          </div>
-        </>
-      ) : (
-        <div className="min-h-0 flex-1">
-          <MonthGrid
-            cursor={monthCursor}
-            onCursorChange={setMonthCursor}
-            byDay={byDay}
-            today={today}
-            selected={selected}
+        <div ref={dayPanel} className="scroll-mt-4 lg:sticky lg:top-5">
+          <DayList
+            day={selected}
+            sessions={daySessions}
             now={now}
-            visual={visual}
-            onPickDay={goToDay}
-            onOpenSession={setDetail}
+            isToday={selected === today}
+            nextId={up?.session.id}
+            onPickDay={pickDay}
+            onJoin={join}
+            onWatchRecording={openReplay}
           />
         </div>
-      )}
-
-      <SessionDetailSheet
-        session={detail}
-        onOpenChange={(open) => !open && setDetail(null)}
-        now={now}
-        onWatchRecording={openReplay}
-        onJoin={join}
-      />
+      </div>
 
       {toast}
     </div>

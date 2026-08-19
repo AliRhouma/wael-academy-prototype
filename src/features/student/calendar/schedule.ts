@@ -84,9 +84,16 @@ export function useSecond(enabled: boolean): number {
  * State of a séance — the whole screen keys off these three.
  * ------------------------------------------------------------------ */
 
-export type SessionState = "terminee" | "en-cours" | "prevue"
+export type SessionState = "reportee" | "terminee" | "en-cours" | "prevue"
 
+/**
+ * WHAT A SÉANCE IS RIGHT NOW. Three of the four states are read off the clock;
+ * « reportée » is the exception and it WINS, whatever the hour says — a séance
+ * put off doesn't quietly become « terminée » once its old slot has passed, and
+ * it certainly never shows as « en cours ».
+ */
 export function sessionState(s: Session, now: Date): SessionState {
+  if (s.postponed) return "reportee"
   const today = dateKey(now)
   if (s.date < today) return "terminee"
   if (s.date > today) return "prevue"
@@ -96,7 +103,8 @@ export function sessionState(s: Session, now: Date): SessionState {
 }
 
 export const STATE_LABEL: Record<SessionState, string> = {
-  terminee: "سالات",
+  reportee: "تأجلت",
+  terminee: "انتهت",
   "en-cours": "قاعدة",
   prevue: "مبرمجة",
 }
