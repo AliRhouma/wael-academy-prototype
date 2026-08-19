@@ -145,6 +145,14 @@
 
   /* ---- Brand gradient (the DNA — nav-active, CTA, avatar, seal, promo) --- */
   --grad: linear-gradient(148deg, #23ac76 0%, #149a76 24%, #0e7d7a 47%, #155f74 68%, #183f6b 100%);
+  /* The veil that turns that ramp into a GROUND (see `.bg-grad-wash`): the page
+     surface at 78 %, so a bit over a fifth of the brand gradient comes through
+     — enough that the ramp reads as a colour with a direction to it, not as a
+     grey page someone breathed on. It is the surface itself and not white, so
+     the wash inherits whatever the page is made of — and every palette's own
+     `--grad` rides underneath untouched. THIS NUMBER IS THE ONLY KNOB: lower it
+     and the brand comes forward, raise it and the page goes quiet. */
+  --grad-veil: color-mix(in srgb, var(--surface) 78%, transparent);
 
   /* ---- shadcn semantic aliases (mapped to tokens above) ----------------- */
   --background: var(--surface-subtle);
@@ -183,6 +191,14 @@
   --shadow-xl: 0 40px 80px -30px rgb(21 58 45 / 0.34),
     0 10px 28px -14px rgb(24 63 107 / 0.12);
   --shadow-focus: 0 0 0 4px rgb(35 172 118 / 0.1);
+  /* The panel elevation, as a `filter` rather than a `box-shadow` — the cream
+     panels are CLIPPED (the notch, the speech tail) and clipping happens after
+     the box-shadow is painted, so a shadow on them is cut away with the corner
+     it was meant to sit under. A drop-shadow on a wrapper OUTSIDE the clip
+     follows the cut shape instead, notch and tail included. Two layers: a wide
+     soft one for the lift, a tight one to seat the edge on the canvas. */
+  --shadow-panel:
+    drop-shadow(0 10px 18px rgb(21 58 45 / 0.10)) drop-shadow(0 2px 4px rgb(21 58 45 / 0.05));
   --shadow-brand: 0 12px 22px -10px rgb(14 125 122 / 0.85); /* glow under gradient fills */
 }
 
@@ -429,6 +445,21 @@
   .bg-grad {
     background: var(--brand-500);
   }
+  /* THE BRAND GRADIENT AS A GROUND — the same ramp the logo plate wears, laid
+     under a near-opaque veil of the page's own surface so a whole panel can
+     carry the brand's colour without competing with the cards on it. One
+     background, no pseudo-element: the veil is a solid-colour gradient layer
+     stacked ON TOP of `--grad`, which is how you dim a background image in
+     place. Palette-aware for free — swap the palette and the wash follows.
+     Dark is left to the caller: on a dark page a tinted plate reads lighter
+     than the cards laid on it, and the surfaces that use this drop the fill and
+     keep the frame instead (see StudentSubjectDetailScreen). */
+  .bg-grad-wash {
+    background-color: var(--surface);
+    background-image:
+      linear-gradient(var(--grad-veil), var(--grad-veil)),
+      var(--grad);
+  }
   /* The signature "warm canvas" — page background with cream + green glows. */
   .bg-canvas {
     background-color: var(--surface-subtle);
@@ -439,6 +470,67 @@
   }
   .shadow-brand {
     box-shadow: var(--shadow-brand);
+  }
+
+  /* « bump » — the CARD's physics, on a button.
+     Every panel on the dashboard is a plate sitting on a 3px edge, and these
+     buttons are cut from the same material: each one stands on a solid slab of
+     its own darker side, rises a hair when the cursor reaches it, and DROPS
+     onto that slab when pressed — the edge vanishes under the button exactly
+     the way a card pushed flat against the page would. That is the whole idea:
+     the press is the slab being spent, not a colour change.
+
+     Nothing here touches layout. The slab is a zero-blur `box-shadow`, so a
+     button gains the effect without moving a single neighbour — it only needs a
+     few px of breathing room under it, which every call site already has.
+
+     Two knobs, both settable per call site:
+       --bump       how tall the slab is (and so how far the press travels)
+       --bump-edge  its colour — the button's OWN darker side, mixed in oklab so
+                    it stays the same hue under every palette AND in dark mode
+                    (a fixed `--brand-700` would have gone lighter there).
+     Timing is a slight overshoot on the way up (the card settling) and a short,
+     flat 70ms on the way down — a press has to feel instant or it reads as lag.
+     The transition PROPERTIES come from Tailwind's own `transition` utility on
+     the call sites; only the curve is set here, so nothing is fighting.
+     Hover is gated on a real pointer: on a touchscreen `:hover` sticks after a
+     tap and the button would stay lifted with its slab out. */
+  /* « rise » — the system's entry move: surfaces fade up ~10px, staggered.
+     The stagger is a custom property rather than seven classes, so a caller
+     sets `--i` on each panel and they deal onto the canvas in order.
+     `backwards` matters: without it a panel is fully painted during its own
+     delay and only then jumps to opacity 0 — the flash the fill mode exists to
+     prevent. The whole rule lives inside the motion query, so under reduced
+     motion the panels are simply there. */
+  @media (prefers-reduced-motion: no-preference) {
+    .rise {
+      animation: wael-panel-rise 460ms cubic-bezier(0.22, 0.9, 0.3, 1) backwards;
+      animation-delay: calc(var(--i, 0) * 70ms);
+    }
+  }
+
+  .btn-bump {
+    --bump: 4px;
+    --bump-edge: color-mix(in oklab, var(--brand-500) 72%, black);
+    box-shadow:
+      0 var(--bump) 0 0 var(--bump-edge),
+      0 calc(var(--bump) + 5px) 12px -6px rgb(21 58 45 / 0.4);
+    transition-timing-function: cubic-bezier(0.34, 1.5, 0.64, 1);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    @media (hover: hover) {
+      .btn-bump:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          0 calc(var(--bump) + 2px) 0 0 var(--bump-edge),
+          0 calc(var(--bump) + 9px) 16px -7px rgb(21 58 45 / 0.45);
+      }
+    }
+    .btn-bump:active {
+      transform: translateY(var(--bump));
+      box-shadow: 0 0 0 0 var(--bump-edge);
+      transition-duration: 70ms;
+    }
   }
 }
 
@@ -563,6 +655,8 @@
   /* Shadows deepen on dark. */
   --shadow-sm: 0 2px 5px rgb(0 0 0 / 0.30);
   --shadow-md: 0 8px 16px -8px rgb(0 0 0 / 0.45), 0 2px 6px rgb(0 0 0 / 0.25);
+  --shadow-panel:
+    drop-shadow(0 10px 20px rgb(0 0 0 / 0.45)) drop-shadow(0 2px 4px rgb(0 0 0 / 0.3));
   --shadow-lg: 0 12px 28px -10px rgb(0 0 0 / 0.5), 0 2px 6px rgb(0 0 0 / 0.25);
   --shadow-xl: 0 40px 80px -30px rgb(0 0 0 / 0.65), 0 10px 28px -14px rgb(0 0 0 / 0.4);
 }
@@ -637,10 +731,10 @@
       radial-gradient(circle at center, rgb(255 255 255 / 0.06) 1.9px, transparent 2px);
   }
 
-  /* A tinted ground for a page built out of panels — the élève dashboard.
-     COLOUR ONLY, so it composes with `.bg-paper` above rather than replacing
-     it: the dot lattice still runs, it just runs on the theme's palest step
-     instead of the cool canvas.
+  /* THE app ground (see AppShell). COLOUR ONLY, so it composes with anything
+     drawn over it rather than replacing it — `.bg-paper` above used to run its
+     dot lattice on top, and can again by putting that class back on <main>.
+     It is flat for now: texture everywhere is texture competing with content.
      It used to be a fixed parchment hex. Bound to `--brand-50` it follows
      `data-palette` — زبرجد grounds the page in its blue-green, crépuscule in
      its violet — and it follows dark mode too, where every ramp inverts and
@@ -741,6 +835,17 @@
    and only becomes visible as it clears the disc, so it reads as coming out
    from under the art rather than being drawn on the card. It ends past the 4:3
    corner (1.9), so it leaves the box instead of stopping in it. */
+@keyframes wael-panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes wael-ripple {
   0% {
     opacity: 0;
@@ -816,6 +921,19 @@
   body {
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* THE HAND. Tailwind v4's preflight leaves buttons on `cursor: default` (it
+     dropped v3's pointer), which on a prototype whose whole point is « tout est
+     cliquable » reads as a dead page: the élève hovers a séance card and gets
+     an arrow. One rule, so it holds for every button in the app instead of
+     thirteen scattered `cursor-pointer` classes. Disabled controls keep the
+     arrow — they aren't going anywhere. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  label[for] {
+    cursor: pointer;
+  }
 }
 
 /* ===========================================================================
@@ -843,6 +961,23 @@
      the surrounding line direction around. */
   [dir="rtl"] :is(input, textarea) {
     text-align: start;
+  }
+
+  /* `dir="auto"` is on every user-authored string in the app (offer names,
+     subject titles, file names, people). It does the ONE job we want — a Latin
+     title like "Turbo Pro Max" keeps its own internal order instead of being
+     reshuffled by the Arabic paragraph around it — but it also flips that
+     element's `direction`, and `text-align: start` then resolves to the WRONG
+     edge: the title jumps to the left of its card while everything beside it
+     stays right. Alignment belongs to the PAGE, not to the string, so pin it
+     back to the page's start edge. Base layer, so an explicit `text-center` /
+     `text-end` utility still wins where a screen asked for one. */
+  [dir="rtl"] [dir="auto"]:not(input, textarea) {
+    text-align: right;
+  }
+
+  [dir="ltr"] [dir="auto"]:not(input, textarea) {
+    text-align: left;
   }
 
   /* Numbers, prices, dates, and times stay Western digits (Tunisian usage) and

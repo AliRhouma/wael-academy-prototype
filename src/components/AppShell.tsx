@@ -33,13 +33,6 @@ const MAX_BAR = 5 // items shown in the mobile bottom bar before overflowing to 
 const HEADER_SLOT_ID = "shell-header-slot"
 
 /**
- * Pages that stand on the theme's own ground instead of the cool canvas — the
- * ones built out of panels (see `CreamPanel`). Colour only; the dot lattice runs
- * on both. Drop a path from this set and the page goes back to the canvas.
- */
-const TINTED_PAGES = new Set(["/student"])
-
-/**
  * Renders its children as a bar STUCK to the top of the scroll area, above the
  * page. For page-level nav that must stay reachable while the content scrolls
  * (a matière picker, tabs): portal into it when needed, unmount to give the room
@@ -169,7 +162,6 @@ function BottomNavItem({ item }: { item: NavItem }) {
  */
 export function AppShell({ nav }: { nav: NavItem[] }) {
   const navigate = useNavigate()
-  const { pathname } = useLocation()
   const { currentRole, currentUser, logout } = useAuth()
   // The live row from the store, so a profile edit renames the header at once.
   const currentUserId = currentUser?.id
@@ -177,6 +169,37 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
   const [moreOpen, setMoreOpen] = useState(false)
   const [expanded, setExpanded] = useState(true)
   const t = useT()
+
+  /**
+   * TWO PAGES CLOSE THE RAIL ON ARRIVAL. Nothing ever re-opens it.
+   *
+   * The video player and the calendar are the two screens that are about WIDTH
+   * rather than about navigating: a player wants every pixel it can get, and a
+   * calendar is a seven-column grid where each unit the rail gives back is a
+   * seventh of the month. So arriving on either folds it to icons — the
+   * sections stay one click away and the collapse button still works normally
+   * while you are there.
+   *
+   * LEAVING DOES NOTHING. There is no saved "state before", no restore: the
+   * rail keeps whatever it is wearing when you walk out, so a matière or a
+   * séance list opened from the calendar finds it exactly as the calendar left
+   * it. Restoring was the bug — the rail re-opening itself on a page that never
+   * asked to touch it, against a state that was on screen a moment earlier.
+   *
+   * One-way, and only on the way IN: re-open it by hand on the calendar and it
+   * stays open, because that is a choice, and the fold only ever fires when the
+   * route crosses into one of the two.
+   */
+  const { pathname } = useLocation()
+  const focused =
+    pathname.includes("/video/") ||
+    // Both spellings, because the two roles route their calendars differently
+    // (« /student/calendrier », « /admin/calendar ») and both are grids.
+    pathname.includes("/calendrier") ||
+    pathname.includes("/calendar")
+  useEffect(() => {
+    if (focused) setExpanded(false)
+  }, [focused])
 
   const overflow = nav.length > MAX_BAR
   const barItems = overflow ? nav.slice(0, MAX_BAR - 1) : nav
@@ -226,12 +249,15 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
               {/* Full-bleed now: at ~4.8:1 the lockup wants every pixel of the
                   rail's width, or the tagline under the wordmark goes to mush. */}
               <WaelLockupH className="block w-full" />
-              {/* A hairline of the plate's own light, then the utility line: the
-                  role — the one thing the lockup can't say — and the collapse
-                  control, which used to float over the stacked art's empty
-                  corner and now has an actual row to live on. */}
-              <div className="mt-3 flex items-center justify-between gap-2 border-t border-white/20 pt-1.5">
-                <p className="truncate text-[calc(11px*var(--ts))] font-medium text-white/80">{roleLabel}</p>
+              {/* A hairline of the plate's own light, then the utility line —
+                  now just the collapse control, which used to float over the
+                  stacked art's empty corner and has an actual row to live on.
+                  The role label that shared this row is gone: the plate is the
+                  BRAND block, and the role is already said twice below it (on
+                  the user card at the foot of the rail, and in the collapsed
+                  rail's tooltip). Justified to the end so the button keeps the
+                  corner it had rather than sliding across the empty row. */}
+              <div className="mt-3 flex items-center justify-end gap-2 border-t border-white/20 pt-1.5">
                 {/* Translucent white rather than a surface pill — a light-grey
                     button on a saturated gradient reads as a chip someone forgot
                     to style. */}
@@ -358,12 +384,18 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
             content scrolls — without a bar sitting there when no page fills it
             (`empty:hidden`). It keeps its light surface: pages style that nav
             against the ink tokens. */}
-        <main
-          className={cn(
-            "bg-paper flex-1 overflow-y-auto scroll-touch pb-24 md:pb-8",
-            TINTED_PAGES.has(pathname.replace(/\/$/, "")) && "bg-tint",
-          )}
-        >
+        {/* ONE GROUND FOR THE WHOLE APP, and it is FLAT. The tint used to
+            belong to the pages built out of panels (the élève dashboard, the
+            calendar) and every other page stood on the cool canvas — so
+            crossing the rail changed the colour of the room, and the panelled
+            pages read as a different product from the rest. It is the
+            dashboard's ground that wins, and it follows `--brand-50` —
+            palette-aware, and inverted in dark.
+            The dot lattice that used to run over it (`.bg-paper`, still defined
+            in index.css) is off: it was texture competing with content on every
+            screen, and on the calendar it read as a seventh set of dots behind
+            the matière dots the month is actually made of. */}
+        <main className="bg-tint flex-1 overflow-y-auto scroll-touch pb-24 md:pb-8">
           <div
             id={HEADER_SLOT_ID}
             className="sticky top-0 z-20 border-b border-border bg-surface pt-safe empty:hidden md:pt-0"

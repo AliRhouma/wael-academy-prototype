@@ -8,6 +8,7 @@ import {
 import { Toaster } from "sonner"
 import { DEFAULT_PALETTE, PALETTES, type PaletteId } from "./palettes"
 import { DEFAULT_FONT, FONTS, type FontId } from "./fonts"
+import { useGazeHotkey } from "./gaze"
 import { PaletteDock } from "./PaletteDock"
 import { FontDock } from "./FontDock"
 
@@ -33,6 +34,20 @@ export function useTheme(): ThemeContextValue {
   if (!ctx) throw new Error("useTheme must be used within <Providers>")
   return ctx
 }
+
+/**
+ * The two floating design docks — the palette swatches and the type picker —
+ * are AUTHORING tools, not product UI. They stay in the tree so a palette or a
+ * typeface can be tried live; flip either to `false` to take it off screen.
+ * Hidden, the app still honours whatever palette/font was last picked (both are
+ * read from localStorage above), so nothing about the look changes.
+ *
+ * They are two switches rather than one because they come and go separately:
+ * the palette is still being chosen (and gets shown in demos), while the
+ * typeface is settled and its dock is just a button in the corner.
+ */
+const SHOW_PALETTE_DOCK = true
+const SHOW_FONT_DOCK = false
 
 const THEME_KEY = "wael-theme"
 const PALETTE_KEY = "wael-palette"
@@ -69,6 +84,11 @@ export function Providers({ children }: { children: ReactNode }) {
   const [palette, setPalette] = useState<PaletteId>(initPalette)
   const [font, setFont] = useState<FontId>(initFont)
 
+  // S stops and restarts Wael's cursor-following eyes, everywhere at once. Bound
+  // here because it is app-wide: the faces are on the matières grid, the séance
+  // lists and the dashboard, and no one screen owns them.
+  useGazeHotkey()
+
   // Tokens in src/styles/index.css switch on [data-theme="dark"].
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme)
@@ -93,8 +113,8 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeContext.Provider value={{ theme, toggle, setTheme, palette, setPalette, font, setFont }}>
       {children}
-      <PaletteDock />
-      <FontDock />
+      {SHOW_PALETTE_DOCK && <PaletteDock />}
+      {SHOW_FONT_DOCK && <FontDock />}
       {/* RTL: toasts land on the reading-flow side — top-left mirrors top-right. */}
       <Toaster position="top-left" dir="rtl" theme={theme} richColors closeButton />
     </ThemeContext.Provider>

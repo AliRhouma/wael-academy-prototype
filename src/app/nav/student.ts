@@ -19,7 +19,7 @@ import type { NavItem } from "./types"
  * slot in the élève's navigation.
  */
 export const studentNav: NavItem[] = [
-  { label: "لوحة القيادة", path: "/student", icon: DashboardIcon, colored: true },
+  { label: "الصفحة الرئيسية", path: "/student", icon: DashboardIcon, colored: true },
   { label: "العروض", path: "/student/offres", icon: OffresIcon, colored: true },
   { label: "موادّي", path: "/student/matieres", icon: SubjectsIcon, colored: true },
   { label: "الروزنامة", path: "/student/calendrier", icon: CalendrierIcon, colored: true },
