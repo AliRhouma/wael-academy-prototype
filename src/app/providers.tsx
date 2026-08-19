@@ -50,7 +50,19 @@ const SHOW_PALETTE_DOCK = true
 const SHOW_FONT_DOCK = false
 
 const THEME_KEY = "wael-theme"
-const PALETTE_KEY = "wael-palette"
+/**
+ * VERSIONNÉE, et c'est le point : le suffixe monte quand `DEFAULT_PALETTE`
+ * change.
+ *
+ * Le dock écrit la palette choisie ici, donc toute machine ayant servi à une
+ * démo porte un choix enregistré — et un choix enregistré gagne sur le défaut.
+ * Résultat sans le suffixe : on change la palette par défaut, on pousse, et
+ * personne dans l'équipe ne la voit, chacun restant sur celle qu'il avait
+ * cliquée un jour. Monter le numéro périme les anciens choix d'un coup ; tout
+ * le monde atterrit sur le nouveau défaut, et repart de là avec ses propres
+ * choix qui persistent normalement.
+ */
+const PALETTE_KEY = "wael-palette-2"
 const FONT_KEY = "wael-font"
 
 function initTheme(): Theme {
