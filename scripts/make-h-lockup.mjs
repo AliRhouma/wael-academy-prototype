@@ -47,10 +47,11 @@ const re = /<path class="p (\w+)"[^>]*>/g
 let m
 while ((m = re.exec(src))) paths[m[1]].push(m[0])
 
+// Lifted verbatim. It used to be rewritten here — the draw-on stroke was
+// scaled down by the group transforms, so the width was pre-divided to keep
+// the weight it was drawn with. The lockup is static now and carries no
+// stroke at all, so there is nothing left to compensate for.
 const style = src.match(/<style>[\s\S]*?<\/style>/)[0]
-  // strokes are scaled down by the group transform; pre-divide so the draw-on
-  // phase keeps the weight it was drawn with
-  .replace("stroke-width:2.4", "stroke-width:3.5")
 
 const out = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${+W.toFixed(2)} ${+H.toFixed(2)}" role="img" aria-label="wael academy">
 <!-- HORIZONTAL LOCKUP — generated from wael-logo-draw.svg, not redrawn.

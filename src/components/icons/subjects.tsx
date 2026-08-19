@@ -7,13 +7,9 @@
  *    top. Delivered as PNG (~2100px, transparent surround) despite the folder
  *    name. It supersedes both layers below wherever a matière has one.
  *
- * 1. SCENE (`svg icons/<Matière>.svg`) — the previous generation, and where the
- *    art is heading: a 4:3 drawing that carries its OWN background — character
- *    plus scenery, edge to edge on the canvas. A scene is not a figure that sits
- *    on a card, it IS the card's picture, so the grid runs it full-bleed under
- *    `object-cover` (see SubjectsScreen) with no tint or halo behind it. Used
- *    byte for byte: unlike the portraits, nothing was dropped or re-cropped —
- *    the delivered canvas is already the frame. `Philosophie` is the first.
+ *    (A SCENE layer sat here once — full-bleed 4:3 drawings for Maths and
+ *    Philosophie. Both matières have badges now, so it was unreachable and its
+ *    two ~400 KB files came out of the bundle with it.)
  *
  * 2. PORTRAIT (`svg icons/illustrations/`) — the Wael illustration, at rest.
  *    One per matière that actually depicts it; the rest borrow one (see
@@ -29,7 +25,7 @@
  * 4. STROKE FALLBACKS (below) — hand-drawn `currentColor` glyphs, kept only as a
  *    safety net now that every matière resolves to a portrait.
  *
- * Badges, scenes and portraits all render as <img>, not inline SVG: a matière grid shows a dozen at
+ * Badges and portraits both render as <img>, not inline SVG: a matière grid shows a dozen at
  * once, so the browser rasterises each drawing once per size and the DOM stays
  * at one node per icon. As separate documents they also can't collide — the
  * files reuse class names, which would repaint each other if they were inlined.
@@ -43,8 +39,6 @@ import { SubjectsIcon } from "./SubjectsIcon"
 
 // The designer's folders, one level above `src`. Imported as urls by Vite — the
 // files are used byte for byte, exactly as delivered.
-import mathsScene from "../../../svg icons/maths.svg"
-import philoScene from "../../../svg icons/Philo.svg"
 import anglaisPortrait from "../../../svg icons/illustrations/english not hover.svg"
 import anglaisPortraitHover from "../../../svg icons/illustrations/english on hover.svg"
 import francaisPortrait from "../../../svg icons/illustrations/Frensh.svg"
@@ -52,26 +46,27 @@ import mathPortrait from "../../../svg icons/illustrations/Math.svg"
 import mathAltPortrait from "../../../svg icons/illustrations/Math 2.svg"
 import physiquePortrait from "../../../svg icons/illustrations/physics.svg"
 
-// BADGES — the newest delivery (`svg icons/wael subject new`). PNG, not SVG,
-// despite the folder name; ~2100px square with a transparent surround.
-import algoBadge from "../../../svg icons/wael subject new/Algo.png"
-import arabicBadge from "../../../svg icons/wael subject new/Arabic.png"
-import infoBadge from "../../../svg icons/wael subject new/Info.png"
-import islamicBadge from "../../../svg icons/wael subject new/Islamic.png"
-import physiqueBadge from "../../../svg icons/wael subject new/Physique.png"
-import sciencesBadge from "../../../svg icons/wael subject new/Sciences.png"
-import economieBadge from "../../../svg icons/wael subject new/econimie.png"
-import electriqueBadge from "../../../svg icons/wael subject new/electric.png"
-import francaisBadge from "../../../svg icons/wael subject new/frensh.png"
-import geoBadge from "../../../svg icons/wael subject new/geaography.png"
-import allemandBadge from "../../../svg icons/wael subject new/germany.png"
-import gestionBadge from "../../../svg icons/wael subject new/gestion.png"
-import mathBadge from "../../../svg icons/wael subject new/math.png"
-import mecaniqueBadge from "../../../svg icons/wael subject new/mecanique.png"
-import espagnolBadge from "../../../svg icons/wael subject new/spain.png"
-// Philosophie is the first badge delivered as SVG, with its eye shapes flagged
-// so the gaze overlay can drive them — see `subjects/eyeGeometry.ts`.
-import philoBadge from "../../../svg icons/Group 60.svg"
+// BADGES — `svg icons/subjects`, the delivered SVGs from `svg icons/New Subject
+// svg` run through SVGO (see `svgo.config.mjs`; ~34 % off, eye flags intact) and
+// renamed for the matière they draw. The whole set is SVG now, and every file
+// carries its eye shapes flagged — see `subjects/eyeGeometry.ts`.
+import algoBadge from "../../../svg icons/subjects/algorithmique.svg"
+import anglaisBadge from "../../../svg icons/subjects/anglais.svg"
+import allemandBadge from "../../../svg icons/subjects/allemand.svg"
+import arabicBadge from "../../../svg icons/subjects/arabe.svg"
+import economieBadge from "../../../svg icons/subjects/economie.svg"
+import electriqueBadge from "../../../svg icons/subjects/electricite.svg"
+import espagnolBadge from "../../../svg icons/subjects/espagnol.svg"
+import francaisBadge from "../../../svg icons/subjects/francais.svg"
+import geoBadge from "../../../svg icons/subjects/geographie.svg"
+import gestionBadge from "../../../svg icons/subjects/gestion.svg"
+import infoBadge from "../../../svg icons/subjects/informatique.svg"
+import islamicBadge from "../../../svg icons/subjects/islamique.svg"
+import mathBadge from "../../../svg icons/subjects/mathematiques.svg"
+import mecaniqueBadge from "../../../svg icons/subjects/mecanique.svg"
+import philoBadge from "../../../svg icons/subjects/philosophie.svg"
+import physiqueBadge from "../../../svg icons/subjects/physique.svg"
+import sciencesBadge from "../../../svg icons/subjects/sciences.svg"
 
 /**
  * BADGES, by matière name exactly as seeded — the art the product leads with now.
@@ -99,6 +94,7 @@ const BADGE_BY_NAME: Record<string, string> = {
   "علوم فيزيائية": physiqueBadge,
   "علوم الحياة والأرض": sciencesBadge,
   "فرنسية": francaisBadge,
+  "أنڤليزية": anglaisBadge,
   "عربية": arabicBadge,
   "الأدب العربي": arabicBadge,
   "تربية إسلامية": islamicBadge,
@@ -115,6 +111,19 @@ const BADGE_BY_NAME: Record<string, string> = {
   "فلسفة": philoBadge,
 }
 
+/**
+ * Where two matières share a drawing, they share its measured gaze: the geometry
+ * belongs to the PICTURE, not to the matière, and `eyeGeometry.ts` stores one
+ * entry per file under the first name it was generated for. Without this the
+ * borrower renders the badge with dead eyes beside a twin whose eyes follow.
+ */
+const BADGE_GAZE_OWNER: Record<string, string> = {
+  "الأدب العربي": "عربية",
+  "تكنولوجيا": "ميكانيك",
+  "تفكير إسلامي": "تربية إسلامية",
+  "الحضارة العربية والإسلامية": "تربية إسلامية",
+}
+
 /** The badge a matière owns, or undefined — the caller then tries a scene. */
 export function badgeFor(name: string): string | undefined {
   return BADGE_BY_NAME[name]
@@ -126,15 +135,6 @@ export function badgeFor(name: string): string | undefined {
  * Wael reading Descartes can't stand in for Économie. A matière with no scene
  * yet falls back to a portrait, so the grid stays whole while the set fills in.
  */
-const SCENE_BY_NAME: Record<string, string> = {
-  "رياضيات": mathsScene,
-  "فلسفة": philoScene,
-}
-
-/** The 4:3 scene a matière owns, or undefined — the caller then draws a portrait. */
-export function sceneFor(name: string): string | undefined {
-  return SCENE_BY_NAME[name]
-}
 
 /** The five portraits, by id. `subjectTint` colours a card from the same id. */
 export type PortraitId = "math" | "math2" | "physics" | "french" | "english"
@@ -336,10 +336,23 @@ export function SubjectIcon({ name, className }: { name: string; className?: str
   if (badge) {
     return (
       <span className={cn("relative block", className)} aria-hidden="true">
-        <img src={badge} alt="" draggable={false} className="size-full object-contain" />
-        {/* Renders only for the badges whose SVG shipped marked eyes; the rest
-            are flat PNG and show the drawn gaze untouched. */}
-        <Eyes subject={name} className="absolute inset-0 size-full object-contain" />
+        {/* The badges are 60–180 KB of vector each and a grid mounts twenty:
+            `async` keeps their decode off the main thread, so the page stays
+            responsive while they land instead of stalling on them. */}
+        <img
+          src={badge}
+          alt=""
+          draggable={false}
+          decoding="async"
+          className="size-full object-contain"
+        />
+        {/* Renders only where a measured geometry exists; a badge without one
+            (تربية إسلامية, until its iris is flagged) shows the drawn gaze
+            untouched, which is why the overlay can only ever add. */}
+        <Eyes
+          subject={BADGE_GAZE_OWNER[name] ?? name}
+          className="absolute inset-0 size-full object-contain"
+        />
       </span>
     )
   }

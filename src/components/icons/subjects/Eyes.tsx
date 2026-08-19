@@ -21,12 +21,36 @@
  *
  * BOTH generations draw the white as a RING around the iris, never as a filled
  * disc, so neither shape is a complete eye on its own. Everything below therefore
- * works on `sclera ∪ iris`:
+ * works on `sclera ∪ arc ∪ iris`:
  *
- * - the REPAINT lays both down in the white's ink, covering the drawn iris. Using
- *   the ring alone leaves the original iris showing, pinned where it was drawn.
- * - the CLIP is both too. Clipping to the ring alone punches a hole exactly where
- *   the iris needs to travel, so only the sliver crossing the ring stays visible.
+ * - the REPAINT lays all three down in the white's ink, covering the drawn iris.
+ *   Using the ring alone leaves the original iris showing, pinned where it was
+ *   drawn.
+ * - the MASK is all three too. Masking to the ring alone punches a hole exactly
+ *   where the iris needs to travel, so only the sliver crossing the ring stays
+ *   visible.
+ *
+ * A MASK, not a `<clipPath>`, and the difference is not cosmetic. A clipPath's
+ * children are combined into ONE path and the winding rule is applied across the
+ * lot, so two overlapping children wound in opposite directions CANCEL instead
+ * of uniting. The white ring and the iris overlap by construction and the art
+ * winds them opposite, so a clip quietly bites a hole out of the iris exactly
+ * where the ring passes under it — the iris renders as a crescent and it reads
+ * as a travel or geometry fault, which is neither. A mask composites luminance
+ * instead of resolving windings, so white over white is simply white.
+ *
+ * `under` and `over` are the dark arc of lid shadow capping the eye. It is static
+ * like the white, and it is repainted at its own ink on WHICHEVER SIDE of the
+ * iris the file drew it — taken from the document order, never assumed. Painting
+ * it on top of a badge that drew the iris over it bites a chunk out of the iris,
+ * which looks like a travel or clipping fault and is neither. Older art has no
+ * arc at all and carries two empty lists, which costs nothing.
+ *
+ * Art sometimes keeps a piece of BOTH eyes in a SINGLE path (anglais does). Such
+ * a shape is eye body, so it has to repaint and mask like the rest or it leaves a
+ * hole — which means handing the same path to both eyes. What keeps that honest
+ * is the mask's REGION: each eye's mask paints only inside its own box, so each
+ * copy keeps its near half and the far half simply is not there.
  *
  * The gaze has two poses:
  *
@@ -39,15 +63,17 @@
  *   the white rather than nudging it.
  *
  * Containment ("never outside the white") is structural, not arithmetic: each
- * iris lives in a `<clipPath>` of its OWN eye. Travel is then budgeted to the
- * room actually left over from centre, so the iris kisses the edge without being
- * trimmed — the clip is the hard floor, the budget is the intent.
+ * iris lives in a mask of its OWN eye. Travel is then budgeted to the room
+ * actually left over from centre, so the iris kisses the edge without being
+ * trimmed — the mask is the hard floor, the budget is the intent.
  *
- * The overlay only mounts for a real cursor that wants motion — see `Eyes`.
- * Everywhere else (touch, reduced motion) it renders nothing at all and the
- * untouched drawing shows through, so the feature can only ever add.
+ * The overlay only mounts for a real cursor that wants motion, and only while
+ * the gaze is switched on — see `Eyes` and `app/gaze.ts`, where S toggles it.
+ * Everywhere else (touch, reduced motion, switched off) it renders nothing at
+ * all and the untouched drawing shows through, so the feature can only ever add.
  */
 import { useEffect, useRef } from "react"
+import { useGaze } from "@/app/gaze"
 import { useMediaQuery } from "@/lib/hooks"
 import type { PortraitId } from "../subjects"
 import { EYES, type EyeGeometry } from "./eyeGeometry"
@@ -123,6 +149,11 @@ function portraitGeometry(portrait: PortraitId): EyeGeometry {
   const ink = PORTRAIT_INK[portrait]
   const side = (sclera: string, pupil: string, front: { x: number; y: number }) => ({
     sclera: [{ d: sclera, fill: ink.white }],
+    // The portraits draw no lid shadow inside the eye, so nothing paints back
+    // either side of the pupil.
+    under: [],
+    over: [],
+    region: [box[0], box[1], box[2], box[3]] as [number, number, number, number],
     iris: [{ d: pupil, fill: ink.pupil }],
     white: ink.white,
     front,
@@ -189,12 +220,23 @@ const MIN_TRAVEL_Y = 11
 /**
  * A matière grid shows a dozen faces and every one of them looks at the SAME
  * cursor, so they share one `pointermove` listener and one animation frame
- * instead of a dozen each. Subscribers are called once per frame with the
- * latest position; each then measures itself and writes its own transform.
+ * instead of a dozen each.
+ *
+ * The frame runs in TWO PASSES, and that split is a performance contract rather
+ * than a style: a subscriber MEASURES when it is called and returns a closure
+ * that WRITES. Measuring means `getBoundingClientRect` / `getScreenCTM`, both of
+ * which force the browser to flush pending layout; writing a transform is what
+ * makes layout pending again. Interleaved — measure, write, measure, write —
+ * twenty icons cost twenty forced synchronous layouts every frame over a grid of
+ * heavy drawings, which is the kind of jank that reads as "the eyes are
+ * expensive" when it is really "the loop is". Batched, the first read flushes
+ * once and the other nineteen are free.
  */
-type Listener = (clientX: number, clientY: number) => void
+type Listener = (clientX: number, clientY: number) => (() => void) | void
 
 const listeners = new Set<Listener>()
+/** Reused across frames — this runs 60× a second and need not allocate. */
+const writes: (() => void)[] = []
 let pointerX = 0
 let pointerY = 0
 let rafId = 0
@@ -203,7 +245,12 @@ let seen = false
 
 function broadcast() {
   rafId = 0
-  for (const listener of listeners) listener(pointerX, pointerY)
+  for (const listener of listeners) {
+    const write = listener(pointerX, pointerY)
+    if (write) writes.push(write)
+  }
+  for (const write of writes) write()
+  writes.length = 0
 }
 
 function onPointerMove(event: PointerEvent) {
@@ -218,7 +265,7 @@ function subscribe(listener: Listener): () => void {
   listeners.add(listener)
   // Catch up immediately, so an icon mounting under a resting cursor doesn't
   // sit staring the wrong way until the pointer next moves.
-  if (seen) listener(pointerX, pointerY)
+  if (seen) listener(pointerX, pointerY)?.()
 
   return () => {
     listeners.delete(listener)
@@ -258,8 +305,10 @@ export function Eyes({
 }) {
   const fine = useMediaQuery("(pointer: fine)")
   const wants = useMediaQuery("(prefers-reduced-motion: no-preference)")
+  // The S key, app-wide. Off here means the overlay is absent, not paused.
+  const gaze = useGaze()
   const geo = (subject && EYES[subject]) || (portrait && portraitGeometry(portrait)) || null
-  if (!fine || !wants || !geo) return null
+  if (!fine || !wants || !gaze || !geo) return null
   return <TrackingEyes geo={geo} className={className} />
 }
 
@@ -270,8 +319,8 @@ function TrackingEyes({ geo, className }: { geo: EyeGeometry; className?: string
   // Namespaced per instance: a grid mounts many of these and duplicate ids
   // would make every eye clip against whichever one rendered last.
   const uniq = useRef(uid++).current
-  const clipL = `eye-clip-l-${uniq}`
-  const clipR = `eye-clip-r-${uniq}`
+  const maskL = `eye-mask-l-${uniq}`
+  const maskR = `eye-mask-r-${uniq}`
 
   useEffect(() => {
     const svg = svgRef.current
@@ -291,9 +340,32 @@ function TrackingEyes({ geo, className }: { geo: EyeGeometry; className?: string
       right.style.transform = `translate(${(geo.r.front.x + gx).toFixed(2)}px, ${(geo.r.front.y + gy).toFixed(2)}px)`
     }
 
-    return subscribe((clientX, clientY) => {
+    /**
+     * Eyes nobody can see cost exactly what eyes somebody can — the same two
+     * layout reads and the same masked repaint, every frame — and a full
+     * matière grid keeps most of itself below the fold. So an icon that has
+     * scrolled out drops out of the frame loop and parks FRONT, which is the
+     * pose it should be wearing when it scrolls back in anyway.
+     * `IntersectionObserver` rather than a rect test, because asking each icon
+     * where it is IS the measurement being avoided.
+     */
+    let visible = true
+    const watcher = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting
+        if (!visible) place(0, 0)
+      },
+      // A margin, so a card entering from the bottom is already tracking by the
+      // time anyone looks at it.
+      { rootMargin: "120px" },
+    )
+    watcher.observe(svg)
+
+    const unsubscribe = subscribe((clientX, clientY) => {
+      if (!visible) return
+
       // Hovered: stop tracking and look straight out at whoever is pointing.
-      if (host?.matches(":hover")) return place(0, 0)
+      if (host?.matches(":hover")) return () => place(0, 0)
 
       const box = svg.getBoundingClientRect()
       if (!box.width) return
@@ -314,10 +386,20 @@ function TrackingEyes({ geo, className }: { geo: EyeGeometry; className?: string
       // for almost anywhere the cursor actually is.
       const amount = Math.min(1, distance / (box.width * REACH))
       // px in an SVG transform IS a user unit, so this is viewBox space — the
-      // travel budget above holds at every rendered size.
-      place((dx / distance) * amount * travelX, (dy / distance) * amount * travelY)
+      // travel budget above holds at every rendered size. Handed back instead of
+      // written here: see the note on `Listener`.
+      const gx = (dx / distance) * amount * travelX
+      const gy = (dy / distance) * amount * travelY
+      return () => place(gx, gy)
     })
+
+    return () => {
+      watcher.disconnect()
+      unsubscribe()
+    }
   }, [geo])
+
+  const view = frame(geo)
 
   // Front is also the first-paint pose, so the eyes never flash the drawn
   // book-ward look before the first frame lands.
@@ -337,10 +419,13 @@ function TrackingEyes({ geo, className }: { geo: EyeGeometry; className?: string
       <path key={`${keyed}-${i}`} d={s.d} fill={flood ? undefined : s.fill} />
     ))
 
+  /** Every part of one eye — the extent to repaint and to mask against. */
+  const whole = (e: EyeGeometry["l"]) => [...e.sclera, ...e.under, ...e.over, ...e.iris]
+
   return (
     <svg
       ref={svgRef}
-      viewBox={frame(geo)}
+      viewBox={view}
       className={className}
       aria-hidden="true"
       // Matches the drawing's `object-contain`, so overlay and art fit their
@@ -349,28 +434,61 @@ function TrackingEyes({ geo, className }: { geo: EyeGeometry; className?: string
       style={{ pointerEvents: "none" }}
     >
       <defs>
-        {/* ring ∪ iris = one complete eye, which is the area the iris may move
-            in. Per eye, so it can never stray into its neighbour's white however
-            far the travel is pushed. A clipPath unions its children, so the parts
-            clip as the single shape they look like. */}
-        <clipPath id={clipL}>{paths([...geo.l.sclera, ...geo.l.iris], "cl")}</clipPath>
-        <clipPath id={clipR}>{paths([...geo.r.sclera, ...geo.r.iris], "cr")}</clipPath>
+        {/* ring ∪ arc ∪ iris = one complete eye, which is the area the iris may
+            move in. Per eye, so it can never stray into its neighbour's white
+            however far the travel is pushed. The arc is in here too, so the iris
+            may travel up UNDER the lid rather than stopping at it.
+
+            The region is pinned to the whole frame in user space: the default is
+            120 % of the MASKED content's box, which is the iris — far too tight
+            once it travels. */}
+        {[
+          [maskL, geo.l],
+          [maskR, geo.r],
+        ].map(([id, eye]) => (
+          <mask
+            key={id as string}
+            id={id as string}
+            maskUnits="userSpaceOnUse"
+            x={(eye as EyeGeometry["l"]).region[0]}
+            y={(eye as EyeGeometry["l"]).region[1]}
+            width={(eye as EyeGeometry["l"]).region[2]}
+            height={(eye as EyeGeometry["l"]).region[3]}
+          >
+            <g fill="#fff">{paths(whole(eye as EyeGeometry["l"]), `m${id}`, true)}</g>
+          </mask>
+        ))}
       </defs>
 
       {/* The repaint: the same union, flooded in the white's own ink, so the
           drawn iris underneath is gone and only the moving copy shows. */}
       <g>
-        <g fill={geo.l.white}>{paths([...geo.l.sclera, ...geo.l.iris], "sl", true)}</g>
-        <g fill={geo.r.white}>{paths([...geo.r.sclera, ...geo.r.iris], "sr", true)}</g>
+        <g fill={geo.l.white}>{paths(whole(geo.l), "sl", true)}</g>
+        <g fill={geo.r.white}>{paths(whole(geo.r), "sr", true)}</g>
+      </g>
+
+      {/* The lid shadow that the art drew BENEATH the iris, back at its own ink:
+          the repaint above flattened it, and the iris has to pass over it. */}
+      <g>
+        {paths(geo.l.under, "ul")}
+        {paths(geo.r.under, "ur")}
       </g>
 
       {/* The moving iris — every part of it, each at its own fill, so a stack of
           iris + pupil + shading + catchlight travels intact. */}
-      <g ref={leftRef} clipPath={`url(#${clipL})`} style={rest(geo.l.front)}>
+      <g ref={leftRef} mask={`url(#${maskL})`} style={rest(geo.l.front)}>
         {paths(geo.l.iris, "il")}
       </g>
-      <g ref={rightRef} clipPath={`url(#${clipR})`} style={rest(geo.r.front)}>
+      <g ref={rightRef} mask={`url(#${maskR})`} style={rest(geo.r.front)}>
         {paths(geo.r.iris, "ir")}
+      </g>
+
+      {/* And the lid shadow the art drew ON TOP of the iris, painted back last,
+          so the iris passes beneath it. Most badges use one side or the other;
+          a few use both, one per eye. */}
+      <g>
+        {paths(geo.l.over, "ol")}
+        {paths(geo.r.over, "or")}
       </g>
     </svg>
   )
