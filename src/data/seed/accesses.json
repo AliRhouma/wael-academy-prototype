@@ -14,7 +14,7 @@
   {
     "id": "acc-bacmath-seances",
     "name": "الحصص المسجّلة — النخبة",
-    "description": "تسجيلات حصص فوج باك رياضيات — النخبة، السنة الدراسية 2026/2027.",
+    "description": "تسجيلات حصص فوج Bac Maths — Élite، السنة الدراسية 2026/2027.",
     "types": ["recordedSession"],
     "yearIds": [],
     "subjectIds": [],

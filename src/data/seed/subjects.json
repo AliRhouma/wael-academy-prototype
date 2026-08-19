@@ -931,6 +931,104 @@
     "category": "optionnelle"
   },
   {
+    "id": "subj-bac-sci-histoire-geographie",
+    "yearId": "y-bac-sci",
+    "name": "تاريخ وجغرافيا",
+    "order": 7,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-sci-education-islamique",
+    "yearId": "y-bac-sci",
+    "name": "تربية إسلامية",
+    "order": 8,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-sci-pensee-islamique",
+    "yearId": "y-bac-sci",
+    "name": "تفكير إسلامي",
+    "order": 9,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-sci-adab",
+    "yearId": "y-bac-sci",
+    "name": "الأدب العربي",
+    "order": 10,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-sci-informatique",
+    "yearId": "y-bac-sci",
+    "name": "إعلامية",
+    "order": 11,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-sci-algorithmique",
+    "yearId": "y-bac-sci",
+    "name": "خوارزميات",
+    "order": 12,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-technologie",
+    "yearId": "y-bac-sci",
+    "name": "تكنولوجيا",
+    "order": 13,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-mecanique",
+    "yearId": "y-bac-sci",
+    "name": "ميكانيك",
+    "order": 14,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-electrique",
+    "yearId": "y-bac-sci",
+    "name": "كهرباء",
+    "order": 15,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-economie",
+    "yearId": "y-bac-sci",
+    "name": "اقتصاد",
+    "order": 16,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-gestion",
+    "yearId": "y-bac-sci",
+    "name": "تصرّف",
+    "order": 17,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-allemand",
+    "yearId": "y-bac-sci",
+    "name": "ألمانية",
+    "order": 18,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-espagnol",
+    "yearId": "y-bac-sci",
+    "name": "إسبانية",
+    "order": 19,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-hadara",
+    "yearId": "y-bac-sci",
+    "name": "الحضارة العربية والإسلامية",
+    "order": 20,
+    "category": "optionnelle"
+  },
+  {
     "id": "subj-bac-tech-technologie",
     "yearId": "y-bac-tech",
     "name": "تكنولوجيا",

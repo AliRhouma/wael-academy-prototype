@@ -1,70 +1,70 @@
 [
   {
     "id": "g-2sci-excellents",
-    "title": "المتفوّقين — ثانية علوم",
+    "title": "2ème Sciences — Excellence",
     "academicYear": "2026/2027",
     "yearId": "y-2-sci",
     "studentIds": ["u-st-yasmine", "u-st-aziz", "u-st-nour", "u-st-maryam"]
   },
   {
     "id": "g-2sci-b",
-    "title": "ثانية علوم — فوج ب",
+    "title": "2ème Sciences — Intermédiaire",
     "academicYear": "2026/2027",
     "yearId": "y-2-sci",
     "studentIds": ["u-st-hamza", "u-st-oussama"]
   },
   {
     "id": "g-bacsci-renfort",
-    "title": "باك علوم — تدارك",
+    "title": "Bac Sciences — Rattrapage",
     "academicYear": "2026/2027",
     "yearId": "y-bac-sci",
     "studentIds": ["u-student", "u-student-sarra", "u-st-selim", "u-st-emna", "u-st-wassim"]
   },
   {
     "id": "g-bacsci-elite",
-    "title": "باك علوم — النخبة",
+    "title": "Bac Sciences — Élite",
     "academicYear": "2026/2027",
     "yearId": "y-bac-sci",
     "studentIds": ["u-st-selim", "u-st-emna"]
   },
   {
     "id": "g-bacsci-a",
-    "title": "باك علوم — فوج أ",
+    "title": "Bac Sciences — Intermédiaire",
     "academicYear": "2026/2027",
     "yearId": "y-bac-sci",
     "studentIds": ["u-student-sarra", "u-st-wassim"]
   },
   {
     "id": "g-bacsci-a-2526",
-    "title": "باك علوم — فوج أ",
+    "title": "Bac Sciences — Intermédiaire",
     "academicYear": "2025/2026",
     "yearId": "y-bac-sci",
     "studentIds": ["u-student", "u-student-sarra", "u-st-selim"]
   },
   {
     "id": "g-bacsci-soir-2526",
-    "title": "باك علوم — فوج الليل",
+    "title": "Bac Sciences — Groupe du soir",
     "academicYear": "2025/2026",
     "yearId": "y-bac-sci",
     "studentIds": ["u-st-emna", "u-st-wassim"]
   },
   {
     "id": "g-bacmath-elite",
-    "title": "باك رياضيات — النخبة",
+    "title": "Bac Maths — Élite",
     "academicYear": "2026/2027",
     "yearId": "y-bac-math",
     "studentIds": ["u-student-ines", "u-st-khalil", "u-st-syrine"]
   },
   {
     "id": "g-9-a",
-    "title": "تاسعة أساسي — فوج أ",
+    "title": "9ème année — Renforcement",
     "academicYear": "2026/2027",
     "yearId": "y-9",
     "studentIds": ["u-student-youssef", "u-student-amira", "u-st-adam", "u-st-lina"]
   },
   {
     "id": "g-7-soutien",
-    "title": "سابعة أساسي — دعم",
+    "title": "7ème année — Soutien",
     "academicYear": "2025/2026",
     "yearId": "y-7",
     "studentIds": []

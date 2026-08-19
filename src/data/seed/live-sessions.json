@@ -9,7 +9,7 @@
     "subjectIds": ["subj-bac-math-mathematiques"],
     "groupIds": ["g-bacmath-elite"],
     "yearIds": ["y-bac-math"],
-    "offerId": "offer-bac-math-annuel",
+    "offerId": "offer-turbo-pro-max",
     "resourceIds": ["res-fiche-integrales", "res-corrige-ds1"]
   },
   {
@@ -34,7 +34,7 @@
     "subjectIds": ["subj-bac-sci-sciences-physiques"],
     "groupIds": ["g-bacsci-renfort"],
     "yearIds": ["y-bac-sci"],
-    "offerId": "offer-bac-sci-trimestre",
+    "offerId": "offer-turbo",
     "resourceIds": []
   },
   {
@@ -47,7 +47,7 @@
     "subjectIds": ["subj-9-sciences-de-la-vie-et-de-la-terre"],
     "groupIds": ["g-9-a"],
     "yearIds": ["y-9"],
-    "offerId": "offer-9-rentree",
+    "offerId": "offer-khotwa",
     "resourceIds": ["res-schema-cellule"]
   },
   {
@@ -72,7 +72,7 @@
     "subjectIds": ["subj-bac-sci-sciences-physiques"],
     "groupIds": ["g-bacsci-renfort"],
     "yearIds": ["y-bac-sci"],
-    "offerId": "offer-bac-sci-trimestre",
+    "offerId": "offer-turbo",
     "resourceIds": ["res-corrige-ds1"]
   },
   {
@@ -97,6 +97,19 @@
     "subjectIds": ["subj-bac-math-mathematiques"],
     "groupIds": ["g-bacmath-elite"],
     "yearIds": ["y-bac-math"],
+    "resourceIds": []
+  },
+  {
+    "id": "live-ondes-revision-today",
+    "name": "مباشر — مراجعة الموجات قبل الفرض",
+    "url": "https://meet.google.com/wael-ondes-revision",
+    "date": "2026-08-18",
+    "startTime": "12:00",
+    "academicYear": "2026/2027",
+    "subjectIds": ["subj-bac-sci-sciences-physiques"],
+    "groupIds": ["g-bacsci-renfort"],
+    "yearIds": ["y-bac-sci"],
+    "offerId": "offer-turbo",
     "resourceIds": []
   }
 ]

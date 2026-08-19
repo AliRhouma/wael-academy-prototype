@@ -5,7 +5,7 @@
     "providerUserId": "u-teacher",
     "offers": [
       {
-        "offerId": "offer-bac-math-annuel",
+        "offerId": "offer-turbo-pro-max",
         "discountPct": 15,
         "cases": [
           {
@@ -23,7 +23,7 @@
         ]
       },
       {
-        "offerId": "offer-bac-sci-trimestre",
+        "offerId": "offer-turbo",
         "discountPct": 10,
         "cases": [
           {
@@ -43,7 +43,7 @@
     "providerUserId": "u-teacher-nabil",
     "offers": [
       {
-        "offerId": "offer-gold-secondaire",
+        "offerId": "offer-turbo",
         "discountPct": 20,
         "cases": [
           {
@@ -55,7 +55,7 @@
         ]
       },
       {
-        "offerId": "offer-silver-secondaire",
+        "offerId": "offer-khotwa",
         "discountAmount": 9,
         "cases": [
           {
@@ -75,7 +75,7 @@
     "providerUserId": "u-student",
     "offers": [
       {
-        "offerId": "offer-bac-sci-trimestre",
+        "offerId": "offer-turbo",
         "discountPct": 15,
         "cases": [
           {
@@ -102,7 +102,7 @@
     "providerUserId": "u-st-syrine",
     "offers": [
       {
-        "offerId": "offer-bac-math-annuel",
+        "offerId": "offer-turbo-pro-max",
         "discountPct": 10,
         "cases": [
           {
@@ -123,7 +123,7 @@
     "providerUserId": "u-parent",
     "offers": [
       {
-        "offerId": "offer-9-rentree",
+        "offerId": "offer-khotwa",
         "discountPct": 20,
         "cases": [
           {
@@ -141,9 +141,9 @@
     "id": "promo-rentree26",
     "code": "RENTREE26",
     "offers": [
-      { "offerId": "offer-bac-math-annuel", "discountPct": 20 },
-      { "offerId": "offer-bac-info-annuel", "discountPct": 15 },
-      { "offerId": "offer-9-rentree", "discountAmount": 20 }
+      { "offerId": "offer-turbo-pro-max", "discountPct": 20 },
+      { "offerId": "offer-turbo", "discountPct": 15 },
+      { "offerId": "offer-khotwa", "discountAmount": 20 }
     ],
     "maxUses": 50,
     "usedByUserIds": ["u-student", "u-st-syrine", "u-st-khalil"]
@@ -151,14 +151,14 @@
   {
     "id": "promo-duo",
     "code": "WAEL-DUO24",
-    "offers": [{ "offerId": "offer-bac-sci-trimestre", "discountAmount": 30 }],
+    "offers": [{ "offerId": "offer-turbo", "discountAmount": 30 }],
     "maxUses": 2,
     "usedByUserIds": ["u-st-emna", "u-st-selim"]
   },
   {
     "id": "promo-welcome",
     "code": "WAEL-K7F2M",
-    "offers": [{ "offerId": "offer-7-decouverte", "discountPct": 50 }],
+    "offers": [{ "offerId": "offer-khotwa", "discountPct": 50 }],
     "usedByUserIds": []
   }
 ]

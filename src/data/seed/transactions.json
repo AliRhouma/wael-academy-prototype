@@ -3,7 +3,7 @@
     "id": "tx-mo-1",
     "subscriptionId": "sub-mohamed-bacmath",
     "date": "2026-06-21",
-    "amount": 150,
+    "amount": 1000,
     "remarks": "القسط الأوّل تخلّص وقت التسجيل، كاش.",
     "installmentId": "inst-mo-1",
     "resources": [
@@ -14,7 +14,7 @@
     "id": "tx-in-1",
     "subscriptionId": "sub-ines-bacmath",
     "date": "2026-07-01",
-    "amount": 480,
+    "amount": 2300,
     "remarks": "خلّصت الكل بتحويل بنكي.",
     "installmentId": "inst-in-1",
     "resources": [
@@ -25,8 +25,8 @@
     "id": "tx-em-1",
     "subscriptionId": "sub-emna-bacsci",
     "date": "2026-07-05",
-    "amount": 40,
-    "remarks": "تسبقة جزئية على القسط الأوّل — باقي 50 د.",
+    "amount": 400,
+    "remarks": "تسبقة جزئية على القسط الأوّل — باقي 450 د.",
     "installmentId": "inst-em-1",
     "resources": []
   }

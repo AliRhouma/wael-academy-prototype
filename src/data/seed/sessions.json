@@ -1528,7 +1528,8 @@
       "g-bacsci-renfort"
     ],
     "teacherId": "t-hedi",
-    "room": "قاعة C2"
+    "room": "قاعة C2",
+    "postponed": true
   },
   {
     "id": "ses-44",
@@ -1649,7 +1650,8 @@
       "g-bacsci-renfort"
     ],
     "teacherId": "t-mourad",
-    "room": "مخبر الفيزياء"
+    "room": "مخبر الفيزياء",
+    "postponed": true
   },
   {
     "id": "ses-114",

@@ -288,6 +288,14 @@ export interface Session {
   /** Salle / plateforme where it happens — e.g. "Salle B12" or "En ligne". */
   room?: string
   /**
+   * The séance was PUT OFF — it keeps its slot on the calendar (that is how the
+   * élève finds out) but it is not going to run at it. A flag, not a status
+   * enum: every other state a séance can be in is derived from the clock, and
+   * this is the one thing the clock cannot tell you. When the prof re-schedules
+   * it, that is a new séance on a new day, not this row moving.
+   */
+  postponed?: boolean
+  /**
    * Semestre of the année scolaire the séance belongs to (1, 2 or 3) — how the
    * élève's « Séances enregistrées » library is sectioned. Absent = semestre 1.
    */
@@ -428,8 +436,15 @@ export interface Offer {
   id: Id
   name: string
   description?: string
-  /** Logo — an image URL (optional; screens fall back to a brand tile). */
+  /** Logo — an image URL. Wins over the type-set wordmark when set. */
   logoUrl?: string
+  /**
+   * The offer's mark, TYPE-SET: no icon yet, so the name itself is the logo.
+   * `logoText` is the loud line ("TURBO", "خطوة"), `logoSub` the quiet one
+   * under it ("PRO MAX", "بخطوة"). Dropping a real `logoUrl` in replaces both.
+   */
+  logoText?: string
+  logoSub?: string
   /** Years (années / niveaux) this offer targets — zero or more. */
   yearIds: Id[]
   /** Base price in dinars (TND). */
@@ -472,11 +487,11 @@ export interface Offer {
 }
 
 /**
- * The four rungs of the commercial ladder, cheapest first. `silver` is the
- * monthly entry pack, `gold` the annual one, `early` the discounted early-bird,
- * `integral` the flagship "وائل للخر" pack.
+ * The three rungs of the commercial ladder, cheapest first. `khotwa` is the
+ * month-by-month paced pack ("خطوة بخطوة"), `turbo` the full year, `turbo-max`
+ * the flagship that adds graded exams and personal follow-up.
  */
-export type OfferTier = "silver" | "gold" | "early" | "integral"
+export type OfferTier = "khotwa" | "turbo" | "turbo-max"
 
 /**
  * What a promo code does to ONE offer — each targeted offer is configured
