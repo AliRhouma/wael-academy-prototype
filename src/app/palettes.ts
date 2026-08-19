@@ -107,4 +107,4 @@ export const PALETTES: PaletteMeta[] = [
 ]
 
 /** The palette a fresh visitor gets (saved choices in localStorage win). */
-export const DEFAULT_PALETTE: PaletteId = "aigue"
+export const DEFAULT_PALETTE: PaletteId = "azure"
