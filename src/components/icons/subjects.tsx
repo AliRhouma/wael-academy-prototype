@@ -32,7 +32,7 @@
  * The glyphs are inline because they're token-driven, and their gradient ids are
  * already namespaced per instance.
  */
-import type { ReactNode } from "react"
+import { useCallback, useState, type ReactNode } from "react"
 import { cn } from "@/lib/utils"
 import { Eyes } from "./subjects/Eyes"
 import { SubjectsIcon } from "./SubjectsIcon"
@@ -325,6 +325,60 @@ const FALLBACK_BY_NAME: Record<string, FallbackKey> = {
  * is showing underneath and the gaze survives the cross-fade. On touch, or under
  * reduced motion, it renders nothing and the portrait is untouched.
  */
+/**
+ * Tracks whether THIS drawing has actually landed, so it can be faded in
+ * rather than appearing mid-page like a dropped tile.
+ *
+ * A badge is 60–90 KB of vector and a matière grid mounts twenty of them: they
+ * arrive over hundreds of milliseconds, in whatever order the network returns
+ * them, and each one pops into an empty box the instant it decodes. One image
+ * doing that is unnoticeable; twenty is a page that looks like it is failing.
+ *
+ * Two ways in, and BOTH are needed. `onLoad` covers the fetch. `complete` on
+ * the ref covers the cache: a drawing already decoded paints on the first frame
+ * and its load event fired long before this component existed, so waiting for
+ * `onLoad` alone would leave a cached badge invisible forever.
+ *
+ * State holds the SRC, not a boolean, so switching a drawing (the hover swap on
+ * the matières screen) re-arms the fade instead of showing the new one over the
+ * old one's flag. It is compared against the `src` this hook closed over, never
+ * against `img.src` — the DOM resolves that to an absolute URL and the module
+ * URL would never match it.
+ */
+function useLanded(src: string) {
+  const [landed, setLanded] = useState<string | null>(null)
+  const ref = useCallback(
+    (node: HTMLImageElement | null) => {
+      if (node?.complete) setLanded(src)
+    },
+    [src],
+  )
+  return { landed: landed === src, ref, onLoad: () => setLanded(src) }
+}
+
+/**
+ * What stands in the drawing's place while it travels.
+ *
+ * Deliberately almost nothing: a disc of ink at 5 %, breathing. The badges ARE
+ * discs, so the shape is honest at any size, and at 5 % it reads as a slot
+ * waiting to be filled rather than as a grey blob claiming to be content.
+ * `inset-[14%]` is the medallion's own footprint in its canvas.
+ */
+function ArtPlaceholder({ round = true }: { round?: boolean }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "pointer-events-none absolute bg-ink/[0.05] motion-safe:animate-pulse",
+        round ? "inset-[14%] rounded-full" : "inset-[10%] rounded-[22%]",
+      )}
+    />
+  )
+}
+
+/** How the art settles in: a fade, and the last hair of a scale. */
+const REVEAL = "transition-[opacity,transform] duration-500 ease-out"
+
 export function SubjectIcon({ name, className }: { name: string; className?: string }) {
   const badge = badgeFor(name)
   const id = portraitFor(name)
@@ -334,56 +388,14 @@ export function SubjectIcon({ name, className }: { name: string; className?: str
   // A badge is finished art — it needs no expression swap and no gaze overlay
   // (see BADGE_BY_NAME), so it renders as one plain, undistorted image.
   if (badge) {
-    return (
-      <span className={cn("relative block", className)} aria-hidden="true">
-        {/* The badges are 60–180 KB of vector each and a grid mounts twenty:
-            `async` keeps their decode off the main thread, so the page stays
-            responsive while they land instead of stalling on them. */}
-        <img
-          src={badge}
-          alt=""
-          draggable={false}
-          decoding="async"
-          className="size-full object-contain"
-        />
-        {/* Renders only where a measured geometry exists; a badge without one
-            (تربية إسلامية, until its iris is flagged) shows the drawn gaze
-            untouched, which is why the overlay can only ever add. */}
-        <Eyes
-          subject={BADGE_GAZE_OWNER[name] ?? name}
-          className="absolute inset-0 size-full object-contain"
-        />
-      </span>
-    )
+    return <BadgeArt name={name} src={badge} className={className} />
   }
 
   if (art) {
     // The portraits aren't square (the tightened viewBoxes are ~1480×1700) and
     // callers size these with square utilities — `contain` keeps every drawing
     // undistorted. The overlay shares the box and fits it the same way.
-    const layer = "absolute inset-0 size-full object-contain"
-    return (
-      <span className={cn("relative block", className)} aria-hidden="true">
-        <img
-          src={art}
-          alt=""
-          draggable={false}
-          className={cn(
-            "size-full object-contain",
-            happy && "transition-opacity duration-300 ease-out group-hover:opacity-0",
-          )}
-        />
-        {happy && (
-          <img
-            src={happy}
-            alt=""
-            draggable={false}
-            className={cn(layer, "opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100")}
-          />
-        )}
-        <Eyes portrait={id} className={layer} />
-      </span>
-    )
+    return <PortraitArt id={id} src={art} hover={happy} className={className} />
   }
   const fallback = FALLBACK_BY_NAME[name]
   // No art AND no hand-drawn stand-in: the delivered subjects book is the
@@ -391,4 +403,107 @@ export function SubjectIcon({ name, className }: { name: string; className?: str
   // the last resort, so an unmapped matière still lands on the real icon set.
   if (!fallback) return <SubjectsIcon className={className} />
   return <Glyph className={cn("text-brand-500", className)}>{FALLBACKS[fallback]}</Glyph>
+}
+
+/**
+ * A badge, revealed as it lands.
+ *
+ * The GAZE travels with the drawing and not on its own clock: the overlay
+ * repaints the eyes of art that isn't there yet, so shown early it is two
+ * floating eyes on an empty disc — which is exactly the thing this component
+ * exists to prevent.
+ */
+function BadgeArt({ name, src, className }: { name: string; src: string; className?: string }) {
+  const { landed, ref, onLoad } = useLanded(src)
+
+  return (
+    <span className={cn("relative block", className)} aria-hidden="true">
+      {!landed && <ArtPlaceholder />}
+      {/* The badges are 60–90 KB of vector each and a grid mounts twenty:
+          `async` keeps their decode off the main thread, so the page stays
+          responsive while they land instead of stalling on them. */}
+      <img
+        ref={ref}
+        src={src}
+        alt=""
+        draggable={false}
+        decoding="async"
+        onLoad={onLoad}
+        className={cn(
+          "size-full object-contain",
+          REVEAL,
+          landed ? "opacity-100" : "opacity-0 motion-safe:scale-95",
+        )}
+      />
+      {/* Renders only where a measured geometry exists; a badge without one
+          (تربية إسلامية, until its iris is flagged) shows the drawn gaze
+          untouched, which is why the overlay can only ever add. */}
+      <Eyes
+        subject={BADGE_GAZE_OWNER[name] ?? name}
+        className={cn(
+          "absolute inset-0 size-full object-contain",
+          REVEAL,
+          landed ? "opacity-100" : "opacity-0",
+        )}
+      />
+    </span>
+  )
+}
+
+/** A portrait and its hover twin, same reveal — the resting drawing gates it. */
+function PortraitArt({
+  id,
+  src,
+  hover,
+  className,
+}: {
+  id: PortraitId
+  src: string
+  hover?: string
+  className?: string
+}) {
+  const { landed, ref, onLoad } = useLanded(src)
+  // The portraits aren't square (the tightened viewBoxes are ~1480×1700) and
+  // callers size these with square utilities — `contain` keeps every drawing
+  // undistorted. The overlay shares the box and fits it the same way.
+  const layer = "absolute inset-0 size-full object-contain"
+
+  return (
+    <span className={cn("relative block", className)} aria-hidden="true">
+      {!landed && <ArtPlaceholder round={false} />}
+      <img
+        ref={ref}
+        src={src}
+        alt=""
+        draggable={false}
+        decoding="async"
+        onLoad={onLoad}
+        className={cn(
+          "size-full object-contain",
+          REVEAL,
+          landed ? "opacity-100" : "opacity-0 motion-safe:scale-95",
+          // The hover swap keeps its own, faster curve — that one is an
+          // interaction, not an arrival.
+          landed && hover && "duration-300 group-hover:opacity-0",
+        )}
+      />
+      {hover && (
+        <img
+          src={hover}
+          alt=""
+          draggable={false}
+          decoding="async"
+          className={cn(
+            layer,
+            "opacity-0 transition-opacity duration-300 ease-out",
+            landed && "group-hover:opacity-100",
+          )}
+        />
+      )}
+      <Eyes
+        portrait={id}
+        className={cn(layer, REVEAL, landed ? "opacity-100" : "opacity-0")}
+      />
+    </span>
+  )
 }
