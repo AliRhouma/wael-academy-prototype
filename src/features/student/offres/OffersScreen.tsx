@@ -4,12 +4,9 @@ import {
   CalendarDays,
   Check,
   ChevronDown,
+  ChevronLeft,
   Clock3,
   GraduationCap,
-  Minus,
-  RefreshCw,
-  Search,
-  ShieldCheck,
   Sparkles,
   Tag,
   Wallet,
@@ -20,6 +17,7 @@ import { useToast } from "@/components/kit/Toast"
 import { useAuth } from "@/stores/useAuth"
 import { useData } from "@/stores/useData"
 import type { Offer, OfferTier } from "@/data/types"
+import { OfferMark } from "@/features/shared/offers/OfferMark"
 import { formatDay, formatDT } from "@/features/shared/payments/paymentLib"
 
 /** Shown discount: the stored % when set, else derived from the promo price. */
@@ -47,83 +45,61 @@ function priceSuffix(o: Offer): string {
 }
 
 /**
- * The commercial ladder, cheapest rung first. The catalogue is now READ as this
- * ladder: one section per rung, so the élève climbs instead of scanning a flat
- * grid of ten look-alike cards.
+ * The catalogue is THREE offers, read as one ladder left to right: pay as you
+ * climb, the full year, the full year plus everything. Cheapest rung first —
+ * no filters, no sections: three cards side by side and the eye does the rest.
  */
-const TIER_ORDER: OfferTier[] = ["silver", "gold", "early", "integral"]
-const TIER_RANK: Record<OfferTier, number> = { silver: 0, gold: 1, early: 2, integral: 3 }
+const TIER_RANK: Record<OfferTier, number> = { khotwa: 0, turbo: 1, "turbo-max": 2 }
 const rank = (o: Offer) => (o.tier ? TIER_RANK[o.tier] : 9)
 
 type TierMeta = {
-  label: string
-  blurb: string
-  logo?: string
-  /** Tinted price band at the head of every card in this rung. */
+  /** Tinted price band at the head of the card. */
   band: string
   price: string
-  chip: string
   hover: string
   icon: string
 }
 
+/**
+ * ONE band for the whole ladder.
+ *
+ * The three rungs used to wear a colour each — green, cream, brand — which read
+ * as three unrelated products rather than three sizes of the same one. They sell
+ * the SAME content at different paces, so the card carries the brand tint and
+ * lets the price, the period chip and the feature list do the separating. The
+ * accent that survives is the price, and only because a figure needs weight.
+ */
+const BAND = "bg-brand-50"
+
 const TIER_META: Record<OfferTier, TierMeta> = {
-  silver: {
-    label: "Silver",
-    blurb: "الأساسي — فيديوهات، تمارين وتلاخيص، شهر بشهر بلا التزام.",
-    logo: "/offers/silver.svg",
-    band: "bg-neutral-100",
-    price: "text-ink",
-    chip: "bg-surface text-neutral-600",
-    hover: "hover:border-neutral-300",
-    icon: "bg-neutral-100 text-neutral-600",
-  },
-  gold: {
-    label: "Gold",
-    blurb: "العام الكامل — زيد الحصص المباشرة والمنتدى، بسومة أرخص.",
-    logo: "/offers/gold.svg",
-    band: "bg-accent2-50",
-    price: "text-accent2-700",
-    chip: "bg-surface text-accent2-700",
-    hover: "hover:border-accent2-300",
-    icon: "bg-accent2-50 text-accent2-600",
-  },
-  early: {
-    label: "بدري",
-    blurb: "عروض العودة المدرسية — سومة الانطلاق، لوقت محدود.",
-    logo: "/offers/early.svg",
-    band: "bg-success-50",
-    price: "text-success-700",
-    chip: "bg-surface text-success-700",
-    hover: "hover:border-success-300",
-    icon: "bg-success-50 text-success-600",
-  },
-  integral: {
-    label: "وائل للخر",
-    blurb: "أكمل عرض في المنصّة — كل شيء، من أوّل العام حتى للامتحان.",
-    logo: "/offers/integral.svg",
-    band: "bg-brand-50",
+  khotwa: {
+    band: BAND,
     price: "text-brand-700",
-    chip: "bg-surface text-brand-700",
+    hover: "hover:border-brand-300",
+    icon: "bg-brand-50 text-brand-600",
+  },
+  turbo: {
+    band: BAND,
+    price: "text-brand-700",
+    hover: "hover:border-brand-300",
+    icon: "bg-brand-50 text-brand-600",
+  },
+  "turbo-max": {
+    band: BAND,
+    price: "text-brand-700",
     hover: "hover:border-brand-300",
     icon: "bg-brand-50 text-brand-600",
   },
 }
 
 const OTHER_META: TierMeta = {
-  label: "عروض أخرى",
-  blurb: "عروض خاصة برّا الرتب.",
-  band: "bg-surface-muted",
-  price: "text-ink",
-  chip: "bg-surface text-ink-subtle",
-  hover: "hover:border-border-strong",
-  icon: "bg-neutral-100 text-ink-subtle",
+  band: BAND,
+  price: "text-brand-700",
+  hover: "hover:border-brand-300",
+  icon: "bg-brand-50 text-brand-600",
 }
 
 const metaOf = (t?: OfferTier) => (t ? TIER_META[t] : OTHER_META)
-
-type Scope = "mine" | "all"
-type Billing = "all" | "monthly" | "annual"
 
 /** Features beyond this fold behind a "و N زيادة" toggle — cards stay same height. */
 const FEATURES_SHOWN = 4
@@ -140,7 +116,7 @@ function OfferCard({
   onSubscribe,
 }: {
   offer: Offer
-  /** The single recommended card of the current view — see `featuredId`. */
+  /** The single recommended card of the catalogue — see `featuredId`. */
   featured: boolean
   subscribed: boolean
   subscriptionId?: string
@@ -156,19 +132,28 @@ function OfferCard({
 
   return (
     <article
+      // The dashboard's panel frame, on a card: a 3px `--brand-200` edge at a
+      // 28px radius, no shadow. `CreamPanel` paints that frame by stacking two
+      // clipped layers because it has a notch to cut; nothing here is notched,
+      // so a plain border reproduces the same edge at the same weight and the
+      // catalogue reads as part of the same surface family as لوحة القيادة.
       className={
-        "group relative flex h-full flex-col overflow-hidden rounded-lg border bg-surface transition motion-safe:hover:-translate-y-1 " +
-        (featured
-          ? "border-brand-200 shadow-lg ring-4 ring-brand-500/10"
-          : `border-border shadow-sm hover:shadow-md ${meta.hover}`)
+        "group relative flex h-full flex-col overflow-hidden rounded-[28px] border-[3px] border-brand-200 bg-surface transition motion-safe:hover:-translate-y-1 " +
+        (featured ? "ring-4 ring-brand-500/10" : meta.hover)
       }
     >
-      {/* ---- Price band — the identity + what it costs, in one tinted block */}
+      {/* ---- Price band — the mark, the name and what it costs, in one block */}
       <div className={"relative p-5 " + (featured ? "bg-grad text-ink-inverted" : meta.band)}>
+        {/* In the flow, on its own line — it used to be pinned to the corner
+            with the name row reserving `pe-24` (96px) for it. The badge measures
+            112px plus its 16px inset, so the name ran under it and « Turbo Pro
+            Max » lost its T. Reserving the true 128px instead would have left
+            the name ~70px at 1280 and broken it over three lines; above the row
+            it collides with nothing and the name gets the full width. */}
         {(featured || subscribed) && (
           <span
             className={
-              "absolute top-4 end-4 inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-display text-[calc(10px*var(--ts))] font-bold shadow-xs " +
+              "mb-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-display text-[calc(10px*var(--ts))] font-bold shadow-xs " +
               (subscribed ? "bg-success-600 text-white" : "bg-surface-cream text-accent2-700")
             }
           >
@@ -177,18 +162,12 @@ function OfferCard({
           </span>
         )}
 
-        <div className="flex items-center gap-3 pe-24">
-          {offer.logoUrl ? (
-            <img src={offer.logoUrl} alt="" className="size-12 shrink-0" />
-          ) : (
-            <span className={"grid size-12 shrink-0 place-items-center rounded-md " + meta.icon}>
-              <Tag className="size-5" />
-            </span>
-          )}
+        <div className="flex items-center gap-3">
+          <OfferMark offer={offer} size="md" inverted={featured} />
           <b
             dir="auto"
             className={
-              "min-w-0 font-display text-[calc(15px*var(--ts))] font-bold leading-snug " +
+              "min-w-0 font-display text-[calc(16px*var(--ts))] font-bold leading-snug " +
               (featured ? "text-ink-inverted" : "text-ink")
             }
           >
@@ -277,17 +256,21 @@ function OfferCard({
               {offer.period}
             </span>
           )}
-          {offer.billing === "monthly" && (
-            <span className="inline-flex items-center gap-1 rounded-full border border-border bg-surface-muted px-2.5 py-1 text-[calc(11px*var(--ts))] font-medium text-ink-subtle">
-              <RefreshCw className="size-3.5 text-ink-muted" />
-              تنجّم توقّف وقت ما تحبّ
-            </span>
-          )}
         </div>
 
-        {offer.tagline && (
-          <p dir="auto" className="mt-3 text-[calc(12.5px*var(--ts))] leading-relaxed text-ink-subtle">
-            {offer.tagline}
+        {/* ONE prose line, not two. The admin writes both a « الجملة الترويجية »
+            and a « Description », and printing them together said the same thing
+            twice in two registers — the card is a choice between three offers,
+            not a page about one. The tagline is the hook and wins; the
+            description stands in when there is no tagline, so an admin who
+            filled only that box still sees something. The long version belongs
+            wherever the offer is read at length, not in a column of three. */}
+        {(offer.tagline || offer.description) && (
+          <p
+            dir="auto"
+            className="mt-3 text-[calc(12.5px*var(--ts))] leading-relaxed text-ink-subtle"
+          >
+            {offer.tagline || offer.description}
           </p>
         )}
 
@@ -328,16 +311,6 @@ function OfferCard({
           </>
         )}
 
-        {offer.priceNotes && offer.priceNotes.length > 0 && (
-          <div className="mt-4 space-y-0.5">
-            {offer.priceNotes.map((n) => (
-              <p key={n} dir="auto" className="text-[calc(11.5px*var(--ts))] text-ink-muted">
-                {n}
-              </p>
-            ))}
-          </div>
-        )}
-
         {/* The action — owned offers point at the wallet instead of re-selling. */}
         {subscribed && subscriptionId ? (
           <Link
@@ -366,107 +339,17 @@ function OfferCard({
 }
 
 /* ------------------------------------------------------------------ */
-/* The comparison matrix — what actually separates the rungs           */
-/* ------------------------------------------------------------------ */
-
-function CompareTable({ offers }: { offers: Offer[] }) {
-  /** Columns = the rungs on screen; rows = every service, commonest first. */
-  const tiers = useMemo(
-    () => TIER_ORDER.filter((t) => offers.some((o) => o.tier === t)),
-    [offers],
-  )
-
-  const rows = useMemo(() => {
-    const count = new Map<string, number>()
-    for (const o of offers) for (const f of o.features ?? []) count.set(f, (count.get(f) ?? 0) + 1)
-    return [...count.entries()].sort((a, b) => b[1] - a[1]).map(([f]) => f)
-  }, [offers])
-
-  const has = (tier: OfferTier, feature: string) =>
-    offers.some((o) => o.tier === tier && (o.features ?? []).includes(feature))
-
-  if (tiers.length < 2 || rows.length === 0) return null
-
-  return (
-    <section className="hidden md:block">
-      <div className="flex items-center gap-2.5">
-        <span className="grid size-7 place-items-center rounded-[9px] bg-brand-50 text-brand-600">
-          <Check className="size-4" />
-        </span>
-        <h2 className="font-display text-[calc(17px*var(--ts))] font-bold text-ink">
-          قارن بين الرتب
-        </h2>
-      </div>
-
-      <div className="mt-4 overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
-        <table className="w-full border-collapse text-start">
-          <thead>
-            <tr className="bg-surface-muted">
-              <th className="px-5 py-3 text-start text-[calc(12px*var(--ts))] font-medium text-ink-muted">
-                الخدمة
-              </th>
-              {tiers.map((t) => (
-                <th key={t} className="px-4 py-3 text-center">
-                  <span className="inline-flex flex-col items-center gap-1">
-                    {TIER_META[t].logo && (
-                      <img src={TIER_META[t].logo} alt="" className="size-8" />
-                    )}
-                    <span className="font-display text-[calc(12.5px*var(--ts))] font-bold text-ink">
-                      {TIER_META[t].label}
-                    </span>
-                  </span>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((f, i) => (
-              <tr key={f} className={i % 2 ? "bg-surface-muted/50" : undefined}>
-                <td
-                  dir="auto"
-                  className="border-t border-border px-5 py-3 text-[calc(12.5px*var(--ts))] text-ink-subtle"
-                >
-                  {f}
-                </td>
-                {tiers.map((t) => (
-                  <td key={t} className="border-t border-border px-4 py-3 text-center">
-                    {has(t, f) ? (
-                      <Check className="mx-auto size-4 text-success-600" />
-                    ) : (
-                      <Minus className="mx-auto size-4 text-neutral-300" />
-                    )}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  )
-}
-
-/* ------------------------------------------------------------------ */
 /* The screen                                                          */
 /* ------------------------------------------------------------------ */
 
-/** Élève — the offer catalogue, read as a ladder: hero, rungs, comparison. */
+/** Élève — the catalogue: three offers, one ladder, hero then cards then matrix. */
 export default function StudentOffersScreen() {
   const user = useAuth((s) => s.currentUser)
   const offers = useData((s) => s.offers)
-  const years = useData((s) => s.years)
   const subscriptions = useData((s) => s.subscriptions)
   const { show, toast } = useToast()
 
-  const [scope, setScope] = useState<Scope>("mine")
-  const [billing, setBilling] = useState<Billing>("all")
   const [asking, setAsking] = useState<Offer | null>(null)
-
-  const myYearIds = user?.yearIds ?? []
-  const myYearName = useMemo(
-    () => years.filter((y) => myYearIds.includes(y.id)).map((y) => y.name).join(" · "),
-    [years, myYearIds],
-  )
 
   /** The subscriptions this élève already holds, indexed by the offer they buy. */
   const mySubByOffer = useMemo(() => {
@@ -475,41 +358,11 @@ export default function StudentOffersScreen() {
     return m
   }, [subscriptions, user?.id])
 
-  const forMyYear = useMemo(
-    () => (o: Offer) => myYearIds.length === 0 || o.yearIds.some((y) => myYearIds.includes(y)),
-    [myYearIds],
+  /** The ladder, cheapest rung first. */
+  const shown = useMemo(
+    () => [...offers].sort((a, b) => rank(a) - rank(b) || netPrice(a) - netPrice(b)),
+    [offers],
   )
-
-  const mineCount = useMemo(() => offers.filter(forMyYear).length, [offers, forMyYear])
-
-  const shown = useMemo(() => {
-    return offers
-      .filter((o) => (scope === "mine" ? forMyYear(o) : true))
-      .filter((o) => (billing === "all" ? true : o.billing === billing))
-      .sort((a, b) => rank(a) - rank(b) || netPrice(a) - netPrice(b))
-  }, [offers, scope, billing, forMyYear])
-
-  /** One section per rung of the ladder, in ladder order. */
-  const groups = useMemo(() => {
-    const byTier = new Map<OfferTier | "other", Offer[]>()
-    for (const o of shown) {
-      const k = o.tier ?? "other"
-      const list = byTier.get(k)
-      if (list) list.push(o)
-      else byTier.set(k, [o])
-    }
-    const keys: (OfferTier | "other")[] = [...TIER_ORDER, "other"]
-    return keys
-      .filter((k) => byTier.has(k))
-      .map((k) => ({
-        key: k,
-        meta: k === "other" ? OTHER_META : TIER_META[k],
-        offers: byTier.get(k)!,
-      }))
-  }, [shown])
-
-  /** Offers already owned — pinned above the catalogue whatever the filters say. */
-  const owned = useMemo(() => offers.filter((o) => mySubByOffer.has(o.id)), [offers, mySubByOffer])
 
   /**
    * Several offers may be flagged `popular`, but only ONE card wears the ring:
@@ -521,234 +374,49 @@ export default function StudentOffersScreen() {
     [shown, mySubByOffer],
   )
 
-  /** The loudest promo in the catalogue — the hero's headline number. */
-  const bestPct = useMemo(
-    () => offers.reduce((max, o) => Math.max(max, discountPct(o) ?? 0), 0),
-    [offers],
-  )
-
-  const scopeTabs: { key: Scope; label: string; count: number }[] = [
-    { key: "mine", label: "لقسمي", count: mineCount },
-    { key: "all", label: "الكل", count: offers.length },
-  ]
-  const billingChips: { key: Billing; label: string }[] = [
-    { key: "all", label: "الكل" },
-    { key: "monthly", label: "شهري" },
-    { key: "annual", label: "سنوي" },
-  ]
-
   return (
     <div className="flex flex-col gap-6">
-      {/* ---- Hero — the promise, the reassurance, and the best deal in one band */}
-      <section className="relative overflow-hidden rounded-xl border border-border bg-surface p-6 shadow-sm md:p-8">
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -top-24 -end-16 size-64 rounded-full bg-accent2-100/70 blur-3xl"
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -bottom-28 -start-20 size-64 rounded-full bg-brand-100/60 blur-3xl"
-        />
+      {/* Breadcrumb + title, the same header every other élève screen wears
+          (SeancesScreen, SubjectsScreen) — the hero band that used to title this
+          page is gone, and a catalogue that opens straight on three price cards
+          never says what it is. */}
+      <nav
+        aria-label="مسار التنقّل"
+        className="flex items-center gap-1.5 text-[calc(13px*var(--ts))] text-ink-muted"
+      >
+        <Link to="/student" className="transition hover:text-brand-600">
+          الصفحة الرئيسية
+        </Link>
+        <ChevronLeft className="size-3.5 shrink-0" />
+        <span className="font-medium text-brand-600">العروض</span>
+      </nav>
 
-        <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="min-w-0">
-            <span className="inline-flex items-center gap-1.5 font-display text-[calc(10.5px*var(--ts))] font-bold uppercase tracking-[.18em] text-accent2-600">
-              <Sparkles className="size-3.5" /> العروض
-            </span>
-            <h1 className="mt-2 font-display text-[calc(26px*var(--ts))] font-bold leading-tight text-ink">
-              اختار العرض اللي يوصّلك
-            </h1>
-            <p className="mt-2 max-w-xl text-sm text-ink-muted">
-              {myYearName
-                ? `العروض المتاحة لـ «${myYearName}» — من الأساسي حتى للعرض الكامل.`
-                : "من الأساسي حتى للعرض الكامل — اختار اللي يناسب قسمك وطموحك."}
-            </p>
-
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {[
-                { icon: ShieldCheck, label: "بلا التزام في العروض الشهرية" },
-                { icon: Wallet, label: "خلاص بالتقسيط" },
-                { icon: GraduationCap, label: "محتوى مطابق للبرنامج الرسمي" },
-              ].map((p) => (
-                <li
-                  key={p.label}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-[calc(11.5px*var(--ts))] font-medium text-ink-subtle shadow-xs"
-                >
-                  <p.icon className="size-3.5 text-brand-500" />
-                  {p.label}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {bestPct > 0 && (
-            <div className="shrink-0 rounded-lg border border-accent2-500/25 bg-surface-cream px-5 py-4 text-center">
-              <p className="text-[calc(11px*var(--ts))] font-medium text-accent2-700">أقصى تخفيض</p>
-              <p className="font-display text-[calc(30px*var(--ts))] font-bold leading-none tabular-nums text-accent2-600">
-                -{bestPct}%
-              </p>
-              <p className="mt-1 text-[calc(11px*var(--ts))] text-ink-muted">على عروض مختارة</p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* ---- What the élève already holds — the first thing they look for */}
-      {owned.length > 0 && (
-        <div className="flex flex-col gap-2">
-          <p className="font-display text-[calc(11.5px*var(--ts))] font-bold uppercase tracking-[.12em] text-success-700">
-            اشتراكك الحالي
-          </p>
-          <div className="grid gap-2 md:grid-cols-2">
-            {owned.map((o) => (
-              <Link
-                key={o.id}
-                to={`/student/porte-monnaie/${mySubByOffer.get(o.id)}`}
-                className="flex items-center gap-3 rounded-lg border border-success-600/25 bg-success-50/40 p-3 transition hover:border-success-600/50 hover:shadow-sm"
-              >
-                {o.logoUrl ? (
-                  <img src={o.logoUrl} alt="" className="size-10 shrink-0" />
-                ) : (
-                  <span className="grid size-10 shrink-0 place-items-center rounded-md bg-success-50 text-success-700">
-                    <Check className="size-5" />
-                  </span>
-                )}
-                <span className="min-w-0 flex-1">
-                  <b
-                    dir="auto"
-                    className="line-clamp-2 block font-display text-[calc(13.5px*var(--ts))] font-bold leading-snug text-ink"
-                  >
-                    {o.name}
-                  </b>
-                  <span className="text-[calc(11.5px*var(--ts))] text-ink-muted">
-                    {o.period ?? "اشتراك جاري"}
-                  </span>
-                </span>
-                <span className="shrink-0 text-[calc(11.5px*var(--ts))] font-medium text-brand-600">
-                  المحفظة ←
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* ---- Filters — scope on one side, billing rhythm on the other */}
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div className="inline-flex rounded-md border border-border bg-surface-muted p-1">
-          {scopeTabs.map((t) => {
-            const active = scope === t.key
-            return (
-              <button
-                key={t.key}
-                type="button"
-                onClick={() => setScope(t.key)}
-                className={
-                  "inline-flex h-9 items-center gap-1.5 rounded-[7px] px-3.5 text-sm font-medium transition " +
-                  (active ? "bg-grad text-ink-inverted shadow-brand" : "text-ink-subtle hover:text-brand-600")
-                }
-              >
-                {t.label}
-                <span
-                  className={
-                    "rounded-full px-1.5 text-xs tabular-nums " +
-                    (active ? "bg-white/20" : "bg-neutral-100 text-ink-muted")
-                  }
-                >
-                  {t.count}
-                </span>
-              </button>
-            )
-          })}
-        </div>
-
-        <div className="-mx-1 flex gap-2 overflow-x-auto scroll-touch px-1 pb-1">
-          {billingChips.map((c) => {
-            const active = billing === c.key
-            return (
-              <button
-                key={c.key}
-                type="button"
-                onClick={() => setBilling(c.key)}
-                className={
-                  "inline-flex h-9 shrink-0 items-center rounded-full border px-3.5 text-sm font-medium transition " +
-                  (active
-                    ? "border-transparent bg-brand-600 text-ink-inverted"
-                    : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
-                }
-              >
-                {c.label}
-              </button>
-            )
-          })}
-        </div>
-      </div>
+      <h1 className="font-display text-[calc(26px*var(--ts))] font-bold leading-tight text-ink">
+        العروض
+      </h1>
 
       {shown.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border bg-surface">
           <EmptyState
-            icon={Search}
-            title="ما فماش عرض هوني"
-            description="ما فماش عرض يوافق الفلتر هذا. جرّب «الكل» ولا بدّل نسق الخلاص."
-            action={
-              <button
-                type="button"
-                onClick={() => {
-                  setScope("all")
-                  setBilling("all")
-                }}
-                className="inline-flex h-11 items-center rounded-md border border-border-strong bg-surface px-4 font-medium text-ink-subtle transition hover:border-brand-200 hover:text-brand-600"
-              >
-                وري العروض الكل
-              </button>
-            }
+            icon={Tag}
+            title="ما فماش عروض توّة"
+            description="الأكاديمية ما زالت تحضّر عروض هذا العام. ارجع بعد شويّة."
           />
         </div>
       ) : (
-        <>
-          {/* ---- One section per rung — the catalogue reads as a ladder */}
-          {groups.map((g) => (
-            <section key={g.key}>
-              <header className="flex items-center gap-3">
-                {g.meta.logo ? (
-                  <img src={g.meta.logo} alt="" className="size-11 shrink-0" />
-                ) : (
-                  <span
-                    className={"grid size-11 shrink-0 place-items-center rounded-md " + g.meta.icon}
-                  >
-                    <Tag className="size-5" />
-                  </span>
-                )}
-                <div className="min-w-0">
-                  <h2 className="font-display text-[calc(17px*var(--ts))] font-bold leading-tight text-ink">
-                    {g.meta.label}
-                  </h2>
-                  <p dir="auto" className="text-[calc(12px*var(--ts))] leading-snug text-ink-muted">
-                    {g.meta.blurb}
-                  </p>
-                </div>
-                <span className="ms-auto hidden shrink-0 rounded-full bg-neutral-100 px-2.5 py-1 text-[calc(11px*var(--ts))] font-medium tabular-nums text-ink-muted md:inline">
-                  {g.offers.length} عروض
-                </span>
-              </header>
-
-              <div className="mt-4 grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
-                {g.offers.map((o) => (
-                  <OfferCard
-                    key={o.id}
-                    offer={o}
-                    featured={o.id === featuredId}
-                    subscribed={mySubByOffer.has(o.id)}
-                    subscriptionId={mySubByOffer.get(o.id)}
-                    onSubscribe={() => setAsking(o)}
-                  />
-                ))}
-              </div>
-            </section>
+        /* ---- The three cards, cheapest rung first */
+        <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {shown.map((o) => (
+            <OfferCard
+              key={o.id}
+              offer={o}
+              featured={o.id === featuredId}
+              subscribed={mySubByOffer.has(o.id)}
+              subscriptionId={mySubByOffer.get(o.id)}
+              onSubscribe={() => setAsking(o)}
+            />
           ))}
-
-          <CompareTable offers={shown} />
-        </>
+        </div>
       )}
 
       {/* Prototype: subscribing raises a request — l'admin creates the real one. */}
@@ -758,9 +426,28 @@ export default function StudentOffersScreen() {
         tone="brand"
         title="تحبّ تطلب العرض هذا؟"
         description={
-          asking
-            ? `«${asking.name}» بـ ${formatDT(netPrice(asking))}. الأكاديمية بش تكلّمك باش تكمّلو الخلاص.`
-            : undefined
+          asking ? (
+            <>
+              {`«${asking.name}» بـ ${formatDT(netPrice(asking))}. الأكاديمية بش تكلّمك باش تكمّلو الخلاص.`}
+              {/* The price fine print — instalments, conditions — used to sit on
+                  the catalogue card, where it was three lines of small type the
+                  élève had to read past to compare offers. It belongs at the
+                  moment of paying, which in this prototype is this dialog. */}
+              {asking.priceNotes && asking.priceNotes.length > 0 && (
+                <span className="mt-3 block space-y-0.5 border-t border-border pt-3">
+                  {asking.priceNotes.map((n) => (
+                    <span
+                      key={n}
+                      dir="auto"
+                      className="block text-[calc(11.5px*var(--ts))] text-ink-muted"
+                    >
+                      {n}
+                    </span>
+                  ))}
+                </span>
+              )}
+            </>
+          ) : undefined
         }
         confirmLabel="ابعث الطلب"
         cancelLabel="سكّر"

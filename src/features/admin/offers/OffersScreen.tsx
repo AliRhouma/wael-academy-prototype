@@ -9,6 +9,7 @@ import { ConfirmDialog } from "@/components/kit/ConfirmDialog"
 import { useToast } from "@/components/kit/Toast"
 import { useData } from "@/stores/useData"
 import type { Access, Offer, OfferTier } from "@/data/types"
+import { OfferMark } from "@/features/shared/offers/OfferMark"
 import { AccessFormSheet } from "./AccessFormSheet"
 import { OffersTabs } from "./OffersTabs"
 import { scopeSummary } from "./accessMeta"
@@ -33,35 +34,16 @@ function discountPct(o: Offer): number | null {
 const DAY = new Intl.DateTimeFormat("ar-TN-u-nu-latn", { day: "numeric", month: "short", year: "numeric" })
 const day = (iso: string) => DAY.format(new Date(`${iso}T00:00:00`))
 
-/** The offer's logo — its image when set, else a quiet brand tile. */
-function OfferLogo({ offer }: { offer: Offer }) {
-  if (offer.logoUrl) {
-    return (
-      <img
-        src={offer.logoUrl}
-        alt=""
-        className="size-10 shrink-0 rounded-md border border-border bg-surface object-cover p-1"
-      />
-    )
-  }
-  return (
-    <span className="grid size-10 shrink-0 place-items-center rounded-md bg-brand-50 text-brand-600">
-      <Tag className="size-5" />
-    </span>
-  )
-}
-
 /**
- * The commercial ladder. Each rung ships its own medallion — picking a tier in
- * the form prefills the logo, so the catalogue card stays visually consistent.
+ * The commercial ladder — three rungs, and each one IS a product with its own
+ * type-set wordmark. Picking a rung prefills that wordmark, so a new offer
+ * lands on the catalogue already wearing its mark.
  */
-const TIERS: { key: OfferTier; label: string; logo: string }[] = [
-  { key: "silver", label: "Silver", logo: "/offers/silver.svg" },
-  { key: "gold", label: "Gold", logo: "/offers/gold.svg" },
-  { key: "early", label: "بدري", logo: "/offers/early.svg" },
-  { key: "integral", label: "وائل للخر", logo: "/offers/integral.svg" },
+const TIERS: { key: OfferTier; label: string; mark: string; sub?: string }[] = [
+  { key: "khotwa", label: "خطوة بخطوة", mark: "خطوة", sub: "بخطوة" },
+  { key: "turbo", label: "Turbo", mark: "TURBO" },
+  { key: "turbo-max", label: "Turbo Pro Max", mark: "TURBO", sub: "PRO MAX" },
 ]
-const TIER_LOGOS = TIERS.map((t) => t.logo)
 
 /** "a\nb\n" ⇄ ["a","b"] — the textarea editors for features / price notes. */
 const linesToList = (s: string) => s.split("\n").map((l) => l.trim()).filter(Boolean)
@@ -87,6 +69,8 @@ export default function AdminOffersScreen() {
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [logoUrl, setLogoUrl] = useState("")
+  const [logoText, setLogoText] = useState("")
+  const [logoSub, setLogoSub] = useState("")
   const [yearIds, setYearIds] = useState<string[]>([])
   const [price, setPrice] = useState("")
   const [promoPrice, setPromoPrice] = useState("")
@@ -148,6 +132,8 @@ export default function AdminOffersScreen() {
     setName("")
     setDescription("")
     setLogoUrl("")
+    setLogoText("")
+    setLogoSub("")
     setYearIds([])
     setPrice("")
     setPromoPrice("")
@@ -173,6 +159,8 @@ export default function AdminOffersScreen() {
     setName(offer.name)
     setDescription(offer.description ?? "")
     setLogoUrl(offer.logoUrl ?? "")
+    setLogoText(offer.logoText ?? "")
+    setLogoSub(offer.logoSub ?? "")
     setYearIds(offer.yearIds)
     setPrice(offer.price.toString())
     setPromoPrice(offer.promoPrice?.toString() ?? "")
@@ -193,12 +181,15 @@ export default function AdminOffersScreen() {
     setFormOpen(true)
   }
 
-  /** Picking a tier swaps in its medallion — unless a custom logo was typed. */
+  /** Picking a rung swaps in its wordmark — unless one was typed by hand. */
   function pickTier(next: OfferTier) {
     const chosen = tier === next ? "" : next
     setTier(chosen)
-    if (logoUrl.trim() === "" || TIER_LOGOS.includes(logoUrl.trim())) {
-      setLogoUrl(chosen === "" ? "" : (TIERS.find((t) => t.key === chosen)?.logo ?? ""))
+    const typed = TIERS.some((t) => t.mark === logoText.trim() && (t.sub ?? "") === logoSub.trim())
+    if (logoText.trim() === "" || typed) {
+      const rung = chosen === "" ? undefined : TIERS.find((t) => t.key === chosen)
+      setLogoText(rung?.mark ?? "")
+      setLogoSub(rung?.sub ?? "")
     }
   }
 
@@ -227,6 +218,8 @@ export default function AdminOffersScreen() {
       name: name.trim(),
       description: description.trim() || undefined,
       logoUrl: logoUrl.trim() || undefined,
+      logoText: logoText.trim() || undefined,
+      logoSub: logoSub.trim() || undefined,
       yearIds,
       price: priceNum,
       promoPrice: promoPrice.trim() !== "" ? promoNum : undefined,
@@ -268,7 +261,7 @@ export default function AdminOffersScreen() {
       header: "عرض",
       render: (o) => (
         <div className="flex items-center gap-3">
-          <OfferLogo offer={o} />
+          <OfferMark offer={o} size="sm" />
           <div className="min-w-0">
             <p className="flex items-center gap-2">
               <span dir="auto" className="truncate font-display text-[calc(15px*var(--ts))] font-bold text-ink">
@@ -522,7 +515,16 @@ export default function AdminOffersScreen() {
                       : "border-border-strong bg-surface text-ink-subtle hover:border-brand-200 hover:text-brand-600")
                   }
                 >
-                  <img src={t.logo} alt="" className="size-6 shrink-0" />
+                  <span
+                    className={
+                      "font-display text-[calc(10px*var(--ts))] font-bold leading-none " +
+                      (on ? "text-brand-700" : "text-ink-muted")
+                    }
+                    dir="auto"
+                  >
+                    {t.mark}
+                    {t.sub ? ` ${t.sub}` : ""}
+                  </span>
                   {t.label}
                 </button>
               )
@@ -558,28 +560,59 @@ export default function AdminOffersScreen() {
           </span>
         </button>
 
-        <label className="block">
+        {/* The mark. No icon logos yet — the wordmark IS the logo, and a real
+            image URL simply takes its place on every screen once it lands. */}
+        <div>
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
-            Logo <span className="font-normal text-ink-muted">(رابط صورة، اختياري)</span>
+            الشعار <span className="font-normal text-ink-muted">(كتابي)</span>
           </span>
           <div className="flex items-center gap-3">
+            <OfferMark
+              offer={{
+                id: "preview",
+                name,
+                yearIds: [],
+                price: 0,
+                accessIds: [],
+                logoUrl: logoUrl.trim() || undefined,
+                logoText: logoText.trim() || undefined,
+                logoSub: logoSub.trim() || undefined,
+              }}
+              size="lg"
+            />
+            <div className="grid flex-1 gap-2 sm:grid-cols-2">
+              <input
+                className={INPUT}
+                dir="auto"
+                value={logoText}
+                onChange={(e) => setLogoText(e.target.value)}
+                placeholder="TURBO"
+                aria-label="السطر الأوّل"
+              />
+              <input
+                className={INPUT}
+                dir="auto"
+                value={logoSub}
+                onChange={(e) => setLogoSub(e.target.value)}
+                placeholder="PRO MAX"
+                aria-label="السطر الثاني (اختياري)"
+              />
+            </div>
+          </div>
+          <label className="mt-2 block">
+            <span className="mb-1.5 block text-[calc(12px*var(--ts))] text-ink-muted">
+              ولا رابط صورة — يغلب الشعار الكتابي
+            </span>
             <input
-              className={INPUT + " flex-1"}
+              className={INPUT}
               value={logoUrl}
               onChange={(e) => setLogoUrl(e.target.value)}
-              placeholder="https://…/logo.png"
+              placeholder="https://…/logo.svg"
               type="url"
               dir="ltr"
             />
-            {logoUrl.trim() !== "" && (
-              <img
-                src={logoUrl}
-                alt="نظرة على اللوغو"
-                className="size-11 shrink-0 rounded-md border border-border bg-surface object-cover p-1"
-              />
-            )}
-          </div>
-        </label>
+          </label>
+        </div>
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-ink-subtle">
