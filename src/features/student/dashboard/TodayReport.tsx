@@ -3,27 +3,29 @@ import { Link } from "react-router-dom"
 import { BarChart3 } from "lucide-react"
 import { CreamPanel, cream } from "@/components/kit/CreamPanel"
 import { reportArt } from "@/features/student/dashboard/reportArt"
-import {
-  useMyHomeworks,
-  useMySessions,
-  useRecentlyAdded,
-} from "@/features/student/dashboard/dashboard"
-import { dateKey, sessionState } from "@/features/student/calendar/schedule"
+import { useMyHomeworks, useMySessions } from "@/features/student/dashboard/dashboard"
+import { dateKey } from "@/features/student/calendar/schedule"
 
 /**
- * Section 3 — تقرير اليوم: the day in three numbers.
+ * Section 3 — برنامج اليوم: the day in two numbers.
  *
  * Numbers, not a list, because the list is Section 2 and Section 4 — this panel
  * answers "how big is today" in one glance, which is the question you ask before
  * you decide whether to read anything else. Each tile is a link to the screen
  * that expands it, so a number that looks wrong is one tap from its detail.
  *
- * The séance count carries « X كملت » under it: the raw total is the same all
- * day and stops meaning anything by noon, while what's left to attend keeps
- * moving. Referenced for density: HomeworkCard, the kit's stat rows.
+ * Two numbers, and NOTHING under them. The séance tile used to carry « X كملت »
+ * and a progress track counting the day down; both are gone. The agenda panel
+ * beside this one already shows every séance of the day with its state on it,
+ * so the count was the same fact in a weaker form — and a tile that answers
+ * « how big is today » in one glance stops doing that the moment it needs two
+ * lines and a bar to be read. The only line left under a number is the one that
+ * appears when the number is ZERO, where the tile would otherwise say nothing.
+ *
+ * Referenced for density: HomeworkCard, the kit's stat rows.
  */
 /**
- * The three tiles wear the delivered drawings, not glyphs.
+ * The two tiles wear the delivered drawings, not glyphs.
  *
  * Inlined into the document rather than hung in an `<img>`: the delivered art is
  * greyscale and gets repainted in the brand teal (see `reportArt`), and a
@@ -47,6 +49,7 @@ function Stat({
   art: string
   value: number
   label: string
+  /** Only ever the ZERO case — see the note at the top of the file. */
   hint?: string
   to: string
 }) {
@@ -54,10 +57,19 @@ function Stat({
     <Link
       to={to}
       // Column at every width: side by side, the icon and a two-line label like
-      // «تسجيلات جداد» set a minimum width three tiles can't honour at 390px,
-      // and the row pushed the whole page into a horizontal scroll.
-      className="group flex min-w-0 flex-1 flex-col items-start gap-2 rounded-[16px] border-2 p-3 transition hover:-translate-y-px md:p-4"
-      style={{ borderColor: cream.edge }}
+      // «خدمة مازالت» set a minimum width the tiles can't honour at 390px, and
+      // the row pushed the whole page into a horizontal scroll.
+      // A shallower bump than the CTAs: these are tiles you can push, not the
+      // decision of the screen, and a 4px slab under a full-height plate reads
+      // as the panel having a second floor.
+      className="group btn-bump flex min-w-0 flex-1 flex-col items-start gap-2 rounded-[16px] border-2 p-3 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)] md:p-4"
+      style={{
+        borderColor: cream.edge,
+        ["--bump" as string]: "3px",
+        // Its own frame, continued underneath — the tile reads as one card on
+        // its edge rather than a button with a shadow.
+        ["--bump-edge" as string]: cream.edge,
+      }}
     >
       {/* No plate behind the drawing — it sits straight on the panel. The white
           one was there to lift a flat glyph off the cream; these carry their own
@@ -94,16 +106,12 @@ function Stat({
 export function TodayReport({ now }: { now: Date }) {
   const mySessions = useMySessions()
   const homeworks = useMyHomeworks()
-  const recent = useRecentlyAdded(now)
   const today = dateKey(now)
 
-  const { total, done } = useMemo(() => {
-    const list = mySessions.filter((s) => s.date === today)
-    return {
-      total: list.length,
-      done: list.filter((s) => sessionState(s, now) === "terminee").length,
-    }
-  }, [mySessions, today, now])
+  const total = useMemo(
+    () => mySessions.filter((s) => s.date === today).length,
+    [mySessions, today],
+  )
 
   // Work still open: anything not yet past its deadline, plus anything undated.
   const open = useMemo(
@@ -113,41 +121,30 @@ export function TodayReport({ now }: { now: Date }) {
 
   return (
     <CreamPanel className="min-h-[11rem]" bodyClassName="gap-3 p-4 md:p-5">
-      <div>
-        <h2
-          className="flex items-center gap-2 font-display text-[calc(17px*var(--ts))] font-bold"
-          style={{ color: cream.ink }}
-        >
-          {/* Not a cap: the first tile is now literally one, and the same
-              shape twice in one panel reads as a mistake. */}
-          <BarChart3 className="size-[19px]" style={{ color: cream.inkMuted }} />
-          تقرير اليوم
-        </h2>
-        <p className="mt-0.5 text-[calc(12px*var(--ts))]" style={{ color: cream.inkMuted }}>
-          نهارك في ثلاث أرقام
-        </p>
-      </div>
+      <h2
+        className="flex items-center gap-2 font-display text-[calc(17px*var(--ts))] font-bold"
+        style={{ color: cream.ink }}
+      >
+        {/* Not a cap: the first tile is now literally one, and the same shape
+            twice in one panel reads as a mistake. */}
+        <BarChart3 className="size-[19px]" style={{ color: cream.inkMuted }} />
+        برنامج اليوم
+      </h2>
 
       <div className="flex flex-1 gap-2.5 md:gap-3">
         <Stat
           art={reportArt.todaySeance}
           value={total}
-          label="حصص اليوم"
-          hint={total > 0 ? `${done} كملت` : "نهار فارغ"}
+          label="حصص لليوم"
+          hint={total === 0 ? "نهار فارغ" : undefined}
           to="/student/calendrier"
         />
         <Stat
           art={reportArt.homework}
           value={open}
-          label="خدمة مازالت"
+          label="تمارين لازم تخدمهم"
           hint={open === 0 ? "كل شيء سالك" : undefined}
           to="/student/matieres"
-        />
-        <Stat
-          art={reportArt.seances}
-          value={recent.length}
-          label="تسجيلات جداد"
-          to="/student/seances"
         />
       </div>
     </CreamPanel>

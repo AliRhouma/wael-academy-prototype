@@ -56,7 +56,7 @@ export function HomeworkCard({ homework, teacher, subject }: HomeworkCardProps) 
           <button
             type="button"
             onClick={() => setDocsOpen(true)}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-grad px-3 text-[calc(13px*var(--ts))] font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-grad px-3 text-[calc(13px*var(--ts))] font-medium text-ink-inverted btn-bump transition hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]"
           >
             <Files className="size-4" />
             {homework.pdfs.length} وثائق
@@ -65,7 +65,7 @@ export function HomeworkCard({ homework, teacher, subject }: HomeworkCardProps) 
           <a
             href={pdfSrc(first)}
             download={pdfFileName(first.name)}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-grad px-3 text-[calc(13px*var(--ts))] font-medium text-ink-inverted shadow-brand transition hover:brightness-105"
+            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-grad px-3 text-[calc(13px*var(--ts))] font-medium text-ink-inverted btn-bump transition hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]"
           >
             <Download className="size-4" />
             حمّل

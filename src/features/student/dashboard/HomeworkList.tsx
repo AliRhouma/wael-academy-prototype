@@ -1,145 +1,166 @@
-import { useState } from "react"
-import { Download, Files, NotebookPen } from "lucide-react"
+import { CheckCheck, Download, FileText } from "lucide-react"
 import { CreamPanel, cream } from "@/components/kit/CreamPanel"
-import { PdfModal } from "@/components/kit/PdfModal"
+import { PanelEmpty } from "@/features/student/dashboard/PanelEmpty"
 import { profName } from "@/features/student/homework"
-import { useMyHomeworks } from "@/features/student/dashboard/dashboard"
-import { dateKey } from "@/features/student/calendar/schedule"
+import { useDemoDocs, type TodayDoc } from "@/features/student/dashboard/dashboard"
 import { pdfFileName, pdfSrc } from "@/data/media"
-import { formatSessionDay } from "@/lib/utils"
-import type { Homework } from "@/data/types"
+import { edgeMask, useScrollEdges } from "@/lib/hooks"
 import { useData } from "@/stores/useData"
 
 /**
- * Section 4 — الخدمة: everything the profs sent, most urgent first.
+ * Section 4 — تمارين لازم تخدمهم: the documents due for today's remaining
+ * séances.
  *
- * A LIST, where the old dashboard used a rail of cards. A rail is for browsing;
- * homework is a queue you work down, and a queue wants to be countable at a
- * glance and ordered top to bottom. It also puts the deadline on every row —
- * the one fact the rail card left out, and the only one that decides what the
- * élève opens first.
+ * Scoped deliberately. The panel used to list every open خدمة the profs had
+ * ever sent, which made it a backlog — and a backlog is something you scroll
+ * past, not something you act on. Cut to "the séances still ahead of you today"
+ * it becomes a packing list: these are the files to have open when you walk in,
+ * and the list empties itself as the day goes by.
  *
- * Late work says so in red and sorts to the top (`useMyHomeworks` already
- * orders by deadline). The row's only action is taking the document, same as
- * the card it replaces.
+ * One row per PDF, not per خدمة, because the élève downloads files — a خدمة
+ * carrying three documents is three things to fetch and should count as three.
  *
- * Referenced for spacing & density: HomeworkCard (what a خدمة says: prof,
- * matière, document), RecentSeances (row rhythm), PdfModal (documents sheet).
+ * The list SCROLLS inside a fixed height rather than growing the panel: it
+ * shares a row with the live section and the day's agenda, and a panel that
+ * stretches to fit eleven documents drags both of its neighbours down with it.
+ *
+ * Referenced for spacing & density: WeekAgenda (the same bordered card per
+ * item), RecentSeances (document row), LiveNowPanel (title row).
  */
-function dueLabel(homework: Homework, today: string): { text: string; late: boolean } | null {
-  if (!homework.dueDate) return null
-  if (homework.dueDate < today) return { text: "فات وقتها", late: true }
-  if (homework.dueDate === today) return { text: "لليوم", late: true }
-  return { text: `لـ ${formatSessionDay(homework.dueDate)}`, late: false }
-}
+/** Stable, so the empty state never hands the list a new array each render. */
+const EMPTY: TodayDoc[] = []
 
-function HomeworkRow({ homework, today }: { homework: Homework; today: string }) {
-  const [docsOpen, setDocsOpen] = useState(false)
+function DocRow({ row }: { row: TodayDoc }) {
   const teachers = useData((s) => s.teachers)
   const subjects = useData((s) => s.subjects)
-  const teacher = teachers.find((t) => t.id === homework.teacherId)
-  const subject = subjects.find((s) => s.id === homework.subjectId)
-  const due = dueLabel(homework, today)
-  const many = homework.pdfs.length > 1
-  const first = homework.pdfs[0]
+  const teacher = teachers.find((t) => t.id === row.homework.teacherId)
+  const subject = subjects.find((s) => s.id === row.homework.subjectId)
 
   return (
-    <li className="flex items-center gap-2.5 py-2.5">
-      <span className="min-w-0 flex-1">
-        {/* Two lines, not one: this is the narrow column of the row, and a
-            truncated title is a خدمة the élève can't identify. */}
+    // Each document is a thing to pick up and take, so it is drawn as an object
+    // with edges rather than as a line in a ruled list.
+    //
+    // THE WHOLE ROW is the download — one link filling the card, not a link
+    // parked in the corner of one. A row that is 240px of nothing plus a 36px
+    // target makes the élève aim; and the row says nothing the button doesn't,
+    // so there was never a second thing here to click. The plate on the end
+    // stays as the AFFORDANCE (it lights on `group-hover`), but it is now
+    // decoration — `aria-hidden`, no tab stop of its own — because an anchor
+    // inside an anchor is not a thing.
+    <li>
+      <a
+        href={pdfSrc(row.pdf)}
+        download={pdfFileName(row.pdf.name)}
+        // No background wash on hover. Flooding the card with `brand-50` put
+        // the title on a tinted ground, cost it its contrast, and read as a
+        // SELECTED row rather than one you are about to take — three plates of
+        // colour on a 40px row, none of them saying which one acts. What moves
+        // now is the frame (a step darker), the slab under the card (it lifts,
+        // see `.btn-bump`), the title, and the one plate that does the work.
+        className="group btn-bump flex w-full items-center gap-2.5 rounded-[14px] border-2 border-brand-200 bg-surface px-2.5 py-2 text-start transition hover:border-brand-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)]"
+        style={{ ["--bump" as string]: "3px", ["--bump-edge" as string]: cream.edge }}
+      >
         <span
-          dir="auto"
-          title={`${homework.title} — ${profName(teacher)}`}
-          // No `block` here: line-clamp sets its own display, and `block` won,
-          // so the titles ran to six lines instead of two.
-          className="font-display text-[calc(12.5px*var(--ts))] font-bold leading-tight line-clamp-2"
-          style={{ color: cream.ink }}
+          className="grid size-8 shrink-0 place-items-center rounded-[10px] border-2 transition"
+          style={{ borderColor: cream.edge, color: "var(--ink-muted)" }}
         >
-          {homework.title}
+          <FileText className="size-4" />
         </span>
-        <span className="mt-0.5 flex items-center gap-1 text-[calc(10.5px*var(--ts))]">
-          {/* The prof's name goes to the tooltip: at this width it was pushing
-              the matière and the deadline off the row, and the deadline is the
-              one thing that decides what gets opened first. */}
-          <span className="truncate" style={{ color: cream.inkMuted }}>
-            {subject?.name}
-          </span>
-          {due && (
-            <span
-              className="shrink-0 font-semibold"
-              style={{ color: due.late ? "var(--danger-600)" : cream.inkMuted }}
-            >
-              · {due.text}
-            </span>
-          )}
-        </span>
-      </span>
 
-      {/* One move per row: take the file. */}
-      {many ? (
-        <button
-          type="button"
-          onClick={() => setDocsOpen(true)}
-          aria-label={`${homework.pdfs.length} وثائق`}
-          className="grid size-8 shrink-0 place-items-center rounded-[10px] border-2 transition hover:[background:var(--brand-500)] hover:text-white"
-          style={{ borderColor: cream.edge, color: "var(--brand-600)" }}
-        >
-          <Files className="size-4" />
-        </button>
-      ) : (
-        <a
-          href={pdfSrc(first)}
-          download={pdfFileName(first.name)}
-          aria-label="حمّل"
-          className="grid size-8 shrink-0 place-items-center rounded-[10px] border-2 transition hover:[background:var(--brand-500)] hover:text-white"
+        <span className="min-w-0 flex-1">
+          <span
+            dir="auto"
+            title={`${row.pdf.name} — ${profName(teacher)}`}
+            // No `block`: line-clamp sets its own display and `block` wins over it.
+            className="font-display text-[calc(12px*var(--ts))] font-bold leading-tight text-ink transition line-clamp-2 group-hover:text-brand-700"
+          >
+            {row.pdf.name}
+          </span>
+          <span
+            className="mt-0.5 flex items-center gap-1 text-[calc(10.5px*var(--ts))]"
+            style={{ color: cream.inkMuted }}
+          >
+            <span dir="auto" className="truncate">
+              {subject?.name}
+            </span>
+            {/* The hour is what ranks this row against the others — it says how
+              long you have, which the document's name never does. */}
+            <span className="shrink-0 font-semibold tabular-nums">· {row.session.startTime}</span>
+          </span>
+        </span>
+
+        {/* The affordance, not the target — the row around it is the link. */}
+        <span
+          aria-hidden
+          className="grid size-9 shrink-0 place-items-center rounded-[10px] border-2 transition group-hover:[background:var(--brand-500)] group-hover:text-white"
           style={{ borderColor: cream.edge, color: "var(--brand-600)" }}
         >
           <Download className="size-4" />
-        </a>
-      )}
-
-      {many && <PdfModal open={docsOpen} onOpenChange={setDocsOpen} pdfs={homework.pdfs} title={homework.title} />}
+        </span>
+      </a>
     </li>
   )
 }
 
-export function HomeworkList({ now }: { now: Date }) {
-  const homeworks = useMyHomeworks()
-  const today = dateKey(now)
-  // Three rows. The queue drives the height of the whole row — the agenda beside
-  // it stretches to match — and at four the pair towered over the row above it.
-  // The counter says what's hidden; the rest live on the matière pages.
-  const shown = homeworks.slice(0, 3)
+/**
+ * `show` is the dashboard's K-key demo switch, not a product prop: false renders
+ * the empty state on demand, so both halves of the panel are reachable from one
+ * screen at any hour. See `StudentDashboard` for why the control is invisible.
+ */
+export function HomeworkList({ now, show }: { now: Date; show: boolean }) {
+  const pool = useDemoDocs(now)
+  const docs = show ? pool : EMPTY
+  // The queue is clipped at a fixed height, so the row at the fold is cut
+  // mid-card with nothing to say there are four more under it.
+  const { ref, edges } = useScrollEdges<HTMLUListElement>("y", docs.length)
 
   return (
     <CreamPanel className="min-h-[13rem]" bodyClassName="gap-2 p-4 md:p-5">
-      <div className="flex items-baseline justify-between gap-2">
-        <h2
-          className="flex items-center gap-2 font-display text-[calc(17px*var(--ts))] font-bold"
-          style={{ color: cream.ink }}
-        >
-          <NotebookPen className="size-[18px]" style={{ color: cream.inkMuted }} />
-          الخدمة
-        </h2>
-        {homeworks.length > shown.length && (
-          <span className="shrink-0 text-[calc(11.5px*var(--ts))]" style={{ color: cream.inkMuted }}>
-            {`+${homeworks.length - shown.length}`}
+      {/* The counter floats rather than sitting in a flex row: this column is
+          the narrow one and the title already wraps, and a flex sibling would
+          reserve its width on EVERY line instead of only the one it sits on.
+          `leading-none` keeps its box shorter than a line so it doesn't bleed
+          into the second. */}
+      <div>
+        {docs.length > 0 && (
+          <span
+            className="float-end ms-2 mt-[5px] text-[calc(11.5px*var(--ts))] leading-none"
+            style={{ color: cream.inkMuted }}
+          >
+            {docs.length}
           </span>
         )}
+        <h2
+          className="font-display text-[calc(17px*var(--ts))] font-bold leading-tight"
+          style={{ color: cream.ink }}
+        >
+          تمارين لازم تخدمهم
+        </h2>
+        <p className="mt-0.5 text-[calc(11.5px*var(--ts))]" style={{ color: cream.inkMuted }}>
+          وثائق حصص اليوم الجايّة
+        </p>
       </div>
 
-      {shown.length === 0 ? (
-        <p
-          className="flex flex-1 items-center justify-center rounded-[14px] border-2 border-dashed px-3 py-6 text-center text-[calc(12.5px*var(--ts))]"
-          style={{ borderColor: cream.edge, color: cream.inkMuted }}
-        >
-          ما فمّة حتّى خدمة. مبروك عليك.
-        </p>
+      {docs.length === 0 ? (
+        <PanelEmpty
+          icon={CheckCheck}
+          title="ما فماش وثيقة تستنّاك"
+          description="حصص اليوم الجايّة ما عندهاش وثائق تتحمّل. مبروك عليك."
+        />
       ) : (
-        <ul className="flex-1 divide-y" style={{ borderColor: cream.edge }}>
-          {shown.map((homework) => (
-            <HomeworkRow key={homework.id} homework={homework} today={today} />
+        // Scrolls inside its own box. `overscroll-contain` so reaching the end
+        // doesn't hand the gesture to the page and jump the whole dashboard.
+        <ul
+          ref={ref}
+          // `py-1` is headroom for the rows' own lift and the slab under them:
+          // this box scrolls AND is masked, and both clip to it, so without the
+          // padding the first row loses its top edge on hover and the last one
+          // sits on a cut-off edge.
+          className="flex max-h-[13.5rem] flex-1 flex-col gap-2 overflow-y-auto overscroll-contain py-1 pe-1"
+          style={edgeMask("y", edges)}
+        >
+          {docs.map((row) => (
+            <DocRow key={row.id} row={row} />
           ))}
         </ul>
       )}

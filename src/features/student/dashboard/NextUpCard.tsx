@@ -17,7 +17,7 @@ import { useData } from "@/stores/useData"
  * whole point of a live is that it is worthless five minutes late — while a
  * séance in the salle gets the calm brand treatment and points at the roznama.
  *
- * Referenced for spacing & density: NextUpBanner (kicker → title → meta order,
+ * Referenced for spacing & density: DayList (kicker → title → meta order,
  * the live/prévue colour split), SeanceSubjectScreen (matière glyph on its own
  * measured tint), FinanceScreen (footer action row).
  */
