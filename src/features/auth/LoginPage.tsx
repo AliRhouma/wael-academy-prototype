@@ -42,7 +42,7 @@ export default function LoginPage() {
     <AuthFrame>
       <AuthHead title="تسجيل دخول" />
 
-      <form onSubmit={submit} className="mx-auto mt-8 w-full md:mt-12 lg:mt-[89px]" noValidate>
+      <form onSubmit={submit} className="mx-auto mt-7 w-full md:mt-[45px]" noValidate>
         <div className={stackGap}>
           <Field label="رقم الهاتف ولّا الإيميل:">
             {(id) => (
@@ -69,11 +69,11 @@ export default function LoginPage() {
               onChange={setPassword}
               autoComplete="current-password"
             />
-            <div className="relative mt-3 lg:mt-[46px]">
+            <div className="relative mt-3 md:mt-[23px]">
               <Link
                 to="/mot-de-passe-oublie"
                 data-uisfx="forward"
-                className="block text-start text-[calc(11px*var(--ts))] font-semibold text-v2-ink transition hover:text-v2-brand md:text-[calc(14px*var(--ts))] lg:text-[calc(21.5px*var(--ts))]"
+                className="block text-start text-[calc(10px*var(--ts))] font-semibold text-v2-ink transition hover:text-v2-brand md:text-[calc(10.75px*var(--ts))]"
               >
                 نسيت كلمة السر؟
               </Link>
@@ -81,7 +81,7 @@ export default function LoginPage() {
                   button. Decoration only, and only where there's room. */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute hidden bg-v2-ink lg:block"
+                className="pointer-events-none absolute hidden bg-v2-ink md:block"
                 style={{
                   // Physical, not logical: the pen mark is drawn at x 1139 of
                   // the 1097-wide field column, i.e. hard against its right.
@@ -102,28 +102,28 @@ export default function LoginPage() {
         </div>
 
         {error && (
-          <div className="mt-6 lg:mt-8">
+          <div className="mt-5 md:mt-6">
             <FormError>
-              <AlertCircle className="mt-0.5 size-4 shrink-0 lg:size-5" strokeWidth={2} />
+              <AlertCircle className="mt-0.5 size-4 shrink-0" strokeWidth={2} />
               {error}
             </FormError>
           </div>
         )}
 
-        <div className="mt-8 md:mt-10 lg:mt-[72px]">
+        <div className="mt-7 md:mt-9">
           <button type="submit" className={authCta}>
             تسجيل دخول
           </button>
         </div>
 
-        <p className={`${footLine} mt-6 md:mt-8 lg:mt-[34px]`}>
+        <p className={`${footLine} mt-5 md:mt-[17px]`}>
           ما عندكش كونط؟{" "}
           <Link to="/inscription" data-uisfx="forward" className={footLink}>
             أعمل كونط
           </Link>
         </p>
 
-        <div className="mx-auto mt-8 max-w-[34rem] lg:mt-10">
+        <div className="mx-auto mt-7 max-w-[26rem]">
           <DemoHint>
             نسخة تجريبية — أدخل بـ <bdi dir="ltr" className="font-bold text-v2-ink">{DEMO_ACCOUNT.phone}</bdi> وكلمة السر{" "}
             <bdi dir="ltr" className="font-bold text-v2-ink">{DEMO_ACCOUNT.password}</bdi>

@@ -12,13 +12,18 @@ import book from "../../../svg icons/doodles/auth-book.svg"
 /**
  * « Log In » — the Figma frame every auth screen is cut from.
  *
- * Its geometry, read off the 1440 × 1425 export and kept as ratios so the page
- * IS the frame at 1440 and folds down from there:
+ * Its geometry, read off the 1440 × 1425 export and kept as RATIOS at half the
+ * drawn scale — the artboard is zoomed (a 1200-wide card, 84px boxes, a 68px
+ * title), so reproduced literally it comes out twice the size of every other
+ * surface here. Halved, the frame's proportions survive and the page reads at
+ * 100 %:
  *   ground   white under the teal → lime ramp at 20 %, i.e. the landing's mint,
  *            same 80px graph paper (`bg-v2-mint-grid`)
  *   chrome   the back chip at x 120, the lockup at x 1178 — one 1200 column,
  *            the same one the card and the site's `container` use
- *   card     120, 274 · 1200 × 1052 · 16px corners · white, flat
+ *   card     1200 × 1052 → 600 wide, 16px corners, white, flat, centred
+   chrome   the header keeps the site's own 1200 column and its lockup, so the
+            door and the landing wear the same hat
  *   doodles  four line drawings at ink 10 %, one per corner, framing the card
  *
  * The three screens differ only by what goes inside the card.
@@ -63,7 +68,7 @@ export function AuthFrame({ children }: { children: ReactNode }) {
       <Doodle src={ruler} className="hidden lg:block" style={{ left: "2.8%", bottom: "6%", width: "9.9%", aspectRatio: "143 / 174" }} />
       <Doodle src={book} className="hidden md:block" style={{ right: "2.8%", bottom: "-1.5%", width: "15%", aspectRatio: "216 / 258" }} />
 
-      <div className="relative mx-auto flex w-full max-w-[75rem] flex-1 flex-col px-4 py-6 sm:px-6 md:py-8 lg:px-0 lg:pt-[6.7vh]">
+      <div className="relative mx-auto flex w-full max-w-[75rem] flex-1 flex-col px-4 py-5 sm:px-6 lg:px-8">
         <header className="flex items-center justify-between gap-4">
           {/* Logo first, so RTL puts it on the right and the back link on the
               left — the frame's own arrangement. */}
@@ -71,7 +76,7 @@ export function AuthFrame({ children }: { children: ReactNode }) {
             to="/"
             data-uisfx="back"
             aria-label="Wael Academy — الصفحة الرئيسية"
-            className="block h-[3.25rem] w-[5rem] shrink-0 bg-v2-ink transition hover:opacity-80 md:h-[4.5rem] md:w-[7rem] lg:h-[5.9rem] lg:w-[9.2rem]"
+            className="block h-[3.25rem] w-[5rem] shrink-0 bg-v2-ink transition hover:opacity-80 md:h-[4.25rem] md:w-[6.4rem]"
             style={{
               maskImage: `url(${lockup})`,
               WebkitMaskImage: `url(${lockup})`,
@@ -86,18 +91,18 @@ export function AuthFrame({ children }: { children: ReactNode }) {
           <Link
             to="/"
             data-uisfx="back"
-            className="group inline-flex items-center gap-3 text-[calc(10px*var(--ts))] font-semibold text-v2-ink transition hover:text-v2-brand md:text-[calc(13px*var(--ts))] lg:text-[calc(16px*var(--ts))]"
+            className="group inline-flex items-center gap-2.5 text-[calc(10px*var(--ts))] font-semibold text-v2-ink transition hover:text-v2-brand md:text-[calc(10.5px*var(--ts))]"
           >
             <span className="hidden sm:inline">الرجوع إلى الصفحة الرئيسية</span>
             <span className="sm:hidden">الرئيسية</span>
-            <span className="grid size-8 shrink-0 place-items-center rounded-full border border-v2-ink/60 transition group-hover:border-v2-brand group-hover:bg-v2-brand group-hover:text-white md:size-10">
-              <ChevronLeft className="size-4 md:size-5" strokeWidth={2} />
+            <span className="grid size-8 shrink-0 place-items-center rounded-full border border-v2-ink/60 transition group-hover:border-v2-brand group-hover:bg-v2-brand group-hover:text-white md:size-9">
+              <ChevronLeft className="size-4" strokeWidth={2} />
             </span>
           </Link>
         </header>
 
-        <main className="flex flex-1 items-center py-6 md:py-8 lg:py-[3.9vh]">
-          <div className="w-full rounded-2xl bg-v2-surface px-5 py-9 shadow-[0_18px_50px_-34px_rgb(23_46_91/0.45)] sm:px-8 md:px-12 md:py-14 lg:px-[52px] lg:py-[72px]">
+        <main className="flex flex-1 items-center justify-center py-6 md:py-10">
+          <div className="w-full max-w-[37.5rem] rounded-2xl bg-v2-surface px-5 py-8 shadow-[0_18px_50px_-34px_rgb(23_46_91/0.45)] sm:px-[26px] md:py-[54px]">
             {children}
           </div>
         </main>
@@ -113,14 +118,14 @@ export function AuthFrame({ children }: { children: ReactNode }) {
 export function AuthHead({ title, kicker = "مرحبا بيك في أكاديمية وائل", note }: { title: string; kicker?: string; note?: ReactNode }) {
   return (
     <div className="text-center">
-      <p className="text-v2-grad text-[calc(13px*var(--ts))] font-bold md:text-[calc(20px*var(--ts))] lg:text-[calc(29px*var(--ts))]">
+      <p className="text-v2-grad text-[calc(12px*var(--ts))] font-bold md:text-[calc(14.5px*var(--ts))]">
         {kicker}
       </p>
-      <h1 className="mt-2 text-[calc(22px*var(--ts))] font-extrabold leading-tight text-v2-ink md:text-[calc(32px*var(--ts))] lg:mt-[26px] lg:text-[calc(45px*var(--ts))]">
+      <h1 className="mt-1.5 text-[calc(19px*var(--ts))] font-extrabold leading-tight text-v2-ink md:mt-[13px] md:text-[calc(22.5px*var(--ts))]">
         {title}
       </h1>
       {note && (
-        <p className="mx-auto mt-3 max-w-[46ch] text-[calc(9.5px*var(--ts))] leading-relaxed text-v2-ink/60 md:text-[calc(12px*var(--ts))] lg:mt-4 lg:text-[calc(15px*var(--ts))]">
+        <p className="mx-auto mt-2.5 max-w-[46ch] text-[calc(9px*var(--ts))] leading-relaxed text-v2-ink/60 md:text-[calc(10px*var(--ts))]">
           {note}
         </p>
       )}

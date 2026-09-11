@@ -92,7 +92,7 @@ export default function ForgotPasswordPage() {
         note={step === "phone" ? "أكتب نومروك: نبعثولك كود في رسالة." : "أكتب الكود اللي وصلك واختار كلمة سر جديدة."}
       />
 
-      <div className="mx-auto mt-8 w-full md:mt-12 lg:mt-[60px] lg:w-[72%]">
+      <div className="mx-auto mt-7 w-full md:mt-[30px]">
         {step === "phone" ? (
           <form onSubmit={send} className={stackGap} noValidate>
             <Field label="رقم الهاتف:">
@@ -114,7 +114,7 @@ export default function ForgotPasswordPage() {
 
             {error && (
               <FormError>
-                <AlertCircle className="mt-0.5 size-4 shrink-0 lg:size-5" strokeWidth={2} />
+                <AlertCircle className="mt-0.5 size-4 shrink-0" strokeWidth={2} />
                 {error}
               </FormError>
             )}
@@ -153,13 +153,13 @@ export default function ForgotPasswordPage() {
 
             {error ? (
               <FormError>
-                <AlertCircle className="mt-0.5 size-4 shrink-0 lg:size-5" strokeWidth={2} />
+                <AlertCircle className="mt-0.5 size-4 shrink-0" strokeWidth={2} />
                 {error}
               </FormError>
             ) : (
               note && (
                 <FormNote>
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 lg:size-5" strokeWidth={2} />
+                  <CheckCircle2 className="mt-0.5 size-4 shrink-0" strokeWidth={2} />
                   {note}
                 </FormNote>
               )
@@ -169,30 +169,30 @@ export default function ForgotPasswordPage() {
               سجّل كلمة السر الجديدة
             </button>
 
-            <div className="!mt-6 space-y-4 text-center lg:!mt-8">
+            <div className="!mt-6 space-y-4 text-center">
               <button
                 type="button"
                 disabled={wait > 0}
                 data-uisfx="send"
                 onClick={() => send()}
-                className="text-[calc(11px*var(--ts))] font-bold text-v2-brand transition hover:underline disabled:text-v2-ink/40 disabled:no-underline md:text-[calc(13px*var(--ts))] lg:text-[calc(17px*var(--ts))]"
+                className="text-[calc(10px*var(--ts))] font-bold text-v2-brand transition hover:underline disabled:text-v2-ink/40 disabled:no-underline md:text-[calc(10.75px*var(--ts))]"
               >
                 {wait > 0 ? `أرجع ابعث الكود (${wait}s)` : "أرجع ابعث الكود"}
               </button>
 
               {assist ? (
-                <div className="rounded-2xl border border-v2-ink/15 bg-v2-ink/[0.03] p-4 text-start lg:p-6">
+                <div className="rounded-xl border border-v2-ink/15 bg-v2-ink/[0.03] p-4 text-start">
                   {assistSent ? (
-                    <p className="flex items-center gap-2 text-[calc(11px*var(--ts))] font-bold text-v2-brand md:text-[calc(13px*var(--ts))] lg:text-[calc(17px*var(--ts))]">
+                    <p className="flex items-center gap-2 text-[calc(10px*var(--ts))] font-bold text-v2-brand md:text-[calc(10.75px*var(--ts))]">
                       <CheckCircle2 className="size-5 shrink-0" strokeWidth={2} />
                       وصل طلبك للإدارة — بش يتصلو بيك.
                     </p>
                   ) : (
                     <>
-                      <p className="text-[calc(11px*var(--ts))] font-bold text-v2-ink md:text-[calc(13.5px*var(--ts))] lg:text-[calc(18px*var(--ts))]">
+                      <p className="text-[calc(10.5px*var(--ts))] font-bold text-v2-ink md:text-[calc(11.5px*var(--ts))]">
                         اطلب من الإدارة كلمة سر جديدة
                       </p>
-                      <p className="mb-3 mt-1 text-[calc(9.5px*var(--ts))] leading-relaxed text-v2-ink/60 md:text-[calc(11.5px*var(--ts))] lg:text-[calc(14px*var(--ts))]">
+                      <p className="mb-3 mt-1 text-[calc(9px*var(--ts))] leading-relaxed text-v2-ink/60 md:text-[calc(9.5px*var(--ts))]">
                         أكتب اسمك ولقبك، والإدارة تتصل بيك على{" "}
                         <bdi dir="ltr" className="font-bold text-v2-ink">
                           {normalizePhone(phone)}
@@ -209,7 +209,7 @@ export default function ForgotPasswordPage() {
                         type="button"
                         disabled={assistName.trim().length < 3}
                         onClick={fileAssist}
-                        className={`${authCta} mt-4 lg:w-full`}
+                        className={`${authCta} mt-4 md:w-full`}
                       >
                         ابعث الطلب
                       </button>
@@ -221,7 +221,7 @@ export default function ForgotPasswordPage() {
                   type="button"
                   data-uisfx="expand"
                   onClick={() => setAssist(true)}
-                  className="block w-full text-[calc(10.5px*var(--ts))] font-medium text-v2-ink/60 transition hover:text-v2-ink hover:underline md:text-[calc(12.5px*var(--ts))] lg:text-[calc(15px*var(--ts))]"
+                  className="block w-full text-[calc(9.5px*var(--ts))] font-medium text-v2-ink/60 transition hover:text-v2-ink hover:underline md:text-[calc(10px*var(--ts))]"
                 >
                   ما وصلنيش الكود
                 </button>
@@ -237,13 +237,13 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
-        <p className={`${footLine} mt-8 lg:mt-10`}>
+        <p className={`${footLine} mt-7`}>
           <Link
             to="/connexion"
             data-uisfx="back"
             className="inline-flex items-center gap-2 font-semibold transition hover:text-v2-ink"
           >
-            <ArrowRight className="size-4 lg:size-5" strokeWidth={2} />
+            <ArrowRight className="size-4" strokeWidth={2} />
             أرجع للدخول
           </Link>
         </p>

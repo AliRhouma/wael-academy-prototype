@@ -22,10 +22,8 @@ import {
  * the level's optional matière when it has one, password. The account is made
  * and the élève walks straight into the space, exactly as the site does it.
  *
- * Same card as the login, one departure: five boxes stacked in a 1200-wide
- * card would make it twice as tall as the frame, so they pair up in two
- * columns from `lg` — the card keeps the frame's height instead of its column
- * count, which is what makes it read as the same screen.
+ * Same card as the login, one column like the frame: at half scale five boxes
+ * stack into an ordinary page height, so there is nothing to pair up.
  */
 export default function RegisterPage() {
   const navigate = useNavigate()
@@ -57,8 +55,8 @@ export default function RegisterPage() {
     <AuthFrame>
       <AuthHead title="أعمل كونط" note="دقيقة وحدة وتولّي عندك فضاءك: الحصص المباشرة، التسجيلات، والتمارين." />
 
-      <form onSubmit={submit} className="mx-auto mt-8 w-full md:mt-12 lg:mt-[60px]" noValidate>
-        <div className={`${stackGap} lg:grid lg:grid-cols-2 lg:gap-x-12 lg:gap-y-[42px] lg:space-y-0`}>
+      <form onSubmit={submit} className="mx-auto mt-7 w-full md:mt-[30px]" noValidate>
+        <div className={stackGap}>
           <Field label="الاسم الكامل:">
             {(id) => (
               <input
@@ -117,11 +115,9 @@ export default function RegisterPage() {
               options={options}
               icon={ChevronDown}
             />
-          ) : (
-            <div aria-hidden className="hidden lg:block" />
-          )}
+          ) : null}
 
-          <div className="lg:col-span-2 lg:mx-auto lg:w-[calc(50%-1.5rem)]">
+          <div>
             <PasswordField
               label="كلمة السر:"
               placeholder={`كلمة السر (${MIN_PASSWORD} حروف على الأقل)`}
@@ -133,21 +129,21 @@ export default function RegisterPage() {
         </div>
 
         {error && (
-          <div className="mt-6 lg:mt-10">
+          <div className="mt-5 md:mt-6">
             <FormError>
-              <AlertCircle className="mt-0.5 size-4 shrink-0 lg:size-5" strokeWidth={2} />
+              <AlertCircle className="mt-0.5 size-4 shrink-0" strokeWidth={2} />
               {error}
             </FormError>
           </div>
         )}
 
-        <div className="mt-8 md:mt-10 lg:mt-[56px]">
+        <div className="mt-7 md:mt-9">
           <button type="submit" className={authCta}>
             أعمل كونط
           </button>
         </div>
 
-        <p className={`${footLine} mt-6 md:mt-8 lg:mt-[34px]`}>
+        <p className={`${footLine} mt-5 md:mt-[17px]`}>
           عندك كونط؟{" "}
           <Link to="/connexion" data-uisfx="back" className={footLink}>
             تسجيل الدخول
