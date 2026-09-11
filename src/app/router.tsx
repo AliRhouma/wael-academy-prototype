@@ -45,12 +45,28 @@ import StudentOffersScreen from "@/features/student/offres/OffersScreen"
 import StudentSubjectsScreen from "@/features/student/SubjectsScreen"
 import StudentCalendarScreen from "@/features/student/calendar/CalendarScreen"
 import StudentSubjectDetailScreen from "@/features/student/SubjectDetailScreen"
+import StudentHomeworksScreen from "@/features/student/homeworks/HomeworksScreen"
 import StudentSeancesScreen from "@/features/student/seances/SeancesScreen"
 import StudentSeanceSubjectScreen from "@/features/student/seances/SeanceSubjectScreen"
 import StudentVideoPlayerScreen from "@/features/student/player/VideoPlayerScreen"
 import StudentFinanceScreen from "@/features/student/finance/FinanceScreen"
 import StudentSubscriptionScreen from "@/features/student/finance/SubscriptionScreen"
 import { useData } from "@/stores/useData"
+import V2Layout from "@/features/student-v2/V2Layout"
+import V2Dashboard from "@/features/student-v2/dashboard/Dashboard"
+import V2SeanceScreen from "@/features/student-v2/SeanceScreen"
+import { V2Placeholder } from "@/features/student-v2/V2Placeholder"
+import V2RecordingsScreen from "@/features/student-v2/recordings/RecordingsScreen"
+import V2CalendarScreen from "@/features/student-v2/calendar/CalendarScreen"
+import V2VideoScreen from "@/features/student-v2/video/VideoScreen"
+import V2OffersScreen from "@/features/student-v2/offers/OffersScreen"
+import SiteLayout from "@/features/site/SiteLayout"
+import SiteHome from "@/features/site/HomePage"
+import SiteAbout from "@/features/site/AboutPage"
+import LoginPage from "@/features/auth/LoginPage"
+import RegisterPage from "@/features/auth/RegisterPage"
+import ForgotPasswordPage from "@/features/auth/ForgotPasswordPage"
+import V2SubjectRecordingsScreen from "@/features/student-v2/recordings/SubjectRecordingsScreen"
 
 /** Standalone list of the shared courses; links into the /courses/:id workspace. */
 function CoursesList() {
@@ -159,7 +175,22 @@ function roleRoute(
 }
 
 export const router = createBrowserRouter([
-  { path: "/", element: <LandingPage /> },
+  /* The public site — the Figma landing (« Page D'acceuil ») and « About us ».
+     The previous landing stays reachable at /landing-ancien. */
+  {
+    path: "/",
+    element: <SiteLayout />,
+    children: [
+      { index: true, element: <SiteHome /> },
+      { path: "a-propos", element: <SiteAbout /> },
+    ],
+  },
+  /* The front door — « Log In », and the register / reset screens the real
+     élève space reaches from it. Outside every shell: no rail, no top bar. */
+  { path: "/connexion", element: <LoginPage /> },
+  { path: "/inscription", element: <RegisterPage /> },
+  { path: "/mot-de-passe-oublie", element: <ForgotPasswordPage /> },
+  { path: "/landing-ancien", element: <LandingPage /> },
   { path: "/roles", element: <RoleSwitcher /> },
   roleRoute(
     "/admin",
@@ -211,12 +242,40 @@ export const router = createBrowserRouter([
       codes: <StudentPromoScreen />,
     },
     [
+      { path: "devoirs", element: <StudentHomeworksScreen /> },
       { path: "matieres/:subjectId", element: <StudentSubjectDetailScreen /> },
       { path: "seances/:subjectId", element: <StudentSeanceSubjectScreen /> },
       { path: "porte-monnaie/:subscriptionId", element: <StudentSubscriptionScreen /> },
       { path: "video/:kind/:id", element: <StudentVideoPlayerScreen /> },
     ],
   ),
+  /* The NEW élève space — the Figma redesign, built screen by screen over the
+     same store. Anything not designed yet hands over to the old screen. */
+  {
+    path: "/student-v2",
+    element: <V2Layout />,
+    children: [
+      { index: true, element: <V2Dashboard /> },
+      { path: "seance/:id", element: <V2SeanceScreen /> },
+      { path: "video/:kind/:id", element: <V2VideoScreen /> },
+      { path: "offres", element: <V2OffersScreen /> },
+      { path: "calendrier", element: <V2CalendarScreen /> },
+      { path: "seances", element: <V2RecordingsScreen /> },
+      { path: "seances/:subjectId", element: <V2SubjectRecordingsScreen /> },
+      {
+        path: "groupes",
+        element: <V2Placeholder title="مجموعاتي" note="صفحة جديدة، ما كانتش في الفضاء القديم — تستنّى التصميم متاعها." />,
+      },
+      { path: "matieres", element: <V2Placeholder title="موادك" legacy="/student/matieres" /> },
+      { path: "devoirs", element: <V2Placeholder title="التمارين" legacy="/student/devoirs" /> },
+      { path: "profil", element: <V2Placeholder title="بروفيلي" legacy="/student/profil" /> },
+      { path: "parametres", element: <V2Placeholder title="الإعدادات" legacy="/student/profil" /> },
+      { path: "porte-monnaie", element: <V2Placeholder title="المحفظة" legacy="/student/porte-monnaie" /> },
+      { path: "favoris", element: <V2Placeholder title="مفضّلاتي" legacy="/student/favoris" /> },
+      { path: "codes", element: <V2Placeholder title="كوداتي" legacy="/student/codes" /> },
+      { path: "*", element: <V2Placeholder title="الصفحة ما تلقاتش" /> },
+    ],
+  },
   { path: "/courses", element: <CoursesList /> },
   {
     path: "/courses/:id",

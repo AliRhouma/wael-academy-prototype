@@ -13,6 +13,11 @@ interface AuthState {
   currentRole: Role | null
   currentUser: User | null
   setRole: (role: Role) => void
+  /**
+   * Seat a specific person — the door screens (`/connexion`, `/inscription`)
+   * sign in the account they matched or just made, not the role's demo user.
+   */
+  signInAs: (user: User) => void
   /** Sign out — clears the session; the caller routes back to the landing page. */
   logout: () => void
 }
@@ -22,5 +27,6 @@ export const useAuth = create<AuthState>()((set) => ({
   currentUser: null,
   setRole: (role) =>
     set({ currentRole: role, currentUser: USERS.find((u) => u.role === role) ?? null }),
+  signInAs: (user) => set({ currentRole: user.role, currentUser: user }),
   logout: () => set({ currentRole: null, currentUser: null }),
 }))

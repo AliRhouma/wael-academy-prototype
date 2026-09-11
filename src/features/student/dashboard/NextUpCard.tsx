@@ -127,15 +127,18 @@ export function NextUpCard({ item, now }: { item: UpNextItem | null; now: Date }
             </span>
           </p>
 
+          {/* LA MATIÈRE EN GRAND, le chapitre en dessous — même ordre de lecture
+              que les cartes de la roznama et de l'agenda du tableau de bord. */}
           <h2
             dir="auto"
+            title={title}
             className="mt-1 font-display text-[calc(17px*var(--ts))] font-bold leading-snug text-ink line-clamp-2 md:text-[calc(19px*var(--ts))]"
           >
-            {title}
+            {subject?.name ?? title}
           </h2>
 
           <p className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[calc(12px*var(--ts))] text-ink-muted">
-            {subject && <span dir="auto">{subject.name}</span>}
+            {subject && <span dir="auto">{title}</span>}
             {teacher && (
               <>
                 <span>·</span>

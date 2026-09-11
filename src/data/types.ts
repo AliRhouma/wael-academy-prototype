@@ -484,6 +484,22 @@ export interface Offer {
   features?: string[]
   /** Highlighted as the recommended card ("الأكثر رواجا"). */
   popular?: boolean
+  /**
+   * The name as it reads inside a sentence — « يحتوي عرض خطوة بخطوة على »
+   * — when the full `name` carries a qualifier ("(للباكالوريا)") or the word
+   * « عرض » itself. Falls back to `name`.
+   */
+  shortName?: string
+  /**
+   * The checklist WITH its one-line explanations, as the élève's offers page
+   * lists it (title bold, detail under it). `features` stays the plain titles
+   * for the places that only show a short list.
+   */
+  contents?: { title: string; text: string }[]
+  /** « عرض قابل للدفع بالتقسيط » — the offer can be paid in instalments. */
+  installable?: boolean
+  /** The closing line under the checklist — who prepared the content. */
+  credit?: string
 }
 
 /**

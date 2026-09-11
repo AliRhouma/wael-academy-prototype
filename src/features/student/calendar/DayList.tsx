@@ -17,6 +17,7 @@ import {
   useHomeworkBySession,
   useSessionVisual,
 } from "@/features/student/calendar/schedule"
+import { stateSkin } from "@/features/student/calendar/stateSkin"
 import { cn, formatSessionDayLong, formatTimeRange } from "@/lib/utils"
 import type { Session } from "@/data/types"
 import { useData } from "@/stores/useData"
@@ -233,34 +234,33 @@ function SessionCard({
         ? { run: () => setDocsOpen(true), label: docsLabel }
         : null
 
-  /** The state colour the card wears, or null for a card with nothing to say. */
-  const edge = live
-    ? "border-[var(--danger-500)]"
-    : off
-      ? "border-[var(--accent-500)]"
-      : isNext
-        ? "border-[var(--brand-500)]"
-        : null
+  /*
+   * THE CARD IS ITS STATE. Border AND ground, from the one palette the whole
+   * roznama reads from — rouge « دايرة توّا », or « تأجلت », teal « مبرمجة »
+   * (firmer on the séance qui vient), gris « انتهت ». Two of these used to
+   * share the tan hairline of a card with nothing to say, and they were the
+   * two an élève meets most. See `stateSkin`.
+   */
+  const skin = stateSkin(state, isNext)
 
   return (
     <li
       className={cn(
         "group relative flex items-start gap-2.5 rounded-[16px] border-2 px-3 py-2.5",
-        "bg-[var(--surface)] transition duration-150",
+        "transition duration-150",
         "focus-within:ring-2 focus-within:ring-[var(--ring)]/40",
         // EVERY colour here is a class, never an inline style: an inline
         // `background` or `borderColor` outranks any `hover:` the cascade can
         // offer, and this card's whole point is that it reacts.
-        edge ?? "border-[var(--brand-200)]",
+        skin.card,
         activate && [
           "cursor-pointer",
-          "hover:bg-[color-mix(in_srgb,var(--brand-500)_6%,var(--surface))]",
+          // Hover DEEPENS the state's own colour rather than washing brand over
+          // it — the card is saying « en cours », not « survolé », and a teal
+          // hover on a red card would say the wrong one of the two.
+          skin.hover,
           "hover:shadow-[0_10px_20px_-12px_color-mix(in_srgb,var(--brand-700)_60%,transparent)]",
           "motion-safe:hover:-translate-y-0.5",
-          // A card already wearing a state keeps its colour on hover — the
-          // border is saying « en cours », not « survolé ». Only the quiet ones
-          // deepen.
-          !edge && "hover:border-[var(--brand-400)]",
         ],
       )}
     >
@@ -301,9 +301,7 @@ function SessionCard({
               // because nothing is happening in it.
               off && "line-through decoration-1",
             )}
-            style={{
-              color: live ? "var(--danger-600)" : off ? cream.inkMuted : "var(--brand-600)",
-            }}
+            style={{ color: skin.ink }}
           >
             <span className="num">{formatTimeRange(session.startTime, session.endTime)}</span>
           </span>
@@ -316,14 +314,13 @@ function SessionCard({
           {state !== "prevue" && (
             <span
               className={cn(
+                // The chip wears the card's own colour — including grey for
+                // « انتهت », which used to borrow the live red. Two states in
+                // the same red was readable while red was the only colour on
+                // the page; next to a card that is now grey all over, it just
+                // looked wrong.
                 "shrink-0 rounded-full px-1.5 py-px text-[calc(10px*var(--ts))] font-bold",
-                live && "bg-danger-50 text-danger-700",
-                off && "bg-accent2-50 text-accent2-700",
-                // Red, like the séance running: the two are the states of the
-                // day the élève is IN, and the tag is the only thing on the card
-                // that says so now that the title no longer fades. They never
-                // collide — one séance can't be both, and the words differ.
-                done && "bg-danger-50 text-danger-700",
+                skin.tag,
               )}
             >
               {live ? "دايرة توّا" : STATE_LABEL[state]}
@@ -331,7 +328,12 @@ function SessionCard({
           )}
         </span>
 
-        {/* THE SAME TITLE IN EVERY STATE — full ink, full weight, whether the
+        {/* LA MATIÈRE, ET EN GRAND — c'est le mot que l'élève reconnaît de loin,
+            et c'est lui qui décide si cette ligne le concerne. Il monte d'un
+            cran au-dessus du reste de la carte pour que la réponse arrive avant
+            la lecture.
+
+            THE SAME TITLE IN EVERY STATE — full ink, full weight, whether the
             séance is coming, gone or called off. It used to fade out once it was
             behind the élève, and a faded line reads as « moins important » when
             what it actually is, is « déjà fait » — a thing the élève may well
@@ -340,11 +342,24 @@ function SessionCard({
         <span
           dir="auto"
           title={session.title}
-          className="truncate font-display text-[calc(13.5px*var(--ts))] font-bold leading-tight"
+          className="truncate font-display text-[calc(15px*var(--ts))] font-bold leading-tight"
           style={{ color: cream.ink }}
         >
           {subjectName ?? session.title}
         </span>
+
+        {/* Le chapitre, SOUS la matière plutôt qu'à sa place. La carte l'avait
+            perdu quand la matière a pris le titre ; c'est pourtant le « on fait
+            quoi » de la séance, et il y a la place de le dire ici. */}
+        {subjectName && (
+          <span
+            dir="auto"
+            className="truncate text-[calc(11.5px*var(--ts))]"
+            style={{ color: cream.inkMuted }}
+          >
+            {session.title}
+          </span>
+        )}
 
         <span
           dir="auto"

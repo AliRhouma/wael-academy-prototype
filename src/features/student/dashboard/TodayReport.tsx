@@ -62,6 +62,11 @@ function Stat({
       // A shallower bump than the CTAs: these are tiles you can push, not the
       // decision of the screen, and a 4px slab under a full-height plate reads
       // as the panel having a second floor.
+      // NO ground of its own, in either skin. A pale wash was tried here and
+      // taken back out: the tile is a frame around a drawing and two numbers,
+      // and the panel showing through it is what keeps the pair reading as part
+      // of برنامج اليوم rather than as two more objects on the page. The blue
+      // in this skin is spent on the things you TAKE — see `cardSkin.ts`.
       className="group btn-bump flex min-w-0 flex-1 flex-col items-start gap-2 rounded-[16px] border-2 p-3 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ring)] md:p-4"
       style={{
         borderColor: cream.edge,

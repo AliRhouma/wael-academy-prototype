@@ -19,6 +19,9 @@ import { useEffect, useState } from "react"
  * THE SWITCHES IN USE, so two screens never claim the same key:
  *   H — dashboard, the live panel · K — dashboard, the documents queue
  *   S — dashboard, the board of new replays
+ *   D — dashboard, the SKIN: off is the cream design of record, on is « les
+ *       cartes pleines », where every card inside a panel takes the logo
+ *       plate's brand fill (see `dashboard/cardSkin.ts`)
  *   1 — calendar, the month view (cards ⇄ dots; starts on whichever the
  *       form factor calls for)
  *   1 — video page, a crowded programme (the contenus column filled to ~24

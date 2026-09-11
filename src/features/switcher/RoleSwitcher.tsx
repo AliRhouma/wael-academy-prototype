@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import { BookOpen, GraduationCap, Shield, Users } from "lucide-react"
+import { BookOpen, GraduationCap, Shield, Sparkles, Users } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import { WaelLockup } from "@/components/icons/WaelLogo"
 import { useAuth } from "@/stores/useAuth"
@@ -60,6 +60,22 @@ export function RoleSwitcher() {
             </button>
           ))}
         </div>
+
+        {/* The redesign, beside the four spaces rather than replacing the élève
+            one — same demo user, same data, the Figma frames. */}
+        <Link
+          to="/student-v2"
+          onClick={() => setRole("student")}
+          className="group mt-3 flex min-h-[44px] items-center gap-4 rounded-lg border border-dashed border-brand-300 bg-surface p-4 text-start transition hover:border-brand-500 hover:shadow-md motion-safe:hover:-translate-y-0.5"
+        >
+          <span className="grid size-11 shrink-0 place-items-center rounded-md bg-grad text-ink-inverted">
+            <Sparkles className="size-5" />
+          </span>
+          <span className="min-w-0">
+            <span className="block font-display text-[calc(15px*var(--ts))] font-bold text-ink">تلميذ · التصميم الجديد</span>
+            <span className="block text-[calc(12px*var(--ts))] text-ink-muted">الفضاء الجديد، من تصاميم Figma — نفس الداتا.</span>
+          </span>
+        </Link>
 
         <p className="mt-8 flex items-center justify-center gap-4 text-center text-[calc(12px*var(--ts))] text-ink-muted">
           <Link to="/" className="font-medium text-brand-600 hover:underline">

@@ -21,18 +21,30 @@ import { useCallback, useEffect, useSyncExternalStore } from "react"
  */
 const KEY = "wael-gaze"
 
+/**
+ * Three settings, not two:
+ *   on      the default — tracks, unless the system asks for reduced motion;
+ *   off     silenced (S, or the new space's states dock);
+ *   always  tracks EVEN under reduced motion. Only ever an explicit choice (the
+ *           states dock offers it when it sees the system setting is what is
+ *           holding the eyes still), never a default: honouring the setting is
+ *           right until the person in front of the screen says otherwise.
+ */
+export type GazeMode = "on" | "off" | "always"
+
 /** Off survives a refresh: someone who silenced the eyes to record a demo should
  *  not have them start moving again at the next reload. */
-function initial(): boolean {
+function initial(): GazeMode {
   try {
-    return localStorage.getItem(KEY) !== "off"
+    const saved = localStorage.getItem(KEY)
+    return saved === "off" || saved === "always" ? saved : "on"
   } catch {
     // Private-mode Safari throws on localStorage. The eyes are not worth a crash.
-    return true
+    return "on"
   }
 }
 
-let on = initial()
+let mode: GazeMode = initial()
 const listeners = new Set<() => void>()
 
 function emit() {
@@ -44,24 +56,34 @@ function subscribe(l: () => void): () => void {
   return () => listeners.delete(l)
 }
 
-export function setGaze(next: boolean): void {
-  if (next === on) return
-  on = next
+export function setGazeMode(next: GazeMode): void {
+  if (next === mode) return
+  mode = next
   try {
-    localStorage.setItem(KEY, next ? "on" : "off")
+    localStorage.setItem(KEY, next)
   } catch {
     // Not being able to remember the choice is fine; honouring it now is not.
   }
   emit()
 }
 
-/** Whether the eyes should track. `false` on the server, where they never do. */
-export function useGaze(): boolean {
+/** On/off, for callers that don't care about the reduced-motion override. */
+export function setGaze(next: boolean): void {
+  setGazeMode(next ? "on" : "off")
+}
+
+/** The full setting. `"off"` on the server, where the eyes never track. */
+export function useGazeMode(): GazeMode {
   return useSyncExternalStore(
     subscribe,
-    () => on,
-    () => false,
+    () => mode,
+    () => "off",
   )
+}
+
+/** Whether the eyes should track at all (either "on" or "always"). */
+export function useGaze(): boolean {
+  return useGazeMode() !== "off"
 }
 
 /**
@@ -74,7 +96,7 @@ export function useGaze(): boolean {
  * eat a letter or collide with a browser shortcut (⌘S / Ctrl+S above all).
  */
 export function useGazeHotkey(): void {
-  const toggle = useCallback(() => setGaze(!on), [])
+  const toggle = useCallback(() => setGaze(mode === "off"), [])
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {

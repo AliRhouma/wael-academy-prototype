@@ -26,8 +26,8 @@ const NO_YEARS: string[] = []
  * revision. It opens on the most recent année, lives in the URL
  * (`?annee=2025-2026`) so a link survives a refresh, and everything below it
  * — the matière grid — is that année's slice. The page carries no standfirst
- * and no totals line: the title names it, and each année card already says
- * which year it is and how much it holds, so the prose was repeating them.
+ * and no totals line: the title names it and each année card names itself, so
+ * the prose was repeating them.
  *
  * The grid deliberately repeats the Matières page card: same glyph, same halo,
  * same rhythm. An élève should recognise "my matières" instantly and only then
@@ -55,16 +55,6 @@ export default function StudentSeancesScreen() {
   }
 
   const myYearIds = user?.yearIds ?? NO_YEARS
-
-  /** Séance counts per année scolaire — the badge on each tab. */
-  const perYear = useMemo(() => {
-    const m = new Map<string, number>()
-    for (const s of pool) {
-      if (!s.recordingUrl) continue
-      m.set(s.academicYear, (m.get(s.academicYear) ?? 0) + 1)
-    }
-    return m
-  }, [pool])
 
   /** My matières + how many recordings the active année holds for each. */
   const cards = useMemo(() => {
@@ -115,10 +105,20 @@ export default function StudentSeancesScreen() {
                 and work out for themselves which one that is, and hung a naked
                 « 26 » beside it that could have been counting anything. Each
                 choice now says what the year IS to them (« العام هذا », « العام
-                الفارط », otherwise archive), then the range, then what it holds,
-                spelled out. The chosen one takes the brand gradient: the
-                selection IS the page's state — everything below is that year's
-                slice — so it is worth the one loud surface a view is allowed. */}
+                الفارط », otherwise archive), then the range — big, because the
+                range is the thing being chosen and it should be readable at a
+                glance across the scrolling row.
+
+                It used to carry a third line counting the recordings inside.
+                That number decided nothing: the élève picks a year because it
+                is the year they want, not because it holds forty séances rather
+                than thirty — and the matière grid right below breaks the same
+                total down per matière, where it is actually actionable. Two
+                lines, one of them big, is the whole card.
+
+                The chosen one takes the brand gradient: the selection IS the
+                page's state — everything below is that year's slice — so it is
+                worth the one loud surface a view is allowed. */}
             <div
               role="tablist"
               aria-label="السنة الدراسية"
@@ -126,7 +126,6 @@ export default function StudentSeancesScreen() {
             >
               {academicYears.map((year, i) => {
                 const active = year === activeYear
-                const count = perYear.get(year) ?? 0
                 // `academicYears` comes back newest-first, so the index IS the
                 // distance from today. Past the year before, an élève counts in
                 // « archive », not in « the year before the year before ».
@@ -142,7 +141,7 @@ export default function StudentSeancesScreen() {
                       // Same edge on both states — the fill is what says which
                       // one is chosen, and a border that appears and disappears
                       // resizes the card under the cursor.
-                      "flex min-w-[8.5rem] shrink-0 flex-col items-start gap-0.5 rounded-lg border-2 px-3.5 py-2.5 text-start transition",
+                      "flex min-w-[7.5rem] shrink-0 flex-col items-start gap-0.5 rounded-lg border-2 px-4 py-2.5 text-start transition",
                       active
                         ? "border-brand-600 bg-grad text-ink-inverted shadow-brand"
                         : "border-brand-200 bg-surface text-ink-subtle shadow-sm hover:border-brand-600 hover:text-brand-600",
@@ -156,16 +155,8 @@ export default function StudentSeancesScreen() {
                     >
                       {kicker}
                     </span>
-                    <span className="font-display text-[calc(15px*var(--ts))] font-bold leading-tight tabular-nums">
+                    <span className="font-display text-[calc(20px*var(--ts))] font-bold leading-tight tabular-nums">
                       {year}
-                    </span>
-                    <span
-                      className={cn(
-                        "text-[calc(11.5px*var(--ts))]",
-                        active ? "text-ink-inverted/85" : "text-ink-muted",
-                      )}
-                    >
-                      {count === 0 ? "ما فماش تسجيلات" : `${count} تسجيل`}
                     </span>
                   </button>
                 )

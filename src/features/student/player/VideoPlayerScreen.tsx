@@ -258,7 +258,8 @@ function crowd(contents: PlayerVideo[]): PlayerVideo[] {
     out.push({
       ...seed,
       id: `${seed.id}--crowd-${i}`,
-      title: `${seed.title} — الجزء ${Math.floor(i / seeds.length) + 2}`,
+      // « Partie N », to match the séance titles themselves (French).
+      title: `${seed.title} — Partie ${Math.floor(i / seeds.length) + 2}`,
     })
   }
   return out

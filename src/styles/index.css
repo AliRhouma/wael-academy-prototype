@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "./palettes.css"; /* alternate palettes — swappable via data-palette on <html> */
 @import "./fonts.css"; /* alternate typefaces — swappable via data-font on <html> */
+@import "./v2.css"; /* the new élève space (/student-v2) — its own fixed palette */
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 

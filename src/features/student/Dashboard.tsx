@@ -147,6 +147,12 @@ export default function StudentDashboard() {
    * All three default ON, and OFF is the empty state in each case.
    */
   const liveOn = useDemoToggle("KeyH")
+  // D — the SKIN, not a data switch like the three below it. Off is the design
+  // of record (cream panels, white cards); on is « les cartes pleines », where
+  // every card INSIDE a panel takes the logo plate's brand fill. It starts off,
+  // so the page opens on the design of record and D is what shows the other
+  // one. `cardSkin.ts` holds the rule for which surfaces fill and which cannot.
+  const filled = useDemoToggle("KeyD", false)
   const docsOn = useDemoToggle("KeyK")
   const recentOn = useDemoToggle("KeyS")
   const recent = recentOn ? recentPool : NO_SESSIONS
@@ -256,7 +262,7 @@ export default function StudentDashboard() {
             </div>
           )}
           <div className="rise min-w-0 md:col-span-2 xl:col-span-1" style={{ ["--i" as string]: 5 }}>
-            <HomeworkList now={now} show={docsOn} />
+            <HomeworkList now={now} show={docsOn} filled={filled} />
           </div>
         </div>
       </div>
@@ -302,7 +308,7 @@ export default function StudentDashboard() {
             />
           </div>
         ) : (
-          <RecentSeances sessions={recent} now={now} />
+          <RecentSeances sessions={recent} now={now} filled={filled} />
         )}
       </section>
     </div>

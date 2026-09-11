@@ -57,6 +57,19 @@ function SessionRow({ session, now }: { session: Session; now: Date }) {
   const teacher = teachers.find((t) => t.id === session.teacherId)
   const state = sessionState(session, now)
   const off = state === "reportee"
+  /*
+   * LA MATIÈRE EN TÊTE. Ce que l'élève cherche dans une ligne d'agenda, c'est
+   * « رياضيات » — pas « Suites numériques — convergence ». La matière est le mot
+   * qu'il reconnaît de loin (et la seule chose que la pastille de couleur à
+   * gauche disait déjà, sans le dire) ; le chapitre, lui, ne se lit qu'une fois
+   * la bonne ligne trouvée. Donc la matière prend le titre, et le chapitre
+   * descend sur la ligne muette avec le prof — rien n'est perdu, l'ordre de
+   * lecture change.
+   */
+  const heading = subject?.name ?? session.title
+  const detail = [subject?.name ? session.title : null, teacher?.name]
+    .filter(Boolean)
+    .join(" · ")
 
   return (
     // A card, not a ruled row. The list is short and every line is a place the
@@ -107,10 +120,10 @@ function SessionRow({ session, now }: { session: Session; now: Date }) {
           <span
             dir="auto"
             title={session.title}
-            className="min-w-0 flex-1 truncate font-display text-[calc(12.5px*var(--ts))] font-bold leading-tight"
+            className="min-w-0 flex-1 truncate font-display text-[calc(13.5px*var(--ts))] font-bold leading-tight"
             style={{ color: state === "terminee" ? cream.inkMuted : cream.ink }}
           >
-            {session.title}
+            {heading}
           </span>
           <HomeworkDocsButton
             compact
@@ -139,9 +152,9 @@ function SessionRow({ session, now }: { session: Session; now: Date }) {
               {STATE_LABEL.reportee}
             </span>
           )}
-          {(subject?.name || teacher?.name) && (
+          {detail && (
             <span dir="auto" className="truncate">
-              · {[subject?.name, teacher?.name].filter(Boolean).join(" · ")}
+              · {detail}
             </span>
           )}
         </span>

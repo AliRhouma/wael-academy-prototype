@@ -1,0 +1,190 @@
+/* ===========================================================================
+   Wael Academy — the NEW élève space (/student-v2)
+   ---------------------------------------------------------------------------
+   Its own token set, lifted byte for byte from the Figma export
+   (« Main Pgae - Calendar months ») rather than re-pointed onto the old ones:
+   the new space has ONE fixed palette, so the PaletteDock — which re-points the
+   old primitives — must not be able to reach it, and the old space must not
+   move when this one does.
+
+   The whole palette is five colours and their opacities:
+     ink     #172E5B  every word, every line (borders are ink at 15–20 %)
+     brand   #0491A5  → cta #8AFF6B   the gradient: page wash, icons, selected
+     cta     #8AFF6B  the lime of every primary button, navy text on it
+     live    #FF3B3E  on air — the live panel, « مباشر الآن », the recording
+     done    #F28B14  « انتهت »
+   plus two chip tints for the panel headers (sky = live, violet = documents).
+
+   Utilities: `text-v2-ink`, `bg-v2-cta`, `border-v2-ink/15`, `bg-v2-grad`, …
+   =========================================================================== */
+
+:root {
+  --v2-ink: #172e5b;
+  --v2-surface: #ffffff;
+  --v2-brand: #0491a5;
+  --v2-deep: #08434b;
+  --v2-cta: #8aff6b;
+  --v2-on-cta: #172e5b;
+  --v2-live: #ff3b3e;
+  --v2-live-strong: #ff0004;
+  --v2-live-soft: #ffe2e2;
+  --v2-done: #f28b14;
+  --v2-done-line: #f9b86c;
+  --v2-chip-live: #8eb1ff;
+  --v2-chip-docs: #a179ff;
+  --v2-grad: linear-gradient(135deg, #0491a5 0%, #8aff6b 100%);
+  /* The page: the same ramp laid flat at 10 % over white, teal on the start
+     (right) edge fading to lime — exactly the frame's background layer. */
+  --v2-canvas: linear-gradient(to left, rgb(4 145 165 / 0.1), rgb(138 255 107 / 0.1));
+  --v2-canvas-base: #ffffff;
+  --v2-rail: rgb(255 255 255 / 0.7);
+  /* The running séance card: teal settling into the deep petrol, faint. */
+  --v2-live-card: linear-gradient(180deg, rgb(4 145 165 / 0.26), rgb(8 67 75 / 0.26));
+}
+
+/* Not in the Figma — derived so the theme toggle doesn't break the space. Same
+   roles, night ground; the lime and the red keep their punch. */
+[data-theme="dark"] {
+  --v2-ink: #e6edfb;
+  --v2-surface: #111d38;
+  --v2-brand: #29b8cc;
+  --v2-deep: #7fd4df;
+  --v2-cta: #8aff6b;
+  --v2-on-cta: #102246;
+  --v2-live: #ff5a5d;
+  --v2-live-strong: #ff7a7c;
+  --v2-live-soft: #3a1620;
+  --v2-done: #f7a24a;
+  --v2-done-line: #b8752c;
+  --v2-chip-live: #5d7fd6;
+  --v2-chip-docs: #7c56d9;
+  --v2-canvas: linear-gradient(to left, rgb(4 145 165 / 0.16), rgb(138 255 107 / 0.06));
+  --v2-canvas-base: #0a1428;
+  --v2-rail: rgb(17 29 56 / 0.8);
+  --v2-live-card: linear-gradient(180deg, rgb(4 145 165 / 0.3), rgb(8 67 75 / 0.45));
+}
+
+@theme inline {
+  --color-v2-ink: var(--v2-ink);
+  --color-v2-surface: var(--v2-surface);
+  --color-v2-brand: var(--v2-brand);
+  --color-v2-deep: var(--v2-deep);
+  --color-v2-cta: var(--v2-cta);
+  --color-v2-on-cta: var(--v2-on-cta);
+  --color-v2-live: var(--v2-live);
+  --color-v2-live-strong: var(--v2-live-strong);
+  --color-v2-live-soft: var(--v2-live-soft);
+  --color-v2-done: var(--v2-done);
+  --color-v2-done-line: var(--v2-done-line);
+  --color-v2-chip-live: var(--v2-chip-live);
+  --color-v2-chip-docs: var(--v2-chip-docs);
+  --color-v2-rail: var(--v2-rail);
+}
+
+@utility bg-v2-grad {
+  background-image: var(--v2-grad);
+}
+
+/* ---------- The public site (landing + about) ----------
+   Measured off « Page D'acceuil » / « About us Page »:
+     deep   #0491A5 → #08434B, top to bottom — offer card, pricing, CTA banner
+     mint   the hero's ground, #DEF7E5 → #D2EEEA, under an 80px graph-paper grid
+     footer the deep ramp run sideways, teal on the left → petrol on the right (as
+            drawn — physical, not logical), same grid */
+@utility bg-v2-grad-deep {
+  background-image: linear-gradient(180deg, #0491a5 0%, #08434b 100%);
+}
+@utility bg-v2-mint-grid {
+  background-color: #def7e5;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--v2-brand) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--v2-brand) 9%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, #def7e5 0%, #d2eeea 100%);
+  background-size: 80px 80px, 80px 80px, auto;
+}
+/* The teachers band: white into a soft aqua, the same grid. */
+@utility bg-v2-aqua-grid {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.35) 1px, transparent 1px),
+    linear-gradient(180deg, #ffffff 0%, #d4eef1 30%, #7cc7d2 100%);
+  background-size: 80px 80px, 80px 80px, auto;
+}
+@utility bg-v2-footer {
+  background-color: #08434b;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to right, #0491a5 0%, #08434b 100%);
+  background-size: 80px 80px, 80px 80px, auto;
+}
+/* Gradient TEXT — the hero's « للنجاح والتفوق »: lime where the line starts
+   (the right, in Arabic), teal where it ends. Physical, since the frame is. */
+@utility text-v2-grad {
+  background-image: linear-gradient(90deg, #0491a5 0%, #3fd08a 55%, #8aff6b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* The floating stat badges bob, gently and out of step (`--d` per badge). */
+@media (prefers-reduced-motion: no-preference) {
+  .v2-float {
+    animation: v2-float 6s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+  }
+}
+@keyframes v2-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
+@utility bg-v2-canvas {
+  background-color: var(--v2-canvas-base);
+  background-image: var(--v2-canvas);
+}
+@utility bg-v2-live-card {
+  background-image: var(--v2-live-card);
+}
+
+/* Line icons stroked with the brand ramp (the rail, the panel glyphs). The
+   gradient is defined ONCE, in the shell (`<V2GradientDefs />`); a Lucide icon
+   sets stroke="currentColor" as an attribute, which any CSS stroke beats. */
+@utility stroke-v2-grad {
+  & path,
+  & circle,
+  & rect,
+  & line,
+  & polyline,
+  & polygon,
+  & ellipse {
+    stroke: url(#v2-grad);
+  }
+}
+
+/* The logo is delivered as a shape, not a colour: an alpha mask painted with
+   the ink token, so it follows the theme instead of baking navy into a PNG. */
+@utility v2-mask {
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: var(--v2-ink);
+}
+
+/* The live dot: a slow halo, not a blink. Gated on motion like `.rise`. */
+@media (prefers-reduced-motion: no-preference) {
+  .v2-onair::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--v2-live);
+    animation: v2-onair 1.8s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
+  }
+}
+@keyframes v2-onair {
+  from { transform: scale(1); opacity: 0.55; }
+  to { transform: scale(2.6); opacity: 0; }
+}

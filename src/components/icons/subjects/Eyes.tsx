@@ -73,7 +73,7 @@
  * all and the untouched drawing shows through, so the feature can only ever add.
  */
 import { useEffect, useRef } from "react"
-import { useGaze } from "@/app/gaze"
+import { useGazeMode } from "@/app/gaze"
 import { useMediaQuery } from "@/lib/hooks"
 import type { PortraitId } from "../subjects"
 import { EYES, type EyeGeometry } from "./eyeGeometry"
@@ -303,12 +303,17 @@ export function Eyes({
   subject?: string
   className?: string
 }) {
-  const fine = useMediaQuery("(pointer: fine)")
+  // ANY fine pointer, not the primary one: on a Windows touchscreen laptop the
+  // primary pointer reports as touch (`pointer: coarse`) even with a mouse or a
+  // trackpad right there, and the eyes silently never mounted on exactly the
+  // machines people demo on.
+  const fine = useMediaQuery("(any-pointer: fine)")
   const wants = useMediaQuery("(prefers-reduced-motion: no-preference)")
-  // The S key, app-wide. Off here means the overlay is absent, not paused.
-  const gaze = useGaze()
+  // The S key, app-wide. Off here means the overlay is absent, not paused;
+  // "always" is the explicit override of the reduced-motion setting.
+  const gaze = useGazeMode()
   const geo = (subject && EYES[subject]) || (portrait && portraitGeometry(portrait)) || null
-  if (!fine || !wants || !gaze || !geo) return null
+  if (!fine || gaze === "off" || (!wants && gaze !== "always") || !geo) return null
   return <TrackingEyes geo={geo} className={className} />
 }
 
@@ -331,7 +336,14 @@ function TrackingEyes({ geo, className }: { geo: EyeGeometry; className?: string
     // What counts as "hovered": the card, where there is one (the same `.group`
     // the colour flood already keys off, so the eyes settle at the exact moment
     // the rest of the card reacts), else the icon's own box.
-    const host = svg.closest(".group") ?? svg.parentElement
+    //
+    // Unless an ancestor says `data-gaze="follow"`: the new élève space draws
+    // its cards big enough to fill the page, so the cursor is nearly always on
+    // SOME card — and locking the hovered one front froze exactly the face the
+    // élève was moving toward. There the eyes never lock; over the face they
+    // simply look at the pointer.
+    const follow = svg.closest('[data-gaze="follow"]')
+    const host = follow ? null : (svg.closest(".group") ?? svg.parentElement)
     const travelX = geo.travel.x * OVERSHOOT
     const travelY = Math.max(geo.travel.y * OVERSHOOT, MIN_TRAVEL_Y)
 

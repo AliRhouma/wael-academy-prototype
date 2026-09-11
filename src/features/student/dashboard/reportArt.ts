@@ -88,3 +88,4 @@ export const reportArt = {
   /** Same drawing, alert cut — the mark on a séance card. */
   homeworkAlert: repaint(homeworkRaw, ALERT),
 } as const
+

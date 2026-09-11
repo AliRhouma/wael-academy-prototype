@@ -158,7 +158,7 @@ export function ContentsPanel({
           // `min-h-0` or the flex item refuses to shrink below its content and
           // the panel grows past the height it was given instead of scrolling.
           className={cn(
-            "mt-2 flex flex-col gap-1.5 overflow-y-auto scroll-touch pe-0.5",
+            "mt-2 flex flex-col gap-2 overflow-y-auto scroll-touch px-0.5 pb-0.5",
             height ? "min-h-0 flex-1" : "max-h-[58vh]",
           )}
         >
@@ -324,12 +324,15 @@ function ContentRow({
           of the width and states them outright. */}
       <span
         className={cn(
-          "grid size-9 shrink-0 place-items-center rounded-md text-[calc(12px*var(--ts))] font-semibold tabular-nums transition",
-          !item.playable
-            ? "bg-danger-50 text-danger-600"
-            : active
-              ? "bg-grad text-ink-inverted shadow-brand"
-              : "bg-brand-50 text-brand-600 group-hover/row:bg-brand-100",
+          "grid size-9 shrink-0 place-items-center rounded-lg text-[calc(12px*var(--ts))] font-semibold tabular-nums transition",
+          // On the selected card the square INVERTS — white plate, brand ink.
+          // It used to be the thing wearing the brand fill; now the card is,
+          // and blue on blue would have swallowed it.
+          active
+            ? "bg-white text-brand-600 shadow-sm"
+            : !item.playable
+              ? "bg-danger-50 text-danger-600"
+              : "bg-brand-50 text-brand-600 group-hover/row:bg-brand-100 group-hover/row:text-brand-700",
         )}
       >
         {!item.playable ? (
@@ -356,14 +359,22 @@ function ContentRow({
         <span
           dir="auto"
           className={cn(
-            "line-clamp-2 text-[calc(13px*var(--ts))] font-medium leading-snug",
-            active ? "text-brand-700" : "text-ink",
+            "line-clamp-2 text-[calc(13px*var(--ts))] leading-snug",
+            // The one you're watching is the loudest title in the column —
+            // bold on the fill, so it reads as the heading of the page and the
+            // rest of the list as what's around it.
+            active ? "font-bold text-white" : "font-medium text-ink",
           )}
         >
           {item.title}
         </span>
         {!item.playable && (
-          <span className="text-[calc(11px*var(--ts))] text-ink-muted">
+          <span
+            className={cn(
+              "text-[calc(11px*var(--ts))]",
+              active ? "font-medium text-white/80" : "text-ink-muted",
+            )}
+          >
             {item.pdfs && item.pdfs.length > 0
               ? `${item.pdfs.length} وثيقة`
               : "وثيقة جايّة"}
@@ -373,11 +384,35 @@ function ContentRow({
     </>
   )
 
+  /**
+   * A CARD per contenu, not a bare row.
+   *
+   * The list is the only navigation on this page, and a stack of borderless
+   * rows read as one grey block you had to aim inside. Each contenu now owns a
+   * card — border, ground, its own shadow — so the titles are separable at a
+   * glance and every one of them is an obvious target.
+   *
+   * Selected wears the LOGO'S OWN FILL: `bg-grad`, the same token under the
+   * emblem plate in the top bar and under the active nav pill (flat
+   * `--brand-500` — the أزور blue today, and whatever the palette says
+   * tomorrow). Nothing else in the column is allowed that fill, so "which one
+   * am I watching" is answered from across the screen.
+   *
+   * The edge is the DASHBOARD'S edge — 2px of `brand-200`, the same frame the
+   * برنامج اليوم panel and its tiles wear (see `CreamPanel.cream.edge`). The
+   * hairline `border` this had was the kit's default table rule; against the
+   * panel's own white it disappeared, and cards you cannot see the sides of are
+   * rows again. Both states carry 2px so nothing shifts when one is selected.
+   *
+   * Hover lifts the card a pixel and deepens its edge; the square swaps its
+   * number for a play head (below). Both are motion-safe.
+   */
   const className = cn(
-    "group/row flex w-full items-center gap-2.5 overflow-hidden rounded-lg border p-1.5 text-start transition",
+    "group/row flex w-full items-center gap-2.5 overflow-hidden rounded-xl border-2 p-2 text-start shadow-xs transition",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
     active
-      ? "border-brand-200 bg-brand-50/60"
-      : "border-transparent hover:border-border hover:bg-surface-muted",
+      ? "border-transparent bg-grad shadow-brand"
+      : "border-brand-200 bg-surface hover:border-brand-300 hover:shadow-md motion-safe:hover:-translate-y-px",
   )
 
   if (!item.playable) {

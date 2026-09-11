@@ -126,6 +126,7 @@ src/
 ```
 
 ## Conventions
+- **Sound effects (élève space `/student-v2`) — read `docs/sound-effects.md` before adding or changing any interaction.** Every user action there plays a semantic cue (`data-uisfx="<cue>"` or `sfx("<cue>")`, library `uisfx`); a new action without one is incomplete. Run `npm run check:sounds` after.
 - UI strings in the product's language (set once; it's the product language).
 - Reuse shared components from `components/` — don't re-style the same thing twice.
 - Screens read and mutate data only through `useData()`. `src/mock/data.ts` is the seed and the single source of truth for initial content (the same records appear everywhere).

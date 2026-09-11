@@ -7,6 +7,7 @@ import {
   useHomeworkBySession,
   type SessionVisual,
 } from "@/features/student/calendar/schedule"
+import { stateSkin } from "@/features/student/calendar/stateSkin"
 import { cn, formatSessionDayLong } from "@/lib/utils"
 import type { Session } from "@/data/types"
 
@@ -243,24 +244,19 @@ export function MonthGrid({
                 <span className="flex min-w-0 flex-col gap-1">
                   {items.map((s) => {
                     const st = sessionState(s, now)
+                    const skin = stateSkin(st)
                     const { subjectName, tint } = visual(s)
                     const hw = homeworkOf(s).length
                     return (
                       <span
                         key={s.id}
-                        className={cn(
-                          "relative flex min-w-0 flex-col overflow-hidden rounded-[8px] border py-1 pe-1 ps-2 text-start",
-                          st === "terminee" && "opacity-60",
-                        )}
-                        style={{
-                          borderColor:
-                            st === "en-cours"
-                              ? "var(--danger-500)"
-                              : st === "reportee"
-                                ? "var(--accent-500)"
-                                : cream.edge,
-                          background: "var(--surface)",
-                        }}
+                        className="relative flex min-w-0 flex-col overflow-hidden rounded-[8px] border py-1 pe-1 ps-2 text-start"
+                        // The SAME four colours the day panel's cards wear, one
+                        // size down — a séance passée goes grey on grey here
+                        // instead of fading out at 60%, so a month reads as
+                        // « ce qui est fait / ce qui vient » before a single
+                        // hour is read. See `stateSkin`.
+                        style={{ borderColor: skin.edge, background: skin.fill }}
                       >
                         <span
                           aria-hidden="true"
@@ -276,10 +272,7 @@ export function MonthGrid({
                             "truncate text-[calc(9.5px*var(--ts))] font-bold tabular-nums leading-tight",
                             st === "reportee" && "line-through decoration-1",
                           )}
-                          style={{
-                            color:
-                              st === "en-cours" ? "var(--danger-600)" : "var(--brand-600)",
-                          }}
+                          style={{ color: skin.ink }}
                         >
                           <span className="num">{s.startTime}</span>
                         </span>

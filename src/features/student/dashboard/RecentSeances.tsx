@@ -6,6 +6,7 @@ import { addedLabel } from "@/features/student/dashboard/dashboard"
 import { subjectTheme } from "@/features/student/subjectTheme"
 import { subjectTint } from "@/features/student/subjectTint"
 import type { Session } from "@/data/types"
+import { SOLID } from "@/features/student/dashboard/cardSkin"
 import { edgeMask, useScrollEdges } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
 import { useData } from "@/stores/useData"
@@ -85,7 +86,16 @@ function RailNudge({
   )
 }
 
-export function RecentSeances({ sessions, now }: { sessions: Session[]; now: Date }) {
+export function RecentSeances({
+  sessions,
+  now,
+  filled,
+}: {
+  sessions: Session[]
+  now: Date
+  /** The D-key skin — every replay goes brand-filled. See `cardSkin.ts`. */
+  filled?: boolean
+}) {
   const subjects = useData((s) => s.subjects)
   // The scrollbar is hidden, so without this the rail has no way of saying
   // whether the card at the edge is the last one or the fifth of nine.
@@ -135,7 +145,12 @@ export function RecentSeances({ sessions, now }: { sessions: Session[]; now: Dat
                   subjectId: subject?.id,
                   groupId: session.groupIds[0],
                 })}
-                className="group flex h-full flex-col rounded-[16px] border border-border bg-surface p-3.5 outline-none transition duration-200 hover:border-brand-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-safe:hover:-translate-y-[3px]"
+                className={cn(
+                  "group flex h-full flex-col rounded-[16px] border p-3.5 outline-none transition duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-safe:hover:-translate-y-[3px]",
+                  filled
+                    ? `border-transparent ${SOLID.box} hover:brightness-105`
+                    : "border-border bg-surface hover:border-brand-200",
+                )}
               >
                 <span className="flex items-center gap-2.5">
                   {/* NO drawing here. A replay is picked by its TITLE — the row
@@ -149,7 +164,10 @@ export function RecentSeances({ sessions, now }: { sessions: Session[]; now: Dat
                       dir="auto"
                       className={cn(
                         "min-w-0 flex-1 truncate text-[calc(11px*var(--ts))] font-semibold uppercase tracking-[.08em]",
-                        theme.name,
+                        // The matière's own colour is the card's ONLY colour in
+                        // the plain skin; on the fill it would be a second hue
+                        // fighting the ground, so it steps back to the white.
+                        filled ? "text-white/85" : theme.name,
                       )}
                     >
                       {subject.name}
@@ -166,18 +184,32 @@ export function RecentSeances({ sessions, now }: { sessions: Session[]; now: Dat
 
                 <span
                   dir="auto"
-                  className="mt-2.5 line-clamp-2 block font-display text-[calc(13.5px*var(--ts))] font-bold leading-snug text-ink"
+                  className={cn(
+                    "mt-2.5 line-clamp-2 block font-display text-[calc(13.5px*var(--ts))] font-bold leading-snug",
+                    filled ? "text-white" : "text-ink",
+                  )}
                 >
                   {session.title}
                 </span>
 
-                <span className="mt-auto flex items-center gap-2 pt-2.5 text-[calc(11px*var(--ts))] text-ink-muted">
+                <span
+                  className="mt-auto flex items-center gap-2 pt-2.5 text-[calc(11px*var(--ts))]"
+                  style={{ color: filled ? SOLID.inkMuted : "var(--ink-muted)" }}
+                >
                   {fresh ? (
                     // A badge, not a line of meta: « جديدة » is the one thing
                     // in this row that expires, and on the red it is read
                     // before the two grey facts beside it. No glyph — at 10px
                     // a sparkle is a speck, and the word is already short.
-                    <span className="inline-flex shrink-0 items-center rounded-full bg-danger-500 px-1.5 py-0.5 text-[calc(10px*var(--ts))] font-bold leading-none text-white">
+                    <span
+                      className={cn(
+                        "inline-flex shrink-0 items-center rounded-full px-1.5 py-0.5 text-[calc(10px*var(--ts))] font-bold leading-none",
+                        // Red on the blue fill goes muddy and stops being an
+                        // alert, so on a filled card the badge inverts: the one
+                        // white sticker on the card, red ink.
+                        filled ? "bg-white text-danger-600" : "bg-danger-500 text-white",
+                      )}
+                    >
                       جديدة
                     </span>
                   ) : (
@@ -194,7 +226,12 @@ export function RecentSeances({ sessions, now }: { sessions: Session[]; now: Dat
                   )}
                   {/* The play affordance moved here, small and at the end: the
                       card is a link, and the plate is the matière's now. */}
-                  <span className="ms-auto inline-flex shrink-0 items-center text-brand-600 transition group-hover:text-brand-700">
+                  <span
+                    className={cn(
+                      "ms-auto inline-flex shrink-0 items-center transition",
+                      filled ? "text-white" : "text-brand-600 group-hover:text-brand-700",
+                    )}
+                  >
                     <Play className="size-3 fill-current" />
                   </span>
                 </span>
