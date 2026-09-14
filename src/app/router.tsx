@@ -67,6 +67,8 @@ import LoginPage from "@/features/auth/LoginPage"
 import RegisterPage from "@/features/auth/RegisterPage"
 import ForgotPasswordPage from "@/features/auth/ForgotPasswordPage"
 import V2SubjectRecordingsScreen from "@/features/student-v2/recordings/SubjectRecordingsScreen"
+import V2SubjectsScreen from "@/features/student-v2/matieres/SubjectsScreen"
+import V2SubjectScreen from "@/features/student-v2/matieres/SubjectScreen"
 
 /** Standalone list of the shared courses; links into the /courses/:id workspace. */
 function CoursesList() {
@@ -266,7 +268,8 @@ export const router = createBrowserRouter([
         path: "groupes",
         element: <V2Placeholder title="مجموعاتي" note="صفحة جديدة، ما كانتش في الفضاء القديم — تستنّى التصميم متاعها." />,
       },
-      { path: "matieres", element: <V2Placeholder title="موادك" legacy="/student/matieres" /> },
+      { path: "matieres", element: <V2SubjectsScreen /> },
+      { path: "matieres/:subjectId", element: <V2SubjectScreen /> },
       { path: "devoirs", element: <V2Placeholder title="التمارين" legacy="/student/devoirs" /> },
       { path: "profil", element: <V2Placeholder title="بروفيلي" legacy="/student/profil" /> },
       { path: "parametres", element: <V2Placeholder title="الإعدادات" legacy="/student/profil" /> },

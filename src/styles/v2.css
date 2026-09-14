@@ -142,6 +142,16 @@
   background-color: var(--v2-canvas-base);
   background-image: var(--v2-canvas);
 }
+/* « موادي » — the open chapitre's ground: the deep ramp laid diagonally at a
+   quarter strength, teal at the bottom start, petrol at the top end, exactly
+   as the frame runs it (518,1191 → 1881,594). And the same ramp at a quarter,
+   flat, for the shut chapitre's numbered disc. */
+@utility bg-v2-chapter {
+  background-image: linear-gradient(66deg, rgb(4 145 165 / 0.25), rgb(8 67 75 / 0.25));
+}
+@utility bg-v2-grad-25 {
+  background-image: linear-gradient(135deg, rgb(4 145 165 / 0.25), rgb(8 67 75 / 0.25));
+}
 @utility bg-v2-live-card {
   background-image: var(--v2-live-card);
 }
