@@ -561,6 +561,25 @@ body { min-height: 100dvh; background: #0d1f2e; background-image: radial-gradien
 }
 @media (max-width: 1240px) and (min-height: 521px) { .stage { grid-template-columns: 1fr; } .flows { order: 2; width: 844px; max-height: none; columns: 3; } .flows h2 { break-after: avoid; } }
 @media (max-width: 900px) and (min-height: 521px) { .screen { zoom: .8; } .flows { width: auto; columns: 2; } }
+
+/* live sessions (exist today; shown with what the update adds) */
+.lv-hero { width: 100%; text-align: start; padding: .9rem 1rem; background: var(--chapter); color: #fff; border-color: #052a30; --lip: #052a30; }
+.lv-stage { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 16 / 8.5; background: #0b3b42; border: 2px solid #052a30; }
+.lv-stage > svg { display: block; width: 100%; height: 100%; }
+.lv-stage .lv-cam { position: absolute; bottom: 14px; inset-inline-end: 12px; padding: 3px; border-radius: 999px; background: #fff; box-shadow: 0 2px 0 #052a30; display: flex; }
+.lv-stage .lv-cam .av { width: 44px; height: 44px; font-size: .85rem; }
+.lv-stage .lv-play { position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; background: var(--cta); border-color: var(--edge-cta); color: var(--on-cta); }
+.lv-stage.locked > svg { filter: blur(3px) brightness(.65); }
+.lv-stage .lv-lock { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; gap: .3rem; text-align: center; }
+.datebox { flex-shrink: 0; min-width: 58px; padding: 4px 6px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface); text-align: center; line-height: 1.25; }
+.datebox small { display: block; font-size: .68rem; font-weight: 700; opacity: .7; }
+.datebox b { font-size: 1rem; }
+.lv-row { gap: .3rem; }
+.lv-pts { margin-top: .6rem; padding: .45rem .7rem; border-radius: 12px; background: rgb(4 145 165 / .1); gap: .5rem; flex-wrap: wrap; }
+.lv-mini { width: 100%; text-align: start; padding: .5rem .7rem; flex-shrink: 0; }
+.lv-homegrid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 1rem; align-items: start; }
+@media (max-width: 900px) { .lv-homegrid { grid-template-columns: 1fr; } }
+.rail button { min-height: 48px; }
 </style>
 </head>
 <body>
@@ -1806,12 +1825,166 @@ ACT.notifs = () => dialog(`<h3>التنبيهات</h3><div class="list">
   <button class="li" data-go="order" data-p="WA-10482">${I("truck")}<div class="grow"><div class="b small">طلبك WA-10482 في الطريق</div><div class="tiny">البارح</div></div></button></div>`);
 
 /* ==========================================================================
+   الحصص المباشرة — they exist today in /student-v2; shown here with what the
+   update adds around them: points for attending, a warm-up before the live,
+   a quick poll inside it, and coins to open a live or a recording that isn't
+   in the student's offer.
+   ========================================================================== */
+Object.assign(PEOPLE, {
+  "t-wael": { name: "الأستاذ وائل", c: "#08434b" }, "t-hala": { name: "الأستاذة هالة", c: "#2f5ea8" },
+  "t-sonia": { name: "الأستاذة سنية", c: "#157787" }, "t-mounir": { name: "الأستاذ منير", c: "#5a35ae" },
+  "t-sami": { name: "الأستاذ سامي", c: "#5d6fb0" },
+});
+const LIVE_DAYS = ["الأحد", "الإثنين", "الثلاثاء", "الإربعاء", "الخميس", "الجمعة", "السبت"];
+const lvAt = (off, h, m = 0) => { const d = new Date(NOW0); d.setDate(d.getDate() + off); d.setHours(h, m, 0, 0); return d.getTime(); };
+const lvNextDow = (dow, h, m = 0) => { let off = (dow - new Date(NOW0).getDay() + 7) % 7; if (off === 0 && lvAt(0, h, m) <= NOW0) off = 7; return lvAt(off, h, m); };
+const lvTime = (ts) => { const d = new Date(ts); return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`; };
+const lvDay = (ts) => { const d0 = new Date(NOW0); d0.setHours(0, 0, 0, 0); const diff = Math.floor((ts - d0.getTime()) / (24 * H)); return diff === 0 ? "اليوم" : diff === 1 ? "غدوة" : LIVE_DAYS[new Date(ts).getDay()]; };
+
+S.lives = [
+  { id: "l-log", t: "Fonction logarithme — exercices type bac", s: "math", by: "t-wael", state: "live", start: NOW0 - 25 * 60e3, dur: 90, viewers: 214, inOffer: true, friends: ["yas", "amine", "sara"] },
+  { id: "l-genet", t: "Génétique humaine — brassage chromosomique", s: "svt", by: "t-sonia", state: "soon", start: lvAt(1, 19, 30), dur: 90, inOffer: true, going: 132, friends: ["nour", "yas"] },
+  { id: "l-ondes", t: "Ondes mécaniques progressives", s: "phys", by: "t-hala", state: "soon", start: lvNextDow(4, 18), dur: 120, inOffer: false, itemId: "live-ondes", going: 88, friends: ["mariem", "skander"] },
+  { id: "l-philo", t: "La dissertation — méthodologie", s: "philo", by: "t-mounir", state: "soon", start: lvNextDow(6, 10), dur: 90, inOffer: true, going: 96, cap: 100, friends: [] },
+  { id: "r-rc", t: "Dipôle RC — charge et décharge", s: "phys", by: "t-hala", state: "rec", when: "الثلاثاء", dur: 72, inOffer: false, itemId: "rec-rc", watched: 0 },
+  { id: "r-suites", t: "Suites numériques — limites", s: "math", by: "t-wael", state: "rec", when: "الإثنين", dur: 85, inOffer: true, watched: 1, done: true },
+  { id: "r-en", t: "Reported speech — révision", s: "en", by: "t-sami", state: "rec", when: "السبت", dur: 55, inOffer: true, watched: 0.4 },
+];
+S.reminders = { "l-genet": true };
+(S.chat ||= {})["l-log"] = [
+  { w: "sys", t: "الحصّة بدات — مرحبا بيكم" }, { w: "t-wael", t: "اليوم نحلّو تمرين 2 من باك 2023، حضّرو الكرّاس" },
+  { w: "yas", t: "أستاذ، نعاودو الحدّ في +∞؟" }, { w: "sara", t: "الصوت واضح" }, { w: "amine", t: "وصلت، سامحوني على التأخير" },
+];
+const lvById = (id) => S.lives.find((x) => x.id === id);
+const lvOk = (l) => l.inOffer || (!!l.itemId && S.unlocked[l.itemId] > Date.now());
+const lvShort = (l) => l.t.split("—")[0].trim();
+const LV_WARM = {
+  svt: [["Lors de la méiose, le brassage interchromosomique a lieu en :", ["Anaphase I", "Prophase I", "Anaphase II"], 0], ["Un hétérozygote pour 2 gènes indépendants produit :", ["2 types de gamètes", "4 types équiprobables", "8 types"], 1], ["Le crossing-over se produit entre :", ["chromatides sœurs", "chromatides de chromosomes homologues", "chromosomes non homologues"], 1]],
+  phys: [["Une onde mécanique transporte :", ["de la matière", "de l'énergie, sans matière", "les deux"], 1], ["Célérité v, longueur d'onde λ et période T :", ["λ = v·T", "λ = v / T", "λ = T / v"], 0], ["Dans une onde transversale, la perturbation est…", ["parallèle à la propagation", "perpendiculaire à la propagation", "circulaire"], 1]],
+  philo: [["Une dissertation commence par :", ["la conclusion", "l'introduction et la problématique", "les exemples"], 1], ["La problématique est :", ["un résumé du cours", "une question qui fait apparaître un paradoxe", "une citation"], 1], ["Chaque partie du développement défend :", ["une thèse argumentée", "une liste d'exemples", "l'avis du professeur"], 0]],
+};
+const LV_POLL = ["lim (ln x) / x quand x → +∞ =", ["+∞", "0", "1"], 1];
+
+const lvDate = (ts) => `<span class="datebox"><small>${lvDay(ts)}</small><b class="num">${lvTime(ts)}</b></span>`;
+const lvAccess = (l) => l.inOffer ? `<span class="tag brand">في عرضك</span>` : lvOk(l) ? `<span class="tag lime">${I("unlock", "s")} مفتوح</span>` : `<span class="money small">${COIN}${n(item(l.itemId).price)}</span>`;
+const lvHero = (l) => `<button class="tile lv-hero" data-go="live" data-p="${l.id}">
+  <div class="row wrap" style="gap:.4rem"><span class="tag live"><span class="live-dot"></span> مباشر توّا</span>${subjTag(l.s)}<span class="tiny ms-auto" style="color:#cfe7ea">${I("eye", "s")} <bdi class="num">${l.viewers}</bdi></span></div>
+  <h2 class="ltr" style="text-align:right;color:#fff;font-size:1.2rem;margin:.5rem 0 .2rem">${l.t}</h2>
+  <div class="row small" style="color:#cfe7ea">${av(l.by, "sm")} ${pname(l.by)} · بدات من <bdi class="num">${Math.round((Date.now() - l.start) / 60e3)}</bdi> دقيقة</div>
+  <div class="row" style="margin-top:.7rem"><div class="avs">${l.friends.map((f) => av(f, "sm")).join("")}</div><span class="tiny" style="color:#cfe7ea">${l.friends.length} من صحابك داخلين</span><span class="cta ms-auto" style="pointer-events:none">${I("radio")} ادخل</span></div></button>`;
+const lvSoonRow = (l) => `<div class="li lv-row"><button class="row grow" data-go="live" data-p="${l.id}" style="gap:.7rem;text-align:start;min-height:52px;min-width:0">${lvDate(l.start)}<div class="grow" style="min-width:0"><div class="b small ltr" style="text-align:right">${l.t}</div><div class="tiny">${pname(l.by)} · ${SUBJ[l.s].ar}${l.cap ? ` · <b style="color:var(--live-strong)">باقي ${l.cap - l.going} بلايص</b>` : ""}</div></div>${lvAccess(l)}</button>
+  <button class="icon-btn flat" data-act="remind" data-id="${l.id}" aria-pressed="${!!S.reminders[l.id]}" aria-label="${S.reminders[l.id] ? "التذكير شغّال" : "ذكّرني"}" style="${S.reminders[l.id] ? "color:var(--brand-text);background:rgb(4 145 165 / .12)" : ""}">${I("bell")}</button></div>`;
+const lvRecRow = (l) => `<button class="li" data-go="live" data-p="${l.id}" style="min-height:56px"><span class="plate" style="background:${SUBJ[l.s].c}">${I(lvOk(l) ? "play" : "lock")}</span><div class="grow" style="min-width:0"><div class="b small ltr" style="text-align:right">${l.t}</div><div class="tiny">${pname(l.by)} · ${l.when} · <bdi class="num">${l.dur}</bdi> د</div>${lvOk(l) ? `<div style="margin-top:.3rem">${bar(l.watched)}</div>` : ""}</div>${l.done ? `<span class="tag lime">${I("check", "s")} كمّلت</span>` : lvAccess(l)}</button>`;
+const lvMini = () => { const l = S.lives.find((x) => x.state === "live"); return l ? `<button class="panel lv-mini row" data-go="live" data-p="${l.id}"><span class="live-dot"></span><div class="grow"><div class="tiny b" style="color:var(--live-strong)">مباشر توّا</div><div class="b small ltr" style="text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${lvShort(l)}</div></div><span class="cta sm" style="pointer-events:none">ادخل</span></button>` : ""; };
+const lvBoard = () => `<svg viewBox="0 0 320 170" direction="ltr" style="direction:ltr" aria-hidden="true"><rect width="320" height="170" fill="#0b3b42"/><rect x="16" y="14" width="288" height="142" rx="10" fill="#f6fbfb" stroke="#172e5b" stroke-width="3"/>
+  <text x="32" y="44" font-size="14" font-weight="700" fill="#172e5b" font-family="Cairo, sans-serif">Exercice 2 — Bac 2023</text>
+  <text x="32" y="72" font-size="13.5" fill="#0491a5" font-family="Georgia, serif" font-style="italic">f(x) = x − 1 − (ln x) / x</text>
+  <text x="32" y="98" font-size="13.5" fill="#172e5b" font-family="Georgia, serif" font-style="italic">lim (ln x)/x = 0 en +∞</text>
+  <path d="M32 132 q 40 -26 80 -8 t 90 -22" fill="none" stroke="#f28b14" stroke-width="3" stroke-linecap="round"/><circle cx="202" cy="102" r="5" fill="#e5484d"/></svg>`;
+const lvOpts = (o, a, pick, act) => `<div class="opts">${o.map((x, i) => `<button class="tile opt" data-state="${pick != null ? (i === a ? "right" : i === pick ? "wrong" : "dim") : ""}" data-act="${act}" data-i="${i}"><span class="k" style="background:${OPTC[i]}">${"ABC"[i]}</span><span class="ltr">${x}</span>${pick != null && i === a ? `<span class="ms-auto">${I("check")}</span>` : ""}</button>`).join("")}</div>`;
+const lvPoll = (u) => { const [q, o, a] = LV_POLL, rev = u.pick != null;
+  return `<div class="panel" style="margin-top:.8rem"><div class="row"><span class="tag live">${I("zap", "s")} سؤال سريع من الأستاذ</span><span class="tiny ms-auto">${rev ? `جاوبو <bdi class="num">168</bdi> · 71٪ صحيح` : "جاوب، يحسب في نقاطك"}</span></div>
+    <h3 class="ltr" style="text-align:right;margin:.5rem 0">${q}</h3>${lvOpts(o, a, u.pick, "lvPick")}
+    ${rev ? `<p class="small" style="margin-top:.5rem">${u.pick === a ? `<b>صحيح!</b> ${pts("+5")} ` : "<b>موش هاذي.</b> "}<span class="muted">ln x يكبر أبطأ برشا من x، معناها الكسر يمشي لـ 0.</span></p>` : ""}</div>`; };
+const lvWarm = (l, u) => { const qs = LV_WARM[l.s] || LV_WARM.phys;
+  if (l.warmed) return `<div class="panel" style="margin-top:.8rem"><div class="row">${I("check")}<b class="small">سخّنت — <bdi class="num">${l.wscore}</bdi>/3 صحاح</b><span class="ms-auto">${pts("+10")}</span></div><p class="tiny" style="margin-top:.3rem">الأستاذ يشوف شنوّة صعيب على الأغلبية ويبدا بيه.</p></div>`;
+  if (u.warm == null) return `<div class="panel" style="margin-top:.8rem"><div class="row"><span class="plate" style="background:var(--cta);color:var(--on-cta)">${I("target")}</span><div class="grow"><b>سخّن قبل الحصّة</b><div class="tiny">3 أسئلة على الدرس اللي فات · دقيقة وحدة</div></div><button class="cta" data-act="warmGo">${I("play")} ابدا</button></div></div>`;
+  const [q, o, a] = qs[u.wi], rev = u.pick != null;
+  return `<div class="panel" style="margin-top:.8rem"><div class="row"><span class="tag">سؤال ${u.wi + 1} / 3</span><span class="tiny ms-auto">سخّن قبل الحصّة</span></div><h3 class="ltr" style="text-align:right;margin:.5rem 0">${q}</h3>${lvOpts(o, a, u.pick, "warmPick")}
+    ${rev ? `<div class="row" style="margin-top:.5rem"><span class="small b">${u.pick === a ? "صحيح" : "موش هاذي"}</span><button class="cta sm ms-auto" data-act="warmNext">${u.wi < 2 ? "الجاي" : "كمّل"} ${I("chevL")}</button></div>` : ""}</div>`; };
+
+R.lives = (p) => {
+  const u = (UI.lives ||= { tab: "now" }), tab = p === "rec" ? "rec" : u.tab;
+  const now = S.lives.filter((l) => l.state === "live"), soon = S.lives.filter((l) => l.state === "soon").sort((a, b) => a.start - b.start), recs = S.lives.filter((l) => l.state === "rec");
+  const seg = `<div class="seg" role="tablist" style="margin-bottom:.8rem">${[["now", "مباشر والجايين"], ["rec", "التسجيلات"]].map(([v, l]) => `<button class="chip" role="tab" aria-pressed="${tab === v}" data-act="livesTab" data-v="${v}">${l}</button>`).join("")}</div>`;
+  const main = seg + (tab === "rec"
+    ? (recs.length ? `<div class="panel" style="padding:.3rem .8rem"><div class="list">${recs.map(lvRecRow).join("")}</div></div>` : emptyBox("tv", "حتّى تسجيل توّا", "كل حصّة مباشرة تتسجّل وتظهر هوني."))
+    : `${now.length ? now.map(lvHero).join("") : emptyBox("radio", "حتّى حصّة مباشرة توّا", soon[0] ? `الجاية: ${lvShort(soon[0])} — ${lvDay(soon[0].start)} ${lvTime(soon[0].start)}` : "")}
+      <div class="sec-title" style="margin-top:1rem"><h3>الجايين</h3><span class="tag ms-auto">${soon.length}</span></div>
+      ${soon.length ? `<div class="panel" style="padding:.3rem .8rem"><div class="list">${soon.map(lvSoonRow).join("")}</div></div>` : emptyBox("calendar", "حتّى حصّة مبرمجة", "الأساتذة يبرمجو الحصص كل جمعة.")}`);
+  const side = `<div class="panel"><header><span class="chipglyph" style="background:var(--live)">${I("radio")}</span><h2>الجديد في الحصص</h2></header>
+    <div class="col" style="gap:.6rem"><div class="row small" style="align-items:flex-start">${I("zap", "s")}<span><b>تحضر وتكمّل</b>: ${pts("+30")} عامّة و${pts("+10", "math")} للمادّة</span></div>
+    <div class="row small" style="align-items:flex-start">${I("target", "s")}<span><b>سخّن قبل الحصّة</b>: 3 أسئلة = ${pts("+10")}</span></div>
+    <div class="row small" style="align-items:flex-start">${I("unlock", "s")}<span><b>حصّة موش في عرضك؟</b> تتفتح بالقطع، بالتسجيل متاعها</span></div></div></div>
+    <div class="panel" style="margin-top:.9rem"><div class="row">${I("bell")}<b class="small">التذكيرات</b><span class="tag ms-auto">${Object.values(S.reminders).filter(Boolean).length}</span></div><p class="tiny" style="margin-top:.4rem">نبعثولك تنبيه 15 دقيقة قبل كل حصّة علّمت عليها.</p></div>`;
+  return { title: p === "rec" ? "تسجيلات" : "الحصص المباشرة", back: "home", html: split(main, side) };
+};
+R.recordings = () => R.lives("rec");
+ACT.livesTab = (el) => { (UI.lives ||= {}).tab = el.dataset.v; if (current().r !== "lives") go("lives"); else refresh(); };
+ACT.remind = (el) => { const id = el.dataset.id; S.reminders[id] = !S.reminders[id]; refresh(); toast(S.reminders[id] ? "باهي — نذكّروك 15 دقيقة قبل" : "نحّينا التذكير", "bell"); };
+
+R.live = (id) => {
+  const l = lvById(id) || S.lives[0], ok = lvOk(l);
+  const u = (UI.live && UI.live.id === l.id) ? UI.live : (UI.live = { id: l.id, hand: false, pick: null, warm: null, wi: 0, wscore: 0, attended: false, ch: 0 });
+  const pool = SUBJ[l.s].pool, it = l.itemId ? item(l.itemId) : null;
+  const head = `<div class="row wrap" style="gap:.4rem">${l.state === "live" ? `<span class="tag live"><span class="live-dot"></span> مباشر</span>` : l.state === "rec" ? `<span class="tag">${I("tv", "s")} تسجيل</span>` : `<span class="tag brand">${I("calendar", "s")} ${lvDay(l.start)} · ${lvTime(l.start)}</span>`}${subjTag(l.s)}${lvAccess(l)}</div>
+    <h2 class="ltr" style="text-align:right;font-size:1.3rem;margin:.35rem 0 .15rem">${l.t}</h2><div class="row small muted">${av(l.by, "sm")} ${pname(l.by)} · ${l.state === "rec" ? `${l.when} · ` : ""}<bdi class="num">${l.dur}</bdi> دقيقة</div>`;
+  const lockBox = ok ? "" : `<div class="panel col" style="gap:.65rem"><div class="small muted">الحصّة هاذي موش في عرضك</div><div class="row"><span class="small muted">السوم</span><span class="ms-auto" style="font-size:1.5rem">${coins(it.price)}</span></div>
+    <div class="row small"><span class="muted">تبقى مفتوحة</span><span class="ms-auto b">${durLabel(it.hours)}</span></div><div class="tiny">${l.state === "rec" ? "التسجيل الكامل بالأجزاء" : "الحضور في المباشر + التسجيل بعدو"}</div>
+    <button class="cta lg block" data-go="item" data-p="${it.id}">${I("unlock")} افتحها بالقطع</button><button class="btn block" data-go="offers">ولا اشترك في عرض</button></div>`;
+  let main, side, cls = "";
+  if (l.state === "live") {
+    const mins = Math.round((Date.now() - l.start) / 60e3);
+    const strip = ok ? `<div class="row small lv-pts">${I("zap", "s")}<span class="grow">${u.attended ? `<b>تحسبلك الحضور</b> · ${pts("+30")} ${pts("+10", pool)}` : `حضرت <bdi class="num" id="lvMin2">${mins}</bdi> / 60 د — ${pts("+30")} و${pts("+10", pool)} كي تكمّل`}</span>${u.attended ? "" : `<div style="width:80px">${bar(Math.min(1, mins / 60))}</div><button class="btn sm" data-act="lvFinish">كمّل (للعرض)</button>`}</div>` : "";
+    const stage = `<div class="lv-stage ${ok ? "" : "locked"}" style="margin-top:.7rem">${lvBoard()}
+      <span class="tag live" style="position:absolute;top:10px;inset-inline-start:10px"><span class="live-dot"></span> مباشر · <bdi class="num" id="lvMin">${mins}</bdi> د</span>
+      <span class="tag" style="position:absolute;top:10px;inset-inline-end:10px;background:rgb(0 0 0 / .5);color:#fff">${I("eye", "s")} <bdi class="num" id="lvView">${l.viewers}</bdi></span>
+      ${ok ? `<span class="lv-cam">${av(l.by)}</span>` : `<span class="lv-lock col">${I("lock", "l")}<span class="small b">افتح الحصّة باش تدخل</span></span>`}</div>`;
+    const tools = ok ? `<div class="row wrap" style="gap:.5rem;margin-top:.6rem"><button class="btn sm" data-act="lvHand" aria-pressed="${u.hand}" style="${u.hand ? "border-color:var(--brand);color:var(--brand-text)" : ""}">${I("hand")} ${u.hand ? "يدّك مرفوعة" : "ارفع يدّك"}</button><button class="btn sm" data-act="lvAsk">${I("msg")} سؤال للأستاذ</button><button class="btn sm" data-act="lvClap">${I("star")} برافو</button><button class="btn sm ms-auto" data-act="lvDocs">${I("file")} وثيقة الحصّة</button></div>` : "";
+    main = head + strip + stage + tools + (ok ? lvPoll(u) : "");
+    side = ok ? chatBox(l.id) : lockBox; cls = ok ? "chatside" : "";
+  } else if (l.state === "soon") {
+    const rem = !!S.reminders[l.id];
+    main = head + `<div class="panel" style="margin-top:.8rem"><div class="row" style="gap:1rem">${lvDate(l.start)}<div class="grow"><div class="tiny">تبدا بعد</div><div style="font-size:1.35rem;font-weight:900">${until(l.start)}</div></div>
+        <div class="col" style="align-items:flex-end;gap:.25rem">${l.friends.length ? `<div class="avs">${l.friends.map((f) => av(f, "sm")).join("")}</div>` : ""}<span class="tiny"><bdi class="num">${l.going}</bdi>${l.cap ? ` / <bdi class="num">${l.cap}</bdi>` : ""} مسجّلين${l.friends.length ? ` · ${l.friends.length} منهم صحابك` : ""}</span></div></div>
+        ${l.cap ? `<div style="margin-top:.6rem">${bar(l.going / l.cap)}</div><div class="tiny" style="margin-top:.25rem;color:var(--live-strong)">باقي ${l.cap - l.going} بلايص برك</div>` : ""}</div>
+      ${ok ? lvWarm(l, u) : ""}
+      <div class="panel" style="margin-top:.8rem"><header><h2>باش تحضّر</h2></header><div class="list"><button class="li" data-act="lvDocs">${kindPlate("pdf")}<div class="grow"><div class="b small ltr" style="text-align:right">Fiche — ${lvShort(l)}</div><div class="tiny">PDF · 3 صفحات</div></div>${I("eye")}</button></div></div>`;
+    side = ok ? `<div class="panel col" style="gap:.6rem"><button class="${rem ? "btn" : "cta"} lg block" data-act="remind" data-id="${l.id}">${I("bell")} ${rem ? "التذكير شغّال" : "ذكّرني قبل 15 دقيقة"}</button><button class="btn block" data-act="soon" data-msg="تزادت للرزنامة متاعك">${I("calendar")} زيدها للرزنامة</button>
+        <div class="col" style="gap:.45rem;margin-top:.3rem"><div class="kicker">شنوّة تربح</div><div class="row small" style="gap:.35rem">${pts("+10")}<span>تسخّن قبل</span></div><div class="row small" style="gap:.35rem">${pts("+30")}${pts("+10", pool)}<span>تحضر وتكمّل</span></div><div class="row small" style="gap:.35rem">${pts("+5")}<span>كل سؤال سريع صحيح</span></div></div></div>` : lockBox;
+  } else {
+    const parts = [["00:00", "مقدّمة وتذكير"], ["12:30", "الدرس"], ["38:10", "تمارين"], ["52:00", "تمرين نوع باك"]];
+    main = head + `<div class="lv-stage ${ok ? "" : "locked"}" style="margin-top:.7rem">${lvBoard()}${ok ? `<button class="icon-btn lv-play" data-act="recPlay" aria-label="شغّل">${I("play", "l")}</button>` : `<span class="lv-lock col">${I("lock", "l")}<span class="small b">مسكّر — المعاينة: أوّل دقيقتين</span></span>`}<div style="position:absolute;bottom:10px;left:12px;right:12px">${bar(ok ? l.watched : 0)}</div></div>
+      <div class="panel" style="margin-top:.8rem"><header><h2>الأجزاء</h2></header><div class="list">${parts.map(([t, c], i) => `<button class="li" data-act="${ok ? "recSeek" : "recLocked"}" data-i="${i}"><span class="tag num">${t}</span><span class="small grow">${c}</span>${ok && l.watched >= (i + 1) / 4 ? I("check", "s") : ok ? "" : I("lock", "s")}</button>`).join("")}</div></div>`;
+    side = ok ? `<div class="panel col" style="gap:.6rem;text-align:center;align-items:center"><div class="kicker">تفرّجت</div>${ring(l.watched, 110, 11, `<b class="num">${Math.round(l.watched * 100)}٪</b>`)}
+        ${l.done ? `<span class="tag lime">${I("check", "s")} كمّلت · ${pts("+15")}</span>` : `<button class="cta lg block" data-act="recDone">${I("check")} كمّلت التسجيل</button>`}
+        <button class="btn block" data-go="ai-quiz">${I("zap")} ولّدلي كويز على الحصّة</button><button class="btn block" data-go="ai-photo">${I("camera")} صوّر حلّك وصحّحو</button></div>` : lockBox;
+  }
+  const title = l.state === "live" ? "مباشر" : l.state === "rec" ? "تسجيل" : "حصّة جاية";
+  return { title, back: "lives", html: split(main, side, cls), mount: () => {
+    const b = $("#msgs"); if (b) b.scrollTop = b.scrollHeight;
+    if (l.state !== "live" || !ok) return;
+    every(() => { l.viewers = Math.max(180, l.viewers + Math.floor(Math.random() * 6) - 2); const e = $("#lvView"); if (e) e.textContent = l.viewers; }, 2500);
+    const lines = [["nour", "فهمت توّا علاش نقسمو على x"], ["t-wael", "باهي، نعدّيو للسؤال 3"], ["amine", "أستاذ، تنجم تعاود الخطوة الأخيرة؟"]];
+    every(() => { if (u.ch < lines.length) { pushMsg(l.id, ...lines[u.ch]); u.ch++; } }, 6000);
+  } };
+};
+ACT.lvPick = (el) => { const u = UI.live; if (u.pick != null) return toast("جاوبت — شوف الإصلاح", "check"); u.pick = +el.dataset.i;
+  if (u.pick === LV_POLL[2]) { S.points.gen += 5; S.pointsLog.unshift({ label: "سؤال سريع صحيح — في المباشر", v: 5, sub: 0, pool: "gen", when: "توّا" }); }
+  refresh(); if (u.pick === LV_POLL[2]) setTimeout(() => burst($(".opt[data-state=right]")), 50); };
+ACT.lvHand = () => { const u = UI.live; u.hand = !u.hand; refresh(); if (u.hand) { pushMsg(u.id, "sys", "محمد رفع يدّو"); toast("الأستاذ شاف يدّك — يعطيك الكلمة بعد شوية", "hand"); } };
+ACT.lvAsk = () => { const f = $(".chat input"); if (f) { f.value = "أستاذ، "; f.focus(); } toast("اكتب سؤالك في الشات — يوصل للأستاذ", "msg"); };
+ACT.lvClap = (el) => { burst(el); pushMsg(UI.live.id, "sys", "محمد بعث «برافو» للأستاذ"); };
+ACT.lvDocs = () => toast("وثيقة الحصّة (PDF) — تتحلّ في التطبيق", "file");
+ACT.lvFinish = () => { const u = UI.live, l = lvById(u.id), pool = SUBJ[l.s].pool; if (u.attended) return; u.attended = true; S.points.gen += 30; S.points[pool] += 10;
+  S.pointsLog.unshift({ label: `حضرت المباشر — ${lvShort(l)}`, v: 30, sub: 10, pool, when: "توّا" }); refresh(); setTimeout(() => burst($(".lv-pts")), 50); toast(`+30 نقطة عامّة و+10 ${POOLS[pool].short}`, "zap"); };
+ACT.warmGo = () => { Object.assign(UI.live, { warm: "q", wi: 0, wscore: 0, pick: null }); refresh(); };
+ACT.warmPick = (el) => { const u = UI.live, l = lvById(u.id); if (u.pick != null) return; u.pick = +el.dataset.i; if (u.pick === (LV_WARM[l.s] || LV_WARM.phys)[u.wi][2]) u.wscore++; refresh(); };
+ACT.warmNext = () => { const u = UI.live, l = lvById(u.id); if (u.wi < 2) { u.wi++; u.pick = null; refresh(); return; }
+  u.warm = null; u.pick = null; l.warmed = true; l.wscore = u.wscore; S.points.gen += 10; S.pointsLog.unshift({ label: `سخّنت قبل — ${lvShort(l)}`, v: 10, sub: 0, pool: "gen", when: "توّا" }); refresh(); toast("+10 نقاط عامّة · نشوفوك في الحصّة", "zap"); };
+ACT.recPlay = () => { const l = lvById(UI.live.id); l.watched = Math.min(1, l.watched + 0.25); refresh(); toast("يتفرّج… (للعرض: كل ضغطة = ربع التسجيل)", "play"); };
+ACT.recSeek = (el) => { const l = lvById(UI.live.id); l.watched = Math.max(l.watched, (+el.dataset.i + 1) / 4); refresh(); };
+ACT.recLocked = () => toast("افتح التسجيل بالقطع ولا بعرض", "lock");
+ACT.recDone = (el) => { const l = lvById(UI.live.id), pool = SUBJ[l.s].pool; if (l.watched < 0.9) { shake(el); return toast("كمّل التفرّج قبل — النقاط على التسجيل الكامل", "clock"); }
+  l.done = true; S.points.gen += 15; S.points[pool] += 5; S.pointsLog.unshift({ label: `كمّلت تسجيل — ${lvShort(l)}`, v: 15, sub: 5, pool, when: "توّا" }); refresh(); toast(`+15 نقطة عامّة و+5 ${POOLS[pool].short}`, "zap"); };
+
+/* ==========================================================================
    Landscape phone shell: rail (start edge, right thumb), compact header with
    the wallet in the top-end corner, primary actions in the end pane (left
    thumb). Five rail destinations; « مدينتي » is the lime one.
    ========================================================================== */
-const RAIL = [["home", "الرئيسية", "home"], ["content", "الدروس", "book"], ["town", "مدينتي", "castle", "game"], ["community", "المجتمع", "users"], ["goals", "أهدافي", "target"]];
-const SECTION = { wallet: "home", earn: "home", ad: "home", tasks: "home", survey: "home", profile: "home", referral: "home", store: "home", product: "home", cart: "home", checkout: "home", order: "home", orders: "home", offers: "home", ai: "home", "ai-photo": "home", "ai-quiz": "home", level: "goals", recs: "goals", focus: "goals", item: "content", viewer: "content", points: "town", league: "town", events: "community", event: "community", group: "community", "group-new": "community", challenge: "community", read: "community" };
+const RAIL = [["home", "الرئيسية", "home"], ["lives", "مباشر", "radio"], ["content", "الدروس", "book"], ["town", "مدينتي", "castle", "game"], ["community", "المجتمع", "users"], ["goals", "أهدافي", "target"]];
+const SECTION = { live: "lives", recordings: "lives", wallet: "home", earn: "home", ad: "home", tasks: "home", survey: "home", profile: "home", referral: "home", store: "home", product: "home", cart: "home", checkout: "home", order: "home", orders: "home", offers: "home", ai: "home", "ai-photo": "home", "ai-quiz": "home", level: "goals", recs: "goals", focus: "goals", item: "content", viewer: "content", points: "town", league: "town", events: "community", event: "community", group: "community", "group-new": "community", challenge: "community", read: "community" };
 const SHELL = {
   render(route, v) {
     const app = $("#app"), sec = SECTION[route] || route;
@@ -1838,7 +2011,7 @@ R.home = () => {
   const html = `<div class="hub rise-in">
     <button class="tile gamecard" data-go="town"><div class="mini">${townSVG(null)}</div><div class="gfoot"><div class="grow"><div class="b">مدينتي</div><div class="tiny">مستوى ${n(S.user.level)} · ${TIERS[S.user.tier][0]}</div></div><span class="cta sm" style="pointer-events:none">${I("gamepad")} العب</span></div></button>
     <div class="tiles">${tiles.map(([r, ic, c, t, s]) => `<button class="tile htile" data-go="${r}"><span class="plate" style="background:${c}">${I(ic)}</span><h3>${t}</h3><p class="tiny">${s}</p></button>`).join("")}</div>
-    <div class="today"><div class="panel"><div class="row"><b>نهارك زين ${S.user.first}</b></div><div class="row" style="margin-top:.4rem">${ring(done / S.todos.length, 52, 7, `<b class="num small">${done}/${S.todos.length}</b>`)}<div class="grow"><div class="small b">مهام اليوم</div><div class="tiny">الجاية: ${(S.todos.find((t) => !t.done) || { t: "كمّلت الكل" }).t}</div></div></div><button class="btn sm block" style="margin-top:.5rem" data-go="goals">${I("listc")} المهام</button></div>
+    <div class="today">${lvMini()}<div class="panel"><div class="row"><b>نهارك زين ${S.user.first}</b></div><div class="row" style="margin-top:.4rem">${ring(done / S.todos.length, 52, 7, `<b class="num small">${done}/${S.todos.length}</b>`)}<div class="grow"><div class="small b">مهام اليوم</div><div class="tiny">الجاية: ${(S.todos.find((t) => !t.done) || { t: "كمّلت الكل" }).t}</div></div></div><button class="btn sm block" style="margin-top:.5rem" data-go="goals">${I("listc")} المهام</button></div>
       <div class="panel"><div class="row">${COIN}<b class="num">${n(S.coins)}</b><span class="tiny">قطعة</span></div><button class="cta block" style="margin-top:.5rem" data-go="earn">${I("plus")} اربح قطع</button></div></div>
   </div>`;
   return { title: "الرئيسية", html };
@@ -1846,6 +2019,7 @@ R.home = () => {
 
 /* the flow index beside the frame (desktop only) — every link drives the phone */
 const FLOWS = [
+  ["الحصص المباشرة", [["lives", "مباشر توّا + الجايين", "radio"], ["live:l-log", "داخل المباشر: سؤال سريع + شات + نقاط", "radio"], ["live:l-genet", "حصّة جاية: سخّن قبل + ذكّرني", "target"], ["live:l-ondes", "حصّة موش في عرضك ← بالقطع", "unlock"], ["recordings", "التسجيلات", "tv"], ["live:r-rc", "تسجيل مسكّر ← بالقطع", "lock"]]],
   ["القطع", [["wallet", "المحفظة والحركة", "wallet"], ["content", "الدروس بالقطع (سوم + مدّة)", "book"], ["item:pdf-complexes", "شراء بالقطع ← تأكيد ← كرونو", "unlock"], ["item:vid-limites", "محتوى مفتوح + الوقت الباقي", "clock"], ["ad", "إعلان بمكافأة", "tv"], ["tasks", "المهام (استبيان، بروفيل، تقييم)", "listc"], ["referral", "استدعي صحابك", "share"]]],
   ["مكتبة وائل", [["store", "المنتوجات", "bag"], ["product:annales-math", "تفاصيل منتوج", "book"], ["cart", "القفّة", "cart"], ["checkout", "الطلب: عنوان ← دفع ← مراجعة", "truck"], ["orders", "طلباتي وتتبّع الطلب", "package"]]],
   ["وضع اللعب", [["town", "مدينتي (اضغط على بناية)", "castle"], ["points", "كيفاش تربح نقاط", "zap"], ["league", "الدوري، الشارات، المستوى", "trophy"]]],
@@ -1856,7 +2030,7 @@ const FLOWS = [
 $("#flows").innerHTML = `<h1>خريطة الفلوهات</h1><p>كل رابط يحلّ الشاشة في التلفون. الحالة تتعاود كي تعمل refresh.</p>
   ${FLOWS.map(([h, ls]) => `<h2>${h}</h2>${ls.map(([r, l, ic]) => { const [rt, p] = r.split(":"); return `<a href="#" data-act="flow" data-r="${rt}" ${p ? `data-pp="${p}"` : ""}>${I(ic)}${l}</a>`; }).join("")}`).join("")}
   <h2>الجهاز</h2><div class="devbar"><button data-act="plat" data-v="ios" aria-pressed="true">iPhone</button><button data-act="plat" data-v="android" aria-pressed="false">Galaxy</button><button data-act="restart">${I("refresh")} من الأوّل</button></div>`;
-ACT.flow = (el) => { closeDialog(); const r = el.dataset.r, reset = { ad: "ad", "ai-photo": "aiph", "ai-quiz": "aiq", challenge: "ch", checkout: "checkout", town: "town" }; if (reset[r]) UI[reset[r]] = null; go(r, el.dataset.pp); };
+ACT.flow = (el) => { closeDialog(); const r = el.dataset.r, reset = { ad: "ad", "ai-photo": "aiph", "ai-quiz": "aiq", challenge: "ch", checkout: "checkout", town: "town", live: "live" }; if (reset[r]) UI[reset[r]] = null; go(r, el.dataset.pp); };
 ACT.plat = (el) => { $("#device").dataset.plat = el.dataset.v; $$(".devbar [data-act=plat]").forEach((b) => b.setAttribute("aria-pressed", b === el)); };
 ACT.restart = () => { try { history.replaceState(null, "", "#/home"); } catch (e) {} location.reload(); };
 ACT.dismissRotate = () => $("#rotate").classList.add("dismissed");
