@@ -45,7 +45,7 @@ export default function WorkspaceLayout() {
       {/* Full-bleed on mobile; a floating window on md+ */}
       <div className="mx-auto flex h-dvh w-full max-w-[1120px] flex-col overflow-hidden bg-surface md:h-[calc(100dvh-4rem)] md:rounded-xl md:border md:border-border md:shadow-xl">
         {/* Header — mobile: top app bar (safe-area padded); desktop: static header */}
-        <header className="z-20 flex items-center gap-3 border-b border-border bg-surface px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:gap-4 md:px-7 md:pb-5 md:pt-5">
+        <header className="z-20 flex items-center gap-3 border-b border-border bg-surface px-4 pb-3 pt-[max(0.75rem,var(--sai-top))] md:gap-4 md:px-7 md:pb-5 md:pt-5">
           <Link
             to="/courses"
             aria-label="ارجع للدروس"

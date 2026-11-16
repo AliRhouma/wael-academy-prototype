@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from "react"
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react"
 import { useToast } from "@/components/kit/Toast"
 import { sfx } from "./sound"
 
@@ -47,4 +47,29 @@ export function useDownloads(): Ctx {
   const ctx = useContext(DownloadsContext)
   if (!ctx) throw new Error("useDownloads must be used inside <DownloadsProvider>")
   return ctx
+}
+
+/**
+ * The last file of a list taken by the élève's OWN hand — the list's small
+ * victory, and the one celebration a screen gets. Plays `achievement` 380 ms
+ * after the download's own `success` has had its moment, and returns the
+ * instant it did (0 until then) so the caller fires its burst off the same
+ * clock. Never on load, never for a demo state that forces « done » — that
+ * is what `live` is for.
+ */
+export function useAllTaken(done: boolean, live = true): number {
+  const was = useRef(done)
+  const [at, setAt] = useState(0)
+  useEffect(() => {
+    if (done && !was.current && live) {
+      const t = window.setTimeout(() => {
+        sfx("achievement")
+        setAt(Date.now())
+      }, 380)
+      was.current = done
+      return () => window.clearTimeout(t)
+    }
+    was.current = done
+  }, [done, live])
+  return at
 }

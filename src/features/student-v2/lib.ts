@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import type { Homework, ResourceLink, Session, Subject } from "@/data/types"
+import { matiereKey, matiereOf } from "@/data/matiere"
 import { useDemoRecent, useMyHomeworks, useMySessions } from "@/features/student/dashboard/dashboard"
 import {
   addDays,
@@ -62,6 +63,23 @@ export function weekStart(d: Date): Date {
   return addDays(d, -((d.getDay() + 6) % 7))
 }
 
+/**
+ * « غدوة — السبت 19/09 » : quand le contenu d'une matière vide est promis.
+ *
+ * Une matière sans programme disait « مازال ما فمّاش محتوى » — un constat, et
+ * rien d'autre : l'élève lit qu'il n'y a rien et n'apprend pas s'il y aura
+ * quelque chose. Le catalogue se remplit matière par matière en ce moment, donc
+ * la carte annonce la prochaine livraison au lieu de constater l'absence.
+ *
+ * La date est calculée, jamais écrite en dur : une démo faite en septembre ne
+ * doit pas promettre une date de septembre au mois de mars.
+ */
+export function dropDay(now: Date = new Date(), long = false): string {
+  const d = addDays(now, 1)
+  const day = `${WEEKDAYS[d.getDay()]} ${pad2(d.getDate())}/${pad2(d.getMonth() + 1)}`
+  return long ? `${day}/${d.getFullYear()}` : day
+}
+
 /** "الثلاثاء 01 سبتمبر" — the frame's own format. */
 export function dayLabel(key: string): string {
   const d = parseDay(key)
@@ -112,9 +130,14 @@ const FRENCH_NAME: Record<string, string> = {
   "تكنولوجيا": "Technologie",
 }
 
+/**
+ * The matière in French. A bac subject already names its filière
+ * (« Bac Sciences - SVT ») — the card shows the matière alone, so the drawing
+ * above it and the word under it say the same thing.
+ */
 export function frenchName(name: string | undefined): string {
   if (!name) return ""
-  return FRENCH_NAME[name] ?? name
+  return FRENCH_NAME[matiereKey(name)] ?? matiereOf(name)
 }
 
 /** session → its first matière, and teacherId → name. */

@@ -94,7 +94,7 @@ export function SubjectPicker({
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetContent
             side="bottom"
-            className="max-h-[80dvh] gap-0 rounded-t-xl border-border bg-surface-raised p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+            className="max-h-[80dvh] gap-0 rounded-t-xl border-border bg-surface-raised p-2 pb-[max(0.5rem,var(--sai-bottom))]"
           >
             <SheetTitle className="px-3 py-2 font-display text-base font-bold text-ink">
               بدّل المادّة

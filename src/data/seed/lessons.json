@@ -1,405 +1,5 @@
 [
   {
-    "id": "l-cx-cours",
-    "title": "درس — الأعداد المركّبة: الشكل الجبري",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
-    "pdfs": [
-      {
-        "name": "ملخّص الدرس"
-      },
-      {
-        "name": "جدول الصيغ"
-      },
-      {
-        "name": "بطاقة منهجية — الطويلة والعمدة"
-      },
-      {
-        "name": "تمارين تطبيقية (النص)"
-      },
-      {
-        "name": "تمارين تطبيقية (الإصلاح)"
-      },
-      {
-        "name": "مواضيع باك — الأعداد المركّبة"
-      }
-    ],
-    "chapterId": "ch-complexes",
-    "order": 0
-  },
-  {
-    "id": "l-cx-exos",
-    "title": "تمارين مع الإصلاح — الأعداد المركّبة",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
-    "pdfs": [
-      {
-        "name": "النص"
-      },
-      {
-        "name": "إصلاح مفصّل"
-      }
-    ],
-    "chapterId": "ch-complexes",
-    "order": 1
-  },
-  {
-    "id": "l-cx-serie",
-    "title": "سلسلة تمارين عدد 1 — الأعداد المركّبة",
-    "kind": "serie",
-    "pdfs": [
-      {
-        "name": "النص"
-      },
-      {
-        "name": "إرشادات"
-      }
-    ],
-    "chapterId": "ch-complexes",
-    "order": 2
-  },
-  {
-    "id": "l-cx-resume",
-    "title": "ملخّص — الأعداد المركّبة",
-    "kind": "resume",
-    "pdfs": [
-      {
-        "name": "بطاقة ملخّص"
-      }
-    ],
-    "chapterId": "ch-complexes",
-    "order": 3
-  },
-  {
-    "id": "l-lim-cours",
-    "title": "درس — النهايات والاتّصال",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      }
-    ],
-    "chapterId": "ch-limites",
-    "order": 0
-  },
-  {
-    "id": "l-lim-serie",
-    "title": "سلسلة تمارين — النهايات والاتّصال",
-    "kind": "serie",
-    "pdfs": [
-      {
-        "name": "النص"
-      }
-    ],
-    "chapterId": "ch-limites",
-    "order": 1
-  },
-  {
-    "id": "l-der-cours",
-    "title": "درس — الاشتقاق ودراسة الدوال",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/9bZkp7q19f0",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      }
-    ],
-    "chapterId": "ch-derivabilite",
-    "order": 0
-  },
-  {
-    "id": "l-der-exos",
-    "title": "تمارين مع الإصلاح — الاشتقاق",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
-    "pdfs": [
-      {
-        "name": "النص"
-      },
-      {
-        "name": "الإصلاح"
-      }
-    ],
-    "chapterId": "ch-derivabilite",
-    "order": 1
-  },
-  {
-    "id": "l-int-cours",
-    "title": "درس كامل — الحساب التكاملي: الدوال الأصلية، التكامل بالتجزئة وتطبيقاتو على حساب المساحات",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "جدول الدوال الأصلية"
-      }
-    ],
-    "chapterId": "ch-integrales",
-    "order": 0
-  },
-  {
-    "id": "l-proba-exos",
-    "title": "تمارين — الاحتمالات الشرطية",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
-    "pdfs": [
-      {
-        "name": "النص"
-      }
-    ],
-    "chapterId": "ch-probabilites",
-    "order": 0
-  },
-  {
-    "id": "l-rc-cours",
-    "title": "درس — ثنائي القطب RC",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "جدول الصيغ"
-      }
-    ],
-    "chapterId": "ch-rc",
-    "order": 0
-  },
-  {
-    "id": "l-rc-exos",
-    "title": "تمارين مع الإصلاح — ثنائي القطب RC",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
-    "pdfs": [
-      {
-        "name": "النص"
-      },
-      {
-        "name": "الإصلاح"
-      }
-    ],
-    "chapterId": "ch-rc",
-    "order": 1
-  },
-  {
-    "id": "l-rl-exos",
-    "title": "تمارين مع الإصلاح — ثنائي القطب RL",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/9bZkp7q19f0",
-    "pdfs": [
-      {
-        "name": "النص"
-      },
-      {
-        "name": "الإصلاح"
-      }
-    ],
-    "chapterId": "ch-rl",
-    "order": 0
-  },
-  {
-    "id": "l-ondes-resume",
-    "title": "ملخّص — الموجات الميكانيكية المتقدّمة",
-    "kind": "resume",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-ondes",
-    "order": 0
-  },
-  {
-    "id": "l-imm-resume",
-    "title": "ملخّص — المناعة والجهاز المناعي",
-    "kind": "resume",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-immunite",
-    "order": 0
-  },
-  {
-    "id": "l-gen-exos",
-    "title": "تمارين — الوراثة البشرية",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
-    "pdfs": [
-      {
-        "name": "النص"
-      },
-      {
-        "name": "الإصلاح"
-      }
-    ],
-    "chapterId": "ch-genetique-humaine",
-    "order": 0
-  },
-  {
-    "id": "l-repro-cours",
-    "title": "درس — التكاثر عند الإنسان",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "رسوم توضيحية"
-      }
-    ],
-    "chapterId": "ch-reproduction",
-    "order": 0
-  },
-  {
-    "id": "l-neuro-cours",
-    "title": "درس — فيزيولوجيا الأعصاب: المنعكس العضلي",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      }
-    ],
-    "chapterId": "ch-neuro",
-    "order": 0
-  },
-  {
-    "id": "l-sql-cours",
-    "title": "درس — لغة SQL",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "مذكّرة SQL"
-      }
-    ],
-    "chapterId": "ch-sql",
-    "order": 0
-  },
-  {
-    "id": "l-sql-tp",
-    "title": "أشغال تطبيقية — طلبات SQL (SELECT، JOIN)",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
-    "pdfs": [
-      {
-        "name": "موضوع الأشغال التطبيقية"
-      },
-      {
-        "name": "قاعدة البيانات (script)"
-      }
-    ],
-    "chapterId": "ch-sql",
-    "order": 1
-  },
-  {
-    "id": "l-reseaux-resume",
-    "title": "ملخّص — الشبكات الإعلامية",
-    "kind": "resume",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-reseaux",
-    "order": 0
-  },
-  {
-    "id": "l-python-cours",
-    "title": "درس — البرمجة بـ Python",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/9bZkp7q19f0",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "أمثلة كود"
-      }
-    ],
-    "chapterId": "ch-python",
-    "order": 0
-  },
-  {
-    "id": "l-croiss-cours",
-    "title": "درس — النمو الاقتصادي",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      }
-    ],
-    "chapterId": "ch-croissance",
-    "order": 0
-  },
-  {
-    "id": "l-mond-resume",
-    "title": "ملخّص — العولمة",
-    "kind": "resume",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-mondialisation",
-    "order": 0
-  },
-  {
-    "id": "l-chomage-exos",
-    "title": "تمارين — البطالة والتضخّم",
-    "kind": "exercice",
-    "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
-    "pdfs": [
-      {
-        "name": "النص"
-      },
-      {
-        "name": "الإصلاح"
-      }
-    ],
-    "chapterId": "ch-chomage",
-    "order": 0
-  },
-  {
-    "id": "l-consc-cours",
-    "title": "درس — الوعي واللاوعي",
-    "kind": "cours",
-    "videoUrl": "https://youtu.be/oHg5SJYRHA0",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "أهمّ المقولات"
-      }
-    ],
-    "chapterId": "ch-conscience",
-    "order": 0
-  },
-  {
-    "id": "l-lib-resume",
-    "title": "ملخّص — الحرّية",
-    "kind": "resume",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-liberte",
-    "order": 0
-  },
-  {
     "id": "l-9th-cours",
     "title": "درس — مبرهنة طاليس",
     "kind": "cours",
@@ -440,445 +40,6206 @@
     "order": 0
   },
   {
-    "id": "l-arh-cours",
-    "title": "درس — النص الحجاجي",
+    "id": "les-bac-eco-eco-1-01",
+    "title": "L'utilité totale et l'utilité marginale",
     "kind": "cours",
-    "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
+    "videoUrl": "wael-media:ELINE-ECO-009",
     "pdfs": [
       {
-        "name": "ملخص الدرس"
+        "name": "PDF V01"
       }
     ],
-    "chapterId": "ch-ar-hijaji",
+    "chapterId": "ch-bac-eco-eco-1",
     "order": 0
   },
   {
-    "id": "l-ars-resume",
-    "title": "ملخص — الشعر الحديث",
-    "kind": "resume",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-ar-shi3r",
-    "order": 0
-  },
-  {
-    "id": "l-arsd-serie",
-    "title": "سلسلة تمارين — النص السردي",
-    "kind": "serie",
-    "pdfs": [
-      {
-        "name": "الأسئلة"
-      },
-      {
-        "name": "الإصلاح"
-      }
-    ],
-    "chapterId": "ch-ar-sardi",
-    "order": 0
-  },
-  {
-    "id": "l-philo-01",
-    "title": "منهجية الفلسفة في 6 دقائق🧠باكالوريا شعب علمية و اقتصادية ✅ مقتطف من منصة وائل أكادمي 🔴",
+    "id": "les-bac-eco-eco-1-02",
+    "title": "La contrainte budgétaire",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=kHonHhSwplo",
+    "videoUrl": "wael-media:ELINE-ECO-010",
     "pdfs": [
       {
-        "name": "بطاقة مراجعة"
+        "name": "PDF V02"
       }
     ],
-    "chapterId": "ch-conscience",
+    "chapterId": "ch-bac-eco-eco-1",
     "order": 1
   },
   {
-    "id": "l-philo-02",
-    "title": "ميكانيك | باك تقني | القطار الكوكبي | منصة وائل أكاديمي",
+    "id": "les-bac-eco-eco-1-03",
+    "title": "L'équilibre du consommateur",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=Juluo572AZg",
-    "pdfs": [],
-    "chapterId": "ch-tech-transmission",
+    "videoUrl": "wael-media:ELINE-ECO-003",
+    "pdfs": [
+      {
+        "name": "l_équilibre du conso"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-1",
     "order": 2
   },
   {
-    "id": "l-philo-03",
-    "title": "رياضيات | باك علمي | الدالة العكسية: تمرين مع الإصلاح | منصة وائل أكاديمي",
+    "id": "les-bac-eco-eco-1-04",
+    "title": "Fonction de la demande",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=LtmNaSI0Qg8",
+    "videoUrl": "wael-media:ELINE-ECO-031",
     "pdfs": [
       {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "تمارين تطبيقية"
+        "name": "Fonction de la demande-Copy"
       }
     ],
-    "chapterId": "ch-conscience",
+    "chapterId": "ch-bac-eco-eco-1",
     "order": 3
   },
   {
-    "id": "l-philo-04",
-    "title": "فرنسية | مراجعة الباك | تمرين لغة مع الإصلاح | منصة وائل أكاديمي",
+    "id": "les-bac-eco-eco-1-05",
+    "title": "Choix citoyen du consommateur",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=uvkdpRn-_gc",
+    "videoUrl": "wael-media:ELINE-ECO-001",
     "pdfs": [
       {
-        "name": "بطاقة مراجعة"
+        "name": "secion 2 le choix citoyen du consommateur bac"
       }
     ],
-    "chapterId": "ch-conscience",
+    "chapterId": "ch-bac-eco-eco-1",
     "order": 4
   },
   {
-    "id": "l-philo-05",
-    "title": "ميكانيك | باك تقني | الانحناء المستوي البسيط | منصة وائل أكاديمي",
+    "id": "les-bac-eco-eco-1-06",
+    "title": "Méthodologie de la dissertation économique",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=jvWmA-oGwC0",
-    "pdfs": [],
-    "chapterId": "ch-tech-rdm",
+    "videoUrl": "wael-media:ELINE-ECO-005",
+    "pdfs": [
+      {
+        "name": "Méthodologie de la dissertation économique-Copy"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-1",
     "order": 5
   },
   {
-    "id": "l-philo-06",
-    "title": "🔴باك تقني | كهرباء: المضخّم الخطّي المدمج (ALI) | وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=AVT5DcI3rcE",
+    "id": "les-bac-eco-eco-1-07",
+    "title": "Problème (partie 1)",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-038",
     "pdfs": [
       {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "تمارين تطبيقية"
+        "name": "Ex Choix économique -Copy"
       }
     ],
-    "chapterId": "ch-tech-ali",
+    "chapterId": "ch-bac-eco-eco-1",
     "order": 6
   },
   {
-    "id": "l-philo-07",
-    "title": "🔴باك علمي | إعلامية: الاختبار التطبيقي | وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=hdCxgcvikIw",
+    "id": "les-bac-eco-eco-1-08",
+    "title": "Problème (partie 2)",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-035",
     "pdfs": [
       {
-        "name": "بطاقة مراجعة"
+        "name": "problème économique part 2 (vidéo)"
       }
     ],
-    "chapterId": "ch-desir",
+    "chapterId": "ch-bac-eco-eco-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-eco-eco-1-09",
+    "title": "Problème (partie 3)",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-036",
+    "pdfs": [
+      {
+        "name": "Ex Choix économique -Copy(2)"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-1",
+    "order": 8
+  },
+  {
+    "id": "les-bac-eco-eco-1-10",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-027",
+    "pdfs": [
+      {
+        "name": "Exercice 2 choix economique du consommateur-Copy"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-1",
+    "order": 9
+  },
+  {
+    "id": "les-bac-eco-eco-1-11",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-028",
+    "pdfs": [
+      {
+        "name": "Exercice 3-Copy (1) équilibre de consommateur"
+      },
+      {
+        "name": "le reste de l_exercice 3"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-1",
+    "order": 10
+  },
+  {
+    "id": "les-bac-eco-eco-1-12",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-020",
+    "pdfs": [
+      {
+        "name": "Choix économique du consommateur-Copy"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-1",
+    "order": 11
+  },
+  {
+    "id": "les-bac-eco-eco-2-01",
+    "title": "La fonction de production (partie 1)",
+    "kind": "cours",
+    "videoUrl": "wael-media:ELINE-ECO-018",
+    "pdfs": [
+      {
+        "name": "fonction de production partie 1"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-2",
     "order": 0
   },
   {
-    "id": "l-philo-08",
-    "title": "فيزياء | باك علمي | RLC حرّة: تمرين مع الإصلاح | منصة وائل أكاديمي",
+    "id": "les-bac-eco-eco-2-02",
+    "title": "La fonction de production (partie 2)",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=utWXQXIi0kc",
-    "pdfs": [],
-    "chapterId": "ch-desir",
+    "videoUrl": "wael-media:ELINE-ECO-017",
+    "pdfs": [
+      {
+        "name": "la fonction de production cours partie2"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-2",
     "order": 1
   },
   {
-    "id": "l-philo-09",
-    "title": "أنڤليزية | باك علمي | Virtual vs in-person schools | منصة وائل أكاديمي",
+    "id": "les-bac-eco-eco-2-03",
+    "title": "Contrainte budgétaire du producteur",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=GQsmDZE5dV4",
+    "videoUrl": "wael-media:ELINE-ECO-013",
     "pdfs": [
       {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "تمارين تطبيقية"
+        "name": "contrainte budgétaire du producteur"
       }
     ],
-    "chapterId": "ch-desir",
+    "chapterId": "ch-bac-eco-eco-2",
     "order": 2
   },
   {
-    "id": "l-philo-10",
-    "title": "🔴باك علمي | English Test (Listening، Grammar…) | وائل أكاديمي",
+    "id": "les-bac-eco-eco-2-04",
+    "title": "Le choix citoyen du producteur",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=ip1p3Lc9Sfk",
+    "videoUrl": "wael-media:ELINE-ECO-012",
     "pdfs": [
       {
-        "name": "بطاقة مراجعة"
+        "name": "SECTION 2 le choix citoyen du producteur-Copy"
       }
     ],
-    "chapterId": "ch-desir",
+    "chapterId": "ch-bac-eco-eco-2",
     "order": 3
   },
   {
-    "id": "l-philo-11",
-    "title": "ميكانيك | باك تقني | القطار الكوكبي، تركيب المدحرجات والصنع | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=VJfV67SV4zo",
-    "pdfs": [],
-    "chapterId": "ch-tech-transmission",
+    "id": "les-bac-eco-eco-2-05",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-039",
+    "pdfs": [
+      {
+        "name": "Exercice choix économique du producteur-Copy"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-2",
     "order": 4
   },
   {
-    "id": "l-philo-12",
-    "title": "التحديد الوظيفي | باك تقني | تمرين مع الإصلاح | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=JniICVZWGQk",
+    "id": "les-bac-eco-eco-2-06",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-049",
     "pdfs": [
       {
-        "name": "سند الدرس"
+        "name": "L_équilibre du producteur (vidéo)"
       },
       {
-        "name": "تمارين تطبيقية"
-      }
-    ],
-    "chapterId": "ch-tech-rdm",
-    "order": 0
-  },
-  {
-    "id": "l-philo-13",
-    "title": "فيزياء | باك علمي | RLC قسرية | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=rX0mJ2YyzkY",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-travail",
-    "order": 1
-  },
-  {
-    "id": "l-philo-14",
-    "title": "كهرباء | باك تقني | المتحكّمات الدقيقة | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=3Ej21PFBmKk",
-    "pdfs": [],
-    "chapterId": "ch-tech-micro",
-    "order": 2
-  },
-  {
-    "id": "l-philo-15",
-    "title": "فيزياء | باك علمي وتقني | الذبذبات الميكانيكية الحرّة | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=ox_GS9JRJNI",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
+        "name": "Exercice sur l’équilibre du producteur-Copy"
       },
       {
-        "name": "تمارين تطبيقية"
+        "name": "L’équilibre de producteur exercice 3"
       }
     ],
-    "chapterId": "ch-travail",
-    "order": 3
-  },
-  {
-    "id": "l-philo-16",
-    "title": "رياضيات | باك علمي | الأعداد المركّبة: تمرين مع الإصلاح | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=O8LR7NsHzWs",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-travail",
-    "order": 4
-  },
-  {
-    "id": "l-philo-17",
-    "title": "فيزياء | باك علمي | RC: تمرين مع الإصلاح | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=WDNr-SEFae0",
-    "pdfs": [],
-    "chapterId": "ch-verite",
-    "order": 0
-  },
-  {
-    "id": "l-philo-18",
-    "title": "فيزياء | باك علمي | الذبذبات الميكانيكية | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=i1tmJkjKxu0",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "تمارين تطبيقية"
-      }
-    ],
-    "chapterId": "ch-verite",
-    "order": 1
-  },
-  {
-    "id": "l-philo-19",
-    "title": "رياضيات | باك علمي | الدوال الأصلية | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=GqxaJ8sY6lA",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-verite",
-    "order": 2
-  },
-  {
-    "id": "l-philo-20",
-    "title": "كيمياء | باك علمي | حمض وقاعدة | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=DzidvUhAGpY",
-    "pdfs": [],
-    "chapterId": "ch-verite",
-    "order": 3
-  },
-  {
-    "id": "l-philo-21",
-    "title": "رياضيات | باك علمي | قراءة بيانية | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=VPzGidiQ1os",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "تمارين تطبيقية"
-      }
-    ],
-    "chapterId": "ch-verite",
-    "order": 4
-  },
-  {
-    "id": "l-philo-22",
-    "title": "رياضيات | باك علمي | المتتاليات: تمرين مع الإصلاح | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=b-QOe3JHjQA",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-liberte",
-    "order": 1
-  },
-  {
-    "id": "l-philo-23",
-    "title": "فيزياء | باك علمي | RLC قسرية: فارق الطور | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=gGH6mUq-ioc",
-    "pdfs": [],
-    "chapterId": "ch-liberte",
-    "order": 2
-  },
-  {
-    "id": "l-philo-24",
-    "title": "رياضيات | باك علمي | المصفوفات | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=yPbxd7IkZn0",
-    "pdfs": [
-      {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "تمارين تطبيقية"
-      }
-    ],
-    "chapterId": "ch-liberte",
-    "order": 3
-  },
-  {
-    "id": "l-philo-25",
-    "title": "أنڤليزية | باك علمي | Consolidation paper: Education matters | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=pk3U2t2obg8",
-    "pdfs": [
-      {
-        "name": "بطاقة مراجعة"
-      }
-    ],
-    "chapterId": "ch-liberte",
-    "order": 4
-  },
-  {
-    "id": "l-philo-26",
-    "title": "فيزياء | باك علمي | الذبذبات الميكانيكية القسرية | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=2R51u2FKTz8",
-    "pdfs": [],
-    "chapterId": "ch-liberte",
+    "chapterId": "ch-bac-eco-eco-2",
     "order": 5
   },
   {
-    "id": "l-philo-27",
-    "title": "رياضيات | باك علمي | الدالة العكسية | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=NML7T8-2gNQ",
+    "id": "les-bac-eco-eco-2-07",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-054",
     "pdfs": [
       {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "تمارين تطبيقية"
+        "name": "la fonction de la demande-Copy"
       }
     ],
-    "chapterId": "ch-liberte",
+    "chapterId": "ch-bac-eco-eco-2",
     "order": 6
   },
   {
-    "id": "l-philo-28",
-    "title": "رياضيات | باك علمي | القراءة البيانية | منصة وائل أكاديمي",
-    "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=SUhReGbMD_I",
+    "id": "les-bac-eco-eco-2-08",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-040",
     "pdfs": [
       {
-        "name": "بطاقة مراجعة"
+        "name": "Dissertations"
       }
     ],
-    "chapterId": "ch-etat",
+    "chapterId": "ch-bac-eco-eco-2",
+    "order": 7
+  },
+  {
+    "id": "les-bac-eco-eco-2-09",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ELINE-ECO-041",
+    "pdfs": [
+      {
+        "name": "Dissertations 2"
+      }
+    ],
+    "chapterId": "ch-bac-eco-eco-2",
+    "order": 8
+  },
+  {
+    "id": "les-bac-lettres-ar-1-01",
+    "title": "الايقاع",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-029",
+    "pdfs": [
+      {
+        "name": "11"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-1",
     "order": 0
   },
   {
-    "id": "l-philo-29",
-    "title": "رياضيات | باك علمي | الدالة ln | منصة وائل أكاديمي",
+    "id": "les-bac-lettres-ar-1-02",
+    "title": "المعجم",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=fzXZFAW0Ru4",
-    "pdfs": [],
-    "chapterId": "ch-etat",
+    "videoUrl": "wael-media:NAJEH-AR-032",
+    "pdfs": [
+      {
+        "name": "11"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-1",
     "order": 1
   },
   {
-    "id": "l-philo-30",
-    "title": "إعلامية: الاختبار التطبيقي | باك علمي | منصة وائل أكاديمي",
+    "id": "les-bac-lettres-ar-1-03",
+    "title": "الصورة الشعرية",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=w7MevlfLW1M",
+    "videoUrl": "wael-media:NAJEH-AR-031",
     "pdfs": [
       {
-        "name": "سند الدرس"
-      },
-      {
-        "name": "تمارين تطبيقية"
+        "name": "11"
       }
     ],
-    "chapterId": "ch-etat",
+    "chapterId": "ch-bac-lettres-ar-1",
     "order": 2
   },
   {
-    "id": "l-philo-31",
-    "title": "اختياري إسباني | مراجعة القواعد 🇪🇸 | منصة وائل أكاديمي",
+    "id": "les-bac-lettres-ar-1-04",
+    "title": "المعاني الحماسية",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=N3rldR7r3k0",
+    "videoUrl": "wael-media:NAJEH-AR-033",
     "pdfs": [
       {
-        "name": "بطاقة مراجعة"
+        "name": "11"
       }
     ],
-    "chapterId": "ch-etat",
+    "chapterId": "ch-bac-lettres-ar-1",
     "order": 3
   },
   {
-    "id": "l-philo-32",
-    "title": "فرنسية | باك علمي 2027 | المنهجية | منصة وائل أكاديمي",
+    "id": "les-bac-lettres-ar-1-05",
+    "title": "النقاش",
     "kind": "cours",
-    "videoUrl": "https://www.youtube.com/watch?v=F82qXP7dBa8",
-    "pdfs": [],
-    "chapterId": "ch-etat",
+    "videoUrl": "wael-media:NAJEH-AR-034",
+    "pdfs": [
+      {
+        "name": "11"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-1",
     "order": 4
+  },
+  {
+    "id": "les-bac-lettres-ar-1-06",
+    "title": "تدريب على موضوع حماسي",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-035",
+    "pdfs": [
+      {
+        "name": "11"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-lettres-ar-2-01",
+    "title": "مقدمة محور الجاحظ",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-001",
+    "pdfs": [
+      {
+        "name": "المنزع العقلي عند الجاحظ"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-lettres-ar-2-02",
+    "title": "المنهج العلمي",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-005",
+    "pdfs": [
+      {
+        "name": "المنزع العقلي عند الجاحظ"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-lettres-ar-2-03",
+    "title": "المنزع العقلي في الفكر الاعتزالي",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-004",
+    "pdfs": [
+      {
+        "name": "المنزع العقلي عند الجاحظ"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-lettres-ar-2-04",
+    "title": "المنزع العقلي في الاسلوب الحجاجي",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-003",
+    "pdfs": [
+      {
+        "name": "المنزع العقلي عند الجاحظ"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-lettres-ar-2-05",
+    "title": "موضوع محور الجاحظ",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-006",
+    "pdfs": [
+      {
+        "name": "المنزع العقلي عند الجاحظ"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-ar-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-svt-1-01",
+    "title": "La fonction reproductrice chez l'homme",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "cours 1 la fonction reproductrice chez l_homme"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-1",
+    "order": 0,
+    "videoUrl": "wael-media:MOHSSEN-SVT-018"
+  },
+  {
+    "id": "les-bac-sci-svt-1-02",
+    "title": "Fonctions des testicules",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-024",
+    "pdfs": [
+      {
+        "name": "Fonctions des testicules2023"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-svt-1-03",
+    "title": "Contrôle de l'activité testiculaire",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-025",
+    "pdfs": [
+      {
+        "name": "L3 controle de l_activite testiculaire cours"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-svt-1-04",
+    "title": "Exercice typique homme",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-001",
+    "pdfs": [
+      {
+        "name": "pdf"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-svt-1-05",
+    "title": "La fonction reproductrice chez la femme",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-027",
+    "pdfs": [
+      {
+        "name": "la fonction reproductrice chez la femme"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-svt-1-06",
+    "title": "L'appareil reproducteur de la femme",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "la fonction reproductrice chez la femme"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-2",
+    "order": 1,
+    "videoUrl": "wael-media:MOHSSEN-SVT-029"
+  },
+  {
+    "id": "les-bac-sci-svt-1-07",
+    "title": "Cycles sexuels",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-032",
+    "pdfs": [
+      {
+        "name": "cycles sexuls"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-svt-1-08",
+    "title": "Cycle ovarien hormonal",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-034",
+    "pdfs": [
+      {
+        "name": "cycle ovarien hormonal202"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-svt-1-09",
+    "title": "Exercice typique femme",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-003",
+    "pdfs": [
+      {
+        "name": "exercice-femme2023 (1)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-svt-1-10",
+    "title": "Régulation du cycle sexuel",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "L8 regulation du cycle sexul"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-2",
+    "order": 5,
+    "videoUrl": "wael-media:MOHSSEN-SVT-036"
+  },
+  {
+    "id": "les-bac-sci-phys-1-01",
+    "title": "Étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-026",
+    "pdfs": [
+      {
+        "name": "chapitre 01 BS"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-phys-1-02",
+    "title": "Étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-029",
+    "pdfs": [
+      {
+        "name": "chapitre 01 BS"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-phys-1-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-024",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-phys-1-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-025",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-phys-1-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-027",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-phys-1-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-028",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-sci-phys-2-01",
+    "title": "Dipôle RC : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-066",
+    "pdfs": [
+      {
+        "name": "DIPOLE RC (avec notes)"
+      },
+      {
+        "name": "DIPOLE RC (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-phys-2-02",
+    "title": "Dipôle RC : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-065",
+    "pdfs": [
+      {
+        "name": "DIPOLE RC (avec notes)"
+      },
+      {
+        "name": "DIPOLE RC (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-phys-2-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-057",
+    "pdfs": [
+      {
+        "name": "exercice 01-02 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-phys-2-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-058",
+    "pdfs": [
+      {
+        "name": "exercice 01-02 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-phys-2-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-059",
+    "pdfs": [
+      {
+        "name": "ex 03-04 dipole rc"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-phys-2-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-060",
+    "pdfs": [
+      {
+        "name": "ex 03-04 dipole rc"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-2",
+    "order": 5
+  },
+  {
+    "id": "les-bac-sci-phys-2-07",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-061",
+    "pdfs": [
+      {
+        "name": "ex 05-06 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-2",
+    "order": 6
+  },
+  {
+    "id": "les-bac-sci-phys-2-08",
+    "title": "Exercice 6",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-062",
+    "pdfs": [
+      {
+        "name": "ex 05-06 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-2",
+    "order": 7
+  },
+  {
+    "id": "les-bac-sci-phys-3-01",
+    "title": "Bobine",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-009",
+    "pdfs": [
+      {
+        "name": "LA BOBINE (avec des notes)"
+      },
+      {
+        "name": "LA BOBINE (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-3",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-phys-3-02",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-007",
+    "pdfs": [
+      {
+        "name": "ex n 01-ex n 02 la bobine"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-3",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-phys-3-03",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-008",
+    "pdfs": [
+      {
+        "name": "ex n 01-ex n 02 la bobine"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-3",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-phys-3-04",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-002",
+    "pdfs": [
+      {
+        "name": "ex n 03 bobine"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-3",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-phys-4-01",
+    "title": "Dipôle RL : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-081",
+    "pdfs": [
+      {
+        "name": "PDF COURS DIPOLE RL"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-4",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-phys-4-02",
+    "title": "Dipôle RL : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-080",
+    "pdfs": [
+      {
+        "name": "PDF COURS DIPOLE RL"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-4",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-phys-4-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-075",
+    "pdfs": [
+      {
+        "name": "correction ex n 01-ex n 02 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-4",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-phys-4-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-074",
+    "pdfs": [
+      {
+        "name": "correction ex n 01-ex n 02 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-4",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-phys-4-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-076",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-4",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-phys-4-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-077",
+    "pdfs": [
+      {
+        "name": "correction ex 03-ex 04 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-4",
+    "order": 5
+  },
+  {
+    "id": "les-bac-sci-phys-4-07",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-078",
+    "pdfs": [
+      {
+        "name": "correction ex 05-ex 06 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-4",
+    "order": 6
+  },
+  {
+    "id": "les-bac-sci-phys-4-08",
+    "title": "Exercice 6",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-079",
+    "pdfs": [
+      {
+        "name": "correction ex 05-ex 06 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-4",
+    "order": 7
+  },
+  {
+    "id": "les-bac-sci-phys-5-01",
+    "title": "Oscillations amorties libres : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-033",
+    "pdfs": [
+      {
+        "name": "OSCILLATIONS ELECTRIQUES LIBRES AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-5",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-phys-5-02",
+    "title": "Oscillations amorties libres : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-037",
+    "pdfs": [
+      {
+        "name": "OSCILLATIONS ELECTRIQUES LIBRES AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-5",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-phys-5-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-034",
+    "pdfs": [
+      {
+        "name": "correction ex 01 oscillations libres amortie"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-5",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-phys-5-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-035",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-5",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-phys-5-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-036",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-5",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-phys-6-01",
+    "title": "Oscillations non amorties : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-054",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-6",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-phys-6-02",
+    "title": "Oscillations non amorties : étude théorique (partie 1)",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-050",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-6",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-phys-6-03",
+    "title": "Oscillations non amorties : étude théorique (partie 2)",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-053",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-6",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-phys-6-04",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-051",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 01-ex n 02"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-6",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-phys-6-05",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-055",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 01-ex n 02"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-6",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-phys-6-06",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-052",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 03 - ex n 04"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-6",
+    "order": 5
+  },
+  {
+    "id": "les-bac-sci-phys-6-07",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 03 - ex n 04"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-6",
+    "order": 6,
+    "videoUrl": "wael-media:MAHDI-PHYS-043"
+  },
+  {
+    "id": "les-bac-sci-phys-6-08",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 05"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-6",
+    "order": 7,
+    "videoUrl": "wael-media:MAHDI-PHYS-044"
+  },
+  {
+    "id": "les-bac-sci-phys-7-01",
+    "title": "Avancement d'une réaction chimique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-010",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-phys-7-02",
+    "title": "Vitesse d'une réaction chimique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-022",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-phys-7-03",
+    "title": "Notion d'équilibre chimique et estérification",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-019",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-phys-7-04",
+    "title": "Loi d'action de masse",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-018",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-phys-7-05",
+    "title": "Exercice 1 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-014",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-phys-7-06",
+    "title": "Exercice 2 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-012",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 5
+  },
+  {
+    "id": "les-bac-sci-phys-7-07",
+    "title": "Exercice 3 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-011",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 6
+  },
+  {
+    "id": "les-bac-sci-phys-7-08",
+    "title": "Exercice 4 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-013",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 7
+  },
+  {
+    "id": "les-bac-sci-phys-7-09",
+    "title": "Exercice 1 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-015",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 8
+  },
+  {
+    "id": "les-bac-sci-phys-7-10",
+    "title": "Exercice 2 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-016",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 9
+  },
+  {
+    "id": "les-bac-sci-phys-7-11",
+    "title": "Exercice 3 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-017",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-sci-phys-7",
+    "order": 10
+  },
+  {
+    "id": "les-bac-sci-philo-1-01",
+    "title": "تمهيد محور الإنية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-009",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-philo-1-02",
+    "title": "تعالي الانية على الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-008",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-philo-1-03",
+    "title": "الانية بما هي ذات واعية (ديكارت)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-001",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-philo-1-04",
+    "title": "في جدلية الانية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-011",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-philo-1-05",
+    "title": "الذات المتجسدة",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-003",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-philo-1-06",
+    "title": "تاسيس انطولوجيا جديدة للجسد",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-007",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-sci-philo-1-07",
+    "title": "الوعي بما هو تشكل تاريخي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-005",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-sci-philo-1-08",
+    "title": "الوعي بناء تاريخي (ماركس)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-006",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-sci-philo-1-09",
+    "title": "جدلية الوعي و اللاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-010",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 8
+  },
+  {
+    "id": "les-bac-sci-philo-1-10",
+    "title": "التكامل بين الوعي و الاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-002",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 9
+  },
+  {
+    "id": "les-bac-sci-philo-1-11",
+    "title": "الغيرية كامنة في الذات",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-004",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-sci-philo-1",
+    "order": 10
+  },
+  {
+    "id": "les-bac-sci-fr-1-01",
+    "title": "Vocabulaire",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-017",
+    "pdfs": [
+      {
+        "name": "souvenirs et nostalgie vovabulaire"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-fr-1-02",
+    "title": "La cause et la conséquence",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-012",
+    "pdfs": [
+      {
+        "name": "La cause et la conséquence"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-fr-1-03",
+    "title": "Exercice cause et conséquence",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-010",
+    "pdfs": [
+      {
+        "name": "la cause et la conséquence exercices"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-fr-1-04",
+    "title": "Texte explicatif, texte argumentatif : quelle différence ?",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-019",
+    "pdfs": [
+      {
+        "name": "Module1 le txt explicatif le txt argumentatif quelle différence BS (1)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-fr-1-05",
+    "title": "Expression écrite : texte explicatif",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-020",
+    "pdfs": [
+      {
+        "name": "texte explicatif2(1)"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-fr-1-06",
+    "title": "Expression écrite : texte explicatif (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-022",
+    "pdfs": [
+      {
+        "name": "texte explicatif2"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-sci-fr-1-07",
+    "title": "Étude de texte : lire et comprendre une question de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-025",
+    "pdfs": [
+      {
+        "name": "étude de texte lire comprendre une question de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-sci-fr-1-08",
+    "title": "Répondre à une question portant sur les procédés d'écriture (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-016",
+    "pdfs": [
+      {
+        "name": "Répondre à une question portant sur les procédés d_écriture application"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-sci-fr-2-01",
+    "title": "Le but",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-007",
+    "pdfs": [
+      {
+        "name": "Activité langue le but BS"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-fr-2-02",
+    "title": "Le but : exercices",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-005",
+    "pdfs": [
+      {
+        "name": "Le but exercices"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-fr-2-03",
+    "title": "Étude de texte : répondre aux questions de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-008",
+    "pdfs": [
+      {
+        "name": "étude de texte répondre aux questions de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-fr-2-04",
+    "title": "Expression écrite : le point de vue absolu",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-003",
+    "pdfs": [
+      {
+        "name": "expression écrite le point de vue absolu   pt absolu"
+      }
+    ],
+    "chapterId": "ch-bac-sci-fr-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-ar-1-01",
+    "title": "العوامل التي ساعدت العرب على الإبداع",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-045",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-ar-1-02",
+    "title": "المناهج العلمية وصفات العالم المسلم",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-047",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-ar-1-03",
+    "title": "العلوم العربية",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-043",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-ar-1-04",
+    "title": "التدرب على فقرة حجاجية",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-044",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-ar-2-01",
+    "title": "الأدب والشعر",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-048",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-ar-2-02",
+    "title": "الأدب نثرا ونقدا",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-049",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-sci-ar-2-03",
+    "title": "الفن",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-050",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-ar-2-04",
+    "title": "الاجابة على أهم الأسئلة",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-051",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-ar-2-05",
+    "title": "اصلاح فرض حول محور الأدب والفن",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-052",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-sci-ar-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-elec-1-01",
+    "title": "MikroC 1 : interruption",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-001",
+    "pdfs": [
+      {
+        "name": "MIKROC 1 interruption2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-elec-1-02",
+    "title": "MikroC 2 : convertisseur",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-005",
+    "pdfs": [
+      {
+        "name": "MIKROC 2 convertisseur2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-elec-1-03",
+    "title": "MikroC 3 : timer",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-008",
+    "pdfs": [
+      {
+        "name": "MIKROC 3 Timer02026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-elec-1-04",
+    "title": "Série : micro-conversion",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ATEF-ELEC-030",
+    "pdfs": [
+      {
+        "name": "serie conversion2026-correction"
+      },
+      {
+        "name": "serie conversion2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-elec-2-01",
+    "title": "Circuit combinatoire : additionneur binaire et BCD",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-009",
+    "pdfs": [
+      {
+        "name": "CIRCUIT 2 COMBINATOIRRE ADDITIONNEUR binaire et BCD-2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-elec-2-02",
+    "title": "Circuit combinatoire : soustracteur",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-012",
+    "pdfs": [
+      {
+        "name": "CIRCUIT COMBINATOIRRE SOUSTRACTEUR"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-elec-2-03",
+    "title": "Circuit combinatoire : comparateur",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-014",
+    "pdfs": [
+      {
+        "name": "CIRCUIT 4 COMBINATOIRRE comparateur-2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-elec-2-04",
+    "title": "Circuit combinatoire : MUX et DMUX",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-016",
+    "pdfs": [
+      {
+        "name": "CIRCUIT 3 COMBINATOIRRE MUX ET DMUX-2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-elec-2-05",
+    "title": "Circuit combinatoire : UAL",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-018",
+    "pdfs": [
+      {
+        "name": "CIRCUIT 5 COMBINATOIRRE UAL-2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-elec-2-06",
+    "title": "Série : circuit combinatoire",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-022",
+    "pdfs": [
+      {
+        "name": "serie circuit combinatoire-2026"
+      },
+      {
+        "name": "serie circuit combinatoire2026-CORRECTION"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-2",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-elec-3-01",
+    "title": "Logique séquentielle : compteur",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-019",
+    "pdfs": [
+      {
+        "name": "LOGIQUE SEQUENTEILLE 1 COMPTEUR-2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-3",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-elec-3-02",
+    "title": "Logique séquentielle : GRAFCET synchronisé",
+    "kind": "cours",
+    "videoUrl": "wael-media:ATEF-ELEC-003",
+    "pdfs": [
+      {
+        "name": "LOGIQUE SEQUENTEILLE 2 GRAFCET SYNCHRONISE-2026"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-3",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-elec-3-03",
+    "title": "Série : interruption",
+    "kind": "exercice",
+    "videoUrl": "wael-media:ATEF-ELEC-026",
+    "pdfs": [
+      {
+        "name": "serie interruption-correction"
+      },
+      {
+        "name": "serie interruption"
+      }
+    ],
+    "chapterId": "ch-bac-tech-elec-3",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-meca-1-01",
+    "title": "Application 1",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-054",
+    "pdfs": [
+      {
+        "name": "APPLICATION  1 - Correction"
+      },
+      {
+        "name": "APPLICATION  1"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-meca-1-02",
+    "title": "Application 2",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-055",
+    "pdfs": [
+      {
+        "name": "APPLICATION  2 - Correction"
+      },
+      {
+        "name": "APPLICATION  2"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-meca-1-03",
+    "title": "Application 3",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-056",
+    "pdfs": [
+      {
+        "name": "APPLICATION  3 - Correction"
+      },
+      {
+        "name": "APPLICATION  3"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-meca-1-04",
+    "title": "Application 4",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-057",
+    "pdfs": [
+      {
+        "name": "APPLICATION  4 - Correction"
+      },
+      {
+        "name": "APPLICATION  4"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-meca-1-05",
+    "title": "Application 5",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-058",
+    "pdfs": [
+      {
+        "name": "APPLICATION  5 -DESSIN DENSEMBLE"
+      },
+      {
+        "name": "APPLICATION  5- Correction"
+      },
+      {
+        "name": "APPLICATION  5"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-meca-2-01",
+    "title": "Application 1",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-001",
+    "pdfs": [
+      {
+        "name": "CORRECTION COTATION FONCTIONNELLE-BAC 2027"
+      },
+      {
+        "name": "COTATION FONCTIONNELLE  BAC 2027"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-meca-2-02",
+    "title": "Application 2",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-002",
+    "pdfs": [
+      {
+        "name": "CORRECTION COTATION FONCTIONNELLE-BAC 2027"
+      },
+      {
+        "name": "COTATION FONCTIONNELLE  BAC 2027"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-meca-2-03",
+    "title": "Application 3",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-003",
+    "pdfs": [
+      {
+        "name": "CORRECTION COTATION FONCTIONNELLE-BAC 2027"
+      },
+      {
+        "name": "COTATION FONCTIONNELLE  BAC 2027"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-meca-2-04",
+    "title": "Application 4",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-004",
+    "pdfs": [
+      {
+        "name": "CORRECTION COTATION FONCTIONNELLE-BAC 2027"
+      },
+      {
+        "name": "COTATION FONCTIONNELLE  BAC 2027"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-meca-2-05",
+    "title": "Application 5",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-005",
+    "pdfs": [
+      {
+        "name": "CORRECTION COTATION FONCTIONNELLE-BAC 2027"
+      },
+      {
+        "name": "COTATION FONCTIONNELLE  BAC 2027"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-meca-2-06",
+    "title": "Application 6",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-006",
+    "pdfs": [
+      {
+        "name": "CORRECTION COTATION FONCTIONNELLE-BAC 2027"
+      },
+      {
+        "name": "COTATION FONCTIONNELLE  BAC 2027"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-2",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-meca-3-01",
+    "title": "Application 1",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-010",
+    "pdfs": [
+      {
+        "name": "Application 1 - Correction"
+      },
+      {
+        "name": "Application 1"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-3",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-meca-3-02",
+    "title": "Application 2",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-013",
+    "pdfs": [
+      {
+        "name": "Application 2 - Correction"
+      },
+      {
+        "name": "Application 2"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-3",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-meca-3-03",
+    "title": "Application 3",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-016",
+    "pdfs": [
+      {
+        "name": "Application 3 - Correction"
+      },
+      {
+        "name": "Application 3"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-3",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-meca-3-04",
+    "title": "Application 4",
+    "kind": "cours",
+    "videoUrl": "wael-media:AMMAR-MECA-019",
+    "pdfs": [
+      {
+        "name": "Application 4 - Correction"
+      },
+      {
+        "name": "Application 4"
+      }
+    ],
+    "chapterId": "ch-bac-tech-meca-3",
+    "order": 3
+  },
+  {
+    "id": "les-bac-eco-philo-1-01",
+    "title": "تمهيد محور الإنية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-009",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-eco-philo-1-02",
+    "title": "تعالي الانية على الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-008",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-eco-philo-1-03",
+    "title": "الانية بما هي ذات واعية (ديكارت)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-001",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-eco-philo-1-04",
+    "title": "في جدلية الانية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-011",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-eco-philo-1-05",
+    "title": "الذات المتجسدة",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-003",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-eco-philo-1-06",
+    "title": "تاسيس انطولوجيا جديدة للجسد",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-007",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-eco-philo-1-07",
+    "title": "الوعي بما هو تشكل تاريخي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-005",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-eco-philo-1-08",
+    "title": "الوعي بناء تاريخي (ماركس)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-006",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-eco-philo-1-09",
+    "title": "جدلية الوعي و اللاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-010",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 8
+  },
+  {
+    "id": "les-bac-eco-philo-1-10",
+    "title": "التكامل بين الوعي و الاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-002",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 9
+  },
+  {
+    "id": "les-bac-eco-philo-1-11",
+    "title": "الغيرية كامنة في الذات",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-004",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-eco-philo-1",
+    "order": 10
+  },
+  {
+    "id": "les-bac-info-philo-1-01",
+    "title": "تمهيد محور الإنية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-009",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-philo-1-02",
+    "title": "تعالي الانية على الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-008",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-philo-1-03",
+    "title": "الانية بما هي ذات واعية (ديكارت)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-001",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-philo-1-04",
+    "title": "في جدلية الانية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-011",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-philo-1-05",
+    "title": "الذات المتجسدة",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-003",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-info-philo-1-06",
+    "title": "تاسيس انطولوجيا جديدة للجسد",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-007",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-info-philo-1-07",
+    "title": "الوعي بما هو تشكل تاريخي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-005",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-info-philo-1-08",
+    "title": "الوعي بناء تاريخي (ماركس)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-006",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-info-philo-1-09",
+    "title": "جدلية الوعي و اللاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-010",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 8
+  },
+  {
+    "id": "les-bac-info-philo-1-10",
+    "title": "التكامل بين الوعي و الاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-002",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 9
+  },
+  {
+    "id": "les-bac-info-philo-1-11",
+    "title": "الغيرية كامنة في الذات",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-004",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-info-philo-1",
+    "order": 10
+  },
+  {
+    "id": "les-bac-lettres-philo-1-01",
+    "title": "تمهيد محور الإنية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-009",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-lettres-philo-1-02",
+    "title": "تعالي الانية على الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-008",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-lettres-philo-1-03",
+    "title": "الانية بما هي ذات واعية (ديكارت)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-001",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-lettres-philo-1-04",
+    "title": "في جدلية الانية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-011",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-lettres-philo-1-05",
+    "title": "الذات المتجسدة",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-003",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-lettres-philo-1-06",
+    "title": "تاسيس انطولوجيا جديدة للجسد",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-007",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-lettres-philo-1-07",
+    "title": "الوعي بما هو تشكل تاريخي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-005",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-lettres-philo-1-08",
+    "title": "الوعي بناء تاريخي (ماركس)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-006",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-lettres-philo-1-09",
+    "title": "جدلية الوعي و اللاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-010",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 8
+  },
+  {
+    "id": "les-bac-lettres-philo-1-10",
+    "title": "التكامل بين الوعي و الاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-002",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 9
+  },
+  {
+    "id": "les-bac-lettres-philo-1-11",
+    "title": "الغيرية كامنة في الذات",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-004",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-lettres-philo-1",
+    "order": 10
+  },
+  {
+    "id": "les-bac-math-philo-1-01",
+    "title": "تمهيد محور الإنية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-009",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-philo-1-02",
+    "title": "تعالي الانية على الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-008",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-philo-1-03",
+    "title": "الانية بما هي ذات واعية (ديكارت)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-001",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-philo-1-04",
+    "title": "في جدلية الانية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-011",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-philo-1-05",
+    "title": "الذات المتجسدة",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-003",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-philo-1-06",
+    "title": "تاسيس انطولوجيا جديدة للجسد",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-007",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-math-philo-1-07",
+    "title": "الوعي بما هو تشكل تاريخي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-005",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-math-philo-1-08",
+    "title": "الوعي بناء تاريخي (ماركس)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-006",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-math-philo-1-09",
+    "title": "جدلية الوعي و اللاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-010",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 8
+  },
+  {
+    "id": "les-bac-math-philo-1-10",
+    "title": "التكامل بين الوعي و الاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-002",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 9
+  },
+  {
+    "id": "les-bac-math-philo-1-11",
+    "title": "الغيرية كامنة في الذات",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-004",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-math-philo-1",
+    "order": 10
+  },
+  {
+    "id": "les-bac-tech-philo-1-01",
+    "title": "تمهيد محور الإنية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-009",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-philo-1-02",
+    "title": "تعالي الانية على الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-008",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-philo-1-03",
+    "title": "الانية بما هي ذات واعية (ديكارت)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-001",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-philo-1-04",
+    "title": "في جدلية الانية و الغيرية",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-011",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-philo-1-05",
+    "title": "الذات المتجسدة",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-003",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-philo-1-06",
+    "title": "تاسيس انطولوجيا جديدة للجسد",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-007",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-philo-1-07",
+    "title": "الوعي بما هو تشكل تاريخي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-005",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-tech-philo-1-08",
+    "title": "الوعي بناء تاريخي (ماركس)",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-006",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-tech-philo-1-09",
+    "title": "جدلية الوعي و اللاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-010",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 8
+  },
+  {
+    "id": "les-bac-tech-philo-1-10",
+    "title": "التكامل بين الوعي و الاوعي",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-002",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 9
+  },
+  {
+    "id": "les-bac-tech-philo-1-11",
+    "title": "الغيرية كامنة في الذات",
+    "kind": "cours",
+    "videoUrl": "wael-media:WALID-PHILO-004",
+    "pdfs": [
+      {
+        "name": "محور الإنية والغيرية"
+      }
+    ],
+    "chapterId": "ch-bac-tech-philo-1",
+    "order": 10
+  },
+  {
+    "id": "les-bac-eco-fr-1-01",
+    "title": "Vocabulaire",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-017",
+    "pdfs": [
+      {
+        "name": "souvenirs et nostalgie vovabulaire"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-eco-fr-1-02",
+    "title": "La cause et la conséquence",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-012",
+    "pdfs": [
+      {
+        "name": "La cause et la conséquence"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-eco-fr-1-03",
+    "title": "Exercice cause et conséquence",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-010",
+    "pdfs": [
+      {
+        "name": "la cause et la conséquence exercices"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-eco-fr-1-04",
+    "title": "Texte explicatif, texte argumentatif : quelle différence ?",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-019",
+    "pdfs": [
+      {
+        "name": "Module1 le txt explicatif le txt argumentatif quelle différence BS (1)"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-eco-fr-1-05",
+    "title": "Expression écrite : texte explicatif",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-020",
+    "pdfs": [
+      {
+        "name": "texte explicatif2(1)"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-eco-fr-1-06",
+    "title": "Expression écrite : texte explicatif (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-022",
+    "pdfs": [
+      {
+        "name": "texte explicatif2"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-eco-fr-1-07",
+    "title": "Étude de texte : lire et comprendre une question de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-025",
+    "pdfs": [
+      {
+        "name": "étude de texte lire comprendre une question de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-eco-fr-1-08",
+    "title": "Répondre à une question portant sur les procédés d'écriture (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-016",
+    "pdfs": [
+      {
+        "name": "Répondre à une question portant sur les procédés d_écriture application"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-eco-fr-2-01",
+    "title": "Le but",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-007",
+    "pdfs": [
+      {
+        "name": "Activité langue le but BS"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-eco-fr-2-02",
+    "title": "Le but : exercices",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-005",
+    "pdfs": [
+      {
+        "name": "Le but exercices"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-eco-fr-2-03",
+    "title": "Étude de texte : répondre aux questions de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-008",
+    "pdfs": [
+      {
+        "name": "étude de texte répondre aux questions de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-eco-fr-2-04",
+    "title": "Expression écrite : le point de vue absolu",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-003",
+    "pdfs": [
+      {
+        "name": "expression écrite le point de vue absolu   pt absolu"
+      }
+    ],
+    "chapterId": "ch-bac-eco-fr-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-fr-1-01",
+    "title": "Vocabulaire",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-017",
+    "pdfs": [
+      {
+        "name": "souvenirs et nostalgie vovabulaire"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-fr-1-02",
+    "title": "La cause et la conséquence",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-012",
+    "pdfs": [
+      {
+        "name": "La cause et la conséquence"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-fr-1-03",
+    "title": "Exercice cause et conséquence",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-010",
+    "pdfs": [
+      {
+        "name": "la cause et la conséquence exercices"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-fr-1-04",
+    "title": "Texte explicatif, texte argumentatif : quelle différence ?",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-019",
+    "pdfs": [
+      {
+        "name": "Module1 le txt explicatif le txt argumentatif quelle différence BS (1)"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-fr-1-05",
+    "title": "Expression écrite : texte explicatif",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-020",
+    "pdfs": [
+      {
+        "name": "texte explicatif2(1)"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-info-fr-1-06",
+    "title": "Expression écrite : texte explicatif (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-022",
+    "pdfs": [
+      {
+        "name": "texte explicatif2"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-info-fr-1-07",
+    "title": "Étude de texte : lire et comprendre une question de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-025",
+    "pdfs": [
+      {
+        "name": "étude de texte lire comprendre une question de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-info-fr-1-08",
+    "title": "Répondre à une question portant sur les procédés d'écriture (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-016",
+    "pdfs": [
+      {
+        "name": "Répondre à une question portant sur les procédés d_écriture application"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-info-fr-2-01",
+    "title": "Le but",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-007",
+    "pdfs": [
+      {
+        "name": "Activité langue le but BS"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-fr-2-02",
+    "title": "Le but : exercices",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-005",
+    "pdfs": [
+      {
+        "name": "Le but exercices"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-fr-2-03",
+    "title": "Étude de texte : répondre aux questions de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-008",
+    "pdfs": [
+      {
+        "name": "étude de texte répondre aux questions de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-fr-2-04",
+    "title": "Expression écrite : le point de vue absolu",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-003",
+    "pdfs": [
+      {
+        "name": "expression écrite le point de vue absolu   pt absolu"
+      }
+    ],
+    "chapterId": "ch-bac-info-fr-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-fr-1-01",
+    "title": "Vocabulaire",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-017",
+    "pdfs": [
+      {
+        "name": "souvenirs et nostalgie vovabulaire"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-fr-1-02",
+    "title": "La cause et la conséquence",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-012",
+    "pdfs": [
+      {
+        "name": "La cause et la conséquence"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-fr-1-03",
+    "title": "Exercice cause et conséquence",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-010",
+    "pdfs": [
+      {
+        "name": "la cause et la conséquence exercices"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-fr-1-04",
+    "title": "Texte explicatif, texte argumentatif : quelle différence ?",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-019",
+    "pdfs": [
+      {
+        "name": "Module1 le txt explicatif le txt argumentatif quelle différence BS (1)"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-fr-1-05",
+    "title": "Expression écrite : texte explicatif",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-020",
+    "pdfs": [
+      {
+        "name": "texte explicatif2(1)"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-fr-1-06",
+    "title": "Expression écrite : texte explicatif (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-022",
+    "pdfs": [
+      {
+        "name": "texte explicatif2"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-math-fr-1-07",
+    "title": "Étude de texte : lire et comprendre une question de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-025",
+    "pdfs": [
+      {
+        "name": "étude de texte lire comprendre une question de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-math-fr-1-08",
+    "title": "Répondre à une question portant sur les procédés d'écriture (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-016",
+    "pdfs": [
+      {
+        "name": "Répondre à une question portant sur les procédés d_écriture application"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-math-fr-2-01",
+    "title": "Le but",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-007",
+    "pdfs": [
+      {
+        "name": "Activité langue le but BS"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-fr-2-02",
+    "title": "Le but : exercices",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-005",
+    "pdfs": [
+      {
+        "name": "Le but exercices"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-fr-2-03",
+    "title": "Étude de texte : répondre aux questions de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-008",
+    "pdfs": [
+      {
+        "name": "étude de texte répondre aux questions de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-fr-2-04",
+    "title": "Expression écrite : le point de vue absolu",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-003",
+    "pdfs": [
+      {
+        "name": "expression écrite le point de vue absolu   pt absolu"
+      }
+    ],
+    "chapterId": "ch-bac-math-fr-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-fr-1-01",
+    "title": "Vocabulaire",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-017",
+    "pdfs": [
+      {
+        "name": "souvenirs et nostalgie vovabulaire"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-fr-1-02",
+    "title": "La cause et la conséquence",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-012",
+    "pdfs": [
+      {
+        "name": "La cause et la conséquence"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-fr-1-03",
+    "title": "Exercice cause et conséquence",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-010",
+    "pdfs": [
+      {
+        "name": "la cause et la conséquence exercices"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-fr-1-04",
+    "title": "Texte explicatif, texte argumentatif : quelle différence ?",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-019",
+    "pdfs": [
+      {
+        "name": "Module1 le txt explicatif le txt argumentatif quelle différence BS (1)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-fr-1-05",
+    "title": "Expression écrite : texte explicatif",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-020",
+    "pdfs": [
+      {
+        "name": "texte explicatif2(1)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-fr-1-06",
+    "title": "Expression écrite : texte explicatif (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-022",
+    "pdfs": [
+      {
+        "name": "texte explicatif2"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-fr-1-07",
+    "title": "Étude de texte : lire et comprendre une question de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-025",
+    "pdfs": [
+      {
+        "name": "étude de texte lire comprendre une question de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-1",
+    "order": 6
+  },
+  {
+    "id": "les-bac-tech-fr-1-08",
+    "title": "Répondre à une question portant sur les procédés d'écriture (application)",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-016",
+    "pdfs": [
+      {
+        "name": "Répondre à une question portant sur les procédés d_écriture application"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-1",
+    "order": 7
+  },
+  {
+    "id": "les-bac-tech-fr-2-01",
+    "title": "Le but",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-007",
+    "pdfs": [
+      {
+        "name": "Activité langue le but BS"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-fr-2-02",
+    "title": "Le but : exercices",
+    "kind": "exercice",
+    "videoUrl": "wael-media:RAOUEDHA-FR-005",
+    "pdfs": [
+      {
+        "name": "Le but exercices"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-fr-2-03",
+    "title": "Étude de texte : répondre aux questions de compréhension",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-008",
+    "pdfs": [
+      {
+        "name": "étude de texte répondre aux questions de compréhension"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-fr-2-04",
+    "title": "Expression écrite : le point de vue absolu",
+    "kind": "cours",
+    "videoUrl": "wael-media:RAOUEDHA-FR-003",
+    "pdfs": [
+      {
+        "name": "expression écrite le point de vue absolu   pt absolu"
+      }
+    ],
+    "chapterId": "ch-bac-tech-fr-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-eco-ar-1-01",
+    "title": "العوامل التي ساعدت العرب على الإبداع",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-045",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-eco-ar-1-02",
+    "title": "المناهج العلمية وصفات العالم المسلم",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-047",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-eco-ar-1-03",
+    "title": "العلوم العربية",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-043",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-eco-ar-1-04",
+    "title": "التدرب على فقرة حجاجية",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-044",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-eco-ar-2-01",
+    "title": "الأدب والشعر",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-048",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-eco-ar-2-02",
+    "title": "الأدب نثرا ونقدا",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-049",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-eco-ar-2-03",
+    "title": "الفن",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-050",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-eco-ar-2-04",
+    "title": "الاجابة على أهم الأسئلة",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-051",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-eco-ar-2-05",
+    "title": "اصلاح فرض حول محور الأدب والفن",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-052",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-eco-ar-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-info-ar-1-01",
+    "title": "العوامل التي ساعدت العرب على الإبداع",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-045",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-ar-1-02",
+    "title": "المناهج العلمية وصفات العالم المسلم",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-047",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-ar-1-03",
+    "title": "العلوم العربية",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-043",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-ar-1-04",
+    "title": "التدرب على فقرة حجاجية",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-044",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-ar-2-01",
+    "title": "الأدب والشعر",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-048",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-ar-2-02",
+    "title": "الأدب نثرا ونقدا",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-049",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-ar-2-03",
+    "title": "الفن",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-050",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-ar-2-04",
+    "title": "الاجابة على أهم الأسئلة",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-051",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-ar-2-05",
+    "title": "اصلاح فرض حول محور الأدب والفن",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-052",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-info-ar-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-ar-1-01",
+    "title": "العوامل التي ساعدت العرب على الإبداع",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-045",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-ar-1-02",
+    "title": "المناهج العلمية وصفات العالم المسلم",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-047",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-ar-1-03",
+    "title": "العلوم العربية",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-043",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-ar-1-04",
+    "title": "التدرب على فقرة حجاجية",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-044",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-ar-2-01",
+    "title": "الأدب والشعر",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-048",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-ar-2-02",
+    "title": "الأدب نثرا ونقدا",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-049",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-ar-2-03",
+    "title": "الفن",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-050",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-ar-2-04",
+    "title": "الاجابة على أهم الأسئلة",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-051",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-ar-2-05",
+    "title": "اصلاح فرض حول محور الأدب والفن",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-052",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-math-ar-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-ar-1-01",
+    "title": "العوامل التي ساعدت العرب على الإبداع",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-045",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-ar-1-02",
+    "title": "المناهج العلمية وصفات العالم المسلم",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-047",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-ar-1-03",
+    "title": "العلوم العربية",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-043",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-ar-1-04",
+    "title": "التدرب على فقرة حجاجية",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-044",
+    "pdfs": [
+      {
+        "name": "المحور الأول فيد"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-ar-2-01",
+    "title": "الأدب والشعر",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-048",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-ar-2-02",
+    "title": "الأدب نثرا ونقدا",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-049",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-ar-2-03",
+    "title": "الفن",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-050",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-ar-2-04",
+    "title": "الاجابة على أهم الأسئلة",
+    "kind": "cours",
+    "videoUrl": "wael-media:NAJEH-AR-051",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-ar-2-05",
+    "title": "اصلاح فرض حول محور الأدب والفن",
+    "kind": "exercice",
+    "videoUrl": "wael-media:NAJEH-AR-052",
+    "pdfs": [
+      {
+        "name": "المحور الثاني مع فرض فيديو"
+      }
+    ],
+    "chapterId": "ch-bac-tech-ar-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-phys-1-01",
+    "title": "Étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-026",
+    "pdfs": [
+      {
+        "name": "chapitre 01 BS"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-phys-1-02",
+    "title": "Étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-029",
+    "pdfs": [
+      {
+        "name": "chapitre 01 BS"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-phys-1-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-024",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-phys-1-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-025",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-phys-1-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-027",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-phys-1-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-028",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-math-phys-2-01",
+    "title": "Dipôle RC : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-066",
+    "pdfs": [
+      {
+        "name": "DIPOLE RC (avec notes)"
+      },
+      {
+        "name": "DIPOLE RC (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-phys-2-02",
+    "title": "Dipôle RC : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-065",
+    "pdfs": [
+      {
+        "name": "DIPOLE RC (avec notes)"
+      },
+      {
+        "name": "DIPOLE RC (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-phys-2-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-057",
+    "pdfs": [
+      {
+        "name": "exercice 01-02 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-phys-2-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-058",
+    "pdfs": [
+      {
+        "name": "exercice 01-02 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-phys-2-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-059",
+    "pdfs": [
+      {
+        "name": "ex 03-04 dipole rc"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-phys-2-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-060",
+    "pdfs": [
+      {
+        "name": "ex 03-04 dipole rc"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-2",
+    "order": 5
+  },
+  {
+    "id": "les-bac-math-phys-2-07",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-061",
+    "pdfs": [
+      {
+        "name": "ex 05-06 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-2",
+    "order": 6
+  },
+  {
+    "id": "les-bac-math-phys-2-08",
+    "title": "Exercice 6",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-062",
+    "pdfs": [
+      {
+        "name": "ex 05-06 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-2",
+    "order": 7
+  },
+  {
+    "id": "les-bac-math-phys-3-01",
+    "title": "Bobine",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-009",
+    "pdfs": [
+      {
+        "name": "LA BOBINE (avec des notes)"
+      },
+      {
+        "name": "LA BOBINE (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-3",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-phys-3-02",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-007",
+    "pdfs": [
+      {
+        "name": "ex n 01-ex n 02 la bobine"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-3",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-phys-3-03",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-008",
+    "pdfs": [
+      {
+        "name": "ex n 01-ex n 02 la bobine"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-3",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-phys-3-04",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-002",
+    "pdfs": [
+      {
+        "name": "ex n 03 bobine"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-3",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-phys-4-01",
+    "title": "Dipôle RL : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-081",
+    "pdfs": [
+      {
+        "name": "PDF COURS DIPOLE RL"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-4",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-phys-4-02",
+    "title": "Dipôle RL : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-080",
+    "pdfs": [
+      {
+        "name": "PDF COURS DIPOLE RL"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-4",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-phys-4-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-075",
+    "pdfs": [
+      {
+        "name": "correction ex n 01-ex n 02 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-4",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-phys-4-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-074",
+    "pdfs": [
+      {
+        "name": "correction ex n 01-ex n 02 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-4",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-phys-4-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-076",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-4",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-phys-4-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-077",
+    "pdfs": [
+      {
+        "name": "correction ex 03-ex 04 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-4",
+    "order": 5
+  },
+  {
+    "id": "les-bac-math-phys-4-07",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-078",
+    "pdfs": [
+      {
+        "name": "correction ex 05-ex 06 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-4",
+    "order": 6
+  },
+  {
+    "id": "les-bac-math-phys-4-08",
+    "title": "Exercice 6",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-079",
+    "pdfs": [
+      {
+        "name": "correction ex 05-ex 06 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-4",
+    "order": 7
+  },
+  {
+    "id": "les-bac-math-phys-5-01",
+    "title": "Oscillations amorties libres : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-033",
+    "pdfs": [
+      {
+        "name": "OSCILLATIONS ELECTRIQUES LIBRES AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-5",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-phys-5-02",
+    "title": "Oscillations amorties libres : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-037",
+    "pdfs": [
+      {
+        "name": "OSCILLATIONS ELECTRIQUES LIBRES AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-5",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-phys-5-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-034",
+    "pdfs": [
+      {
+        "name": "correction ex 01 oscillations libres amortie"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-5",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-phys-5-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-035",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-5",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-phys-5-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-036",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-5",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-phys-6-01",
+    "title": "Oscillations non amorties : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-054",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-6",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-phys-6-02",
+    "title": "Oscillations non amorties : étude théorique (partie 1)",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-050",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-6",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-phys-6-03",
+    "title": "Oscillations non amorties : étude théorique (partie 2)",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-053",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-6",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-phys-6-04",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-051",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 01-ex n 02"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-6",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-phys-6-05",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-055",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 01-ex n 02"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-6",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-phys-6-06",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-052",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 03 - ex n 04"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-6",
+    "order": 5
+  },
+  {
+    "id": "les-bac-math-phys-6-07",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 03 - ex n 04"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-6",
+    "order": 6,
+    "videoUrl": "wael-media:MAHDI-PHYS-043"
+  },
+  {
+    "id": "les-bac-math-phys-6-08",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 05"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-6",
+    "order": 7,
+    "videoUrl": "wael-media:MAHDI-PHYS-044"
+  },
+  {
+    "id": "les-bac-math-phys-7-01",
+    "title": "Avancement d'une réaction chimique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-010",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-phys-7-02",
+    "title": "Vitesse d'une réaction chimique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-022",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-phys-7-03",
+    "title": "Notion d'équilibre chimique et estérification",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-019",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-phys-7-04",
+    "title": "Loi d'action de masse",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-018",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-phys-7-05",
+    "title": "Exercice 1 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-014",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-phys-7-06",
+    "title": "Exercice 2 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-012",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 5
+  },
+  {
+    "id": "les-bac-math-phys-7-07",
+    "title": "Exercice 3 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-011",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 6
+  },
+  {
+    "id": "les-bac-math-phys-7-08",
+    "title": "Exercice 4 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-013",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 7
+  },
+  {
+    "id": "les-bac-math-phys-7-09",
+    "title": "Exercice 1 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-015",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 8
+  },
+  {
+    "id": "les-bac-math-phys-7-10",
+    "title": "Exercice 2 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-016",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 9
+  },
+  {
+    "id": "les-bac-math-phys-7-11",
+    "title": "Exercice 3 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-017",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-math-phys-7",
+    "order": 10
+  },
+  {
+    "id": "les-bac-math-svt-1-01",
+    "title": "La fonction reproductrice chez l'homme",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "cours 1 la fonction reproductrice chez l_homme"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-1",
+    "order": 0,
+    "videoUrl": "wael-media:MOHSSEN-SVT-018"
+  },
+  {
+    "id": "les-bac-math-svt-1-02",
+    "title": "Fonctions des testicules",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-024",
+    "pdfs": [
+      {
+        "name": "Fonctions des testicules2023"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-math-svt-1-03",
+    "title": "Contrôle de l'activité testiculaire",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-025",
+    "pdfs": [
+      {
+        "name": "L3 controle de l_activite testiculaire cours"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-svt-1-04",
+    "title": "Exercice typique homme",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-001",
+    "pdfs": [
+      {
+        "name": "pdf"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-svt-1-05",
+    "title": "La fonction reproductrice chez la femme",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-027",
+    "pdfs": [
+      {
+        "name": "la fonction reproductrice chez la femme"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-svt-1-06",
+    "title": "L'appareil reproducteur de la femme",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "la fonction reproductrice chez la femme"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-2",
+    "order": 1,
+    "videoUrl": "wael-media:MOHSSEN-SVT-029"
+  },
+  {
+    "id": "les-bac-math-svt-1-07",
+    "title": "Cycles sexuels",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-032",
+    "pdfs": [
+      {
+        "name": "cycles sexuls"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-svt-1-08",
+    "title": "Cycle ovarien hormonal",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-034",
+    "pdfs": [
+      {
+        "name": "cycle ovarien hormonal202"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-svt-1-09",
+    "title": "Exercice typique femme",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-003",
+    "pdfs": [
+      {
+        "name": "exercice-femme2023 (1)"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-svt-1-10",
+    "title": "Régulation du cycle sexuel",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "L8 regulation du cycle sexul"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-2",
+    "order": 5,
+    "videoUrl": "wael-media:MOHSSEN-SVT-036"
+  },
+  {
+    "id": "les-bac-info-phys-1-01",
+    "title": "Étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-026",
+    "pdfs": [
+      {
+        "name": "chapitre 01 BS"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-phys-1-02",
+    "title": "Étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-029",
+    "pdfs": [
+      {
+        "name": "chapitre 01 BS"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-phys-1-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-024",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-phys-1-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-025",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-phys-1-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-027",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-info-phys-1-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-028",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-info-phys-2-01",
+    "title": "Dipôle RC : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-066",
+    "pdfs": [
+      {
+        "name": "DIPOLE RC (avec notes)"
+      },
+      {
+        "name": "DIPOLE RC (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-phys-2-02",
+    "title": "Dipôle RC : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-065",
+    "pdfs": [
+      {
+        "name": "DIPOLE RC (avec notes)"
+      },
+      {
+        "name": "DIPOLE RC (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-phys-2-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-057",
+    "pdfs": [
+      {
+        "name": "exercice 01-02 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-phys-2-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-058",
+    "pdfs": [
+      {
+        "name": "exercice 01-02 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-phys-2-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-059",
+    "pdfs": [
+      {
+        "name": "ex 03-04 dipole rc"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-info-phys-2-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-060",
+    "pdfs": [
+      {
+        "name": "ex 03-04 dipole rc"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-2",
+    "order": 5
+  },
+  {
+    "id": "les-bac-info-phys-2-07",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-061",
+    "pdfs": [
+      {
+        "name": "ex 05-06 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-2",
+    "order": 6
+  },
+  {
+    "id": "les-bac-info-phys-2-08",
+    "title": "Exercice 6",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-062",
+    "pdfs": [
+      {
+        "name": "ex 05-06 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-2",
+    "order": 7
+  },
+  {
+    "id": "les-bac-info-phys-3-01",
+    "title": "Bobine",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-009",
+    "pdfs": [
+      {
+        "name": "LA BOBINE (avec des notes)"
+      },
+      {
+        "name": "LA BOBINE (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-3",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-phys-3-02",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-007",
+    "pdfs": [
+      {
+        "name": "ex n 01-ex n 02 la bobine"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-3",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-phys-3-03",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-008",
+    "pdfs": [
+      {
+        "name": "ex n 01-ex n 02 la bobine"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-3",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-phys-3-04",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-002",
+    "pdfs": [
+      {
+        "name": "ex n 03 bobine"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-3",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-phys-4-01",
+    "title": "Dipôle RL : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-081",
+    "pdfs": [
+      {
+        "name": "PDF COURS DIPOLE RL"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-4",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-phys-4-02",
+    "title": "Dipôle RL : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-080",
+    "pdfs": [
+      {
+        "name": "PDF COURS DIPOLE RL"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-4",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-phys-4-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-075",
+    "pdfs": [
+      {
+        "name": "correction ex n 01-ex n 02 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-4",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-phys-4-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-074",
+    "pdfs": [
+      {
+        "name": "correction ex n 01-ex n 02 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-4",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-phys-4-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-076",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-4",
+    "order": 4
+  },
+  {
+    "id": "les-bac-info-phys-4-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-077",
+    "pdfs": [
+      {
+        "name": "correction ex 03-ex 04 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-4",
+    "order": 5
+  },
+  {
+    "id": "les-bac-info-phys-4-07",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-078",
+    "pdfs": [
+      {
+        "name": "correction ex 05-ex 06 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-4",
+    "order": 6
+  },
+  {
+    "id": "les-bac-info-phys-4-08",
+    "title": "Exercice 6",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-079",
+    "pdfs": [
+      {
+        "name": "correction ex 05-ex 06 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-4",
+    "order": 7
+  },
+  {
+    "id": "les-bac-info-phys-5-01",
+    "title": "Oscillations amorties libres : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-033",
+    "pdfs": [
+      {
+        "name": "OSCILLATIONS ELECTRIQUES LIBRES AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-5",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-phys-5-02",
+    "title": "Oscillations amorties libres : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-037",
+    "pdfs": [
+      {
+        "name": "OSCILLATIONS ELECTRIQUES LIBRES AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-5",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-phys-5-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-034",
+    "pdfs": [
+      {
+        "name": "correction ex 01 oscillations libres amortie"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-5",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-phys-5-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-035",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-5",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-phys-5-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-036",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-5",
+    "order": 4
+  },
+  {
+    "id": "les-bac-info-phys-6-01",
+    "title": "Oscillations non amorties : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-054",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-6",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-phys-6-02",
+    "title": "Oscillations non amorties : étude théorique (partie 1)",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-050",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-6",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-phys-6-03",
+    "title": "Oscillations non amorties : étude théorique (partie 2)",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-053",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-6",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-phys-6-04",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-051",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 01-ex n 02"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-6",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-phys-6-05",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-055",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 01-ex n 02"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-6",
+    "order": 4
+  },
+  {
+    "id": "les-bac-info-phys-6-06",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-052",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 03 - ex n 04"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-6",
+    "order": 5
+  },
+  {
+    "id": "les-bac-info-phys-6-07",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 03 - ex n 04"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-6",
+    "order": 6,
+    "videoUrl": "wael-media:MAHDI-PHYS-043"
+  },
+  {
+    "id": "les-bac-info-phys-6-08",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 05"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-6",
+    "order": 7,
+    "videoUrl": "wael-media:MAHDI-PHYS-044"
+  },
+  {
+    "id": "les-bac-info-phys-8-01",
+    "title": "Oscillations entretenues",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-049",
+    "pdfs": [
+      {
+        "name": "pdf oscillations electriques entretenues"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-8",
+    "order": 0
+  },
+  {
+    "id": "les-bac-info-phys-8-02",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-046",
+    "pdfs": [
+      {
+        "name": "pdf oscillations electriques entretenues"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-8",
+    "order": 1
+  },
+  {
+    "id": "les-bac-info-phys-8-03",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-047",
+    "pdfs": [
+      {
+        "name": "pdf oscillations electriques entretenues"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-8",
+    "order": 2
+  },
+  {
+    "id": "les-bac-info-phys-8-04",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-045",
+    "pdfs": [
+      {
+        "name": "pdf oscillations electriques entretenues"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-8",
+    "order": 3
+  },
+  {
+    "id": "les-bac-info-phys-8-05",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-048",
+    "pdfs": [
+      {
+        "name": "pdf oscillations electriques entretenues"
+      }
+    ],
+    "chapterId": "ch-bac-info-phys-8",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-phys-1-01",
+    "title": "Étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-026",
+    "pdfs": [
+      {
+        "name": "chapitre 01 BS"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-1",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-phys-1-02",
+    "title": "Étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-029",
+    "pdfs": [
+      {
+        "name": "chapitre 01 BS"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-1",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-phys-1-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-024",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-1",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-phys-1-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-025",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-1",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-phys-1-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-027",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-1",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-phys-1-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-028",
+    "pdfs": [
+      {
+        "name": "pdf le condensateur (correx ex)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-1",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-phys-2-01",
+    "title": "Dipôle RC : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-066",
+    "pdfs": [
+      {
+        "name": "DIPOLE RC (avec notes)"
+      },
+      {
+        "name": "DIPOLE RC (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-2",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-phys-2-02",
+    "title": "Dipôle RC : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-065",
+    "pdfs": [
+      {
+        "name": "DIPOLE RC (avec notes)"
+      },
+      {
+        "name": "DIPOLE RC (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-2",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-phys-2-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-057",
+    "pdfs": [
+      {
+        "name": "exercice 01-02 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-2",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-phys-2-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-058",
+    "pdfs": [
+      {
+        "name": "exercice 01-02 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-2",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-phys-2-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-059",
+    "pdfs": [
+      {
+        "name": "ex 03-04 dipole rc"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-2",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-phys-2-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-060",
+    "pdfs": [
+      {
+        "name": "ex 03-04 dipole rc"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-2",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-phys-2-07",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-061",
+    "pdfs": [
+      {
+        "name": "ex 05-06 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-2",
+    "order": 6
+  },
+  {
+    "id": "les-bac-tech-phys-2-08",
+    "title": "Exercice 6",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-062",
+    "pdfs": [
+      {
+        "name": "ex 05-06 dipole RC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-2",
+    "order": 7
+  },
+  {
+    "id": "les-bac-tech-phys-3-01",
+    "title": "Bobine",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-009",
+    "pdfs": [
+      {
+        "name": "LA BOBINE (avec des notes)"
+      },
+      {
+        "name": "LA BOBINE (vierge)"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-3",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-phys-3-02",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-007",
+    "pdfs": [
+      {
+        "name": "ex n 01-ex n 02 la bobine"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-3",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-phys-3-03",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-008",
+    "pdfs": [
+      {
+        "name": "ex n 01-ex n 02 la bobine"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-3",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-phys-3-04",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-002",
+    "pdfs": [
+      {
+        "name": "ex n 03 bobine"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-3",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-phys-4-01",
+    "title": "Dipôle RL : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-081",
+    "pdfs": [
+      {
+        "name": "PDF COURS DIPOLE RL"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-4",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-phys-4-02",
+    "title": "Dipôle RL : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-080",
+    "pdfs": [
+      {
+        "name": "PDF COURS DIPOLE RL"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-4",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-phys-4-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-075",
+    "pdfs": [
+      {
+        "name": "correction ex n 01-ex n 02 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-4",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-phys-4-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-074",
+    "pdfs": [
+      {
+        "name": "correction ex n 01-ex n 02 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-4",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-phys-4-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-076",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-4",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-phys-4-06",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-077",
+    "pdfs": [
+      {
+        "name": "correction ex 03-ex 04 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-4",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-phys-4-07",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-078",
+    "pdfs": [
+      {
+        "name": "correction ex 05-ex 06 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-4",
+    "order": 6
+  },
+  {
+    "id": "les-bac-tech-phys-4-08",
+    "title": "Exercice 6",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-079",
+    "pdfs": [
+      {
+        "name": "correction ex 05-ex 06 dipole RL"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-4",
+    "order": 7
+  },
+  {
+    "id": "les-bac-tech-phys-5-01",
+    "title": "Oscillations amorties libres : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-033",
+    "pdfs": [
+      {
+        "name": "OSCILLATIONS ELECTRIQUES LIBRES AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-5",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-phys-5-02",
+    "title": "Oscillations amorties libres : étude théorique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-037",
+    "pdfs": [
+      {
+        "name": "OSCILLATIONS ELECTRIQUES LIBRES AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-5",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-phys-5-03",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-034",
+    "pdfs": [
+      {
+        "name": "correction ex 01 oscillations libres amortie"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-5",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-phys-5-04",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-035",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-5",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-phys-5-05",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-036",
+    "pdfs": [
+      {
+        "name": "correction ex 02_ex 03 oscillations libres amorties"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-5",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-phys-6-01",
+    "title": "Oscillations non amorties : étude expérimentale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-054",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-6",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-phys-6-02",
+    "title": "Oscillations non amorties : étude théorique (partie 1)",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-050",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-6",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-phys-6-03",
+    "title": "Oscillations non amorties : étude théorique (partie 2)",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-053",
+    "pdfs": [
+      {
+        "name": "O oSCILLATIONS ELECTRIQUES LIBRES NON AMORTIES pdf"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-6",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-phys-6-04",
+    "title": "Exercice 1",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-051",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 01-ex n 02"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-6",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-phys-6-05",
+    "title": "Exercice 2",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-055",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 01-ex n 02"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-6",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-phys-6-06",
+    "title": "Exercice 3",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-052",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 03 - ex n 04"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-6",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-phys-6-07",
+    "title": "Exercice 4",
+    "kind": "exercice",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 03 - ex n 04"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-6",
+    "order": 6,
+    "videoUrl": "wael-media:MAHDI-PHYS-043"
+  },
+  {
+    "id": "les-bac-tech-phys-6-08",
+    "title": "Exercice 5",
+    "kind": "exercice",
+    "pdfs": [
+      {
+        "name": "osc non amorties ex n 05"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-6",
+    "order": 7,
+    "videoUrl": "wael-media:MAHDI-PHYS-044"
+  },
+  {
+    "id": "les-bac-tech-phys-7-01",
+    "title": "Avancement d'une réaction chimique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-010",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 0
+  },
+  {
+    "id": "les-bac-tech-phys-7-02",
+    "title": "Vitesse d'une réaction chimique",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-022",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 1
+  },
+  {
+    "id": "les-bac-tech-phys-7-03",
+    "title": "Notion d'équilibre chimique et estérification",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-019",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 2
+  },
+  {
+    "id": "les-bac-tech-phys-7-04",
+    "title": "Loi d'action de masse",
+    "kind": "cours",
+    "videoUrl": "wael-media:MAHDI-PHYS-018",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 3
+  },
+  {
+    "id": "les-bac-tech-phys-7-05",
+    "title": "Exercice 1 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-014",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 4
+  },
+  {
+    "id": "les-bac-tech-phys-7-06",
+    "title": "Exercice 2 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-012",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 5
+  },
+  {
+    "id": "les-bac-tech-phys-7-07",
+    "title": "Exercice 3 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-011",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 6
+  },
+  {
+    "id": "les-bac-tech-phys-7-08",
+    "title": "Exercice 4 : cinétique chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-013",
+    "pdfs": [
+      {
+        "name": "pdf Cinétique chimique - Chapitre 1 - Cours et Exercices"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 7
+  },
+  {
+    "id": "les-bac-tech-phys-7-09",
+    "title": "Exercice 1 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-015",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 8
+  },
+  {
+    "id": "les-bac-tech-phys-7-10",
+    "title": "Exercice 2 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-016",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 9
+  },
+  {
+    "id": "les-bac-tech-phys-7-11",
+    "title": "Exercice 3 : équilibre chimique",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MAHDI-PHYS-017",
+    "pdfs": [
+      {
+        "name": "pdf L'équilibre chimique BAC"
+      }
+    ],
+    "chapterId": "ch-bac-tech-phys-7",
+    "order": 10
+  },
+  {
+    "id": "les-bac-sci-svt-1-11",
+    "title": "La procréation",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-038",
+    "pdfs": [
+      {
+        "name": "L9 fécondation"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-3",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-svt-1-12",
+    "title": "Nidation et rôle du placenta",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "nidation et role du placenta"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-3",
+    "order": 1,
+    "videoUrl": "wael-media:MOHSSEN-SVT-019"
+  },
+  {
+    "id": "les-bac-sci-svt-1-13",
+    "title": "Maîtrise de la procréation",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "L 11 maitrise de la procréation"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-3",
+    "order": 2,
+    "videoUrl": "wael-media:MOHSSEN-SVT-022"
+  },
+  {
+    "id": "les-bac-sci-svt-1-14",
+    "title": "Exercice typique procréation",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-005",
+    "pdfs": [
+      {
+        "name": "exercice typique procréation"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-3",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-svt-1-15",
+    "title": "QCM : reproduction humaine et santé",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-008",
+    "pdfs": [
+      {
+        "name": "qcm dc 1 2022"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-3",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-svt-2-01",
+    "title": "Brassage de l'information génétique au cours de la reproduction sexuée",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-051",
+    "pdfs": [
+      {
+        "name": "brassage de l'IG au cours de la reproduction sexuée"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-4",
+    "order": 0
+  },
+  {
+    "id": "les-bac-sci-svt-2-02",
+    "title": "Rappels de génétique formelle et monohybridisme",
+    "kind": "cours",
+    "pdfs": [],
+    "chapterId": "ch-bac-sci-svt-4",
+    "order": 1,
+    "videoUrl": "wael-media:MOHSSEN-SVT-041"
+  },
+  {
+    "id": "les-bac-sci-svt-2-03",
+    "title": "Deux gènes indépendants avec dominance absolue",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-044",
+    "pdfs": [
+      {
+        "name": "deux gènes independants 2027"
+      },
+      {
+        "name": "deux gènes independants"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-4",
+    "order": 2
+  },
+  {
+    "id": "les-bac-sci-svt-2-04",
+    "title": "Deux gènes liés liaison partielle",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-046",
+    "pdfs": [
+      {
+        "name": "deux gènes liés liaison partielle"
+      },
+      {
+        "name": "deux gènes liés liaison partielle"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-4",
+    "order": 3
+  },
+  {
+    "id": "les-bac-sci-svt-2-05",
+    "title": "Deux gènes liés liaison totale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-048",
+    "pdfs": [
+      {
+        "name": "deux gènes liés liaison totale"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-4",
+    "order": 4
+  },
+  {
+    "id": "les-bac-sci-svt-2-06",
+    "title": "Exercice : génétique des diploïdes",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-013",
+    "pdfs": [
+      {
+        "name": "exercice génétique des diploides 1"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-4",
+    "order": 5
+  },
+  {
+    "id": "les-bac-sci-svt-2-07",
+    "title": "Méthodologie génétique des diploïdes",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-015",
+    "pdfs": [
+      {
+        "name": "méthodologie génétique des diploides"
+      }
+    ],
+    "chapterId": "ch-bac-sci-svt-4",
+    "order": 6
+  },
+  {
+    "id": "les-bac-math-svt-1-11",
+    "title": "La procréation",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-038",
+    "pdfs": [
+      {
+        "name": "L9 fécondation"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-3",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-svt-1-12",
+    "title": "Nidation et rôle du placenta",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "nidation et role du placenta"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-3",
+    "order": 1,
+    "videoUrl": "wael-media:MOHSSEN-SVT-019"
+  },
+  {
+    "id": "les-bac-math-svt-1-13",
+    "title": "Maîtrise de la procréation",
+    "kind": "cours",
+    "pdfs": [
+      {
+        "name": "L 11 maitrise de la procréation"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-3",
+    "order": 2,
+    "videoUrl": "wael-media:MOHSSEN-SVT-022"
+  },
+  {
+    "id": "les-bac-math-svt-1-14",
+    "title": "Exercice typique procréation",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-005",
+    "pdfs": [
+      {
+        "name": "exercice typique procréation"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-3",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-svt-1-15",
+    "title": "QCM : reproduction humaine et santé",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-008",
+    "pdfs": [
+      {
+        "name": "qcm dc 1 2022"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-3",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-svt-2-01",
+    "title": "Brassage de l'information génétique au cours de la reproduction sexuée",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-051",
+    "pdfs": [
+      {
+        "name": "brassage de l'IG au cours de la reproduction sexuée"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-4",
+    "order": 0
+  },
+  {
+    "id": "les-bac-math-svt-2-02",
+    "title": "Rappels de génétique formelle et monohybridisme",
+    "kind": "cours",
+    "pdfs": [],
+    "chapterId": "ch-bac-math-svt-4",
+    "order": 1,
+    "videoUrl": "wael-media:MOHSSEN-SVT-041"
+  },
+  {
+    "id": "les-bac-math-svt-2-03",
+    "title": "Deux gènes indépendants avec dominance absolue",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-044",
+    "pdfs": [
+      {
+        "name": "deux gènes independants 2027"
+      },
+      {
+        "name": "deux gènes independants"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-4",
+    "order": 2
+  },
+  {
+    "id": "les-bac-math-svt-2-04",
+    "title": "Deux gènes liés liaison partielle",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-046",
+    "pdfs": [
+      {
+        "name": "deux gènes liés liaison partielle"
+      },
+      {
+        "name": "deux gènes liés liaison partielle"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-4",
+    "order": 3
+  },
+  {
+    "id": "les-bac-math-svt-2-05",
+    "title": "Deux gènes liés liaison totale",
+    "kind": "cours",
+    "videoUrl": "wael-media:MOHSSEN-SVT-048",
+    "pdfs": [
+      {
+        "name": "deux gènes liés liaison totale"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-4",
+    "order": 4
+  },
+  {
+    "id": "les-bac-math-svt-2-06",
+    "title": "Exercice : génétique des diploïdes",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-013",
+    "pdfs": [
+      {
+        "name": "exercice génétique des diploides 1"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-4",
+    "order": 5
+  },
+  {
+    "id": "les-bac-math-svt-2-07",
+    "title": "Méthodologie génétique des diploïdes",
+    "kind": "exercice",
+    "videoUrl": "wael-media:MOHSSEN-SVT-015",
+    "pdfs": [
+      {
+        "name": "méthodologie génétique des diploides"
+      }
+    ],
+    "chapterId": "ch-bac-math-svt-4",
+    "order": 6
   }
 ]

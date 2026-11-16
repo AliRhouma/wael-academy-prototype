@@ -1,6 +1,1 @@
-[
-  { "id": "qe-cx", "title": "اختبار كويز — الأعداد المركّبة", "chapterId": "ch-complexes", "order": 0 },
-  { "id": "qe-rc", "title": "اختبار كويز — ثنائي القطب RC", "chapterId": "ch-rc", "order": 0 },
-  { "id": "qe-sql", "title": "اختبار كويز — طلبات SQL", "chapterId": "ch-sql", "order": 0 },
-  { "id": "qe-arh", "title": "اختبار — النص الحجاجي", "chapterId": "ch-ar-hijaji", "order": 0 }
-]
+[]

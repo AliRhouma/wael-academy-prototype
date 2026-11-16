@@ -1,0 +1,156 @@
+/* /map — the isometric town. Gesture surface, building states, labels and the
+   few loops (flags, bubbles, fountain), all of which stop under reduced motion. */
+
+.map-viewport {
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+  outline: none;
+}
+.map-viewport[data-dragging] {
+  cursor: grabbing;
+}
+.map-viewport[data-dragging] .map-bld {
+  cursor: grabbing;
+}
+.map-world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+}
+
+/* the space the town floats in. Hex because no token is this dark: both stops
+   are --v2-ink (#172e5b) pushed toward night, so the sky stays the brand navy. */
+.map-space-bg {
+  background:
+    radial-gradient(120% 90% at 50% 45%, #1b3566 0%, #0f2147 45%, #081530 100%);
+}
+.space-sparkles path {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: space-twinkle 3.6s ease-in-out infinite;
+}
+@keyframes space-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    scale: 0.7;
+  }
+  50% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .space-sparkles path {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+/* buildings: hover lifts a little, selected lifts more and glows lime */
+.map-bld {
+  cursor: pointer;
+  outline: none;
+}
+.map-bld-body {
+  transition:
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 150ms ease;
+}
+.map-bld[data-hover] .map-bld-body {
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+}
+.map-bld[data-selected] .map-bld-body {
+  transform: translateY(-7px);
+  filter: drop-shadow(0 0 1.5px #5bcd3f) drop-shadow(0 0 8px rgb(138 255 107 / 0.9));
+}
+.map-bld:focus-visible .map-bld-body {
+  filter: drop-shadow(0 0 1.5px #0491a5) drop-shadow(0 0 6px rgb(4 145 165 / 0.8));
+}
+
+.map-ring {
+  fill: rgb(255 255 255 / 0.5);
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+.map-ring.is-selected {
+  fill: rgb(138 255 107 / 0.45); /* --v2-cta */
+  stroke: #5bcd3f; /* --v2-edge-cta */
+  stroke-width: 3;
+}
+
+/* labels keep a near-constant screen size: the camera sets --iz = 1 / zoom */
+.map-label-anchor {
+  cursor: pointer;
+}
+.map-label {
+  transform: scale(var(--iz, 1));
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.map-shake {
+  animation: map-shake 320ms ease;
+}
+@keyframes map-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .map-flag {
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: map-wave 2.4s ease-in-out infinite;
+  }
+  .map-bubble {
+    animation: map-bubble 2.8s ease-in-out infinite;
+  }
+  .map-ripple {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: map-ripple 3s ease-out infinite;
+  }
+  .map-ripple.b {
+    animation-delay: -1.5s;
+  }
+  .map-jet {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: map-jet 1.6s ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .map-bld-body {
+    transition: none;
+  }
+  .map-shake {
+    animation: none;
+  }
+}
+@keyframes map-wave {
+  0%, 100% { transform: skewY(0) scaleX(1); }
+  50% { transform: skewY(-8deg) scaleX(0.86); }
+}
+@keyframes map-bubble {
+  0%, 100% { transform: translateY(0); opacity: 0.95; }
+  50% { transform: translateY(-4px); opacity: 0.7; }
+}
+@keyframes map-ripple {
+  from { transform: scale(0.5); opacity: 0.9; }
+  to { transform: scale(1.35); opacity: 0; }
+}
+@keyframes map-jet {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.88); }
+}

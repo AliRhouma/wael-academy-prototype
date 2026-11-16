@@ -14,6 +14,7 @@ import {
 import { formatTime } from "@/data/media"
 import { cn } from "@/lib/utils"
 import { useFullscreen, type YouTubeController } from "@/lib/youtube"
+import { usePlatform } from "@/app/platform"
 
 export interface VideoStageProps {
   /** The controller from `useYouTubePlayer` — owned by the parent, so the page
@@ -60,6 +61,12 @@ export function VideoStage({
 
   const stageRef = useRef<HTMLDivElement | null>(null)
   const { isFullscreen, toggle: toggleFullscreen } = useFullscreen(stageRef)
+  // On an iPhone the prev / next circles over the video are Liquid Glass,
+  // clear variant (media only, over the existing dim, white glyphs).
+  const stepBtn =
+    usePlatform() === "ios"
+      ? "ios-glass-clear text-white"
+      : "bg-neutral-900/60 text-white backdrop-blur transition hover:bg-neutral-900/80"
 
   const [uiVisible, setUiVisible] = useState(true)
   const hideTimer = useRef<number | undefined>(undefined)
@@ -148,7 +155,7 @@ export function VideoStage({
         onClick={() => step(go)}
         disabled={!go}
         aria-label={dir === "prev" ? "الفيديو اللي قبل" : "الفيديو اللي بعد"}
-        className="grid size-9 shrink-0 place-items-center rounded-full text-white/90 transition hover:bg-white/15 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent"
+        className="grid size-11 shrink-0 place-items-center rounded-full text-white/90 transition hover:bg-white/15 hover:text-white disabled:opacity-30 disabled:hover:bg-transparent"
       >
         <Icon className="size-[18px]" />
       </button>
@@ -189,7 +196,7 @@ export function VideoStage({
       {/* Title strip — the only way to know what's playing in fullscreen. */}
       <div
         className={cn(
-          "pointer-events-none absolute inset-x-0 top-0 flex items-start gap-3 bg-gradient-to-b from-neutral-900/85 to-transparent p-4 pt-[calc(1rem+env(safe-area-inset-top))] transition-opacity duration-200 sm:pt-4",
+          "pointer-events-none absolute inset-x-0 top-0 flex items-start gap-3 bg-gradient-to-b from-neutral-900/85 to-transparent p-4 pt-[calc(1rem+var(--sai-top))] transition-opacity duration-200 sm:pt-4",
           uiVisible ? "opacity-100" : "opacity-0",
         )}
       >
@@ -220,7 +227,8 @@ export function VideoStage({
               onClick={() => step(onPrev)}
               aria-label="الفيديو اللي قبل"
               className={cn(
-                "absolute start-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-neutral-900/60 text-white backdrop-blur transition hover:bg-neutral-900/80",
+                "absolute start-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full",
+                stepBtn,
                 uiVisible ? "opacity-100" : "pointer-events-none opacity-0",
               )}
             >
@@ -233,7 +241,8 @@ export function VideoStage({
               onClick={() => step(onNext)}
               aria-label="الفيديو اللي بعد"
               className={cn(
-                "absolute end-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-neutral-900/60 text-white backdrop-blur transition hover:bg-neutral-900/80",
+                "absolute end-4 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full",
+                stepBtn,
                 uiVisible ? "opacity-100" : "pointer-events-none opacity-0",
               )}
             >
@@ -253,8 +262,9 @@ export function VideoStage({
           uiVisible ? "opacity-100" : "pointer-events-none opacity-0",
         )}
       >
-        {/* Timeline */}
-        <div className="relative flex h-4 items-center">
+        {/* Timeline — a 44 pt touch band (Apple: 44 × 44 default, 28 minimum),
+            pulled back by negative margins so the bar still looks 16 pt tall. */}
+        <div className="relative -my-3.5 flex h-11 items-center">
           <div className="absolute inset-x-0 h-1.5 rounded-full bg-white/25" />
           <div className="absolute h-1.5 rounded-full bg-brand-400" style={{ width: `${pct}%` }} />
           <span
@@ -279,7 +289,7 @@ export function VideoStage({
             type="button"
             onClick={toggle}
             aria-label={playing ? "وقّف" : "شغّل"}
-            className="grid size-10 shrink-0 place-items-center rounded-full text-white transition hover:bg-white/15"
+            className="grid size-11 shrink-0 place-items-center rounded-full text-white transition hover:bg-white/15"
           >
             {playing ? (
               <Pause className="size-5 fill-current" />
@@ -293,7 +303,7 @@ export function VideoStage({
             type="button"
             onClick={toggleMute}
             aria-label={muted ? "رجّع الصوت" : "سكّر الصوت"}
-            className="hidden size-9 shrink-0 place-items-center rounded-full text-white/90 transition hover:bg-white/15 hover:text-white sm:grid"
+            className="hidden size-11 shrink-0 place-items-center rounded-full text-white/90 transition hover:bg-white/15 hover:text-white sm:grid"
           >
             {muted ? <VolumeX className="size-[18px]" /> : <Volume2 className="size-[18px]" />}
           </button>
@@ -310,7 +320,7 @@ export function VideoStage({
             type="button"
             onClick={toggleFullscreen}
             aria-label={isFullscreen ? "اخرج من الشاشة الكاملة" : "شاشة كاملة"}
-            className="grid size-10 shrink-0 place-items-center rounded-full text-white transition hover:bg-white/15"
+            className="grid size-11 shrink-0 place-items-center rounded-full text-white transition hover:bg-white/15"
           >
             {isFullscreen ? <Minimize2 className="size-5" /> : <Maximize2 className="size-5" />}
           </button>

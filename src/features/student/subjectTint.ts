@@ -1,5 +1,6 @@
 import type { SubjectCategory } from "@/data/types"
 import { badgeFor, portraitFor, type PortraitId } from "@/components/icons/subjects"
+import { matiereKey } from "@/data/matiere"
 import { subjectTheme } from "@/features/student/subjectTheme"
 
 /**
@@ -191,7 +192,8 @@ export function subjectTint(name: string, category?: SubjectCategory): SubjectTi
   // stopped showing. An unmeasured badge falls through to the portrait colour:
   // registering art and measuring it are two separate edits, and the state in
   // between must not be a blank card.
-  const source = (badgeFor(name) ? BADGE_COLOR[name] : undefined) ?? ART_COLOR[portraitFor(name)]
+  const source =
+    (badgeFor(name) ? BADGE_COLOR[matiereKey(name)] : undefined) ?? ART_COLOR[portraitFor(name)]
   const hit = cache.get(source)
   if (hit) return hit
   const [h, s] = hsl(source)

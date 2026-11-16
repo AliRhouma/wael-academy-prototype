@@ -1,0 +1,4530 @@
+{
+  "entries": [
+    {
+      "id": "math-1",
+      "matiere": "رياضيات",
+      "years": [
+        "y-1"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien vaut (−3)² ?",
+          "choices": [
+            "−9",
+            "9",
+            "−6",
+            "6"
+          ],
+          "answer": 1,
+          "explain": "Le carré d'un nombre négatif est positif : (−3) × (−3) = 9.",
+          "chapter": "1ère — Activités numériques II (puissances dans ℝ)"
+        },
+        {
+          "lang": "fr",
+          "q": "Développe (x + 3)².",
+          "choices": [
+            "x² + 9",
+            "x² + 3x + 9",
+            "x² + 6x + 9",
+            "2x + 6"
+          ],
+          "answer": 2,
+          "explain": "(a + b)² = a² + 2ab + b², donc x² + 2·3·x + 9 = x² + 6x + 9.",
+          "chapter": "1ère — Activités algébriques (identités remarquables)"
+        },
+        {
+          "lang": "fr",
+          "q": "ABC rectangle en A, avec AB = 3 et BC = 6. Combien vaut cos B̂ ?",
+          "choices": [
+            "1/2",
+            "2",
+            "√3/2",
+            "1/3"
+          ],
+          "answer": 0,
+          "explain": "cos B̂ = côté adjacent / hypoténuse = AB / BC = 3/6 = 1/2.",
+          "chapter": "1ère — Rapports trigonométriques d'un angle aigu"
+        }
+      ]
+    },
+    {
+      "id": "math-2-sci-info",
+      "matiere": "رياضيات",
+      "years": [
+        "y-2-sci",
+        "y-2-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Suite arithmétique : u₀ = 2 et raison r = 3. Combien vaut u₁ ?",
+          "choices": [
+            "6",
+            "5",
+            "3",
+            "8"
+          ],
+          "answer": 1,
+          "explain": "u₁ = u₀ + r = 2 + 3 = 5.",
+          "chapter": "2ème Sciences / TI — Suites arithmétiques"
+        },
+        {
+          "lang": "fr",
+          "q": "Lequel de ces nombres est divisible par 9 ?",
+          "choices": [
+            "2 716",
+            "1 234",
+            "7 001",
+            "4 536"
+          ],
+          "answer": 3,
+          "explain": "La somme de ses chiffres, 4 + 5 + 3 + 6 = 18, est divisible par 9.",
+          "chapter": "2ème Sciences / TI — Arithmétique (critères de divisibilité)"
+        },
+        {
+          "lang": "fr",
+          "q": "Combien vaut le discriminant de 2x² + 3x − 2 = 0 ?",
+          "choices": [
+            "25",
+            "−7",
+            "7",
+            "1"
+          ],
+          "answer": 0,
+          "explain": "Δ = b² − 4ac = 9 − 4·2·(−2) = 9 + 16 = 25.",
+          "chapter": "2ème Sciences / TI — Problèmes du second degré"
+        }
+      ]
+    },
+    {
+      "id": "math-2-eco",
+      "matiere": "رياضيات",
+      "years": [
+        "y-2-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien font 10 % de 250 ?",
+          "choices": [
+            "25",
+            "2,5",
+            "35",
+            "10"
+          ],
+          "answer": 0,
+          "explain": "10 % de 250 = 250 × 10/100 = 25.",
+          "chapter": "2ème Éco — Les pourcentages"
+        },
+        {
+          "lang": "fr",
+          "q": "Un prix de 80 DT augmente de 25 %. Quel est le nouveau prix ?",
+          "choices": [
+            "105 DT",
+            "100 DT",
+            "85 DT",
+            "120 DT"
+          ],
+          "answer": 1,
+          "explain": "80 × 1,25 = 100 DT.",
+          "chapter": "2ème Éco — Les pourcentages"
+        },
+        {
+          "lang": "fr",
+          "q": "Suite géométrique : u₀ = 3 et raison q = 2. Combien vaut u₃ ?",
+          "choices": [
+            "12",
+            "18",
+            "9",
+            "24"
+          ],
+          "answer": 3,
+          "explain": "u₃ = u₀ × q³ = 3 × 8 = 24.",
+          "chapter": "2ème Éco — Suites arithmétiques – Suites géométriques"
+        }
+      ]
+    },
+    {
+      "id": "math-3-math",
+      "matiere": "رياضيات",
+      "years": [
+        "y-3-math"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est la dérivée de f(x) = x³ ?",
+          "choices": [
+            "x²",
+            "x⁴/4",
+            "3x",
+            "3x²"
+          ],
+          "answer": 3,
+          "explain": "La dérivée de xⁿ est n·xⁿ⁻¹, donc 3x².",
+          "chapter": "3ème Math — Fonction dérivée"
+        },
+        {
+          "lang": "fr",
+          "q": "Lequel de ces nombres est premier ?",
+          "choices": [
+            "51",
+            "57",
+            "53",
+            "91"
+          ],
+          "answer": 2,
+          "explain": "51 = 3×17, 57 = 3×19 et 91 = 7×13, mais 53 n'a pas d'autre diviseur que 1 et lui-même.",
+          "chapter": "3ème Math — Les nombres premiers"
+        },
+        {
+          "lang": "fr",
+          "q": "Combien vaut (1 + i)² ?",
+          "choices": [
+            "2",
+            "1 + 2i",
+            "0",
+            "2i"
+          ],
+          "answer": 3,
+          "explain": "(1 + i)² = 1 + 2i + i² = 1 + 2i − 1 = 2i.",
+          "chapter": "3ème Math — Nombres complexes"
+        }
+      ]
+    },
+    {
+      "id": "math-3-sci",
+      "matiere": "رياضيات",
+      "years": [
+        "y-3-sci"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est la dérivée de f(x) = 5x² ?",
+          "choices": [
+            "2x",
+            "5x",
+            "10x²",
+            "10x"
+          ],
+          "answer": 3,
+          "explain": "(5x²)′ = 5 × 2x = 10x.",
+          "chapter": "3ème Sciences — Fonction dérivée"
+        },
+        {
+          "lang": "fr",
+          "q": "Produit scalaire de u(2 ; 3) et v(4 ; −1) dans un repère orthonormé ?",
+          "choices": [
+            "11",
+            "5",
+            "8",
+            "−5"
+          ],
+          "answer": 1,
+          "explain": "u·v = 2×4 + 3×(−1) = 8 − 3 = 5.",
+          "chapter": "3ème Sciences — Produit scalaire dans le plan"
+        },
+        {
+          "lang": "fr",
+          "q": "Limite de (3x² + 1)/(x² − 2) quand x tend vers +∞ ?",
+          "choices": [
+            "+∞",
+            "0",
+            "3",
+            "−1/2"
+          ],
+          "answer": 2,
+          "explain": "On garde les termes de plus haut degré : 3x²/x² = 3.",
+          "chapter": "3ème Sciences — Limites et comportements asymptotiques"
+        }
+      ]
+    },
+    {
+      "id": "math-3-tech",
+      "matiere": "رياضيات",
+      "years": [
+        "y-3-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien vaut cos(π/3) ?",
+          "choices": [
+            "√3/2",
+            "1/2",
+            "√2/2",
+            "1"
+          ],
+          "answer": 1,
+          "explain": "π/3 correspond à 60°, et cos 60° = 1/2.",
+          "chapter": "3ème Technique — Formules trigonométriques"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle est la dérivée de f(x) = x² + 3x ?",
+          "choices": [
+            "2x + 3",
+            "x + 3",
+            "2x",
+            "2x + 3x"
+          ],
+          "answer": 0,
+          "explain": "(x²)′ = 2x et (3x)′ = 3, donc f′(x) = 2x + 3.",
+          "chapter": "3ème Technique — Dérivabilité"
+        },
+        {
+          "lang": "fr",
+          "q": "De combien de façons peut-on choisir 2 élèves parmi 5 (sans ordre) ?",
+          "choices": [
+            "20",
+            "25",
+            "10",
+            "7"
+          ],
+          "answer": 2,
+          "explain": "C(5,2) = (5×4)/2 = 10 ; 20 compterait l'ordre.",
+          "chapter": "3ème Technique — Dénombrement"
+        }
+      ]
+    },
+    {
+      "id": "math-3-info",
+      "matiere": "رياضيات",
+      "years": [
+        "y-3-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Suite arithmétique : u₀ = 1 et raison 4. Combien vaut u₂ ?",
+          "choices": [
+            "8",
+            "9",
+            "5",
+            "16"
+          ],
+          "answer": 1,
+          "explain": "u₂ = u₀ + 2r = 1 + 8 = 9.",
+          "chapter": "3ème Informatique — Les suites"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel est le PGCD de 12 et 18 ?",
+          "choices": [
+            "36",
+            "3",
+            "6",
+            "2"
+          ],
+          "answer": 2,
+          "explain": "6 est le plus grand nombre qui divise à la fois 12 et 18.",
+          "chapter": "3ème Informatique — Arithmétique"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle est l'écriture décimale du nombre binaire 1011 ?",
+          "choices": [
+            "13",
+            "9",
+            "7",
+            "11"
+          ],
+          "answer": 3,
+          "explain": "1011₂ = 8 + 0 + 2 + 1 = 11.",
+          "chapter": "3ème Informatique — Systèmes de numération"
+        }
+      ]
+    },
+    {
+      "id": "math-3-eco",
+      "matiere": "رياضيات",
+      "years": [
+        "y-3-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est la moyenne des notes 8, 12 et 16 ?",
+          "choices": [
+            "12",
+            "36",
+            "10",
+            "14"
+          ],
+          "answer": 0,
+          "explain": "(8 + 12 + 16) / 3 = 36 / 3 = 12.",
+          "chapter": "3ème Éco-gestion — Statistiques"
+        },
+        {
+          "lang": "fr",
+          "q": "On lance un dé équilibré. Probabilité d'obtenir un 6 ?",
+          "choices": [
+            "1/2",
+            "5/6",
+            "1/36",
+            "1/6"
+          ],
+          "answer": 3,
+          "explain": "Un seul cas favorable sur six cas possibles : 1/6.",
+          "chapter": "3ème Éco-gestion — Probabilités"
+        },
+        {
+          "lang": "fr",
+          "q": "f(x) = x² − 4x. Pour quelle valeur de x a-t-on f′(x) = 0 ?",
+          "choices": [
+            "x = 4",
+            "x = −2",
+            "x = 0",
+            "x = 2"
+          ],
+          "answer": 3,
+          "explain": "f′(x) = 2x − 4, qui s'annule pour x = 2.",
+          "chapter": "3ème Éco-gestion — Dérivation"
+        }
+      ]
+    },
+    {
+      "id": "math-bac-math",
+      "matiere": "رياضيات",
+      "years": [
+        "y-bac-math"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien vaut ln(1) ?",
+          "choices": [
+            "1",
+            "e",
+            "0",
+            "−1"
+          ],
+          "answer": 2,
+          "explain": "ln(1) = 0 car e⁰ = 1.",
+          "chapter": "Bac Math — Fonction logarithme népérien"
+        },
+        {
+          "lang": "fr",
+          "q": "Une primitive de f(x) = 2x sur ℝ est :",
+          "choices": [
+            "x²",
+            "2",
+            "2x²",
+            "x²/2"
+          ],
+          "answer": 0,
+          "explain": "La dérivée de x² est 2x.",
+          "chapter": "Bac Math — Primitives"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel est le reste de la division euclidienne de 100 par 7 ?",
+          "choices": [
+            "1",
+            "3",
+            "5",
+            "2"
+          ],
+          "answer": 3,
+          "explain": "100 = 7 × 14 + 2, donc le reste est 2.",
+          "chapter": "Bac Math — Divisibilité dans ℤ"
+        }
+      ]
+    },
+    {
+      "id": "math-bac-sci",
+      "matiere": "رياضيات",
+      "years": [
+        "y-bac-sci"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien vaut e⁰ ?",
+          "choices": [
+            "0",
+            "1",
+            "e",
+            "−1"
+          ],
+          "answer": 1,
+          "explain": "Toute exponentielle de 0 vaut 1 : e⁰ = 1.",
+          "chapter": "Bac Sciences — Fonction exponentielle"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle est la dérivée de ln(x) sur ]0 ; +∞[ ?",
+          "choices": [
+            "eˣ",
+            "x",
+            "ln(x)/x",
+            "1/x"
+          ],
+          "answer": 3,
+          "explain": "Par définition, (ln x)′ = 1/x.",
+          "chapter": "Bac Sciences — Fonction logarithme népérien"
+        },
+        {
+          "lang": "fr",
+          "q": "P(A) = 0,5 et P(B sachant A) = 0,4. Combien vaut P(A ∩ B) ?",
+          "choices": [
+            "0,9",
+            "0,1",
+            "0,2",
+            "0,8"
+          ],
+          "answer": 2,
+          "explain": "P(A ∩ B) = P(A) × P(B sachant A) = 0,5 × 0,4 = 0,2.",
+          "chapter": "Bac Sciences — Probabilités sur un ensemble fini"
+        }
+      ]
+    },
+    {
+      "id": "math-bac-tech",
+      "matiere": "رياضيات",
+      "years": [
+        "y-bac-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien vaut ln(e) ?",
+          "choices": [
+            "0",
+            "e",
+            "1",
+            "10"
+          ],
+          "answer": 2,
+          "explain": "ln et exp sont réciproques, donc ln(e) = 1.",
+          "chapter": "Bac Technique — Fonction logarithme népérien"
+        },
+        {
+          "lang": "fr",
+          "q": "Combien vaut i² ?",
+          "choices": [
+            "1",
+            "−1",
+            "i",
+            "−i"
+          ],
+          "answer": 1,
+          "explain": "Par définition du nombre i, i² = −1.",
+          "chapter": "Bac Technique — Nombres complexes"
+        },
+        {
+          "lang": "fr",
+          "q": "Combien vaut l'intégrale de 0 à 1 de 3x² dx ?",
+          "choices": [
+            "3",
+            "1/3",
+            "3/2",
+            "1"
+          ],
+          "answer": 3,
+          "explain": "Une primitive est x³, donc 1³ − 0³ = 1.",
+          "chapter": "Bac Technique — Calcul intégral"
+        }
+      ]
+    },
+    {
+      "id": "math-bac-info",
+      "matiere": "رياضيات",
+      "years": [
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien vaut e^(ln 5) ?",
+          "choices": [
+            "5",
+            "ln 5",
+            "e⁵",
+            "1/5"
+          ],
+          "answer": 0,
+          "explain": "exp et ln sont réciproques : e^(ln 5) = 5.",
+          "chapter": "Bac Informatique — Fonction exponentielle"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel est le PGCD de 24 et 36 ?",
+          "choices": [
+            "6",
+            "12",
+            "72",
+            "4"
+          ],
+          "answer": 1,
+          "explain": "12 divise 24 et 36, et aucun diviseur commun n'est plus grand.",
+          "chapter": "Bac Informatique — Arithmétique (PGCD)"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel est le reste de 2¹⁰ dans la division par 3 ?",
+          "choices": [
+            "0",
+            "2",
+            "1",
+            "4"
+          ],
+          "answer": 2,
+          "explain": "2 ≡ −1 [3], donc 2¹⁰ ≡ (−1)¹⁰ = 1 [3].",
+          "chapter": "Bac Informatique — Arithmétique (congruences)"
+        }
+      ]
+    },
+    {
+      "id": "math-bac-eco",
+      "matiere": "رياضيات",
+      "years": [
+        "y-bac-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "La fonction exponentielle est toujours :",
+          "choices": [
+            "strictement positive",
+            "négative",
+            "nulle en 0",
+            "décroissante"
+          ],
+          "answer": 0,
+          "explain": "Pour tout réel x, eˣ > 0.",
+          "chapter": "Bac Éco-gestion — Fonction exponentielle"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle est la dérivée de eˣ ?",
+          "choices": [
+            "x·eˣ⁻¹",
+            "ln x",
+            "1",
+            "eˣ"
+          ],
+          "answer": 3,
+          "explain": "La fonction exponentielle est égale à sa propre dérivée.",
+          "chapter": "Bac Éco-gestion — Fonction exponentielle"
+        },
+        {
+          "lang": "fr",
+          "q": "Graphe à 4 sommets, chacun de degré 3. Combien a-t-il d'arêtes ?",
+          "choices": [
+            "12",
+            "4",
+            "6",
+            "3"
+          ],
+          "answer": 2,
+          "explain": "La somme des degrés vaut 2 × arêtes : 4 × 3 = 12, donc 6 arêtes.",
+          "chapter": "Bac Éco-gestion — Théorie des graphes"
+        }
+      ]
+    },
+    {
+      "id": "math-generic",
+      "matiere": "رياضيات",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien vaut 2³ ?",
+          "choices": [
+            "6",
+            "8",
+            "9",
+            "5"
+          ],
+          "answer": 1,
+          "explain": "2³ = 2 × 2 × 2 = 8.",
+          "chapter": "1ère — Activités numériques II (puissances)"
+        },
+        {
+          "lang": "fr",
+          "q": "Résous 2x + 6 = 0.",
+          "choices": [
+            "x = 3",
+            "x = 6",
+            "x = −12",
+            "x = −3"
+          ],
+          "answer": 3,
+          "explain": "2x = −6, donc x = −3.",
+          "chapter": "1ère — Équations du premier degré à une inconnue"
+        },
+        {
+          "lang": "fr",
+          "q": "Triangle rectangle de côtés 6 et 8 autour de l'angle droit. Hypoténuse ?",
+          "choices": [
+            "10",
+            "14",
+            "12",
+            "7"
+          ],
+          "answer": 0,
+          "explain": "Pythagore : 6² + 8² = 36 + 64 = 100, donc l'hypoténuse vaut 10.",
+          "chapter": "1ère — Théorème de Pythagore"
+        }
+      ]
+    },
+    {
+      "id": "phys-1",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-1"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quel appareil mesure l'intensité du courant électrique ?",
+          "choices": [
+            "Le voltmètre",
+            "L'ampèremètre",
+            "L'ohmmètre",
+            "Le thermomètre"
+          ],
+          "answer": 1,
+          "explain": "L'ampèremètre, branché en série, mesure l'intensité.",
+          "chapter": "1ère — P1. Électricité (courant électrique)"
+        },
+        {
+          "lang": "fr",
+          "q": "Un objet a une masse de 2 kg (g = 10 N/kg). Quel est son poids ?",
+          "choices": [
+            "12 N",
+            "2 N",
+            "0,2 N",
+            "20 N"
+          ],
+          "answer": 3,
+          "explain": "P = m × g = 2 × 10 = 20 N.",
+          "chapter": "1ère — P3. Forces (le poids, P = m·g)"
+        },
+        {
+          "lang": "fr",
+          "q": "Masse molaire de l'eau H₂O ? (H = 1 g/mol ; O = 16 g/mol)",
+          "choices": [
+            "17 g/mol",
+            "34 g/mol",
+            "18 g/mol",
+            "33 g/mol"
+          ],
+          "answer": 2,
+          "explain": "M = 2 × 1 + 16 = 18 g/mol.",
+          "chapter": "1ère — C1. La matière (la mole, masse molaire)"
+        }
+      ]
+    },
+    {
+      "id": "phys-2-sci",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-2-sci"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est l'unité de la résistance électrique ?",
+          "choices": [
+            "Le volt",
+            "L'ohm",
+            "Le watt",
+            "L'ampère"
+          ],
+          "answer": 1,
+          "explain": "La résistance se mesure en ohms (Ω).",
+          "chapter": "2ème Sciences — Récepteurs passifs"
+        },
+        {
+          "lang": "fr",
+          "q": "Une solution a un pH égal à 3. Elle est :",
+          "choices": [
+            "acide",
+            "basique",
+            "neutre",
+            "saturée"
+          ],
+          "answer": 0,
+          "explain": "À 25 °C, un pH inférieur à 7 indique une solution acide.",
+          "chapter": "2ème Sciences — Chimie : notion de pH"
+        },
+        {
+          "lang": "fr",
+          "q": "Un résistor de 100 Ω est traversé par 0,2 A. Tension à ses bornes ?",
+          "choices": [
+            "500 V",
+            "2 V",
+            "200 V",
+            "20 V"
+          ],
+          "answer": 3,
+          "explain": "Loi d'Ohm : U = R × I = 100 × 0,2 = 20 V.",
+          "chapter": "2ème Sciences — Récepteurs passifs (loi d'Ohm)"
+        }
+      ]
+    },
+    {
+      "id": "phys-2-info",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-2-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Une diode laisse passer le courant :",
+          "choices": [
+            "dans un seul sens",
+            "dans les deux sens",
+            "jamais",
+            "seulement en alternatif"
+          ],
+          "answer": 0,
+          "explain": "La diode est passante dans un seul sens et bloquée dans l'autre.",
+          "chapter": "2ème TI — La diode"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle est l'unité de la puissance électrique ?",
+          "choices": [
+            "Le joule",
+            "Le coulomb",
+            "Le volt",
+            "Le watt"
+          ],
+          "answer": 3,
+          "explain": "La puissance s'exprime en watts (W).",
+          "chapter": "2ème TI — Puissance et énergie électriques"
+        },
+        {
+          "lang": "fr",
+          "q": "Une lampe de 60 W fonctionne pendant 2 h. Énergie consommée ?",
+          "choices": [
+            "30 Wh",
+            "62 Wh",
+            "120 Wh",
+            "120 W"
+          ],
+          "answer": 2,
+          "explain": "E = P × t = 60 W × 2 h = 120 Wh.",
+          "chapter": "2ème TI — Puissance et énergie électriques"
+        }
+      ]
+    },
+    {
+      "id": "phys-3-math",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-3-math"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Deux charges électriques de même signe :",
+          "choices": [
+            "s'attirent",
+            "se repoussent",
+            "n'interagissent pas",
+            "s'annulent"
+          ],
+          "answer": 1,
+          "explain": "Des charges de même signe se repoussent, de signes contraires s'attirent.",
+          "chapter": "3ème Math — Interaction électrique (loi de Coulomb)"
+        },
+        {
+          "lang": "fr",
+          "q": "Énergie cinétique d'un solide de 2 kg qui roule à 3 m/s ?",
+          "choices": [
+            "9 J",
+            "6 J",
+            "18 J",
+            "3 J"
+          ],
+          "answer": 0,
+          "explain": "Ec = ½ m v² = ½ × 2 × 9 = 9 J.",
+          "chapter": "3ème Math — Énergie cinétique"
+        },
+        {
+          "lang": "fr",
+          "q": "Un solide tourne à 2 tours par seconde. Sa vitesse angulaire vaut :",
+          "choices": [
+            "2 rad/s",
+            "π rad/s",
+            "4π rad/s",
+            "8π rad/s"
+          ],
+          "answer": 2,
+          "explain": "Un tour vaut 2π rad, donc ω = 2 × 2π = 4π rad/s.",
+          "chapter": "3ème Math — Solide en rotation autour d'un axe fixe"
+        }
+      ]
+    },
+    {
+      "id": "phys-3-sci",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-3-sci"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est l'unité du champ magnétique ?",
+          "choices": [
+            "Le weber",
+            "Le newton",
+            "Le volt par mètre",
+            "Le tesla"
+          ],
+          "answer": 3,
+          "explain": "Le vecteur champ magnétique B s'exprime en teslas (T).",
+          "chapter": "3ème Sciences — Interaction magnétique"
+        },
+        {
+          "lang": "fr",
+          "q": "Une solution aqueuse d'amine aliphatique est :",
+          "choices": [
+            "acide",
+            "basique",
+            "neutre",
+            "oxydante"
+          ],
+          "answer": 1,
+          "explain": "Le doublet libre de l'azote capte un proton : les amines sont des bases.",
+          "chapter": "3ème Sciences — Les amines aliphatiques"
+        },
+        {
+          "lang": "fr",
+          "q": "Mouvement uniformément varié : v₀ = 0 et a = 2 m/s². Vitesse à t = 5 s ?",
+          "choices": [
+            "25 m/s",
+            "7 m/s",
+            "10 m/s",
+            "50 m/s"
+          ],
+          "answer": 2,
+          "explain": "v = a·t + v₀ = 2 × 5 + 0 = 10 m/s.",
+          "chapter": "3ème Sciences — Étude cinématique"
+        }
+      ]
+    },
+    {
+      "id": "phys-3-tech",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-3-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est l'unité de la charge électrique ?",
+          "choices": [
+            "Le coulomb",
+            "L'ampère",
+            "Le volt",
+            "Le farad"
+          ],
+          "answer": 0,
+          "explain": "La charge électrique s'exprime en coulombs (C).",
+          "chapter": "3ème Technique — Interaction électrique"
+        },
+        {
+          "lang": "fr",
+          "q": "Lors d'une oxydation, une espèce chimique :",
+          "choices": [
+            "gagne des électrons",
+            "perd des électrons",
+            "gagne des protons",
+            "perd des neutrons"
+          ],
+          "answer": 1,
+          "explain": "Oxydation = perte d'électrons ; réduction = gain d'électrons.",
+          "chapter": "3ème Technique — Oxydoréduction"
+        },
+        {
+          "lang": "fr",
+          "q": "Amplificateur inverseur : R₁ = 1 kΩ et R₂ = 10 kΩ. Son gain en tension ?",
+          "choices": [
+            "10",
+            "11",
+            "−0,1",
+            "−10"
+          ],
+          "answer": 3,
+          "explain": "Pour le montage inverseur, Av = −R₂/R₁ = −10.",
+          "chapter": "3ème Technique — Amplificateur opérationnel"
+        }
+      ]
+    },
+    {
+      "id": "phys-3-info",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-3-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Une porte logique ET (AND) donne 1 quand :",
+          "choices": [
+            "les deux entrées valent 1",
+            "une entrée vaut 1",
+            "les deux valent 0",
+            "jamais"
+          ],
+          "answer": 0,
+          "explain": "La sortie d'une porte ET vaut 1 seulement si toutes ses entrées valent 1.",
+          "chapter": "3ème Informatique — Les portes logiques"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel est le pH de l'eau pure à 25 °C ?",
+          "choices": [
+            "0",
+            "1",
+            "14",
+            "7"
+          ],
+          "answer": 3,
+          "explain": "L'eau pure est neutre : pH = 7 à 25 °C.",
+          "chapter": "3ème Informatique — Acides et bases ; pH des solutions"
+        },
+        {
+          "lang": "fr",
+          "q": "Une charge q = 2 µC est dans un champ E = 1 000 V/m. Force subie ?",
+          "choices": [
+            "2 N",
+            "0,5 mN",
+            "2 mN",
+            "2 kN"
+          ],
+          "answer": 2,
+          "explain": "F = q·E = 2×10⁻⁶ × 10³ = 2×10⁻³ N = 2 mN.",
+          "chapter": "3ème Informatique — Interaction électrique (champ électrique)"
+        }
+      ]
+    },
+    {
+      "id": "phys-bac-math",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-bac-math"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est l'unité de la capacité d'un condensateur ?",
+          "choices": [
+            "Le henry",
+            "Le farad",
+            "L'ohm",
+            "Le coulomb"
+          ],
+          "answer": 1,
+          "explain": "La capacité C s'exprime en farads (F).",
+          "chapter": "Bac Math — Le condensateur ; le dipôle RC"
+        },
+        {
+          "lang": "fr",
+          "q": "Dipôle RC avec R = 1 kΩ et C = 1 µF. Constante de temps τ ?",
+          "choices": [
+            "1 ms",
+            "1 s",
+            "1 µs",
+            "1 000 s"
+          ],
+          "answer": 0,
+          "explain": "τ = R·C = 10³ × 10⁻⁶ = 10⁻³ s = 1 ms.",
+          "chapter": "Bac Math — Le condensateur ; le dipôle RC"
+        },
+        {
+          "lang": "fr",
+          "q": "Circuit LC : si on multiplie C par 4, la période propre est :",
+          "choices": [
+            "multipliée par 4",
+            "divisée par 2",
+            "inchangée",
+            "multipliée par 2"
+          ],
+          "answer": 3,
+          "explain": "T₀ = 2π√(LC) : √4 = 2, donc la période double.",
+          "chapter": "Bac Math — Oscillations électriques libres"
+        }
+      ]
+    },
+    {
+      "id": "phys-bac-sci",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-bac-sci"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est l'unité de l'inductance d'une bobine ?",
+          "choices": [
+            "Le weber",
+            "Le farad",
+            "Le tesla",
+            "Le henry"
+          ],
+          "answer": 3,
+          "explain": "L'inductance L s'exprime en henrys (H).",
+          "chapter": "Bac Sciences — La bobine ; le dipôle RL"
+        },
+        {
+          "lang": "fr",
+          "q": "Pendant la décharge d'un condensateur, la tension à ses bornes :",
+          "choices": [
+            "augmente",
+            "diminue",
+            "reste constante",
+            "double"
+          ],
+          "answer": 1,
+          "explain": "Le condensateur perd sa charge, donc u = q/C diminue vers 0.",
+          "chapter": "Bac Sciences — Le condensateur ; le dipôle RC"
+        },
+        {
+          "lang": "fr",
+          "q": "Onde de célérité 340 m/s et de fréquence 170 Hz. Longueur d'onde ?",
+          "choices": [
+            "0,5 m",
+            "57 800 m",
+            "510 m",
+            "2 m"
+          ],
+          "answer": 3,
+          "explain": "λ = v / N = 340 / 170 = 2 m.",
+          "chapter": "Bac Sciences — Ondes mécaniques progressives"
+        }
+      ]
+    },
+    {
+      "id": "phys-bac-tech",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-bac-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "À 25 °C, une solution de pH = 9 est :",
+          "choices": [
+            "acide",
+            "neutre",
+            "basique",
+            "saturée"
+          ],
+          "answer": 2,
+          "explain": "Un pH supérieur à 7 à 25 °C indique une solution basique.",
+          "chapter": "Bac Technique — Réactions acide-base"
+        },
+        {
+          "lang": "fr",
+          "q": "Dipôle RL avec L = 0,1 H et R = 10 Ω. Constante de temps τ ?",
+          "choices": [
+            "1 s",
+            "10 ms",
+            "100 s",
+            "1 ms"
+          ],
+          "answer": 1,
+          "explain": "τ = L / R = 0,1 / 10 = 0,01 s = 10 ms.",
+          "chapter": "Bac Technique — La bobine ; le dipôle RL"
+        },
+        {
+          "lang": "fr",
+          "q": "RLC série : à quelle fréquence a lieu la résonance d'intensité ?",
+          "choices": [
+            "1/(2π√(LC))",
+            "2π√(LC)",
+            "1/(RC)",
+            "√(L/C)"
+          ],
+          "answer": 0,
+          "explain": "À la résonance, la fréquence imposée égale la fréquence propre N₀ = 1/(2π√(LC)).",
+          "chapter": "Bac Technique — Oscillations électriques forcées (RLC série)"
+        }
+      ]
+    },
+    {
+      "id": "phys-bac-info",
+      "matiere": "علوم فيزيائية",
+      "years": [
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Dans une pile Daniell, le pont salin sert à :",
+          "choices": [
+            "fermer le circuit",
+            "produire des électrons",
+            "stocker l'énergie",
+            "chauffer la pile"
+          ],
+          "answer": 0,
+          "explain": "Le pont salin assure la continuité électrique entre les deux compartiments.",
+          "chapter": "Bac Informatique — Piles électrochimiques"
+        },
+        {
+          "lang": "fr",
+          "q": "L'oxydation ménagée d'un alcool tertiaire :",
+          "choices": [
+            "donne une cétone",
+            "donne un aldéhyde",
+            "est impossible",
+            "donne un acide"
+          ],
+          "answer": 2,
+          "explain": "Un alcool tertiaire n'a pas d'hydrogène sur le carbone fonctionnel : il ne s'oxyde pas.",
+          "chapter": "Bac Informatique — Chimie organique (oxydation ménagée)"
+        },
+        {
+          "lang": "fr",
+          "q": "Un filtre a une transmittance T = 0,1. Gain G = 20 log T ?",
+          "choices": [
+            "20 dB",
+            "−1 dB",
+            "−10 dB",
+            "−20 dB"
+          ],
+          "answer": 3,
+          "explain": "log 0,1 = −1, donc G = 20 × (−1) = −20 dB.",
+          "chapter": "Bac Informatique — Filtres électriques"
+        }
+      ]
+    },
+    {
+      "id": "phys-generic",
+      "matiere": "علوم فيزيائية",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quel appareil mesure la tension électrique ?",
+          "choices": [
+            "L'ampèremètre",
+            "Le voltmètre",
+            "Le wattmètre",
+            "La balance"
+          ],
+          "answer": 1,
+          "explain": "Le voltmètre, branché en dérivation, mesure la tension.",
+          "chapter": "1ère — P1. Électricité (tension électrique)"
+        },
+        {
+          "lang": "fr",
+          "q": "L'eau liquide devient vapeur à 100 °C. Ce changement d'état s'appelle :",
+          "choices": [
+            "la fusion",
+            "la condensation",
+            "la vaporisation",
+            "la solidification"
+          ],
+          "answer": 2,
+          "explain": "Le passage de l'état liquide à l'état gazeux est la vaporisation.",
+          "chapter": "1ère — P2. Propriétés de la matière (changements d'état)"
+        },
+        {
+          "lang": "fr",
+          "q": "Une voiture parcourt 150 km en 2 h. Quelle est sa vitesse moyenne ?",
+          "choices": [
+            "75 km/h",
+            "300 km/h",
+            "152 km/h",
+            "50 km/h"
+          ],
+          "answer": 0,
+          "explain": "v = d / t = 150 km / 2 h = 75 km/h.",
+          "chapter": "1ère — P3. Forces, mouvements (vitesse moyenne)"
+        }
+      ]
+    },
+    {
+      "id": "svt-1",
+      "matiere": "علوم الحياة والأرض",
+      "years": [
+        "y-1"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quel gaz la plante verte rejette-t-elle pendant la photosynthèse ?",
+          "choices": [
+            "Le dioxyde de carbone",
+            "Le dioxygène",
+            "Le diazote",
+            "Le dihydrogène"
+          ],
+          "answer": 1,
+          "explain": "La photosynthèse absorbe du CO₂ et rejette du dioxygène O₂.",
+          "chapter": "1ère — Nutrition carbonée (photosynthèse)"
+        },
+        {
+          "lang": "fr",
+          "q": "Par quelles structures les racines absorbent-elles l'eau du sol ?",
+          "choices": [
+            "Les feuilles",
+            "Les stomates",
+            "Les vaisseaux du phloème",
+            "Les poils absorbants"
+          ],
+          "answer": 3,
+          "explain": "Les poils absorbants de la racine prélèvent l'eau et les sels minéraux.",
+          "chapter": "1ère — Nutrition minérale (besoins en eau)"
+        },
+        {
+          "lang": "fr",
+          "q": "Contrairement à la sérothérapie, la vaccination donne une protection :",
+          "choices": [
+            "immédiate",
+            "passive",
+            "durable",
+            "non spécifique"
+          ],
+          "answer": 2,
+          "explain": "Le vaccin déclenche une réponse active avec mémoire, donc durable.",
+          "chapter": "1ère — Microbes et santé (vaccination et sérothérapie)"
+        }
+      ]
+    },
+    {
+      "id": "svt-2-sci",
+      "matiere": "علوم الحياة والأرض",
+      "years": [
+        "y-2-sci"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle roche sédimentaire fait la richesse du bassin de Gafsa ?",
+          "choices": [
+            "Le phosphate",
+            "Le granite",
+            "Le basalte",
+            "Le marbre"
+          ],
+          "answer": 0,
+          "explain": "Le bassin minier de Gafsa exploite les phosphates.",
+          "chapter": "2ème Sciences — Les phosphates"
+        },
+        {
+          "lang": "fr",
+          "q": "Dans une chaîne alimentaire, les végétaux chlorophylliens sont :",
+          "choices": [
+            "des consommateurs",
+            "des producteurs",
+            "des décomposeurs",
+            "des prédateurs"
+          ],
+          "answer": 1,
+          "explain": "Ils fabriquent leur matière organique par photosynthèse : ce sont des producteurs.",
+          "chapter": "2ème Sciences — Relations trophiques d'un écosystème"
+        },
+        {
+          "lang": "fr",
+          "q": "Une cellule à 46 chromosomes subit une mitose. Chaque cellule fille en a :",
+          "choices": [
+            "23",
+            "92",
+            "46",
+            "44"
+          ],
+          "answer": 2,
+          "explain": "La mitose est une reproduction conforme : les cellules filles gardent 46 chromosomes.",
+          "chapter": "2ème Sciences — La reproduction conforme (mitose)"
+        }
+      ]
+    },
+    {
+      "id": "svt-3-math",
+      "matiere": "علوم الحياة والأرض",
+      "years": [
+        "y-3-math"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle hormone fait baisser la glycémie ?",
+          "choices": [
+            "L'insuline",
+            "Le glucagon",
+            "L'adrénaline",
+            "La thyroxine"
+          ],
+          "answer": 0,
+          "explain": "L'insuline, sécrétée par le pancréas, est la seule hormone hypoglycémiante.",
+          "chapter": "3ème Math — Régulation de la glycémie"
+        },
+        {
+          "lang": "fr",
+          "q": "La méiose produit des cellules :",
+          "choices": [
+            "diploïdes",
+            "à 92 chromosomes",
+            "identiques à la mère",
+            "haploïdes"
+          ],
+          "answer": 3,
+          "explain": "La méiose réduit de moitié le nombre de chromosomes : les gamètes sont haploïdes.",
+          "chapter": "3ème Math — Origine de la diversité génétique (méiose)"
+        },
+        {
+          "lang": "fr",
+          "q": "Croisement Aa × Aa (A dominant). Proportion de phénotype dominant ?",
+          "choices": [
+            "1/2",
+            "1/4",
+            "100 %",
+            "3/4"
+          ],
+          "answer": 3,
+          "explain": "AA, Aa, Aa ont le phénotype [A] et aa le phénotype [a] : 3/4.",
+          "chapter": "3ème Math — Transmission d'un couple d'allèles"
+        }
+      ]
+    },
+    {
+      "id": "svt-3-sci",
+      "matiere": "علوم الحياة والأرض",
+      "years": [
+        "y-3-sci"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle enzyme de la salive commence la digestion de l'amidon ?",
+          "choices": [
+            "La pepsine",
+            "L'amylase",
+            "La lipase",
+            "L'insuline"
+          ],
+          "answer": 1,
+          "explain": "L'amylase salivaire hydrolyse l'amidon en maltose.",
+          "chapter": "3ème Sciences — Des aliments aux nutriments (digestion)"
+        },
+        {
+          "lang": "fr",
+          "q": "L'unité fonctionnelle du rein qui fabrique l'urine s'appelle :",
+          "choices": [
+            "le neurone",
+            "l'alvéole",
+            "l'acinus",
+            "le néphron"
+          ],
+          "answer": 3,
+          "explain": "Chaque rein contient environ un million de néphrons qui filtrent le sang.",
+          "chapter": "3ème Sciences — L'excrétion urinaire"
+        },
+        {
+          "lang": "fr",
+          "q": "Les ondes S ne traversent pas le noyau externe de la Terre car il est :",
+          "choices": [
+            "solide",
+            "gazeux",
+            "très froid",
+            "liquide"
+          ],
+          "answer": 3,
+          "explain": "Les ondes S ne se propagent pas dans les liquides : le noyau externe est liquide.",
+          "chapter": "3ème Sciences — Structure du globe terrestre"
+        }
+      ]
+    },
+    {
+      "id": "svt-bac-math",
+      "matiere": "علوم الحياة والأرض",
+      "years": [
+        "y-bac-math"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle cellule transmet le message nerveux ?",
+          "choices": [
+            "Le neurone",
+            "Le globule rouge",
+            "L'ovocyte",
+            "L'hépatocyte"
+          ],
+          "answer": 0,
+          "explain": "Le neurone est la cellule spécialisée du système nerveux.",
+          "chapter": "Bac Math — Neurophysiologie"
+        },
+        {
+          "lang": "fr",
+          "q": "Chez l'homme, les spermatozoïdes sont produits dans :",
+          "choices": [
+            "les ovaires",
+            "les testicules",
+            "la prostate",
+            "les reins"
+          ],
+          "answer": 1,
+          "explain": "La spermatogenèse a lieu dans les tubes séminifères des testicules.",
+          "chapter": "Bac Math — Reproduction humaine"
+        },
+        {
+          "lang": "fr",
+          "q": "Une maladie héréditaire récessive liée à X touche surtout :",
+          "choices": [
+            "les filles",
+            "les deux également",
+            "les garçons",
+            "les personnes âgées"
+          ],
+          "answer": 2,
+          "explain": "Un garçon n'a qu'un X : un seul allèle muté suffit à le rendre malade.",
+          "chapter": "Bac Math — Génétique humaine"
+        }
+      ]
+    },
+    {
+      "id": "svt-bac-sci",
+      "matiere": "علوم الحياة والأرض",
+      "years": [
+        "y-bac-sci"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelles cellules sécrètent les anticorps ?",
+          "choices": [
+            "Les plaquettes",
+            "Les hématies",
+            "Les neurones",
+            "Les plasmocytes"
+          ],
+          "answer": 3,
+          "explain": "Les lymphocytes B se différencient en plasmocytes qui sécrètent les anticorps.",
+          "chapter": "Bac Sciences — Immunité"
+        },
+        {
+          "lang": "fr",
+          "q": "Chez la femme, où a lieu normalement la fécondation ?",
+          "choices": [
+            "Dans l'utérus",
+            "Dans la trompe",
+            "Dans l'ovaire",
+            "Dans le vagin"
+          ],
+          "answer": 1,
+          "explain": "La fécondation se fait dans le tiers supérieur de la trompe.",
+          "chapter": "Bac Sciences — Reproduction humaine et santé"
+        },
+        {
+          "lang": "fr",
+          "q": "Test-cross AaBb × aabb, gènes indépendants. Combien de phénotypes ?",
+          "choices": [
+            "2",
+            "9",
+            "4",
+            "16"
+          ],
+          "answer": 2,
+          "explain": "Les 4 gamètes de l'hybride donnent 4 phénotypes équiprobables (1/4 chacun).",
+          "chapter": "Bac Sciences — Génétique (dihybridisme)"
+        }
+      ]
+    },
+    {
+      "id": "svt-bac-lettres",
+      "matiere": "علوم الحياة والأرض",
+      "years": [
+        "y-bac-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Chez la femme, quel organe produit les ovocytes ?",
+          "choices": [
+            "L'ovaire",
+            "L'utérus",
+            "La trompe",
+            "Le vagin"
+          ],
+          "answer": 0,
+          "explain": "Les ovocytes se forment dans les follicules de l'ovaire.",
+          "chapter": "Bac Lettres (option) — Reproduction humaine"
+        },
+        {
+          "lang": "fr",
+          "q": "Le long d'un neurone, le message nerveux est de nature :",
+          "choices": [
+            "mécanique",
+            "magnétique",
+            "lumineuse",
+            "électrique"
+          ],
+          "answer": 3,
+          "explain": "Le long de la fibre, il se propage sous forme de potentiels d'action électriques.",
+          "chapter": "Bac Lettres (option) — Neurophysiologie"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle hormone, détectée par les tests de grossesse, vient de l'embryon ?",
+          "choices": [
+            "La FSH",
+            "La testostérone",
+            "La HCG",
+            "L'insuline"
+          ],
+          "answer": 2,
+          "explain": "La HCG est sécrétée par l'embryon dès la nidation.",
+          "chapter": "Bac Lettres (option) — Reproduction humaine"
+        }
+      ]
+    },
+    {
+      "id": "svt-generic",
+      "matiere": "علوم الحياة والأرض",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "De quoi la plante verte a-t-elle besoin pour la photosynthèse ?",
+          "choices": [
+            "De lumière",
+            "D'obscurité",
+            "De sucre",
+            "D'alcool"
+          ],
+          "answer": 0,
+          "explain": "La photosynthèse utilise l'énergie lumineuse, le CO₂ et l'eau.",
+          "chapter": "1ère — Nutrition carbonée (photosynthèse)"
+        },
+        {
+          "lang": "fr",
+          "q": "Un vaccin protège l'organisme grâce à :",
+          "choices": [
+            "les antibiotiques",
+            "la mémoire immunitaire",
+            "les vitamines",
+            "la digestion"
+          ],
+          "answer": 1,
+          "explain": "Le vaccin crée des cellules mémoire qui réagissent vite au vrai microbe.",
+          "chapter": "1ère — Microbes et santé (vaccination)"
+        },
+        {
+          "lang": "fr",
+          "q": "Combien de chromosomes contient une cellule humaine ordinaire ?",
+          "choices": [
+            "23",
+            "44",
+            "46",
+            "92"
+          ],
+          "answer": 2,
+          "explain": "Une cellule somatique humaine possède 23 paires, soit 46 chromosomes.",
+          "chapter": "2ème Sciences — La cellule, unité des êtres vivants"
+        }
+      ]
+    },
+    {
+      "id": "info-2-info",
+      "matiere": "إعلامية",
+      "years": [
+        "y-2-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "En Python, quelle fonction affiche un résultat à l'écran ?",
+          "choices": [
+            "print()",
+            "input()",
+            "len()",
+            "int()"
+          ],
+          "answer": 0,
+          "explain": "print() affiche ; input() sert à lire une saisie.",
+          "chapter": "2ème TI — Implémenter en Python"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle balise HTML crée un lien hypertexte ?",
+          "choices": [
+            "<p>",
+            "<a>",
+            "<img>",
+            "<h1>"
+          ],
+          "answer": 1,
+          "explain": "La balise <a href=\"…\"> crée un lien hypertexte.",
+          "chapter": "2ème TI — Vocabulaire et syntaxe HTML5"
+        },
+        {
+          "lang": "fr",
+          "q": "Que vaut 17 % 5 en Python ?",
+          "choices": [
+            "3",
+            "3.4",
+            "2",
+            "12"
+          ],
+          "answer": 2,
+          "explain": "% donne le reste de la division entière : 17 = 5 × 3 + 2.",
+          "chapter": "2ème TI — Implémenter en Python (opérateurs // et %)"
+        }
+      ]
+    },
+    {
+      "id": "info-3-info",
+      "matiere": "إعلامية",
+      "years": [
+        "y-3-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quel type Python convient pour stocker la valeur 3.14 ?",
+          "choices": [
+            "int",
+            "float",
+            "str",
+            "bool"
+          ],
+          "answer": 1,
+          "explain": "Un nombre à virgule est un réel : type float.",
+          "chapter": "3ème Informatique — Rappels : structures de base"
+        },
+        {
+          "lang": "fr",
+          "q": "La recherche dichotomique exige un tableau :",
+          "choices": [
+            "à deux dimensions",
+            "vide",
+            "de chaînes",
+            "trié"
+          ],
+          "answer": 3,
+          "explain": "La dichotomie compare au milieu et élimine une moitié : il faut un tableau trié.",
+          "chapter": "3ème Informatique — Les méthodes de recherche"
+        },
+        {
+          "lang": "fr",
+          "q": "Tri par sélection croissant de [5, 2, 8, 1] : tableau après le 1er passage ?",
+          "choices": [
+            "[2, 5, 1, 8]",
+            "[1, 5, 2, 8]",
+            "[2, 5, 8, 1]",
+            "[1, 2, 8, 5]"
+          ],
+          "answer": 3,
+          "explain": "On cherche le minimum (1) et on l'échange avec la 1re case (5).",
+          "chapter": "3ème Informatique — Les méthodes de tri"
+        }
+      ]
+    },
+    {
+      "id": "info-bac-msct",
+      "matiere": "إعلامية",
+      "years": [
+        "y-bac-math",
+        "y-bac-sci",
+        "y-bac-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle structure répète un traitement un nombre connu de fois ?",
+          "choices": [
+            "Pour (for)",
+            "Si (if)",
+            "Selon (match)",
+            "Lire (input)"
+          ],
+          "answer": 0,
+          "explain": "La boucle Pour s'utilise quand le nombre de répétitions est connu.",
+          "chapter": "Bac — Structures itératives"
+        },
+        {
+          "lang": "fr",
+          "q": "En Python, que renvoie la fonction input() ?",
+          "choices": [
+            "Un entier",
+            "Un booléen",
+            "Un réel",
+            "Une chaîne (str)"
+          ],
+          "answer": 3,
+          "explain": "input() renvoie toujours une chaîne, à convertir avec int() ou float().",
+          "chapter": "Bac — Implémentation en Python"
+        },
+        {
+          "lang": "fr",
+          "q": "s = 0, puis for i in range(1, 4): s = s + i. Que vaut s à la fin ?",
+          "choices": [
+            "10",
+            "3",
+            "4",
+            "6"
+          ],
+          "answer": 3,
+          "explain": "range(1, 4) donne 1, 2, 3 : s = 1 + 2 + 3 = 6.",
+          "chapter": "Bac — Structures itératives (Pour)"
+        }
+      ]
+    },
+    {
+      "id": "info-bac-info",
+      "matiere": "إعلامية",
+      "years": [
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "En Python, quel mot-clé sert à définir une fonction ?",
+          "choices": [
+            "def",
+            "func",
+            "function",
+            "return"
+          ],
+          "answer": 0,
+          "explain": "On écrit def nom(paramètres): pour définir une fonction.",
+          "chapter": "Bac Informatique — Révision : décomposition modulaire"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel module enregistre des enregistrements dans un fichier .dat ?",
+          "choices": [
+            "numpy",
+            "pickle",
+            "math",
+            "random"
+          ],
+          "answer": 1,
+          "explain": "Les conventions officielles utilisent pickle (dump, load) pour les fichiers de données.",
+          "chapter": "Bac Informatique — Les enregistrements et les fichiers"
+        },
+        {
+          "lang": "fr",
+          "q": "On ouvre en mode \"w\" un fichier texte qui existe déjà. Que se passe-t-il ?",
+          "choices": [
+            "Il ajoute à la fin",
+            "Erreur",
+            "Son contenu est effacé",
+            "Il est lu"
+          ],
+          "answer": 2,
+          "explain": "Le mode \"w\" écrase le fichier ; c'est \"a\" qui ajoute à la fin.",
+          "chapter": "Bac Informatique — Les fichiers texte"
+        }
+      ]
+    },
+    {
+      "id": "info-bac-eco",
+      "matiere": "إعلامية",
+      "years": [
+        "y-bac-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Dans une table d'une base de données, une ligne s'appelle :",
+          "choices": [
+            "un enregistrement",
+            "un champ",
+            "une clé",
+            "une requête"
+          ],
+          "answer": 0,
+          "explain": "Chaque ligne est un enregistrement ; chaque colonne est un champ.",
+          "chapter": "Bac Éco-gestion — Bases de données relationnelles"
+        },
+        {
+          "lang": "fr",
+          "q": "Une clé primaire doit être :",
+          "choices": [
+            "répétée",
+            "unique",
+            "facultative",
+            "toujours un texte"
+          ],
+          "answer": 1,
+          "explain": "La clé primaire identifie chaque enregistrement de façon unique.",
+          "chapter": "Bac Éco-gestion — Bases de données relationnelles"
+        },
+        {
+          "lang": "fr",
+          "q": "Avec pandas, quelle fonction lit un fichier CSV ?",
+          "choices": [
+            "to_csv()",
+            "open_csv()",
+            "read_csv()",
+            "load()"
+          ],
+          "answer": 2,
+          "explain": "pd.read_csv(\"fichier.csv\") charge le fichier dans un DataFrame.",
+          "chapter": "Bac Éco-gestion — Analyse de données avec Python (pandas)"
+        }
+      ]
+    },
+    {
+      "id": "info-bac-lettres",
+      "matiere": "إعلامية",
+      "years": [
+        "y-bac-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quel logiciel fait des calculs dans des cellules ?",
+          "choices": [
+            "Un traitement de texte",
+            "Un navigateur",
+            "Un antivirus",
+            "Un tableur"
+          ],
+          "answer": 3,
+          "explain": "Le tableur organise les données en cellules et calcule avec des formules.",
+          "chapter": "Bac Lettres — Tableur"
+        },
+        {
+          "lang": "fr",
+          "q": "Dans un tableur, quelle formule fait la somme des cellules A1 à A5 ?",
+          "choices": [
+            "=A1+A5",
+            "=SOMME(A1:A5)",
+            "=SOMME(A1;A5)",
+            "SOMME(A1-A5)"
+          ],
+          "answer": 1,
+          "explain": "Les deux-points désignent la plage A1 à A5 ; le point-virgule ne prend que A1 et A5.",
+          "chapter": "Bac Lettres — Tableur"
+        },
+        {
+          "lang": "fr",
+          "q": "Formulaire en ligne : pour une seule réponse parmi plusieurs, on utilise :",
+          "choices": [
+            "des cases à cocher",
+            "une zone de texte",
+            "des boutons radio",
+            "un bouton d'envoi"
+          ],
+          "answer": 2,
+          "explain": "Les boutons radio n'autorisent qu'un seul choix ; les cases à cocher en permettent plusieurs.",
+          "chapter": "Bac Lettres — Formulaires en ligne"
+        }
+      ]
+    },
+    {
+      "id": "info-generic",
+      "matiere": "إعلامية",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle fonction Python affiche un message ?",
+          "choices": [
+            "input()",
+            "type()",
+            "len()",
+            "print()"
+          ],
+          "answer": 3,
+          "explain": "print() affiche à l'écran ; input() lit une saisie.",
+          "chapter": "2ème — Pensée computationnelle et programmation"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle structure exécute un bloc seulement si une condition est vraie ?",
+          "choices": [
+            "for",
+            "while",
+            "if",
+            "def"
+          ],
+          "answer": 2,
+          "explain": "if (Si … Alors) est la structure conditionnelle.",
+          "chapter": "2ème — Pensée computationnelle (structure conditionnelle)"
+        },
+        {
+          "lang": "fr",
+          "q": "Que vaut 7 // 2 en Python ?",
+          "choices": [
+            "3.5",
+            "3",
+            "1",
+            "4"
+          ],
+          "answer": 1,
+          "explain": "// donne le quotient de la division entière : 7 = 2 × 3 + 1.",
+          "chapter": "2ème — Implémenter en Python (opérateurs)"
+        }
+      ]
+    },
+    {
+      "id": "algo-bac-info",
+      "matiere": "خوارزميات",
+      "years": [
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Une fonction récursive est une fonction qui :",
+          "choices": [
+            "utilise une boucle",
+            "n'a pas de paramètre",
+            "ne renvoie rien",
+            "s'appelle elle-même"
+          ],
+          "answer": 3,
+          "explain": "Elle se rappelle elle-même jusqu'à une condition d'arrêt.",
+          "chapter": "Bac Informatique — La récursivité"
+        },
+        {
+          "lang": "fr",
+          "q": "Fibonacci : F0 = 0, F1 = 1, Fn = Fn−1 + Fn−2. Combien vaut F6 ?",
+          "choices": [
+            "5",
+            "8",
+            "13",
+            "6"
+          ],
+          "answer": 1,
+          "explain": "0, 1, 1, 2, 3, 5, 8 : F6 = 8.",
+          "chapter": "Bac Informatique — Les algorithmes récurrents"
+        },
+        {
+          "lang": "fr",
+          "q": "Comment s'écrit le nombre 25 en base 2 ?",
+          "choices": [
+            "10011",
+            "11010",
+            "11001",
+            "10101"
+          ],
+          "answer": 2,
+          "explain": "25 = 16 + 8 + 1, soit 11001 en binaire.",
+          "chapter": "Bac Informatique — Algorithmes d'arithmétique (conversions de bases)"
+        }
+      ]
+    },
+    {
+      "id": "algo-generic",
+      "matiere": "خوارزميات",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Un algorithme est :",
+          "choices": [
+            "une suite d'instructions",
+            "un ordinateur",
+            "un langage",
+            "un fichier"
+          ],
+          "answer": 0,
+          "explain": "C'est une suite finie et ordonnée d'instructions qui résout un problème.",
+          "chapter": "3ème Informatique — Rappels : structures de base"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle structure répète un bloc tant qu'une condition est vraie ?",
+          "choices": [
+            "Si (if)",
+            "Tant que (while)",
+            "Lire (input)",
+            "Écrire (print)"
+          ],
+          "answer": 1,
+          "explain": "Tant que … Faire répète le traitement tant que la condition reste vraie.",
+          "chapter": "3ème Informatique — Rappels : structures de contrôle"
+        },
+        {
+          "lang": "fr",
+          "q": "x ← 3, puis x ← x * 2 + 1. Que vaut x ?",
+          "choices": [
+            "9",
+            "6",
+            "8",
+            "7"
+          ],
+          "answer": 3,
+          "explain": "La multiplication passe avant l'addition : 3 × 2 + 1 = 7.",
+          "chapter": "3ème Informatique — Rappels : affectation"
+        }
+      ]
+    },
+    {
+      "id": "techno-3-tech",
+      "matiere": "تكنولوجيا",
+      "years": [
+        "y-3-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle fonction logique donne 1 si au moins une entrée vaut 1 ?",
+          "choices": [
+            "OU (OR)",
+            "ET (AND)",
+            "NON (NOT)",
+            "NON-ET (NAND)"
+          ],
+          "answer": 0,
+          "explain": "La sortie d'une fonction OU vaut 1 dès qu'une entrée vaut 1.",
+          "chapter": "3ème Technique — Génie électrique : logique combinatoire"
+        },
+        {
+          "lang": "fr",
+          "q": "Combien vaut le nombre binaire 1010 en décimal ?",
+          "choices": [
+            "12",
+            "1010",
+            "5",
+            "10"
+          ],
+          "answer": 3,
+          "explain": "1010₂ = 8 + 0 + 2 + 0 = 10.",
+          "chapter": "3ème Technique — Génie électrique : systèmes de numération et codes"
+        },
+        {
+          "lang": "fr",
+          "q": "Une liaison pivot laisse combien de degrés de liberté ?",
+          "choices": [
+            "0",
+            "2",
+            "1",
+            "6"
+          ],
+          "answer": 2,
+          "explain": "La liaison pivot n'autorise qu'une rotation autour de son axe.",
+          "chapter": "3ème Technique — Génie mécanique : les liaisons mécaniques"
+        }
+      ]
+    },
+    {
+      "id": "sti-bac-info",
+      "matiere": "تكنولوجيا",
+      "years": [
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quel langage décrit la structure d'une page web ?",
+          "choices": [
+            "HTML",
+            "SQL",
+            "Python",
+            "PHP"
+          ],
+          "answer": 0,
+          "explain": "HTML structure la page ; CSS la met en forme.",
+          "chapter": "Bac Informatique (STI) — Sites web statiques (HTML5)"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle commande SQL ajoute une ligne dans une table ?",
+          "choices": [
+            "UPDATE",
+            "INSERT INTO",
+            "SELECT",
+            "ALTER TABLE"
+          ],
+          "answer": 1,
+          "explain": "INSERT INTO … VALUES ajoute un enregistrement.",
+          "chapter": "Bac Informatique (STI) — Manipulation d'une base de données"
+        },
+        {
+          "lang": "fr",
+          "q": "Quelle clause SQL filtre les groupes formés par GROUP BY ?",
+          "choices": [
+            "WHERE",
+            "ORDER BY",
+            "HAVING",
+            "DISTINCT"
+          ],
+          "answer": 2,
+          "explain": "WHERE filtre les lignes avant le regroupement, HAVING filtre les groupes.",
+          "chapter": "Bac Informatique (STI) — Manipulation d'une base de données"
+        }
+      ]
+    },
+    {
+      "id": "techno-generic",
+      "matiere": "تكنولوجيا",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien vaut le nombre binaire 11 en décimal ?",
+          "choices": [
+            "11",
+            "3",
+            "2",
+            "4"
+          ],
+          "answer": 1,
+          "explain": "11₂ = 2 + 1 = 3.",
+          "chapter": "2ème TI — Systèmes de numération et codes"
+        },
+        {
+          "lang": "fr",
+          "q": "La fonction logique NON (NOT) transforme 1 en :",
+          "choices": [
+            "10",
+            "1",
+            "2",
+            "0"
+          ],
+          "answer": 3,
+          "explain": "NON inverse l'entrée : 1 devient 0 et 0 devient 1.",
+          "chapter": "1ère — Fonctions logiques de base"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel dessin représente une seule pièce avec toutes ses cotes ?",
+          "choices": [
+            "Le dessin d'ensemble",
+            "La nomenclature",
+            "Le dessin de définition",
+            "Le schéma électrique"
+          ],
+          "answer": 2,
+          "explain": "Le dessin de définition décrit complètement une pièce, cotes comprises.",
+          "chapter": "1ère — Définition graphique d'un produit"
+        }
+      ]
+    },
+    {
+      "id": "meca-3-tech",
+      "matiere": "ميكانيك",
+      "years": [
+        "y-3-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Une liaison encastrement laisse combien de degrés de liberté ?",
+          "choices": [
+            "0",
+            "1",
+            "3",
+            "6"
+          ],
+          "answer": 0,
+          "explain": "L'encastrement bloque tous les mouvements : aucun degré de liberté.",
+          "chapter": "3ème Technique — Les liaisons mécaniques"
+        },
+        {
+          "lang": "fr",
+          "q": "En analyse fonctionnelle, la « bête à cornes » sert à exprimer :",
+          "choices": [
+            "le coût",
+            "le besoin",
+            "la matière",
+            "la cotation"
+          ],
+          "answer": 1,
+          "explain": "Elle répond à : à qui rend-il service, sur quoi agit-il, dans quel but ?",
+          "chapter": "3ème Technique — Analyse fonctionnelle externe d'un produit"
+        },
+        {
+          "lang": "fr",
+          "q": "Un pignon de 20 dents entraîne une roue de 60 dents. Rapport de transmission ?",
+          "choices": [
+            "3",
+            "40",
+            "1/3",
+            "1/2"
+          ],
+          "answer": 2,
+          "explain": "r = Z menant / Z mené = 20/60 = 1/3 : la roue tourne 3 fois moins vite.",
+          "chapter": "3ème Technique — Transmission de mouvement"
+        }
+      ]
+    },
+    {
+      "id": "meca-bac-tech",
+      "matiere": "ميكانيك",
+      "years": [
+        "y-bac-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Dans un système automatisé, la chaîne d'énergie commence par :",
+          "choices": [
+            "Alimenter",
+            "Acquérir",
+            "Traiter",
+            "Communiquer"
+          ],
+          "answer": 0,
+          "explain": "Chaîne d'énergie : Alimenter, Distribuer, Convertir, Transmettre.",
+          "chapter": "Bac Technique — Analyse fonctionnelle interne d'un produit"
+        },
+        {
+          "lang": "fr",
+          "q": "Couple C = 10 N·m à ω = 100 rad/s. Quelle puissance est transmise ?",
+          "choices": [
+            "10 W",
+            "0,1 W",
+            "110 W",
+            "1 000 W"
+          ],
+          "answer": 3,
+          "explain": "P = C × ω = 10 × 100 = 1 000 W.",
+          "chapter": "Bac Technique — Transmission de puissance"
+        },
+        {
+          "lang": "fr",
+          "q": "Vis-écrou à un filet, pas 2 mm. La vis fait 5 tours : déplacement de l'écrou ?",
+          "choices": [
+            "2,5 mm",
+            "7 mm",
+            "10 mm",
+            "20 mm"
+          ],
+          "answer": 2,
+          "explain": "Déplacement = nombre de tours × pas = 5 × 2 = 10 mm.",
+          "chapter": "Bac Technique — Transmission avec transformation de mouvement (vis-écrou)"
+        }
+      ]
+    },
+    {
+      "id": "meca-generic",
+      "matiere": "ميكانيك",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien de degrés de liberté au maximum entre deux solides ?",
+          "choices": [
+            "3",
+            "6",
+            "4",
+            "12"
+          ],
+          "answer": 1,
+          "explain": "3 translations et 3 rotations : 6 degrés de liberté.",
+          "chapter": "3ème Technique — Les liaisons mécaniques"
+        },
+        {
+          "lang": "fr",
+          "q": "Une liaison pivot autorise :",
+          "choices": [
+            "une rotation",
+            "une translation",
+            "aucun mouvement",
+            "tous les mouvements"
+          ],
+          "answer": 0,
+          "explain": "La liaison pivot permet seulement la rotation autour de son axe.",
+          "chapter": "3ème Technique — Les liaisons mécaniques"
+        },
+        {
+          "lang": "fr",
+          "q": "Un pignon de 15 dents entraîne une roue de 45 dents. La roue tourne :",
+          "choices": [
+            "3 fois plus vite",
+            "à la même vitesse",
+            "15 fois moins vite",
+            "3 fois moins vite"
+          ],
+          "answer": 3,
+          "explain": "r = 15/45 = 1/3 : la grande roue tourne 3 fois moins vite.",
+          "chapter": "3ème Technique — Transmission de mouvement"
+        }
+      ]
+    },
+    {
+      "id": "elec-3-tech",
+      "matiere": "كهرباء",
+      "years": [
+        "y-3-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Combien d'états logiques peut prendre une variable binaire ?",
+          "choices": [
+            "8",
+            "1",
+            "10",
+            "2"
+          ],
+          "answer": 3,
+          "explain": "Une variable binaire vaut 0 ou 1.",
+          "chapter": "3ème Technique — Génie électrique : systèmes de numération et codes"
+        },
+        {
+          "lang": "fr",
+          "q": "Une bascule (RS, D, JK) est un circuit de logique :",
+          "choices": [
+            "combinatoire",
+            "séquentielle",
+            "analogique",
+            "de puissance"
+          ],
+          "answer": 1,
+          "explain": "La sortie d'une bascule dépend aussi de son état précédent : c'est séquentiel.",
+          "chapter": "3ème Technique — Génie électrique : logique séquentielle"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel nombre décimal correspond à (1F)₁₆ ?",
+          "choices": [
+            "25",
+            "115",
+            "31",
+            "17"
+          ],
+          "answer": 2,
+          "explain": "(1F)₁₆ = 1 × 16 + 15 = 31.",
+          "chapter": "3ème Technique — Génie électrique : systèmes de numération et codes"
+        }
+      ]
+    },
+    {
+      "id": "elec-bac-tech",
+      "matiere": "كهرباء",
+      "years": [
+        "y-bac-tech"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Le PIC 16F876A utilisé en génie électrique est :",
+          "choices": [
+            "un moteur pas à pas",
+            "un capteur PT100",
+            "une bascule JK",
+            "un microcontrôleur"
+          ],
+          "answer": 3,
+          "explain": "Le PIC 16F876A est un microcontrôleur programmé en MikroC.",
+          "chapter": "Bac Technique — Microcontrôleur"
+        },
+        {
+          "lang": "fr",
+          "q": "Combien d'états différents compte un compteur modulo 10 ?",
+          "choices": [
+            "9",
+            "10",
+            "11",
+            "16"
+          ],
+          "answer": 1,
+          "explain": "Un compteur modulo 10 compte de 0 à 9 : 10 états.",
+          "chapter": "Bac Technique — Logique séquentielle : compteurs"
+        },
+        {
+          "lang": "fr",
+          "q": "En démarrage étoile-triangle, le courant de démarrage est divisé par :",
+          "choices": [
+            "√3",
+            "2",
+            "3",
+            "9"
+          ],
+          "answer": 2,
+          "explain": "Le couplage étoile au démarrage divise par 3 le courant et le couple.",
+          "chapter": "Bac Technique — Machines électriques (moteur asynchrone)"
+        }
+      ]
+    },
+    {
+      "id": "elec-generic",
+      "matiere": "كهرباء",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quelle est l'unité de la tension électrique ?",
+          "choices": [
+            "Le volt",
+            "L'ampère",
+            "L'ohm",
+            "Le watt"
+          ],
+          "answer": 0,
+          "explain": "La tension se mesure en volts (V).",
+          "chapter": "1ère — P1. Électricité (tension électrique)"
+        },
+        {
+          "lang": "fr",
+          "q": "Une porte ET à deux entrées reçoit 1 et 0. Sa sortie vaut :",
+          "choices": [
+            "1",
+            "10",
+            "2",
+            "0"
+          ],
+          "answer": 3,
+          "explain": "La sortie d'une porte ET ne vaut 1 que si toutes les entrées valent 1.",
+          "chapter": "1ère — Fonctions logiques de base"
+        },
+        {
+          "lang": "fr",
+          "q": "Convertis le nombre binaire 1101 en décimal.",
+          "choices": [
+            "11",
+            "14",
+            "13",
+            "9"
+          ],
+          "answer": 2,
+          "explain": "1101₂ = 8 + 4 + 0 + 1 = 13.",
+          "chapter": "2ème TI — Systèmes de numération et codes"
+        }
+      ]
+    },
+    {
+      "id": "eco-2",
+      "matiere": "اقتصاد",
+      "years": [
+        "y-2-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Se nourrir, boire, se loger : ce sont des besoins…",
+          "choices": [
+            "primaires",
+            "secondaires",
+            "de luxe",
+            "collectifs"
+          ],
+          "answer": 0,
+          "explain": "Les besoins primaires sont vitaux : nourriture, eau, logement.",
+          "chapter": "2ème Éco — Les besoins"
+        },
+        {
+          "lang": "fr",
+          "q": "La partie du revenu qui n'est pas consommée s'appelle :",
+          "choices": [
+            "l'impôt",
+            "l'épargne",
+            "le salaire",
+            "la dépense"
+          ],
+          "answer": 1,
+          "explain": "E = R − C : ce qui n'est pas consommé est épargné.",
+          "chapter": "2ème Éco — L'épargne"
+        },
+        {
+          "lang": "fr",
+          "q": "Revenu 1 000 DT, consommation 800 DT. Propension moyenne à consommer ?",
+          "choices": [
+            "0,2",
+            "1,25",
+            "0,8",
+            "800"
+          ],
+          "answer": 2,
+          "explain": "PMC = C / R = 800 / 1 000 = 0,8.",
+          "chapter": "2ème Éco — La consommation (propensions à consommer)"
+        }
+      ]
+    },
+    {
+      "id": "eco-3",
+      "matiere": "اقتصاد",
+      "years": [
+        "y-3-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Les deux grands facteurs de production sont :",
+          "choices": [
+            "le travail et le capital",
+            "l'offre et la demande",
+            "l'impôt et la taxe",
+            "le prix et la qualité"
+          ],
+          "answer": 0,
+          "explain": "On produit en combinant du travail et du capital.",
+          "chapter": "3ème Éco-gestion — La production et ses facteurs"
+        },
+        {
+          "lang": "fr",
+          "q": "Production 500 DT, consommations intermédiaires 200 DT. Valeur ajoutée ?",
+          "choices": [
+            "700 DT",
+            "300 DT",
+            "200 DT",
+            "2,5 DT"
+          ],
+          "answer": 1,
+          "explain": "VA = production − consommations intermédiaires = 500 − 200 = 300 DT.",
+          "chapter": "3ème Éco-gestion — La production et sa mesure"
+        },
+        {
+          "lang": "fr",
+          "q": "Population active : 5 millions, dont 1 million de chômeurs. Taux de chômage ?",
+          "choices": [
+            "25 %",
+            "5 %",
+            "20 %",
+            "80 %"
+          ],
+          "answer": 2,
+          "explain": "Taux de chômage = chômeurs / population active = 1/5 = 20 %.",
+          "chapter": "3ème Éco-gestion — Le facteur travail"
+        }
+      ]
+    },
+    {
+      "id": "eco-bac",
+      "matiere": "اقتصاد",
+      "years": [
+        "y-bac-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Une hausse générale et durable des prix s'appelle :",
+          "choices": [
+            "la récession",
+            "la déflation",
+            "la croissance",
+            "l'inflation"
+          ],
+          "answer": 3,
+          "explain": "L'inflation est la hausse générale et durable du niveau des prix.",
+          "chapter": "Bac Éco-gestion — L'inflation"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel agrégat sert à mesurer la croissance économique ?",
+          "choices": [
+            "Le taux de chômage",
+            "Le PIB",
+            "L'IPC",
+            "Le taux d'activité"
+          ],
+          "answer": 1,
+          "explain": "La croissance est l'augmentation durable du PIB réel.",
+          "chapter": "Bac Éco-gestion — La croissance économique"
+        },
+        {
+          "lang": "fr",
+          "q": "Revenu 100 DT ; X coûte 10 DT, Y coûte 20 DT. Avec 4 X, combien de Y au plus ?",
+          "choices": [
+            "6",
+            "4",
+            "2",
+            "3"
+          ],
+          "answer": 3,
+          "explain": "Il reste 100 − 4 × 10 = 60 DT, soit 60 / 20 = 3 unités de Y.",
+          "chapter": "Bac Éco-gestion — Le comportement du consommateur (contrainte budgétaire)"
+        }
+      ]
+    },
+    {
+      "id": "eco-generic",
+      "matiere": "اقتصاد",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Quel agent économique produit des biens pour les vendre ?",
+          "choices": [
+            "L'entreprise",
+            "Le ménage",
+            "La banque centrale",
+            "L'administration"
+          ],
+          "answer": 0,
+          "explain": "L'entreprise produit des biens et services marchands.",
+          "chapter": "2ème Éco — La production"
+        },
+        {
+          "lang": "fr",
+          "q": "Ce qui reste du revenu après la consommation s'appelle :",
+          "choices": [
+            "la dépense",
+            "le crédit",
+            "la taxe",
+            "l'épargne"
+          ],
+          "answer": 3,
+          "explain": "Épargne = revenu − consommation.",
+          "chapter": "2ème Éco — L'épargne"
+        },
+        {
+          "lang": "fr",
+          "q": "Un prix passe de 50 DT à 60 DT. Quel est son taux de variation ?",
+          "choices": [
+            "10 %",
+            "16,7 %",
+            "20 %",
+            "120 %"
+          ],
+          "answer": 2,
+          "explain": "(60 − 50) / 50 = 0,2, soit + 20 %.",
+          "chapter": "2ème Éco — Les revenus (revenu nominal et réel)"
+        }
+      ]
+    },
+    {
+      "id": "gest-2",
+      "matiere": "تصرّف",
+      "years": [
+        "y-2-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Une entreprise qui cherche à faire du bénéfice a un but :",
+          "choices": [
+            "lucratif",
+            "non lucratif",
+            "uniquement social",
+            "politique"
+          ],
+          "answer": 0,
+          "explain": "Le but lucratif est la recherche du profit.",
+          "chapter": "2ème Éco — L'entreprise, centre de décisions"
+        },
+        {
+          "lang": "fr",
+          "q": "Prix d'achat 40 DT, frais d'achat 10 DT. Quel est le coût d'achat ?",
+          "choices": [
+            "30 DT",
+            "50 DT",
+            "400 DT",
+            "40 DT"
+          ],
+          "answer": 1,
+          "explain": "Coût d'achat = prix d'achat + frais d'achat = 40 + 10 = 50 DT.",
+          "chapter": "2ème Éco — Les décisions de production (notion de coût)"
+        },
+        {
+          "lang": "fr",
+          "q": "Prix de vente 120 DT, coût de revient 90 DT. Résultat par unité ?",
+          "choices": [
+            "210 DT",
+            "−30 DT",
+            "30 DT",
+            "1,33 DT"
+          ],
+          "answer": 2,
+          "explain": "Résultat = prix de vente − coût de revient = 120 − 90 = 30 DT.",
+          "chapter": "2ème Éco — Les décisions de production (résultat)"
+        }
+      ]
+    },
+    {
+      "id": "gest-3",
+      "matiere": "تصرّف",
+      "years": [
+        "y-3-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "La fonction qui achète les matières premières s'appelle :",
+          "choices": [
+            "l'approvisionnement",
+            "la production",
+            "la fonction commerciale",
+            "la fonction financière"
+          ],
+          "answer": 0,
+          "explain": "La fonction approvisionnement gère les achats et les stocks.",
+          "chapter": "3ème Éco-gestion — La fonction approvisionnement"
+        },
+        {
+          "lang": "fr",
+          "q": "Stock initial 100, entrées 300, sorties 250. Quel est le stock final ?",
+          "choices": [
+            "650",
+            "150",
+            "50",
+            "350"
+          ],
+          "answer": 1,
+          "explain": "Stock final = 100 + 300 − 250 = 150.",
+          "chapter": "3ème Éco-gestion — La fonction approvisionnement (fiche de stock)"
+        },
+        {
+          "lang": "fr",
+          "q": "Coût d'achat 80 DT, prix de vente HT 100 DT. Quel est le taux de marge ?",
+          "choices": [
+            "20 %",
+            "80 %",
+            "25 %",
+            "125 %"
+          ],
+          "answer": 2,
+          "explain": "Taux de marge = marge / coût d'achat = 20 / 80 = 25 % (20 % est le taux de marque).",
+          "chapter": "3ème Éco-gestion — La fonction commerciale (taux de marge)"
+        }
+      ]
+    },
+    {
+      "id": "gest-bac",
+      "matiere": "تصرّف",
+      "years": [
+        "y-bac-eco"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Le bilan d'une entreprise présente :",
+          "choices": [
+            "le planning",
+            "les ventes du jour",
+            "les salaires seuls",
+            "l'actif et le passif"
+          ],
+          "answer": 3,
+          "explain": "Le bilan met en face ce que l'entreprise possède (actif) et ses ressources (passif).",
+          "chapter": "Bac Éco-gestion — Gestion financière"
+        },
+        {
+          "lang": "fr",
+          "q": "Besoin annuel 1 200 unités, 4 commandes égales par an. Quantité par commande ?",
+          "choices": [
+            "4 800",
+            "300",
+            "1 196",
+            "400"
+          ],
+          "answer": 1,
+          "explain": "1 200 / 4 = 300 unités par commande.",
+          "chapter": "Bac Éco-gestion — Gestion de l'approvisionnement"
+        },
+        {
+          "lang": "fr",
+          "q": "Prix de vente HT 200 DT, TVA 19 %. Quel est le prix TTC ?",
+          "choices": [
+            "219 DT",
+            "162 DT",
+            "238 DT",
+            "380 DT"
+          ],
+          "answer": 2,
+          "explain": "TTC = HT × 1,19 = 200 × 1,19 = 238 DT.",
+          "chapter": "Bac Éco-gestion — Gestion commerciale (facturation)"
+        }
+      ]
+    },
+    {
+      "id": "gest-generic",
+      "matiere": "تصرّف",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Une entreprise vend 10 articles à 15 DT l'un. Chiffre d'affaires ?",
+          "choices": [
+            "25 DT",
+            "105 DT",
+            "1,5 DT",
+            "150 DT"
+          ],
+          "answer": 3,
+          "explain": "Chiffre d'affaires = quantité × prix = 10 × 15 = 150 DT.",
+          "chapter": "2ème Éco — Les décisions de ventes"
+        },
+        {
+          "lang": "fr",
+          "q": "Le recrutement et la paie relèvent de la fonction :",
+          "choices": [
+            "ressources humaines",
+            "commerciale",
+            "approvisionnement",
+            "production"
+          ],
+          "answer": 0,
+          "explain": "La fonction RH recrute, forme et rémunère le personnel.",
+          "chapter": "2ème Éco — Les décisions liées au personnel"
+        },
+        {
+          "lang": "fr",
+          "q": "Coût de revient 80 DT, prix de vente 100 DT. Quel est le bénéfice ?",
+          "choices": [
+            "180 DT",
+            "−20 DT",
+            "20 DT",
+            "1,25 DT"
+          ],
+          "answer": 2,
+          "explain": "Bénéfice = 100 − 80 = 20 DT.",
+          "chapter": "2ème Éco — Les décisions de production (résultat)"
+        }
+      ]
+    },
+    {
+      "id": "ar-1",
+      "matiere": "عربية",
+      "years": [
+        "y-1"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "من نقل «كليلة ودمنة» إلى العربية؟",
+          "choices": [
+            "ابن المقفّع",
+            "الجاحظ",
+            "المتنبّي",
+            "ابن خلدون"
+          ],
+          "answer": 0,
+          "explain": "نقل ابن المقفّع كتاب «كليلة ودمنة» إلى العربية في القرن الثاني للهجرة.",
+          "chapter": "الأولى — المحور 2: الحكاية المثليّة"
+        },
+        {
+          "lang": "ar",
+          "q": "من صاحب قصيدة «إرادة الحياة»؟",
+          "choices": [
+            "أحمد شوقي",
+            "أبو القاسم الشابي",
+            "محمود درويش",
+            "نزار قباني"
+          ],
+          "answer": 1,
+          "explain": "«إرادة الحياة» من أشهر قصائد الشاعر التونسي أبي القاسم الشابي.",
+          "chapter": "الأولى — المحور 3: الشعر الوطني"
+        },
+        {
+          "lang": "ar",
+          "q": "إلى أيّ نوع من الغزل ينتمي شعر جميل بن معمر؟",
+          "choices": [
+            "الغزل الحضري",
+            "الغزل الصوفي",
+            "الرثاء",
+            "الغزل العذري"
+          ],
+          "answer": 3,
+          "explain": "جميل بثينة من أعلام الغزل العذري القائم على العفّة والوفاء لمحبوبة واحدة.",
+          "chapter": "الأولى — المحور 1: شعر الغزل في القرن الأول الهجري"
+        }
+      ]
+    },
+    {
+      "id": "ar-2",
+      "matiere": "عربية",
+      "years": [
+        "y-2-sci",
+        "y-2-eco",
+        "y-2-info"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "من صاحب كتاب «البخلاء»؟",
+          "choices": [
+            "الجاحظ",
+            "ابن المقفّع",
+            "أبو نواس",
+            "المعرّي"
+          ],
+          "answer": 0,
+          "explain": "«البخلاء» للجاحظ، ومنه تُختار نوادر هذا المحور.",
+          "chapter": "الثانية — محور 3: فنّ النادرة"
+        },
+        {
+          "lang": "ar",
+          "q": "من مؤلّف مسرحية «بيجماليون»؟",
+          "choices": [
+            "نجيب محفوظ",
+            "توفيق الحكيم",
+            "طه حسين",
+            "سعد الله ونوس"
+          ],
+          "answer": 1,
+          "explain": "«بيجماليون» مسرحية لتوفيق الحكيم، رائد المسرح الذهني.",
+          "chapter": "الثانية — محور 5: النص المسرحي"
+        },
+        {
+          "lang": "ar",
+          "q": "بمَ اشتهر أبو نواس في تجديده للقصيدة؟",
+          "choices": [
+            "الوقوف على الأطلال",
+            "الموشّحات",
+            "رفض المقدّمة الطلليّة",
+            "شعر الحماسة"
+          ],
+          "answer": 2,
+          "explain": "سخر أبو نواس من الوقوف على الأطلال ودعا إلى وصف الخمر والحياة الجديدة.",
+          "chapter": "الثانية — محور 2: التجديد في الشعر العربي في القرن الثاني للهجرة"
+        }
+      ]
+    },
+    {
+      "id": "ar-2-lettres",
+      "matiere": "عربية",
+      "years": [
+        "y-2-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "من صاحب المعلّقة التي مطلعها «قفا نبكِ من ذكرى حبيب ومنزل»؟",
+          "choices": [
+            "طرفة بن العبد",
+            "عنترة بن شدّاد",
+            "زهير بن أبي سلمى",
+            "امرؤ القيس"
+          ],
+          "answer": 3,
+          "explain": "هذا مطلع معلّقة امرئ القيس، أشهر شعراء الجاهلية.",
+          "chapter": "الثانية آداب — محور 1: الشعر الجاهلي"
+        },
+        {
+          "lang": "ar",
+          "q": "من صاحب كتاب «البخلاء» الذي تُدرس منه النوادر؟",
+          "choices": [
+            "ابن المقفّع",
+            "الأصفهاني",
+            "الجاحظ",
+            "المعرّي"
+          ],
+          "answer": 2,
+          "explain": "«البخلاء» للجاحظ، وهو أشهر مصادر النادرة في الأدب القديم.",
+          "chapter": "الثانية آداب — محور 3: من أشكال القصّ القديم: النادرة"
+        },
+        {
+          "lang": "ar",
+          "q": "ما وزن الفعل «استخرج»؟",
+          "choices": [
+            "افتعل",
+            "انفعل",
+            "تفاعل",
+            "استفعل"
+          ],
+          "answer": 3,
+          "explain": "«استخرج» على وزن «استفعل» بزيادة الهمزة والسين والتاء.",
+          "chapter": "الثانية آداب — اللغة: دلالات الصيغ الصرفية (الأفعال المزيدة)"
+        }
+      ]
+    },
+    {
+      "id": "ar-3",
+      "matiere": "عربية",
+      "years": [
+        "y-3-math",
+        "y-3-sci",
+        "y-3-eco",
+        "y-3-tech",
+        "y-3-info"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "الدعابة والتهكّم والسخرية من أنواع:",
+          "choices": [
+            "الهزل",
+            "الرثاء",
+            "الحماسة",
+            "الزهد"
+          ],
+          "answer": 0,
+          "explain": "يميّز البرنامج بين ثلاثة أنواع من الهزل: الدعابة والتهكّم والسخرية.",
+          "chapter": "الثالثة — محور 1: الهزل والظرف في الأدب العربي القديم"
+        },
+        {
+          "lang": "ar",
+          "q": "أيّ هؤلاء كاتبة تُدرس في محور «شواغل المرأة بقلم المرأة»؟",
+          "choices": [
+            "طه حسين",
+            "مي زيادة",
+            "ابن خلدون",
+            "محمود درويش"
+          ],
+          "answer": 1,
+          "explain": "مي زيادة من رائدات الكتابة النسائية العربية الحديثة.",
+          "chapter": "الثالثة — محور 3: شواغل المرأة بقلم المرأة"
+        },
+        {
+          "lang": "ar",
+          "q": "في جملة «جاء التلميذُ مسرعًا»، ما وظيفة «مسرعًا»؟",
+          "choices": [
+            "نعت",
+            "تمييز",
+            "حال",
+            "مفعول به"
+          ],
+          "answer": 2,
+          "explain": "«مسرعًا» تبيّن هيئة التلميذ عند المجيء، فهي حال منصوبة.",
+          "chapter": "الثالثة — اللغة: الأشكال النحوية لبعض الوظائف"
+        }
+      ]
+    },
+    {
+      "id": "ar-3-lettres",
+      "matiere": "عربية",
+      "years": [
+        "y-3-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "من صاحب كتاب «الأيّام»؟",
+          "choices": [
+            "طه حسين",
+            "نجيب محفوظ",
+            "توفيق الحكيم",
+            "جبران خليل جبران"
+          ],
+          "answer": 0,
+          "explain": "«الأيّام» سيرة طه حسين الذاتية، ويُدرس جزؤها الثالث.",
+          "chapter": "الثالثة آداب — محور 5: فنّ السيرة الذاتية"
+        },
+        {
+          "lang": "ar",
+          "q": "من يُعدّ مبتكر فنّ المقامة؟",
+          "choices": [
+            "الحريري",
+            "ابن المقفّع",
+            "الجاحظ",
+            "بديع الزمان الهمذاني"
+          ],
+          "answer": 3,
+          "explain": "ابتكر بديع الزمان الهمذاني المقامة في القرن الرابع، ثمّ سار الحريري على نهجه.",
+          "chapter": "الثالثة آداب — محور 2: المقامة"
+        },
+        {
+          "lang": "ar",
+          "q": "الجمع بين «الليل» و«النهار» في جملة واحدة محسّن بديعي يُسمّى:",
+          "choices": [
+            "الجناس",
+            "السجع",
+            "الطباق",
+            "المقابلة"
+          ],
+          "answer": 2,
+          "explain": "الطباق هو الجمع بين الكلمة وضدّها.",
+          "chapter": "الثالثة آداب — اللغة: البديع"
+        }
+      ]
+    },
+    {
+      "id": "ar-bac",
+      "matiere": "عربية",
+      "years": [
+        "y-bac-math",
+        "y-bac-sci",
+        "y-bac-eco",
+        "y-bac-tech",
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "النصّ الذي يدافع عن رأي ليُقنع به يُسمّى نصًّا:",
+          "choices": [
+            "حجاجيًّا",
+            "سرديًّا",
+            "وصفيًّا",
+            "حواريًّا"
+          ],
+          "answer": 0,
+          "explain": "النصّ الحجاجي يبني أطروحة ويدعمها بالحجج لإقناع المتلقّي.",
+          "chapter": "الرابعة — محور وحيد: الحجاج والتفسير"
+        },
+        {
+          "lang": "ar",
+          "q": "أيّ أداة تدلّ على الاستدراك؟",
+          "choices": [
+            "لأنّ",
+            "لكنّ",
+            "إذن",
+            "ثمّ"
+          ],
+          "answer": 1,
+          "explain": "«لكنّ» تستدرك على ما قبلها، أمّا «لأنّ» فللتعليل و«إذن» للنتيجة.",
+          "chapter": "الرابعة — اللغة: أدوات لغوية"
+        },
+        {
+          "lang": "ar",
+          "q": "في «سافرتُ طلبًا للعلم»، ما وظيفة «طلبًا»؟",
+          "choices": [
+            "مفعول مطلق",
+            "حال",
+            "مفعول لأجله",
+            "تمييز"
+          ],
+          "answer": 2,
+          "explain": "«طلبًا» تبيّن سبب السفر، فهي مفعول لأجله.",
+          "chapter": "الرابعة — اللغة: وظائف نحوية (المفعول لأجله)"
+        }
+      ]
+    },
+    {
+      "id": "ar-bac-lettres",
+      "matiere": "عربية",
+      "years": [
+        "y-bac-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "من مؤلّف «رسالة الغفران»؟",
+          "choices": [
+            "التوحيدي",
+            "الجاحظ",
+            "المتنبّي",
+            "أبو العلاء المعرّي"
+          ],
+          "answer": 3,
+          "explain": "«رسالة الغفران» لأبي العلاء المعرّي، ويُدرس منها قسم الرحلة.",
+          "chapter": "الرابعة آداب — محور 3: رسالة الغفران"
+        },
+        {
+          "lang": "ar",
+          "q": "من صاحب رواية «حدّث أبو هريرة قال…»؟",
+          "choices": [
+            "نجيب محفوظ",
+            "محمود المسعدي",
+            "توفيق الحكيم",
+            "الطاهر وطّار"
+          ],
+          "answer": 1,
+          "explain": "«حدّث أبو هريرة قال…» للكاتب التونسي محمود المسعدي.",
+          "chapter": "الرابعة آداب — محور 5: الرواية العربية"
+        },
+        {
+          "lang": "ar",
+          "q": "مسرحية «مغامرة رأس المملوك جابر» تنتمي إلى:",
+          "choices": [
+            "المسرح الكلاسيكي",
+            "المأساة الإغريقية",
+            "الملهاة",
+            "المسرح الملحمي"
+          ],
+          "answer": 3,
+          "explain": "وظّف سعد الله ونوس فيها تقنيات المسرح الملحمي كالحكواتي وكسر الإيهام.",
+          "chapter": "الرابعة آداب — محور 4: المسرحية"
+        }
+      ]
+    },
+    {
+      "id": "ar-generic",
+      "matiere": "عربية",
+      "years": [],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "في «الجنديّ أسدٌ»، ما الصورة البيانية؟",
+          "choices": [
+            "تشبيه بليغ",
+            "كناية",
+            "طباق",
+            "سجع"
+          ],
+          "answer": 0,
+          "explain": "حُذفت الأداة ووجه الشبه، فهو تشبيه بليغ.",
+          "chapter": "الأولى — البلاغة: علم البيان"
+        },
+        {
+          "lang": "ar",
+          "q": "من صاحب قصيدة «إرادة الحياة»؟",
+          "choices": [
+            "أحمد شوقي",
+            "أبو القاسم الشابي",
+            "المتنبّي",
+            "امرؤ القيس"
+          ],
+          "answer": 1,
+          "explain": "«إرادة الحياة» من أشهر قصائد أبي القاسم الشابي.",
+          "chapter": "الأولى — المحور 3: الشعر الوطني"
+        },
+        {
+          "lang": "ar",
+          "q": "«لا تكذبْ». هذا أسلوب:",
+          "choices": [
+            "أمر",
+            "استفهام",
+            "نهي",
+            "تمنٍّ"
+          ],
+          "answer": 2,
+          "explain": "«لا» الناهية مع الفعل المضارع المجزوم تفيد النهي.",
+          "chapter": "الأولى — البلاغة: الإنشاء الطلبي"
+        }
+      ]
+    },
+    {
+      "id": "fr-1",
+      "matiere": "فرنسية",
+      "years": [
+        "y-1"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Accorde l'adjectif : « des fleurs … » (beau).",
+          "choices": [
+            "belles",
+            "beaux",
+            "belle",
+            "bel"
+          ],
+          "answer": 0,
+          "explain": "L'adjectif s'accorde avec « fleurs », féminin pluriel : belles.",
+          "chapter": "1ère — Module 2 : Scènes de la vie en France (accord de l'adjectif)"
+        },
+        {
+          "lang": "fr",
+          "q": "« Il marchait quand il la vit. » À quel temps est « vit » ?",
+          "choices": [
+            "l'imparfait",
+            "le passé composé",
+            "le présent",
+            "le passé simple"
+          ],
+          "answer": 3,
+          "explain": "« vit » est le passé simple de « voir » : l'action ponctuelle du récit.",
+          "chapter": "1ère — Module 1 : Rencontres (temps du récit)"
+        },
+        {
+          "lang": "fr",
+          "q": "« Il est resté chez lui car il pleuvait. » Qu'exprime « car » ?",
+          "choices": [
+            "la conséquence",
+            "le but",
+            "la cause",
+            "l'opposition"
+          ],
+          "answer": 2,
+          "explain": "« car » introduit la raison : il pleuvait, c'est la cause.",
+          "chapter": "1ère — Module 5 : Sauvons la planète Terre (cause, conséquence, but)"
+        }
+      ]
+    },
+    {
+      "id": "fr-2",
+      "matiere": "فرنسية",
+      "years": [
+        "y-2-sci",
+        "y-2-lettres",
+        "y-2-eco",
+        "y-2-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Qui a écrit la nouvelle « La Ficelle » ?",
+          "choices": [
+            "Guy de Maupassant",
+            "Victor Hugo",
+            "Molière",
+            "Albert Camus"
+          ],
+          "answer": 0,
+          "explain": "« La Ficelle » est une nouvelle de Maupassant (1883).",
+          "chapter": "2ème — Module 5 : Images d'ici, images d'ailleurs"
+        },
+        {
+          "lang": "fr",
+          "q": "Dans un texte argumentatif, l'opinion défendue par l'auteur s'appelle :",
+          "choices": [
+            "le thème",
+            "la thèse",
+            "l'exemple",
+            "la chute"
+          ],
+          "answer": 1,
+          "explain": "Le thème est le sujet ; la thèse est la position défendue sur ce sujet.",
+          "chapter": "2ème — Langue et expression : thème et thèse"
+        },
+        {
+          "lang": "fr",
+          "q": "« Tu es un ange. » Quelle figure de style est-ce ?",
+          "choices": [
+            "une comparaison",
+            "une hyperbole",
+            "une antithèse",
+            "une métaphore"
+          ],
+          "answer": 3,
+          "explain": "Rapprochement sans outil de comparaison : c'est une métaphore.",
+          "chapter": "2ème — Module 1 : Pages d'amour"
+        }
+      ]
+    },
+    {
+      "id": "fr-3",
+      "matiere": "فرنسية",
+      "years": [
+        "y-3-math",
+        "y-3-sci",
+        "y-3-eco",
+        "y-3-tech",
+        "y-3-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Qui a écrit « Le Malade imaginaire » ?",
+          "choices": [
+            "Voltaire",
+            "Racine",
+            "Corneille",
+            "Molière"
+          ],
+          "answer": 3,
+          "explain": "C'est la dernière comédie de Molière (1673).",
+          "chapter": "3ème — Module 4 : Scènes comiques"
+        },
+        {
+          "lang": "fr",
+          "q": "Qui a écrit « Celui qui n'avait jamais vu la mer » ?",
+          "choices": [
+            "Albert Camus",
+            "J.-M. G. Le Clézio",
+            "Maupassant",
+            "Jules Verne"
+          ],
+          "answer": 1,
+          "explain": "Cette nouvelle de Le Clézio est l'œuvre du module de lecture.",
+          "chapter": "3ème — Module de lecture"
+        },
+        {
+          "lang": "fr",
+          "q": "Un personnage répète sans cesse la même réplique. Quel comique est-ce ?",
+          "choices": [
+            "comique de geste",
+            "comique de mots",
+            "comique de répétition",
+            "comique de caractère"
+          ],
+          "answer": 2,
+          "explain": "La reprise d'une même réplique crée le comique de répétition.",
+          "chapter": "3ème — Module 4 : Scènes comiques"
+        }
+      ]
+    },
+    {
+      "id": "fr-3-lettres",
+      "matiere": "فرنسية",
+      "years": [
+        "y-3-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Qui est l'auteur de « Candide » ?",
+          "choices": [
+            "Voltaire",
+            "Rousseau",
+            "Montesquieu",
+            "Diderot"
+          ],
+          "answer": 0,
+          "explain": "« Candide ou l'Optimisme » est un conte philosophique de Voltaire (1759).",
+          "chapter": "3ème Lettres — Module 4 : Portraits comiques (Candide)"
+        },
+        {
+          "lang": "fr",
+          "q": "Un vers de douze syllabes s'appelle :",
+          "choices": [
+            "un octosyllabe",
+            "un alexandrin",
+            "un décasyllabe",
+            "un quatrain"
+          ],
+          "answer": 1,
+          "explain": "L'alexandrin compte 12 syllabes ; l'octosyllabe 8 et le décasyllabe 10.",
+          "chapter": "3ème Lettres — Langue et lecture : versification"
+        },
+        {
+          "lang": "fr",
+          "q": "Dans une autobiographie, l'auteur, le narrateur et le personnage sont :",
+          "choices": [
+            "toujours différents",
+            "trois amis",
+            "des êtres fictifs",
+            "une seule personne"
+          ],
+          "answer": 3,
+          "explain": "L'autobiographie repose sur l'identité auteur = narrateur = personnage.",
+          "chapter": "3ème Lettres — Module 5 : Écrits autobiographiques"
+        }
+      ]
+    },
+    {
+      "id": "fr-bac",
+      "matiere": "فرنسية",
+      "years": [
+        "y-bac-math",
+        "y-bac-sci",
+        "y-bac-eco",
+        "y-bac-tech",
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Qui a écrit « Le Silence de la mer » ?",
+          "choices": [
+            "Vercors",
+            "Albert Camus",
+            "Jean-Paul Sartre",
+            "Émile Zola"
+          ],
+          "answer": 0,
+          "explain": "Vercors l'a publié clandestinement en 1942.",
+          "chapter": "4ème — Module de lecture 1 : Le Silence de la mer"
+        },
+        {
+          "lang": "fr",
+          "q": "« La Cantatrice chauve » d'Ionesco appartient au théâtre :",
+          "choices": [
+            "classique",
+            "antique",
+            "romantique",
+            "de l'absurde"
+          ],
+          "answer": 3,
+          "explain": "Ionesco est une figure majeure du théâtre de l'absurde.",
+          "chapter": "4ème — Module de lecture 2 : La Cantatrice chauve"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel connecteur introduit une concession ?",
+          "choices": [
+            "donc",
+            "car",
+            "bien que",
+            "ensuite"
+          ],
+          "answer": 2,
+          "explain": "« Bien que » admet un fait tout en maintenant l'idée principale : concession.",
+          "chapter": "4ème — Écriture et langue : essai argumentatif (connecteurs)"
+        }
+      ]
+    },
+    {
+      "id": "fr-bac-lettres",
+      "matiere": "فرنسية",
+      "years": [
+        "y-bac-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "Qui a écrit la pièce « Antigone » étudiée en 4ème Lettres ?",
+          "choices": [
+            "Jean Anouilh",
+            "Molière",
+            "Victor Hugo",
+            "Albert Camus"
+          ],
+          "answer": 0,
+          "explain": "L'« Antigone » du programme est celle de Jean Anouilh (1944).",
+          "chapter": "4ème Lettres — Œuvres intégrales : Antigone"
+        },
+        {
+          "lang": "fr",
+          "q": "Qui est l'auteur de « Carmen » ?",
+          "choices": [
+            "Gustave Flaubert",
+            "Prosper Mérimée",
+            "Émile Zola",
+            "Stendhal"
+          ],
+          "answer": 1,
+          "explain": "« Carmen » est une nouvelle de Prosper Mérimée (1845).",
+          "chapter": "4ème Lettres — Œuvres intégrales : Carmen"
+        },
+        {
+          "lang": "fr",
+          "q": "« Cette obscure clarté » (Corneille) : quelle figure de style ?",
+          "choices": [
+            "une litote",
+            "une hyperbole",
+            "un oxymore",
+            "une métonymie"
+          ],
+          "answer": 2,
+          "explain": "L'oxymore unit deux termes contradictoires : obscure / clarté.",
+          "chapter": "4ème Lettres — Lecture et écriture : figures de style"
+        }
+      ]
+    },
+    {
+      "id": "fr-generic",
+      "matiere": "فرنسية",
+      "years": [],
+      "questions": [
+        {
+          "lang": "fr",
+          "q": "« Je viendrai demain. » Le verbe est conjugué au :",
+          "choices": [
+            "passé simple",
+            "présent",
+            "conditionnel",
+            "futur simple"
+          ],
+          "answer": 3,
+          "explain": "« viendrai » est le futur simple de « venir ».",
+          "chapter": "1ère — Module 3 : Jeunesse(s) sans frontières (futur)"
+        },
+        {
+          "lang": "fr",
+          "q": "« Il est fort comme un lion. » Quelle figure de style est-ce ?",
+          "choices": [
+            "une métaphore",
+            "une comparaison",
+            "une litote",
+            "une antithèse"
+          ],
+          "answer": 1,
+          "explain": "L'outil « comme » signale une comparaison.",
+          "chapter": "2ème — Module 1 : Pages d'amour"
+        },
+        {
+          "lang": "fr",
+          "q": "Quel connecteur exprime la conséquence ?",
+          "choices": [
+            "parce que",
+            "pourtant",
+            "afin que",
+            "donc"
+          ],
+          "answer": 3,
+          "explain": "« Donc » introduit une conséquence ; « parce que » une cause.",
+          "chapter": "1ère — Module 5 : cause, conséquence, but"
+        }
+      ]
+    },
+    {
+      "id": "en-1",
+      "matiere": "أنڤليزية",
+      "years": [
+        "y-1"
+      ],
+      "questions": [
+        {
+          "lang": "en",
+          "q": "I ___ got two brothers.",
+          "choices": [
+            "have",
+            "has",
+            "am",
+            "does"
+          ],
+          "answer": 0,
+          "explain": "With 'I', we use 'have got'.",
+          "chapter": "1st year — Grammar: have got = have"
+        },
+        {
+          "lang": "en",
+          "q": "Mount Everest is the ___ mountain in the world.",
+          "choices": [
+            "higher",
+            "highest",
+            "most high",
+            "high"
+          ],
+          "answer": 1,
+          "explain": "Short adjectives take -est in the superlative: highest.",
+          "chapter": "1st year — Grammar: superlative"
+        },
+        {
+          "lang": "en",
+          "q": "I have lived in Sfax ___ 2015.",
+          "choices": [
+            "for",
+            "from",
+            "since",
+            "during"
+          ],
+          "answer": 2,
+          "explain": "'Since' goes with a starting point in time; 'for' goes with a duration.",
+          "chapter": "1st year — Grammar: present perfect with since and for"
+        }
+      ]
+    },
+    {
+      "id": "en-2",
+      "matiere": "أنڤليزية",
+      "years": [
+        "y-2-sci",
+        "y-2-lettres",
+        "y-2-eco",
+        "y-2-info"
+      ],
+      "questions": [
+        {
+          "lang": "en",
+          "q": "My best friend always ___ me with my homework.",
+          "choices": [
+            "helps",
+            "help",
+            "helping",
+            "helped to"
+          ],
+          "answer": 0,
+          "explain": "Present simple, third person singular: helps.",
+          "chapter": "2nd year — Perform to Learn: Friendship"
+        },
+        {
+          "lang": "en",
+          "q": "If it rains tomorrow, we ___ at home.",
+          "choices": [
+            "stay",
+            "stayed",
+            "would stay",
+            "will stay"
+          ],
+          "answer": 3,
+          "explain": "Type 1 conditional: if + present, will + verb.",
+          "chapter": "2nd year — Perform to Learn: grammar (conditional type 1)"
+        },
+        {
+          "lang": "en",
+          "q": "They built this bridge in 1990. → This bridge ___ in 1990.",
+          "choices": [
+            "is built",
+            "has built",
+            "was built",
+            "were built"
+          ],
+          "answer": 2,
+          "explain": "Past simple passive with a singular subject: was + past participle.",
+          "chapter": "2nd year — Perform to Learn: grammar (passive voice)"
+        }
+      ]
+    },
+    {
+      "id": "en-3",
+      "matiere": "أنڤليزية",
+      "years": [
+        "y-3-sci",
+        "y-3-lettres",
+        "y-3-info",
+        "y-3-math",
+        "y-3-eco",
+        "y-3-tech"
+      ],
+      "questions": [
+        {
+          "lang": "en",
+          "q": "A person who helps others for free is a ___.",
+          "choices": [
+            "volunteer",
+            "boss",
+            "customer",
+            "tourist"
+          ],
+          "answer": 0,
+          "explain": "A volunteer gives time and work without being paid.",
+          "chapter": "3rd year — Module 2: We learn to give, share and care"
+        },
+        {
+          "lang": "en",
+          "q": "The ___ gap is the difference between parents' and children's views.",
+          "choices": [
+            "age",
+            "generation",
+            "family",
+            "time"
+          ],
+          "answer": 1,
+          "explain": "The generation gap separates the ideas of older and younger people.",
+          "chapter": "3rd year — Module 1: In time of test, family is best"
+        },
+        {
+          "lang": "en",
+          "q": "If I ___ rich, I would build a school in my village.",
+          "choices": [
+            "am",
+            "will be",
+            "were",
+            "have been"
+          ],
+          "answer": 2,
+          "explain": "Type 2 conditional: if + past ('were'), would + verb.",
+          "chapter": "3rd year — Activate and Perform: grammar (conditional type 2)"
+        }
+      ]
+    },
+    {
+      "id": "en-bac",
+      "matiere": "أنڤليزية",
+      "years": [
+        "y-bac-math",
+        "y-bac-sci",
+        "y-bac-eco",
+        "y-bac-lettres",
+        "y-bac-tech",
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "en",
+          "q": "A school where all lessons happen online is a ___ school.",
+          "choices": [
+            "primary",
+            "boarding",
+            "public",
+            "virtual"
+          ],
+          "answer": 3,
+          "explain": "Virtual schools teach through the Internet.",
+          "chapter": "4th year — Unit 2: Education Matters (Virtual Schools)"
+        },
+        {
+          "lang": "en",
+          "q": "When skilled people leave their country to work abroad, it is called:",
+          "choices": [
+            "tourism",
+            "brain drain",
+            "urban exodus",
+            "lifelong learning"
+          ],
+          "answer": 1,
+          "explain": "The brain drain is the loss of educated people to other countries.",
+          "chapter": "4th year — Unit 3: Creative Inventive Minds (The Brain Drain)"
+        },
+        {
+          "lang": "en",
+          "q": "___ he was tired, he kept studying.",
+          "choices": [
+            "Because",
+            "So",
+            "Unless",
+            "Although"
+          ],
+          "answer": 3,
+          "explain": "'Although' introduces a contrast: tired, yet he kept studying.",
+          "chapter": "4th year — Unit 3: argumentative writing (linkers)"
+        }
+      ]
+    },
+    {
+      "id": "en-generic",
+      "matiere": "أنڤليزية",
+      "years": [],
+      "questions": [
+        {
+          "lang": "en",
+          "q": "How ___ sugar do you want?",
+          "choices": [
+            "many",
+            "much",
+            "few",
+            "lot"
+          ],
+          "answer": 1,
+          "explain": "'Sugar' is uncountable, so we use 'much'.",
+          "chapter": "1st year — Grammar: countable vs uncountable nouns"
+        },
+        {
+          "lang": "en",
+          "q": "She ___ TV when the phone rang.",
+          "choices": [
+            "was watching",
+            "watches",
+            "has watched",
+            "is watching"
+          ],
+          "answer": 0,
+          "explain": "Past progressive for an action in progress interrupted by another.",
+          "chapter": "1st year — Grammar: past progressive"
+        },
+        {
+          "lang": "en",
+          "q": "You ___ wear a seatbelt. It's the law.",
+          "choices": [
+            "might",
+            "can't",
+            "must",
+            "needn't"
+          ],
+          "answer": 2,
+          "explain": "'Must' expresses obligation.",
+          "chapter": "1st year — Grammar: modals"
+        }
+      ]
+    },
+    {
+      "id": "philo-3",
+      "matiere": "فلسفة",
+      "years": [
+        "y-3-math",
+        "y-3-sci",
+        "y-3-eco",
+        "y-3-info",
+        "y-3-tech"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "الرأي الذي يتبنّاه أغلب الناس دون تفكير يُسمّى:",
+          "choices": [
+            "الرأي السائد",
+            "الحجّة",
+            "المفهوم",
+            "النظرية"
+          ],
+          "answer": 0,
+          "explain": "الرأي السائد رأي شائع يُتلقّى دون فحص، وهو من معاني اليوميّ.",
+          "chapter": "الثالثة — اليوميّ: الرأي السائد"
+        },
+        {
+          "lang": "ar",
+          "q": "إبطال أطروحة ببيان خطئها يُسمّى:",
+          "choices": [
+            "التعريف",
+            "الوصف",
+            "الأشكلة",
+            "الدحض"
+          ],
+          "answer": 3,
+          "explain": "الدحض إجراء يُبطل الأطروحة بحجج تبيّن تهافتها.",
+          "chapter": "الثالثة — مقتضيات التفكير: إجرائيات التفكير"
+        },
+        {
+          "lang": "ar",
+          "q": "التمسّك برأي واعتباره حقيقة مطلقة لا تقبل الشكّ يُسمّى:",
+          "choices": [
+            "النقد",
+            "الحوار",
+            "الوثوقية",
+            "الاستقلالية"
+          ],
+          "answer": 2,
+          "explain": "الوثوقية يقين متصلّب يرفض المراجعة والشكّ.",
+          "chapter": "الثالثة — اليوميّ: الوثوقية"
+        }
+      ]
+    },
+    {
+      "id": "philo-3-lettres",
+      "matiere": "فلسفة",
+      "years": [
+        "y-3-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "من مؤلّف «حيّ بن يقظان» المدروس في قائمة الآثار؟",
+          "choices": [
+            "ابن طفيل",
+            "ابن رشد",
+            "الغزالي",
+            "الفارابي"
+          ],
+          "answer": 0,
+          "explain": "قصّة «حيّ بن يقظان» المقرّرة هي لابن طفيل الأندلسي.",
+          "chapter": "الثالثة آداب — دراسة مسترسلة لأثر فلسفي"
+        },
+        {
+          "lang": "ar",
+          "q": "إبطال أطروحة ببيان تهافتها يُسمّى:",
+          "choices": [
+            "التعريف",
+            "الدحض",
+            "الأشكلة",
+            "التأسيس"
+          ],
+          "answer": 1,
+          "explain": "الدحض يُبطل الأطروحة، أمّا التأسيس فيبني الموقف على أسس.",
+          "chapter": "الثالثة آداب — مقتضيات التفكير: إجرائيات التفكير"
+        },
+        {
+          "lang": "ar",
+          "q": "التعقّل والحوار والنقد من مكوّنات:",
+          "choices": [
+            "الدعاية",
+            "الوهم",
+            "الرأي السائد",
+            "إيتيقا التفكير"
+          ],
+          "answer": 3,
+          "explain": "إيتيقا التفكير خاصّة بشعبة الآداب وتشمل التعقّل والحوار والنقد.",
+          "chapter": "الثالثة آداب — مقتضيات التفكير: إيتيقا التفكير"
+        }
+      ]
+    },
+    {
+      "id": "philo-bac",
+      "matiere": "فلسفة",
+      "years": [
+        "y-bac-math",
+        "y-bac-sci",
+        "y-bac-eco",
+        "y-bac-tech",
+        "y-bac-info"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "يعني مفهوم «الغيرية» علاقة الذات بـ:",
+          "choices": [
+            "الماضي",
+            "الطبيعة فقط",
+            "الآلة",
+            "الآخر"
+          ],
+          "answer": 3,
+          "explain": "الغيرية هي حضور الآخر في تشكّل الذات وعلاقتها به.",
+          "chapter": "الرابعة — الإنسانيّ بين الكثرة والوحدة: الإنّية والغيرية"
+        },
+        {
+          "lang": "ar",
+          "q": "صاحب القولة «أنا أفكّر إذن أنا موجود» هو:",
+          "choices": [
+            "كانط",
+            "ديكارت",
+            "نيتشه",
+            "هيغل"
+          ],
+          "answer": 1,
+          "explain": "الكوجيتو لديكارت: يقين الوعي بذاته هو أوّل حقيقة.",
+          "chapter": "الرابعة — الإنّية والغيرية (الوعي)"
+        },
+        {
+          "lang": "ar",
+          "q": "بناء تمثيل مبسّط للواقع لفهمه وتفسيره في العلم يُسمّى:",
+          "choices": [
+            "الملاحظة",
+            "الاستقراء",
+            "النمذجة",
+            "الوثوقية"
+          ],
+          "answer": 2,
+          "explain": "النمذجة بناء نموذج يمثّل الظاهرة ويسمح بتفسيرها والتنبّؤ بها.",
+          "chapter": "الرابعة — العلم بين الحقيقة والنمذجة"
+        }
+      ]
+    },
+    {
+      "id": "philo-bac-lettres",
+      "matiere": "فلسفة",
+      "years": [
+        "y-bac-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "من صاحب كتاب «الجمهورية»؟",
+          "choices": [
+            "أفلاطون",
+            "أرسطو",
+            "الكندي",
+            "مسكويه"
+          ],
+          "answer": 0,
+          "explain": "«الجمهورية» لأفلاطون، وهي من آثار القائمة الرسمية.",
+          "chapter": "الرابعة آداب — دراسة مسترسلة لأثر فلسفي"
+        },
+        {
+          "lang": "ar",
+          "q": "أيّ مسألة تطرح «الجمال والحقيقة» في برنامج الآداب؟",
+          "choices": [
+            "العمل",
+            "الفنّ",
+            "الدولة",
+            "العلم"
+          ],
+          "answer": 1,
+          "explain": "مسألة «الفنّ: الجمال والحقيقة» خاصّة بشعبة الآداب.",
+          "chapter": "الرابعة آداب — القيم بين النسبيّ والمطلق: الفنّ"
+        },
+        {
+          "lang": "ar",
+          "q": "شعور العامل بأنّ عمله غريب عنه ولا يحقّق ذاته يُسمّى:",
+          "choices": [
+            "الإنصاف",
+            "التحرّر",
+            "المنفعة",
+            "الاغتراب"
+          ],
+          "answer": 3,
+          "explain": "الاغتراب فقدان العامل صلته بعمله وبذاته.",
+          "chapter": "الرابعة آداب — العمل: النجاعة والعدالة"
+        }
+      ]
+    },
+    {
+      "id": "philo-generic",
+      "matiere": "فلسفة",
+      "years": [],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "تعني كلمة «فلسفة» في أصلها اليوناني:",
+          "choices": [
+            "محبّة الحكمة",
+            "علم الأرقام",
+            "فنّ الخطابة",
+            "دراسة الطبيعة"
+          ],
+          "answer": 0,
+          "explain": "«فيلوسوفيا» = محبّة (فيلو) الحكمة (صوفيا).",
+          "chapter": "الثالثة — مطلب التفكير: من اليوميّ إلى الفلسفيّ"
+        },
+        {
+          "lang": "ar",
+          "q": "الرأي الشائع الذي نردّده دون فحص يُسمّى:",
+          "choices": [
+            "الحجّة",
+            "النقد",
+            "البرهان",
+            "الرأي السائد"
+          ],
+          "answer": 3,
+          "explain": "الرأي السائد من معاني اليوميّ التي يبدأ منها التفكير الفلسفي.",
+          "chapter": "الثالثة — اليوميّ: الرأي السائد"
+        },
+        {
+          "lang": "ar",
+          "q": "أيّ فيلسوف اشتهر بمحاورة الناس وطرح الأسئلة في أثينا؟",
+          "choices": [
+            "ابن رشد",
+            "ديكارت",
+            "سقراط",
+            "كانط"
+          ],
+          "answer": 2,
+          "explain": "كان سقراط يحاور أهل أثينا ليكشف تناقض آرائهم.",
+          "chapter": "الثالثة — تجربة الالتزام: شخصيات فكرية"
+        }
+      ]
+    },
+    {
+      "id": "hg-2",
+      "matiere": "تاريخ وجغرافيا",
+      "years": [
+        "y-2-lettres",
+        "y-2-eco"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "انتقال السكّان من الريف إلى المدينة يُسمّى:",
+          "choices": [
+            "النزوح الريفي",
+            "الهجرة الدولية",
+            "التهيئة الترابية",
+            "السياحة"
+          ],
+          "answer": 0,
+          "explain": "النزوح الريفي هجرة داخلية من الأرياف نحو المدن.",
+          "chapter": "الثانية — الجغرافيا: المدن تنظّم المجال"
+        },
+        {
+          "lang": "ar",
+          "q": "في أيّ سنة سقطت غرناطة آخر معاقل المسلمين في الأندلس؟",
+          "choices": [
+            "1453",
+            "1492",
+            "1830",
+            "711"
+          ],
+          "answer": 1,
+          "explain": "سقطت غرناطة سنة 1492 بيد الملكين الكاثوليكيين.",
+          "chapter": "الثانية — التاريخ: العلاقة بين العالم الإسلامي والغرب المسيحي"
+        },
+        {
+          "lang": "ar",
+          "q": "من قاد المسلمين في معركة حطّين سنة 1187؟",
+          "choices": [
+            "طارق بن زياد",
+            "هارون الرشيد",
+            "صلاح الدين الأيوبي",
+            "عقبة بن نافع"
+          ],
+          "answer": 2,
+          "explain": "انتصر صلاح الدين الأيوبي على الصليبيين في حطّين ثمّ استعاد القدس.",
+          "chapter": "الثانية — التاريخ: العلاقة بين العالم الإسلامي والغرب المسيحي"
+        }
+      ]
+    },
+    {
+      "id": "hg-3-lettres",
+      "matiere": "تاريخ وجغرافيا",
+      "years": [
+        "y-3-lettres",
+        "y-3-eco"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "في أيّ قارّة تقع البلاد التونسية؟",
+          "choices": [
+            "أمريكا",
+            "آسيا",
+            "أوروبا",
+            "إفريقيا"
+          ],
+          "answer": 3,
+          "explain": "تقع تونس في شمال إفريقيا على ساحل البحر المتوسّط.",
+          "chapter": "الثالثة — الجغرافيا: البلاد التونسية، دراسة عامّة"
+        },
+        {
+          "lang": "ar",
+          "q": "من قاد الرحلة التي وصلت إلى أمريكا سنة 1492؟",
+          "choices": [
+            "فاسكو دي غاما",
+            "كريستوف كولومب",
+            "ماجلان",
+            "ماركو بولو"
+          ],
+          "answer": 1,
+          "explain": "عبر كولومب الأطلسي سنة 1492 لحساب ملكي إسبانيا.",
+          "chapter": "الثالثة — التاريخ: أوروبا والعالم المتوسطي في القرن 16"
+        },
+        {
+          "lang": "ar",
+          "q": "من ألّف «أقوم المسالك في معرفة أحوال الممالك»؟",
+          "choices": [
+            "ابن أبي الضياف",
+            "أحمد باي",
+            "الطاهر الحدّاد",
+            "خير الدين"
+          ],
+          "answer": 3,
+          "explain": "ألّفه المصلح خير الدين التونسي سنة 1867 داعيًا إلى الإصلاح.",
+          "chapter": "الثالثة — التاريخ: النهضة العربية وتطوّر الإيالة التونسية في القرن 19"
+        }
+      ]
+    },
+    {
+      "id": "hg-bac",
+      "matiere": "تاريخ وجغرافيا",
+      "years": [
+        "y-bac-lettres",
+        "y-bac-eco"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "ما العملة الموحّدة لعدد من دول الاتحاد الأوروبي؟",
+          "choices": [
+            "الأورو",
+            "الدولار",
+            "الجنيه الإسترليني",
+            "الين"
+          ],
+          "answer": 0,
+          "explain": "الأورو عملة منطقة الأورو داخل الاتحاد الأوروبي.",
+          "chapter": "الرابعة — الجغرافيا: الاتحاد الأوروبي، تكتّل اقتصادي قوي"
+        },
+        {
+          "lang": "ar",
+          "q": "في أيّ سنة استقلّت تونس؟",
+          "choices": [
+            "1881",
+            "1956",
+            "1962",
+            "1938"
+          ],
+          "answer": 1,
+          "explain": "استقلّت تونس يوم 20 مارس 1956.",
+          "chapter": "الرابعة — التاريخ: تونس من 1945 إلى 1956، المسيرة نحو الاستقلال"
+        },
+        {
+          "lang": "ar",
+          "q": "ماذا حدث في تونس يوم 9 أفريل 1938؟",
+          "choices": [
+            "إعلان الاستقلال",
+            "إعلان الجمهورية",
+            "مظاهرات قمعها الاستعمار",
+            "انتصاب الحماية"
+          ],
+          "answer": 2,
+          "explain": "قمعت سلطات الحماية مظاهرات تطالب ببرلمان تونسي فسقط شهداء.",
+          "chapter": "الرابعة — التاريخ: تونس من نهاية الحرب الأولى إلى نهاية الحرب الثانية"
+        }
+      ]
+    },
+    {
+      "id": "hg-generic",
+      "matiere": "تاريخ وجغرافيا",
+      "years": [],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "في أيّ سنة استقلّت تونس؟",
+          "choices": [
+            "1956",
+            "1881",
+            "1962",
+            "1945"
+          ],
+          "answer": 0,
+          "explain": "استقلّت تونس يوم 20 مارس 1956.",
+          "chapter": "الأولى — البلاد التونسية من الإصلاح إلى التحديث"
+        },
+        {
+          "lang": "ar",
+          "q": "من أسّس مدينة قرطاج؟",
+          "choices": [
+            "الرومان",
+            "الوندال",
+            "العثمانيون",
+            "الفينيقيون"
+          ],
+          "answer": 3,
+          "explain": "أسّس الفينيقيون القادمون من صور قرطاج في القرن التاسع قبل الميلاد.",
+          "chapter": "الأولى — قرطاج قطب حضاري في المتوسّط"
+        },
+        {
+          "lang": "ar",
+          "q": "من أسّس مدينة القيروان؟",
+          "choices": [
+            "طارق بن زياد",
+            "حسّان بن النعمان",
+            "عقبة بن نافع",
+            "ابن خلدون"
+          ],
+          "answer": 2,
+          "explain": "أسّسها عقبة بن نافع سنة 670 م.",
+          "chapter": "الأولى — القيروان وتونس مركزا إشعاع للحضارة العربية الإسلامية"
+        }
+      ]
+    },
+    {
+      "id": "islam-2",
+      "matiere": "تربية إسلامية",
+      "years": [
+        "y-2-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "ما أوّل كلمة نزلت من القرآن الكريم؟",
+          "choices": [
+            "اقرأ",
+            "قل",
+            "الحمد",
+            "يا أيّها"
+          ],
+          "answer": 0,
+          "explain": "أوّل ما نزل قوله تعالى «اقرأ باسم ربّك الذي خلق».",
+          "chapter": "الثانية — المبحث الثاني: الإنسان والوحي (الوحي والتاريخ)"
+        },
+        {
+          "lang": "ar",
+          "q": "الأخذ بالأسباب مع الاعتماد على الله يُسمّى:",
+          "choices": [
+            "التواكل",
+            "التوكّل",
+            "اليأس",
+            "التقليد"
+          ],
+          "answer": 1,
+          "explain": "التوكّل عمل وثقة بالله، أمّا التواكل فترك للأسباب.",
+          "chapter": "الثانية — المبحث الأول: الأمل والتوكّل"
+        },
+        {
+          "lang": "ar",
+          "q": "جعل الله الإنسان خليفة في الأرض ليعمّرها. هذا معنى:",
+          "choices": [
+            "الاجتهاد",
+            "التوحيد",
+            "الإصلاح",
+            "الاستخلاف"
+          ],
+          "answer": 3,
+          "explain": "الاستخلاف تكليف الإنسان بإعمار الأرض وتحقيق التقدّم.",
+          "chapter": "الثانية — المبحث الثاني: الاستخلاف والتقدّم"
+        }
+      ]
+    },
+    {
+      "id": "islam-generic",
+      "matiere": "تربية إسلامية",
+      "years": [],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "كم عدد أركان الإيمان؟",
+          "choices": [
+            "خمسة",
+            "ستّة",
+            "أربعة",
+            "سبعة"
+          ],
+          "answer": 1,
+          "explain": "الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر.",
+          "chapter": "الأولى — أركان العقيدة الإسلامية"
+        },
+        {
+          "lang": "ar",
+          "q": "بذل المجتهد وسعه لاستنباط حكم شرعي يُسمّى:",
+          "choices": [
+            "الاستخلاف",
+            "التقليد",
+            "التوكّل",
+            "الاجتهاد"
+          ],
+          "answer": 3,
+          "explain": "الاجتهاد استفراغ الوسع في استنباط الأحكام من أدلّتها.",
+          "chapter": "الأولى — الاجتهاد"
+        },
+        {
+          "lang": "ar",
+          "q": "التوكّل الصحيح يعني:",
+          "choices": [
+            "ترك العمل وانتظار الرزق",
+            "الاعتماد على الحظّ",
+            "العمل مع الثقة بالله",
+            "الخوف من المستقبل"
+          ],
+          "answer": 2,
+          "explain": "التوكّل أخذ بالأسباب مع تفويض النتائج إلى الله.",
+          "chapter": "الثانية — الأمل والتوكّل"
+        }
+      ]
+    },
+    {
+      "id": "pi-3-lettres",
+      "matiere": "تفكير إسلامي",
+      "years": [
+        "y-3-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "ما المصدر الأوّل للتشريع الإسلامي؟",
+          "choices": [
+            "القرآن الكريم",
+            "الإجماع",
+            "القياس",
+            "العرف"
+          ],
+          "answer": 0,
+          "explain": "القرآن الكريم أوّل مصادر التشريع، تليه السنّة.",
+          "chapter": "الثالثة آداب — النصّ والتاريخ: مدخل إلى التشريع"
+        },
+        {
+          "lang": "ar",
+          "q": "شرح معاني آيات القرآن وبيانها يُسمّى:",
+          "choices": [
+            "القياس",
+            "التفسير",
+            "الإجماع",
+            "الفتوى"
+          ],
+          "answer": 1,
+          "explain": "التفسير بيان معاني القرآن، والتأويل صرف اللفظ إلى معنى محتمل.",
+          "chapter": "الثالثة آداب — النصّ والتاريخ: التفسير والتأويل"
+        },
+        {
+          "lang": "ar",
+          "q": "عجز البشر عن الإتيان بمثل القرآن يُسمّى:",
+          "choices": [
+            "التأويل",
+            "النسخ",
+            "أسباب النزول",
+            "الإعجاز القرآني"
+          ],
+          "answer": 3,
+          "explain": "الإعجاز القرآني دليل على أنّ القرآن من عند الله.",
+          "chapter": "الثالثة آداب — النصّ والتاريخ: الإعجاز القرآني"
+        }
+      ]
+    },
+    {
+      "id": "pi-bac-lettres",
+      "matiere": "تفكير إسلامي",
+      "years": [
+        "y-bac-lettres"
+      ],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "ما يدركه الإنسان بحواسّه يُسمّى عالم:",
+          "choices": [
+            "الشهادة",
+            "الغيب",
+            "الملكوت",
+            "البرزخ"
+          ],
+          "answer": 0,
+          "explain": "عالم الشهادة هو المحسوس، وعالم الغيب ما غاب عن الحواسّ.",
+          "chapter": "الرابعة آداب — تسخير الكون: الغيب والشهادة"
+        },
+        {
+          "lang": "ar",
+          "q": "يحرّر التوحيد الإنسان من:",
+          "choices": [
+            "العمل",
+            "المسؤولية",
+            "التفكير",
+            "العبودية لغير الله"
+          ],
+          "answer": 3,
+          "explain": "التوحيد يجعل العبودية لله وحده فيتحرّر الإنسان ممّا سواه.",
+          "chapter": "الرابعة آداب — التوحيد والمجتمع: التوحيد والحرية"
+        },
+        {
+          "lang": "ar",
+          "q": "البحث في حِكم الأحكام الشرعية ومقاصدها يُسمّى:",
+          "choices": [
+            "التفسير",
+            "الإعجاز",
+            "فلسفة التشريع",
+            "علم الكلام"
+          ],
+          "answer": 2,
+          "explain": "فلسفة التشريع تبحث عن غايات الأحكام ومقاصدها.",
+          "chapter": "الرابعة آداب — النصّ والتاريخ: فلسفة التشريع"
+        }
+      ]
+    },
+    {
+      "id": "pi-generic",
+      "matiere": "تفكير إسلامي",
+      "years": [],
+      "questions": [
+        {
+          "lang": "ar",
+          "q": "ما المصدر الأوّل للتشريع الإسلامي؟",
+          "choices": [
+            "السنّة",
+            "القرآن الكريم",
+            "القياس",
+            "الإجماع"
+          ],
+          "answer": 1,
+          "explain": "القرآن الكريم هو المصدر الأوّل، تليه السنّة النبوية.",
+          "chapter": "الثالثة علوم — الإنسان والقرآن: أسس التشريع الإسلامي"
+        },
+        {
+          "lang": "ar",
+          "q": "من العالم المسلم صاحب كتاب «الجبر والمقابلة»؟",
+          "choices": [
+            "الخوارزمي",
+            "ابن سينا",
+            "ابن الهيثم",
+            "الرازي"
+          ],
+          "answer": 0,
+          "explain": "ألّف الخوارزمي «الجبر والمقابلة» فأسّس علم الجبر.",
+          "chapter": "الثالثة علوم — إسهامات العلماء المسلمين في تطوير العلوم"
+        },
+        {
+          "lang": "ar",
+          "q": "من صاحب كتاب «المناظر» في علم البصريات؟",
+          "choices": [
+            "الخوارزمي",
+            "البيروني",
+            "ابن الهيثم",
+            "ابن النفيس"
+          ],
+          "answer": 2,
+          "explain": "ابن الهيثم مؤسّس علم البصريات الحديث واعتمد التجربة.",
+          "chapter": "الثالثة علوم — مناهج البحث عند المسلمين"
+        }
+      ]
+    }
+  ]
+}

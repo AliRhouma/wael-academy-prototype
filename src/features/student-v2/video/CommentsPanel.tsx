@@ -83,14 +83,14 @@ export function V2CommentsPanel({ kind, videoId, demoEmpty }: { kind: VideoRefKi
           onChange={(e) => setBody(e.target.value)}
           placeholder="زيد تعليق......."
           aria-label="زيد تعليق"
-          className="h-14 min-w-0 flex-1 rounded-full border border-v2-ink/15 bg-v2-surface px-5 text-[calc(9px*var(--ts))] text-v2-ink outline-none transition placeholder:text-v2-ink/45 focus:border-v2-brand/60"
+          className="h-14 min-w-0 flex-1 rounded-full border border-v2-ink/15 bg-v2-surface px-5 text-[calc(9px*var(--ts))] text-v2-ink outline-none transition placeholder:text-v2-ink-3 focus:border-v2-brand/60"
         />
         <img src={avatar} alt="" className="order-first size-11 shrink-0 rounded-full object-cover" />
         {body.trim() && (
           <button
             type="submit"
             aria-label="انشر"
-            className="grid size-11 shrink-0 place-items-center rounded-full bg-v2-cta text-v2-on-cta transition hover:brightness-95 active:scale-95"
+            className="v2-cta grid size-11 shrink-0 place-items-center rounded-full bg-v2-cta text-v2-on-cta transition hover:brightness-95 active:scale-95"
           >
             <SendHorizontal className="size-5 -scale-x-100" />
           </button>
@@ -98,7 +98,7 @@ export function V2CommentsPanel({ kind, videoId, demoEmpty }: { kind: VideoRefKi
       </form>
 
       {comments.length === 0 ? (
-        <p className="mt-4 text-[calc(8.5px*var(--ts))] text-v2-ink/55">مفماش تعليق بعد - كون إنت الأول</p>
+        <p className="mt-4 text-[calc(8.5px*var(--ts))] text-v2-ink-2">مفماش تعليق بعد - كون إنت الأول</p>
       ) : (
         <ul className="mt-5 flex flex-col gap-4">
           {comments.map((c) => {
@@ -111,7 +111,7 @@ export function V2CommentsPanel({ kind, videoId, demoEmpty }: { kind: VideoRefKi
                     <span className={cn("text-[calc(8.5px*var(--ts))] font-bold", mine ? "text-v2-brand" : "text-v2-ink")}>
                       {mine ? "إنت" : name(c.userId)}
                     </span>
-                    <span className="text-[calc(7.5px*var(--ts))] text-v2-ink/45">{ago(c.createdAt)}</span>
+                    <span className="text-[calc(7.5px*var(--ts))] text-v2-ink-2">{ago(c.createdAt)}</span>
                   </p>
                   <p dir="auto" className="mt-0.5 whitespace-pre-wrap text-[calc(9px*var(--ts))] leading-relaxed text-v2-ink/80">
                     {c.body}
@@ -122,7 +122,7 @@ export function V2CommentsPanel({ kind, videoId, demoEmpty }: { kind: VideoRefKi
                     type="button"
                     data-uisfx="delete" onClick={() => removeComment(c.id)}
                     aria-label="امسح تعليقي"
-                    className="grid size-10 shrink-0 place-items-center rounded-full text-v2-ink/45 transition hover:bg-v2-live/10 hover:text-v2-live-strong"
+                    className="grid size-10 shrink-0 place-items-center rounded-full text-v2-ink-2 transition hover:bg-v2-live/10 hover:text-v2-live-strong"
                   >
                     <Trash2 className="size-4" />
                   </button>

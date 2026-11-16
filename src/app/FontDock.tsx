@@ -27,7 +27,7 @@ export function FontDock() {
 
   return (
     // One step above the PaletteDock, which itself clears the chat bubble.
-    <div className="fixed bottom-56 end-4 z-50 md:bottom-40 md:end-6">
+    <div data-dock="" className="fixed bottom-56 end-4 z-50 md:bottom-40 md:end-6">
       {open && (
         <div
           role="dialog"

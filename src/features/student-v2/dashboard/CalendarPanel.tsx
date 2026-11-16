@@ -35,7 +35,7 @@ import {
   v2VideoPath,
   weekStart,
 } from "../lib"
-import { LatinLine, Panel, ctaClass, iconBtnClass, liveOutlineClass } from "../ui"
+import { LatinLine, Panel, ctaClass, iconBtnClass, liveOutlineClass, tileClass } from "../ui"
 
 /** One-letter weekday, the Arabic calendar convention — for a 390px strip. */
 const WEEKDAY_LETTER = ["ح", "ن", "ث", "ر", "خ", "ج", "س"]
@@ -124,7 +124,7 @@ export function CalendarPanel({
           aria-label={collapsed ? "افتح الروزنامة" : "سكّر الروزنامة"}
           className={iconBtnClass}
         >
-          <ChevronDown className={cn("size-5 text-v2-ink/60 transition", collapsed && "rotate-180")} />
+          <ChevronDown className={cn("size-5 text-v2-ink-2 transition", collapsed && "rotate-180")} />
         </button>
       }
     >
@@ -133,18 +133,18 @@ export function CalendarPanel({
           {/* Month + view switch. On a phone the step arrows live here too, so
               the strip below gets the full width for its seven days. */}
           <div className="flex items-center gap-2">
-            <button type="button" data-uisfx="swipe" onClick={back} aria-label="اللّي قبل" className={cn(iconBtnClass, "size-10 sm:hidden", view === "month" && "sm:grid")}>
+            <button type="button" data-uisfx="swipe" onClick={back} aria-label="اللّي قبل" className={cn(iconBtnClass, "sm:hidden", view === "month" && "sm:grid")}>
               <ChevronRight className="size-5" />
             </button>
             <p className="text-[calc(12px*var(--ts))] font-bold text-v2-ink md:text-[calc(13px*var(--ts))]">{label}</p>
-            <button type="button" data-uisfx="swipe" onClick={forward} aria-label="اللّي بعد" className={cn(iconBtnClass, "size-10 sm:hidden", view === "month" && "sm:grid")}>
+            <button type="button" data-uisfx="swipe" onClick={forward} aria-label="اللّي بعد" className={cn(iconBtnClass, "sm:hidden", view === "month" && "sm:grid")}>
               <ChevronLeft className="size-5" />
             </button>
             {offToday && (
               <button
                 type="button"
                 data-uisfx="back" onClick={goToday}
-                className="min-h-9 rounded-full bg-v2-brand/10 px-3 text-[calc(7.5px*var(--ts))] font-semibold text-v2-brand transition hover:bg-v2-brand/20"
+                className="v2-chip min-h-9 rounded-full bg-v2-brand/10 px-3 text-[calc(7.5px*var(--ts))] font-semibold text-v2-brand transition hover:bg-v2-brand/20"
               >
                 رجوع لليوم
               </button>
@@ -210,7 +210,7 @@ export function WeekStrip({
   return (
     <div className="flex items-center gap-1.5 sm:gap-2">
       <button type="button" data-uisfx="swipe" onClick={() => onStep(-1)} aria-label="الجمعة اللّي فاتت" className={cn(iconBtnClass, "hidden size-9 sm:grid")}>
-        <ChevronRight className="size-5 text-v2-ink/60" />
+        <ChevronRight className="size-5 text-v2-ink-2" />
       </button>
       <div className="grid flex-1 grid-cols-7 gap-1.5 sm:gap-2">
         {WEEK_ORDER.map((_, i) => {
@@ -222,16 +222,22 @@ export function WeekStrip({
           const isToday = key === today
           const past = key < today
           return (
+            // A tile under the play skin (`v2-day`): the selected day lime
+            // with a lip, today ringed in ink, past days flat and grey —
+            // colour as state, depth as "you can press this".
             <button
               key={key}
               type="button"
               data-uisfx="select" onClick={() => onSelect(key)}
               aria-pressed={isSel}
+              data-today={isToday}
+              data-past={past}
               aria-label={`${dayLabel(key)}${list.length ? ` — ${list.length} حصص` : ""}`}
               className={cn(
-                "relative flex min-h-[3.75rem] flex-col items-center justify-center gap-0.5 rounded-[10px] border text-[calc(7.5px*var(--ts))] transition md:min-h-[4.25rem]",
+                tileClass,
+                "v2-day relative flex min-h-[3.75rem] flex-col items-center justify-center gap-0.5 rounded-[10px] border text-[calc(7.5px*var(--ts))] transition md:min-h-[4.25rem]",
                 isSel
-                  ? "border-transparent bg-v2-grad font-semibold text-white shadow-md shadow-v2-brand/25"
+                  ? "border-transparent bg-v2-cta font-semibold text-v2-on-cta shadow-md shadow-v2-cta/40"
                   : past
                     ? "border-v2-ink/15 text-v2-ink/40 hover:border-v2-ink/30"
                     : "border-v2-ink/45 text-v2-ink hover:border-v2-brand hover:bg-v2-brand/[0.05]",
@@ -245,7 +251,7 @@ export function WeekStrip({
                 <span
                   aria-hidden
                   className={cn(
-                    "absolute bottom-1.5 size-1.5 rounded-full",
+                    "v2-coin absolute bottom-1.5 size-1.5 rounded-full",
                     isSel ? "bg-white" : hasLive ? "bg-v2-live" : "bg-v2-brand",
                   )}
                 />
@@ -255,7 +261,7 @@ export function WeekStrip({
         })}
       </div>
       <button type="button" data-uisfx="swipe" onClick={() => onStep(1)} aria-label="الجمعة الجاية" className={cn(iconBtnClass, "hidden size-9 sm:grid")}>
-        <ChevronLeft className="size-5 text-v2-ink/60" />
+        <ChevronLeft className="size-5 text-v2-ink-2" />
       </button>
     </div>
   )
@@ -273,12 +279,12 @@ function ViewSwitch({ view, onChange, className }: { view: View; onChange: (v: V
           type="button"
           data-uisfx="open"
           className={cn(
-            "group flex min-h-10 min-w-[6.5rem] items-center justify-between gap-3 rounded-2xl border border-v2-ink/20 bg-v2-surface px-4 text-[calc(8.5px*var(--ts))] font-medium text-v2-ink transition hover:border-v2-brand/50 data-[state=open]:border-v2-brand/50",
+            "v2-chip group flex min-h-11 min-w-[6.5rem] items-center justify-between gap-3 rounded-2xl border border-v2-ink/20 bg-v2-surface px-4 text-[calc(8.5px*var(--ts))] font-medium text-v2-ink transition hover:border-v2-brand/50 data-[state=open]:border-v2-brand/50",
             className,
           )}
         >
           {options.find((o) => o.value === view)?.label}
-          <ChevronDown className="size-4 text-v2-ink/60 transition group-data-[state=open]:rotate-180" />
+          <ChevronDown className="size-4 text-v2-ink-2 transition group-data-[state=open]:rotate-180" />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
@@ -291,7 +297,7 @@ function ViewSwitch({ view, onChange, className }: { view: View; onChange: (v: V
             <DropdownMenu.Item
               key={o.value}
               data-uisfx="select" onSelect={() => onChange(o.value)}
-              className="flex min-h-10 cursor-pointer items-center justify-between gap-3 rounded-xl px-3 text-[calc(8.5px*var(--ts))] outline-none data-[highlighted]:bg-v2-ink/[0.05]"
+              className="flex min-h-11 cursor-pointer items-center justify-between gap-3 rounded-xl px-3 text-[calc(8.5px*var(--ts))] outline-none data-[highlighted]:bg-v2-ink/[0.05]"
             >
               {o.label}
               {o.value === view && <Check className="size-4 text-v2-brand" />}
@@ -332,14 +338,14 @@ export function DayList({
       .filter((s) => s.date > day && !s.postponed)
       .sort((a, b) => sessionStart(a).getTime() - sessionStart(b).getTime())[0]
     return (
-      <div className="flex flex-1 flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-v2-ink/20 px-5 py-10 text-center">
+      <div className="v2-empty flex flex-1 flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-v2-ink/20 px-5 py-10 text-center">
         <span className="grid size-14 place-items-center rounded-full bg-v2-brand/[0.08]">
           <CalendarX2 className="size-7 stroke-v2-grad" strokeWidth={1.5} />
         </span>
         <p className="mt-1 text-[calc(10.5px*var(--ts))] font-bold text-v2-ink">
           ما عندك حتّى حصّة {relativeDay(day, now) === "اليوم" ? "اليوم" : `نهار ${relativeDay(day, now)}`}
         </p>
-        <p className="text-[calc(8.5px*var(--ts))] text-v2-ink/55">نهار فاضي — فرصة باش تراجع ولّا تشوف تسجيل.</p>
+        <p className="text-[calc(8.5px*var(--ts))] text-v2-ink-2">نهار فاضي — فرصة باش تراجع ولّا تشوف تسجيل.</p>
         {next && (
           <button type="button" data-uisfx="forward" onClick={() => onPick(next.date)} className={cn(ctaClass, "mt-2")}>
             أقرب حصّة: {dayLabel(next.date)}
@@ -382,9 +388,11 @@ export function SessionCard({
   const live = state === "en-cours"
 
   return (
+    // Informational, so a flat `v2-panel` (2 px border under play), never a
+    // tile: the actions inside it are what presses.
     <article
       className={cn(
-        "relative rounded-2xl border p-4 transition md:p-5",
+        "v2-panel relative rounded-2xl border p-4 transition md:p-5",
         focused && "ring-2 ring-v2-brand ring-offset-2 ring-offset-v2-surface",
         live && "border-transparent bg-v2-live-card",
         state === "prevue" && "border-v2-ink/15 hover:border-v2-brand/40",
@@ -399,7 +407,7 @@ export function SessionCard({
           {live ? (
             <span aria-hidden className="v2-onair relative block size-5 rounded-full bg-v2-live ring-4 ring-v2-surface/70" />
           ) : state === "prevue" ? (
-            <Clock className="size-5 text-v2-ink/60" strokeWidth={1.75} />
+            <Clock className="size-5 text-v2-ink-2" strokeWidth={1.75} />
           ) : null}
         </span>
       </header>
@@ -408,12 +416,12 @@ export function SessionCard({
         to={`${BASE}/seance/${session.id}`}
         className={cn(
           "mt-3 block rounded-lg text-[calc(10.5px*var(--ts))] font-medium text-v2-ink hover:text-v2-brand",
-          state === "reportee" && "text-v2-ink/50 line-through decoration-v2-ink/30",
+          state === "reportee" && "text-v2-ink-2 line-through decoration-v2-ink/30",
         )}
       >
         حصّة {subject}
       </Link>
-      <LatinLine className="mt-0.5 text-[calc(7.5px*var(--ts))] text-v2-ink/55">{session.title}</LatinLine>
+      <LatinLine className="mt-0.5 text-[calc(7.5px*var(--ts))] text-v2-ink-2">{session.title}</LatinLine>
 
       {state === "prevue" && (
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2">
@@ -445,7 +453,7 @@ export function SessionCard({
 
       {state === "terminee" && (
         <>
-          <p className="mt-1 text-[calc(7.5px*var(--ts))] text-v2-ink/55">
+          <p className="mt-1 text-[calc(7.5px*var(--ts))] text-v2-ink-2">
             {formatTimeRange(session.startTime, session.endTime)}
             {teacher && ` | ${teacher}`}
           </p>
@@ -463,12 +471,12 @@ export function SessionCard({
               // shouldn't stop at the séance page on the way.
               <Link data-uisfx="play" to={v2VideoPath(session.id, { subjectId: session.subjectIds[0] })} className={liveOutlineClass}>
                 <CirclePlay className="size-5" strokeWidth={1.75} />
-                شوف التسجيل
+                عاود شوف الحصّة
               </Link>
             ) : (
               <span
                 aria-disabled
-                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-dashed border-v2-ink/25 px-5 text-[calc(9px*var(--ts))] font-medium text-v2-ink/50"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-dashed border-v2-ink/25 px-5 text-[calc(9px*var(--ts))] font-medium text-v2-ink-2"
               >
                 <Clock className="size-4" />
                 التسجيل يوصل قريب
@@ -479,7 +487,7 @@ export function SessionCard({
       )}
 
       {state === "reportee" && (
-        <p className="mt-2 text-[calc(8px*var(--ts))] text-v2-ink/60">
+        <p className="mt-2 text-[calc(8px*var(--ts))] text-v2-ink-2">
           الحصّة هذي تأجّلت — الموعد الجديد يوصلك في إشعار.
         </p>
       )}
@@ -498,15 +506,16 @@ export function StateChip({ state }: { state: SessionState }) {
     )
   }
   if (state === "terminee") {
+    // The play skin turns this into a tilted stamp — orange, 2 px, 800.
     return (
-      <span className="rounded-full border border-v2-done-line px-3 text-[calc(7.5px*var(--ts))] font-semibold leading-6 text-v2-done">
+      <span className="v2-stamp rounded-full border border-v2-done-line px-3 text-[calc(7.5px*var(--ts))] font-semibold leading-6 text-v2-done">
         انتهت
       </span>
     )
   }
   if (state === "reportee") {
     return (
-      <span className="rounded-full bg-v2-ink/[0.07] px-3 text-[calc(7.5px*var(--ts))] font-semibold leading-6 text-v2-ink/60">
+      <span className="rounded-full bg-v2-ink/[0.07] px-3 text-[calc(7.5px*var(--ts))] font-semibold leading-6 text-v2-ink-2">
         تأجلت
       </span>
     )
@@ -545,7 +554,7 @@ function MonthGrid({
     <div className="flex flex-col gap-2">
       <div className="grid grid-cols-7 gap-1.5 md:gap-2">
         {WEEK_ORDER.map((wd) => (
-          <p key={wd} className="text-center text-[calc(7px*var(--ts))] font-medium text-v2-ink/55">
+          <p key={wd} className="text-center text-[calc(7px*var(--ts))] font-medium text-v2-ink-2">
             <span className="hidden sm:inline">{WEEKDAYS[wd]}</span>
             <span className="sm:hidden">{WEEKDAY_LETTER[wd]}</span>
           </p>
@@ -566,6 +575,7 @@ function MonthGrid({
               data-uisfx="select" onClick={() => onPick(key)}
               aria-label={`${dayLabel(key)}${list.length ? ` — ${list.length} حصص` : ""}`}
               className={cn(
+                tileClass,
                 "flex min-h-12 flex-col items-stretch gap-1 rounded-xl border p-1.5 text-start transition md:min-h-[4.75rem]",
                 list.length > 0 ? "border-v2-brand/30 bg-v2-brand/[0.1] hover:bg-v2-brand/[0.16]" : "border-v2-ink/15 hover:border-v2-ink/35",
                 !inMonth && "opacity-35",
@@ -576,7 +586,7 @@ function MonthGrid({
               <span
                 className={cn(
                   "text-[calc(7.5px*var(--ts))] tabular-nums",
-                  key < today ? "text-v2-ink/45" : "font-semibold text-v2-ink",
+                  key < today ? "text-v2-ink-2" : "font-semibold text-v2-ink",
                 )}
               >
                 {pad2(d.getDate())}
@@ -599,7 +609,7 @@ function MonthGrid({
                       {liveHere ? "مباشر" : (subjectOf(list[0])?.name ?? "")}
                     </span>
                     {list.length > 1 && (
-                      <span className="text-[calc(6.5px*var(--ts))] text-v2-ink/55">+{list.length - 1}</span>
+                      <span className="text-[calc(6.5px*var(--ts))] text-v2-ink-2">+{list.length - 1}</span>
                     )}
                   </span>
                 </>
@@ -608,7 +618,7 @@ function MonthGrid({
           )
         })}
       </div>
-      <p className="text-[calc(7.5px*var(--ts))] text-v2-ink/55">
+      <p className="text-[calc(7.5px*var(--ts))] text-v2-ink-2">
         {count === 0 ? "ما فمّا حتّى حصّة الشهر هذا." : `${count} حصص في ${MONTHS[month.getMonth()]} — إضغط على نهار باش تشوف حصصو.`}
       </p>
     </div>

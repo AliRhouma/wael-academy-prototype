@@ -9,6 +9,7 @@ import { Toaster } from "sonner"
 import { DEFAULT_PALETTE, PALETTES, type PaletteId } from "./palettes"
 import { DEFAULT_FONT, FONTS, type FontId } from "./fonts"
 import { useGazeHotkey } from "./gaze"
+import { getDevice } from "./platform"
 import { PaletteDock } from "./PaletteDock"
 import { FontDock } from "./FontDock"
 
@@ -65,9 +66,20 @@ const THEME_KEY = "wael-theme"
 const PALETTE_KEY = "wael-palette-2"
 const FONT_KEY = "wael-font"
 
-function initTheme(): Theme {
+const DARK_QUERY = "(prefers-color-scheme: dark)"
+
+/**
+ * A theme someone picked (the gallery's moon, a toggle) wins; otherwise the
+ * device's own appearance — a phone in dark mode opens the app dark, as
+ * Apple and Material both expect (docs/mobile/apple-design-audit.md, I3).
+ */
+function savedTheme(): Theme | null {
   const saved = localStorage.getItem(THEME_KEY)
-  return saved === "dark" ? "dark" : "light"
+  return saved === "dark" || saved === "light" ? saved : null
+}
+
+function initTheme(): Theme {
+  return savedTheme() ?? (window.matchMedia(DARK_QUERY).matches ? "dark" : "light")
 }
 
 function initPalette(): PaletteId {
@@ -92,7 +104,13 @@ function initFont(): FontId {
  * refresh.
  */
 export function Providers({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(initTheme)
+  const [theme, applyTheme] = useState<Theme>(initTheme)
+  // Only an explicit choice is remembered — so with none saved, the app keeps
+  // following the device when it switches between light and dark.
+  const setTheme = (next: Theme) => {
+    localStorage.setItem(THEME_KEY, next)
+    applyTheme(next)
+  }
   const [palette, setPalette] = useState<PaletteId>(initPalette)
   const [font, setFont] = useState<FontId>(initFont)
 
@@ -104,8 +122,17 @@ export function Providers({ children }: { children: ReactNode }) {
   // Tokens in src/styles/index.css switch on [data-theme="dark"].
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme)
-    localStorage.setItem(THEME_KEY, theme)
   }, [theme])
+
+  // Follow the device while nothing has been picked.
+  useEffect(() => {
+    const mql = window.matchMedia(DARK_QUERY)
+    const onChange = () => {
+      if (!savedTheme()) applyTheme(mql.matches ? "dark" : "light")
+    }
+    mql.addEventListener("change", onChange)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
 
   // Palettes in src/styles/palettes.css switch on [data-palette].
   useEffect(() => {
@@ -119,14 +146,15 @@ export function Providers({ children }: { children: ReactNode }) {
     localStorage.setItem(FONT_KEY, font)
   }, [font])
 
-  const toggle = () =>
-    setTheme((prev) => (prev === "light" ? "dark" : "light"))
+  const toggle = () => setTheme(theme === "light" ? "dark" : "light")
 
   return (
     <ThemeContext.Provider value={{ theme, toggle, setTheme, palette, setPalette, font, setFont }}>
       {children}
-      {SHOW_PALETTE_DOCK && <PaletteDock />}
-      {SHOW_FONT_DOCK && <FontDock />}
+      {/* Not inside a phone frame: the docks re-point the OLD space's
+          primitives and would only cover the screen being looked at. */}
+      {SHOW_PALETTE_DOCK && !getDevice().framed && <PaletteDock />}
+      {SHOW_FONT_DOCK && !getDevice().framed && <FontDock />}
       {/* RTL: toasts land on the reading-flow side — top-left mirrors top-right. */}
       <Toaster position="top-left" dir="rtl" theme={theme} richColors closeButton />
     </ThemeContext.Provider>

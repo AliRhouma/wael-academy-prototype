@@ -2,9 +2,11 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Clock, Play } from "lucide-react"
 import { useNow } from "@/features/student/calendar/schedule"
+import { subjectTint } from "@/features/student/subjectTint"
 import { cn } from "@/lib/utils"
 import { BASE, frenchName } from "../lib"
 import { PortraitStage } from "../PortraitStage"
+import { tileClass } from "../ui"
 import { recordingCount, useShelves, type SubjectShelf } from "./recordings"
 
 type Filter = "all" | "recorded"
@@ -35,11 +37,11 @@ export default function V2RecordingsScreen() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-[calc(15px*var(--ts))] font-bold text-v2-ink md:text-[calc(18px*var(--ts))]">تسجيلات</h1>
-          <p className="text-[calc(8.5px*var(--ts))] text-v2-ink/55">
+          <p className="text-[calc(8.5px*var(--ts))] text-v2-ink-2">
             {total} تسجيل في {withReplays.length} مواد
           </p>
         </div>
-        <div role="tablist" aria-label="فرز المواد" className="flex rounded-full border border-v2-ink/15 bg-v2-surface p-1">
+        <div role="tablist" aria-label="فرز المواد" className="v2-seg flex rounded-full border border-v2-ink/15 bg-v2-surface p-1">
           {(
             [
               ["all", `الكل · ${shelves.length}`],
@@ -53,8 +55,8 @@ export default function V2RecordingsScreen() {
               aria-selected={filter === value}
               data-uisfx="toggle-on" onClick={() => setFilter(value)}
               className={cn(
-                "min-h-10 rounded-full px-4 text-[calc(8.5px*var(--ts))] font-semibold transition",
-                filter === value ? "bg-v2-grad text-white" : "text-v2-ink/70 hover:text-v2-ink",
+                "v2-chip min-h-11 rounded-full px-4 text-[calc(8.5px*var(--ts))] font-semibold transition",
+                filter === value ? "bg-v2-cta text-v2-on-cta" : "text-v2-ink/70 hover:text-v2-ink",
               )}
             >
               {label}
@@ -79,12 +81,17 @@ function ShelfCard({ shelf }: { shelf: SubjectShelf }) {
   const empty = recorded.length === 0
 
   return (
+    // The same game tile as « موادي » — lip in the matière's own tint.
     <Link data-uisfx="open"
       to={`${BASE}/seances/${subject.id}`}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-v2-ink/15 bg-v2-surface transition duration-300 hover:-translate-y-1 hover:border-v2-brand/40 hover:shadow-xl hover:shadow-v2-ink/[0.07] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-v2-brand"
+      style={{ ["--v2-lip" as string]: subjectTint(subject.name).dot }}
+      className={cn(
+        tileClass,
+        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-v2-ink/15 bg-v2-surface transition duration-300 hover:-translate-y-1 hover:border-v2-brand/40 hover:shadow-xl hover:shadow-v2-ink/[0.07] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-v2-brand",
+      )}
     >
       {fresh && (
-        <span className="absolute end-0 top-0 z-10 rounded-es-2xl bg-v2-grad px-3 py-1 text-[calc(7.5px*var(--ts))] font-bold tracking-wide text-white md:px-4 md:py-1.5">
+        <span className="absolute end-0 top-0 z-10 rounded-es-2xl bg-v2-cta px-3 py-1 text-[calc(7.5px*var(--ts))] font-bold tracking-wide text-v2-on-cta md:px-4 md:py-1.5">
           NEW
         </span>
       )}
@@ -97,7 +104,7 @@ function ShelfCard({ shelf }: { shelf: SubjectShelf }) {
         <p
           className={cn(
             "text-[calc(7px*var(--ts))] md:text-[calc(8px*var(--ts))] xl:text-[calc(10px*var(--ts))]",
-            empty ? "text-v2-ink/45" : "text-v2-ink/65",
+            empty ? "text-v2-ink-2" : "text-v2-ink-2",
           )}
         >
           {recordingCount(recorded.length)}
@@ -106,14 +113,14 @@ function ShelfCard({ shelf }: { shelf: SubjectShelf }) {
           {frenchName(subject.name)}
         </p>
         {empty ? (
-          <span className="mt-1 inline-flex items-center gap-1.5 text-[calc(7.5px*var(--ts))] text-v2-ink/45 xl:text-[calc(9.5px*var(--ts))]">
+          <span className="mt-1 inline-flex items-center gap-1.5 text-[calc(7.5px*var(--ts))] text-v2-ink-2 xl:text-[calc(9.5px*var(--ts))]">
             <Clock className="size-3.5 xl:size-4" />
             التسجيلات جايين
           </span>
         ) : (
           <span className="mt-1 inline-flex items-center gap-1.5 text-[calc(7.5px*var(--ts))] font-medium text-v2-ink transition group-hover:text-v2-brand md:text-[calc(8.5px*var(--ts))] xl:text-[calc(11px*var(--ts))]">
             أدخل للتسجيل
-            <span className="grid size-5 place-items-center rounded-full border-[1.5px] border-v2-brand text-v2-brand transition group-hover:border-transparent group-hover:bg-v2-grad group-hover:text-white xl:size-6">
+            <span className="grid size-5 place-items-center rounded-full border-[1.5px] border-v2-brand text-v2-brand transition group-hover:border-transparent group-hover:bg-v2-cta group-hover:text-v2-on-cta xl:size-6">
               <Play className="size-2.5 translate-x-[-0.5px] fill-current xl:size-3" />
             </span>
           </span>

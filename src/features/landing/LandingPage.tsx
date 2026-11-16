@@ -938,7 +938,7 @@ function FinalCta() {
 function Footer() {
   return (
     <footer className="mt-24 border-t border-border bg-surface/60">
-      <div className="mx-auto flex w-full max-w-[1220px] flex-col items-center gap-4 px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] text-center sm:flex-row sm:justify-between sm:text-start">
+      <div className="mx-auto flex w-full max-w-[1220px] flex-col items-center gap-4 px-4 py-10 pb-[max(2.5rem,var(--sai-bottom))] text-center sm:flex-row sm:justify-between sm:text-start">
         <div className="flex items-center gap-2.5">
           <BrandMark size="size-8" />
           <span className="text-[calc(13px*var(--ts))] font-medium text-ink">

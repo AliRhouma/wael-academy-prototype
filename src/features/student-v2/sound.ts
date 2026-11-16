@@ -59,6 +59,17 @@ export function setSoundPack(pack: PackName) {
   sfx("success")
 }
 
+/**
+ * Take a setting made in another window — the mobile gallery's states panel
+ * driving the phones. Silent: the sample already played where it was picked.
+ */
+export function applySound({ enabled, pack }: { enabled: boolean; pack: PackName }) {
+  const p = soundPlayer()
+  if (p.isEnabled() !== enabled) p.setEnabled(enabled)
+  if (p.getPack() !== pack) p.setPack(pack)
+  emit()
+}
+
 const subscribe = (l: () => void) => {
   listeners.add(l)
   return () => listeners.delete(l)

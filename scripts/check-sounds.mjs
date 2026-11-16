@@ -13,7 +13,7 @@ import { cueNames } from "uisfx"
 import { readFileSync, readdirSync, statSync } from "node:fs"
 import { join } from "node:path"
 
-const ROOTS = ["src/features/student-v2", "src/features/auth"]
+const ROOTS = ["src/features/student-v2", "src/features/auth", "src/features/mobilegame", "src/features/game"]
 const valid = new Set(cueNames)
 
 const walk = (dir) =>

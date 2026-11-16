@@ -1,0 +1,120 @@
+/* ===========================================================================
+   Android skin — what the élève space wears inside a Galaxy.
+   ---------------------------------------------------------------------------
+   Switched on by `data-platform="android"` on <html> (src/app/platform.ts:
+   the mobile gallery's Galaxy frame, `?platform=android`, or a real Android
+   phone). Layered over v2.css and the gamified skin; scoped to the space
+   (`[data-space="v2"]`) so the back-office and the site never change.
+
+   The conventions are Material 3 Expressive (Android 16, 2025) as Samsung's
+   One UI shows them — see docs/mobile/android-patterns.md and the skill
+   `wael-mobile-android`. In short: tonal surfaces instead of borders; the
+   shape scale (12 · 16 · 28 dp); an 80 dp navigation bar whose selected
+   destination sits in a 64 × 32 pill; 40 dp pill buttons; ripples; 48 dp
+   targets; 16 sp body, 12 sp labels.
+
+   The M3 colour roles are DERIVED from the space's own five colours — the
+   brand stays the brand, it just lands in Material's slots:
+     primary            = teal          secondary-container = lime tint
+     surface-container* = teal-tinted whites (tonal elevation, no borders)
+     outline-variant    = ink at 18 %
+   =========================================================================== */
+
+:root {
+  --m3-primary: var(--v2-brand);
+  --m3-on-primary: #ffffff;
+  --m3-secondary-container: color-mix(in srgb, var(--v2-cta) 42%, var(--v2-surface));
+  --m3-on-secondary-container: var(--v2-ink);
+  --m3-surface-container-low: color-mix(in srgb, var(--v2-brand) 3%, var(--v2-surface));
+  --m3-surface-container: color-mix(in srgb, var(--v2-brand) 5%, var(--v2-surface));
+  --m3-surface-container-high: color-mix(in srgb, var(--v2-brand) 8%, var(--v2-surface));
+  --m3-surface-container-highest: color-mix(in srgb, var(--v2-brand) 12%, var(--v2-surface));
+  --m3-outline-variant: color-mix(in srgb, var(--v2-ink) 18%, transparent);
+}
+[data-theme="dark"] {
+  --m3-secondary-container: color-mix(in srgb, var(--v2-cta) 28%, var(--v2-surface));
+  --m3-surface-container-low: color-mix(in srgb, var(--v2-brand) 6%, var(--v2-surface));
+  --m3-surface-container: color-mix(in srgb, var(--v2-brand) 10%, var(--v2-surface));
+  --m3-surface-container-high: color-mix(in srgb, var(--v2-brand) 14%, var(--v2-surface));
+  --m3-surface-container-highest: color-mix(in srgb, var(--v2-brand) 18%, var(--v2-surface));
+}
+
+@theme inline {
+  --color-m3-primary: var(--m3-primary);
+  --color-m3-on-primary: var(--m3-on-primary);
+  --color-m3-secondary-container: var(--m3-secondary-container);
+  --color-m3-on-secondary-container: var(--m3-on-secondary-container);
+  --color-m3-surface-container-low: var(--m3-surface-container-low);
+  --color-m3-surface-container: var(--m3-surface-container);
+  --color-m3-surface-container-high: var(--m3-surface-container-high);
+  --color-m3-surface-container-highest: var(--m3-surface-container-highest);
+  --color-m3-outline-variant: var(--m3-outline-variant);
+}
+
+/* The ripple: Material's press feedback. A state layer that grows from the
+   centre on :active and fades — CSS only, no JS, honours reduced motion. */
+@utility m3-ripple {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 200%;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    background: currentColor;
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+    z-index: -1;
+  }
+  &:active::after {
+    opacity: 0.12;
+    transform: scale(1);
+    transition:
+      transform 320ms cubic-bezier(0.2, 0, 0, 1),
+      opacity 120ms linear;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:active::after { transition: none; }
+  }
+}
+
+[data-platform="android"] [data-space="v2"] {
+  /* Body 16 sp, labels 12 sp — the space's 14 is close; nudge up a notch. */
+  --ts: 1.55;
+
+  /* The shape scale: panels take extra-large (28), inner shapes large (16). */
+  & .rounded-3xl { border-radius: 28px; }
+  & .rounded-2xl { border-radius: 16px; }
+  & .rounded-t-3xl { border-radius: 28px 28px 0 0; }
+
+  /* Material separates with tone, not lines: a panel's border thins to the
+     outline-variant and the surface behind it carries the elevation. */
+  & .border-v2-ink\/15 { border-color: var(--m3-outline-variant); }
+}
+
+/* Bottom sheets anywhere in the document (they portal to <body>): 28 dp top
+   corners, a `surface-container-low` body, the 32 × 4 drag handle, and
+   Material's 32 % scrim behind. */
+[data-platform="android"] [data-slot="sheet-content"][data-side="bottom"] {
+  border-radius: 28px 28px 0 0;
+  background-color: var(--m3-surface-container-low);
+}
+[data-platform="android"] [data-slot="sheet-overlay"] {
+  background-color: rgb(0 0 0 / 0.32);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+[data-platform="android"] [data-slot="sheet-grabber"] {
+  width: 32px;
+  height: 4px;
+  opacity: 0.4;
+}
+
+[data-platform="android"] body {
+  -webkit-tap-highlight-color: transparent;
+}

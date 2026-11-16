@@ -639,456 +639,813 @@
   {
     "id": "subj-bac-eco-economie",
     "yearId": "y-bac-eco",
-    "name": "اقتصاد",
+    "name": "Bac Éco - Économie",
     "order": 0,
     "category": "principale"
   },
   {
     "id": "subj-bac-eco-gestion",
     "yearId": "y-bac-eco",
-    "name": "تصرّف",
+    "name": "Bac Éco - Gestion",
     "order": 1,
     "category": "principale"
   },
   {
     "id": "subj-bac-eco-mathematiques",
     "yearId": "y-bac-eco",
-    "name": "رياضيات",
+    "name": "Bac Éco - Maths",
     "order": 2,
     "category": "principale"
   },
   {
     "id": "subj-bac-eco-philosophie",
     "yearId": "y-bac-eco",
-    "name": "فلسفة",
+    "name": "Bac Éco - فلسفة",
     "order": 3,
     "category": "secondaire"
   },
   {
-    "id": "subj-bac-eco-histoire-geographie",
+    "id": "subj-bac-eco-histoire",
     "yearId": "y-bac-eco",
-    "name": "تاريخ وجغرافيا",
+    "name": "Bac Éco - تاريخ",
     "order": 4,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-eco-francais",
     "yearId": "y-bac-eco",
-    "name": "فرنسية",
+    "name": "Bac Éco - Français",
     "order": 5,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-eco-arabe",
     "yearId": "y-bac-eco",
-    "name": "عربية",
+    "name": "Bac Éco - عربية",
     "order": 6,
-    "category": "optionnelle"
+    "category": "secondaire"
   },
   {
     "id": "subj-bac-eco-anglais",
     "yearId": "y-bac-eco",
-    "name": "أنڤليزية",
+    "name": "Bac Éco - Anglais",
     "order": 7,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-eco-geographie",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - جغرافيا",
+    "order": 8,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-eco-chinois",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - Chinois",
+    "order": 9,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-eco-dessin",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - Dessin",
+    "order": 10,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-eco-musique",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - Musique",
+    "order": 11,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-eco-portugais",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - Portugais",
+    "order": 12,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-eco-russe",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - Russe",
+    "order": 13,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-eco-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - SVT",
+    "order": 14,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-eco-turc",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - Turc",
+    "order": 15,
     "category": "optionnelle"
   },
   {
     "id": "subj-bac-eco-allemand",
     "yearId": "y-bac-eco",
-    "name": "ألمانية",
-    "order": 20,
+    "name": "Bac Éco - Allemand",
+    "order": 16,
     "category": "optionnelle"
   },
   {
     "id": "subj-bac-eco-espagnol",
     "yearId": "y-bac-eco",
-    "name": "إسبانية",
-    "order": 21,
+    "name": "Bac Éco - Espagnol",
+    "order": 17,
     "category": "optionnelle"
   },
   {
-    "id": "subj-bac-info-informatique",
+    "id": "subj-bac-eco-informatique",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - Informatique",
+    "order": 18,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-eco-italien",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - Italien",
+    "order": 19,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-eco-mae-wael",
+    "yearId": "y-bac-eco",
+    "name": "Bac Éco - مع وائل",
+    "order": 20,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-info-programmation",
     "yearId": "y-bac-info",
-    "name": "إعلامية",
+    "name": "Bac Info - Programmation",
     "order": 0,
     "category": "principale"
   },
   {
     "id": "subj-bac-info-algorithmique",
     "yearId": "y-bac-info",
-    "name": "خوارزميات",
+    "name": "Bac Info - Algorithmique",
     "order": 1,
     "category": "principale"
   },
   {
     "id": "subj-bac-info-mathematiques",
     "yearId": "y-bac-info",
-    "name": "رياضيات",
+    "name": "Bac Info - Maths",
     "order": 2,
     "category": "principale"
   },
   {
     "id": "subj-bac-info-sciences-physiques",
     "yearId": "y-bac-info",
-    "name": "علوم فيزيائية",
+    "name": "Bac Info - Physique",
     "order": 3,
-    "category": "secondaire"
-  },
-  {
-    "id": "subj-bac-info-philosophie",
-    "yearId": "y-bac-info",
-    "name": "فلسفة",
-    "order": 4,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-info-francais",
     "yearId": "y-bac-info",
-    "name": "فرنسية",
-    "order": 5,
+    "name": "Bac Info - Français",
+    "order": 4,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-info-arabe",
     "yearId": "y-bac-info",
-    "name": "عربية",
-    "order": 6,
-    "category": "optionnelle"
+    "name": "Bac Info - Arabe",
+    "order": 5,
+    "category": "secondaire"
   },
   {
     "id": "subj-bac-info-anglais",
     "yearId": "y-bac-info",
-    "name": "أنڤليزية",
+    "name": "Bac Info - Anglais",
+    "order": 6,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-info-philosophie",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - فلسفة",
     "order": 7,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-info-sti",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - STI",
+    "order": 8,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-info-chinois",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Chinois",
+    "order": 9,
     "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-dessin",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Dessin",
+    "order": 10,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-musique",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Musique",
+    "order": 11,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-portugais",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Portugais",
+    "order": 12,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-russe",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Russe",
+    "order": 13,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - SVT",
+    "order": 14,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-turc",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Turc",
+    "order": 15,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-allemand",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Allemand",
+    "order": 16,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-espagnol",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Espagnol",
+    "order": 17,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-italien",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - Italien",
+    "order": 18,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-info-mae-wael",
+    "yearId": "y-bac-info",
+    "name": "Bac Info - مع وائل",
+    "order": 19,
+    "category": "secondaire"
   },
   {
     "id": "subj-bac-lettres-arabe",
     "yearId": "y-bac-lettres",
-    "name": "عربية",
+    "name": "Bac Lettres - عربية",
     "order": 0,
     "category": "principale"
   },
   {
     "id": "subj-bac-lettres-francais",
     "yearId": "y-bac-lettres",
-    "name": "فرنسية",
+    "name": "Bac Lettres - Français",
     "order": 1,
     "category": "principale"
   },
   {
     "id": "subj-bac-lettres-anglais",
     "yearId": "y-bac-lettres",
-    "name": "أنڤليزية",
+    "name": "Bac Lettres - Anglais",
     "order": 2,
     "category": "principale"
   },
   {
     "id": "subj-bac-lettres-philosophie",
     "yearId": "y-bac-lettres",
-    "name": "فلسفة",
+    "name": "Bac Lettres - فلسفة",
     "order": 3,
     "category": "secondaire"
   },
   {
-    "id": "subj-bac-lettres-histoire-geographie",
+    "id": "subj-bac-lettres-histoire",
     "yearId": "y-bac-lettres",
-    "name": "تاريخ وجغرافيا",
+    "name": "Bac Lettres - تاريخ",
     "order": 4,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-lettres-informatique",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - Informatique",
+    "order": 5,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-lettres-pensee-islamique",
     "yearId": "y-bac-lettres",
-    "name": "تفكير إسلامي",
-    "order": 5,
+    "name": "Bac Lettres - تفكير اسلامي",
+    "order": 6,
     "category": "secondaire"
   },
   {
-    "id": "subj-bac-lettres-adab",
+    "id": "subj-bac-lettres-geographie",
     "yearId": "y-bac-lettres",
-    "name": "الأدب العربي",
-    "order": 6,
-    "category": "optionnelle"
-  },
-  {
-    "id": "subj-bac-lettres-hadara",
-    "yearId": "y-bac-lettres",
-    "name": "الحضارة العربية والإسلامية",
+    "name": "Bac Lettres - جغرافيا",
     "order": 7,
-    "category": "optionnelle"
+    "category": "secondaire"
   },
   {
     "id": "subj-bac-lettres-allemand",
     "yearId": "y-bac-lettres",
-    "name": "ألمانية",
-    "order": 20,
+    "name": "Bac Lettres - Allemand",
+    "order": 8,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-lettres-chinois",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - Chinois",
+    "order": 9,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-lettres-dessin",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - Dessin",
+    "order": 10,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-lettres-musique",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - Musique",
+    "order": 11,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-lettres-portugais",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - Portugais",
+    "order": 12,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-lettres-russe",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - Russe",
+    "order": 13,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-lettres-turc",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - Turc",
+    "order": 15,
     "category": "optionnelle"
   },
   {
     "id": "subj-bac-lettres-espagnol",
     "yearId": "y-bac-lettres",
-    "name": "إسبانية",
-    "order": 21,
+    "name": "Bac Lettres - Espagnol",
+    "order": 16,
     "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-lettres-italien",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - Italien",
+    "order": 17,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-lettres-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - SVT",
+    "order": 18,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-lettres-mae-wael",
+    "yearId": "y-bac-lettres",
+    "name": "Bac Lettres - مع وائل",
+    "order": 19,
+    "category": "secondaire"
   },
   {
     "id": "subj-bac-math-mathematiques",
     "yearId": "y-bac-math",
-    "name": "رياضيات",
+    "name": "Bac Math - Maths",
     "order": 0,
     "category": "principale"
   },
   {
     "id": "subj-bac-math-sciences-physiques",
     "yearId": "y-bac-math",
-    "name": "علوم فيزيائية",
+    "name": "Bac Math - Physique",
     "order": 1,
     "category": "principale"
   },
   {
     "id": "subj-bac-math-sciences-de-la-vie-et-de-la-terre",
     "yearId": "y-bac-math",
-    "name": "علوم الحياة والأرض",
+    "name": "Bac Math - SVT",
     "order": 2,
     "category": "principale"
   },
   {
     "id": "subj-bac-math-philosophie",
     "yearId": "y-bac-math",
-    "name": "فلسفة",
+    "name": "Bac Math - فلسفة",
     "order": 3,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-math-francais",
     "yearId": "y-bac-math",
-    "name": "فرنسية",
+    "name": "Bac Math - Français",
     "order": 4,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-math-arabe",
     "yearId": "y-bac-math",
-    "name": "عربية",
+    "name": "Bac Math - عربية",
     "order": 5,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-math-anglais",
     "yearId": "y-bac-math",
-    "name": "أنڤليزية",
+    "name": "Bac Math - Anglais",
     "order": 6,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-math-italien",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Italien",
+    "order": 7,
     "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-informatique",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Informatique",
+    "order": 8,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-math-chinois",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Chinois",
+    "order": 9,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-dessin",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Dessin",
+    "order": 10,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-musique",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Musique",
+    "order": 11,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-portugais",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Portugais",
+    "order": 12,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-russe",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Russe",
+    "order": 13,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-turc",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Turc",
+    "order": 15,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-allemand",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Allemand",
+    "order": 16,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-espagnol",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - Espagnol",
+    "order": 17,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-math-mae-wael",
+    "yearId": "y-bac-math",
+    "name": "Bac Math - مع وائل",
+    "order": 18,
+    "category": "secondaire"
   },
   {
     "id": "subj-bac-sci-sciences-de-la-vie-et-de-la-terre",
     "yearId": "y-bac-sci",
-    "name": "علوم الحياة والأرض",
+    "name": "Bac Sciences - SVT",
     "order": 0,
     "category": "principale"
   },
   {
     "id": "subj-bac-sci-sciences-physiques",
     "yearId": "y-bac-sci",
-    "name": "علوم فيزيائية",
+    "name": "Bac Sciences - Physique",
     "order": 1,
     "category": "principale"
   },
   {
     "id": "subj-bac-sci-mathematiques",
     "yearId": "y-bac-sci",
-    "name": "رياضيات",
+    "name": "Bac Sciences - Maths",
     "order": 2,
     "category": "principale"
   },
   {
     "id": "subj-bac-sci-philosophie",
     "yearId": "y-bac-sci",
-    "name": "فلسفة",
+    "name": "Bac Sciences - فلسفة",
     "order": 3,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-sci-francais",
     "yearId": "y-bac-sci",
-    "name": "فرنسية",
+    "name": "Bac Sciences - Français",
     "order": 4,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-sci-arabe",
     "yearId": "y-bac-sci",
-    "name": "عربية",
+    "name": "Bac Sciences - عربية",
     "order": 5,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-sci-anglais",
     "yearId": "y-bac-sci",
-    "name": "أنڤليزية",
+    "name": "Bac Sciences - Anglais",
     "order": 6,
-    "category": "optionnelle"
-  },
-  {
-    "id": "subj-bac-sci-histoire-geographie",
-    "yearId": "y-bac-sci",
-    "name": "تاريخ وجغرافيا",
-    "order": 7,
-    "category": "secondaire"
-  },
-  {
-    "id": "subj-bac-sci-education-islamique",
-    "yearId": "y-bac-sci",
-    "name": "تربية إسلامية",
-    "order": 8,
-    "category": "secondaire"
-  },
-  {
-    "id": "subj-bac-sci-pensee-islamique",
-    "yearId": "y-bac-sci",
-    "name": "تفكير إسلامي",
-    "order": 9,
-    "category": "secondaire"
-  },
-  {
-    "id": "subj-bac-sci-adab",
-    "yearId": "y-bac-sci",
-    "name": "الأدب العربي",
-    "order": 10,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-sci-informatique",
     "yearId": "y-bac-sci",
-    "name": "إعلامية",
-    "order": 11,
+    "name": "Bac Sciences - Informatique",
+    "order": 7,
     "category": "secondaire"
   },
   {
-    "id": "subj-bac-sci-algorithmique",
+    "id": "subj-bac-sci-espagnol",
     "yearId": "y-bac-sci",
-    "name": "خوارزميات",
+    "name": "Bac Sciences - Espagnol",
+    "order": 8,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-chinois",
+    "yearId": "y-bac-sci",
+    "name": "Bac Sciences - Chinois",
+    "order": 9,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-dessin",
+    "yearId": "y-bac-sci",
+    "name": "Bac Sciences - Dessin",
+    "order": 10,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-musique",
+    "yearId": "y-bac-sci",
+    "name": "Bac Sciences - Musique",
+    "order": 11,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-portugais",
+    "yearId": "y-bac-sci",
+    "name": "Bac Sciences - Portugais",
     "order": 12,
     "category": "optionnelle"
   },
   {
-    "id": "subj-bac-sci-technologie",
+    "id": "subj-bac-sci-russe",
     "yearId": "y-bac-sci",
-    "name": "تكنولوجيا",
+    "name": "Bac Sciences - Russe",
     "order": 13,
     "category": "optionnelle"
   },
   {
-    "id": "subj-bac-sci-mecanique",
+    "id": "subj-bac-sci-turc",
     "yearId": "y-bac-sci",
-    "name": "ميكانيك",
-    "order": 14,
-    "category": "optionnelle"
-  },
-  {
-    "id": "subj-bac-sci-electrique",
-    "yearId": "y-bac-sci",
-    "name": "كهرباء",
+    "name": "Bac Sciences - Turc",
     "order": 15,
-    "category": "optionnelle"
-  },
-  {
-    "id": "subj-bac-sci-economie",
-    "yearId": "y-bac-sci",
-    "name": "اقتصاد",
-    "order": 16,
-    "category": "optionnelle"
-  },
-  {
-    "id": "subj-bac-sci-gestion",
-    "yearId": "y-bac-sci",
-    "name": "تصرّف",
-    "order": 17,
     "category": "optionnelle"
   },
   {
     "id": "subj-bac-sci-allemand",
     "yearId": "y-bac-sci",
-    "name": "ألمانية",
+    "name": "Bac Sciences - Allemand",
+    "order": 16,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-italien",
+    "yearId": "y-bac-sci",
+    "name": "Bac Sciences - Italien",
+    "order": 17,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-sci-mae-wael",
+    "yearId": "y-bac-sci",
+    "name": "Bac Sciences - مع وائل",
     "order": 18,
-    "category": "optionnelle"
-  },
-  {
-    "id": "subj-bac-sci-espagnol",
-    "yearId": "y-bac-sci",
-    "name": "إسبانية",
-    "order": 19,
-    "category": "optionnelle"
-  },
-  {
-    "id": "subj-bac-sci-hadara",
-    "yearId": "y-bac-sci",
-    "name": "الحضارة العربية والإسلامية",
-    "order": 20,
-    "category": "optionnelle"
-  },
-  {
-    "id": "subj-bac-tech-technologie",
-    "yearId": "y-bac-tech",
-    "name": "تكنولوجيا",
-    "order": 0,
-    "category": "principale"
-  },
-  {
-    "id": "subj-bac-tech-mecanique",
-    "yearId": "y-bac-tech",
-    "name": "ميكانيك",
-    "order": 1,
-    "category": "principale"
+    "category": "secondaire"
   },
   {
     "id": "subj-bac-tech-electrique",
     "yearId": "y-bac-tech",
-    "name": "كهرباء",
-    "order": 2,
+    "name": "Bac Technique - Electrique",
+    "order": 0,
     "category": "principale"
   },
   {
     "id": "subj-bac-tech-mathematiques",
     "yearId": "y-bac-tech",
-    "name": "رياضيات",
-    "order": 3,
+    "name": "Bac Technique - Maths",
+    "order": 1,
     "category": "principale"
   },
   {
     "id": "subj-bac-tech-sciences-physiques",
     "yearId": "y-bac-tech",
-    "name": "علوم فيزيائية",
-    "order": 4,
+    "name": "Bac Technique - Physique",
+    "order": 2,
     "category": "principale"
   },
   {
     "id": "subj-bac-tech-philosophie",
     "yearId": "y-bac-tech",
-    "name": "فلسفة",
-    "order": 5,
+    "name": "Bac Technique - فلسفة",
+    "order": 3,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-tech-francais",
     "yearId": "y-bac-tech",
-    "name": "فرنسية",
-    "order": 6,
+    "name": "Bac Technique - Français",
+    "order": 4,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-tech-arabe",
     "yearId": "y-bac-tech",
-    "name": "عربية",
-    "order": 7,
+    "name": "Bac Technique - عربية",
+    "order": 5,
     "category": "secondaire"
   },
   {
     "id": "subj-bac-tech-anglais",
     "yearId": "y-bac-tech",
-    "name": "أنڤليزية",
+    "name": "Bac Technique - Anglais",
+    "order": 6,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-tech-mecanique",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Mécanique",
+    "order": 7,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-tech-informatique",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Informatique",
     "order": 8,
+    "category": "secondaire"
+  },
+  {
+    "id": "subj-bac-tech-chinois",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Chinois",
+    "order": 9,
     "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-dessin",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Dessin",
+    "order": 10,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-musique",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Musique",
+    "order": 11,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-portugais",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Portugais",
+    "order": 12,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-russe",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Russe",
+    "order": 13,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-sciences-de-la-vie-et-de-la-terre",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - SVT",
+    "order": 14,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-turc",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Turc",
+    "order": 15,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-allemand",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Allemand",
+    "order": 16,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-espagnol",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Espagnol",
+    "order": 17,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-italien",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - Italien",
+    "order": 18,
+    "category": "optionnelle"
+  },
+  {
+    "id": "subj-bac-tech-mae-wael",
+    "yearId": "y-bac-tech",
+    "name": "Bac Technique - مع وائل",
+    "order": 19,
+    "category": "secondaire"
   }
 ]

@@ -400,7 +400,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
             id={HEADER_SLOT_ID}
             className="sticky top-0 z-20 border-b border-border bg-surface pt-safe empty:hidden md:pt-0"
           />
-          <div className="p-4 pt-[max(1rem,env(safe-area-inset-top))] md:px-8 md:pt-5">
+          <div className="p-4 pt-[max(1rem,var(--sai-top))] md:px-8 md:pt-5">
             <Outlet />
           </div>
         </main>
@@ -427,7 +427,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
 
       {/* Overflow "More" sheet (mobile only) */}
       <Sheet open={moreOpen} onOpenChange={setMoreOpen}>
-        <SheetContent side="bottom" className="gap-0 rounded-t-xl border-border bg-surface-raised p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+        <SheetContent side="bottom" className="gap-0 rounded-t-xl border-border bg-surface-raised p-2 pb-[max(0.5rem,var(--sai-bottom))]">
           <SheetTitle className="px-3 py-2 font-display text-base font-bold text-ink">{t.more}</SheetTitle>
 
           {/* Who you are, and the two things you can do about it. On a phone

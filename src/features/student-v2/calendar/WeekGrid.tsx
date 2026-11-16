@@ -101,13 +101,13 @@ export function WeekGrid({
                   key < today && !isSel && "opacity-55",
                 )}
               >
-                <span className={cn("text-[calc(7.5px*var(--ts))]", isSel ? "font-bold text-v2-ink" : "text-v2-ink/55")}>
+                <span className={cn("text-[calc(7.5px*var(--ts))]", isSel ? "font-bold text-v2-ink" : "text-v2-ink-2")}>
                   {WEEKDAYS[d.getDay()]}
                 </span>
                 <span
                   className={cn(
                     "grid size-8 place-items-center rounded-full text-[calc(9.5px*var(--ts))] font-bold tabular-nums",
-                    isToday ? "bg-v2-grad text-white shadow-md shadow-v2-brand/30" : "text-v2-ink",
+                    isToday ? "bg-v2-cta text-v2-on-cta shadow-md shadow-v2-cta/40" : "text-v2-ink",
                   )}
                 >
                   {pad2(d.getDate())}
@@ -135,7 +135,7 @@ export function WeekGrid({
               <span
                 key={h}
                 className={cn(
-                  "absolute end-2 text-[calc(7px*var(--ts))] tabular-nums text-v2-ink/45",
+                  "absolute end-2 text-[calc(7px*var(--ts))] tabular-nums text-v2-ink-2",
                   i === 0 ? "top-1" : "-translate-y-1/2",
                 )}
                 style={i === 0 ? undefined : { top: i * HOUR_PX }}
@@ -185,12 +185,12 @@ export function WeekGrid({
 
           {week.length === 0 && (
             <div className="pointer-events-none absolute inset-0 z-30 grid place-items-center">
-              <div className="pointer-events-auto flex flex-col items-center gap-2 rounded-3xl border border-v2-ink/10 bg-v2-surface/95 px-8 py-7 text-center shadow-lg shadow-v2-ink/5">
+              <div className="v2-panel pointer-events-auto flex flex-col items-center gap-2 rounded-3xl border border-v2-ink/10 bg-v2-surface/95 px-8 py-7 text-center shadow-lg shadow-v2-ink/5">
                 <span className="grid size-14 place-items-center rounded-full bg-v2-brand/[0.08]">
                   <CalendarX2 className="size-7 stroke-v2-grad" strokeWidth={1.5} />
                 </span>
                 <p className="mt-1 text-[calc(10.5px*var(--ts))] font-bold text-v2-ink">ما عندك حتّى حصّة الجمعة هذي</p>
-                <p className="text-[calc(8.5px*var(--ts))] text-v2-ink/55">أسبوع فاضي — وقت باش تراجع ولّا تشوف تسجيلات.</p>
+                <p className="text-[calc(8.5px*var(--ts))] text-v2-ink-2">أسبوع فاضي — وقت باش تراجع ولّا تشوف تسجيلات.</p>
                 {nextAfter && (
                   <button type="button" data-uisfx="forward" onClick={() => onSelect(nextAfter.date)} className={cn(ctaClass, "mt-2")}>
                     أقرب حصّة: {dayLabel(nextAfter.date)}
@@ -232,7 +232,7 @@ function Block({
       data-uisfx="focus" onClick={onOpen}
       aria-label={`حصّة ${subjectOf(session)?.name ?? ""} — ${dayLabel(session.date)} ${session.startTime}`}
       className={cn(
-        "group absolute inset-x-1 z-10 flex flex-col overflow-hidden rounded-xl border-s-[3px] px-2 py-1.5 text-start transition hover:z-30 hover:shadow-lg hover:shadow-v2-ink/10 focus-visible:outline-2 focus-visible:outline-v2-brand",
+        "v2-block group absolute inset-x-1 z-10 flex flex-col overflow-hidden rounded-xl border-s-[3px] px-2 py-1.5 text-start transition hover:z-30 hover:shadow-lg hover:shadow-v2-ink/10 focus-visible:outline-2 focus-visible:outline-v2-brand",
         live && "border-v2-live bg-v2-live-card",
         state === "prevue" && "border-v2-brand bg-v2-live-card hover:brightness-[1.03]",
         state === "terminee" && "border-v2-ink/25 bg-v2-ink/[0.045]",
@@ -244,7 +244,7 @@ function Block({
         <span
           className={cn(
             "text-[calc(7px*var(--ts))] tabular-nums",
-            state === "terminee" || state === "reportee" ? "text-v2-ink/50" : "font-semibold text-v2-ink/80",
+            state === "terminee" || state === "reportee" ? "text-v2-ink-2" : "font-semibold text-v2-ink/80",
             state === "reportee" && "line-through",
           )}
         >
@@ -259,8 +259,8 @@ function Block({
       <span
         className={cn(
           "mt-0.5 line-clamp-2 text-[calc(8.5px*var(--ts))] font-bold leading-tight",
-          state === "terminee" ? "text-v2-ink/55" : "text-v2-ink",
-          state === "reportee" && "text-v2-ink/50 line-through decoration-v2-ink/30",
+          state === "terminee" ? "text-v2-ink-2" : "text-v2-ink",
+          state === "reportee" && "text-v2-ink-2 line-through decoration-v2-ink/30",
         )}
       >
         حصّة {subjectOf(session)?.name}
@@ -276,7 +276,7 @@ function Block({
         </span>
       )}
       {roomy && state === "prevue" && (
-        <span className="mt-auto truncate text-[calc(6.5px*var(--ts))] text-v2-ink/60">{teacherName(session.teacherId)}</span>
+        <span className="mt-auto truncate text-[calc(6.5px*var(--ts))] text-v2-ink-2">{teacherName(session.teacherId)}</span>
       )}
     </button>
   )

@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react"
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { ArrowLeft, ArrowRight, Check, FolderOpen, MonitorPlay, Play, SkipBack, SkipForward } from "lucide-react"
 import type { VideoRefKind } from "@/data/types"
@@ -13,11 +13,15 @@ import { cn } from "@/lib/utils"
 import { useDemoStates } from "../demoStates"
 import { useDownloads } from "../downloads"
 import { BASE, MONTHS, frenchName, inV2, parseDay, useLookups, useSessionDocs } from "../lib"
-import { CtaLink, Panel, PanelEmpty, ctaClass } from "../ui"
+import { sfx } from "../sound"
+import { Burst, CtaLink, Panel, PanelEmpty, ctaClass, ctaGhostClass, tileClass } from "../ui"
 import { V2CommentsPanel } from "./CommentsPanel"
 import { PlaylistPanel, type PlaylistMode, type PlaylistRow } from "./PlaylistPanel"
 
 const ORDINAL = ["الأوّل", "الثاني", "الثالث"]
+
+/** Les genres de contenu qui sont de l'entraînement, pas du cours. */
+const PRACTICE = new Set(["exercice", "serie"])
 
 /** « هبطت 20 أوت 2026 » — when the replay went online (else the séance's day). */
 function publishedLabel(iso: string): string {
@@ -65,6 +69,8 @@ export default function V2VideoScreen() {
   const demo = useDemoStates()
   const wide = useMediaQuery("(min-width: 1024px)")
   const sessions = useData((s) => s.sessions)
+  const lessons = useData((s) => s.lessons)
+  const exams = useData((s) => s.exams)
   const { subjectById, teacherName } = useLookups()
 
   const valid = rawKind === "lesson" || rawKind === "exam" || rawKind === "seance"
@@ -76,9 +82,63 @@ export default function V2VideoScreen() {
   const videoId = useMemo(() => (source ? youtubeId(videoSrc(source.active.videoUrl)) : undefined), [source])
   const player = useYouTubePlayer(videoId)
 
+  /**
+   * « كمّلت الحصّة » — the one celebration this page has, on the REAL end
+   * of the video. The controller exposes no `ended` flag, so it is read off
+   * what it does expose: the head sits within a second of the duration and
+   * playback has stopped (YouTube reports ended as "not playing", and the
+   * polled head stops at the end). Once per video per session — `fired`
+   * is component memory, not the store, like the ticks in the playlist.
+   */
+  const ended = player.ready && player.duration > 0 && !player.playing && player.time >= player.duration - 1
+  const activeVideoId = source?.active.id
+  const fired = useRef<Set<string>>(new Set())
+  const [finish, setFinish] = useState<{ id: string; at: number } | null>(null)
+  useEffect(() => {
+    if (!ended || !activeVideoId || fired.current.has(activeVideoId)) return
+    fired.current.add(activeVideoId)
+    sfx("achievement")
+    setFinish({ id: activeVideoId, at: Date.now() })
+    // Gone in 1.2 s — the next action must never wait on a celebration.
+    const t = window.setTimeout(() => setFinish(null), 1200)
+    return () => window.clearTimeout(t)
+  }, [ended, activeVideoId])
+  const dismissFinish = () => {
+    if (!finish) return
+    sfx("close")
+    setFinish(null)
+  }
+
   const session = kind === "seance" ? (sessions.find((s) => s.id === id) ?? null) : null
-  const docs = useSessionDocs(session, true)
+  const sessionDocs = useSessionDocs(session, true)
   const { has, download } = useDownloads()
+
+  /**
+   * Les documents de CE replay.
+   *
+   * Une séance apporte les siens (le cours de la séance, les exercices que le
+   * prof a envoyés). Un contenu de matière — un cours, un exercice — porte ses
+   * propres PDF, et ce sont eux qu'il faut ici : arriver sur le lecteur d'une
+   * leçon et lire « ما فمّا حتّى وثيقة » alors que la carte d'où l'on vient
+   * annonçait une vidéo ET une vothèque, c'était la page qui perdait la moitié
+   * de la leçon en chemin. Même panneau, même bouton de téléchargement ; seule
+   * la provenance change.
+   */
+  const docs = useMemo<{ id: string; name: string; label: string }[]>(() => {
+    if (kind === "seance")
+      return sessionDocs.map((d) => ({
+        id: d.id,
+        name: d.pdf.name,
+        label: d.kind === "cours" ? "كور الحصّة" : "تمرين",
+      }))
+    if (kind === "lesson") {
+      const lesson = lessons.find((l) => l.id === id)
+      const label = lesson && PRACTICE.has(lesson.kind) ? "تمرين" : "كور الدرس"
+      return (lesson?.pdfs ?? []).map((pdf, i) => ({ id: `${lesson!.id}#${i}`, name: pdf.name, label }))
+    }
+    const exam = exams.find((e) => e.id === id)
+    return (exam?.pdfs ?? []).map((pdf, i) => ({ id: `${exam!.id}#${i}`, name: pdf.name, label: "إمتحان" }))
+  }, [kind, id, sessionDocs, lessons, exams])
 
   const rows = useMemo<PlaylistRow[]>(() => {
     if (!source) return []
@@ -142,7 +202,7 @@ export default function V2VideoScreen() {
     <div className="flex flex-col gap-4">
       <Link data-uisfx="back"
         to={backTo}
-        className="inline-flex min-h-11 w-fit items-center gap-2 rounded-full pe-3 text-[calc(9.5px*var(--ts))] font-medium text-v2-ink/75 transition hover:text-v2-brand"
+        className="hidden min-h-11 w-fit items-center gap-2 rounded-full pe-3 lg:inline-flex text-[calc(9.5px*var(--ts))] font-medium text-v2-ink/75 transition hover:text-v2-brand"
       >
         <ArrowRight className="size-5" />
         تسجيلات{subject ? ` · ${frenchName(subject.name)}` : ""}
@@ -164,7 +224,9 @@ export default function V2VideoScreen() {
       >
         {/* ---- Stage, steps, title ---- */}
         <div className="min-w-0 lg:col-start-2 lg:row-start-1">
-          <div className="relative overflow-hidden rounded-3xl border border-v2-ink/15 bg-v2-surface">
+          {/* `v2-stage`: the play skin re-dresses the shared stage's timeline
+              from here (12 px bar, chunky scrubber) — the kit stays untouched. */}
+          <div className="v2-stage relative overflow-hidden rounded-3xl border border-v2-ink/15 bg-v2-surface">
             <VideoStage
               player={player}
               title={active.title}
@@ -188,16 +250,50 @@ export default function V2VideoScreen() {
                 className="group absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-v2-surface"
               >
                 <span className="grid size-24 place-items-center rounded-full bg-v2-cta/45 transition group-hover:scale-105 md:size-28">
-                  <span className="grid size-[4.5rem] place-items-center rounded-full bg-v2-grad text-white shadow-lg shadow-v2-brand/30 md:size-20">
+                  <span className="v2-play-badge grid size-[4.5rem] place-items-center rounded-full bg-v2-cta text-v2-on-cta shadow-lg shadow-v2-cta/40 md:size-20">
                     <Play className="size-8 translate-x-0.5 fill-current" />
                   </span>
                 </span>
                 {session && (
-                  <span className="text-[calc(8px*var(--ts))] text-v2-ink/50">
+                  <span className="text-[calc(8px*var(--ts))] text-v2-ink-2">
                     {frenchName(subject?.name)} · <bdi>{durationLabel(session.startTime, session.endTime)}</bdi>
                   </span>
                 )}
               </button>
+            )}
+
+            {/* The finish: a stamp over the stage, the burst, and the way on.
+                Tapping anywhere dismisses it (a `close`); the « الجاي » inside
+                stops the tap and steps on instead. Reduced motion keeps the
+                stamp and drops the rest (CSS). */}
+            {finish && finish.id === active.id && (
+              <div
+                role="presentation"
+                onClick={dismissFinish}
+                className="v2-finish absolute inset-0 z-20 flex flex-col items-center justify-center gap-4 bg-v2-ink/70 p-4 text-center"
+              >
+                <span className="relative">
+                  <span className="v2-stamp inline-flex rounded-xl border-2 border-v2-cta bg-v2-surface px-4 py-1.5 text-[calc(14px*var(--ts))] font-extrabold text-v2-ink" data-tone="cta">
+                    كمّلت الحصّة! الجاية؟
+                  </span>
+                  <Burst at={finish.at} />
+                </span>
+                {next && (
+                  <button
+                    type="button"
+                    data-uisfx="skip-next"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setFinish(null)
+                      go(next.to)?.()
+                    }}
+                    className={ctaClass}
+                  >
+                    <SkipBack className="size-4" />
+                    الجاي
+                  </button>
+                )}
+              </div>
             )}
           </div>
 
@@ -211,11 +307,11 @@ export default function V2VideoScreen() {
           </div>
 
           <div className="mt-4">
-            {subject && <p className="text-[calc(8px*var(--ts))] font-medium uppercase tracking-wide text-v2-ink/55">{frenchName(subject.name)}</p>}
+            {subject && <p className="text-[calc(8px*var(--ts))] font-medium uppercase tracking-wide text-v2-ink-2">{frenchName(subject.name)}</p>}
             <h1 dir="auto" className="text-[calc(14px*var(--ts))] font-bold leading-snug text-v2-ink md:text-[calc(17px*var(--ts))]">
               {active.title}
             </h1>
-            <p className="mt-1 text-[calc(8.5px*var(--ts))] text-v2-ink/60">
+            <p className="mt-1 text-[calc(8.5px*var(--ts))] text-v2-ink-2">
               {session ? publishedLabel(session.publishedAt ?? session.date) : active.context}
               {session && teacherName(session.teacherId) && ` · ${teacherName(session.teacherId)}`}
             </p>
@@ -237,24 +333,31 @@ export default function V2VideoScreen() {
                 {docs.map((doc) => {
                   const taken = has(doc.id)
                   return (
-                    <li key={doc.id}>
+                    // The same collectible as the dashboard's: a tile with a
+                    // lip until taken, then the tick.
+                    <li key={doc.id} className={cn(tileClass, "rounded-2xl border border-transparent")} data-taken={taken}>
                       <div
                         className={cn(
-                          "flex h-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed px-3 py-5 text-center transition",
+                          "v2-doc-inner flex h-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed px-3 py-5 text-center transition",
                           taken ? "border-v2-ink/25 bg-v2-ink/[0.03]" : "border-v2-brand bg-v2-brand/[0.08]",
                         )}
                       >
-                        <span className="grid size-14 place-items-center rounded-full bg-v2-surface">
+                        <span className="v2-doc-plate relative grid size-14 place-items-center rounded-full bg-v2-surface" data-kind={doc.label === "تمرين" ? "exercice" : "cours"}>
                           <FolderOpen className="size-7 stroke-v2-grad" strokeWidth={1.6} />
+                          {taken && (
+                            <span className="v2-tick absolute -bottom-0.5 -end-0.5 grid size-5 place-items-center rounded-full bg-v2-brand text-white ring-2 ring-v2-surface">
+                              <Check className="size-3" strokeWidth={3} />
+                            </span>
+                          )}
                         </span>
                         <p dir="auto" className="line-clamp-2 text-[calc(9px*var(--ts))] font-medium leading-snug text-v2-ink">
-                          {doc.pdf.name}
+                          {doc.name}
                         </p>
-                        <p className="text-[calc(7.5px*var(--ts))] text-v2-ink/55">{doc.kind === "cours" ? "كور الحصّة" : "تمرين"}</p>
+                        <p className="text-[calc(7.5px*var(--ts))] text-v2-ink-2">{doc.label}</p>
                         <button
                           type="button"
-                          onClick={() => download(doc.id, doc.pdf.name)}
-                          className={cn(ctaClass, "mt-1 min-h-10 px-4", taken && "border border-v2-ink/20 bg-transparent hover:shadow-none")}
+                          onClick={() => download(doc.id, doc.name)}
+                          className={cn(ctaClass, "mt-1 min-h-11 px-4", taken && ctaGhostClass)}
                         >
                           {taken ? (
                             <>
@@ -304,7 +407,8 @@ function StepButton({
       onClick={onClick}
       disabled={!onClick}
       className={cn(
-        "inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-[calc(8.5px*var(--ts))] font-medium text-v2-ink transition hover:bg-v2-ink/[0.05] disabled:pointer-events-none disabled:opacity-35",
+        // A chunky secondary under the play skin (`v2-btn`); quiet text here.
+        "v2-btn inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-[calc(8.5px*var(--ts))] font-medium text-v2-ink transition hover:bg-v2-ink/[0.05] disabled:pointer-events-none disabled:opacity-35",
         end && "flex-row-reverse",
       )}
     >

@@ -2,14 +2,14 @@ import { useMemo, useState, type ReactNode } from "react"
 import { CalendarCheck2, Check, CheckCircle2, Clock, Crown, Info, Mail, MessageSquareText, Phone, Send, Wallet } from "lucide-react"
 import type { Offer } from "@/data/types"
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog"
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetDescription, SheetGrabber, SheetTitle } from "@/components/ui/sheet"
 import { useToast } from "@/components/kit/Toast"
 import { useIsMobile } from "@/lib/hooks"
 import { useAuth } from "@/stores/useAuth"
 import { useData } from "@/stores/useData"
 import { cn } from "@/lib/utils"
 import { useDemoStates } from "../demoStates"
-import { ctaClass } from "../ui"
+import { btnClass, ctaClass } from "../ui"
 import { sfx } from "../sound"
 
 const PHONE = "+216 50 40 43"
@@ -65,12 +65,12 @@ export default function V2OffersScreen() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-[calc(15px*var(--ts))] font-bold text-v2-ink md:text-[calc(18px*var(--ts))]">العروض</h1>
-          <p className="mt-1 text-[calc(9px*var(--ts))] text-v2-ink/60">عروضك الحالية، والعروض اللي تنجّم تزيدها.</p>
+          <p className="mt-1 text-[calc(9px*var(--ts))] text-v2-ink-2">عروضك الحالية، والعروض اللي تنجّم تزيدها.</p>
         </div>
         <button
           type="button"
           data-uisfx="open" onClick={() => setDialog({ kind: "contact" })}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-v2-ink/20 bg-v2-surface px-5 text-[calc(9px*var(--ts))] font-semibold text-v2-ink transition hover:border-v2-brand hover:text-v2-brand"
+          className={cn(btnClass, "text-[calc(9px*var(--ts))]")}
         >
           <MessageSquareText className="size-5" strokeWidth={1.75} />
           اكتب للأكاديمية
@@ -195,7 +195,7 @@ function OfferColumn({
   return (
     <article
       className={cn(
-        "flex h-full flex-col gap-3 rounded-3xl p-3 md:p-4",
+        "v2-panel flex h-full flex-col gap-3 rounded-3xl p-3 md:p-4",
         current ? "border-2 border-v2-brand/70 bg-v2-brand/[0.07]" : "border border-v2-ink/10 bg-v2-ink/[0.03]",
       )}
     >
@@ -216,11 +216,11 @@ function OfferColumn({
           <span className="text-[calc(20px*var(--ts))] font-black leading-none tabular-nums text-v2-ink">{now}</span>
           <span className="text-[calc(9px*var(--ts))] font-bold text-v2-ink">د</span>
           {off > 0 && (
-            <span className="text-[calc(9.5px*var(--ts))] tabular-nums text-v2-live line-through decoration-2">{offer.price}</span>
+            <span className="text-[calc(9.5px*var(--ts))] tabular-nums text-v2-live-strong line-through decoration-2">{offer.price}</span>
           )}
-          <span className="text-[calc(9px*var(--ts))] text-v2-ink/60">{period}</span>
+          <span className="text-[calc(9px*var(--ts))] text-v2-ink-2">{period}</span>
         </p>
-        <p className="mt-1 text-[calc(7.5px*var(--ts))] text-v2-ink/50">السعر</p>
+        <p className="mt-1 text-[calc(7.5px*var(--ts))] text-v2-ink-2">السعر</p>
         {offer.installable && (
           <p className="mt-3 flex items-center gap-2 border-t border-dashed border-v2-ink/15 pt-3 text-[calc(8px*var(--ts))] text-v2-ink/80">
             <Wallet className="size-4 shrink-0 text-v2-brand" strokeWidth={1.75} />
@@ -234,7 +234,7 @@ function OfferColumn({
         <p className="flex min-h-11 items-center justify-center gap-2 rounded-full bg-v2-brand/12 px-4 text-[calc(8.5px*var(--ts))] font-bold text-v2-brand">
           <CheckCircle2 className="size-5" strokeWidth={1.75} />
           عرضك الحالي
-          {current.until && <span className="font-normal text-v2-ink/60">· إلى {dmy(current.until)}</span>}
+          {current.until && <span className="font-normal text-v2-ink-2">· إلى {dmy(current.until)}</span>}
         </p>
       ) : asked ? (
         <p className="flex min-h-11 items-center justify-center gap-2 rounded-full border border-dashed border-v2-done-line bg-v2-done/[0.08] px-4 text-[calc(8.5px*var(--ts))] font-bold text-v2-done">
@@ -249,7 +249,7 @@ function OfferColumn({
           <button
             type="button"
             data-uisfx="open" onClick={onPlan}
-            className="inline-flex min-h-11 items-center justify-center rounded-full border border-v2-ink/20 bg-v2-surface px-3 text-[calc(8px*var(--ts))] font-semibold text-v2-ink transition hover:border-v2-brand hover:text-v2-brand"
+            className={cn(btnClass, "px-3 text-[calc(8px*var(--ts))]")}
           >
             تفاصيل الدفع بالتقسيط
           </button>
@@ -271,7 +271,7 @@ function OfferColumn({
                 <span className="block text-[calc(8.5px*var(--ts))] font-bold text-v2-ink" dir="auto">
                   {c.title}
                 </span>
-                {c.text && <span className="mt-0.5 block text-[calc(7.5px*var(--ts))] leading-relaxed text-v2-ink/60">{c.text}</span>}
+                {c.text && <span className="mt-0.5 block text-[calc(7.5px*var(--ts))] leading-relaxed text-v2-ink-2">{c.text}</span>}
               </span>
             </li>
           ))}
@@ -286,12 +286,12 @@ function OfferColumn({
 
 function NoOffer() {
   return (
-    <div className="flex h-full min-h-72 flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-v2-brand/40 bg-v2-brand/[0.05] p-6 text-center">
+    <div className="v2-empty flex h-full min-h-72 flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-v2-brand/40 bg-v2-brand/[0.05] p-6 text-center">
       <span className="grid size-16 place-items-center rounded-full bg-v2-surface">
         <CalendarCheck2 className="size-8 stroke-v2-grad" strokeWidth={1.5} />
       </span>
       <p className="text-[calc(11px*var(--ts))] font-bold text-v2-ink">ما عندكش عرض توّا</p>
-      <p className="max-w-xs text-[calc(8.5px*var(--ts))] leading-relaxed text-v2-ink/60">
+      <p className="max-w-xs text-[calc(8.5px*var(--ts))] leading-relaxed text-v2-ink-2">
         اختار عرض من العروض اللي على جنب — وكي تفعّلو الأكاديمية، يتحلّ المحتوى الكل في موادّك وحصصك.
       </p>
     </div>
@@ -306,10 +306,11 @@ function Modal({ title, description, onClose, children }: { title: string; descr
   if (mobile) {
     return (
       <Sheet open onOpenChange={(o) => !o && onClose()}>
-        <SheetContent side="bottom" className="max-h-[88dvh] gap-3 overflow-y-auto rounded-t-3xl bg-v2-surface px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5 text-v2-ink">
-          <span aria-hidden className="mx-auto h-1.5 w-12 rounded-full bg-v2-ink/15" />
+        {/* Portals to <body>: stamps the space on itself so the skins reach it. */}
+        <SheetContent side="bottom" data-space="v2" className="max-h-[88dvh] gap-3 overflow-y-auto rounded-t-3xl bg-v2-surface px-4 pb-[max(1.25rem,var(--sai-bottom))] pt-5 text-v2-ink">
+          <SheetGrabber />
           <SheetTitle className="text-[calc(12px*var(--ts))] font-bold text-v2-ink">{title}</SheetTitle>
-          {description && <SheetDescription className="-mt-2 text-[calc(8px*var(--ts))] text-v2-ink/55">{description}</SheetDescription>}
+          {description && <SheetDescription className="-mt-2 text-[calc(8px*var(--ts))] text-v2-ink-2">{description}</SheetDescription>}
           {children}
         </SheetContent>
       </Sheet>
@@ -317,9 +318,9 @@ function Modal({ title, description, onClose, children }: { title: string; descr
   }
   return (
     <Dialog open onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="gap-3 rounded-3xl border-v2-ink/15 bg-v2-surface p-6 text-v2-ink sm:max-w-lg">
+      <DialogContent data-space="v2" className="gap-3 rounded-3xl border-v2-ink/15 bg-v2-surface p-6 text-v2-ink sm:max-w-lg">
         <DialogTitle className="text-[calc(12px*var(--ts))] font-bold text-v2-ink">{title}</DialogTitle>
-        {description && <DialogDescription className="-mt-2 text-[calc(8px*var(--ts))] text-v2-ink/55">{description}</DialogDescription>}
+        {description && <DialogDescription className="-mt-2 text-[calc(8px*var(--ts))] text-v2-ink-2">{description}</DialogDescription>}
         {children}
       </DialogContent>
     </Dialog>
@@ -342,17 +343,17 @@ function ContactForm({ onSent }: { onSent: () => void }) {
         rows={4}
         autoFocus
         placeholder="مثلاً: نحبّ نبدّل للعرض السنوي، كيفاش نعمل؟"
-        className="w-full resize-none rounded-2xl border border-v2-ink/15 bg-v2-surface p-4 text-[calc(9px*var(--ts))] text-v2-ink outline-none transition placeholder:text-v2-ink/40 focus:border-v2-brand/60"
+        className="w-full resize-none rounded-2xl border border-v2-ink/15 bg-v2-surface p-4 text-[calc(9px*var(--ts))] text-v2-ink outline-none transition placeholder:text-v2-ink-3 focus:border-v2-brand/60"
       />
       <button type="submit" data-uisfx="send" disabled={!body.trim()} className={ctaClass}>
         <Send className="size-4 -scale-x-100" />
         ابعث
       </button>
       <div className="grid grid-cols-2 gap-2">
-        <a href={`tel:${PHONE.replace(/\s/g, "")}`} className="flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-v2-ink/15 text-[calc(8px*var(--ts))] font-semibold text-v2-ink transition hover:border-v2-brand" dir="ltr">
+        <a href={`tel:${PHONE.replace(/\s/g, "")}`} className="v2-btn flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-v2-ink/15 text-[calc(8px*var(--ts))] font-semibold text-v2-ink transition hover:border-v2-brand" dir="ltr">
           <Phone className="size-4" /> {PHONE}
         </a>
-        <a href={`mailto:${EMAIL}`} className="flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-v2-ink/15 text-[calc(8px*var(--ts))] font-semibold text-v2-ink transition hover:border-v2-brand">
+        <a href={`mailto:${EMAIL}`} className="v2-btn flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-v2-ink/15 text-[calc(8px*var(--ts))] font-semibold text-v2-ink transition hover:border-v2-brand">
           <Mail className="size-4" /> إيميل
         </a>
       </div>
@@ -380,7 +381,7 @@ function Plan({ offer }: { offer: Offer }) {
       <ol className="flex flex-col gap-2">
         {rows.map((r, i) => (
           <li key={r.when} className="flex items-center gap-3 rounded-2xl border border-v2-ink/10 p-3">
-            <span dir="ltr" className="grid size-9 shrink-0 place-items-center rounded-full bg-v2-grad text-[calc(8px*var(--ts))] font-bold text-white">
+            <span dir="ltr" className="grid size-9 shrink-0 place-items-center rounded-full bg-v2-cta text-[calc(8px*var(--ts))] font-bold text-v2-on-cta">
               {i + 1}
             </span>
             <span className="flex-1 text-[calc(9px*var(--ts))] font-semibold text-v2-ink">{r.when}</span>
@@ -396,7 +397,7 @@ function Plan({ offer }: { offer: Offer }) {
           {total} <span className="text-[calc(8px*var(--ts))]">د</span>
         </span>
       </p>
-      <p className="text-[calc(7.5px*var(--ts))] leading-relaxed text-v2-ink/55">
+      <p className="text-[calc(7.5px*var(--ts))] leading-relaxed text-v2-ink-2">
         بلا فوائد. التواريخ والمبالغ النهائية تتثبّت مع الأكاديمية وقت التفعيل.
       </p>
     </div>
@@ -411,7 +412,7 @@ function Subscribe({ offer, onSend, onPlan }: { offer: Offer; onSend: () => void
         <OfferMark offer={offer} />
         <div className="min-w-0 flex-1">
           <p className="text-[calc(10px*var(--ts))] font-bold text-v2-ink">{offer.name}</p>
-          <p className="text-[calc(8px*var(--ts))] text-v2-ink/60">{offer.audience}</p>
+          <p className="text-[calc(8px*var(--ts))] text-v2-ink-2">{offer.audience}</p>
         </div>
         <p className="text-[calc(15px*var(--ts))] font-black tabular-nums text-v2-ink">
           {now} <span className="text-[calc(8px*var(--ts))]">د</span>

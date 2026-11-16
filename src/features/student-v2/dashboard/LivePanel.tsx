@@ -5,7 +5,7 @@ import type { Session } from "@/data/types"
 import { formatAway, formatCountdown, sessionEnd, useSecond } from "@/features/student/calendar/schedule"
 import { cn, formatTimeRange } from "@/lib/utils"
 import { BASE, SOON_MS, relativeDay, useLookups, v2VideoPath, type LivePick } from "../lib"
-import { Panel, PanelEmpty, ctaClass, liveOutlineClass } from "../ui"
+import { Num, Panel, PanelEmpty, Ring, ctaClass, liveOutlineClass } from "../ui"
 
 /**
  * « الحصة بدات » — is there somewhere I have to BE right now?
@@ -24,6 +24,11 @@ import { Panel, PanelEmpty, ctaClass, liveOutlineClass } from "../ui"
  *              colour here that means « change of plan », and the next one.
  *   none       nothing today. Deliberately NOT red: a pink alarm box that says
  *              "nothing" reads as an error, so it goes quiet and teal.
+ *
+ * Under the play skin this is the dashboard's QUEST CARD — the loudest object
+ * on the page: a 2 px border in the state's colour, the countdown drawn as a
+ * ring that empties over the last hour, « انتهت » as a stamp. Same tree in
+ * both skins; `.v2-play` / `.v2-soft` pick which clock shows.
  */
 export function LivePanel({
   pick,
@@ -44,10 +49,14 @@ export function LivePanel({
       ? "الحصة بدات"
       : pick.kind === "countdown"
         ? soon
-          ? "تبدا بعد شويّة"
+          ? "تبدا توّا… حضّر روحك"
           : "الحصّة الجاية"
         : pick.kind === "ended"
-          ? "الحصّة وفات"
+          ? // « completed », not « over » — and the replay promised only while it
+            // is still on its way; once it is here the line below says so.
+            pick.session.recordingUrl
+            ? "الحصّة كمّلت"
+            : "الحصّة كمّلت — التسجيل جاي"
           : pick.kind === "postponed"
             ? "الحصّة تأجلت"
             : "الحصّة المباشرة"
@@ -78,8 +87,9 @@ function SessionLine({ session, className }: { session: Session; className?: str
 function Box({ tone, children }: { tone: "live" | "calm" | "done" | "off"; children: ReactNode }) {
   return (
     <div
+      data-tone={tone}
       className={cn(
-        "relative flex flex-1 flex-col items-center justify-center rounded-2xl border px-4 py-6 text-center md:px-6",
+        "v2-quest relative flex flex-1 flex-col items-center justify-center rounded-2xl border px-4 py-6 text-center md:px-6",
         tone === "live" && "border-v2-live bg-v2-live-soft",
         tone === "calm" && "border-v2-live/60 bg-v2-live-soft",
         tone === "done" && "border-v2-brand/40 bg-v2-brand/[0.07]",
@@ -108,25 +118,36 @@ function OnAir({ session }: { session: Session }) {
         </div>
       </div>
 
+      {/* The way in. The frame's text link with its hand-drawn arrow; under
+          the play skin the same link is the chunky lime pill (`v2-cta`) and
+          the arrow steps aside. */}
       <Link data-uisfx="connect"
         to={`${BASE}/seance/${session.id}`}
-        className="group mt-1 inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-[calc(10px*var(--ts))] font-semibold text-v2-ink transition hover:text-v2-live-strong"
+        className="v2-cta group mt-1 inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-[calc(10px*var(--ts))] font-semibold text-v2-ink transition hover:text-v2-live-strong"
       >
         {/* The frame's hand-drawn arrow, curling from the box down to the link. */}
-        <svg viewBox="0 0 48 40" className="-mt-6 h-9 w-11 text-v2-ink" fill="none" aria-hidden>
+        <svg viewBox="0 0 48 40" className="v2-soft -mt-6 h-9 w-11 text-v2-ink" fill="none" aria-hidden>
           <path d="M40 2c3 16-6 29-30 33" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           <path d="M16 29l-7 6 9 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-        أدخل للمباشر
+        يلّا، ادخل للمباشر
         <ArrowLeft className="size-5 transition group-hover:-translate-x-1" />
       </Link>
     </Box>
   )
 }
 
+/** How long the ring takes to empty: the last hour before the séance. */
+const RING_MS = 3_600_000
+
 function Countdown({ session, left, soon }: { session: Session | null; left: number; soon: boolean }) {
   // Under an hour, hours are noise: « 12:43 » reads faster than « 00:12:43 ».
-  const clock = left < 3_600_000 ? formatCountdown(left).slice(3) : formatCountdown(left)
+  const full = formatCountdown(left)
+  const clock = left < RING_MS ? full.slice(3) : full
+  // The ring's digits: under an hour, mm:ss with the seconds rolling; over
+  // it, hh:mm large and the seconds small underneath — eight digits in a
+  // ring is a wall, not a clock.
+  const [hh, mm, ss] = full.split(":")
 
   return (
     <Box tone="calm">
@@ -139,7 +160,8 @@ function Countdown({ session, left, soon }: { session: Session | null; left: num
         {soon ? "حضّر روحك، الحصّة قريب تبدا" : "ما فمّاش حصّة مباشرة توّا"}
       </p>
 
-      <div className="mt-4 w-full max-w-[29rem] rounded-2xl border border-dashed border-v2-live bg-v2-live/10 p-1.5">
+      {/* The frame's clock: a red dashed box. Soft skin only. */}
+      <div className="v2-soft mt-4 w-full max-w-[29rem] rounded-2xl border border-dashed border-v2-live bg-v2-live/10 p-1.5">
         <div className="flex items-center justify-center gap-4 rounded-2xl bg-v2-surface/70 px-3 py-2.5">
           <span className="text-[calc(9.5px*var(--ts))] font-bold text-v2-live-strong">
             {soon ? "تبدا بعد" : "تبدا في أقلّ من"}
@@ -150,12 +172,39 @@ function Countdown({ session, left, soon }: { session: Session | null; left: num
         </div>
       </div>
 
+      {/* The quest's ring: full until the last hour, then it empties second
+          by second. Play skin only. */}
+      <div className="v2-play mt-4 flex flex-col items-center gap-2">
+        <Ring fraction={left / RING_MS}>
+          <span dir="ltr" className="v2-ring-digits flex flex-col items-center">
+            {left < RING_MS ? (
+              <span className="text-[calc(17px*var(--ts))]">
+                {mm}:<Num value={ss} />
+              </span>
+            ) : (
+              <>
+                <span className="text-[calc(17px*var(--ts))]">
+                  {hh}:{mm}
+                </span>
+                <span className="mt-1 text-[calc(8px*var(--ts))] font-semibold text-v2-ink-2">
+                  <Num value={ss} />
+                </span>
+              </>
+            )}
+          </span>
+        </Ring>
+        <span className="text-[calc(8.5px*var(--ts))] font-bold text-v2-live-strong">
+          {soon ? "تبدا بعد" : "تبدا في أقلّ من"}
+          {left >= RING_MS && ` ${hh === "00" ? "" : `${Number(hh)} سا`}`}
+        </span>
+      </div>
+
       {session && <SessionLine session={session} />}
       {session &&
         (soon ? (
           <Link data-uisfx="connect" to={`${BASE}/seance/${session.id}`} className={cn(ctaClass, "mt-3")}>
             <Video className="size-5" strokeWidth={1.75} />
-            أدخل للمباشر
+            يلّا، ادخل للمباشر
           </Link>
         ) : (
           <Link data-uisfx="forward"
@@ -167,7 +216,7 @@ function Countdown({ session, left, soon }: { session: Session | null; left: num
           </Link>
         ))}
       {soon && (
-        <p className="mt-1 text-[calc(7.5px*var(--ts))] text-v2-ink/55">الباب يتحلّ 15 دقيقة قبل الحصّة.</p>
+        <p className="mt-1 text-[calc(7.5px*var(--ts))] text-v2-ink-2">الباب يتحلّ 15 دقيقة قبل الحصّة.</p>
       )}
     </Box>
   )
@@ -184,7 +233,11 @@ function Ended({
 }) {
   return (
     <Box tone="done">
-      <CheckCircle2 aria-hidden className="absolute end-4 top-4 size-5 text-v2-brand" strokeWidth={1.75} />
+      {/* The tick in the corner (soft), or the « انتهت » stamp (play). */}
+      <CheckCircle2 aria-hidden className="v2-soft absolute end-4 top-4 size-5 text-v2-brand" strokeWidth={1.75} />
+      <span aria-hidden className="v2-stamp v2-play absolute end-4 top-4 text-[calc(9px*var(--ts))]">
+        انتهت
+      </span>
       <p className="text-[calc(10.5px*var(--ts))] font-medium text-v2-ink">
         كمّلت الحصّة — وفات {formatAway(sessionEnd(session).getTime() - now.getTime())}
       </p>
@@ -203,7 +256,7 @@ function Ended({
         {session.recordingUrl && (
           <Link data-uisfx="play" to={v2VideoPath(session.id, { subjectId: session.subjectIds[0] })} className={liveOutlineClass}>
             <CirclePlay className="size-5" strokeWidth={1.75} />
-            شوف التسجيل
+            عاود شوف الحصّة
           </Link>
         )}
       </div>
@@ -219,7 +272,7 @@ function Postponed({ session, next, now }: { session: Session; next: Session | n
       <p className="text-[calc(10.5px*var(--ts))] font-bold text-v2-ink">
         حصّة {subjectOf(session)?.name} ما عادش باش تصير {relativeDay(session.date, now) === "اليوم" ? "اليوم" : relativeDay(session.date, now)}
       </p>
-      <p className="mt-1 text-[calc(8.5px*var(--ts))] text-v2-ink/60 line-through decoration-v2-ink/30">
+      <p className="mt-1 text-[calc(8.5px*var(--ts))] text-v2-ink-2 line-through decoration-v2-ink/30">
         {formatTimeRange(session.startTime, session.endTime)}
       </p>
       <p className="mt-2 text-[calc(8.5px*var(--ts))] text-v2-ink/70">الأستاذ أجّلها — الموعد الجديد يوصلك في إشعار.</p>
@@ -240,18 +293,25 @@ function Postponed({ session, next, now }: { session: Session; next: Session | n
   )
 }
 
+/**
+ * A rest day is a state, not an absence: « اليوم راحة » when a next séance is
+ * known, and Wael dressed for THAT matière looking at the empty box — the
+ * one character the panel can honestly show.
+ */
 function Nothing({ next, now }: { next: Session | null; now: Date }) {
   const { subjectOf } = useLookups()
+  const nextSubject = next ? subjectOf(next) : undefined
   return (
     <PanelEmpty
       icon={CalendarClock}
-      title="ما فمّاش حصّة مباشرة توّا"
+      character={nextSubject?.name}
+      title={next ? "اليوم راحة" : "ما فمّاش حصّة مباشرة توّا"}
       body="كي تبدا حصّة مباشرة، تلقى زرّ الدخول هوني."
       action={
         <div className="flex flex-col items-center gap-3">
           {next && (
             <p className="rounded-full bg-v2-surface px-4 py-1.5 text-[calc(8.5px*var(--ts))] text-v2-ink/75">
-              أقرب حصّة: <span className="font-bold text-v2-ink">{subjectOf(next)?.name}</span> ·{" "}
+              أقرب حصّة: <span className="font-bold text-v2-ink">{nextSubject?.name}</span> ·{" "}
               {relativeDay(next.date, now)} على {next.startTime}
             </p>
           )}

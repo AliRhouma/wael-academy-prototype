@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { Link, useParams, useSearchParams } from "react-router-dom"
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { ArrowRight, CalendarDays, ChevronDown, Clock, Lock, MonitorPlay, Play, UserRound, Users } from "lucide-react"
 import type { Session } from "@/data/types"
 import { SubjectIcon } from "@/components/icons/subjects"
@@ -19,7 +19,7 @@ import { useData } from "@/stores/useData"
 import { cn } from "@/lib/utils"
 import { useDemoStates } from "../demoStates"
 import { BASE, MONTHS, frenchName, parseDay, useLookups, v2VideoPath } from "../lib"
-import { CtaLink, PanelEmpty } from "../ui"
+import { CtaLink, PanelEmpty, tileClass, useShake } from "../ui"
 import { recordingCount } from "./recordings"
 
 /** How long a séance may show « التسجيل يوصل قريب » before it drops out. */
@@ -110,7 +110,7 @@ export default function V2SubjectRecordingsScreen() {
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 md:gap-6">
       <Link data-uisfx="back"
         to={`${BASE}/seances`}
-        className="inline-flex min-h-11 w-fit items-center gap-2 rounded-full pe-3 text-[calc(9.5px*var(--ts))] font-medium text-v2-ink/75 transition hover:text-v2-brand"
+        className="hidden min-h-11 w-fit items-center gap-2 rounded-full pe-3 lg:inline-flex text-[calc(9.5px*var(--ts))] font-medium text-v2-ink/75 transition hover:text-v2-brand"
       >
         <ArrowRight className="size-5" />
         تسجيلات
@@ -128,7 +128,7 @@ export default function V2SubjectRecordingsScreen() {
           <h1 className="text-[calc(18px*var(--ts))] font-bold leading-tight text-v2-ink md:text-[calc(22px*var(--ts))]">
             {frenchName(subject?.name)}
           </h1>
-          <p className="mt-0.5 text-[calc(8.5px*var(--ts))] text-v2-ink/60">
+          <p className="mt-0.5 text-[calc(8.5px*var(--ts))] text-v2-ink-2">
             {recorded === 0 ? "مازال ما فمّاش تسجيلات" : recordingCount(recorded)} · {groupTabs.length}{" "}
             {groupTabs.length === 1 || groupTabs.length > 10 ? "مجموعة" : "مجموعات"}
           </p>
@@ -136,9 +136,10 @@ export default function V2SubjectRecordingsScreen() {
       </header>
 
       {scope.length === 0 ? (
-        <div className="rounded-3xl border border-v2-ink/15 bg-v2-surface p-4 md:p-6">
+        <div className="v2-panel rounded-3xl border border-v2-ink/15 bg-v2-surface p-4 md:p-6">
           <PanelEmpty
             icon={MonitorPlay}
+            character={subject?.name}
             title={`مازال ما تنشر حتّى تسجيل في ${subject?.name ?? "المادّة هذي"}`}
             body="كي يكمّل الأستاذ حصّة وينزّل التسجيل متاعها، يظهرلك هوني."
             action={<CtaLink data-uisfx="back" to={`${BASE}/seances`}>رجوع للتسجيلات</CtaLink>}
@@ -158,7 +159,7 @@ export default function V2SubjectRecordingsScreen() {
                   aria-pressed={active}
                   title={g.title}
                   className={cn(
-                    "inline-flex min-h-10 items-center gap-2 rounded-full border ps-3 pe-1.5 text-[calc(8.5px*var(--ts))] font-semibold transition",
+                    "v2-chip inline-flex min-h-11 items-center gap-2 rounded-full border ps-3 pe-1.5 text-[calc(8.5px*var(--ts))] font-semibold transition",
                     active
                       ? "border-transparent bg-v2-brand text-white shadow-md shadow-v2-brand/25"
                       : "border-v2-ink/15 bg-v2-surface text-v2-ink hover:border-v2-brand/50",
@@ -166,10 +167,10 @@ export default function V2SubjectRecordingsScreen() {
                 >
                   <Users className="size-4" strokeWidth={2} />
                   <bdi>{g.label}</bdi>
-                  {g.mine && <span className={cn("text-[calc(7px*var(--ts))] font-normal", active ? "text-white/75" : "text-v2-ink/50")}>· مجموعتي</span>}
+                  {g.mine && <span className={cn("text-[calc(7px*var(--ts))] font-normal", active ? "text-white/75" : "text-v2-ink-2")}>· مجموعتي</span>}
                   <span
                     className={cn(
-                      "grid size-6 place-items-center rounded-full text-[calc(7.5px*var(--ts))] font-bold tabular-nums",
+                      "v2-chip-count grid size-6 place-items-center rounded-full text-[calc(7.5px*var(--ts))] font-bold tabular-nums",
                       active ? "bg-white text-v2-brand" : "bg-v2-ink/[0.07] text-v2-ink/70",
                     )}
                   >
@@ -179,7 +180,7 @@ export default function V2SubjectRecordingsScreen() {
               )
             })}
             {years.length > 1 && (
-              <div className="ms-auto flex rounded-full border border-v2-ink/15 bg-v2-surface p-0.5" role="tablist" aria-label="العام الدراسي">
+              <div className="v2-seg ms-auto flex rounded-full border border-v2-ink/15 bg-v2-surface p-0.5" role="tablist" aria-label="العام الدراسي">
                 {years.map((y) => (
                   <button
                     key={y}
@@ -188,8 +189,8 @@ export default function V2SubjectRecordingsScreen() {
                     aria-selected={y === year}
                     data-uisfx="toggle-on" onClick={() => setParam("annee", yearSlug(y))}
                     className={cn(
-                      "min-h-9 rounded-full px-3 text-[calc(7.5px*var(--ts))] font-semibold tabular-nums transition",
-                      y === year ? "bg-v2-ink text-white" : "text-v2-ink/60 hover:text-v2-ink",
+                      "v2-chip min-h-9 rounded-full px-3 text-[calc(7.5px*var(--ts))] font-semibold tabular-nums transition",
+                      y === year ? "bg-v2-ink text-white" : "text-v2-ink-2 hover:text-v2-ink",
                     )}
                   >
                     {y}
@@ -255,7 +256,7 @@ function Trimesters({
           <li
             key={t.n}
             className={cn(
-              "rise overflow-hidden rounded-2xl border bg-v2-surface transition-colors",
+              "v2-panel rise overflow-hidden rounded-2xl border bg-v2-surface transition-colors",
               on ? "border-v2-brand/60 shadow-lg shadow-v2-brand/10" : "border-v2-ink/12",
             )}
             style={{ ["--i" as string]: t.n }}
@@ -270,16 +271,16 @@ function Trimesters({
               <span
                 className={cn(
                   "grid size-10 shrink-0 place-items-center rounded-full text-[calc(9px*var(--ts))] font-bold",
-                  has ? "bg-v2-grad text-white" : "bg-v2-ink/[0.07] text-v2-ink/45",
+                  has ? "bg-v2-cta text-v2-on-cta" : "bg-v2-ink/[0.07] text-v2-ink-2",
                 )}
               >
                 {t.n}
               </span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[calc(10.5px*var(--ts))] font-bold text-v2-ink md:text-[calc(11.5px*var(--ts))]">
-                  {t.title} <span className="ms-1 text-[calc(8px*var(--ts))] font-normal text-v2-ink/50">{t.range}</span>
+                  {t.title} <span className="ms-1 text-[calc(8px*var(--ts))] font-normal text-v2-ink-2">{t.range}</span>
                 </span>
-                <span className={cn("mt-0.5 flex items-center gap-1.5 text-[calc(8px*var(--ts))]", has ? "font-semibold text-v2-ink/70" : "font-bold text-v2-ink/45")}>
+                <span className={cn("mt-0.5 flex items-center gap-1.5 text-[calc(8px*var(--ts))]", has ? "font-semibold text-v2-ink/70" : "font-bold text-v2-ink-2")}>
                   {has ? (
                     <>
                       <Play className="size-3 fill-current text-v2-brand" />
@@ -290,7 +291,7 @@ function Trimesters({
                   )}
                 </span>
               </span>
-              {has && <ChevronDown className={cn("size-5 shrink-0 text-v2-ink/50 transition-transform", on && "rotate-180")} />}
+              {has && <ChevronDown className={cn("size-5 shrink-0 text-v2-ink-2 transition-transform", on && "rotate-180")} />}
             </button>
 
             {has && (
@@ -338,21 +339,24 @@ function RecordingRow({
   subjectName: string
   teacher?: string
 }) {
+  const navigate = useNavigate()
+  const [shake, doShake] = useShake()
   const ready = !!session.recordingUrl
   const fresh =
     ready && !!session.publishedAt && new Date(session.publishedAt).getTime() >= new Date(now).setHours(0, 0, 0, 0) - (RECENT_DAYS - 1) * 86_400_000
   const title = [subjectName, session.title, groupLabel].filter(Boolean).join(" | ")
 
   const status = locked ? (
-    <span className="inline-flex items-center gap-1.5 text-v2-ink/55">
-      <Lock className="size-3.5" /> اشترك الآن
+    // Explains the lock and offers the door — no shame, no silent paywall.
+    <span className="inline-flex items-center gap-1.5 text-v2-ink-2">
+      <Lock className="size-3.5" /> هالتسجيل للمشتركين — شوف العروض
     </span>
   ) : !ready ? (
-    <span className="inline-flex items-center gap-1.5 text-v2-ink/50">
+    <span className="inline-flex items-center gap-1.5 text-v2-ink-2">
       <Clock className="size-3.5" /> التسجيل يوصل قريب
     </span>
   ) : fresh ? (
-    <span className="rounded-full bg-v2-grad px-2 text-[calc(6.5px*var(--ts))] font-bold leading-5 text-white">NEW</span>
+    <span className="rounded-full bg-v2-cta px-2 text-[calc(6.5px*var(--ts))] font-bold leading-5 text-v2-on-cta">NEW</span>
   ) : (
     <span className="inline-flex items-center gap-1.5 text-v2-brand">
       <Play className="size-3 fill-current" /> شوف التسجيل
@@ -364,7 +368,7 @@ function RecordingRow({
       <span className="flex items-center justify-between gap-2 text-[calc(7.5px*var(--ts))] font-semibold">
         {status}
         {ready && !locked && (
-          <span className="grid size-9 shrink-0 place-items-center rounded-full border-[1.5px] border-v2-brand text-v2-brand transition group-hover:border-transparent group-hover:bg-v2-grad group-hover:text-white">
+          <span className="grid size-9 shrink-0 place-items-center rounded-full border-[1.5px] border-v2-brand text-v2-brand transition group-hover:border-transparent group-hover:bg-v2-cta group-hover:text-v2-on-cta">
             <Play className="size-3.5 translate-x-[-1px] fill-current" />
           </span>
         )}
@@ -372,10 +376,10 @@ function RecordingRow({
       {/* Two lines, not an ellipsis: « matière | séance | groupe » is long, and
           a one-line clip ate its start on a phone. LTR so the bars and dashes
           keep their order; right-aligned like the Arabic around it. */}
-      <span dir="ltr" className={cn("mt-1.5 line-clamp-2 block text-right text-[calc(9.5px*var(--ts))] font-bold leading-snug", ready ? "text-v2-ink" : "text-v2-ink/55")}>
+      <span dir="ltr" className={cn("mt-1.5 line-clamp-2 block text-right text-[calc(9.5px*var(--ts))] font-bold leading-snug", ready ? "text-v2-ink" : "text-v2-ink-2")}>
         {title}
       </span>
-      <span className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[calc(7.5px*var(--ts))] text-v2-ink/55">
+      <span className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[calc(7.5px*var(--ts))] text-v2-ink-2">
         <span className="inline-flex items-center gap-1.5">
           <CalendarDays className="size-3.5" /> {longDay(session.date)}
         </span>
@@ -393,8 +397,22 @@ function RecordingRow({
 
   const shell = "group block rounded-2xl border p-4 transition"
   if (locked) {
+    // A locked door shakes first (the `blocked` cue is the tap's), THEN leads
+    // to the offers — the shake needs its 320 ms on screen, except for
+    // someone who asked for less motion, who goes straight through.
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     return (
-      <Link data-uisfx="blocked" to={`${BASE}/offres`} className={cn(shell, "border-v2-ink/10 bg-v2-ink/[0.025] hover:border-v2-brand/40")}>
+      <Link
+        data-uisfx="blocked"
+        to={`${BASE}/offres`}
+        data-locked="true"
+        onClick={(e) => {
+          e.preventDefault()
+          doShake()
+          window.setTimeout(() => navigate(`${BASE}/offres`), calm ? 0 : 320)
+        }}
+        className={cn(tileClass, shake, shell, "border-v2-ink/10 bg-v2-ink/[0.025] hover:border-v2-brand/40")}
+      >
         {body}
       </Link>
     )
@@ -403,7 +421,7 @@ function RecordingRow({
   return (
     <Link data-uisfx="play"
       to={v2VideoPath(session.id, { subjectId: session.subjectIds[0], groupId })}
-      className={cn(shell, "border-v2-ink/10 bg-v2-ink/[0.025] hover:border-v2-brand/40 hover:bg-v2-surface hover:shadow-lg hover:shadow-v2-ink/[0.06]")}
+      className={cn(tileClass, shell, "border-v2-ink/10 bg-v2-ink/[0.025] hover:border-v2-brand/40 hover:bg-v2-surface hover:shadow-lg hover:shadow-v2-ink/[0.06]")}
     >
       {body}
     </Link>

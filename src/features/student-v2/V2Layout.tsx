@@ -5,6 +5,9 @@ import { DownloadsProvider } from "./downloads"
 import { mountSound } from "./sound"
 import { V2Shell } from "./V2Shell"
 
+/** Framed by another page — in practice, a phone of the mobile gallery. */
+const IN_GALLERY = window.self !== window.top
+
 /**
  * The new élève space. Same demo user, same store as /student — a second
  * front-end over one academy, not a fifth role. It seats the student in the
@@ -32,10 +35,12 @@ export default function V2Layout() {
   if (currentRole !== "student" || !currentUser) return null
 
   return (
-    <DemoStatesProvider>
+    // Inside a phone of the mobile gallery the states are flipped from the
+    // gallery's own page (`StatesPanel`), for both phones at once — no dock here.
+    <DemoStatesProvider sync={IN_GALLERY ? "follow" : undefined}>
       <DownloadsProvider>
         <V2Shell />
-        <StatesDock />
+        {!IN_GALLERY && <StatesDock />}
       </DownloadsProvider>
     </DemoStatesProvider>
   )

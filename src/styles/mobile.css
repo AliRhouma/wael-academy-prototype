@@ -1,0 +1,134 @@
+/* ===========================================================================
+   The mobile gallery — /mobile, and what the `mobile.` host opens on.
+   ---------------------------------------------------------------------------
+   Two phones on a studio ground with the app live inside each. The GEOMETRY
+   (sizes, radii, bezels, cut-outs, keys) is data in
+   src/features/mobile/devices.ts and arrives as CSS variables; this file is
+   the MATERIAL — the body, the metal ring, the keys, the glass.
+   =========================================================================== */
+
+/* The ground: the space's deep petrol, a lime glow where the light comes
+   from, the site's 80px grid underneath so the page reads as the same
+   product as the landing. */
+@utility bg-v2-stage {
+  background-color: #062f36;
+  background-image:
+    radial-gradient(900px 620px at 82% -12%, rgb(138 255 107 / 0.17), transparent 62%),
+    radial-gradient(820px 640px at 8% 112%, rgb(4 145 165 / 0.38), transparent 62%),
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: auto, auto, 80px 80px, 80px 80px;
+}
+
+/* On the gallery page the floating authoring docks (palette, type) step
+   aside: the phones are the page. */
+[data-gallery] [data-dock] {
+  display: none;
+}
+
+/* The body. Laid out at true size; the frame component scales it. */
+.device {
+  position: relative;
+  width: var(--dw);
+  height: var(--dh);
+  border-radius: var(--dr);
+  background: var(--d-body);
+  box-shadow:
+    0 70px 120px -50px rgb(0 0 0 / 0.75),
+    0 30px 50px -30px rgb(0 0 0 / 0.55),
+    inset 0 0 0 1px rgb(255 255 255 / 0.05);
+}
+
+/* The frame's metal, seen edge-on round the glass: a gradient ring as thick
+   as the band (`--d-ring`, per device), masked to the body's edge. */
+.device::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: var(--d-ring, 4px);
+  border-radius: inherit;
+  background: var(--d-edge);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* The glass: black bezel, the display cut into it. */
+.device-screen {
+  position: absolute;
+  inset: var(--d-bezel-top) var(--d-bezel-side) var(--d-bezel-bottom);
+  border-radius: var(--d-screen-r);
+  overflow: hidden;
+  background: #000;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.05);
+}
+.device-screen > iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+/* Keys — the same metal as the ring, standing 3px proud of the body. */
+.device-key {
+  position: absolute;
+  width: 3px;
+  background: var(--d-edge);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.22);
+}
+.device-key[data-side="left"] {
+  left: -3px;
+  border-radius: 2px 0 0 2px;
+}
+.device-key[data-side="right"] {
+  right: -3px;
+  border-radius: 0 2px 2px 0;
+}
+/* The ring/silent switch: shorter, and set in rather than proud. */
+.device-key[data-kind="switch"] {
+  width: 4px;
+  left: -4px;
+  background: #2a2b31;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+}
+
+/* Samsung's « Key Island »: the raised strip the keys stand on — the same
+   aluminium as the band, half a millimetre proud of it. */
+.device-island {
+  position: absolute;
+  right: -2px;
+  width: 6px;
+  border-radius: 0 3px 3px 0;
+  background: var(--d-edge);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12);
+}
+
+/* The notch, hanging from the top bezel into the display. */
+.device-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  background: #000;
+  border-radius: 0 0 var(--d-notch-r) var(--d-notch-r);
+}
+/* The TrueDepth lens — a dark disc with a blue-violet glint. */
+.device-lens {
+  background: radial-gradient(circle at 35% 35%, #3b4a7a 0%, #141a2e 45%, #050710 100%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+/* The Infinity-O hole: a lens in the display itself. */
+.device-hole {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 38% 38%, #1c2440 0%, #0a0d18 50%, #000 100%);
+  box-shadow:
+    inset 0 0 0 1.5px rgb(0 0 0 / 0.9),
+    0 0 0 1px rgb(255 255 255 / 0.06);
+}

@@ -12,6 +12,12 @@ product-agnostic and reads from the block.
 - **Entities:** _TBD — decide as screens are built (likely students, teachers, courses, sessions, enrollments, payments); keep in sync with `src/data/seed/`._
 - **Real backend schema?** none — in-memory prototype (state resets on refresh).
 
+## Feature reference — read it first, update it last (every session)
+- **`docs/FEATURES.md` is the project's reference file**: every feature we want, where it lives (surface, URL, code), its status (✅ built · 🟡 in progress · 🔲 planned · 💡 idea · ⛔ dropped), the decisions, the open questions and a dated changelog. Read it at the start of a session to know where the project stands.
+- **After any session adds, changes, removes or decides something about a feature**, update it before finishing: the status cells, notes, "Last updated" date, the Decisions table if a choice was made, and one changelog line (`date — what changed — where — *session: <session name>*`).
+- **Every update names its session.** End each changelog line with `— *session: <session name>*`, the title of the Claude session that made the change, so each change can be traced back to the conversation behind it. Get the title with the session tool (`get_session` with `"self"`). A new Decisions row that one session decided ends with the same tag.
+- Then run **`npm run features:html`** to regenerate the readable copy `docs/features.html` (never edit the HTML by hand).
+
 ---
 
 This is a **prototype, not a real app.** Goal: screens that look exactly like the

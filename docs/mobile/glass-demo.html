@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Liquid Glass — banc d'essai</title>
+<!-- Optional: Cairo (the app's face). Everything works offline with system-ui. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400..800&display=swap" rel="stylesheet" />
+<style>
+/* =========================================================================
+   Liquid Glass test bench — docs/mobile/glass-demo.html
+   Companion to docs/mobile/glass-research.md. Self-contained: inline CSS,
+   inline SVG, one small script (toggles + the Chromium refraction maps).
+   Tokens copied from src/styles/v2.css so (a) is byte-for-byte our current
+   `ios-glass` from src/styles/platform/ios.css.
+   ========================================================================= */
+:root {
+  --v2-ink: #172e5b;
+  --v2-surface: #ffffff;
+  --v2-brand: #0491a5;
+  --v2-brand-text: #036b7a;
+  --v2-deep: #08434b;
+  --v2-cta: #8aff6b;
+  --v2-live: #ff3b3e;
+  --v2-gold: #f5b82e; /* one-off: brand gold accent, only used in the busy background */
+  --v2-shadow-rgb: 8 67 75;
+  --page: #eef6f4;
+  --page-ink: #172e5b;
+  --muted: #4f6283;
+  color-scheme: light;
+}
+html[data-theme="dark"] {
+  --v2-ink: #e6edfb;
+  --v2-surface: #111d38;
+  --v2-brand: #29b8cc;
+  --v2-brand-text: #7fd4df;
+  --v2-deep: #7fd4df;
+  --v2-shadow-rgb: 0 0 0;
+  --page: #0a1226;
+  --page-ink: #e6edfb;
+  --muted: #a6b3cf;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--page-ink);
+  font-family: Cairo, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1440px; margin: 0 auto; padding: 20px 16px 48px; }
+h1 { font-size: 22px; margin: 0 0 4px; font-weight: 800; }
+.lede { margin: 0 0 14px; color: var(--muted); font-size: 14px; max-width: 70ch; }
+
+/* ---- controls ---- */
+.controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-bottom: 18px; }
+.seg { display: inline-flex; padding: 3px; border-radius: 999px; background: color-mix(in srgb, var(--page-ink) 8%, transparent); }
+.seg button {
+  appearance: none; border: 0; background: none; color: inherit; font: inherit; font-size: 13px; font-weight: 700;
+  min-height: 36px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--v2-surface); color: var(--v2-brand-text); box-shadow: 0 1px 3px rgb(0 0 0 / .12); }
+.seg-label { font-size: 12px; color: var(--muted); font-weight: 700; margin-inline-end: 4px; }
+.engine { font-size: 12px; color: var(--muted); }
+.engine b { color: var(--page-ink); }
+
+/* ---- grid of panels ---- */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.panel { min-width: 0; }
+.panel h2 { font-size: 15px; margin: 0; font-weight: 800; }
+.panel p { margin: 2px 0 10px; font-size: 12.5px; color: var(--muted); line-height: 1.45; min-height: 3.6em; }
+
+/* ---- the phone stage ---- */
+.stage {
+  position: relative; height: 640px; border-radius: 40px; overflow: hidden; isolation: isolate;
+  box-shadow: 0 0 0 8px #0b1324, 0 20px 50px -20px rgb(0 0 0 / .5);
+  margin: 8px;
+  direction: rtl;
+}
+.bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.busy, .flat, .photo { position: absolute; inset: 0; display: none; }
+html[data-bg="busy"] .busy { display: block; }
+html[data-bg="flat"] .flat { display: block; }
+
+/* busy: brand teal/lime/navy content that scrolls behind the chrome */
+.busy { background: linear-gradient(160deg, #0491a5 0%, #0d6f86 35%, #172e5b 70%, #0b4a55 100%); }
+.scroller { position: absolute; inset-inline: 0; top: 0; animation: scroll 26s linear infinite; }
+html[data-motion="off"] .scroller { animation-play-state: paused; }
+@keyframes scroll { to { transform: translateY(-50%); } }
+.chunk { position: relative; height: 900px; }
+.blob { position: absolute; border-radius: 50%; filter: blur(2px); }
+.b1 { width: 260px; height: 260px; top: 30px; inset-inline-start: -60px; background: radial-gradient(circle at 35% 35%, #c9ff9c, var(--v2-cta) 45%, #3fbf3a 100%); }
+.b2 { width: 200px; height: 200px; top: 360px; inset-inline-end: -40px; background: radial-gradient(circle at 40% 30%, #ffe08a, var(--v2-gold) 55%, #d68400); }
+.b3 { width: 140px; height: 140px; top: 640px; inset-inline-start: 40px; background: radial-gradient(circle at 40% 30%, #ff9a9c, var(--v2-live) 60%, #a3001f); }
+.stripes { position: absolute; top: 250px; inset-inline: 0; height: 70px;
+  background: repeating-linear-gradient(-45deg, #fff 0 10px, #172e5b 10px 20px, var(--v2-cta) 20px 30px, #0491a5 30px 40px); }
+.band { position: absolute; z-index: 1; top: 40px; inset-inline: 0; height: 74px; display: flex; gap: 10px; padding-inline: 12px; align-items: center; }
+.band span { flex: none; height: 54px; padding: 0 14px; border-radius: 16px; display: grid; place-items: center; font-weight: 800; font-size: 22px; color: #fff; background: #172e5b; }
+.band span:nth-child(2n) { background: #fff; color: #0491a5; }
+.band span:nth-child(3n) { background: var(--v2-live); }
+.checker { position: absolute; top: 520px; inset-inline-end: 20px; width: 150px; height: 150px; border-radius: 22px;
+  background: conic-gradient(#fff 25%, #172e5b 0 50%, #fff 0 75%, #172e5b 0) 0 0 / 30px 30px; }
+.headline { position: absolute; top: 120px; inset-inline: 18px; font-size: 54px; line-height: 1.05; font-weight: 800; color: #fff; text-shadow: 0 2px 0 rgb(0 0 0 / .15); }
+.para { position: absolute; top: 340px; inset-inline: 18px; font-size: 15px; line-height: 1.55; color: #e6fff7; font-weight: 600; }
+.card { position: absolute; top: 700px; inset-inline: 16px; height: 150px; border-radius: 22px; background: #fff; padding: 14px 16px; color: #172e5b; }
+.card b { font-size: 20px; display: block; }
+.card .bar { height: 12px; border-radius: 99px; background: #e3eef0; margin-top: 12px; overflow: hidden; }
+.card .bar i { display: block; height: 100%; width: 64%; background: linear-gradient(90deg, var(--v2-cta), #0491a5); }
+.card .chips { display: flex; gap: 6px; margin-top: 12px; }
+.card .chips span { padding: 4px 10px; border-radius: 99px; font-size: 12px; font-weight: 700; color: #fff; background: #172e5b; }
+.card .chips span:nth-child(2) { background: var(--v2-live); }
+.card .chips span:nth-child(3) { background: #0491a5; }
+
+/* flat: exactly our login screen's `bg-v2-mint-grid` (src/styles/v2.css) */
+.flat {
+  background-color: #def7e5;
+  background-image:
+    linear-gradient(color-mix(in srgb, #0491a5 9%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, #0491a5 9%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, #def7e5 0%, #d2eeea 100%);
+  background-size: 80px 80px, 80px 80px, auto;
+}
+html[data-theme="dark"] .flat { background-color: #0e1a33; background-image:
+    linear-gradient(rgb(41 184 204 / .09) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(41 184 204 / .09) 1px, transparent 1px),
+    linear-gradient(180deg, #0e1a33 0%, #0a1428 100%); }
+.flat .ttl { position: absolute; top: 112px; inset-inline: 22px; font-size: 26px; font-weight: 800; color: var(--v2-ink); }
+.flat .sub { position: absolute; top: 152px; inset-inline: 22px; font-size: 14px; color: var(--muted); }
+
+/* clear glass needs a dimming layer over the media (Apple: "needs a dimming layer") */
+.dim { position: absolute; inset: 0; z-index: 1; background: rgb(0 0 0 / .28); display: none; pointer-events: none; }
+.panel[data-variant="clear"] .dim { display: block; }
+
+/* ---- chrome placement (same for every variant) ---- */
+.back { position: absolute; z-index: 2; top: 54px; inset-inline-start: 16px; width: 44px; height: 44px; border-radius: 999px;
+  display: grid; place-items: center; border: 0; padding: 0; cursor: pointer; color: var(--v2-brand-text); }
+.back svg { width: 22px; height: 22px; }
+.sheet { position: absolute; z-index: 2; inset-inline: 10px; top: 200px; height: 250px; border-radius: 34px; padding: 8px 14px 14px; color: var(--v2-ink); }
+.grabber { width: 36px; height: 5px; border-radius: 99px; background: currentColor; opacity: .3; margin: 0 auto 10px; }
+.sheet h3 { margin: 0 4px 10px; font-size: 19px; font-weight: 800; }
+.rows { border-radius: 22px; background: var(--v2-surface); overflow: hidden; }
+.rows div { min-height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font-size: 15px; font-weight: 600; color: var(--v2-ink); }
+.rows div + div { border-top: .5px solid color-mix(in srgb, var(--v2-ink) 14%, transparent); }
+.rows small { color: var(--muted); font-weight: 600; }
+.tabbar { position: absolute; z-index: 2; bottom: 34px; inset-inline: 16px; height: 64px; border-radius: 999px; padding: 6px;
+  display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; margin: 0; }
+.tabbar li { display: grid; place-items: center; align-content: center; gap: 2px; border-radius: 999px; font-size: 10.5px; font-weight: 700; color: var(--v2-ink); }
+.tabbar li svg { width: 24px; height: 24px; }
+.tabbar li.on { color: var(--v2-brand-text); background: color-mix(in srgb, var(--v2-brand) 14%, transparent); }
+.tabbar { --glass-alpha: 50%; }
+.home { position: absolute; z-index: 3; bottom: 8px; left: 50%; translate: -50% 0; width: 134px; height: 5px; border-radius: 99px; background: rgb(0 0 0 / .8); }
+html[data-bg="busy"] .home, html[data-theme="dark"] .home { background: rgb(255 255 255 / .85); }
+
+/* clear: bold, bright content on top (Apple's third condition) */
+.panel[data-variant="clear"] .back,
+.panel[data-variant="clear"] .tabbar li,
+.panel[data-variant="clear"] .tabbar li.on,
+.panel[data-variant="clear"] .sheet { color: #fff; }
+.panel[data-variant="clear"] .back svg,
+.panel[data-variant="clear"] .tabbar svg { filter: drop-shadow(0 1px 2px rgb(0 0 0 / .35)); }
+.panel[data-variant="clear"] .tabbar li span,
+.panel[data-variant="clear"] .sheet h3 { text-shadow: 0 1px 2px rgb(0 0 0 / .4); }
+.panel[data-variant="clear"] .tabbar li.on { background: rgb(255 255 255 / .22); }
+
+/* =========================================================================
+   (a) CURRENT — copied verbatim from src/styles/platform/ios.css
+   ========================================================================= */
+.ios-glass-current {
+  background-color: color-mix(in srgb, var(--v2-surface) 70%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  backdrop-filter: blur(22px) saturate(170%);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.6),
+    0 10px 30px -12px rgb(var(--v2-shadow-rgb) / 0.35),
+    0 1px 2px rgb(0 0 0 / 0.05);
+}
+html[data-theme="dark"] .ios-glass-current {
+  background-color: color-mix(in srgb, var(--v2-surface) 62%, transparent);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.12),
+    0 10px 30px -12px rgb(0 0 0 / 0.6);
+}
+
+/* =========================================================================
+   (b) RECOMMENDED REGULAR — Safari-safe. Same element, no pseudo-elements,
+   no position change, so it is a drop-in replacement for the utility.
+   Recipe: thin fill (lets the backdrop's colour through) + light blur +
+   high saturation & a touch of brightness (the "vibrant" lift) + a sheen
+   gradient + a directional specular rim (top-left key light, bottom-right
+   bounce) + a darkened outer hairline (iOS 27) + contact & ambient shadow.
+   ========================================================================= */
+.ios-glass {
+  /* --glass-alpha: 36 % for icon-only controls; bars that carry text labels
+     raise it (the tab bar below uses 50 %) — legibility over dark content. */
+  --glass-fill: color-mix(in srgb, var(--v2-surface) var(--glass-alpha, 36%), transparent);
+  --glass-glow: rgb(255 255 255 / .22);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .34) 0%, rgb(255 255 255 / .06) 46%, rgb(255 255 255 / .14) 100%),
+    var(--glass-fill);
+  -webkit-backdrop-filter: blur(10px) saturate(190%) brightness(1.06);
+  backdrop-filter: blur(10px) saturate(190%) brightness(1.06);
+  box-shadow:
+    inset 0 0 0 .5px rgb(255 255 255 / .4),            /* thin even rim */
+    inset 0 0 16px var(--glass-glow),                  /* glass thickness glow */
+    inset 0 -10px 14px -12px rgb(var(--v2-shadow-rgb) / .2), /* lower bevel in shade */
+    0 0 0 .5px rgb(var(--v2-shadow-rgb) / .16),        /* darkened outer edge */
+    0 1px 3px rgb(var(--v2-shadow-rgb) / .14),         /* contact */
+    0 10px 28px -8px rgb(var(--v2-shadow-rgb) / .28);  /* ambient lift */
+  transition: box-shadow .25s cubic-bezier(.2,.8,.2,1), scale .25s cubic-bezier(.2,.8,.2,1);
+}
+/* Press: glass lights up from within and swells a little — never fades out. */
+.ios-glass:active { --glass-glow: rgb(255 255 255 / .55); scale: 1.06; }
+html[data-theme="dark"] .ios-glass {
+  --glass-fill: color-mix(in srgb, var(--v2-surface) calc(var(--glass-alpha, 36%) + 10%), transparent);
+  --glass-glow: rgb(255 255 255 / .06);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / .12) 0%, rgb(255 255 255 / 0) 50%, rgb(255 255 255 / .04) 100%),
+    var(--glass-fill);
+  -webkit-backdrop-filter: blur(12px) saturate(170%) brightness(.92);
+  backdrop-filter: blur(12px) saturate(170%) brightness(.92);
+  box-shadow:
+    inset 0 0 0 .5px rgb(255 255 255 / .12),
+    inset 0 0 16px var(--glass-glow),
+    0 0 0 .5px rgb(0 0 0 / .5),
+    0 1px 3px rgb(0 0 0 / .3),
+    0 10px 28px -8px rgb(0 0 0 / .55);
+}
+html[data-theme="dark"] .ios-glass:active { --glass-glow: rgb(255 255 255 / .16); }
+
+/* The specular rim — the single most "glass" cue. A 1.5 px ring painted
+   with a diagonal gradient: bright where the key light (top-left) and its
+   bounce (bottom-right) catch the bevel, nothing on the other two sides.
+   Physical light, so it does NOT mirror in RTL. Needs the host to be a
+   containing block: in the app put `position: relative` in @layer base so
+   `absolute`/`fixed` utilities still win. */
+:where(.ios-glass, .ios-glass-clear) { position: relative; } /* zero specificity: positioned hosts keep theirs */
+.ios-glass::after, .ios-glass-clear::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  padding: var(--glass-rim-w, 1.5px);
+  background: linear-gradient(135deg,
+    rgb(255 255 255 / var(--glass-rim-a, .95)) 0%, rgb(255 255 255 / .2) 20%, transparent 42%,
+    transparent 58%, rgb(255 255 255 / .18) 80%, rgb(255 255 255 / calc(var(--glass-rim-a, .95) * .75)) 100%),
+    /* iOS 27's "darkened edge": a faint dark bevel all round, under the
+       highlight — this is what draws the silhouette on a flat light page. */
+    linear-gradient(rgb(var(--v2-shadow-rgb) / var(--glass-edge, .14)) 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+html[data-theme="dark"] .ios-glass { --glass-rim-a: .45; --glass-edge: .5; }
+.ios-glass-clear { --glass-edge: .18; }
+
+/* =========================================================================
+   (c) RECOMMENDED CLEAR — over media only, with a dim layer below and bold
+   white glyphs on top. Almost no fill, almost no blur: it is a lens, not a
+   frost. Same rim language, stronger, plus a darker shadow.
+   ========================================================================= */
+.ios-glass-clear {
+  --glass-glow: rgb(255 255 255 / .16);
+  background: linear-gradient(180deg, rgb(255 255 255 / .2) 0%, rgb(255 255 255 / .02) 50%, rgb(255 255 255 / .08) 100%);
+  -webkit-backdrop-filter: blur(2.5px) saturate(160%) brightness(1.12);
+  backdrop-filter: blur(2.5px) saturate(160%) brightness(1.12);
+  box-shadow:
+    inset 0 0 0 .5px rgb(255 255 255 / .3),
+    inset 0 0 14px var(--glass-glow),
+    0 0 0 .5px rgb(0 0 0 / .14),
+    0 8px 22px -8px rgb(0 0 0 / .4);
+  transition: box-shadow .25s cubic-bezier(.2,.8,.2,1), scale .25s cubic-bezier(.2,.8,.2,1);
+}
+.ios-glass-clear:active { --glass-glow: rgb(255 255 255 / .45); scale: 1.06; }
+
+/* =========================================================================
+   (d) CHROMIUM REFRACTION — (b)'s rim and shadow, plus an SVG displacement
+   filter used AS a backdrop-filter (`url(#…)`), which only Chromium does.
+   The class `svg-backdrop` on <html> is set by script after sniffing a
+   Chromium engine: `@supports` gives a false positive in Safari/Firefox, so
+   never gate this with CSS alone. Without it, (d) is exactly (b).
+   ========================================================================= */
+.ios-glass-refract { /* inherits (b) via the extra class `ios-glass` */ }
+html.svg-backdrop .ios-glass-refract {
+  --glass-fill: color-mix(in srgb, var(--v2-surface) calc(var(--glass-alpha, 36%) - 14%), transparent);
+  -webkit-backdrop-filter: var(--lg-filter) saturate(180%) brightness(1.05);
+  backdrop-filter: var(--lg-filter) saturate(180%) brightness(1.05);
+}
+html.svg-backdrop[data-theme="dark"] .ios-glass-refract {
+  --glass-fill: color-mix(in srgb, var(--v2-surface) calc(var(--glass-alpha, 36%) + 2%), transparent);
+  -webkit-backdrop-filter: var(--lg-filter) saturate(170%) brightness(.92);
+  backdrop-filter: var(--lg-filter) saturate(170%) brightness(.92);
+}
+
+/* ---- accessibility fallbacks (all variants that are "ours") ---- */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .ios-glass, .ios-glass-refract { --glass-fill: color-mix(in srgb, var(--v2-surface) 92%, transparent); }
+  .ios-glass-clear { background: rgb(20 30 50 / .55); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .ios-glass, html.svg-backdrop .ios-glass-refract {
+    --glass-fill: color-mix(in srgb, var(--v2-surface) 94%, transparent);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  }
+  .ios-glass-clear { background: rgb(20 30 50 / .72); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+}
+@media (prefers-contrast: more) {
+  .ios-glass, .ios-glass-clear, html.svg-backdrop .ios-glass-refract {
+    background: var(--v2-surface); -webkit-backdrop-filter: none; backdrop-filter: none;
+    box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--v2-ink) 70%, transparent), 0 6px 18px -8px rgb(0 0 0 / .4);
+  }
+  .panel[data-variant="clear"] .back, .panel[data-variant="clear"] .tabbar li, .panel[data-variant="clear"] .sheet { color: var(--v2-ink); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroller { animation: none; }
+  .ios-glass:active, .ios-glass-clear:active { scale: 1; }
+}
+
+.note { margin-top: 22px; font-size: 13px; color: var(--muted); max-width: 90ch; line-height: 1.55; }
+.note code { font-size: 12px; background: color-mix(in srgb, var(--page-ink) 8%, transparent); padding: 1px 5px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Liquid Glass — banc d'essai</h1>
+  <p class="lede">Même fond, mêmes composants (bouton retour 44 px, capsule de la barre d'onglets, feuille moyenne), quatre matériaux. Basculez sur le fond plat pour voir le cas de notre écran de connexion. Recherche&nbsp;: <code>docs/mobile/glass-research.md</code>.</p>
+
+  <div class="controls" role="group" aria-label="Réglages">
+    <span><span class="seg-label">Fond</span><span class="seg" data-key="bg">
+      <button type="button" data-val="busy" aria-pressed="true">Chargé</button>
+      <button type="button" data-val="flat" aria-pressed="false">Plat (connexion)</button>
+    </span></span>
+    <span><span class="seg-label">Thème</span><span class="seg" data-key="theme">
+      <button type="button" data-val="light" aria-pressed="true">Clair</button>
+      <button type="button" data-val="dark" aria-pressed="false">Sombre</button>
+    </span></span>
+    <span><span class="seg-label">Défilement</span><span class="seg" data-key="motion">
+      <button type="button" data-val="on" aria-pressed="true">Oui</button>
+      <button type="button" data-val="off" aria-pressed="false">Pause</button>
+    </span></span>
+    <span class="engine" id="engine"></span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <p class="note">
+    (a) est la copie exacte de l'utilitaire <code>ios-glass</code> actuel. (b) et (c) n'utilisent que <code>backdrop-filter</code>, des dégradés et des <code>box-shadow</code>&nbsp;: ils rendent pareil dans Safari iOS et dans Chrome.
+    (d) ajoute une vraie réfraction (filtre SVG <code>feDisplacementMap</code> dans <code>backdrop-filter: url()</code>), que seul Chromium sait faire&nbsp;; ailleurs, (d) retombe sur (b).
+    Appuyez sur un bouton&nbsp;: le verre recommandé s'illumine et gonfle au lieu de s'effacer.
+  </p>
+</div>
+
+<!-- The phone stage, cloned once per variant -->
+<template id="stage-tpl">
+  <div class="stage">
+    <div class="bg" aria-hidden="true">
+      <div class="busy"><div class="scroller">
+        <div class="chunk">
+          <div class="band"><span>Σ</span><span>π</span><span>∫ dx</span><span>Bac</span><span>√2</span></div>
+          <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+          <div class="headline">أكاديمية<br />وائل ✦ 2026</div>
+          <div class="stripes"></div>
+          <div class="para">Les nombres complexes — forme trigonométrique. الدرس الثالث: التمثيل الهندسي، المرافق، والقيمة المطلقة. Exercices corrigés, séances en direct, enregistrements.</div>
+          <div class="checker"></div>
+          <div class="card"><b>Mathématiques</b><span>الفصل 4 · 12 درس</span><div class="bar"><i></i></div><div class="chips"><span>Bac</span><span>مباشر</span><span>Quiz</span></div></div>
+        </div>
+        <div class="chunk">
+          <div class="band"><span>Σ</span><span>π</span><span>∫ dx</span><span>Bac</span><span>√2</span></div>
+          <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+          <div class="headline">أكاديمية<br />وائل ✦ 2026</div>
+          <div class="stripes"></div>
+          <div class="para">Les nombres complexes — forme trigonométrique. الدرس الثالث: التمثيل الهندسي، المرافق، والقيمة المطلقة. Exercices corrigés, séances en direct, enregistrements.</div>
+          <div class="checker"></div>
+          <div class="card"><b>Mathématiques</b><span>الفصل 4 · 12 درس</span><div class="bar"><i></i></div><div class="chips"><span>Bac</span><span>مباشر</span><span>Quiz</span></div></div>
+        </div>
+      </div></div>
+      <div class="flat"><div class="ttl">ادخل لمدينتك</div><div class="sub">رقم الهاتف وللا الإيميل</div></div>
+    </div>
+    <div class="dim"></div>
+
+    <button class="back" data-glass type="button" aria-label="رجوع">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+
+    <div class="sheet" data-glass>
+      <div class="grabber"></div>
+      <h3>الوثائق</h3>
+      <div class="rows">
+        <div><span>Série 4 — complexes</span><small>PDF · 2 Mo</small></div>
+        <div><span>تصحيح الامتحان</span><small>PDF · 1 Mo</small></div>
+        <div><span>Fiche méthode</span><small>PDF · 300 Ko</small></div>
+      </div>
+    </div>
+
+    <ul class="tabbar" data-glass>
+      <li class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>الرئيسية</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span>الرزنامة</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="m10 8 5 3-5 3z"/><path d="M8 21h8"/></svg><span>تسجيلات</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3"/></svg><span>مجموعاتي</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h4v16H4zM10 4h4v16h-4zM15.5 4.5l3.8-1 3.6 15.6-3.8 1z"/></svg><span>الدروس</span></li>
+    </ul>
+    <div class="home"></div>
+  </div>
+</template>
+
+<!-- Holder for the generated refraction filters (Chromium only) -->
+<svg id="lg-defs" width="0" height="0" style="position:absolute" aria-hidden="true"><defs></defs></svg>
+
+<script>
+const VARIANTS = [
+  { id: 'current', cls: 'ios-glass-current', title: '(a) Actuel — ios-glass', text: 'Copie exacte de ios.css : surface 70 %, blur 22 px, saturate 170 %, liseré blanc 1 px uniforme.' },
+  { id: 'regular', cls: 'ios-glass', title: '(b) Recommandé — régulier', text: 'Surface 36 % + reflet, blur 10 px, saturate 190 %, brightness 1.06, liseré spéculaire directionnel, bord sombre, ombre de contact.' },
+  { id: 'clear', cls: 'ios-glass-clear', title: '(c) Recommandé — clear', text: 'Presque sans remplissage ni flou : une lentille. Uniquement sur média, avec voile sombre dessous et glyphes blancs gras. La feuille montre pourquoi Apple ne la met jamais sur une feuille.' },
+  { id: 'refract', cls: 'ios-glass ios-glass-refract', title: '(d) Réfraction — Chromium seulement', text: '(b) + filtre SVG de déplacement (biseau « squircle » convexe) dans backdrop-filter. Ailleurs : retombe sur (b).' },
+];
+
+const grid = document.getElementById('grid');
+const tpl = document.getElementById('stage-tpl');
+for (const v of VARIANTS) {
+  const panel = document.createElement('section');
+  panel.className = 'panel';
+  panel.dataset.variant = v.id;
+  panel.innerHTML = `<h2>${v.title}</h2><p>${v.text}</p>`;
+  const stage = tpl.content.cloneNode(true);
+  stage.querySelectorAll('[data-glass]').forEach(el => el.className += ' ' + v.cls);
+  panel.appendChild(stage);
+  grid.appendChild(panel);
+}
+
+/* ---- toggles ---- */
+const root = document.documentElement;
+root.dataset.bg = 'busy'; root.dataset.theme = 'light'; root.dataset.motion = 'on';
+document.querySelectorAll('.seg').forEach(seg => {
+  seg.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    root.dataset[seg.dataset.key] = b.dataset.val;
+    seg.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  });
+});
+
+/* ---- Chromium refraction ---------------------------------------------
+   Only Chromium renders SVG filters inside backdrop-filter. CSS @supports
+   lies about it in Safari/Firefox, so sniff the engine. */
+const isChromium = !!(navigator.userAgentData && navigator.userAgentData.brands.some(b => /Chromium/i.test(b.brand)));
+document.getElementById('engine').innerHTML = isChromium
+  ? 'Moteur : <b>Chromium</b> — (d) réfracte.'
+  : 'Moteur : <b>WebKit / Gecko</b> — (d) retombe sur (b), comme sur un vrai iPhone.';
+if (isChromium) root.classList.add('svg-backdrop');
+
+/* Displacement map for a rounded rect: within `bezel` px of the edge, push
+   the sample point inward along the edge normal, strongest at the rim and
+   fading to zero on a convex-squircle profile (kube.io's "convex squircle":
+   h(t) = (1 − (1 − t)^4)^(1/4)). Encoded R = x, G = y, 128 = no shift. */
+function buildMap(w, h, r, bezel) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const ctx = c.getContext('2d'); const img = ctx.createImageData(w, h); const d = img.data;
+  const cx = w / 2, cy = h / 2, bx = cx - r, by = cy - r;
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const px = x + .5 - cx, py = y + .5 - cy;
+    const qx = Math.abs(px) - bx, qy = Math.abs(py) - by;
+    let nx, ny, dist;
+    if (qx > 0 && qy > 0) { const l = Math.hypot(qx, qy) || 1; nx = qx / l; ny = qy / l; dist = r - l; }
+    else if (qx > qy) { nx = 1; ny = 0; dist = r - qx; }
+    else { nx = 0; ny = 1; dist = r - qy; }
+    nx *= Math.sign(px) || 1; ny *= Math.sign(py) || 1; // outward normal
+    let mag = 0;
+    if (dist >= 0 && dist < bezel) {
+      const t = dist / bezel;
+      const hgt = Math.pow(1 - Math.pow(1 - t, 4), .25);
+      mag = 1 - hgt;
+    }
+    const i = (y * w + x) * 4;
+    d[i] = 128 - nx * mag * 127;     // inward
+    d[i + 1] = 128 - ny * mag * 127;
+    d[i + 2] = 128; d[i + 3] = 255;
+  }
+  ctx.putImageData(img, 0, 0);
+  return c.toDataURL();
+}
+
+const NS = 'http://www.w3.org/2000/svg';
+const defs = document.querySelector('#lg-defs defs');
+let fid = 0;
+function refract(el) {
+  const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+  if (!w || !h) return;
+  const r = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, w / 2, h / 2);
+  const bezel = Math.min(r, 14, Math.min(w, h) / 2.4);
+  const id = el.dataset.lg || ('lg' + fid++); el.dataset.lg = id;
+  defs.querySelector('#' + id)?.remove();
+  const f = document.createElementNS(NS, 'filter');
+  f.setAttribute('id', id); f.setAttribute('filterUnits', 'userSpaceOnUse');
+  f.setAttribute('x', 0); f.setAttribute('y', 0); f.setAttribute('width', w); f.setAttribute('height', h);
+  f.setAttribute('color-interpolation-filters', 'sRGB');
+  f.innerHTML = `
+    <feGaussianBlur in="SourceGraphic" stdDeviation="${h > 120 ? 6 : w > 120 ? 5 : 2}" result="soft"/>
+    <feImage href="${buildMap(w, h, r, bezel)}" x="0" y="0" width="${w}" height="${h}" preserveAspectRatio="none" result="map"/>
+    <feDisplacementMap in="soft" in2="map" scale="${Math.round(bezel * 2.4)}" xChannelSelector="R" yChannelSelector="G"/>`;
+  defs.appendChild(f);
+  el.style.setProperty('--lg-filter', `url(#${id})`);
+}
+if (isChromium) {
+  const els = document.querySelectorAll('.ios-glass-refract');
+  const ro = new ResizeObserver(entries => entries.forEach(e => refract(e.target)));
+  els.forEach(el => ro.observe(el));
+}
+</script>
+</body>
+</html>

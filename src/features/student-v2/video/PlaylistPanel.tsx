@@ -1,9 +1,9 @@
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Link } from "react-router-dom"
-import { ChevronDown, Maximize2, Minimize2, PanelRightClose, PanelRightOpen, Play } from "lucide-react"
+import { Check, ChevronDown, Maximize2, Minimize2, PanelRightClose, PanelRightOpen, Play } from "lucide-react"
 import type { GroupTab, PlayerVideo } from "@/features/student/player/types"
 import { cn } from "@/lib/utils"
-import { LatinLine } from "../ui"
+import { LatinLine, tileClass } from "../ui"
 
 /**
  * How much room the list takes — the three widths of the player page.
@@ -56,6 +56,14 @@ export function PlaylistPanel({
   const [all, setAll] = useState(false)
 
   /**
+   * The rows opened THIS SESSION — UI memory only, like the downloads: the
+   * store keeps no watch history, so the tick a row earns here says "you
+   * opened this" and nothing more, and it goes with the page.
+   */
+  const seen = useRef<Set<string>>(new Set())
+  seen.current.add(activeId)
+
+  /**
    * SMOOTHNESS — why the change of width doesn't jump:
    *
    * - The frame (border, ground, corners) belongs to the column and animates
@@ -84,7 +92,7 @@ export function PlaylistPanel({
   const shown = wide || all ? rows : rows.filter((r, i) => i < 4 || r.video.id === activeId)
 
   return (
-    <section className="relative flex min-h-0 flex-col overflow-hidden rounded-3xl border border-v2-ink/15 bg-v2-surface lg:max-h-[calc(100dvh-3rem)]">
+    <section className="v2-panel relative flex min-h-0 flex-col overflow-hidden rounded-3xl border border-v2-ink/15 bg-v2-surface lg:max-h-[calc(100dvh-3rem)]">
       <div
         inert={folded}
         className={cn(
@@ -106,15 +114,16 @@ export function PlaylistPanel({
                     to={g.to}
                     replace
                     title={g.title}
+                    data-on={active}
                     className={cn(
-                      "inline-flex min-h-11 items-center gap-2 rounded-2xl border px-4 text-[calc(9px*var(--ts))] font-semibold transition 2xl:min-h-14 2xl:px-6 2xl:text-[calc(11px*var(--ts))]",
+                      "v2-chip inline-flex min-h-11 items-center gap-2 rounded-2xl border px-4 text-[calc(9px*var(--ts))] font-semibold transition 2xl:min-h-14 2xl:px-6 2xl:text-[calc(11px*var(--ts))]",
                       active
                         ? "border-transparent bg-v2-cta text-v2-on-cta"
                         : "border-v2-ink/60 text-v2-ink hover:border-v2-brand hover:text-v2-brand",
                     )}
                   >
                     <bdi>{g.label}</bdi>
-                    <span className={cn("text-[calc(7.5px*var(--ts))] tabular-nums", active ? "text-v2-on-cta/70" : "text-v2-ink/50")}>
+                    <span className={cn("text-[calc(7.5px*var(--ts))] tabular-nums", active ? "text-v2-on-cta/70" : "text-v2-ink-2")}>
                       {g.count}
                     </span>
                     {g.mine && <span aria-label="مجموعتي" className="size-1.5 rounded-full bg-v2-brand" />}
@@ -147,42 +156,51 @@ export function PlaylistPanel({
 
         <div className="mt-4 flex items-baseline gap-2">
           <h2 className="text-[calc(13px*var(--ts))] font-bold text-v2-ink md:text-[calc(14.5px*var(--ts))] 2xl:text-[calc(17px*var(--ts))]">{label}</h2>
-          <span className="text-[calc(8px*var(--ts))] text-v2-ink/50">· {rows.length} فيديو</span>
+          <span className="text-[calc(8px*var(--ts))] text-v2-ink-2">· {rows.length} فيديو</span>
         </div>
 
         {!shut && (
           <ol
             key={expanded ? "two" : "one"}
             className={cn(
-              "mt-4 min-h-0 flex-1 gap-2 overflow-y-auto pe-3 animate-in fade-in-0 duration-300 [scrollbar-color:var(--v2-brand)_color-mix(in_srgb,var(--v2-brand)_16%,transparent)]",
+              "v2-playlist mt-4 min-h-0 flex-1 gap-2 overflow-y-auto pe-3 animate-in fade-in-0 duration-300 [scrollbar-color:var(--v2-brand)_color-mix(in_srgb,var(--v2-brand)_16%,transparent)]",
               expanded ? "grid grid-cols-2 content-start gap-3" : "flex flex-col",
             )}
           >
             {shown.map(({ video, published, detail }) => {
               const i = rows.findIndex((r) => r.video.id === video.id)
               const active = video.id === activeId
+              const opened = !active && seen.current.has(video.id)
               return (
                 <li key={video.id} className="min-w-0">
+                  {/* A tile under the play skin; the playing row keeps the
+                      teal plate, its disc goes lime. */}
                   <Link data-uisfx="play"
                     to={video.to}
                     replace
                     aria-current={active ? "true" : undefined}
                     className={cn(
+                      tileClass,
                       "group flex items-center gap-3 rounded-2xl p-3 transition md:p-4",
                       active ? "bg-v2-live-card" : "hover:bg-v2-ink/[0.035]",
                       expanded && !active && "border border-v2-ink/10",
                     )}
                   >
                     {active ? (
-                      <span className="grid size-10 shrink-0 place-items-center rounded-full border-2 border-v2-surface/80 bg-v2-ink/15 text-v2-surface 2xl:size-12">
+                      <span data-on="true" className="v2-row-disc relative grid size-10 shrink-0 place-items-center rounded-full border-2 border-v2-surface/80 bg-v2-ink/15 text-v2-surface 2xl:size-12">
                         <Play className="size-4 translate-x-[-1px] fill-current" />
                       </span>
                     ) : (
                       <span
                         dir="ltr"
-                        className="grid size-10 shrink-0 place-items-center rounded-full bg-v2-brand/20 text-[calc(8px*var(--ts))] font-bold tabular-nums text-v2-ink transition group-hover:bg-v2-grad group-hover:text-white 2xl:size-12 2xl:text-[calc(9.5px*var(--ts))]"
+                        className="v2-row-disc relative grid size-10 shrink-0 place-items-center rounded-full bg-v2-brand/20 text-[calc(8px*var(--ts))] font-bold tabular-nums text-v2-ink transition group-hover:bg-v2-cta group-hover:text-v2-on-cta 2xl:size-12 2xl:text-[calc(9.5px*var(--ts))]"
                       >
                         {num(i)}
+                        {opened && (
+                          <span aria-label="شفتو" className="v2-play v2-tick grid place-items-center rounded-full">
+                            <Check strokeWidth={3} />
+                          </span>
+                        )}
                       </span>
                     )}
                     <span className="min-w-0 flex-1">
@@ -196,9 +214,9 @@ export function PlaylistPanel({
                           {video.title}
                         </LatinLine>
                       )}
-                      <span className="mt-0.5 block truncate text-[calc(7.5px*var(--ts))] text-v2-ink/60 2xl:text-[calc(9px*var(--ts))]">{published}</span>
+                      <span className="mt-0.5 block truncate text-[calc(7.5px*var(--ts))] text-v2-ink-2 2xl:text-[calc(9px*var(--ts))]">{published}</span>
                       {expanded && detail && (
-                        <span className="mt-0.5 block truncate text-[calc(7.5px*var(--ts))] text-v2-ink/50">{detail}</span>
+                        <span className="mt-0.5 block truncate text-[calc(7.5px*var(--ts))] text-v2-ink-2">{detail}</span>
                       )}
                     </span>
                   </Link>
@@ -275,7 +293,7 @@ function Rail({
       <IconToggle sound="expand" label="حلّ القائمة" onClick={onOpen}>
         <PanelRightOpen className="size-5" />
       </IconToggle>
-      <span className="text-[calc(7px*var(--ts))] text-v2-ink/50">{rows.length}</span>
+      <span className="text-[calc(7px*var(--ts))] text-v2-ink-2">{rows.length}</span>
       <ol className="flex min-h-0 flex-col items-center gap-2 overflow-y-auto px-1 pb-1 [scrollbar-width:none]">
         {rows.map(({ video }, i) => {
           const active = video.id === activeId
@@ -287,10 +305,11 @@ function Rail({
                 title={video.title}
                 aria-label={video.title}
                 aria-current={active ? "true" : undefined}
+                data-on={active}
                 className={cn(
-                  "grid size-11 place-items-center rounded-full text-[calc(7.5px*var(--ts))] font-bold tabular-nums transition",
+                  "v2-row-disc grid size-11 place-items-center rounded-full text-[calc(7.5px*var(--ts))] font-bold tabular-nums transition",
                   active
-                    ? "bg-v2-grad text-white shadow-md shadow-v2-brand/30"
+                    ? "bg-v2-cta text-v2-on-cta shadow-md shadow-v2-cta/40"
                     : "bg-v2-brand/15 text-v2-ink hover:bg-v2-brand/30",
                 )}
               >

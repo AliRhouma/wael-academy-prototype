@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wael Academy: critique of the next-update feature plan</title>
+<style>
+  /* Self-contained: no web fonts, no network. Brand feel borrowed from the soft system
+     (teal / petrol, gold accent, cream ground, soft rounded cards). Raw hex is used
+     because this is a standalone document outside the app's token pipeline. */
+  :root{
+    --cream:#FBF7EE; --paper:#FFFFFF; --ink:#1D2B33; --muted:#5B6B72; --line:#E6DFD0;
+    --teal:#0B7A80; --petrol:#08434B; --teal-soft:#E3F2F1;
+    --gold:#B8862B; --gold-soft:#FBF1DC;
+    --good:#1F7A4A; --good-soft:#E2F4EA;
+    --enh:#9A6A10; --enh-soft:#FCF0D6;
+    --weak:#B23A33; --weak-soft:#FBE6E3;
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--cream)}
+  body{margin:0;color:var(--ink);font:16px/1.6 "Segoe UI","Rubik","Helvetica Neue",Arial,sans-serif;background:var(--cream)}
+  .wrap{max-width:980px;margin:0 auto;padding:40px 28px 80px}
+  header.cover{background:var(--petrol);color:#fff;border-radius:20px;padding:36px 36px 30px;position:relative;overflow:hidden}
+  header.cover:after{content:"";position:absolute;inset:auto -60px -80px auto;width:260px;height:260px;border-radius:50%;background:rgba(184,134,43,.25)}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#F3D99B;font-weight:700}
+  h1{font-size:34px;line-height:1.15;margin:8px 0 10px;font-weight:800}
+  .cover p{margin:0;color:#D7E9E8;max-width:720px}
+  .meta{margin-top:18px;font-size:13px;color:#BFD9D7}
+  h2{font-size:26px;line-height:1.2;margin:56px 0 6px;color:var(--petrol);font-weight:800}
+  h2 .num{display:inline-block;min-width:38px;color:var(--gold)}
+  h3{font-size:18px;margin:28px 0 10px;color:var(--petrol)}
+  h4{font-size:15px;margin:0 0 4px}
+  p{margin:0 0 12px}
+  a{color:var(--teal)}
+  sup a{text-decoration:none;font-weight:700;font-size:11px}
+  .lede{font-size:17px;color:var(--muted);margin-bottom:18px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin:12px 0;box-shadow:0 2px 0 rgba(8,67,75,.06)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr}.wrap{padding:20px 14px 60px}h1{font-size:26px}}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:12px 0}
+  th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line);font-size:15px}
+  th{background:var(--teal-soft);color:var(--petrol);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+  tr:last-child td{border-bottom:0}
+  .pill{display:inline-block;padding:3px 11px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap;border:1.5px solid}
+  .pill.good{color:var(--good);background:var(--good-soft);border-color:#9FD3B5}
+  .pill.enh{color:var(--enh);background:var(--enh-soft);border-color:#E7C77F}
+  .pill.weak{color:var(--weak);background:var(--weak-soft);border-color:#E8A9A2}
+  .verdict{display:flex;gap:14px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-inline-start:6px solid var(--gold);border-radius:var(--radius);padding:14px 18px;margin:14px 0 6px}
+  .verdict.weak{border-inline-start-color:var(--weak)}
+  .verdict.good{border-inline-start-color:var(--good)}
+  .verdict p{margin:0}
+  .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:6px;margin-inline-end:8px;vertical-align:2px}
+  .tag.c{background:var(--weak-soft);color:var(--weak)}
+  .tag.p{background:var(--teal-soft);color:var(--teal)}
+  .tag.k{background:var(--good-soft);color:var(--good)}
+  .item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0;page-break-inside:avoid;break-inside:avoid}
+  .item h4{display:flex;align-items:baseline;gap:4px;flex-wrap:wrap}
+  .item p{margin:6px 0 0}
+  .why{margin-top:8px;padding:8px 12px;background:var(--gold-soft);border-radius:8px;font-size:14.5px}
+  .why b{color:var(--gold)}
+  ul.tight{margin:6px 0 0;padding-inline-start:20px}
+  ul.tight li{margin:3px 0}
+  ol.top5{counter-reset:t;list-style:none;padding:0;margin:10px 0}
+  ol.top5 li{counter-increment:t;position:relative;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 62px;margin:10px 0;page-break-inside:avoid}
+  ol.top5 li:before{content:counter(t);position:absolute;inset-inline-start:16px;top:14px;width:32px;height:32px;border-radius:50%;background:var(--petrol);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+  .loop{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0}
+  .loop .step{flex:1 1 150px;background:var(--teal-soft);border:1.5px solid #9CCFCB;border-radius:12px;padding:10px 12px;font-size:14px}
+  .loop .step b{display:block;color:var(--petrol);font-size:15px}
+  .loop .arrow{color:var(--gold);font-weight:900;font-size:20px}
+  .note{font-size:14px;color:var(--muted)}
+  .toc{columns:2;column-gap:28px;padding-inline-start:20px;margin:8px 0}
+  .toc li{margin:3px 0;break-inside:avoid}
+  .phase{border-inline-start:4px solid var(--teal);padding:12px 16px;background:var(--paper);border-radius:0 12px 12px 0;margin:10px 0;page-break-inside:avoid}
+  .phase h4{color:var(--petrol);font-size:16px}
+  .phase.defer{border-inline-start-color:var(--muted)}
+  .src li{margin:6px 0;font-size:14px;word-break:break-word}
+  .kbd{font-family:Consolas,"Courier New",monospace;font-size:13px;background:#F1EBDD;padding:1px 6px;border-radius:5px}
+  footer{margin-top:60px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+  @media print{
+    html,body{background:#fff}
+    .wrap{max-width:none;padding:0}
+    header.cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .pill,.tag,th,.why,.loop .step{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    h2{page-break-after:avoid;break-after:avoid}
+    h2.newpage{page-break-before:always;break-before:page}
+    .card,.item,.verdict,table{box-shadow:none}
+    a{color:var(--ink)}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="cover">
+  <div class="eyebrow">Wael Academy · Next update · Product review</div>
+  <h1>Critique of the feature plan: coins, the town, community, analytics and AI</h1>
+  <p>This review looks at whether the plan helps Tunisian secondary and bac students learn more, keeps them coming back for healthy reasons, holds together economically, and is safe for minors and acceptable to the app stores. It covers each area in turn and ends with a recommended order of work and the open questions the client needs to answer.</p>
+  <div class="meta">Prepared 5 November 2026 · Based on the client's plan summary and the clickable prototype (student space <span class="kbd" style="background:rgba(255,255,255,.12);color:#fff">/student-v2</span>, seed data, gamified-skin brief) · Not legal advice</div>
+</header>
+
+<h2><span class="num">0</span>At a glance</h2>
+<p class="lede">Verdict scale: <span class="pill good">Good</span> <span class="pill enh">Good but can be enhanced</span> <span class="pill weak">Weak</span>. Numbers in brackets such as <sup><a href="#s1">[1]</a></sup> point to the sources at the end.</p>
+
+<table>
+  <thead><tr><th style="width:24%">Area</th><th style="width:22%">Verdict</th><th>Why, in one line</th></tr></thead>
+  <tbody>
+    <tr><td><b>The plan as a whole</b></td><td><span class="pill enh">Good but can be enhanced</span></td><td>The instincts are right, but it describes five products at once. The rewards around learning are specified in detail, while the learning core they all depend on gets a single line.</td></tr>
+    <tr><td><b>1 · Coins economy</b> &amp; Wael Library</td><td><span class="pill weak">Weak (as specified)</span></td><td>It competes with the subscription. Two of its earning routes break store policy or reward activity that isn't learning. Time-limited rentals work against spaced review, and paying real money for coins hits store billing and Tunisian card limits.</td></tr>
+    <tr><td><b>2 · Gamification town</b> &amp; league</td><td><span class="pill enh">Good but can be enhanced</span></td><td>Points from learning and buildings tied to a subject are a strong idea. The Clash of Clans mechanics (timers, scarcity, loss) must be left out, points must come from evidence of learning rather than time spent, and a single global league would demotivate most students.</td></tr>
+    <tr><td><b>3 · Community</b>, rooms &amp; events</td><td><span class="pill enh">Good but can be enhanced</span></td><td>Answering questions together in a live room is real practice and good for learning. Open chat between minors, scoring by speed, coin prizes and empty rooms are all unaddressed risks.</td></tr>
+    <tr><td><b>4 · Analytics</b>, recommendation &amp; planning</td><td><span class="pill enh">Good but can be enhanced</span></td><td>Instrumenting learning is the right foundation, and the planner is the best idea in the plan. But "vectors and segments" come too early, popularity is not a measure of quality, and profiling minors carries real legal weight in Tunisia.</td></tr>
+    <tr><td><b>5 · AI</b> correction &amp; generation</td><td><span class="pill enh">Good but can be enhanced</span></td><td>Feedback on handwritten work has the most learning value of anything in the plan. Today's models still mis-grade handwritten maths often enough to damage trust, so pilot it narrowly with a reference solution and a teacher checking the results.</td></tr>
+  </tbody>
+</table>
+
+<h3>The five points that matter most</h3>
+<ol class="top5">
+  <li><b>Build the practice engine first, because everything else depends on it.</b> Points, leagues, live rooms, diagnosis, recommendation and AI generation all need the same thing: a bank of practice questions, each tagged by chapter, skill and difficulty, answered in study mode with immediate feedback and brought back later for review. Today that is listed as "upcoming". It should be phase 1, and every reward should hang off a verified step in it.</li>
+  <li><b>Points must reward evidence of learning, never time spent.</b> Minutes of video, PDF downloads and idle attendance are easy to farm (muted tabs, a phone left playing). Playback at 2× is <i>not</i> the problem: studies find no loss in comprehension up to 2×<sup><a href="#s7">[7]</a></sup>. The problem is paying out for presence. Award points for correct first attempts, for getting an item right again days later, and for check questions inside videos. Students who "game the system" learn measurably less<sup><a href="#s12">[12]</a></sup>.</li>
+  <li><b>Redesign coins before building them.</b> Keep coins earned-only in version 1. Unlock whole chapters rather than single files, and keep unlocks until the end of the school year so students can review before exams. Drop "rate the app for coins": Google Play forbids incentivised ratings<sup><a href="#s22">[22]</a></sup> and Apple requires its own review prompt<sup><a href="#s20">[20]</a></sup>. Selling coins for real money triggers mandatory in-app purchase and store commission<sup><a href="#s20">[20]</a><a href="#s21">[21]</a></sup>, and many Tunisian bank cards can't pay in foreign currency<sup><a href="#s26">[26]</a></sup>.</li>
+  <li><b>Minors change the rules: involve parents and plan for compliance from day one.</b> Many users are minors, and the prototype's offers start at 6th year primary (about age 11). Tunisian Law 2004-63 requires the guardian's consent <i>and</i> the family judge's authorisation to process a child's data (art. 28), a prior declaration to the INPDP, the national data-protection authority (art. 7), and INPDP authorisation for any transfer abroad (art. 52). That covers foreign analytics, realtime and AI vendors<sup><a href="#s24">[24]</a></sup>. Chat requires filtering, reporting and blocking<sup><a href="#s20">[20]</a></sup>. The plan never mentions parents, even though they are a role in the product, the payers and the legal gatekeepers.</li>
+  <li><b>Keep the good part of Clash of Clans and leave the engine behind.</b> Make the town a <i>map of mastery</i>: each building is a subject and each floor is a chapter the student has mastered and re-checked. Replace the global league with small weekly cohorts of similar level, use flexible weekly goals instead of streaks, and never use random rewards or paid entry. Extrinsic rewards that are tangible and expected undermine intrinsic motivation<sup><a href="#s8">[8]</a></sup>, and leaderboards and badges have been shown to lower motivation over a school term<sup><a href="#s10">[10]</a></sup>.</li>
+</ol>
+
+<h3>Contents</h3>
+<ol class="toc">
+  <li><a href="#whole">The plan as a whole</a></li>
+  <li><a href="#coins">Coins economy &amp; Wael Library</a></li>
+  <li><a href="#town">Gamification town &amp; league</a></li>
+  <li><a href="#community">Community, rooms &amp; events</a></li>
+  <li><a href="#analytics">Analytics, recommendation &amp; planning</a></li>
+  <li><a href="#ai">AI correction &amp; generation</a></li>
+  <li><a href="#roles">Parents &amp; teachers</a></li>
+  <li><a href="#sequencing">Recommended sequencing</a></li>
+  <li><a href="#questions">Open questions for the client</a></li>
+  <li><a href="#sources">Sources</a></li>
+</ol>
+
+<!-- ============================================================ -->
+<h2 id="whole" class="newpage"><span class="num">A</span>The plan as a whole</h2>
+<div class="verdict"><span class="pill enh">Good but can be enhanced</span><p>The direction is right: practice-centred content, learning-driven progress and AI feedback. But it is five products at once, it leans on rewards more than on learning, and it ignores two of the product's four roles.</p></div>
+
+<h3>What to keep</h3>
+<div class="item"><h4><span class="tag k">Keep</span>Separate currencies for "progress" (points) and "spending" (coins)</h4><p>This is the most important structural choice in the plan, and it is correct. Progress that can be bought stops meaning anything. Keep the wall between the two absolute: points never convert into coins.</p></div>
+<div class="item"><h4><span class="tag k">Keep</span>Points are earned from learning, and some buildings only accept points from a specific subject</h4><p>This turns balance between subjects into something the student can see, which is a real learning nudge. Many bac students neglect their weak subject.</p></div>
+<div class="item"><h4><span class="tag k">Keep</span>Going from diagnosis to recommendation to a plan</h4><p>Closing the loop from "what I don't know" to "what I do on Tuesday" is what most edtech never ships, and it is what bac students struggle with most.</p></div>
+
+<h3>Critiques</h3>
+<div class="item"><h4><span class="tag c">C1</span>Five products at once</h4><p>A virtual-goods economy with an e-store and cash on delivery, a base-building game, realtime multiplayer with chat, a recommender, and AI vision grading. Each of these has its own team at companies that ship only that one thing. Built in parallel, each will be shallow, and the parts will disagree about what "progress" means.</p></div>
+<div class="item"><h4><span class="tag c">C2</span>The learning core is the dependency, and it is the least specified part</h4><p>Quizzes, exercises in study mode and exams are "upcoming". Yet points need graded attempts, leagues need points, live rooms need question series, diagnosis needs questions mapped to skills, recommendation needs diagnosis, and AI generation needs a model of what a good exercise looks like. The plan spends most of its words on rewards <i>around</i> learning and one line on learning itself.</p></div>
+<div class="item"><h4><span class="tag c">C3</span>Too many extrinsic reward layers</h4><p>Coins, points, a league, tiers, badges, and physical goods bought with coins. A meta-analysis of 128 experiments found that rewards which are tangible, expected and tied to the task undermine intrinsic motivation<sup><a href="#s8">[8]</a></sup>. Gamification in education has small positive average effects, but the results vary widely and depend on design<sup><a href="#s9">[9]</a></sup>. In a semester-long classroom study, leaderboards and badges <i>lowered</i> motivation, satisfaction and empowerment compared with a control group, and that drop carried through to exam scores<sup><a href="#s10">[10]</a></sup>. More layers does not mean more learning.</p></div>
+<div class="item"><h4><span class="tag c">C4</span>Parents and teachers are absent</h4><p>The product has four roles, but the plan only addresses students and admin. Parents are the payers, the legal consent-givers for minors, and the people who receive cash-on-delivery parcels. Teachers are the source of quality, live sessions and moderation. Both are untapped levers. See <a href="#roles">Parents &amp; teachers</a>.</p></div>
+<div class="item"><h4><span class="tag c">C5</span>It reverses the current design brief without saying so</h4><p>The repo's gamified-skin brief (<span class="kbd">.claude/skills/wael-gamified</span>, <span class="kbd">docs/mobile/gamification-design.md</span>) currently says "No XP, points, levels, leagues, streaks, hearts or energy; completion only from real or session data", with a principle of "never nagging, never fake progress". Adding points and leagues is a legitimate product decision. It should be taken deliberately, keeping that brief's guardrails.</p></div>
+<div class="item"><h4><span class="tag c">C6</span>Compliance with rules for minors is not considered</h4><p>Ads aimed at minors, chat between minors, behavioural profiling, photos of minors' work sent to AI vendors, and minors placing cash-on-delivery orders each bring legal and store-policy obligations. They are cheaper to design in than to retrofit.</p></div>
+
+<h3>Propositions</h3>
+<div class="item"><h4><span class="tag p">P1</span>Write down the core learning loop, then attach every feature to one of its steps</h4>
+  <div class="loop">
+    <div class="step"><b>Learn</b>Live session, recording, video, PDF</div><span class="arrow">→</span>
+    <div class="step"><b>Practise</b>Retrieval questions in study mode, immediate explained feedback</div><span class="arrow">→</span>
+    <div class="step"><b>Review later</b>Missed items come back after days (spaced, interleaved)</div><span class="arrow">→</span>
+    <div class="step"><b>See mastery</b>Chapter mastered, town floor built, parent and teacher informed</div>
+  </div>
+  <p>Retrieval practice (testing yourself) and spaced practice are the two study techniques with the strongest evidence. Rereading and highlighting are among the weakest<sup><a href="#s1">[1]</a><a href="#s2">[2]</a><a href="#s3">[3]</a></sup>.</p>
+  <div class="why"><b>Why it helps:</b> The product's centre of gravity moves from consuming content (the current dashboard of videos and PDFs) to practising and recalling, which is where learning actually happens. Every reward then celebrates something real.</div></div>
+<div class="item"><h4><span class="tag p">P2</span>One "mastery" truth that every feature reads</h4><p>Compute one mastery state per student per chapter from practice results, for example "not started, practising, mastered, re-checked". The town, league, recommendations, planner, parent digest and teacher heatmap all read this single value.</p><div class="why"><b>Why it helps:</b> No feature can disagree with another about progress. It also makes fake progress structurally impossible.</div></div>
+<div class="item"><h4><span class="tag p">P3</span>Adopt a one-page guardrail charter before building</h4><ul class="tight">
+  <li>No random or paid rewards (no chests, spin wheels or loot boxes). Loot-box spending is linked to problem gambling<sup><a href="#s14">[14]</a></sup>.</li>
+  <li>No paid entry to any competition. No streak-loss theatre and no guilt notifications.</li>
+  <li>No ads inside study, exam or video flows. Ads only at natural pauses, with a daily cap.</li>
+  <li>Points come only from verified learning. Progress can never be bought.</li>
+  <li>For younger students, no public ranking by real name and no free-text chat by default.</li>
+  <li>Parents can see, and switch off, social and spending features.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2 id="coins" class="newpage"><span class="num">1</span>Coins economy &amp; Wael Library</h2>
+<div class="verdict weak"><span class="pill weak">Weak (as specified)</span><p>The intent is good: an entry path for families who can't pay for an annual offer. As described, though, it competes with the subscription, its earning routes break store policy or reward activity that isn't learning, and time-limited rentals work against how students should review.</p></div>
+
+<h3>What to keep</h3>
+<div class="item"><h4><span class="tag k">Keep</span>Pay-as-you-go access for families who can't commit to an annual offer</h4><p>The prototype's annual offers are priced in the thousands of dinars in the seed data. A cheaper, chapter-sized way in is a real need in Tunisia.</p></div>
+<div class="item"><h4><span class="tag k">Keep</span>Referral, and a Library that sells physical study material</h4><p>Word of mouth between classmates is the strongest acquisition channel in this market. The Library also fits naturally with Wael Documents' printed material, which already appears in the offers as "هدايا من Wael Documents".</p></div>
+
+<h3>Critiques</h3>
+<div class="item"><h4><span class="tag c">C1</span>The free path competes with the paid offer, and coins have no clear job</h4><p>If every material has a coin price and coins can be earned through ads and tasks, then a patient student can rebuild the subscription for free. Before any pricing, someone has to answer: <i>what can a non-subscriber reach in a school year by earning only?</i> If the answer is "most of it", the subscription is cannibalised. If it is "almost nothing", the coins feel like a trick.</p></div>
+<div class="item"><h4><span class="tag c">C2</span>Time-limited access works against spaced review</h4><p>Spaced practice beats cramming, and the best gap between sessions grows with how long you need to remember<sup><a href="#s3">[3]</a></sup>. A bac student needs to come back to a chapter weeks later and again before the exam. A 7-day rental pushes students to cram inside the window and then locks them out at exactly the moment they should review. Separately, a PDF that has been downloaded cannot be "expired" without DRM, so time limits on documents can't be enforced.</p></div>
+<div class="item"><h4><span class="tag c">C3</span>Pricing per file puts a purchase decision in front of every act of study</h4><p>"Is this video worth 15 coins?" is friction at the worst moment. Teenagers who are afraid of wasting coins tend to hoard them and study less, not more.</p></div>
+<div class="item"><h4><span class="tag c">C4</span>"Rate the app on the stores for coins" breaks store policy and can't be verified</h4><p>Google Play forbids incentivised ratings and reviews, and violating apps can be removed from top lists or from the store<sup><a href="#s22">[22]</a></sup>. Apple requires its system review prompt (5.6.1), which by design never tells the app whether the user actually rated, and it bans manipulating reviews (5.6.3)<sup><a href="#s20">[20]</a></sup>. This route should be dropped permanently.</p></div>
+<div class="item"><h4><span class="tag c">C5</span>The ad route mints coins with no ad revenue, at the cost of study time</h4><p>The ads are the platform's own promotions, so every coin they create is content given away. That is acceptable as a marketing funnel, but three things follow:</p><ul class="tight"><li>Time spent watching ads is time not spent learning.</li><li>Rewarding minors for watching promotions of paid offers is a form of pressure on parents.</li><li>Ads must never interrupt an exercise, a video or an exam.</li></ul><p>Apple does allow rewarding users for watching an ad (3.2.2(x))<sup><a href="#s20">[20]</a></sup>. If third-party ad networks are ever added, Google Play's Families ad-SDK rules and Apple's kids rules apply<sup><a href="#s23">[23]</a><a href="#s20">[20]</a></sup>.</p></div>
+<div class="item"><h4><span class="tag c">C6</span>Buying coins with real money changes everything (open question)</h4><p>If coins can be bought, in-app purchase is mandatory for digital content on iOS (3.1.1) and Google Play Billing on Android<sup><a href="#s20">[20]</a><a href="#s21">[21]</a></sup>. Credits bought through in-app purchase may not expire on iOS, and the stores take a 15–30% commission<sup><a href="#s27">[27]</a></sup>. Apple also explicitly bans the usual local workaround of codes or scratch cards that unlock content inside the app ("license keys… QR codes", 3.1.1).</p><p>On top of that, many Tunisian bank cards only work in dinars and on domestic sites<sup><a href="#s26">[26]</a></sup>, so store billing may be out of reach for a large share of families. The same rules already apply to the existing offers if they are ever sold inside the iOS app (3.1.3(b)).</p></div>
+<div class="item"><h4><span class="tag c">C7</span>Coins that buy physical goods become a cash-like liability and a magnet for fraud</h4><p>Once coins from ads and referrals turn into real books delivered to the door, farming coins pays out in real goods. Expect multiple accounts on siblings' phones, emulators and scripted ad views. It is also the strongest form of the overjustification problem: tangible, expected rewards for studying<sup><a href="#s8">[8]</a></sup>. On top of that, Apple requires non-IAP payment for physical goods (3.1.3(e))<sup><a href="#s20">[20]</a></sup>, so coins bought with in-app purchase should not pay for physical goods.</p></div>
+<div class="item"><h4><span class="tag c">C8</span>Coins for completing a profile or answering surveys means collecting minors' data in exchange for currency</h4><p>Tunisian law requires express, written consent (art. 27). For children it requires guardian consent and authorisation from the family judge (art. 28)<sup><a href="#s24">[24]</a></sup>. Paying children to hand over data is the opposite of collecting only what you need. Surveys must be first-party and limited to product research.</p></div>
+<div class="item"><h4><span class="tag c">C9</span>The economy itself isn't designed</h4><p>There is no model of how coins enter (sources) and leave (sinks), no caps and no admin monitoring. Without sinks, coin balances grow until either prices inflate or content becomes effectively free.</p></div>
+<div class="item"><h4><span class="tag c">C10</span>Cash on delivery is necessary in Tunisia and costly</h4><p>More than 80% of Tunisian online transactions are paid cash on delivery<sup><a href="#s26">[26]</a></sup>. The usual costs are refused parcels, delivery partners and stock. A minor placing a cash-on-delivery order that a parent refuses at the door is a predictable failure.</p></div>
+
+<h3>Propositions</h3>
+<div class="item"><h4><span class="tag p">P1</span>Give coins one job: the "try before you subscribe" currency</h4><p>The subscription unlocks everything. Coins unlock a <b>whole chapter</b> (lessons, documents, the practice set) for a non-subscriber, or an extra for a subscriber, such as an additional mock exam or a discount on a printed booklet. Make the value ladder explicit: <i>free sample → one chapter with coins → whole subject or year with an offer</i>.</p><div class="why"><b>Why it helps:</b> One clear path to upgrade and no decision per file. A chapter-sized unlock matches how learning is organised.</div></div>
+<div class="item"><h4><span class="tag p">P2</span>Keep coins earned-only in version 1, with no real-money top-up</h4><div class="why"><b>Why it helps:</b> No in-app purchase, commission or card problem, no monetary value that makes the system feel like gambling, and room to tune the economy with real data before money is involved. Revisit once the data exists, and if the economy is opened to money, do it on web first, where local payment options apply.</div></div>
+<div class="item"><h4><span class="tag p">P3</span>An unlock lasts until the end of the school year (or until the bac), not a number of days</h4><div class="why"><b>Why it helps:</b> Students can come back for spaced review before exams<sup><a href="#s3">[3]</a></sup>, it removes the cramming window, and it avoids the unenforceable "expiring PDF".</div></div>
+<div class="item"><h4><span class="tag p">P4</span>Rebuild the earning routes around verified learning, with caps</h4><ul class="tight">
+  <li><b>Main route:</b> learning milestones, such as a chapter mastered or a weekly plan completed. Pay out per milestone, not per action, and cap it per week.</li>
+  <li><b>Small route:</b> the platform's own ads, at natural pauses only, capped per day and never during a study flow.</li>
+  <li><b>Profile:</b> ask only for fields the product actually uses (level, section, subjects), and never pay for data.</li>
+  <li><b>Drop</b> store ratings for coins completely.</li></ul><div class="why"><b>Why it helps:</b> The only reliable way to get coins is to learn. Milestone-level rewards are less controlling than paying per task, which lessens the undermining effect on motivation<sup><a href="#s8">[8]</a></sup>.</div></div>
+<div class="item"><h4><span class="tag p">P5</span>Firewalls: points never convert to coins, coins can't be transferred, nothing random</h4><div class="why"><b>Why it helps:</b> This prevents a black market of coins traded between students, stops farmed progress from turning into money, and keeps the product away from anything that looks like gambling<sup><a href="#s14">[14]</a></sup>.</div></div>
+<div class="item"><h4><span class="tag p">P6</span>Build the economy spreadsheet before writing code</h4><p>Model weekly coin earnings for three typical students (the diligent one, the casual one, the farmer) against prices. Add an admin view of coins created and spent per week, plus a switch to pause any earning route.</p><div class="why"><b>Why it helps:</b> Inflation and abuse show up as numbers before they show up as complaints.</div></div>
+<div class="item"><h4><span class="tag p">P7</span>Start the Library small: a curated catalogue, cash on delivery, and a parent in the loop</h4><p>Start with Wael Documents printed booklets and bac preparation books. Orders from minors trigger a confirmation call or SMS to the parent's phone. Coins give a capped discount (for example up to 20%) rather than paying the full price. Pilot in one region before going national.</p><div class="why"><b>Why it helps:</b> Cash on delivery is expected in Tunisia<sup><a href="#s26">[26]</a></sup>. Parent confirmation cuts refused parcels and fraud, and capping coins limits the liability. Printed booklets of the very chapters students study online reinforce the learning loop rather than distracting from it.</div></div>
+<div class="item"><h4><span class="tag p">P8</span>Pay referral rewards on activation, not on sign-up</h4><p>Reward both sides once the invited student completes a first week of practice, or subscribes. Add phone verification, cap rewards per month, and flag clusters of accounts on the same device.</p><div class="why"><b>Why it helps:</b> Rewards follow real users rather than throwaway accounts, and the invited friend arrives already studying.</div></div>
+
+<!-- ============================================================ -->
+<h2 id="town" class="newpage"><span class="num">2</span>Gamification town &amp; league</h2>
+<div class="verdict"><span class="pill enh">Good but can be enhanced</span><p>Points earned from learning and buildings tied to subjects are a genuinely good idea. What makes Clash of Clans compelling (timers, scarcity, raids, paying to speed up) is exactly what must not be copied, and a global league would demotivate most students.</p></div>
+
+<h3>Critiques</h3>
+<div class="item"><h4><span class="tag c">C1</span>Points from "activity" can be farmed</h4><p>Video minutes (muted, background tab, phone left playing), PDF downloads and idle attendance in sessions all pay for presence rather than learning. Watching at 2× is <i>not</i> the problem: comprehension holds up to 2×<sup><a href="#s7">[7]</a></sup>, so penalising speed would punish efficient learners. Exploiting a system's rules instead of learning ("gaming the system") is the off-task behaviour most strongly linked to reduced learning<sup><a href="#s12">[12]</a></sup>.</p></div>
+<div class="item"><h4><span class="tag c">C2</span>Easy questions can be farmed too</h4><p>Without diminishing returns, the best strategy is to repeat the same easy quiz. That is the opposite of desirable difficulty: the effortful retrieval and interleaving that make learning stick<sup><a href="#s2">[2]</a><a href="#s4">[4]</a></sup>.</p></div>
+<div class="item"><h4><span class="tag c">C3</span>The pull of Clash of Clans comes from mechanics that are harmful here</h4><p>Build timers, paying to speed up, raids that take your resources, and buildings that decay. These run on loss aversion and scarcity. They create urgency, and they push teenagers toward checking the app compulsively and spending, not toward studying.</p></div>
+<div class="item"><h4><span class="tag c">C4</span>The town can turn into a game that has nothing to do with the content</h4><p>Time spent arranging and decorating buildings is not learning time. If the town becomes a destination rather than a ten-second glance at progress, it competes with study.</p></div>
+<div class="item"><h4><span class="tag c">C5</span>A global league puts almost everyone in a losing position</h4><p>In a national ranking, about 95% of students are "behind". Relatedness through leaderboards does not predict enjoyment, and leaderboards demotivate the students at the bottom<sup><a href="#s11">[11]</a><a href="#s10">[10]</a></sup>. Bac anxiety is already high in Tunisia, and a public national ranking of minors by name adds social-comparison pressure and a privacy problem.</p></div>
+<div class="item"><h4><span class="tag c">C6</span>Badges and tiers lose their value if they're everywhere</h4><p>"A badge or trophy means little without a challenge behind it." That line is already quoted in the repo's own research (Octalysis).</p></div>
+
+<h3>Propositions</h3>
+<div class="item"><h4><span class="tag p">P1</span>The town is the student's map of mastery</h4><p>Each building is a subject. Each floor is a chapter brought to <i>mastered</i> (passing a retrieval check) and then <i>re-checked</i> (passing it again a few days later). The town grows only from the mastery state in P2 of section A, so it can't be bought, farmed or decorated.</p><div class="why"><b>Why it helps:</b> Progress is never fake, spaced review is built into how the town grows, and buildings tied to subjects make a neglected subject visible. "Your physics tower is two floors behind" works as a diagnosis, not a reproach.</div></div>
+<div class="item"><h4><span class="tag p">P2</span>A points recipe that rewards evidence of learning</h4><ul class="tight">
+  <li>Points for a <b>correct first attempt</b>, weighted by the question's difficulty. Retries within minutes earn nothing.</li>
+  <li>Bonus points for <b>getting a previously missed question right after at least two days</b>. This is spacing, rewarded<sup><a href="#s3">[3]</a></sup>.</li>
+  <li><b>Video points only through check questions inside the video.</b> Short tests between video segments reduce mind-wandering and improve learning<sup><a href="#s6">[6]</a></sup>.</li>
+  <li>No points for downloads, for minutes watched, or for simply being present in a session (attendance is shown, not paid).</li>
+  <li>Daily caps per type of activity, and diminishing returns on the same question set.</li></ul><div class="why"><b>Why it helps:</b> The cheapest way to earn points becomes the way that teaches the most: retrieval, spacing and feedback<sup><a href="#s1">[1]</a><a href="#s5">[5]</a></sup>.</div></div>
+<div class="item"><h4><span class="tag p">P3</span>Small cohort leagues instead of one global ladder</h4><p>Groups of about 20–30 students at the same level and section, reset weekly, with promotion based on <i>improvement</i> as well as rank. Students appear under a nickname and avatar only. Leagues are opt-in for younger students, with no demotion theatre. Add cooperative goals for groups and classes.</p><div class="why"><b>Why it helps:</b> Everyone has a realistic chance of winning something, comparisons are against peers rather than the whole country, and combining collaboration with competition is the most promising mix for motivation in the meta-analysis<sup><a href="#s9">[9]</a></sup>.</div></div>
+<div class="item"><h4><span class="tag p">P4</span>Flexible weekly goals instead of streaks</h4><p>For example "4 study days this week", with rest days allowed and no message saying "you lost your streak".</p><div class="why"><b>Why it helps:</b> Students keep a rhythm without anxiety, and it keeps the existing brief's "no streak, no nagging" commitment.</div></div>
+<div class="item"><h4><span class="tag p">P5</span>Few badges, each for a real milestone</h4><p>First chapter mastered, first full mock exam, 50 reviews completed, a subject finished. Tiers (bronze, silver, gold) can be tied to mastered chapters rather than raw points.</p><div class="why"><b>Why it helps:</b> Every badge stands for something the student would be proud to tell a parent.</div></div>
+<div class="item"><h4><span class="tag p">P6</span>Leave the timers, raids, decay and pay-to-speed out of the build list</h4><div class="why"><b>Why it helps:</b> They make a town feel compelling only by exploiting loss aversion. Without them, the town has to earn its place through meaning, which P1 provides.</div></div>
+
+<!-- ============================================================ -->
+<h2 id="community" class="newpage"><span class="num">3</span>Community, rooms &amp; events</h2>
+<div class="verdict"><span class="pill enh">Good but can be enhanced</span><p>Live group series are retrieval practice with immediate feedback, which is both valuable and engaging. But open chat between minors, scoring by speed, coin prizes and empty rooms are problems the plan doesn't address.</p></div>
+
+<h3>What to keep</h3>
+<div class="item"><h4><span class="tag k">Keep</span>Synchronised series: everyone answers, sees the correct answer, continues, and gets a final ranking</h4><p>This is group retrieval practice with feedback at every step, a strong learning ingredient wrapped in a social format teenagers enjoy.</p></div>
+<div class="item"><h4><span class="tag k">Keep</span>Events launched by admin</h4><p>Scheduled moments give the year a rhythm, for example a revision tournament before the bac mock exams.</p></div>
+
+<h3>Critiques</h3>
+<div class="item"><h4><span class="tag c">C1</span>Chat between minors is a safety and moderation project</h4><p>Apple requires any app with user-generated content to filter objectionable material, offer reporting with timely responses, let users block others, and publish contact details (1.2)<sup><a href="#s20">[20]</a></sup>. Filtering Tunisian derja, Arabizi (Arabic written in Latin letters) and French mixed together is hard, and the risks of grooming and bullying are real. Chat logs are also children's personal data under Law 2004-63<sup><a href="#s24">[24]</a></sup>.</p></div>
+<div class="item"><h4><span class="tag c">C2</span>Speed-based scoring rewards guessing</h4><p>A Kahoot-style "fastest correct answer wins" punishes students who think carefully and weaker students. Revealing in public who got it wrong can embarrass. Both work against learning.</p></div>
+<div class="item"><h4><span class="tag c">C3</span>Empty rooms</h4><p>With a modest active user base, rooms created on the fly will sit at "waiting for players…", and an empty room teaches users not to come back.</p></div>
+<div class="item"><h4><span class="tag c">C4</span>Coin prizes invite cheating and collusion</h4><p>Group members can share answers on WhatsApp, run multiple accounts, or use bots. If an event ever charged an entry fee in coins and paid out prizes in coins, and coins could be bought, that would be gambling-like.</p></div>
+<div class="item"><h4><span class="tag c">C5</span>"Read a course together" is vague</h4><p>Reading in sync adds little on its own. The learning value comes from discussing, explaining and answering together.</p></div>
+<div class="item"><h4><span class="tag c">C6</span>Realtime is costly and fragile on mobile networks</h4><p>It needs presence, reconnection handling, answer checking on the server, and load at event peaks. It is feasible with a managed realtime service, but it is ongoing operational work, and a foreign vendor brings in the data-transfer rule (art. 52)<sup><a href="#s24">[24]</a></sup>.</p></div>
+
+<h3>Propositions</h3>
+<div class="item"><h4><span class="tag p">P1</span>Start with live drills hosted by the teacher, attached to existing live sessions</h4><p>"After the session, a 10-question live series." Attendance is guaranteed, the teacher moderates, and the content matches what was just taught. Then add scheduled events. Rooms created by students come last.</p><div class="why"><b>Why it helps:</b> It solves empty rooms and moderation at once, and retrieval right after teaching consolidates the session.</div></div>
+<div class="item"><h4><span class="tag p">P2</span>Scoring based on thinking, peer-instruction style</h4><p>Correctness first, with a small capped bonus for speed and a minimum "think time" before answers lock. On hard questions: answer, see the class distribution, discuss for 60 seconds, then answer again. Show the distribution, never the names of students who were wrong. Personal results stay private.</p><div class="why"><b>Why it helps:</b> Peer instruction measurably improves conceptual understanding<sup><a href="#s17">[17]</a></sup>, and it rewards reasoning rather than fast fingers.</div></div>
+<div class="item"><h4><span class="tag p">P3</span>A step-by-step chat policy</h4><ul class="tight">
+  <li><b>Version 1:</b> quick-chat only (preset derja phrases and reactions), with no free text, no private messages and no images.</li>
+  <li><b>Version 2:</b> free text for older students, only in groups joined by invite code, with a filter, report, block and mute, an admin moderation queue, teacher visibility, and a parental switch.</li></ul><div class="why"><b>Why it helps:</b> Most of the social fun comes with almost none of the risk, and it meets Apple 1.2 from the first release.</div></div>
+<div class="item"><h4><span class="tag p">P4</span>Fair events</h4><p>Entry is always free. Prizes are titles, badges and modest coins. Question order is randomised, each question has its own timer, answers are checked on the server, and suspicious device or account patterns are flagged.</p><div class="why"><b>Why it helps:</b> The excitement stays, the incentive to cheat drops, and there is no exposure to gambling rules.</div></div>
+<div class="item"><h4><span class="tag p">P5</span>Groups as study circles</h4><p>Each group has a shared weekly goal and a joint progress bar (for example "our group mastered 12 chapters this week") alongside the challenges.</p><div class="why"><b>Why it helps:</b> Belonging comes through cooperation rather than ranking, and pressure from friends points toward studying.</div></div>
+
+<!-- ============================================================ -->
+<h2 id="analytics" class="newpage"><span class="num">4</span>Analytics, recommendation &amp; planning</h2>
+<div class="verdict"><span class="pill enh">Good but can be enhanced</span><p>Measuring learning is the right foundation, and the planning feature is the most valuable idea in the plan. But vectors and segments are premature without tagged questions and enough data, popularity is a poor proxy for quality, and profiling minors has legal weight in Tunisia.</p></div>
+
+<h3>Critiques</h3>
+<div class="item"><h4><span class="tag c">C1</span>Not enough data at the start</h4><p>Collaborative filtering and student or content vectors need many interactions per item. At launch most items have very few, so the model will simply recommend whatever is already popular.</p></div>
+<div class="item"><h4><span class="tag c">C2</span>The indicators measure inputs, not learning</h4><p>Study time, video minutes, PDFs downloaded and active days describe effort, and they are easy to inflate (section 2, C1). Diagnosing a level requires <i>assessment questions mapped to skills</i>, and the plan doesn't describe that tagging.</p></div>
+<div class="item"><h4><span class="tag c">C3</span>"Most interacted" is not "best"</h4><p>Ranking by interaction favours long videos, and favours confusing videos that students have to rewatch. It also penalises teachers of hard subjects. The product data already models teacher pay rates and payouts, so if this ranking ever feeds pay or public "best teacher" lists, it creates perverse incentives.</p></div>
+<div class="item"><h4><span class="tag c">C4</span>Tracking every event of minors is profiling and has legal weight in Tunisia</h4><p>Law 2004-63 requires a prior declaration to the INPDP for any processing (art. 7). For a child it requires the guardian's consent <i>and</i> the family judge's authorisation (art. 28), and INPDP authorisation for any transfer abroad (art. 52), with the request going to the family judge when the data concerns a child. That covers analytics, crash-reporting and AI vendors hosted outside Tunisia<sup><a href="#s24">[24]</a></sup>. Breaching art. 28 is reported to carry up to two years' prison and a 10,000 DT fine (art. 87)<sup><a href="#s25">[25]</a></sup>. Get Tunisian counsel before launch.</p></div>
+<div class="item"><h4><span class="tag c">C5</span>The planner could turn into nagging</h4><p>Plans generated automatically, with red "overdue" badges and daily pushes, become guilt machines, which is the opposite of the "never nagging" principle.</p></div>
+
+<h3>Propositions</h3>
+<div class="item"><h4><span class="tag p">P1</span>First, a catalogue of events and a tagged question bank</h4><p>Use a small, stable list of events in the form "who did what to what, with what result" (an xAPI-like approach). Tag every question with chapter, skill, difficulty and correct answer.</p><div class="why"><b>Why it helps:</b> This tagging is the asset every later feature needs: diagnosis, rooms, points, AI variants and reports.</div></div>
+<div class="item"><h4><span class="tag p">P2</span>Diagnosis version 1: simple, explainable rules</h4><p>Base mastery per chapter on recent accuracy (the last N attempts, with older attempts counting less). Later, move to knowledge tracing, a standard model that estimates the chance a student has mastered each skill<sup><a href="#s15">[15]</a></sup>. Always show the reason: "Recommended because you got 2/6 on Thalès last week."</p><div class="why"><b>Why it helps:</b> It works from day one with little data, and students, parents and teachers can trust it.</div></div>
+<div class="item"><h4><span class="tag p">P3</span>Recommendation version 1: "the next three things to do"</h4><p>(a) Reviews that are due (spacing), (b) the weakest chapter in the current school unit, (c) preparation for the next live session. Mix subjects within review sets.</p><div class="why"><b>Why it helps:</b> It directly applies spacing and interleaving<sup><a href="#s3">[3]</a><a href="#s4">[4]</a></sup> without any machine learning. Use machine learning later, once the data volume justifies it.</div></div>
+<div class="item"><h4><span class="tag p">P4</span>Measure content quality with learning signals</h4><p>How students do on the questions that follow a piece of content, where they drop off in a video, and a "this helped me" button. Show this privately to the teacher. Never rank by raw popularity, and never link it to pay without human review.</p><div class="why"><b>Why it helps:</b> Teachers get feedback on what actually teaches, and there is no incentive to make long or confusing content.</div></div>
+<div class="item"><h4><span class="tag p">P5</span>The student owns the planner, and the app proposes</h4><p>The student sets goals and the app suggests tasks. Tasks are phrased as concrete plans ("Tuesday after school, 20 minutes of physics review"), live sessions appear in the calendar automatically, missed tasks roll over quietly, and there is a short reflection each week.</p><div class="why"><b>Why it helps:</b> Concrete if-then plans of this kind have a medium-to-large effect on reaching goals (meta-analysis d ≈ 0.65)<sup><a href="#s16">[16]</a></sup>. Leaving control with the student protects motivation (the autonomy principle in the repo's design brief).</div></div>
+<div class="item"><h4><span class="tag p">P6</span>Privacy by design</h4><p>Collect only what is needed, set retention periods, keep analytics pseudonymous, host data in Tunisia or with an INPDP-authorised transfer, and build a parental consent flow into onboarding.</p><div class="why"><b>Why it helps:</b> Compliance becomes a built-in feature rather than a launch blocker, and it builds trust with parents.</div></div>
+
+<!-- ============================================================ -->
+<h2 id="ai" class="newpage"><span class="num">5</span>AI correction &amp; generation</h2>
+<div class="verdict"><span class="pill enh">Good but can be enhanced</span><p>Feedback on handwritten work is the idea with the most learning value in the plan. Today's models still mis-grade handwritten maths often enough to hurt trust, Arabic and French notation is harder still, and photos of minors' work sent to foreign vendors need authorisation. Pilot it narrowly.</p></div>
+
+<h3>Critiques</h3>
+<div class="item"><h4><span class="tag c">C1</span>Accuracy on handwritten maths is not good enough yet for unsupervised grading</h4><p>GPT-4o grading handwritten university maths exams agreed with human graders significantly less than graders agree with each other, even when given a rubric. It sometimes marked clearly correct answers wrong and wrong answers correct<sup><a href="#s18">[18]</a></sup>. On FERMAT, a benchmark of 2,200+ handwritten solutions from grades 7–12, the best model caught 77% of the errors, and models did better when the handwriting was replaced with printed text<sup><a href="#s19">[19]</a></sup>. Telling a student a wrong answer is right is worse than giving no feedback.</p></div>
+<div class="item"><h4><span class="tag c">C2</span>Tunisian notation is harder than the benchmarks</h4><p>Scientific subjects move from Arabic in basic education to French in secondary school, so pages mix right-to-left text with left-to-right formulas, and handwriting styles vary widely. The published benchmarks are mostly in English.</p></div>
+<div class="item"><h4><span class="tag c">C3</span>Cost, abuse and leaked answers</h4><p>Every photo costs money for model inference. Students will also photograph homework to get the answers, which turns the feature into a cheating tool unless it gives hints rather than solutions.</p></div>
+<div class="item"><h4><span class="tag c">C4</span>Privacy of photos</h4><p>Photos may show names, faces or the inside of a home. Sending them to a foreign AI vendor is a transfer abroad that needs authorisation (art. 52), with the family judge involved for children<sup><a href="#s24">[24]</a></sup>.</p></div>
+<div class="item"><h4><span class="tag c">C5</span>Agentic generation without review risks the brand</h4><p>Generated exercises can contain wrong statements, wrong answers, off-syllabus content or the wrong difficulty. "Generated games" without a teaching design are entertainment. Unreviewed volume dilutes the reputation that Wael Documents' material has built.</p></div>
+
+<h3>Propositions</h3>
+<div class="item"><h4><span class="tag p">P1</span>A narrow pilot grounded in a reference solution</h4><p>Only for exercises from the Wael question bank, with the reference solution and a marking rubric given to the model (grounding in a rubric improved agreement with human graders<sup><a href="#s18">[18]</a></sup>). Start with checking the final answer and key steps. The output is one of "looks right", "check step 3" or "not sure", and the model holds back when it isn't confident. Add an "ask a teacher" button, and have teachers audit a weekly sample. Publish the agreement rate internally before widening the pilot.</p><div class="why"><b>Why it helps:</b> Students get fast feedback where it is reliable, and are sent to a human where it isn't. Feedback is one of the strongest influences on learning, provided it is accurate and about the task<sup><a href="#s5">[5]</a></sup>.</div></div>
+<div class="item"><h4><span class="tag p">P2</span>Hint first, solution second</h4><p>Point to the <i>first</i> error and let the student retry. Show the worked solution after the retry, or when the student asks.</p><div class="why"><b>Why it helps:</b> The productive struggle stays (desirable difficulty), and it is much harder to use the feature to copy homework.</div></div>
+<div class="item"><h4><span class="tag p">P3</span>Generation as a co-pilot for teachers</h4><p>Generate <i>variants</i> of validated exercises (new numbers or context, same skill). Check numeric answers automatically by solving twice or with a computer algebra system. A teacher approves before anything is published.</p><div class="why"><b>Why it helps:</b> The pool of practice questions grows fast, and retrieval practice and spacing need many fresh items<sup><a href="#s1">[1]</a></sup>, with quality protected by a human.</div></div>
+<div class="item"><h4><span class="tag p">P4</span>Handle photos with privacy in mind</h4><p>Crop to the answer area, strip metadata, ask for no faces, keep photos only briefly, sign a data-processing agreement with the vendor, and get INPDP authorisation.</p></div>
+<div class="item"><h4><span class="tag p">P5</span>Measure the effect on learning, not usage</h4><p>Do students who get AI feedback get the next similar item right more often? That is the number that justifies the cost.</p></div>
+
+<!-- ============================================================ -->
+<h2 id="roles" class="newpage"><span class="num">6</span>Parents &amp; teachers: the roles the plan leaves unused</h2>
+<p class="lede">The product already has four roles. Using parents and teachers solves several of the problems above (consent, cash-on-delivery refusals, moderation, content quality, empty rooms) rather than adding scope.</p>
+<table>
+  <thead><tr><th style="width:18%">Role</th><th>How the plan's features should use it</th><th style="width:30%">Problem it solves</th></tr></thead>
+  <tbody>
+    <tr><td><b>Parent</b></td><td>Consent during onboarding. A weekly digest (one message, not daily) with chapters mastered, time studied and the upcoming plan. Switches for social, ads and Library features. Confirmation of cash-on-delivery orders. Can see coin earning and spending.</td><td>The legal requirements of art. 27/28, refused parcels, trust, retention through the paying parent.</td></tr>
+    <tr><td><b>Teacher</b></td><td>Hosts live drills after sessions. Assigns practice sets that feed the student's planner. Sees a heatmap of mastery by chapter to plan the next live session. Reviews and approves AI-generated variants. Audits a sample of AI corrections. Moderates their own rooms.</td><td>Empty rooms, chat moderation, AI accuracy, quality of content, sessions that match what students actually need.</td></tr>
+    <tr><td><b>Admin</b></td><td>Placement and caps for ads, with guardrails that can't be overridden (never during study or exams). An economy dashboard (coins created and spent, with switches to pause earning routes). Moderation queue. Event scheduling. Library catalogue and orders.</td><td>Inflation, abuse, compliance.</td></tr>
+  </tbody>
+</table>
+
+<!-- ============================================================ -->
+<h2 id="sequencing" class="newpage"><span class="num">7</span>Recommended sequencing</h2>
+<p class="lede">Order by dependency, learning value and risk: the learning core first, visible progress second, social features third, the costly or risky parts as pilots. Each phase ships something students can feel.</p>
+
+<div class="phase"><h4>Phase 0 · Foundations (before any feature)</h4><ul class="tight">
+  <li>Guardrail charter (section A, P3), and a decision on whether to retire the "no points or leagues" brief.</li>
+  <li>Legal review: INPDP declaration, a parental consent flow including the family-judge question in art. 28, and a hosting and vendor plan for art. 52.</li>
+  <li>Catalogue of events, and a tagging scheme for the question bank (chapter, skill, difficulty).</li>
+  <li>Economy spreadsheet for coins (only if coins are kept in phase 2).</li></ul>
+  <p class="note">Why first: these are cheap now and very expensive to retrofit. Every later phase depends on them.</p></div>
+
+<div class="phase"><h4>Phase 1 · MVP: "practice that counts"</h4><ul class="tight">
+  <li>Quizzes and exercises in study mode, one question at a time, with immediate explained feedback. Timed exams and mock exams.</li>
+  <li>Mastery per chapter, and a review queue that brings missed questions back after a few days.</li>
+  <li>Check questions inside recorded videos.</li>
+  <li>Simple weekly planner (live sessions plus due reviews plus the weakest chapter), owned by the student.</li>
+  <li>Weekly digest for parents, and a chapter heatmap for teachers.</li></ul>
+  <p class="note">Why: it delivers the largest learning gain for the effort (retrieval, spacing, feedback), carries low compliance risk, and creates the data and question bank that every later feature needs.</p></div>
+
+<div class="phase"><h4>Phase 2 · "Visible progress"</h4><ul class="tight">
+  <li>Points from verified learning, using the recipe in section 2, P2.</li>
+  <li>The town as a light mastery map, plus a few meaningful badges and flexible weekly goals.</li>
+  <li>Small weekly cohort leagues (opt-in for younger students), using nicknames only.</li>
+  <li>Earned-only coins that unlock a chapter for non-subscribers. The platform's own ads, capped and outside study flows.</li>
+  <li>Referral paid on activation.</li></ul>
+  <p class="note">Why: phase 1 gives the rewards something real to celebrate. Testing the economy without money is safe.</p></div>
+
+<div class="phase"><h4>Phase 3 · "Together"</h4><ul class="tight">
+  <li>Live drills hosted by teachers after sessions, then scheduled events and tournaments with free entry.</li>
+  <li>Quick-chat only. Groups work as study circles with shared goals.</li></ul>
+  <p class="note">Why: the empty-room and moderation problems are solved by teachers and schedules before opening up rooms created by students.</p></div>
+
+<div class="phase"><h4>Phase 4 · Pilots (measured, limited scope)</h4><ul class="tight">
+  <li>AI correction of handwritten work: one subject, one level, grounded in a reference solution, with teacher audit.</li>
+  <li>AI-generated exercise variants that teachers approve.</li>
+  <li>Wael Library: printed booklets, cash on delivery with parent confirmation, one region.</li></ul>
+  <p class="note">Why: costly, risky or operationally heavy. Only scale them once the pilot numbers (grading agreement, refused-parcel rate, cost per student) justify it.</p></div>
+
+<div class="phase defer"><h4>Deferred, to revisit with data</h4><ul class="tight">
+  <li>Buying coins with real money (store billing, cards, commission, gambling optics).</li>
+  <li>Recommendation by machine learning, student vectors and segmentation (needs data volume).</li>
+  <li>Free-text chat, and open rooms created by students.</li>
+  <li>A global national league. Agentic "game" generation.</li>
+  <li><b>Dropped permanently:</b> coins for store ratings, random rewards, paid entry to competitions, time-limited (days) access to content.</li></ul></div>
+
+<!-- ============================================================ -->
+<h2 id="questions" class="newpage"><span class="num">8</span>Open questions for the client</h2>
+<div class="grid2">
+  <div class="card"><h4 style="color:var(--petrol)">Economy</h4><ol class="tight">
+    <li>Does "charge coins" mean buying them with real money? On which platforms (web, iOS, Android)?</li>
+    <li>Who are coins for: non-subscribers, subscribers, or both? What stays subscription-only?</li>
+    <li>What does a coin unlock (a file, a chapter or a subject), and for how long?</li>
+    <li>Can coins expire, be gifted or be transferred between students?</li>
+    <li>What is the target: how many coins should a diligent student earn per month, and what should that buy?</li>
+  </ol></div>
+  <div class="card"><h4 style="color:var(--petrol)">Product</h4><ol class="tight" start="6">
+    <li>Is the current "no XP, points, leagues or streaks" principle retired? Which of its guardrails stay?</li>
+    <li>Age range: from 6th year primary (about 11) to the bac? Are there different social, ads and league rules by age band?</li>
+    <li>How should points per subject handle subjects that have fewer exercises?</li>
+    <li>Should the town be a quick glance (a mastery map) or a place to spend time?</li>
+    <li>Will analytics ever affect teacher pay or a public ranking of teachers?</li>
+  </ol></div>
+  <div class="card"><h4 style="color:var(--petrol)">Compliance</h4><ol class="tight" start="11">
+    <li>Has the INPDP declaration been filed? Who is the Tunisian legal counsel?</li>
+    <li>How is parental consent captured, and how is the family-judge requirement in art. 28 handled?</li>
+    <li>Where is data hosted? Which foreign vendors (analytics, realtime, AI, crash reporting) will need art. 52 authorisation?</li>
+    <li>Which guardrails on admin-configured ads are hard-coded and can't be overridden?</li>
+  </ol></div>
+  <div class="card"><h4 style="color:var(--petrol)">Operations</h4><ol class="tight" start="15">
+    <li>Who moderates chat and rooms (staff or teachers), and how quickly must reports be handled?</li>
+    <li>Library: run in-house or with a partner? Stock, delivery company, returns, coverage? Must a parent confirm orders from minors?</li>
+    <li>AI: which subject and level first, what error rate is acceptable, and what is the monthly budget per student?</li>
+    <li>Do teachers have the time and incentive to host drills and review AI content? How are they paid for it?</li>
+  </ol></div>
+</div>
+
+<!-- ============================================================ -->
+<h2 id="sources" class="newpage"><span class="num">9</span>Sources</h2>
+<p class="note">Accessed November 2026. Store policies change, so check the live pages before relying on any specific clause. The legal points summarise statute text and press reports and are not legal advice.</p>
+<h3>Learning science &amp; motivation</h3>
+<ol class="src">
+  <li id="s1">Roediger, H. L., &amp; Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <i>Psychological Science</i>, 17(3). <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x">doi.org/10.1111/j.1467-9280.2006.01693.x</a></li>
+  <li id="s2">Dunlosky, J., et al. (2013). Improving students' learning with effective learning techniques. <i>Psychological Science in the Public Interest</i>, 14(1). <a href="https://doi.org/10.1177/1529100612453266">doi.org/10.1177/1529100612453266</a></li>
+  <li id="s3">Cepeda, N. J., et al. (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. <i>Psychological Bulletin</i>, 132(3). <a href="https://doi.org/10.1037/0033-2909.132.3.354">doi.org/10.1037/0033-2909.132.3.354</a></li>
+  <li id="s4">Rohrer, D., &amp; Taylor, K. (2007). The shuffling of mathematics problems improves learning. <i>Instructional Science</i>, 35. <a href="https://doi.org/10.1007/s11251-007-9015-8">doi.org/10.1007/s11251-007-9015-8</a></li>
+  <li id="s5">Hattie, J., &amp; Timperley, H. (2007). The power of feedback. <i>Review of Educational Research</i>, 77(1). <a href="https://doi.org/10.3102/003465430298487">doi.org/10.3102/003465430298487</a></li>
+  <li id="s6">Szpunar, K. K., Khan, N. Y., &amp; Schacter, D. L. (2013). Interpolated memory tests reduce mind wandering and improve learning of online lectures. <i>PNAS</i>, 110(16). <a href="https://doi.org/10.1073/pnas.1221764110">doi.org/10.1073/pnas.1221764110</a></li>
+  <li id="s7">Murphy, D. H., Hoover, K. M., Agadzhanyan, K., Kuehn, J. C., &amp; Castel, A. D. (2022). Learning in double time: The effect of lecture video speed on immediate and delayed comprehension. <i>Applied Cognitive Psychology</i>, 36(1). <a href="https://castel.psych.ucla.edu/wp-content/uploads/sites/111/2022/03/Applied-Cognitive-Psychology-2021-Murphy-Learning-in-double-time-The-effect-of-lecture-video-speed-on-immediate-and.pdf">PDF (Castel lab, UCLA)</a></li>
+  <li id="s8">Deci, E. L., Koestner, R., &amp; Ryan, R. M. (1999). A meta-analytic review of experiments examining the effects of extrinsic rewards on intrinsic motivation. <i>Psychological Bulletin</i>, 125(6). <a href="https://doi.org/10.1037/0033-2909.125.6.627">doi.org/10.1037/0033-2909.125.6.627</a></li>
+  <li id="s9">Sailer, M., &amp; Homner, L. (2020). The gamification of learning: A meta-analysis. <i>Educational Psychology Review</i>, 32. Cognitive g = .49, motivational g = .36, behavioural g = .25. <a href="https://link.springer.com/article/10.1007/s10648-019-09498-w">link.springer.com/article/10.1007/s10648-019-09498-w</a></li>
+  <li id="s10">Hanus, M. D., &amp; Fox, J. (2015). Assessing the effects of gamification in the classroom: A longitudinal study on intrinsic motivation, social comparison, satisfaction, effort, and academic performance. <i>Computers &amp; Education</i>, 80. <a href="https://doi.org/10.1016/j.compedu.2014.08.019">doi.org/10.1016/j.compedu.2014.08.019</a></li>
+  <li id="s11">Gao et al. (2024), leaderboard study (NSF PAR), as summarised in the repo's <span class="kbd">docs/mobile/gamification-design.md</span> §2. <a href="https://par.nsf.gov/servlets/purl/10591267">par.nsf.gov/servlets/purl/10591267</a></li>
+  <li id="s12">Baker, R. S., Corbett, A. T., Koedinger, K. R., &amp; Wagner, A. Z. (2004). Off-task behavior in the cognitive tutor classroom: When students "game the system". <i>CHI 2004</i>. <a href="https://hci.rwth-aachen.de/materials/conferences/CHI2004/1p383.pdf">PDF</a></li>
+  <li id="s14" value="14">Zendle, D., &amp; Cairns, P. (2018). Video game loot boxes are linked to problem gambling: Results of a large-scale survey. <i>PLOS ONE</i>. <a href="https://doi.org/10.1371/journal.pone.0206767">doi.org/10.1371/journal.pone.0206767</a></li>
+  <li id="s15">Corbett, A. T., &amp; Anderson, J. R. (1994). Knowledge tracing: Modeling the acquisition of procedural knowledge. <i>User Modeling and User-Adapted Interaction</i>, 4. <a href="https://doi.org/10.1007/BF01099821">doi.org/10.1007/BF01099821</a></li>
+  <li id="s16">Gollwitzer, P. M., &amp; Sheeran, P. (2006). Implementation intentions and goal achievement: A meta-analysis of effects and processes. <i>Advances in Experimental Social Psychology</i>, 38. <a href="https://doi.org/10.1016/S0065-2601(06)38002-1">doi.org/10.1016/S0065-2601(06)38002-1</a></li>
+  <li id="s17">Crouch, C. H., &amp; Mazur, E. (2001). Peer Instruction: Ten years of experience and results. <i>American Journal of Physics</i>, 69(9). <a href="https://doi.org/10.1119/1.1374249">doi.org/10.1119/1.1374249</a></li>
+</ol>
+<h3>AI grading</h3>
+<ol class="src" start="18">
+  <li id="s18">Caraeni, A., Scarlatos, A., &amp; Lan, A. (2024). Evaluating GPT-4 at grading handwritten solutions in math exams. <a href="https://arxiv.org/abs/2411.05231">arxiv.org/abs/2411.05231</a></li>
+  <li id="s19">Nath, O., et al. (2025). Can Vision-Language Models Evaluate Handwritten Math? (FERMAT). <i>ACL 2025</i>. <a href="https://aclanthology.org/2025.acl-long.720">aclanthology.org/2025.acl-long.720</a></li>
+</ol>
+<h3>App stores</h3>
+<ol class="src" start="20">
+  <li id="s20">Apple, App Store Review Guidelines: 1.2 (user-generated content), 3.1.1 (in-app purchase, currencies, ban on unlock codes), 3.1.3(b) (multiplatform), 3.1.3(e) (physical goods), 3.2.2(x) (incentives, "watching an ad"), 5.1.4 (kids), 5.6.1 (review prompt API), 5.6.3 (review manipulation). <a href="https://developer.apple.com/app-store/review/guidelines/">developer.apple.com/app-store/review/guidelines</a></li>
+  <li id="s21">Google Play, Payments policy (Play Billing for virtual currency and digital content; physical goods exempt). <a href="https://support.google.com/googleplay/android-developer/answer/9858738">support.google.com/googleplay/android-developer/answer/9858738</a></li>
+  <li id="s22">Android Developers Blog (2017), Google Play's policy on incentivized ratings, reviews, and installs. <a href="https://android-developers.googleblog.com/2017/06/google-plays-policy-on-incentivized.html">android-developers.googleblog.com/2017/06/google-plays-policy-on-incentivized.html</a></li>
+  <li id="s23">Google Play, Families Self-Certified Ads SDK Policy. <a href="https://support.google.com/googleplay/android-developer/answer/12918983">support.google.com/googleplay/android-developer/answer/12918983</a></li>
+  <li id="s27" value="27">Apple, App Store Small Business Program (reduced 15% commission). <a href="https://developer.apple.com/app-store/small-business-program/">developer.apple.com/app-store/small-business-program</a></li>
+</ol>
+<h3>Tunisia: data protection &amp; commerce</h3>
+<ol class="src" start="24">
+  <li id="s24">Loi organique n° 2004-63 du 27 juillet 2004 portant sur la protection des données à caractère personnel (French text): arts. 7, 27, 28, 51–52. <a href="https://legislation-securite.tn/wp-content/uploads/sites/5/2023/11/Loi-n°-2004-63-du-27-Juillet-2004-Fr.pdf">legislation-securite.tn (PDF)</a></li>
+  <li id="s25">Business News (1 October 2026), "Photos et vidéos d'enfants sur Internet : jusqu'à deux ans de prison et 10 000 dinars d'amende", on arts. 27, 28 and 87. <a href="https://businessnews.com.tn/2026/10/01/photos-et-videos-denfants-sur-internet-jusqua-deux-ans-de-prison-et-10-000-dinars-damende/1421030/">businessnews.com.tn</a></li>
+  <li id="s26">U.S. International Trade Administration, Tunisia Country Commercial Guide: eCommerce (last published 26 February 2026). More than 80% of online transactions are paid cash on delivery, and Tunisian cards are not approved for foreign-currency transactions. <a href="https://www.trade.gov/country-commercial-guides/tunisia-ecommerce">trade.gov/country-commercial-guides/tunisia-ecommerce</a></li>
+</ol>
+<h3>Internal</h3>
+<ul class="src">
+  <li>Prototype repo: <span class="kbd">src/features/student-v2</span>, <span class="kbd">src/data/seed/offers.json</span> (offer audiences and prices), <span class="kbd">.claude/skills/wael-gamified/SKILL.md</span> and <span class="kbd">docs/mobile/gamification-design.md</span> (the current "no XP, points, leagues or streaks" brief and its research).</li>
+</ul>
+
+<footer>
+  Wael Academy · Next-update critique · 5 November 2026. This document reviews the client's plan summary. It is product and learning-design advice, not legal advice. Confirm the Tunisian data-protection points with local counsel and the store-policy points against the live guidelines before committing.
+</footer>
+</div>
+</body>
+</html>

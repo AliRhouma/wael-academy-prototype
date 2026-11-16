@@ -2,24 +2,55 @@
   {
     "id": "ex-math-ds1",
     "title": "فرض تأليفي عدد 1 — رياضيات",
-    "pdfs": [{ "name": "نص الامتحان" }, { "name": "الإصلاح" }],
+    "pdfs": [
+      {
+        "name": "نص الامتحان"
+      },
+      {
+        "name": "الإصلاح"
+      }
+    ],
     "videoUrl": "https://youtu.be/dQw4w9WgXcQ",
-    "subjectIds": ["subj-bac-math-mathematiques", "subj-bac-sci-mathematiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
+    "subjectIds": [
+      "subj-bac-math-mathematiques",
+      "subj-bac-sci-mathematiques"
+    ],
+    "yearIds": [
+      "y-bac-math",
+      "y-bac-sci"
+    ],
     "order": 0
   },
   {
     "id": "ex-math-dc2",
     "title": "فرض مراقبة عدد 2 — رياضيات",
-    "pdfs": [{ "name": "نص الامتحان" }],
-    "subjectIds": ["subj-bac-math-mathematiques"],
-    "yearIds": ["y-bac-math"],
+    "pdfs": [
+      {
+        "name": "نص الامتحان"
+      }
+    ],
+    "subjectIds": [
+      "subj-bac-math-mathematiques"
+    ],
+    "yearIds": [
+      "y-bac-math"
+    ],
     "order": 1
   },
   {
     "id": "ex-math-bacblanc",
     "title": "باك تجريبي — رياضيات",
-    "pdfs": [{ "name": "الموضوع" }, { "name": "سلّم التنقيط" }, { "name": "إصلاح مفصّل" }],
+    "pdfs": [
+      {
+        "name": "الموضوع"
+      },
+      {
+        "name": "سلّم التنقيط"
+      },
+      {
+        "name": "إصلاح مفصّل"
+      }
+    ],
     "videoUrl": "https://youtu.be/oHg5SJYRHA0",
     "subjectIds": [
       "subj-bac-math-mathematiques",
@@ -27,58 +58,109 @@
       "subj-bac-tech-mathematiques",
       "subj-bac-info-mathematiques"
     ],
-    "yearIds": ["y-bac-math", "y-bac-sci", "y-bac-tech", "y-bac-info"],
+    "yearIds": [
+      "y-bac-math",
+      "y-bac-sci",
+      "y-bac-tech",
+      "y-bac-info"
+    ],
     "order": 2
   },
   {
     "id": "ex-phys-ds1",
     "title": "فرض تأليفي عدد 1 — علوم فيزيائية",
-    "pdfs": [{ "name": "نص الامتحان" }, { "name": "الإصلاح" }],
+    "pdfs": [
+      {
+        "name": "نص الامتحان"
+      },
+      {
+        "name": "الإصلاح"
+      }
+    ],
     "videoUrl": "https://youtu.be/2Z4m4lnjxkY",
-    "subjectIds": ["subj-bac-math-sciences-physiques", "subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-math", "y-bac-sci"],
+    "subjectIds": [
+      "subj-bac-math-sciences-physiques",
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "yearIds": [
+      "y-bac-math",
+      "y-bac-sci"
+    ],
     "order": 0
   },
   {
     "id": "ex-phys-dc1",
     "title": "فرض مراقبة عدد 1 — علوم فيزيائية",
-    "pdfs": [{ "name": "نص الامتحان" }],
-    "subjectIds": ["subj-bac-sci-sciences-physiques"],
-    "yearIds": ["y-bac-sci"],
+    "pdfs": [
+      {
+        "name": "نص الامتحان"
+      }
+    ],
+    "subjectIds": [
+      "subj-bac-sci-sciences-physiques"
+    ],
+    "yearIds": [
+      "y-bac-sci"
+    ],
     "order": 1
   },
   {
     "id": "ex-svt-ds2",
     "title": "فرض تأليفي عدد 2 — علوم الحياة والأرض",
-    "pdfs": [{ "name": "نص الامتحان" }, { "name": "الإصلاح" }],
+    "pdfs": [
+      {
+        "name": "نص الامتحان"
+      },
+      {
+        "name": "الإصلاح"
+      }
+    ],
     "videoUrl": "https://youtu.be/9bZkp7q19f0",
-    "subjectIds": ["subj-bac-sci-sciences-de-la-vie-et-de-la-terre"],
-    "yearIds": ["y-bac-sci"],
+    "subjectIds": [
+      "subj-bac-sci-sciences-de-la-vie-et-de-la-terre"
+    ],
+    "yearIds": [
+      "y-bac-sci"
+    ],
     "order": 0
   },
   {
     "id": "ex-info-tp",
     "title": "الاختبار التطبيقي — إعلامية",
-    "pdfs": [{ "name": "موضوع الأشغال التطبيقية" }, { "name": "شبكة التقييم" }],
+    "pdfs": [
+      {
+        "name": "موضوع الأشغال التطبيقية"
+      },
+      {
+        "name": "شبكة التقييم"
+      }
+    ],
     "videoUrl": "https://youtu.be/3JZ_D3ELwOQ",
-    "subjectIds": ["subj-bac-info-informatique"],
-    "yearIds": ["y-bac-info"],
+    "subjectIds": [
+      "subj-bac-info-programmation"
+    ],
+    "yearIds": [
+      "y-bac-info"
+    ],
     "order": 0
   },
   {
     "id": "ex-ar-farth1",
     "title": "فرض تأليفي عدد 1 — العربية",
-    "pdfs": [{ "name": "نص الامتحان" }, { "name": "الإصلاح" }],
-    "subjectIds": ["subj-bac-lettres-arabe"],
-    "yearIds": ["y-bac-lettres"],
-    "order": 0
-  },
-  {
-    "id": "ex-7-math-dc1",
-    "title": "فرض مراقبة عدد 1 — رياضيات",
-    "pdfs": [{ "name": "نص الامتحان" }],
-    "subjectIds": ["subj-7-mathematiques"],
-    "yearIds": ["y-7"],
+    "pdfs": [
+      {
+        "name": "نص الامتحان"
+      },
+      {
+        "name": "الإصلاح"
+      }
+    ],
+    "subjectIds": [
+      "subj-bac-lettres-arabe"
+    ],
+    "yearIds": [
+      "y-bac-lettres"
+    ],
     "order": 0
   }
 ]

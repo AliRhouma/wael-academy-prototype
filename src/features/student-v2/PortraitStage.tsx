@@ -17,6 +17,7 @@ import mecanique from "../../../svg icons/doodles/mecanique.svg"
 import philosophie from "../../../svg icons/doodles/philosophie.svg"
 import physique from "../../../svg icons/doodles/physique.svg"
 import sciences from "../../../svg icons/doodles/sciences.svg"
+import { matiereKey } from "@/data/matiere"
 
 /**
  * The line drawings round each portrait, lifted out of the Figma frames
@@ -66,9 +67,15 @@ const DOODLE_BY_NAME: Record<string, string> = {
  *
  * The badge is the SVG with its eyes flagged, so the gaze overlay rides along;
  * the card around it must carry `group` for the hover-to-front snap.
+ *
+ * `v2-squash` is the play skin's mascot press: while the card is held, the
+ * badge squashes (x 1.06 / y .94) and springs back on release — the image and
+ * its gaze overlay share this box, so his eyes squash with him. The eyes
+ * themselves are not touched: expressions (dilate, squint, blink) would mean
+ * editing the generated overlay, which the eyes pipeline owns, not the skin.
  */
 export function PortraitStage({ name, className }: { name: string; className?: string }) {
-  const doodle = DOODLE_BY_NAME[name]
+  const doodle = DOODLE_BY_NAME[matiereKey(name)]
   return (
     <div className={cn("relative aspect-[354/240] w-full", className)}>
       {doodle && (
@@ -87,7 +94,7 @@ export function PortraitStage({ name, className }: { name: string; className?: s
       )}
       <SubjectIcon
         name={name}
-        className="absolute inset-x-[12.97%] top-[3.96%] h-[96.6%] transition duration-500 group-hover:scale-[1.04]"
+        className="v2-squash absolute inset-x-[12.97%] top-[3.96%] h-[96.6%] transition duration-500 group-hover:scale-[1.04]"
       />
     </div>
   )

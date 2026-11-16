@@ -2,6 +2,7 @@ import { useId, useMemo, useState, type KeyboardEvent } from "react"
 import { useNavigate } from "react-router-dom"
 import { LibraryBig, Search, SearchX, TvMinimalPlay, X, type LucideIcon } from "lucide-react"
 import { studentV2Nav } from "@/app/nav/studentV2"
+import { usePlatform } from "@/app/platform"
 import { useMySessions } from "@/features/student/dashboard/dashboard"
 import { useAuth } from "@/stores/useAuth"
 import { useData } from "@/stores/useData"
@@ -108,14 +109,24 @@ export function SearchBox({ className }: { className?: string }) {
 
   const showList = open && q.trim().length > 0
 
+  // On a phone the field takes the platform's own search-bar shape: iOS's
+  // 36–38 pt grey capsule, Material's 56 dp tonal bar — both with the
+  // magnifier at the LEADING edge, where the frame's design put it last.
+  const platform = usePlatform()
+  const native = platform !== "web"
+
   return (
     <div className={cn("relative", className)}>
       <label
         className={cn(
           "flex h-12 items-center gap-3 rounded-full border bg-v2-surface pe-3 ps-5 transition md:h-14 2xl:h-16 2xl:ps-7",
           showList ? "border-v2-brand/50 shadow-lg shadow-v2-ink/5" : "border-transparent hover:border-v2-ink/15",
+          native && "border-transparent px-3 shadow-none",
+          platform === "ios" && "h-[38px] bg-v2-ink/[0.07]",
+          platform === "android" && "h-14 bg-m3-surface-container-high",
         )}
       >
+        {native && <Search className="size-5 shrink-0 text-v2-ink-2" strokeWidth={2} />}
         <input
           type="search"
           role="combobox"
@@ -132,7 +143,7 @@ export function SearchBox({ className }: { className?: string }) {
           onFocus={() => setOpen(true)}
           onBlur={() => setOpen(false)}
           onKeyDown={onKeyDown}
-          className="h-full min-w-0 flex-1 bg-transparent text-[calc(10px*var(--ts))] text-v2-ink outline-none placeholder:text-v2-ink/45 [&::-webkit-search-cancel-button]:hidden"
+          className="h-full min-w-0 flex-1 bg-transparent text-[calc(10px*var(--ts))] text-v2-ink outline-none placeholder:text-v2-ink-3 [&::-webkit-search-cancel-button]:hidden"
         />
         {q ? (
           <button
@@ -141,12 +152,12 @@ export function SearchBox({ className }: { className?: string }) {
             onMouseDown={(e) => e.preventDefault()}
             data-uisfx="delete"
             onClick={() => setQ("")}
-            className="grid size-9 place-items-center rounded-full text-v2-ink/50 transition hover:bg-v2-ink/5 hover:text-v2-ink"
+            className="grid size-9 place-items-center rounded-full text-v2-ink-2 transition hover:bg-v2-ink/5 hover:text-v2-ink"
           >
             <X className="size-4" />
           </button>
         ) : (
-          <Search className="me-1.5 size-5 shrink-0 text-v2-ink" strokeWidth={1.75} />
+          !native && <Search className="me-1.5 size-5 shrink-0 text-v2-ink" strokeWidth={1.75} />
         )}
       </label>
 
@@ -160,7 +171,7 @@ export function SearchBox({ className }: { className?: string }) {
             <div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
               <SearchX className="size-8 stroke-v2-grad" strokeWidth={1.5} />
               <p className="text-[calc(9.5px*var(--ts))] font-semibold text-v2-ink">ما لقينا شي لـ « {q.trim()} »</p>
-              <p className="text-[calc(8px*var(--ts))] text-v2-ink/55">جرّب إسم مادّة، ولّا عنوان حصّة بالفرنسي.</p>
+              <p className="text-[calc(8px*var(--ts))] text-v2-ink-2">جرّب إسم مادّة، ولّا عنوان حصّة بالفرنسي.</p>
             </div>
           ) : (
             hits.map((hit, i) => {
@@ -169,7 +180,7 @@ export function SearchBox({ className }: { className?: string }) {
               return (
                 <div key={hit.id}>
                   {first && (
-                    <p className="px-3 pb-1 pt-2 text-[calc(7.5px*var(--ts))] font-semibold text-v2-ink/45">{hit.group}</p>
+                    <p className="px-3 pb-1 pt-2 text-[calc(7.5px*var(--ts))] font-semibold text-v2-ink-2">{hit.group}</p>
                   )}
                   <button
                     type="button"
@@ -184,11 +195,11 @@ export function SearchBox({ className }: { className?: string }) {
                       i === active ? "bg-v2-brand/10" : "hover:bg-v2-ink/[0.04]",
                     )}
                   >
-                    <Icon className="size-5 shrink-0 stroke-v2-grad" strokeWidth={1.75} />
+                    <Icon aria-hidden className="size-5 shrink-0 text-v2-brand-text" strokeWidth={1.75} />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[calc(9.5px*var(--ts))] font-semibold text-v2-ink">{hit.label}</span>
                       {hit.hint && (
-                        <span className="block truncate text-[calc(7.5px*var(--ts))] text-v2-ink/55">{hit.hint}</span>
+                        <span className="block truncate text-[calc(7.5px*var(--ts))] text-v2-ink-2">{hit.hint}</span>
                       )}
                     </span>
                   </button>

@@ -69,6 +69,30 @@ import ForgotPasswordPage from "@/features/auth/ForgotPasswordPage"
 import V2SubjectRecordingsScreen from "@/features/student-v2/recordings/SubjectRecordingsScreen"
 import V2SubjectsScreen from "@/features/student-v2/matieres/SubjectsScreen"
 import V2SubjectScreen from "@/features/student-v2/matieres/SubjectScreen"
+import DeviceGallery from "@/features/mobile/DeviceGallery"
+import MobileGameLayout from "@/features/mobilegame/MobileGameLayout"
+import MobileSplash from "@/features/mobilegame/SplashScreen"
+import MobileLogin from "@/features/mobilegame/LoginScreen"
+import { MobileHome, MobileSoon } from "@/features/mobilegame/screens"
+import MobileWelcome from "@/features/mobilegame/onboarding/WelcomeScreen"
+import MobileLevel from "@/features/mobilegame/onboarding/LevelScreen"
+import MobileSubject from "@/features/mobilegame/onboarding/SubjectScreen"
+import MobileQuiz from "@/features/mobilegame/onboarding/QuizScreen"
+import MobileResult from "@/features/mobilegame/onboarding/ResultScreen"
+import MobileRegister from "@/features/mobilegame/RegisterScreen"
+import WebGameLayout from "@/features/webgame/WebGameLayout"
+import WebGameLanding from "@/features/webgame/LandingPage"
+import WebGameLogin from "@/features/webgame/LoginPage"
+import { WebHome, WebSoon } from "@/features/webgame/screens"
+import TownMapPage from "@/features/map/TownMapPage"
+
+/**
+ * `mobile.<host>` is the device gallery's own door: its root IS the gallery
+ * (the two phones, the app live inside). `mobile.localhost:5173` works in dev
+ * with no setup — browsers resolve `*.localhost` to the machine, and Vite
+ * accepts the host. Everywhere else the gallery is at /mobile.
+ */
+const MOBILE_HOST = /^mobile\./i.test(window.location.hostname)
 
 /** Standalone list of the shared courses; links into the /courses/:id workspace. */
 function CoursesList() {
@@ -127,6 +151,28 @@ function SectionPlaceholder({ title }: { title: string }) {
   )
 }
 
+/**
+ * The project hub is a static page (public/hub/, built by `npm run hub`). The
+ * app only sees "/hub" when the trailing slash is missing — hand over to the
+ * file — or when the hub was never generated.
+ */
+function HubDoor() {
+  if (window.location.pathname === "/hub") {
+    window.location.replace("/hub/" + window.location.search + window.location.hash)
+    return null
+  }
+  return (
+    <div className="grid min-h-dvh place-items-center bg-canvas px-4 text-center">
+      <div>
+        <h1 className="font-display text-2xl font-bold text-ink">Plan du projet introuvable</h1>
+        <p className="mt-2 text-sm text-ink-muted">
+          Lancez <code>npm run hub</code> pour générer <code>public/hub/</code>.
+        </p>
+      </div>
+    </div>
+  )
+}
+
 function NotFound() {
   return (
     <div className="grid min-h-dvh place-items-center bg-canvas px-4 text-center">
@@ -179,14 +225,50 @@ function roleRoute(
 export const router = createBrowserRouter([
   /* The public site — the Figma landing (« Page D'acceuil ») and « About us ».
      The previous landing stays reachable at /landing-ancien. */
+  MOBILE_HOST
+    ? { path: "/", element: <DeviceGallery /> }
+    : {
+        path: "/",
+        element: <SiteLayout />,
+        children: [
+          { index: true, element: <SiteHome /> },
+          { path: "a-propos", element: <SiteAbout /> },
+        ],
+      },
+  /* The élève space on an iPhone and a Galaxy, side by side. */
+  { path: "/mobile", element: <DeviceGallery /> },
+  /* The GAME versions — a separate app (phone, landscape) and a separate web
+     (responsive), because their flow differs too much from /student-v2. */
   {
-    path: "/",
-    element: <SiteLayout />,
+    path: "/mobilegame",
+    element: <MobileGameLayout />,
     children: [
-      { index: true, element: <SiteHome /> },
-      { path: "a-propos", element: <SiteAbout /> },
+      { index: true, element: <MobileSplash /> },
+      /* first launch: welcome → level → matière → 3 questions → result → account */
+      { path: "bienvenue", element: <MobileWelcome /> },
+      { path: "niveau", element: <MobileLevel /> },
+      { path: "matiere", element: <MobileSubject /> },
+      { path: "defi", element: <MobileQuiz /> },
+      { path: "resultat", element: <MobileResult /> },
+      { path: "inscription", element: <MobileRegister /> },
+      { path: "connexion", element: <MobileLogin /> },
+      { path: "accueil", element: <MobileHome /> },
+      { path: "*", element: <MobileSoon /> },
     ],
   },
+  {
+    path: "/webgame",
+    element: <WebGameLayout />,
+    children: [
+      { index: true, element: <WebGameLanding /> },
+      { path: "connexion", element: <WebGameLogin /> },
+      { path: "app", element: <WebHome /> },
+      { path: "*", element: <WebSoon /> },
+    ],
+  },
+  /* The game's isometric town (« مدينتي »), drawn in code — pan, zoom, tap a building. */
+  { path: "/map", element: <TownMapPage /> },
+  { path: "/map/planete", element: <TownMapPage key="planet" shape="planet" /> },
   /* The front door — « Log In », and the register / reset screens the real
      élève space reaches from it. Outside every shell: no rail, no top bar. */
   { path: "/connexion", element: <LoginPage /> },
@@ -291,5 +373,7 @@ export const router = createBrowserRouter([
     ],
   },
   { path: "/design-system", element: <DesignSystemPage /> },
+  /* The project map — every page, design system and doc (static, public/hub/). */
+  { path: "/hub/*", element: <HubDoor /> },
   { path: "*", element: <NotFound /> },
 ])

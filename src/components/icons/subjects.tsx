@@ -34,6 +34,7 @@
  */
 import { useCallback, useState, type ReactNode } from "react"
 import { cn } from "@/lib/utils"
+import { matiereKey } from "@/data/matiere"
 import { Eyes } from "./subjects/Eyes"
 import { SubjectsIcon } from "./SubjectsIcon"
 
@@ -124,9 +125,14 @@ const BADGE_GAZE_OWNER: Record<string, string> = {
   "الحضارة العربية والإسلامية": "تربية إسلامية",
 }
 
-/** The badge a matière owns, or undefined — the caller then tries a scene. */
+/**
+ * The badge a matière owns, or undefined — the caller then tries a scene.
+ *
+ * Keyed through `matiereKey`, so a bac subject named for its filière
+ * (« Bac Sciences - SVT ») lands on the same drawing as the matière alone.
+ */
 export function badgeFor(name: string): string | undefined {
-  return BADGE_BY_NAME[name]
+  return BADGE_BY_NAME[matiereKey(name)]
 }
 
 /**
@@ -184,7 +190,8 @@ function hash(name: string): number {
 
 /** The portrait a matière shows: its own where one exists, else one of the five. */
 export function portraitFor(name: string): PortraitId {
-  return PORTRAIT_BY_NAME[name] ?? POOL[hash(name) % POOL.length]
+  const key = matiereKey(name)
+  return PORTRAIT_BY_NAME[key] ?? POOL[hash(key) % POOL.length]
 }
 
 /**
@@ -397,7 +404,7 @@ export function SubjectIcon({ name, className }: { name: string; className?: str
     // undistorted. The overlay shares the box and fits it the same way.
     return <PortraitArt id={id} src={art} hover={happy} className={className} />
   }
-  const fallback = FALLBACK_BY_NAME[name]
+  const fallback = FALLBACK_BY_NAME[matiereKey(name)]
   // No art AND no hand-drawn stand-in: the delivered subjects book is the
   // generic matière mark now — it replaces the stroke "livre" that used to be
   // the last resort, so an unmapped matière still lands on the real icon set.
@@ -439,7 +446,7 @@ function BadgeArt({ name, src, className }: { name: string; src: string; classNa
           (تربية إسلامية, until its iris is flagged) shows the drawn gaze
           untouched, which is why the overlay can only ever add. */}
       <Eyes
-        subject={BADGE_GAZE_OWNER[name] ?? name}
+        subject={BADGE_GAZE_OWNER[matiereKey(name)] ?? matiereKey(name)}
         className={cn(
           "absolute inset-0 size-full object-contain",
           REVEAL,

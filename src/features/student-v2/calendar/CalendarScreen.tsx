@@ -125,7 +125,7 @@ export default function V2CalendarScreen() {
                   <button
                     type="button"
                     data-uisfx="back" onClick={() => select(today)}
-                    className="me-1 min-h-9 rounded-full bg-v2-brand/10 px-3 text-[calc(7.5px*var(--ts))] font-semibold text-v2-brand transition hover:bg-v2-brand/20"
+                    className="v2-chip me-1 min-h-9 rounded-full bg-v2-brand/10 px-3 text-[calc(7.5px*var(--ts))] font-semibold text-v2-brand transition hover:bg-v2-brand/20"
                   >
                     اليوم
                   </button>
@@ -168,7 +168,7 @@ export default function V2CalendarScreen() {
             <div className="mt-6 border-t border-v2-ink/10 pt-5">
               <p className="mb-3 flex items-baseline gap-2 text-[calc(10.5px*var(--ts))] font-bold text-v2-ink">
                 حصص {dayLabel(selected)}
-                {dayCount > 0 && <span className="text-[calc(8px*var(--ts))] font-normal text-v2-ink/50">· {dayCount}</span>}
+                {dayCount > 0 && <span className="text-[calc(8px*var(--ts))] font-normal text-v2-ink-2">· {dayCount}</span>}
               </p>
               <DayList
                 key={selected}

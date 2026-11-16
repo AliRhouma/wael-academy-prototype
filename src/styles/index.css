@@ -3,6 +3,10 @@
 @import "./palettes.css"; /* alternate palettes — swappable via data-palette on <html> */
 @import "./fonts.css"; /* alternate typefaces — swappable via data-font on <html> */
 @import "./v2.css"; /* the new élève space (/student-v2) — its own fixed palette */
+@import "./skins/play.css"; /* the gamified skin of that space — data-skin="play" on <html> (default) */
+@import "./platform/ios.css"; /* what the space wears on an iPhone — data-platform="ios" */
+@import "./platform/android.css"; /* …and on an Android phone — data-platform="android" */
+@import "./mobile.css"; /* the mobile gallery (/mobile) — two phone frames round the live app */
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -678,12 +682,33 @@
    into tokens.css and do NOT change any token VALUES. They reuse existing
    tokens for all colors/spacing; they only add device-aware layout behavior.
    =========================================================================== */
+/* The system bars' heights — what a fixed top/bottom bar must keep clear of.
+   On a real phone they are the browser's own `env()` insets. Inside a device
+   frame (the mobile gallery's iframes) `env()` is 0, so src/app/platform.ts
+   writes the phone's bar heights here in px instead. Everything that used to
+   read `env(safe-area-inset-*)` reads these. */
+:root {
+  --sai-top: env(safe-area-inset-top, 0px);
+  --sai-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Inside a device frame the desktop browser would draw its own scrollbars —
+   a gutter no phone shows (and, under RTL, on the wrong side). Hide them;
+   scrolling itself is untouched. */
+[data-framed],
+[data-framed] * {
+  scrollbar-width: none;
+}
+[data-framed] ::-webkit-scrollbar {
+  display: none;
+}
+
 @layer utilities {
   /* Safe-area padding for FIXED top/bottom bars (notch + home indicator).
      Put on a wrapper WITHOUT competing padding on that axis; base padding goes
-     on the inner element. env() resolves to 0 on non-notched screens. */
-  .pt-safe { padding-top: max(0px, env(safe-area-inset-top)); }
-  .pb-safe { padding-bottom: max(0px, env(safe-area-inset-bottom)); }
+     on the inner element. Resolves to 0 on non-notched screens. */
+  .pt-safe { padding-top: max(0px, var(--sai-top)); }
+  .pb-safe { padding-bottom: max(0px, var(--sai-bottom)); }
   .pl-safe { padding-left: max(0px, env(safe-area-inset-left)); }
   .pr-safe { padding-right: max(0px, env(safe-area-inset-right)); }
   /* Logical twins — these mirror with `dir`, so prefer them over pl-/pr-safe. */

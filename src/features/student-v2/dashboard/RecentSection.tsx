@@ -6,7 +6,7 @@ import { dateKey } from "@/features/student/calendar/schedule"
 import { cn } from "@/lib/utils"
 import { BASE, frenchName, hourOf, useLookups, v2VideoPath } from "../lib"
 import { PortraitStage } from "../PortraitStage"
-import { CtaLink, LatinLine, PanelEmpty, SeeAll } from "../ui"
+import { CtaLink, LatinLine, PanelEmpty, SeeAll, tileClass } from "../ui"
 
 /**
  * « آخر الحصص المضافة » — replays put online these last days, as the frame
@@ -30,7 +30,7 @@ export function RecentSection({ sessions, now }: { sessions: Session[]; now: Dat
       </div>
 
       {sessions.length === 0 ? (
-        <div className="rounded-3xl border border-v2-ink/15 bg-v2-surface p-4 md:p-6">
+        <div className="v2-panel rounded-3xl border border-v2-ink/15 bg-v2-surface p-4 md:p-6">
           <PanelEmpty
             icon={MonitorPlay}
             title="ما تزادت حتّى حصّة جديدة"
@@ -72,12 +72,17 @@ function SeanceCard({ session, now }: { session: Session; now: Date }) {
   const fresh = !!session.publishedAt && session.publishedAt.slice(0, 10) === dateKey(now)
 
   return (
+    // A tile under the play skin: the whole card presses, the play mark is a
+    // 40 px teal plate — one depth cue for one action.
     <Link data-uisfx="play"
       to={v2VideoPath(session.id, { subjectId: session.subjectIds[0] })}
-      className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-v2-ink/15 bg-v2-surface transition duration-300 hover:-translate-y-1 hover:border-v2-brand/40 hover:shadow-xl hover:shadow-v2-ink/[0.07] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-v2-brand"
+      className={cn(
+        tileClass,
+        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-v2-ink/15 bg-v2-surface transition duration-300 hover:-translate-y-1 hover:border-v2-brand/40 hover:shadow-xl hover:shadow-v2-ink/[0.07] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-v2-brand",
+      )}
     >
       {fresh && (
-        <span className="absolute end-0 top-0 z-10 rounded-es-2xl bg-v2-grad px-4 py-1.5 text-[calc(8px*var(--ts))] font-bold tracking-wide text-white">
+        <span className="absolute end-0 top-0 z-10 rounded-es-2xl bg-v2-cta px-4 py-1.5 text-[calc(8px*var(--ts))] font-bold tracking-wide text-v2-on-cta">
           NEW
         </span>
       )}
@@ -87,7 +92,7 @@ function SeanceCard({ session, now }: { session: Session; now: Date }) {
       <PortraitStage name={subject?.name ?? ""} />
 
       <div className="relative mx-[7%] mb-[7%] rounded-2xl border border-v2-ink/20 bg-v2-surface px-4 py-3 text-start">
-        <LatinLine className="text-[calc(7.5px*var(--ts))] font-medium uppercase tracking-wide text-v2-ink/55">
+        <LatinLine className="text-[calc(7.5px*var(--ts))] font-medium uppercase tracking-wide text-v2-ink-2">
           {session.title}
         </LatinLine>
         {/* Wraps rather than clips: « Sciences de la vie et de la terre » is
@@ -99,7 +104,7 @@ function SeanceCard({ session, now }: { session: Session; now: Date }) {
           <p className="min-w-0 flex-1 truncate text-[calc(8.5px*var(--ts))] text-v2-ink/75">
             {session.publishedAt ? `${addedLabel(session.publishedAt, now)} . ${hourOf(session.publishedAt)}` : ""}
           </p>
-          <span className="grid size-7 shrink-0 place-items-center rounded-full border-[1.5px] border-v2-brand text-v2-brand transition group-hover:border-transparent group-hover:bg-v2-grad group-hover:text-white">
+          <span className="v2-play-plate grid size-7 shrink-0 place-items-center rounded-full border-[1.5px] border-v2-brand text-v2-brand transition group-hover:border-transparent group-hover:bg-v2-cta group-hover:text-v2-on-cta">
             <Play className="size-3 translate-x-[-1px] fill-current" />
           </span>
         </div>

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { DropdownMenu } from "radix-ui"
-import { ChevronDown, Heart, History, LogOut, Repeat, Settings, Ticket, UserRound, Wallet, type LucideIcon } from "lucide-react"
+import { BadgePercent, ChevronDown, Heart, History, LogOut, Repeat, Settings, Ticket, UserRound, Wallet, type LucideIcon } from "lucide-react"
 import { useAuth } from "@/stores/useAuth"
 import { cn } from "@/lib/utils"
 import avatar from "@/assets/v2/avatar.jpg"
@@ -23,7 +23,14 @@ export function ProfileMenu({ compact = false }: { compact?: boolean }) {
     { label: "المحفظة", icon: Wallet, to: `${BASE}/porte-monnaie` },
     { label: "مفضّلاتي", icon: Heart, to: `${BASE}/favoris` },
     { label: "كوداتي", icon: Ticket, to: `${BASE}/codes` },
-    ...(compact ? [{ label: "الإعدادات", icon: Settings, to: `${BASE}/parametres` }] : []),
+    // On a phone the tab bar stops at five, so what left it lives here:
+    // العروض (see nav/studentV2.ts) and the gear the desktop bar shows.
+    ...(compact
+      ? [
+          { label: "العروض", icon: BadgePercent, to: `${BASE}/offres` },
+          { label: "الإعدادات", icon: Settings, to: `${BASE}/parametres` },
+        ]
+      : []),
   ]
 
   return (
@@ -59,23 +66,23 @@ export function ProfileMenu({ compact = false }: { compact?: boolean }) {
             <img src={avatar} alt="" className="size-11 rounded-full object-cover" />
             <div className="min-w-0">
               <p className="truncate text-[calc(10px*var(--ts))] font-bold">{user?.name}</p>
-              <p className="truncate text-[calc(7.5px*var(--ts))] text-v2-ink/55">{user?.email}</p>
+              <p className="truncate text-[calc(7.5px*var(--ts))] text-v2-ink-2">{user?.email}</p>
             </div>
           </div>
           <DropdownMenu.Separator className="mx-2 mb-1 h-px bg-v2-ink/10" />
           {links.map(({ label, icon: Icon, to }) => (
             <DropdownMenu.Item key={to} data-uisfx="select" onSelect={() => navigate(to)} className={itemClass}>
-              <Icon className="size-5 stroke-v2-grad" strokeWidth={1.75} />
+              <Icon aria-hidden className="size-5 text-v2-brand-text" strokeWidth={1.75} />
               {label}
             </DropdownMenu.Item>
           ))}
           <DropdownMenu.Separator className="mx-2 my-1 h-px bg-v2-ink/10" />
           <DropdownMenu.Item data-uisfx="back" onSelect={() => navigate("/student")} className={itemClass}>
-            <History className="size-5 text-v2-ink/60" strokeWidth={1.75} />
+            <History className="size-5 text-v2-ink-2" strokeWidth={1.75} />
             الفضاء القديم
           </DropdownMenu.Item>
           <DropdownMenu.Item data-uisfx="swipe" onSelect={() => navigate("/roles")} className={itemClass}>
-            <Repeat className="size-5 text-v2-ink/60" strokeWidth={1.75} />
+            <Repeat className="size-5 text-v2-ink-2" strokeWidth={1.75} />
             بدّل الفضاء
           </DropdownMenu.Item>
           <DropdownMenu.Item

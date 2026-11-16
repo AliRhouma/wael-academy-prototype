@@ -15,6 +15,13 @@
      done    #F28B14  « انتهت »
    plus two chip tints for the panel headers (sky = live, violet = documents).
 
+   « موادي » adds one rule on top: colour MEANS something there. The open
+   chapitre is the deep ramp SOLID (`--v2-chapter`), white contenus on it; the
+   corner flag takes the kind (`--v2-kind-*`: teal cours, navy exercice, petrol
+   série, violet résumé, lime quiz); and lime stays what it has always been —
+   the one selected thing. Nothing on that page is the ramp at 25 % any more:
+   over a page that is itself the ramp at 10 %, a second wash reads as nothing.
+
    Utilities: `text-v2-ink`, `bg-v2-cta`, `border-v2-ink/15`, `bg-v2-grad`, …
    =========================================================================== */
 
@@ -26,7 +33,18 @@
   --v2-cta: #8aff6b;
   --v2-on-cta: #172e5b;
   --v2-live: #ff3b3e;
-  --v2-live-strong: #ff0004;
+  /* Red as TEXT. Was #ff0004 (4.0 : 1 on white); this holds 5.8 : 1, AA for
+     body sizes — the vivid --v2-live stays for fills, dots and borders. */
+  --v2-live-strong: #c8191c;
+
+  /* Secondary and tertiary ink, SOLID. Grey made by fading the navy
+     (text-v2-ink/45…/65) measured 2.5–3.9 : 1 on white and on the tinted
+     panels — under AA for every size we set it at (docs/mobile/
+     apple-design-audit.md, C1). Fading stays for disabled things (/40). */
+  --v2-ink-2: #586989; /* secondary — 5.5 : 1 on white, 5.2 : 1 on #f0f9fa */
+  --v2-ink-3: #687794; /* tertiary, placeholders, ≥ 13 pt only — 4.5 : 1 */
+  /* Teal as TEXT or a meaningful icon: the brand teal itself is 3.3 : 1. */
+  --v2-brand-text: #036b7a; /* 6.2 : 1 on white */
   --v2-live-soft: #ffe2e2;
   --v2-done: #f28b14;
   --v2-done-line: #f9b86c;
@@ -40,6 +58,29 @@
   --v2-rail: rgb(255 255 255 / 0.7);
   /* The running séance card: teal settling into the deep petrol, faint. */
   --v2-live-card: linear-gradient(180deg, rgb(4 145 165 / 0.26), rgb(8 67 75 / 0.26));
+
+  /* --- « موادي » -----------------------------------------------------------
+     The open chapitre used to be the brand ramp at 25 % laid over a page that
+     is ITSELF the ramp at 10 % — two washes stacked, which came out a colour
+     with no name: not teal, not white, just dim. So the open chapitre is now a
+     SOLID deep panel and the white contenus sit ON it. Figure and ground, one
+     glance. */
+  --v2-chapter: linear-gradient(150deg, #0a7d8e 0%, #08434b 62%, #062f36 100%);
+  --v2-on-chapter: #ffffff;
+  --v2-chapter-line: rgb(255 255 255 / 0.16);
+
+  /* The corner flag's colour IS the kind. Five hues, all of them the palette's
+     own: the teal, the navy, the petrol, the documents violet, the lime. */
+  --v2-kind-cours: #0491a5;
+  --v2-kind-exercice: #172e5b;
+  --v2-kind-serie: #08434b;
+  --v2-kind-resume: #7b4ddb; /* --v2-chip-docs, taken down far enough to carry white */
+  --v2-kind-quiz: #8aff6b;
+  --v2-on-kind: #ffffff;
+
+  /* Elevation, green-tinted — a card is lifted off the canvas by its shadow,
+     not by a 50 %-navy outline. */
+  --v2-shadow-rgb: 8 67 75;
 }
 
 /* Not in the Figma — derived so the theme toggle doesn't break the space. Same
@@ -53,6 +94,9 @@
   --v2-on-cta: #102246;
   --v2-live: #ff5a5d;
   --v2-live-strong: #ff7a7c;
+  --v2-ink-2: #a6aec1;
+  --v2-ink-3: #919aad;
+  --v2-brand-text: #29b8cc;
   --v2-live-soft: #3a1620;
   --v2-done: #f7a24a;
   --v2-done-line: #b8752c;
@@ -62,6 +106,17 @@
   --v2-canvas-base: #0a1428;
   --v2-rail: rgb(17 29 56 / 0.8);
   --v2-live-card: linear-gradient(180deg, rgb(4 145 165 / 0.3), rgb(8 67 75 / 0.45));
+  --v2-chapter: linear-gradient(150deg, #0d5a68 0%, #072b33 65%, #05202a 100%);
+  --v2-on-chapter: #eaf6f8;
+  --v2-chapter-line: rgb(255 255 255 / 0.12);
+  /* Lifted, because the flags sit on a night-navy card. */
+  --v2-kind-cours: #2bb5c9;
+  --v2-kind-exercice: #5074bd;
+  --v2-kind-serie: #1d8394;
+  --v2-kind-resume: #9b76ee;
+  --v2-kind-quiz: #8aff6b;
+  --v2-on-kind: #071726;
+  --v2-shadow-rgb: 0 0 0;
 }
 
 @theme inline {
@@ -73,12 +128,23 @@
   --color-v2-on-cta: var(--v2-on-cta);
   --color-v2-live: var(--v2-live);
   --color-v2-live-strong: var(--v2-live-strong);
+  --color-v2-ink-2: var(--v2-ink-2);
+  --color-v2-ink-3: var(--v2-ink-3);
+  --color-v2-brand-text: var(--v2-brand-text);
   --color-v2-live-soft: var(--v2-live-soft);
   --color-v2-done: var(--v2-done);
   --color-v2-done-line: var(--v2-done-line);
   --color-v2-chip-live: var(--v2-chip-live);
   --color-v2-chip-docs: var(--v2-chip-docs);
   --color-v2-rail: var(--v2-rail);
+  --color-v2-on-chapter: var(--v2-on-chapter);
+  --color-v2-chapter-line: var(--v2-chapter-line);
+  --color-v2-kind-cours: var(--v2-kind-cours);
+  --color-v2-kind-exercice: var(--v2-kind-exercice);
+  --color-v2-kind-serie: var(--v2-kind-serie);
+  --color-v2-kind-resume: var(--v2-kind-resume);
+  --color-v2-kind-quiz: var(--v2-kind-quiz);
+  --color-v2-on-kind: var(--v2-on-kind);
 }
 
 @utility bg-v2-grad {
@@ -142,15 +208,28 @@
   background-color: var(--v2-canvas-base);
   background-image: var(--v2-canvas);
 }
-/* « موادي » — the open chapitre's ground: the deep ramp laid diagonally at a
-   quarter strength, teal at the bottom start, petrol at the top end, exactly
-   as the frame runs it (518,1191 → 1881,594). And the same ramp at a quarter,
-   flat, for the shut chapitre's numbered disc. */
+/* « موادي » — the open chapitre's ground: the deep ramp at FULL strength, teal
+   at the start, petrol at the end. The frame ran it at 25 %; over the page's
+   own 10 % wash that read as nothing at all, so it is solid now and the white
+   contenus float on it. */
 @utility bg-v2-chapter {
-  background-image: linear-gradient(66deg, rgb(4 145 165 / 0.25), rgb(8 67 75 / 0.25));
+  background-image: var(--v2-chapter);
 }
-@utility bg-v2-grad-25 {
-  background-image: linear-gradient(135deg, rgb(4 145 165 / 0.25), rgb(8 67 75 / 0.25));
+
+/* Elevation for the space. Green-tinted in the day, plain black at night —
+   a forest shadow on a night ground just glows. */
+@utility shadow-v2-card {
+  box-shadow:
+    0 1px 2px rgb(var(--v2-shadow-rgb) / 0.05),
+    0 10px 24px -16px rgb(var(--v2-shadow-rgb) / 0.28);
+}
+@utility shadow-v2-lift {
+  box-shadow:
+    0 2px 6px rgb(var(--v2-shadow-rgb) / 0.08),
+    0 20px 40px -20px rgb(var(--v2-shadow-rgb) / 0.38);
+}
+@utility shadow-v2-panel {
+  box-shadow: 0 14px 34px -16px rgb(var(--v2-shadow-rgb) / 0.55);
 }
 @utility bg-v2-live-card {
   background-image: var(--v2-live-card);
@@ -197,4 +276,48 @@
 @keyframes v2-onair {
   from { transform: scale(1); opacity: 0.55; }
   to { transform: scale(2.6); opacity: 0; }
+}
+
+/* ---------- Skin hooks — the base (soft) side ----------
+   The components expose semantic classes (`.v2-cta`, `.v2-tile`, `.v2-ring`,
+   `.v2-ladder`…) and `src/styles/skins/play.css` dresses them for the
+   gamified skin. Under the flat skin they are mostly NO-OPS — the component's
+   own utilities are the look — and only the structural minimum lives here:
+   what an element needs in order to exist at all, skin or no skin. Nothing
+   below changes a pixel of the Figma look. */
+
+/* An element that exists for the play skin only (the countdown ring, the
+   stamp, the glyph plates): absent until that skin says otherwise. */
+.v2-play {
+  display: none;
+}
+
+/* The countdown ring — a square box, the SVG behind, the digits on top. */
+.v2-ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+.v2-ring > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  rotate: -90deg;
+}
+
+/* The celebration burst — particles the play skin animates; nothing here. */
+.v2-burst {
+  display: none;
+}
+
+/* A ticking number keeps its own box so the play skin can roll it. */
+.v2-num {
+  display: inline-block;
+}
+
+/* The chapitre ladder draws its rail from the steps' pseudo-elements, so
+   each step is a positioning box in BOTH skins (no rail under soft). */
+.v2-ladder-step {
+  position: relative;
 }

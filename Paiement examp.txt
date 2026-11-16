@@ -1,0 +1,348 @@
+{
+  "_note": "Fictional example. Shows the payment format of one élève, extended with every detail the Google Sheets hold (paiement élève 2026_2027 : Facilité خطوة بخطوة, Facilité الأوائل, Facilité منح, EN COURS, COMPLETED, Retour). All money is in millimes (1 DT = 1000 millimes). Each field that comes from a sheet column says so in `_sheetColumns`.",
+  "student": {
+    "userId": "00000000-0000-4000-8000-000000000001",
+    "name": "Élève Exemple",
+    "email": "eleve.exemple@example.com",
+    "phone": "00000000",
+    "secondaryPhone": "11111111",
+    "whatsapp": "00000000",
+    "inWhatsappGroup": true,
+    "level": "Bac",
+    "section": "Science",
+    "option": "Espagnol",
+    "address": "Rue Exemple, Ariana",
+    "_sheetColumns": {
+      "name": "Nom Prénom",
+      "email": "E-mail",
+      "phone": "Num téléphone / Numéro de télephone (first number; a second one may follow after « - »)",
+      "secondaryPhone": "Num téléphone (second number after « - »)",
+      "whatsapp": "Numéro de Whatsapp",
+      "inWhatsappGroup": "Groupe whatsappp / Whatsapp groupe (OUI / NON)",
+      "level": "Niveau (الأوائل, منح, EN COURS only — e.g. 1ére, 2éme, 3éme, 7éme, 8éme, Bac)",
+      "section": "Section",
+      "option": "Option"
+    }
+  },
+  "subscriptions": [
+    {
+      "id": "00000000-0000-4000-8000-000000000010",
+      "offerId": "00000000-0000-4000-8000-000000000020",
+      "offerName": "خطوة بخطوة سنوي",
+      "sheet": "Facilité خطوة بخطوة",
+      "startsAt": "2026-06-12T00:00:00.000Z",
+      "expiresAt": null,
+      "accessDeadline": "2027-06-30",
+      "status": "ACTIVE",
+      "sheetStatus": "En cours",
+      "priceMillimes": 2350000,
+      "subjectIds": [],
+      "books": ["SSd", "SMy", "SPd", "ESP"],
+      "tag": "Par tranches",
+      "contractNote": "300 DT à l'inscription, 300 DT à la livraison, puis 7 mensualités de 250 DT",
+      "promoCode": null,
+      "discountPercent": null,
+      "paymentMethod": "Jax",
+      "plan": {
+        "initialMillimes": 300000,
+        "secondTrancheMillimes": 300000,
+        "monthlyMillimes": 250000,
+        "remainingTranches": 7,
+        "paidTranchesLabel": "3/",
+        "_check": "initial + secondTranche + remainingTranches × monthly must equal priceMillimes (300 000 + 300 000 + 7 × 250 000 = 2 350 000)."
+      },
+      "delivery": {
+        "parcelStatus": "Livré",
+        "lastDeliveryDate": "2026-10-15",
+        "nextTrancheDate": "2026-11-15",
+        "followUpStatus": ">> WBP"
+      },
+      "comment": "Paiement mois août — tranche sept — tranche OCT",
+      "receiptNote": "Reçu photo envoyé sur WhatsApp",
+      "_sheetColumns": {
+        "offerName": "Offres (خطوة بخطوة سنوي, اوائل سنوي, …)",
+        "sheet": "which tab the row lives in: Facilité خطوة بخطوة / Facilité الأوائل / Facilité منح / EN COURS / COMPLETED / Retour",
+        "startsAt": "Date de début",
+        "expiresAt": "Date de fin",
+        "sheetStatus": "État (En cours, Pas commencé, Bloqué, …)",
+        "priceMillimes": "Prix Total",
+        "books": "Livres / livres (space- or slash-separated codes)",
+        "promoCode": "code promo / Code Promo (e.g. WA-D993, 30% (second child), 10%)",
+        "discountPercent": "% (منح only — scholarship percentage, e.g. 45)",
+        "paymentMethod": "Méthode de paiment (Jax, …)",
+        "plan.initialMillimes": "Prix Initial (1ère tranche)",
+        "plan.secondTrancheMillimes": "2eme tranche / Tranche 2 (empty in منح)",
+        "plan.monthlyMillimes": "Prix Par mois",
+        "plan.remainingTranches": "Nombres de tranche restant",
+        "plan.paidTranchesLabel": "Les tranches payées (e.g. 3/, COMPLETED, MENSUEL, GRATUIT)",
+        "delivery.parcelStatus": "État Colis (Livré, …) — Payée (OUI/NON) sits next to it",
+        "delivery.lastDeliveryDate": "dernière Livraison / Date de Livraison",
+        "delivery.nextTrancheDate": "prochaine tranche / prochaine tranche sera le :",
+        "delivery.followUpStatus": "états / État Colis (2nd one) — >> WBP, Pas encore, En cours, Urgent, annulé",
+        "comment": "Commentaire",
+        "receiptNote": "Réçu"
+      },
+      "installments": [
+        {
+          "id": "00000000-0000-4000-8000-000000000031",
+          "order": 0,
+          "label": "Prix Initial",
+          "amountMillimes": 300000,
+          "percentBps": null,
+          "dueDate": "2026-06-12"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000032",
+          "order": 1,
+          "label": "2ème tranche (à la livraison)",
+          "amountMillimes": 300000,
+          "percentBps": null,
+          "dueDate": "2026-07-15"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000033",
+          "order": 2,
+          "label": "Mensualité 1",
+          "amountMillimes": 250000,
+          "percentBps": null,
+          "dueDate": "2026-08-15"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000034",
+          "order": 3,
+          "label": "Mensualité 2",
+          "amountMillimes": 250000,
+          "percentBps": null,
+          "dueDate": "2026-09-15"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000035",
+          "order": 4,
+          "label": "Mensualité 3",
+          "amountMillimes": 250000,
+          "percentBps": null,
+          "dueDate": "2026-10-15"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000036",
+          "order": 5,
+          "label": "Mensualité 4",
+          "amountMillimes": 250000,
+          "percentBps": null,
+          "dueDate": "2026-11-15"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000037",
+          "order": 6,
+          "label": "Mensualité 5",
+          "amountMillimes": 250000,
+          "percentBps": null,
+          "dueDate": "2026-12-15"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000038",
+          "order": 7,
+          "label": "Mensualité 6",
+          "amountMillimes": 250000,
+          "percentBps": null,
+          "dueDate": "2027-01-15"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000039",
+          "order": 8,
+          "label": "Mensualité 7 (dernière)",
+          "amountMillimes": 250000,
+          "percentBps": null,
+          "dueDate": "2027-02-15"
+        }
+      ],
+      "transactions": [
+        {
+          "id": "00000000-0000-4000-8000-000000000041",
+          "amountMillimes": 300000,
+          "date": "2026-06-12",
+          "remarks": "Jax, Prix Initial à l'inscription",
+          "installmentId": "00000000-0000-4000-8000-000000000031",
+          "resources": [],
+          "createdAt": "2026-06-12T10:00:00.000Z"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000042",
+          "amountMillimes": 300000,
+          "date": "2026-07-15",
+          "remarks": "Jax, 2ème tranche à la livraison des livres",
+          "installmentId": "00000000-0000-4000-8000-000000000032",
+          "resources": [
+            {
+              "name": "Reçu",
+              "url": "https://example.com/recu-exemple-1.jpg",
+              "notes": "Photo du reçu Jax envoyée sur WhatsApp"
+            }
+          ],
+          "createdAt": "2026-07-15T14:20:00.000Z"
+        },
+        {
+          "id": "00000000-0000-4000-8000-000000000043",
+          "amountMillimes": 250000,
+          "date": "2026-10-15",
+          "remarks": "Jax, tranche OCT",
+          "installmentId": "00000000-0000-4000-8000-000000000033",
+          "resources": [
+            {
+              "name": "Reçu",
+              "url": "https://example.com/recu-exemple-2.jpg",
+              "notes": "N° d'opération 000000"
+            }
+          ],
+          "createdAt": "2026-10-15T09:30:00.000Z"
+        }
+      ]
+    }
+  ],
+  "paymentProofs": [
+    {
+      "id": "00000000-0000-4000-8000-000000000050",
+      "studentUserId": "00000000-0000-4000-8000-000000000001",
+      "offerId": "00000000-0000-4000-8000-000000000020",
+      "method": "JAX",
+      "reference": "000000",
+      "fileUrl": "https://example.com/recu-exemple-2.jpg",
+      "amountMillimes": 250000,
+      "paidMillimes": 250000,
+      "subjectIds": [],
+      "freeMonths": 0,
+      "promoCode": null,
+      "subscriptionId": "00000000-0000-4000-8000-000000000010",
+      "fileHash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "studentNote": "Tranche d'octobre",
+      "status": "CONFIRMED",
+      "createdAt": "2026-10-15T08:00:00.000Z",
+      "handledAt": "2026-10-15T09:30:00.000Z",
+      "handledBy": "00000000-0000-4000-8000-000000000002",
+      "events": [
+        {
+          "action": "SUBMITTED",
+          "comment": null,
+          "responsableKey": null,
+          "byUserId": "00000000-0000-4000-8000-000000000001",
+          "details": null,
+          "at": "2026-10-15T08:00:00.000Z"
+        },
+        {
+          "action": "CONFIRMED",
+          "comment": "Reçu Jax vérifié",
+          "responsableKey": 1,
+          "byUserId": "00000000-0000-4000-8000-000000000002",
+          "details": {
+            "offerId": "00000000-0000-4000-8000-000000000020",
+            "offerName": "خطوة بخطوة سنوي",
+            "startsAt": "2026-06-12T00:00:00.000Z",
+            "expiresAt": null,
+            "priceMillimes": 2350000,
+            "activation": "existing"
+          },
+          "at": "2026-10-15T09:30:00.000Z"
+        }
+      ]
+    }
+  ],
+  "sheetRow": {
+    "_note": "The raw row as it appears in the sheet, column names kept exactly. Useful for import and for showing the office the line they know. Columns differ slightly per tab; the three variants are listed below.",
+    "sheet": "Facilité خطوة بخطوة",
+    "row": {
+      "Nom Prénom": "Élève Exemple",
+      "Offres": "خطوة بخطوة سنوي",
+      "E-mail": "eleve.exemple@example.com",
+      "État": "En cours",
+      "Date de début": "12/06/2026",
+      "Date de fin": "",
+      "Num téléphone": "00000000-11111111",
+      "Numéro de Whatsapp": "00000000",
+      "Groupe whatsappp": "OUI",
+      "Section": "Science",
+      "Option": "Espagnol",
+      "Payée": "OUI",
+      "État Colis": "Livré",
+      "Adresse ": "Rue Exemple, Ariana",
+      "Livres": "SSd SMy SPd ESP",
+      "code promo": "",
+      "Prix Total": "2350",
+      "Prix Initial": "300",
+      "2eme tranche": "300",
+      "Nombres de tranche restant": "7",
+      "Prix Par mois": "250",
+      "dernière Livraison": "15/10/2026",
+      "prochaine tranche ": "15/11/2026",
+      "états": ">> WBP",
+      "Les tranches payées": "3/",
+      "Méthode de paiment": "Jax",
+      "Commentaire": "Paiement mois août — tranche sept — tranche OCT",
+      "Réçu": "Reçu photo envoyé sur WhatsApp"
+    },
+    "variants": {
+      "Facilité الأوائل / EN COURS": {
+        "_differences": "Offres = اوائل سنوي ; has « Niveau » (1ére…8éme) ; « Tranche 2 » instead of « 2eme tranche » ; « Date de Livraison » and « prochaine tranche sera le : » ; a second « État Colis » column holds the follow-up status (WBP, Pas encore, annulé) ; « Code Promo » may hold « 30% (second child) ». Standard price 950 = 250 + 100 + 6 × 100 ; sibling price 665.",
+        "example": {
+          "Nom prénom": "Élève Exemple 2",
+          "Offres": "اوائل سنوي",
+          "Niveau ": "3éme",
+          "Section": "Lettres",
+          "Code Promo": "30% (second child)",
+          "Prix Total": "665",
+          "Prix Initial": "250",
+          "Tranche 2": "80",
+          "Nombres de tranche restant": "4",
+          "Prix Par mois": "80",
+          "Date de Livraison": "08/10/2026",
+          "prochaine tranche sera le :": "08/11/2026",
+          "État Colis": "Pas encore",
+          "Les tranches payées": "2/"
+        }
+      },
+      "Facilité منح": {
+        "_differences": "Scholarship tab. Has a « % » column (discount, e.g. 45) ; « 2eme tranche » is empty ; « Prix Par mois » comes before « Nombres de tranche restant ». Price = 300 + n × monthly (e.g. 1292 = 300 + 9 × 110,2).",
+        "example": {
+          "Nom prénom": "Élève Exemple 3",
+          "Offres": "خطوة بخطوة سنوي",
+          "Niveau ": "Bac",
+          "%": "45",
+          "Prix Total": "1292",
+          "Prix Initial": "300",
+          "2eme tranche": "",
+          "Prix Par mois": "110,2",
+          "Nombres de tranche restant": "9",
+          "Les tranches payées": "3/"
+        }
+      },
+      "COMPLETED / Retour": {
+        "_differences": "Same columns as the Facilité tab of the same offer. COMPLETED = everything paid (Les tranches payées = COMPLETED). Retour = students who left or were refunded."
+      }
+    },
+    "specialValues": {
+      "x": "not filled yet (all four price cells at « x » with Payée = OUI means a single payment was made)",
+      "MENSUEL": "monthly offer, no tranche plan",
+      "GRATUIT / gratuit": "free access, nothing to pay",
+      "COMPLETED": "all tranches paid",
+      "*, ^^, mai, 675 fevrier, MATIERE": "placeholders typed by hand — treat as missing"
+    }
+  },
+  "computedView": {
+    "_note": "Not stored: worked out from installments and transactions, which fill tranches in date order. paidTranchesLabel in the sheet (« 3/ ») must match the number of installments with status « payée ».",
+    "totalMillimes": 2350000,
+    "paidMillimes": 850000,
+    "remainingMillimes": 1500000,
+    "remainingTranches": 6,
+    "planIsConsistent": true,
+    "installmentStatus": [
+      { "order": 0, "label": "Prix Initial", "dueDate": "2026-06-12", "paidMillimes": 300000, "status": "payée" },
+      { "order": 1, "label": "2ème tranche", "dueDate": "2026-07-15", "paidMillimes": 300000, "status": "payée" },
+      { "order": 2, "label": "Mensualité 1", "dueDate": "2026-08-15", "paidMillimes": 250000, "status": "payée" },
+      { "order": 3, "label": "Mensualité 2", "dueDate": "2026-09-15", "paidMillimes": 0, "status": "en retard" },
+      { "order": 4, "label": "Mensualité 3", "dueDate": "2026-10-15", "paidMillimes": 0, "status": "en retard" },
+      { "order": 5, "label": "Mensualité 4", "dueDate": "2026-11-15", "paidMillimes": 0, "status": "à venir" },
+      { "order": 6, "label": "Mensualité 5", "dueDate": "2026-12-15", "paidMillimes": 0, "status": "à venir" },
+      { "order": 7, "label": "Mensualité 6", "dueDate": "2027-01-15", "paidMillimes": 0, "status": "à venir" },
+      { "order": 8, "label": "Mensualité 7 (dernière)", "dueDate": "2027-02-15", "paidMillimes": 0, "status": "à venir" }
+    ]
+  }
+}

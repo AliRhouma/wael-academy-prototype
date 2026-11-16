@@ -1,9 +1,10 @@
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react"
 import { Eye, Layers, RotateCcw, Volume2, X } from "lucide-react"
-import { setGazeMode, useGazeMode } from "@/app/gaze"
+import type { PackName } from "uisfx"
+import { setGazeMode, useGazeMode, type GazeMode } from "@/app/gaze"
 import { useMediaQuery } from "@/lib/hooks"
 import { cn } from "@/lib/utils"
-import { PACK_LABELS, setSoundEnabled, setSoundPack, useSound } from "./sound"
+import { applySound, PACK_LABELS, setSoundEnabled, setSoundPack, useSound } from "./sound"
 
 /**
  * The states each panel of the new space can be in, and a small dock to flip
@@ -73,11 +74,65 @@ function fromUrl(): Partial<DemoStates> {
   return out as Partial<DemoStates>
 }
 
-export function DemoStatesProvider({ children }: { children: ReactNode }) {
+/**
+ * The mobile gallery shows the space in two phones at once, and flips their
+ * states from ONE panel on its own page. The gallery's provider LEADS — it
+ * posts every change, and answers a phone that (re)loads and says hello; the
+ * providers inside the phones FOLLOW and draw no dock of their own. Same
+ * origin, so a BroadcastChannel is the whole wire. Sound and the eyes ride
+ * along: they are module state, one copy per window.
+ */
+export type StatesSync = "lead" | "follow"
+
+const CHANNEL = "wael-v2:states"
+
+interface Snapshot {
+  type: "sync"
+  states: DemoStates
+  sound: { enabled: boolean; pack: PackName }
+  gaze: GazeMode
+}
+type Message = Snapshot | { type: "hello" }
+
+function useStatesSync(sync: StatesSync | undefined, states: DemoStates, apply: (s: DemoStates) => void) {
+  const { enabled, pack } = useSound()
+  const gaze = useGazeMode()
+  const channel = useRef<BroadcastChannel | null>(null)
+  const latest = useRef<Snapshot | null>(null)
+
+  useEffect(() => {
+    if (!sync || typeof BroadcastChannel === "undefined") return
+    const ch = new BroadcastChannel(CHANNEL)
+    channel.current = ch
+    ch.onmessage = (e: MessageEvent<Message>) => {
+      const m = e.data
+      if (sync === "lead" && m.type === "hello" && latest.current) ch.postMessage(latest.current)
+      if (sync === "follow" && m.type === "sync") {
+        apply(m.states)
+        applySound(m.sound)
+        setGazeMode(m.gaze)
+      }
+    }
+    if (sync === "follow") ch.postMessage({ type: "hello" } satisfies Message)
+    return () => {
+      ch.close()
+      channel.current = null
+    }
+  }, [sync, apply])
+
+  useEffect(() => {
+    const snapshot: Snapshot = { type: "sync", states, sound: { enabled, pack }, gaze }
+    latest.current = snapshot
+    if (sync === "lead") channel.current?.postMessage(snapshot)
+  }, [sync, states, enabled, pack, gaze])
+}
+
+export function DemoStatesProvider({ children, sync }: { children: ReactNode; sync?: StatesSync }) {
   const [states, setStates] = useState<DemoStates>(() => ({ ...INITIAL, ...fromUrl(), anchor: Date.now() }))
   const set: Ctx["set"] = (key, value) =>
     setStates((s) => ({ ...s, [key]: value, anchor: key === "live" ? Date.now() : s.anchor }))
   const reset = () => setStates({ ...INITIAL, anchor: Date.now() })
+  useStatesSync(sync, states, setStates)
   return (
     <DemoStatesContext.Provider value={{ states, set, reset }}>{children}</DemoStatesContext.Provider>
   )
@@ -164,21 +219,43 @@ const ROWS: { key: Key; label: string; options: { value: string; label: string }
 ]
 
 /**
+ * Where the controls are drawn: `light` on the app's own surface (the dock
+ * inside the space), `dark` on the mobile gallery's petrol ground.
+ */
+type Tone = "light" | "dark"
+
+const chipClass = (tone: Tone, active: boolean) =>
+  cn(
+    "min-h-9 rounded-full border px-3 text-[calc(8px*var(--ts))] font-semibold transition",
+    tone === "light"
+      ? active
+        ? "border-transparent bg-v2-grad text-white"
+        : "border-v2-ink/15 text-v2-ink/75 hover:border-v2-brand/50 hover:text-v2-ink"
+      : active
+        ? "border-transparent bg-v2-cta text-v2-on-cta"
+        : "border-white/20 text-white/75 hover:bg-white/10 hover:text-white",
+  )
+
+const labelClass = (tone: Tone) =>
+  cn(
+    "mb-1.5 flex items-center gap-1.5 text-[calc(8px*var(--ts))] font-semibold",
+    tone === "light" ? "text-v2-ink/70" : "text-white/70",
+  )
+
+const hintClass = (tone: Tone) => (tone === "light" ? "font-normal text-v2-ink-2" : "font-normal text-white/45")
+
+/**
  * Sound — on/off and the FEEL, auditioned in place: picking a pack switches
  * the whole space to it and plays a sample, so the twelve can be compared by
  * ear in a few taps. Remembered (see `sound.ts`).
  */
-function SoundRow() {
+function SoundRow({ tone }: { tone: Tone }) {
   const { enabled, pack } = useSound()
-  const chip = (active: boolean) =>
-    cn(
-      "min-h-9 rounded-full border px-3 text-[calc(7.5px*var(--ts))] font-semibold transition",
-      active ? "border-transparent bg-v2-grad text-white" : "border-v2-ink/15 text-v2-ink/75 hover:border-v2-brand/50 hover:text-v2-ink",
-    )
+  const chip = (active: boolean) => cn(chipClass(tone, active), "text-[calc(7.5px*var(--ts))]")
   return (
     <div>
-      <p className="mb-1.5 flex items-center gap-1.5 text-[calc(8px*var(--ts))] font-semibold text-v2-ink/70">
-        <Volume2 className="size-4" /> الأصوات <span className="font-normal text-v2-ink/45">· UI SFX (CC0)</span>
+      <p className={labelClass(tone)}>
+        <Volume2 className="size-4" /> الأصوات <span className={hintClass(tone)}>· UI SFX (CC0)</span>
       </p>
       <div className="flex flex-wrap gap-1.5">
         <button type="button" aria-pressed={enabled} onClick={() => setSoundEnabled(true)} className={chip(enabled)}>
@@ -216,7 +293,7 @@ function SoundRow() {
  * thing that silences them without that switch — the system's reduced-motion
  * setting (Windows: « Animation effects » off), which the overlay honours.
  */
-function GazeRow() {
+function GazeRow({ tone }: { tone: Tone }) {
   const mode = useGazeMode()
   const fine = useMediaQuery("(any-pointer: fine)")
   const calm = useMediaQuery("(prefers-reduced-motion: reduce)")
@@ -224,29 +301,21 @@ function GazeRow() {
 
   return (
     <div>
-      <p className="mb-1.5 flex items-center gap-1.5 text-[calc(8px*var(--ts))] font-semibold text-v2-ink/70">
-        <Eye className="size-4" /> عيون وائل <span className="font-normal text-v2-ink/45">· زرّ S</span>
+      <p className={labelClass(tone)}>
+        <Eye className="size-4" /> عيون وائل <span className={hintClass(tone)}>· زرّ S</span>
       </p>
       <div className="flex flex-wrap gap-1.5">
-        {([true, false] as const).map((value) => {
-          const active = on === value
-          return (
-            <button
-              key={String(value)}
-              type="button"
-              aria-pressed={active}
-              data-uisfx={value ? "wake" : "sleep"} onClick={() => setGazeMode(value ? (mode === "always" ? "always" : "on") : "off")}
-              className={cn(
-                "min-h-9 rounded-full border px-3 text-[calc(8px*var(--ts))] font-semibold transition",
-                active
-                  ? "border-transparent bg-v2-grad text-white"
-                  : "border-v2-ink/15 text-v2-ink/75 hover:border-v2-brand/50 hover:text-v2-ink",
-              )}
-            >
-              {value ? "تتبّع الفأرة" : "ثابتة"}
-            </button>
-          )
-        })}
+        {([true, false] as const).map((value) => (
+          <button
+            key={String(value)}
+            type="button"
+            aria-pressed={on === value}
+            data-uisfx={value ? "wake" : "sleep"} onClick={() => setGazeMode(value ? (mode === "always" ? "always" : "on") : "off")}
+            className={chipClass(tone, on === value)}
+          >
+            {value ? "تتبّع الفأرة" : "ثابتة"}
+          </button>
+        ))}
       </div>
       {on && !fine && (
         <p className="mt-1.5 text-[calc(7px*var(--ts))] leading-relaxed text-v2-live-strong">ما تخدمش باللمس — تحتاج فأرة.</p>
@@ -266,7 +335,7 @@ function GazeRow() {
         </div>
       )}
       {mode === "always" && calm && (
-        <p className="mt-1.5 text-[calc(7px*var(--ts))] leading-relaxed text-v2-ink/55">
+        <p className={cn("mt-1.5 text-[calc(7px*var(--ts))] leading-relaxed", tone === "light" ? "text-v2-ink-2" : "text-white/55")}>
           تخدم رغم إعداد « حركة أقل » متاع النظام.
         </p>
       )}
@@ -274,16 +343,109 @@ function GazeRow() {
   )
 }
 
+/** Every row of the panel — the same in the dock and on the gallery page. */
+function StatesRows({ tone }: { tone: Tone }) {
+  const ctx = useContext(DemoStatesContext)
+  if (!ctx) return null
+  const { states, set } = ctx
+  return (
+    <div className="flex flex-col gap-3 p-4">
+      <SoundRow tone={tone} />
+      <GazeRow tone={tone} />
+      {ROWS.map((row) => (
+        <div key={row.key}>
+          <p className={labelClass(tone)}>{row.label}</p>
+          <div className="flex flex-wrap gap-1.5">
+            {row.options.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                aria-pressed={states[row.key] === o.value}
+                data-uisfx="toggle-on" onClick={() => set(row.key, o.value as never)}
+                className={chipClass(tone, states[row.key] === o.value)}
+              >
+                {o.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** How many panels are forced off the truth — the dock's badge, the panel's count. */
+function useForced(): number {
+  const ctx = useContext(DemoStatesContext)
+  return ctx ? ROWS.filter((r) => ctx.states[r.key] !== "auto").length : 0
+}
+
+/**
+ * The panel on the mobile gallery's page — open beside the phones, driving
+ * both of them at once (its provider leads, see `StatesSync`). `onClose` only
+ * where it is drawn as a drawer, on a screen too narrow to keep it open.
+ */
+export function StatesPanel({ onClose, className }: { onClose?: () => void; className?: string }) {
+  const ctx = useContext(DemoStatesContext)
+  const forced = useForced()
+  if (!ctx) return null
+  return (
+    <section
+      aria-label="حالات الشاشة"
+      className={cn("flex min-h-0 flex-col rounded-3xl border border-white/15 bg-white/[0.04] text-white", className)}
+    >
+      <div className="flex items-center justify-between gap-2 border-b border-white/10 px-4 py-3">
+        <div className="flex items-center gap-2.5">
+          <span className="grid size-9 shrink-0 place-items-center rounded-full bg-v2-grad">
+            <Layers className="size-4" />
+          </span>
+          <div>
+            <p className="text-[calc(10px*var(--ts))] font-bold">حالات الشاشة</p>
+            <p className="text-[calc(7.5px*var(--ts))] text-white/55">
+              {forced > 0 ? `${forced} مبدّلة · للهاتفين مع بعض` : "للهاتفين مع بعض — ما يبدّل حتّى داتا."}
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            data-uisfx="undo" onClick={ctx.reset}
+            aria-label="رجّع الكل للحقيقي"
+            title="رجّع الكل للحقيقي"
+            className="grid size-9 place-items-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white"
+          >
+            <RotateCcw className="size-4" />
+          </button>
+          {onClose && (
+            <button
+              type="button"
+              data-uisfx="close" onClick={onClose}
+              aria-label="سكّر"
+              className="grid size-9 place-items-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white"
+            >
+              <X className="size-4" />
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto scroll-touch">
+        <StatesRows tone="dark" />
+      </div>
+    </section>
+  )
+}
+
 /** The floating « حالات » button + popover. Sits under the palette dock. */
 export function StatesDock() {
   const ctx = useContext(DemoStatesContext)
   const [open, setOpen] = useState(false)
+  const forced = useForced()
   if (!ctx) return null
-  const { states, set, reset } = ctx
-  const forced = ROWS.filter((r) => states[r.key] !== "auto").length
 
   return (
-    <div className="fixed bottom-24 end-4 z-50 lg:bottom-6 lg:end-6">
+    // Above the phone's tab bar, whichever platform drew it: the bar's own
+    // height plus the system inset it keeps clear of (see src/app/platform.ts).
+    <div className="fixed bottom-[calc(var(--sai-bottom)+6rem)] end-4 z-50 lg:bottom-6 lg:end-6">
       {open && (
         <div
           role="dialog"
@@ -293,14 +455,14 @@ export function StatesDock() {
           <div className="flex items-center justify-between gap-2 border-b border-v2-ink/10 px-4 py-3">
             <div>
               <p className="text-[calc(10px*var(--ts))] font-bold">حالات الشاشة</p>
-              <p className="text-[calc(7.5px*var(--ts))] text-v2-ink/55">نموذج فقط — ما يبدّل حتّى داتا.</p>
+              <p className="text-[calc(7.5px*var(--ts))] text-v2-ink-2">نموذج فقط — ما يبدّل حتّى داتا.</p>
             </div>
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                data-uisfx="undo" onClick={reset}
+                data-uisfx="undo" onClick={ctx.reset}
                 aria-label="رجّع الكل للحقيقي"
-                className="grid size-9 place-items-center rounded-full text-v2-ink/60 transition hover:bg-v2-ink/5 hover:text-v2-ink"
+                className="grid size-9 place-items-center rounded-full text-v2-ink-2 transition hover:bg-v2-ink/5 hover:text-v2-ink"
               >
                 <RotateCcw className="size-4" />
               </button>
@@ -308,42 +470,13 @@ export function StatesDock() {
                 type="button"
                 data-uisfx="close" onClick={() => setOpen(false)}
                 aria-label="سكّر"
-                className="grid size-9 place-items-center rounded-full text-v2-ink/60 transition hover:bg-v2-ink/5 hover:text-v2-ink"
+                className="grid size-9 place-items-center rounded-full text-v2-ink-2 transition hover:bg-v2-ink/5 hover:text-v2-ink"
               >
                 <X className="size-4" />
               </button>
             </div>
           </div>
-          <div className="flex flex-col gap-3 p-4">
-            <SoundRow />
-            <GazeRow />
-            {ROWS.map((row) => (
-              <div key={row.key}>
-                <p className="mb-1.5 text-[calc(8px*var(--ts))] font-semibold text-v2-ink/70">{row.label}</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {row.options.map((o) => {
-                    const active = states[row.key] === o.value
-                    return (
-                      <button
-                        key={o.value}
-                        type="button"
-                        aria-pressed={active}
-                        data-uisfx="toggle-on" onClick={() => set(row.key, o.value as never)}
-                        className={cn(
-                          "min-h-9 rounded-full border px-3 text-[calc(8px*var(--ts))] font-semibold transition",
-                          active
-                            ? "border-transparent bg-v2-grad text-white"
-                            : "border-v2-ink/15 text-v2-ink/75 hover:border-v2-brand/50 hover:text-v2-ink",
-                        )}
-                      >
-                        {o.label}
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
+          <StatesRows tone="light" />
         </div>
       )}
       <button

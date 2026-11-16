@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assets de la ville</title>
+<style>
+  /* Same token set as docs/features.html so the docs read as one family. */
+  :root{--ink:#172e5b;--ink2:#586989;--teal:#0491a5;--teal-text:#036b7a;--lime:#8aff6b;--live:#c8191c;--done:#f28b14;--ok:#1f8a4c;--bg:#f3f7f9;--panel:#fff;--line:rgb(23 46 91/.12);--shadow:0 1px 2px rgb(4 145 165/.08),0 8px 24px rgb(4 145 165/.08)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e6edfb;--ink2:#a6aec1;--teal:#29b8cc;--teal-text:#29b8cc;--ok:#4cc98a;--bg:#0a1428;--panel:#111d38;--line:rgb(255 255 255/.12);--shadow:none}}
+  :root[data-theme="dark"]{--ink:#e6edfb;--ink2:#a6aec1;--teal:#29b8cc;--teal-text:#29b8cc;--ok:#4cc98a;--bg:#0a1428;--panel:#111d38;--line:rgb(255 255 255/.12);--shadow:none}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Rubik,sans-serif}
+  .wrap{max-width:1200px;margin:0 auto;padding:28px 16px 64px}
+  h1{font-size:28px;line-height:1.2;margin:0 0 6px}
+  .sub{color:var(--ink2);margin:0 0 20px;max-width:760px}
+  .note{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;color:var(--ink2);font-size:13px;margin-bottom:20px}
+  .note b{color:var(--ink)}
+  .reco{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:28px}
+  .reco div{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow)}
+  .reco h3{margin:0 0 4px;font-size:15px}
+  .reco p{margin:0;color:var(--ink2);font-size:13.5px}
+  .reco .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal-text);margin-bottom:4px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5}
+  .chip{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:9px 14px;min-height:40px;font:inherit;font-size:14px;cursor:pointer}
+  .chip:hover{border-color:var(--teal)}
+  .chip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+  .count{margin-inline-start:auto;align-self:center;color:var(--ink2);font-size:13px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+  @media (max-width:420px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow)}
+  .card.rejected{opacity:.78}
+  .stage{position:relative;aspect-ratio:16/10;background:#e9eef1 repeating-conic-gradient(#e2e8ec 0 25%,transparent 0 50%) 0 0/20px 20px;cursor:zoom-in}
+  .stage img{width:100%;height:100%;object-fit:contain;display:block}
+  .stage .num{position:absolute;inset-block-start:10px;inset-inline-start:10px;background:rgb(23 46 91/.85);color:#fff;font-weight:700;font-size:12px;border-radius:8px;padding:3px 8px}
+  .stage .broken{position:absolute;inset:0;display:none;place-items:center;color:#586989;font-size:13px;text-align:center;padding:20px}
+  .stage.fail img{visibility:hidden}.stage.fail .broken{display:grid}
+  .thumbs{display:flex;gap:6px;padding:8px 10px 0;overflow-x:auto}
+  .thumbs button{flex:0 0 64px;height:42px;border:2px solid transparent;border-radius:8px;padding:0;overflow:hidden;cursor:pointer;background:#e9eef1}
+  .thumbs button[aria-current="true"]{border-color:var(--teal)}
+  .thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+  .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .title{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+  .title h2{font-size:16px;margin:0;line-height:1.3}
+  .stars{white-space:nowrap;font-size:13px;color:var(--done);letter-spacing:1px}
+  .stars span{color:var(--line)}
+  .badges{display:flex;flex-wrap:wrap;gap:6px}
+  .b{font-size:12px;font-weight:600;border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--ink2)}
+  .b.cc0{background:rgb(31 138 76/.12);color:var(--ok);border-color:transparent}
+  .b.custom{background:rgb(242 139 20/.14);color:#b45f00;border-color:transparent}
+  .b.bad{background:rgb(200 25 28/.12);color:var(--live);border-color:transparent}
+  .b.kind{color:var(--teal-text)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .b.custom{color:#ffb35c}}
+  .desc{margin:0;color:var(--ink2);font-size:13.5px}
+  dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:12.5px}
+  dt{color:var(--ink2)}dd{margin:0}
+  .go{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;border-radius:12px;background:var(--teal);color:#fff;text-decoration:none;font-weight:600;font-size:14px}
+  .go:hover{filter:brightness(1.08)}
+  .empty{display:none;text-align:center;color:var(--ink2);padding:40px 0}
+  .lb{position:fixed;inset:0;background:rgb(10 20 40/.9);display:none;place-items:center;z-index:20;padding:16px;cursor:zoom-out}
+  .lb.open{display:grid}
+  .lb img{max-width:100%;max-height:88vh;border-radius:10px;background:#fff}
+  .lb p{color:#fff;text-align:center;margin:10px 0 0;font-size:14px}
+  footer{margin-top:36px;color:var(--ink2);font-size:12.5px}
+  a{color:var(--teal-text)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Assets pour la ville isométrique</h1>
+  <p class="sub">Les 18 packs trouvés pendant la recherche, plus les écartés, avec leurs aperçus. Les images sont chargées depuis le site de chaque auteur&nbsp;: rien n’est téléchargé dans le projet. Détails et recommandation complète&nbsp;: <a href="town-assets.md">town-assets.md</a>.</p>
+
+  <div class="note"><b>À retenir&nbsp;:</b> les images viennent d’internet (itch.io, kenney.nl…), donc il faut être connecté. La licence de chaque pack a été lue sur sa page le 2026-11-15&nbsp;; faire une capture de la page licence le jour du téléchargement.</div>
+
+  <div class="reco">
+    <div><span class="tag">Recommandé · 100 % CC0</span><h3>KayKit + Kenney + Quaternius (3D)</h3><p>Rendus en isométrique 2:1 dans Blender avec une seule lumière et recolorés aux couleurs Wael&nbsp;: un look cohérent et propre à Wael.</p></div>
+    <div><span class="tag">Le plus rapide · 2D</span><h3>Penzilla Giant City Builder</h3><p>Le plus proche de l’image cible, avec une école et un musée. Licence maison&nbsp;: crédit obligatoire, 1 projet. 10&nbsp;$.</p></div>
+    <div><span class="tag">Manque partout</span><h3>Bâtiments éducatifs</h3><p>Bibliothèque, labo, tour des maths, école de musique, mairie&nbsp;: à assembler en 3D (kitbash) ou à commander à un illustrateur.</p></div>
+  </div>
+
+  <div class="filters" role="toolbar" aria-label="Filtres">
+    <button class="chip" data-f="all" aria-pressed="true">Tous</button>
+    <button class="chip" data-f="2d" aria-pressed="false">2D prêts à l’emploi</button>
+    <button class="chip" data-f="3d" aria-pressed="false">3D à rendre</button>
+    <button class="chip" data-f="cc0" aria-pressed="false">CC0 seulement</button>
+    <button class="chip" data-f="top" aria-pressed="false">Style 4–5</button>
+    <button class="chip" data-f="rejected" aria-pressed="false">Écartés</button>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty">Aucun pack ne correspond à ce filtre.</p>
+
+  <footer>Source&nbsp;: recherche du 2026-11-15 (session « Project overview »). Les aperçus restent la propriété de leurs auteurs et ne servent ici qu’à comparer.</footer>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Aperçu agrandi"><div><img id="lbimg" alt=""><p id="lbcap"></p></div></div>
+
+<script>
+const IZ = "https://img.itch.zone/";
+const K = "https://kenney.nl/media/pages/assets/";
+const PACKS = [
+  {n:1,name:"Penzilla — Free City Builder",url:"https://penzilla.itch.io/free-city-builder",kind:"2d",lic:"custom",licText:"Licence maison (crédit, 1 projet)",style:5,
+   desc:"Dessiné à la main, chaleureux et coloré : le plus proche de l’image cible sans copier un jeu.",contents:"50 éléments : bâtiments, décor, tuiles",format:"PNG",tile:"512×292 (≈1,75:1, pas 2:1)",credit:"« Graphics created by Penzilla Design »",
+   imgs:[IZ+"aW1nLzE4MTYyNTM5LnBuZw==/original/kF6gIX.png",IZ+"aW1hZ2UvMzAzNjk3NC8xODg2MDgyMi5wbmc=/original/2yuIuE.png",IZ+"aW1hZ2UvMzAzNjk3NC8xODg2MDY5MC5wbmc=/original/axIo8f.png",IZ+"aW1hZ2UvMzAzNjk3NC8xODg2MDc0MS5wbmc=/original/7IZytC.png"]},
+  {n:2,name:"Penzilla — Giant City Builder (10 $)",url:"https://penzilla.itch.io/giant-city-builder",kind:"2d",lic:"custom",licText:"Licence maison (crédit, 1 projet)",style:5,
+   desc:"Version complète du n°1. Le seul pack avec une école et un musée.",contents:"500+ éléments : 61 bâtiments publics, 76 boutiques, maisons, 225 décors, 50 véhicules",format:"PNG",tile:"512×292",credit:"« Graphics created by Penzilla Design »",
+   imgs:[IZ+"aW1nLzE4MTU4ODk0LnBuZw==/original/o76C9Q.png",IZ+"aW1hZ2UvMzAzNjI1Ny8xODg2MDMyMC5wbmc=/original/9MOoEe.png",IZ+"aW1hZ2UvMzAzNjI1Ny8xODg2MDMxOS5wbmc=/original/XSFehk.png",IZ+"aW1hZ2UvMzAzNjI1Ny8xODg2MDM5Ny5wbmc=/original/e%2BjhaP.png"]},
+  {n:3,name:"Kenney — Isometric Tiles City",url:"https://kenney.nl/assets/isometric-tiles-city",kind:"2d",lic:"cc0",licText:"CC0",style:3,
+   desc:"Routes, parkings, lampadaires, arrêts de bus, arbres. Propre mais générique.",contents:"128 fichiers",format:"PNG + spritesheet",tile:"Iso 2:1",credit:"Non",
+   imgs:[K+"isometric-tiles-city/7a380d24eb-1677695022/preview.png"]},
+  {n:"3b",name:"Kenney — Isometric Tiles Buildings",url:"https://kenney.nl/assets/isometric-tiles-buildings",kind:"2d",lic:"cc0",licText:"CC0",style:3,
+   desc:"Bâtiments modulaires à empiler. Aucun bâtiment éducatif.",contents:"128 fichiers",format:"PNG + spritesheet",tile:"Iso 2:1",credit:"Non",
+   imgs:[K+"isometric-tiles-buildings/cdbefb2c03-1677694977/preview.png",K+"isometric-tiles-buildings/bac1f1ba5a-1677694980/sample.png"]},
+  {n:"3c",name:"Kenney — Isometric Tiles Landscape",url:"https://kenney.nl/assets/isometric-tiles-landscape",kind:"2d",lic:"cc0",licText:"CC0",style:3,
+   desc:"Sol, herbe, eau et relief dans la même famille.",contents:"Tuiles de paysage",format:"PNG",tile:"Iso 2:1",credit:"Non",
+   imgs:[K+"isometric-tiles-landscape/3d2ca98635-1677695068/preview.png"]},
+  {n:"3d",name:"Kenney — Isometric Tiles Vehicles",url:"https://kenney.nl/assets/isometric-tiles-vehicles",kind:"2d",lic:"cc0",licText:"CC0",style:3,
+   desc:"Police, ambulance, taxi, camion poubelle, voitures en 5 couleurs, 8 directions.",contents:"Véhicules",format:"PNG",tile:"Iso 2:1",credit:"Non",
+   imgs:[K+"isometric-tiles-vehicles/a58c19b4f1-1677695114/preview.png",K+"isometric-tiles-vehicles/8983055a32-1677695116/sample.png"]},
+  {n:4,name:"Kenney — Isometric Roads",url:"https://kenney.nl/assets/isometric-roads",kind:"2d",lic:"cc0",licText:"CC0",style:3,
+   desc:"Utile pour le réseau routier : routes, collines, eau, plage, arbres.",contents:"95 fichiers",format:"PNG",tile:"Iso 2:1",credit:"Non",
+   imgs:[K+"isometric-roads/aff462257f-1677695242/preview.jpg"]},
+  {n:5,name:"Buggy Studio — Isometric City Pack",url:"https://buggystudio.itch.io/isometric-city-pack",kind:"2d",lic:"cc0",licText:"CC0 (commentaire de l’auteur)",style:3,
+   desc:"2D avec contours, lisible. Hôpital et caserne de pompiers. CC0 seulement dit dans un commentaire : à vérifier.",contents:"~500 sprites : 52 bâtiments, 108 sols/routes, 23 véhicules, 52 accessoires",format:"PNG",tile:"Non précisé",credit:"Non",
+   imgs:[IZ+"aW1nLzI5MDQwNjE3LnBuZw==/original/nNk2mA.png",IZ+"aW1hZ2UvMTM4Mjk1Mi8yOTA0MDYyNi5wbmc=/original/YXWxCN.png",IZ+"aW1hZ2UvMTM4Mjk1Mi8yOTA0MDYyOS5wbmc=/original/LJ1Blu.png",IZ+"aW1hZ2UvMTM4Mjk1Mi8yOTA0MDYzMi5wbmc=/original/2xK6r2.png"]},
+  {n:6,name:"styloo — 2D Village",url:"https://styloo.itch.io/2d-village",kind:"2d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Cartoon coloré en rendu 3D stylisé, avec ou sans contour. Angle à vérifier.",contents:"500+ sprites, 8 directions",format:"PNG transparents",tile:"Angle à vérifier",credit:"Non",
+   imgs:[IZ+"aW1nLzk3NTY2NzcuanBn/original/xlSm3e.jpg",IZ+"aW1hZ2UvMTY1NzkxMS85NzU2NzAwLmdpZg==/original/T2UEaj.gif",IZ+"aW1hZ2UvMTY1NzkxMS85NzU2NzAxLmdpZg==/original/4UvSGJ.gif",IZ+"aW1hZ2UvMTY1NzkxMS85NzU2NzAyLmdpZg==/original/nSOM8i.gif"]},
+  {n:7,name:"styloo — 2D City (3 $)",url:"https://styloo.itch.io/2d-city",kind:"2d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Version ville du n°6 : immeubles, routes, feux, bancs, étals, terrains de sport.",contents:"2 000+ sprites",format:"PNG (~240 Mo)",tile:"8 directions",credit:"Non",
+   imgs:[IZ+"aW1nLzMxNjQwNzcwLmpwZw==/original/zMs%2BxZ.jpg",IZ+"aW1hZ2UvMTY1NDgwNi85NzM1OTcyLmdpZg==/original/8VjZZW.gif",IZ+"aW1hZ2UvMTY1NDgwNi85NzM1OTcxLmdpZg==/original/rQvjVk.gif",IZ+"aW1hZ2UvMTY1NDgwNi85NzM1OTczLmdpZg==/original/kNKkb3.gif"]},
+  {n:8,name:"Artyom Zagorskiy — Isometric Medieval Pack",url:"https://artyom-zagorskiy.itch.io/isometric-medieval-pack",kind:"2d",lic:"cc0",licText:"CC0",style:3,
+   desc:"Vectoriel « cute ». Thème médiéval, mais arbres, routes et rochers se recolorent facilement.",contents:"269 tuiles : arbres, 15 routes, rivières, maisons",format:"SVG + EPS",tile:"≈90×52",credit:"Non",
+   imgs:[IZ+"aW1nLzcxOTc4ODAucG5n/original/LAQQtn.png",IZ+"aW1hZ2UvMTIzNDM0MC83MTk3ODgxLnBuZw==/original/bCTePU.png",IZ+"aW1hZ2UvMTIzNDM0MC83NjU2ODQ5LnBuZw==/original/96L59d.png",IZ+"aW1hZ2UvMTIzNDM0MC83NjU2ODUyLnBuZw==/original/d%2FWcFN.png"]},
+  {n:9,name:"Kenney — Sketch Town",url:"https://kenney-assets.itch.io/sketch-town",kind:"2d",lic:"cc0",licText:"CC0",style:2,
+   desc:"Style croquis à contours : ne colle pas au rendu doux voulu.",contents:"340+ sprites (+230 en extension)",format:"PNG",tile:"Iso",credit:"Non",
+   imgs:[IZ+"aW1nLzY3NjkzNzYucG5n/original/EFYdgJ.png",IZ+"aW1hZ2UvMTE2MzY2My82NzY5Mzc5LnBuZw==/original/SF0L2p.png",IZ+"aW1hZ2UvMTE2MzY2My82NzY5Mzc4LnBuZw==/original/ZJhCbR.png"]},
+  {n:10,name:"Screaming Brain Studios — Iso Town Pack",url:"https://screamingbrainstudios.itch.io/iso-town-pack",kind:"2d",lic:"cc0",licText:"CC0",style:1,
+   desc:"Pixel-art rétro réaliste. Pas de routes ni d’arbres.",contents:"216 bâtiments (432 tuiles), 11 toits",format:"PNG",tile:"128/64, vrai 2:1",credit:"Non",
+   imgs:[IZ+"aW1nLzU3Nzc2NTIuanBn/original/8wiEX8.jpg",IZ+"aW1hZ2UvMTAxNDM0OS81Nzc3NTA0LmpwZw==/original/RLNZLC.jpg",IZ+"aW1hZ2UvMTAxNDM0OS81Nzc3NTA5LmpwZw==/original/tw8V7i.jpg"]},
+  {n:11,name:"PabloGameDev — FREE Isometric City Builder",url:"https://pablogamedev.itch.io/isometric-voxel-city-builder",kind:"2d",lic:"custom",licText:"Maison (pas de redistribution)",style:2,
+   desc:"Voxel / pixel : ne colle pas au style visé.",contents:"20 bâtiments, arbres, rochers, buissons, PSD",format:"PNG + PSD",tile:"Non précisé",credit:"Non mentionné",
+   imgs:[IZ+"aW1nLzc1OTA3MDQucG5n/original/ql8zKG.png",IZ+"aW1hZ2UvMTMwNDk1OC83NTkwNzQ5LnBuZw==/original/Ht63dX.png",IZ+"aW1hZ2UvMTMwNDk1OC83NTkwNzUyLnBuZw==/original/dK7dwV.png"]},
+  {n:12,name:"KayKit — City Builder Bits",url:"https://kaylousberg.itch.io/city-builder-bits",kind:"3d",lic:"cc0",licText:"CC0",style:5,
+   desc:"Low-poly « cute », aperçus déjà isométriques. Une seule texture dégradé : tout le pack se recolore aux couleurs Wael.",contents:"32+ modèles gratuits (bâtiments, routes, voitures, arbres, bancs) · extra parc 3,95 $",format:"OBJ, FBX, glTF",tile:"Rendu Blender",credit:"Non",
+   imgs:[IZ+"aW1nLzMxOTg2MDc0LmpwZw==/original/l3hi3j.jpg",IZ+"aW1hZ2UvMjE4OTQ4My8xMjk1NzMwNy5wbmc=/original/oNg4ek.png",IZ+"aW1hZ2UvMjE4OTQ4My8xMjk1NzMwOC5wbmc=/original/BlIiNv.png",IZ+"aW1hZ2UvMjE4OTQ4My8xMzIxODA2OS5wbmc=/original/azwRiw.png"]},
+  {n:13,name:"Kenney — City Kit Suburban",url:"https://kenney.nl/assets/city-kit-suburban",kind:"3d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Maisons low-poly propres et cohérentes.",contents:"40 fichiers",format:"3D (GLB/FBX/OBJ)",tile:"Rendu Blender",credit:"Non",
+   imgs:[K+"city-kit-suburban/a695035b5e-1745479397/preview.png",K+"city-kit-suburban/8c3d4e93a3-1745479402/sample.png"]},
+  {n:"13b",name:"Kenney — City Kit Commercial",url:"https://kenney.nl/assets/city-kit-commercial",kind:"3d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Immeubles et boutiques de la même famille.",contents:"50 fichiers",format:"3D",tile:"Rendu Blender",credit:"Non",
+   imgs:[K+"city-kit-commercial/f9afc81822-1747481468/preview.png",K+"city-kit-commercial/ca60ea54ef-1747481474/sample.png"]},
+  {n:"13c",name:"Kenney — City Kit Roads",url:"https://kenney.nl/assets/city-kit-roads",kind:"3d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Routes, panneaux, feux : tout le réseau routier.",contents:"90 fichiers",format:"3D",tile:"Rendu Blender",credit:"Non",
+   imgs:[K+"city-kit-roads/8570bf4a2f-1787042771/preview.png",K+"city-kit-roads/8021370415-1787042780/sample.png"]},
+  {n:14,name:"Kenney — Car Kit",url:"https://kenney.nl/assets/car-kit",kind:"3d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Voitures, bus et utilitaires pour animer les routes.",contents:"45 véhicules",format:"3D",tile:"Rendu Blender",credit:"Non",
+   imgs:[K+"car-kit/81f9d77bc7-1775131953/preview.png"]},
+  {n:"14b",name:"Kenney — Mini Characters",url:"https://kenney.nl/assets/mini-characters",kind:"3d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Petits personnages animés pour peupler la ville.",contents:"40 fichiers, animés",format:"3D",tile:"Rendu Blender",credit:"Non",
+   imgs:[K+"mini-characters/357d1a9452-1794046878/preview.png"]},
+  {n:"14c",name:"Kenney — Nature Kit",url:"https://kenney.nl/assets/nature-kit",kind:"3d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Arbres, rochers et feuillage en masse.",contents:"330 fichiers",format:"3D",tile:"Rendu Blender",credit:"Non",
+   imgs:[K+"nature-kit/2d81fc716e-1677698893/preview.png",K+"nature-kit/656a90532f-1677698896/sample.png"]},
+  {n:15,name:"Quaternius — Stylized Nature MegaKit",url:"https://quaternius.itch.io/stylized-nature-megakit",kind:"3d",lic:"cc0",licText:"CC0",style:4,
+   desc:"Végétation très douce : idéale pour les forêts, buissons, fleurs et rochers.",contents:"~116 modèles (version Standard gratuite)",format:"FBX, OBJ, Blend, glTF",tile:"Rendu Blender",credit:"Non",
+   imgs:[IZ+"aW1nLzI0MzM2NTUzLnBuZw==/original/YsqBZr.png",IZ+"aW1hZ2UvMjg2MjIxNC8xNzEwOTU4Ny5wbmc=/original/R7DE6B.png",IZ+"aW1hZ2UvMjg2MjIxNC8xNzEwOTU2NS5wbmc=/original/tN4YBT.png",IZ+"aW1hZ2UvMjg2MjIxNC8xNzEwOTU4MC5wbmc=/original/bgl8BP.png"]},
+  {n:16,name:"Quaternius — Simple Buildings Pack",url:"https://quaternius.com/packs/simplebuildings.html",kind:"3d",lic:"cc0",licText:"CC0",style:3,
+   desc:"Plus ancien et plus simple, mais avec un hôpital.",contents:"10 bâtiments",format:"FBX, OBJ, Blend",tile:"Rendu Blender",credit:"Non",
+   imgs:["https://quaternius.com/assets/images/fullres/simplebuildings.jpg"]},
+  {n:17,name:"Poly Pizza — « Schoolhouse » (exemple)",url:"https://poly.pizza/m/ftnL_OvlkCx",kind:"3d",lic:"ccby",licText:"CC-BY 3.0 (selon le modèle)",style:2,
+   desc:"Modèles isolés aux styles variés, pour combler un manque (école, bus scolaire, livres). Crédit obligatoire.",contents:"Modèles à l’unité",format:"OBJ, glTF",tile:"Rendu Blender",credit:"Oui (CC-BY)",
+   imgs:["https://static.poly.pizza/60a7b5e3-e062-41eb-804b-b218edac3783.jpg"]},
+  {n:18,name:"ITHappy Studios — Cartoon City Free",url:"https://ithappystudios.com/blog/new-release-cartoon-city-free/",kind:"3d",lic:"unknown",licText:"Licence non indiquée — à vérifier",style:4,
+   desc:"Cartoon low-poly coloré avec fontaines, feux, arrêts de bus. Licence à confirmer avant tout usage.",contents:"80 modèles",format:"FBX, OBJ, glTF, Blend",tile:"Rendu Blender",credit:"?",
+   imgs:["https://media.ithappystudios.com/wp-content/uploads/2025/08/18195024/3-cartoon-city-free-intersection-view-traffic-lights-vehicles-scaled.webp"]},
+  {n:"✕",name:"Max Parata — Isometric City",url:"https://maxparata.itch.io/isometric-city",kind:"2d",lic:"bad",licText:"CC BY-ND 4.0 — écarté",style:2,rejected:true,
+   desc:"Écarté : « ND » interdit de recolorer ou recadrer. Style pixel/voxel.",contents:"—",format:"PNG",tile:"—",credit:"Oui",
+   imgs:[IZ+"aW1nLzIzMDUyNTkzLmpwZw==/original/kqCHRc.jpg",IZ+"aW1hZ2UvMzgzNjk1OS8yMzA1MjU5NC5qcGc=/original/5bpw1J.jpg",IZ+"aW1hZ2UvMzgzNjk1OS8yMzA1MjU5NS5qcGc=/original/KWzH%2F3.jpg"]},
+];
+
+const LIC = {cc0:"cc0",ccby:"custom",custom:"custom",unknown:"bad",bad:"bad"};
+const grid = document.getElementById("grid");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+grid.innerHTML = PACKS.map((p, i) => `
+  <article class="card${p.rejected ? " rejected" : ""}" data-i="${i}">
+    <div class="stage" data-role="stage">
+      <img src="${p.imgs[0]}" alt="Aperçu de ${esc(p.name)}" loading="lazy" referrerpolicy="no-referrer">
+      <span class="num">#${p.n}</span>
+      <span class="broken">L’aperçu n’a pas pu se charger.<br>Ouvrir la page du pack pour le voir.</span>
+    </div>
+    ${p.imgs.length > 1 ? `<div class="thumbs">${p.imgs.map((src, j) =>
+      `<button type="button" data-j="${j}" aria-label="Aperçu ${j + 1}" ${j === 0 ? 'aria-current="true"' : ""}><img src="${src}" alt="" loading="lazy" referrerpolicy="no-referrer"></button>`).join("")}</div>` : ""}
+    <div class="body">
+      <div class="title"><h2>${esc(p.name)}</h2><span class="stars" title="Proximité du style visé : ${p.style}/5">${"★".repeat(p.style)}<span>${"★".repeat(5 - p.style)}</span></span></div>
+      <div class="badges"><span class="b ${LIC[p.lic]}">${esc(p.licText)}</span><span class="b kind">${p.kind === "3d" ? "3D à rendre" : "2D prêt"}</span></div>
+      <p class="desc">${esc(p.desc)}</p>
+      <dl><dt>Contenu</dt><dd>${esc(p.contents)}</dd><dt>Format</dt><dd>${esc(p.format)}</dd><dt>Tuile</dt><dd>${esc(p.tile)}</dd><dt>Crédit</dt><dd>${esc(p.credit)}</dd></dl>
+      <a class="go" href="${p.url}" target="_blank" rel="noopener">Voir la page du pack ↗</a>
+    </div>
+  </article>`).join("");
+
+// Broken image → friendly message instead of an empty box.
+grid.querySelectorAll(".stage img").forEach(img => img.addEventListener("error", () => img.parentElement.classList.add("fail")));
+
+// Thumbnails swap the main preview.
+grid.addEventListener("click", e => {
+  const t = e.target.closest(".thumbs button");
+  if (t) {
+    const card = t.closest(".card"), p = PACKS[card.dataset.i], stage = card.querySelector(".stage");
+    stage.classList.remove("fail");
+    stage.querySelector("img").src = p.imgs[t.dataset.j];
+    card.querySelectorAll(".thumbs button").forEach(b => b.removeAttribute("aria-current"));
+    t.setAttribute("aria-current", "true");
+    return;
+  }
+  const s = e.target.closest('[data-role="stage"]');
+  if (s && !s.classList.contains("fail")) {
+    const p = PACKS[s.closest(".card").dataset.i];
+    document.getElementById("lbimg").src = s.querySelector("img").src;
+    document.getElementById("lbcap").textContent = p.name + " — " + p.licText;
+    document.getElementById("lb").classList.add("open");
+  }
+});
+const lb = document.getElementById("lb");
+lb.addEventListener("click", () => lb.classList.remove("open"));
+document.addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("open"); });
+
+// Filters.
+const TESTS = {
+  all: p => !p.rejected,
+  "2d": p => p.kind === "2d" && !p.rejected,
+  "3d": p => p.kind === "3d" && !p.rejected,
+  cc0: p => p.lic === "cc0" && !p.rejected,
+  top: p => p.style >= 4 && !p.rejected,
+  rejected: p => p.rejected,
+};
+function applyFilter(f) {
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.f === f));
+  let n = 0;
+  grid.querySelectorAll(".card").forEach(card => {
+    const show = TESTS[f](PACKS[card.dataset.i]);
+    card.style.display = show ? "" : "none";
+    if (show) n++;
+  });
+  document.getElementById("count").textContent = n + " pack" + (n > 1 ? "s" : "");
+  document.getElementById("empty").style.display = n ? "none" : "block";
+}
+document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => applyFilter(c.dataset.f)));
+applyFilter("all");
+</script>
+</body>
+</html>

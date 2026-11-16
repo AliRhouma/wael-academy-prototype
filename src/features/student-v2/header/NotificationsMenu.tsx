@@ -98,7 +98,7 @@ export function NotificationsMenu() {
         <button type="button" data-uisfx="notification" aria-label={`الإشعارات${unread ? ` — ${unread} جداد` : ""}`} className={iconBtnClass}>
           <Bell className="size-6" strokeWidth={1.6} />
           {unread > 0 && (
-            <span className="absolute -top-0.5 -end-0.5 grid h-6 min-w-6 place-items-center rounded-full border-2 border-v2-surface bg-v2-grad px-1 text-[12px] font-bold leading-none text-white">
+            <span className="absolute -top-0.5 -end-0.5 grid h-6 min-w-6 place-items-center rounded-full border-2 border-v2-surface bg-v2-ink px-1 text-[12px] font-bold leading-none text-v2-surface">
               {unread}
             </span>
           )}
@@ -131,7 +131,7 @@ export function NotificationsMenu() {
                 <BellOff className="size-7 stroke-v2-grad" strokeWidth={1.5} />
               </span>
               <p className="mt-1 text-[calc(10px*var(--ts))] font-bold">ما عندك حتّى إشعار</p>
-              <p className="text-[calc(8px*var(--ts))] text-v2-ink/55">كي يبعثلك أستاذ تمرين ولّا يتزاد تسجيل، يوصلك هوني.</p>
+              <p className="text-[calc(8px*var(--ts))] text-v2-ink-2">كي يبعثلك أستاذ تمرين ولّا يتزاد تسجيل، يوصلك هوني.</p>
             </div>
           ) : (
             <div className="max-h-[60vh] overflow-y-auto p-2">
@@ -156,8 +156,8 @@ export function NotificationsMenu() {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block text-[calc(9px*var(--ts))] font-bold leading-snug">{n.title}</span>
-                      <span className="block truncate text-[calc(8px*var(--ts))] text-v2-ink/60">{n.body}</span>
-                      <span className="mt-0.5 block text-[calc(7px*var(--ts))] text-v2-ink/45">
+                      <span className="block truncate text-[calc(8px*var(--ts))] text-v2-ink-2">{n.body}</span>
+                      <span className="mt-0.5 block text-[calc(7px*var(--ts))] text-v2-ink-2">
                         {n.when ?? formatAway(Math.min(n.at - now.getTime(), 0))}
                       </span>
                     </span>

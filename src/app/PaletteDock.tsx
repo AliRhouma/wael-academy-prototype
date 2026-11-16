@@ -22,7 +22,7 @@ export function PaletteDock() {
 
   return (
     // Sits ABOVE the student chat bubble (which owns the bottom corner).
-    <div className="fixed bottom-40 end-4 z-50 md:bottom-24 md:end-6">
+    <div data-dock="" className="fixed bottom-40 end-4 z-50 md:bottom-24 md:end-6">
       {open && (
         <div
           role="dialog"

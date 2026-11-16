@@ -1,0 +1,953 @@
+/* ===========================================================================
+   « play » — the gamified skin of the élève space.
+   ---------------------------------------------------------------------------
+   Switched on by `data-skin="play"` on <html> (the default; `?skin=soft`
+   shows the flat Figma look for comparison — src/app/platform.ts). Layered
+   over v2.css, under the platform skins.
+
+   This skin changes how the EXISTING features look and feel — Duolingo /
+   Brilliant-grade "game feel" — and nothing about what they do: no points,
+   no levels, no new screens. Chunky pressable buttons, bolder outlines,
+   figure-and-ground colour, progress you can see, feedback you can feel.
+   See docs/mobile/gamification-design.md and the skill `wael-gamified`.
+
+   HOW IT IS WIRED. The components expose semantic hook classes and nothing
+   else changes between skins — the same tree renders under `soft` and
+   `play`, only this file reads differently:
+
+     .v2-cta        the lime pill          → chunky, 4 px lip, collapses on press
+     .v2-cta-live   the red outline        → 2 px border, 2 px lip
+     .v2-btn        a secondary button     → 2 px line, 3 px lip
+     .v2-panel      a section panel        → FLAT, 2 px border (depth = pressable)
+     .v2-tile       anything tappable      → 2 px border, 3 px lip, press collapse
+     .v2-chip       pills & segments       → 2 px border; the one in force is lime
+     .v2-bar        progress               → 12 px, highlight stripe
+     .v2-ring       countdown ring         → stroke 10, lime on an ink track
+     .v2-stamp      « انتهت »              → rotated, 2 px orange, 800
+     .v2-ladder     the chapitres          → a 3 px rail linking the discs
+     .v2-kind-*     a contenu's kind       → the tile's border and lip take it
+     .v2-burst      the one celebration    → 16 CSS particles, ≤ 700 ms
+     .v2-squash     the subject badge      → squash on press, spring back
+     .v2-play / .v2-soft   an element that exists for ONE skin only
+
+   Every rule here lives under `[data-skin="play"] [data-space="v2"]` (the
+   shell stamps the space; its sheets and dialogs stamp themselves, since
+   they portal to <body>). The platform skins come AFTER this file and own
+   the radii — nothing here hard-sets a corner it does not have to.
+   =========================================================================== */
+
+/* ---------- Tokens: derived EDGE shades only, no new hue ----------
+   One darker shade per existing colour (same hue, −18 to −22 % lightness):
+   the lip under a pressable. Lime keeps its single meaning, red stays live,
+   orange stays « ended ». */
+[data-skin="play"] {
+  --v2-edge-cta: #5bcd3f; /* lime, the lip under every primary button */
+  --v2-edge-brand: #036b7a; /* teal pressables, the « open » chapitre disc */
+  --v2-edge-deep: #052a30; /* under the open chapitre panel */
+  --v2-edge-live: #c92c2f; /* the live quest card */
+  --v2-edge-done: #b9680b; /* the « انتهت » stamp's ink */
+  --v2-edge-violet: #5a35ae; /* résumé plates */
+  --v2-edge-ink: #0e1d3c; /* navy (exercice) plates */
+  --v2-edge-tile: rgb(23 46 91 / 0.14); /* under a white tile — ≈ #dce0e8 on white */
+  --v2-line: rgb(23 46 91 / 0.15); /* card borders, at 2 px now */
+  --v2-track: rgb(23 46 91 / 0.1); /* progress tracks and the ladder rail */
+}
+/* The lip must still read on night navy: lime a shade deeper, the tile edge
+   a true shadow-dark, the track lifted to white. */
+[data-skin="play"][data-theme="dark"] {
+  --v2-edge-cta: #4fb338;
+  --v2-edge-brand: #1b8899;
+  --v2-edge-deep: #020f14;
+  --v2-edge-live: #cc3f42;
+  --v2-edge-done: #c47320;
+  --v2-edge-violet: #6d4bc8;
+  --v2-edge-ink: #37539a;
+  --v2-edge-tile: rgb(0 0 0 / 0.45);
+  --v2-line: rgb(255 255 255 / 0.16);
+  --v2-track: rgb(255 255 255 / 0.12);
+}
+
+[data-skin="play"] [data-space="v2"] {
+  /* Headings carry the game's weight; Arabic is never letter-spaced, never
+     synthesised bold (the root already says so — restated for the space). */
+  font-synthesis: none;
+
+  /* ---------- Skin-only / flat-only elements ---------- */
+  /* `.v2-play` is hidden by v2.css; here it falls back to whatever display
+     the utility on it asked for (revert-layer = the layered Tailwind rule),
+     so a `grid` ring is a grid again and a plain span is a span. */
+  & .v2-play {
+    display: revert-layer;
+  }
+  & .v2-soft {
+    display: none;
+  }
+
+  /* ---------- Press physics, shared ----------
+     In: 80 ms linear, the lip collapses under the finger. Out: 180 ms with an
+     overshoot, so release reads as a spring, not a stop. Colour keeps the
+     soft skin's 150 ms. */
+  & .v2-cta,
+  & .v2-cta-live,
+  & .v2-btn,
+  & .v2-tile,
+  & .v2-chip {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      translate 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      scale 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color 150ms,
+      border-color 150ms,
+      color 150ms,
+      filter 150ms;
+  }
+  & :is(.v2-cta, .v2-cta-live, .v2-btn, .v2-tile, .v2-chip):active {
+    transition-duration: 80ms, 80ms, 80ms, 150ms, 150ms, 150ms, 150ms;
+    transition-timing-function: linear;
+  }
+  /* The focus ring sits ABOVE the lip: 3 px, 3 px off. */
+  & :is(.v2-cta, .v2-cta-live, .v2-btn, .v2-tile, .v2-chip):focus-visible {
+    outline: 3px solid var(--v2-brand);
+    outline-offset: 3px;
+  }
+
+  /* ---------- .v2-cta — the lime pill, chunky ----------
+     Lime fill, navy label at 800, a 4 px lip in the lime's own edge. No glow
+     on hover (a blurred shadow reads SaaS); a hair brighter instead. */
+  & .v2-cta {
+    background-color: var(--v2-cta);
+    color: var(--v2-on-cta);
+    font-weight: 800;
+    font-size: calc(10.5px * var(--ts));
+    border-radius: 9999px;
+    box-shadow: 0 4px 0 0 var(--v2-edge-cta);
+    filter: none;
+  }
+  & .v2-cta:hover {
+    box-shadow: 0 4px 0 0 var(--v2-edge-cta);
+    filter: brightness(1.03);
+  }
+  & .v2-cta:active {
+    translate: 0 4px;
+    scale: 1;
+    box-shadow: 0 0 0 0 var(--v2-edge-cta);
+  }
+  /* A button without depth cannot be pressed — the metaphor explains itself. */
+  & .v2-cta:disabled,
+  & .v2-cta[aria-disabled="true"] {
+    box-shadow: none;
+    translate: 0 0;
+  }
+  /* The same pill once its job is done (« تحمّل » on a taken file): a quiet
+     secondary — white, 2 px line, 3 px tile lip. Still pressable: a repeat
+     tap is allowed, it just isn't a win any more. */
+  & .v2-cta.v2-cta-ghost {
+    background-color: var(--v2-surface);
+    color: var(--v2-ink);
+    border: 2px solid var(--v2-line);
+    box-shadow: 0 3px 0 0 var(--v2-edge-tile);
+    filter: none;
+  }
+  & .v2-cta.v2-cta-ghost:active {
+    translate: 0 3px;
+    box-shadow: 0 0 0 0 var(--v2-edge-tile);
+  }
+
+  /* ---------- .v2-cta-live — the red outline (« شوف التسجيل ») ---------- */
+  & .v2-cta-live {
+    border-width: 2px;
+    font-weight: 800;
+    box-shadow: 0 2px 0 0 var(--v2-edge-live);
+  }
+  & .v2-cta-live:active {
+    translate: 0 2px;
+    scale: 1;
+    box-shadow: 0 0 0 0 var(--v2-edge-live);
+  }
+
+  /* ---------- .v2-btn — secondary / outline ---------- */
+  & .v2-btn {
+    border: 2px solid var(--v2-line);
+    background-color: var(--v2-surface);
+    font-weight: 700;
+    box-shadow: 0 3px 0 0 var(--v2-edge-tile);
+  }
+  & .v2-btn:hover {
+    border-color: color-mix(in srgb, var(--v2-ink) 30%, transparent);
+    background-color: var(--v2-surface);
+  }
+  & .v2-btn:active {
+    translate: 0 3px;
+    box-shadow: 0 0 0 0 var(--v2-edge-tile);
+  }
+  & .v2-btn:disabled {
+    box-shadow: none;
+  }
+
+  /* ---------- .v2-panel — flat, bolder ----------
+     Information has no depth. The 24 px radius is the component's (and the
+     platform's) business; the border doubles and the title takes 800. */
+  & .v2-panel {
+    border-width: 2px;
+    box-shadow: none;
+  }
+  & .v2-panel > header h2 {
+    font-weight: 800;
+    font-size: calc(14px * var(--ts));
+  }
+  @media (min-width: 48rem) {
+    & .v2-panel > header h2 {
+      font-size: calc(14.5px * var(--ts));
+    }
+  }
+
+  /* ---------- .v2-tile — anything you can tap ----------
+     2 px border, a 3 px lip in `--v2-lip` (a tile may name its own: the
+     subject tint, a kind's edge), hover lifts 2 px and the lip grows to 5,
+     press collapses it. No blurred shadow, hovered or not. */
+  & .v2-tile {
+    --v2-lip: var(--v2-edge-tile);
+    border-width: 2px;
+    border-color: var(--v2-tile-line, var(--v2-line));
+    box-shadow: 0 3px 0 0 var(--v2-lip);
+  }
+  @media (hover: hover) {
+    & .v2-tile:hover {
+      translate: 0 -2px;
+      box-shadow: 0 5px 0 0 var(--v2-lip);
+    }
+  }
+  & .v2-tile:active {
+    translate: 0 3px;
+    scale: 1;
+    box-shadow: 0 0 0 0 var(--v2-lip);
+  }
+  /* Collected: the lip goes (nothing left to press for), the border calms. */
+  & .v2-tile[data-taken="true"] {
+    --v2-lip: transparent;
+    border-color: color-mix(in srgb, var(--v2-brand) 40%, transparent);
+    box-shadow: none;
+  }
+  & .v2-tile[data-taken="true"]:hover {
+    translate: 0 0;
+    box-shadow: none;
+  }
+  /* Locked: flat, dashed, grey. It shakes and plays `blocked` (see .v2-shake)
+     instead of pretending to open. */
+  & .v2-tile[data-locked="true"] {
+    --v2-lip: transparent;
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--v2-ink) 25%, transparent);
+    box-shadow: none;
+    color: color-mix(in srgb, var(--v2-ink) 50%, transparent);
+  }
+  & .v2-tile[data-locked="true"]:hover,
+  & .v2-tile[data-locked="true"]:active {
+    translate: 0 0;
+    box-shadow: none;
+  }
+  /* A rail of tiles (the documents, the replays) clips its children's lips
+     unless it leaves them room underneath. */
+  & .v2-rail {
+    padding-bottom: 8px;
+  }
+
+  /* ---------- .v2-chip — pills, segments, filters ----------
+     2 px line at rest; the one in force is LIME with a 2 px lip — lime means
+     "the one selected", here as everywhere. The gradient fill the soft skin
+     uses on an active segment goes: a gradient is decoration, lime is meaning. */
+  /* Width only — a chip keeps its own border colour (ink on the page,
+     white/16 on the deep chapitre panel). */
+  & .v2-chip {
+    border-width: 2px;
+    font-weight: 700;
+  }
+  & .v2-chip:active {
+    scale: 0.96;
+  }
+  & .v2-chip[aria-selected="true"],
+  & .v2-chip[aria-pressed="true"],
+  & .v2-chip[data-on="true"] {
+    background-color: var(--v2-cta);
+    background-image: none;
+    border-color: transparent;
+    color: var(--v2-on-cta);
+    font-weight: 800;
+    box-shadow: 0 2px 0 0 var(--v2-edge-cta);
+  }
+  & :is(.v2-chip[aria-selected="true"], .v2-chip[aria-pressed="true"], .v2-chip[data-on="true"]) :is(.v2-chip-count) {
+    background-color: color-mix(in srgb, var(--v2-on-cta) 15%, transparent);
+    color: var(--v2-on-cta);
+  }
+  /* The segmented control's frame: a segment inside it has no border of its
+     own, only the lime when it is the one. */
+  & .v2-seg {
+    border-width: 2px;
+    border-color: var(--v2-line);
+  }
+  & .v2-seg .v2-chip {
+    border-width: 0;
+  }
+
+  /* ---------- .v2-bar — progress you can see ----------
+     12 px (14 on desktop), rounded, an inner highlight stripe on the fill.
+     The track is the same ink/10 as the ladder rail. */
+  & .v2-bar {
+    height: 12px;
+    border-radius: 9999px;
+    background-color: var(--v2-track);
+    overflow: hidden;
+  }
+  & .v2-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    background-color: var(--v2-cta);
+    background-image: none;
+    box-shadow: inset 0 3px 0 rgb(255 255 255 / 0.35);
+    transition: width 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  @media (min-width: 48rem) {
+    & .v2-bar {
+      height: 14px;
+    }
+  }
+
+  /* ---------- .v2-ring — the countdown ----------
+     Structure in v2.css; here the colour: ink/10 track, lime fill, round
+     caps, a white disc behind so the ring reads as a coin on any box. */
+  & .v2-ring {
+    background-color: var(--v2-surface);
+    border-radius: 9999px;
+  }
+  & .v2-ring-track {
+    stroke: var(--v2-track);
+  }
+  & .v2-ring-fill {
+    stroke: var(--v2-cta);
+    transition: stroke-dashoffset 900ms linear;
+  }
+  /* Ring digits: Cairo 900, tabular, navy — the frame's red clock becomes the
+     quest's counter. */
+  & .v2-ring-digits {
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    color: var(--v2-ink);
+    line-height: 1;
+  }
+
+  /* ---------- .v2-num — a number that changes, ticking ----------
+     The soft skin swaps the digit; here it rolls up 0.45 em in 300 ms. Only
+     on a CHANGE (the component keys it), never on mount. */
+  & .v2-num.v2-num-tick {
+    animation: v2-num-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* ---------- .v2-stamp — « انتهت », « كمّلت الحصّة » ----------
+     A rubber stamp: 2 px orange, orange-edge ink, 800, tilted −6°. The
+     StateChip and the live panel share it; the finish stamp over a video
+     takes lime (`data-tone="cta"`) because that one is a win, not an end. */
+  & .v2-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    rotate: -6deg;
+    border: 2px solid var(--v2-done);
+    border-radius: 10px;
+    background-color: var(--v2-surface);
+    color: var(--v2-edge-done);
+    font-weight: 800;
+    line-height: 1.3;
+    padding: 0.15em 0.6em;
+  }
+  & .v2-stamp[data-tone="cta"] {
+    border-color: var(--v2-cta);
+    color: var(--v2-on-cta);
+  }
+
+  /* ---------- .v2-quest — the live panel's inner box ----------
+     Border 2 px in the state's colour. Only the LIVE state has a lip — it is
+     the one box on the dashboard with a deadline, and the research keeps the
+     halo for it alone. */
+  & .v2-quest {
+    border-width: 2px;
+  }
+  & .v2-quest[data-tone="live"] {
+    border-color: var(--v2-live);
+    box-shadow: 0 4px 0 0 var(--v2-edge-live);
+  }
+  & .v2-quest[data-tone="calm"] {
+    border-color: color-mix(in srgb, var(--v2-live) 60%, transparent);
+    border-style: solid;
+  }
+  & .v2-quest[data-tone="done"] {
+    border-color: color-mix(in srgb, var(--v2-brand) 40%, transparent);
+  }
+  & .v2-quest[data-tone="off"] {
+    border-color: var(--v2-done-line);
+  }
+
+  /* ---------- .v2-day — the week strip as tiles ----------
+     Selected = lime + 3 px lime lip; today = a 2 px ink ring; past = ink/40,
+     no lip, a 4 % squash on press so it still answers. The séance dot is a
+     6 px coin. */
+  & .v2-day {
+    border-radius: 12px;
+  }
+  & .v2-day[aria-pressed="true"] {
+    --v2-lip: var(--v2-edge-cta);
+    background-color: var(--v2-cta);
+    background-image: none;
+    border-color: transparent;
+    color: var(--v2-on-cta);
+    font-weight: 800;
+  }
+  & .v2-day[data-today="true"]:not([aria-pressed="true"]) {
+    border-color: var(--v2-ink);
+    font-weight: 800;
+  }
+  & .v2-day[data-past="true"]:not([aria-pressed="true"]) {
+    --v2-lip: transparent;
+    box-shadow: none;
+    color: color-mix(in srgb, var(--v2-ink) 40%, transparent);
+  }
+  & .v2-day[data-past="true"]:not([aria-pressed="true"]):hover {
+    translate: 0 0;
+    box-shadow: none;
+  }
+  & .v2-day[data-past="true"]:not([aria-pressed="true"]):active {
+    translate: 0 0;
+    scale: 0.96;
+  }
+  & .v2-coin {
+    width: 6px;
+    height: 6px;
+  }
+  & .v2-day[aria-pressed="true"] .v2-coin {
+    background-color: var(--v2-on-cta);
+  }
+
+  /* A séance block on the week grid: a small tile, 2 px lip. */
+  & .v2-block {
+    box-shadow: 0 2px 0 0 var(--v2-edge-tile);
+  }
+  & .v2-block:active {
+    translate: 0 2px;
+    box-shadow: none;
+  }
+
+  /* ---------- .v2-tick — the collected mark ----------
+     24 px lime plate, navy tick, pops in (scale .6 → 1.15 → 1, 320 ms) the
+     moment the file is taken — same frame as `success`. */
+  & .v2-tick {
+    width: 24px;
+    height: 24px;
+    background-color: var(--v2-cta);
+    color: var(--v2-on-cta);
+    box-shadow: 0 2px 0 0 var(--v2-edge-cta);
+    animation: v2-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  & .v2-tick svg {
+    width: 14px;
+    height: 14px;
+  }
+  /* The document plate: a 40 px rounded square in the kind's colour instead
+     of the round folder — the file reads as a collectible, not an upload. */
+  & .v2-doc-plate {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: var(--v2-kind-exercice);
+    color: var(--v2-on-kind);
+  }
+  & .v2-doc-plate svg {
+    stroke: currentColor;
+  }
+  & .v2-doc-plate svg * {
+    stroke: currentColor;
+  }
+  & .v2-doc-plate[data-kind="cours"] {
+    background-color: var(--v2-kind-cours);
+  }
+  /* The tappable document card's inner box loses its dashed outline: the
+     tile around it carries the border now, and two frames read as a form. */
+  & .v2-tile .v2-doc-inner {
+    border-color: transparent;
+  }
+
+  /* ---------- .v2-play-plate — the replay's play mark ----------
+     40 px, teal, white glyph — one plate per card, pressed with the card. */
+  & .v2-play-plate {
+    width: 40px;
+    height: 40px;
+    border-width: 0;
+    background-color: var(--v2-brand);
+    background-image: none;
+    color: #ffffff;
+    box-shadow: 0 2px 0 0 var(--v2-edge-brand);
+  }
+  & .v2-play-plate svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* ---------- .v2-count — a count as a plate badge (« 12 درس ») ---------- */
+  & .v2-count {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    border-radius: 8px;
+    padding: 0.1em 0.6em;
+    background-color: color-mix(in srgb, var(--v2-ink) 6%, transparent);
+    font-weight: 800;
+  }
+  & .v2-count[data-on="true"] {
+    background-color: color-mix(in srgb, var(--v2-brand) 12%, transparent);
+  }
+
+  /* ---------- .v2-squash — the badge as a mascot ----------
+     Press the card: he squashes (x 1.06, y .94) in 80 ms and springs back on
+     release. The stage grows a hair on hover (the soft skin's 1.04 stays).
+     The gaze overlay rides inside the same box, so his eyes squash with him. */
+  & .v2-squash {
+    transform-origin: 50% 85%;
+    transition: scale 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  & .group:active .v2-squash {
+    scale: 1.06 0.94;
+    transition-duration: 80ms;
+    transition-timing-function: linear;
+  }
+
+  /* ---------- .v2-ladder — the chapitres as a path ----------
+     A 3 px rail (ink/10) at the reading start links the numbered discs; the
+     rail into a locked chapitre is dashed. Each step draws the rail through
+     its OWN padding only — above its disc (plus the gap before it) and below
+     it — so the rail never crosses a title. The open chapitre draws no rail
+     under its disc: its body IS the content, and the path resumes beneath.
+     The numbers are where the discs sit, per breakpoint (see SubjectScreen):
+       closed  ps 16 + 44/2 → 38 px · md ps 24 + 56/2 → 52 · 2xl 24 + 70/2 → 59
+       open    p 12 + px 4 + 22 → 38 · md 20 + 4 + 28 → 52 · 2xl 24 + 4 + 35 → 63 */
+  & .v2-ladder {
+    --ladder-gap: 1rem;
+    gap: var(--ladder-gap);
+  }
+  & .v2-ladder-step {
+    --rail-x: 38px;
+    --disc: 44px;
+    --disc-top: 18px;
+  }
+  & .v2-ladder-step[data-state="current"] {
+    --disc-top: 12px;
+  }
+  @media (min-width: 48rem) {
+    & .v2-ladder-step {
+      --rail-x: 52px;
+      --disc: 56px;
+      --disc-top: 26px;
+    }
+    & .v2-ladder-step[data-state="current"] {
+      --disc-top: 20px;
+    }
+  }
+  @media (min-width: 96rem) {
+    & .v2-ladder {
+      --ladder-gap: 2rem;
+    }
+    & .v2-ladder-step {
+      --rail-x: 59px;
+      --disc: 70px;
+      --disc-top: 33px;
+    }
+    & .v2-ladder-step[data-state="current"] {
+      --rail-x: 63px;
+      --disc-top: 24px;
+    }
+  }
+  & .v2-ladder-step::before,
+  & .v2-ladder-step::after {
+    position: absolute;
+    z-index: 1;
+    inset-inline-start: calc(var(--rail-x) - 1.5px);
+    width: 3px;
+    border-radius: 2px;
+    background-color: var(--v2-track);
+    pointer-events: none;
+  }
+  /* The segment ABOVE a disc: the gap before this step, then down to the disc. */
+  & .v2-ladder-step + .v2-ladder-step::before {
+    content: "";
+    top: calc(-1 * var(--ladder-gap));
+    height: calc(var(--ladder-gap) + var(--disc-top));
+  }
+  /* …into a locked chapitre, dashed. */
+  & .v2-ladder-step + .v2-ladder-step[data-state="locked"]::before {
+    background-color: transparent;
+    background-image: repeating-linear-gradient(to bottom, var(--v2-track) 0 5px, transparent 5px 11px);
+  }
+  /* …into the OPEN chapitre: ink/10 across the gap, white/16 once inside the
+     deep panel's padding. */
+  & .v2-ladder-step + .v2-ladder-step[data-state="current"]::before {
+    background-color: transparent;
+    background-image: linear-gradient(
+      to bottom,
+      var(--v2-track) 0 var(--ladder-gap),
+      var(--v2-chapter-line) var(--ladder-gap)
+    );
+  }
+  /* The segment BELOW a disc, to the card's bottom edge — not on the last
+     step (the path ends at its disc) and not on the open one. */
+  & .v2-ladder-step:not(:last-child):not([data-state="current"])::after {
+    content: "";
+    top: calc(var(--disc-top) + var(--disc));
+    bottom: 0;
+  }
+
+  /* The nodes. Locked = ink/6 fill, ink/40 digits, no lip. Open (has content,
+     shut) = white, 3 px teal border, teal digits, 3 px teal lip. Current
+     (expanded) = lime, 4 px lime lip, a 6 px caret pointing at the title. */
+  & .v2-ladder-node {
+    position: relative;
+    z-index: 2;
+    box-shadow: none;
+  }
+  & .v2-ladder-node[data-state="locked"] {
+    background-color: color-mix(in srgb, var(--v2-ink) 6%, transparent);
+    color: color-mix(in srgb, var(--v2-ink) 40%, transparent);
+  }
+  & .v2-ladder-node[data-state="open"] {
+    background-color: var(--v2-surface);
+    color: var(--v2-brand);
+    border: 3px solid var(--v2-brand);
+    box-shadow: 0 3px 0 0 var(--v2-edge-brand);
+  }
+  & .v2-ladder-node[data-state="current"] {
+    background-color: var(--v2-cta);
+    color: var(--v2-on-cta);
+    box-shadow: 0 4px 0 0 var(--v2-edge-cta);
+  }
+  & .v2-ladder-node[data-state="current"]::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    inset-inline-end: -6px;
+    translate: 0 -50%;
+    border-block: 6px solid transparent;
+    border-inline-start: 6px solid var(--v2-cta);
+  }
+  /* A corner mark on the node: the lock on a shut door, the tick once every
+     file of the chapitre is in hand (session memory, see SubjectScreen). */
+  & .v2-node-mark {
+    position: absolute;
+    bottom: -4px;
+    inset-inline-end: -4px;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 9999px;
+    background-color: var(--v2-surface);
+    color: color-mix(in srgb, var(--v2-ink) 55%, transparent);
+    box-shadow: 0 0 0 2px var(--v2-surface);
+  }
+  & .v2-node-mark svg {
+    width: 12px;
+    height: 12px;
+  }
+  & .v2-node-mark[data-kind="done"] {
+    background-color: var(--v2-cta);
+    color: var(--v2-on-cta);
+    animation: v2-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  /* The open chapitre panel: the deep gradient stays, its blurred shadow
+     becomes a 4 px lip in the deep edge. The shut card is a .v2-tile. */
+  & .v2-chapter-open {
+    box-shadow: 0 4px 0 0 var(--v2-edge-deep);
+  }
+  /* The contenus list inside it leaves room under the last tile's lip. */
+  & .v2-contents {
+    padding-bottom: 4px;
+  }
+
+  /* ---------- .v2-kind-* — a contenu tile wears its kind ----------
+     Border in the kind at 35 %, lip in the kind's edge shade. The corner
+     ribbon still names it; the plate (md+) draws its glyph. */
+  & .v2-tile.v2-kind-cours {
+    --v2-tile-line: color-mix(in srgb, var(--v2-kind-cours) 35%, transparent);
+    --v2-lip: var(--v2-edge-brand);
+  }
+  & .v2-tile.v2-kind-exercice {
+    --v2-tile-line: color-mix(in srgb, var(--v2-kind-exercice) 35%, transparent);
+    --v2-lip: var(--v2-edge-ink);
+  }
+  & .v2-tile.v2-kind-serie {
+    --v2-tile-line: color-mix(in srgb, var(--v2-kind-serie) 35%, transparent);
+    --v2-lip: var(--v2-edge-deep);
+  }
+  & .v2-tile.v2-kind-resume {
+    --v2-tile-line: color-mix(in srgb, var(--v2-kind-resume) 35%, transparent);
+    --v2-lip: var(--v2-edge-violet);
+  }
+  & .v2-tile.v2-kind-quiz {
+    --v2-tile-line: color-mix(in srgb, var(--v2-kind-quiz) 55%, transparent);
+    --v2-lip: var(--v2-edge-cta);
+  }
+  & .v2-plate {
+    display: none;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    color: var(--v2-on-kind);
+  }
+  @media (min-width: 48rem) {
+    & .v2-plate {
+      display: grid;
+    }
+  }
+  & .v2-plate svg {
+    width: 20px;
+    height: 20px;
+  }
+  & .v2-plate.v2-kind-cours {
+    background-color: var(--v2-kind-cours);
+  }
+  & .v2-plate.v2-kind-exercice {
+    background-color: var(--v2-kind-exercice);
+  }
+  & .v2-plate.v2-kind-serie {
+    background-color: var(--v2-kind-serie);
+  }
+  & .v2-plate.v2-kind-resume {
+    background-color: var(--v2-kind-resume);
+  }
+  & .v2-plate.v2-kind-quiz {
+    background-color: var(--v2-kind-quiz);
+    color: var(--v2-on-cta);
+  }
+
+  /* ---------- .v2-empty — an empty state is a character, not a box ---------- */
+  & .v2-empty {
+    border-width: 2px;
+  }
+
+  /* ---------- .v2-stage — the shared video stage, restyled from outside ----------
+     The kit's VideoStage is not this skin's to edit, so its timeline is
+     re-dressed here: 12 px bar (the fill is already re-pointed at lime by the
+     shell), a highlight stripe, a 20 px scrubber with a 2 px lime lip. */
+  & .v2-stage .h-1\.5 {
+    height: 12px;
+    border-radius: 9999px;
+  }
+  & .v2-stage .bg-brand-400 {
+    box-shadow: inset 0 3px 0 rgb(255 255 255 / 0.35);
+  }
+  & .v2-stage .size-3\.5.bg-white {
+    width: 20px;
+    height: 20px;
+    box-shadow: 0 2px 0 0 var(--v2-edge-cta);
+  }
+  /* The paused play badge: a lime plate with a lip instead of a glowing ramp. */
+  & .v2-stage .bg-grad.shadow-brand {
+    background-image: none;
+    background-color: var(--v2-cta);
+    color: var(--v2-on-cta);
+    box-shadow: 0 4px 0 0 var(--v2-edge-cta);
+  }
+
+  /* The poster's big play badge: a lime plate on a 4 px lip, pressed with
+     the poster (the poster is the `group`). */
+  & .v2-play-badge {
+    background-image: none;
+    background-color: var(--v2-cta);
+    color: var(--v2-on-cta);
+    box-shadow: 0 4px 0 0 var(--v2-edge-cta);
+    transition: translate 180ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  & .group:active .v2-play-badge {
+    translate: 0 4px;
+    box-shadow: 0 0 0 0 var(--v2-edge-cta);
+    transition-duration: 80ms;
+  }
+  /* The playlist: rows are tiles, the row playing has a LIME disc (the one
+     selected thing), a row opened this session wears a tick. The list
+     scrolls, so it leaves room under the last lip. */
+  & .v2-playlist {
+    padding-bottom: 4px;
+  }
+  & .v2-row-disc[data-on="true"] {
+    background-color: var(--v2-cta);
+    background-image: none;
+    border-color: transparent;
+    color: var(--v2-on-cta);
+    box-shadow: 0 2px 0 0 var(--v2-edge-cta);
+  }
+  & .v2-row-disc .v2-tick {
+    position: absolute;
+    bottom: -4px;
+    inset-inline-end: -4px;
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 0 2px var(--v2-surface);
+  }
+  & .v2-row-disc .v2-tick svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* ---------- .v2-finish — « كمّلت الحصّة » ----------
+     Over the player, once per video per session: a lime stamp, the burst, and
+     the chunky « الجاي ». Dismisses itself in 1.2 s or on tap. */
+  & .v2-finish {
+    background-color: color-mix(in srgb, var(--v2-deep) 72%, transparent);
+    animation: v2-fade-in 200ms ease-out both;
+  }
+  & .v2-finish .v2-stamp {
+    font-size: calc(16px * var(--ts));
+    padding: 0.25em 0.8em;
+    background-color: var(--v2-surface);
+    animation: v2-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  /* ---------- .v2-burst — the one celebration ----------
+     Sixteen particles from the element that earned it, 620 ms, then gone.
+     Palette colours only (lime, teal, navy, white), set per particle by the
+     component; `--dx/--dy` is where each one flies. */
+  & .v2-burst {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: visible;
+  }
+  & .v2-burst i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--s, 8px);
+    height: var(--s, 8px);
+    border-radius: var(--r, 2px);
+    background-color: var(--c, var(--v2-cta));
+    translate: -50% -50%;
+    animation: v2-burst 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* ---------- .v2-shake — a locked thing answering a tap ---------- */
+  & .v2-shake {
+    animation: v2-shake 320ms ease-in-out both;
+  }
+
+  /* ---------- first-load stagger, tightened ----------
+     The system's « rise » (10 px fade-up) at the game's tempo: 240 ms, 40 ms
+     apart. Still first load only, still gated on motion by index.css. */
+  & .rise {
+    animation-duration: 240ms;
+    animation-delay: calc(var(--i, 0) * 40ms);
+  }
+}
+
+/* The sheets and dialogs portal to <body>, outside the shell, and stamp
+   `data-space="v2"` on themselves (DocsSheet, FilesSheet, the offers Modal) —
+   so every rule above reaches them. A row of files in a sheet is 48 px. */
+[data-skin="play"] [data-space="v2"] .v2-sheet-row {
+  min-height: 48px;
+}
+
+/* ---------- Keyframes ---------- */
+@keyframes v2-pop {
+  0% {
+    scale: 0.6;
+    opacity: 0;
+  }
+  60% {
+    scale: 1.15;
+    opacity: 1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+@keyframes v2-num-in {
+  from {
+    translate: 0 0.45em;
+    opacity: 0;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+@keyframes v2-shake {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  20% {
+    translate: -4px 0;
+  }
+  40% {
+    translate: 4px 0;
+  }
+  60% {
+    translate: -3px 0;
+  }
+  80% {
+    translate: 3px 0;
+  }
+}
+@keyframes v2-burst {
+  0% {
+    translate: -50% -50%;
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    translate: calc(-50% + var(--dx)) calc(-50% + var(--dy));
+    scale: 0.2;
+    opacity: 0;
+  }
+}
+@keyframes v2-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---------- Reduced motion ----------
+   No burst, no shake, no pop, no roll; presses and lifts become instant and
+   only opacity still fades (120 ms). The in-app gaze switch is honoured by
+   the eyes themselves. */
+@media (prefers-reduced-motion: reduce) {
+  [data-skin="play"] [data-space="v2"] {
+    & .v2-burst,
+    & .v2-burst i {
+      display: none;
+    }
+    & .v2-shake,
+    & .v2-tick,
+    & .v2-node-mark,
+    & .v2-num,
+    & .v2-finish .v2-stamp {
+      animation: none;
+    }
+    & .v2-finish {
+      animation-duration: 120ms;
+    }
+    & .v2-cta,
+    & .v2-cta-live,
+    & .v2-btn,
+    & .v2-tile,
+    & .v2-chip,
+    & .v2-squash,
+    & .v2-bar-fill,
+    & .v2-ring-fill {
+      transition-duration: 0ms;
+    }
+    & .group:active .v2-squash {
+      scale: 1;
+    }
+  }
+}

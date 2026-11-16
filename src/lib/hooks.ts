@@ -43,6 +43,34 @@ export function usePrefersReducedMotion(): boolean {
 }
 
 /**
+ * True while the page is being scrolled DOWN — past `threshold` px from the
+ * top — and false the moment it scrolls back up or returns to the top.
+ *
+ * For chrome that gets out of the way while the reader is heading into the
+ * content and comes straight back when they look for it (the iOS tab bar
+ * minimises this way). The 2px dead band ignores sub-pixel jitter so the bar
+ * doesn't flicker on a slow drag.
+ */
+export function useScrollingDown(threshold = 24): boolean {
+  const [down, setDown] = useState(false)
+
+  useEffect(() => {
+    let last = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      if (y <= threshold) setDown(false)
+      else if (y > last + 2) setDown(true)
+      else if (y < last - 2) setDown(false)
+      last = y
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [threshold])
+
+  return down
+}
+
+/**
  * Tells a `sticky` element when it has actually stuck, so it can restyle
  * itself (grow a background, fold into a compact form…).
  *

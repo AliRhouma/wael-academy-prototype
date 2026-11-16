@@ -1,0 +1,1342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Wael Academy — Feature Catalog</title>
+<meta name="description" content="Filterable catalogue of candidate features for the Wael Academy élève space: exam preparation, exercises, live and replays, shared study, habits, organisation, per-subject programme design, teacher and admin tools, and a roadmap. Research in docs/mobile/features-research.md.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap">
+<style>
+/* ---------- tokens (brand) ---------- */
+:root{
+  --ink:#172E5B; --teal:#0491A5; --lime:#8AFF6B; --live:#FF3B3E; --done:#F28B14;
+  --bg:#F3F7F9; --panel:#FFFFFF; --text:#172E5B; --muted:#5B6B8A;
+  --border:rgba(23,46,91,.15); --border-strong:rgba(23,46,91,.35);
+  --chip:rgba(4,145,165,.10); --chip-text:#036F7E;
+  --lime-soft:rgba(138,255,107,.30); --done-soft:rgba(242,139,20,.16); --live-soft:rgba(255,59,62,.12);
+  --radius:24px; --radius-sm:14px;
+  --shadow:0 10px 30px rgba(23,46,91,.08);
+  --focus:0 0 0 3px rgba(4,145,165,.45);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1A33; --panel:#14274A; --text:#EAF1FF; --muted:#A9B9DA;
+    --border:rgba(234,241,255,.16); --border-strong:rgba(234,241,255,.38);
+    --chip:rgba(138,255,107,.12); --chip-text:#B9FFA6;
+    --lime-soft:rgba(138,255,107,.16); --done-soft:rgba(242,139,20,.22); --live-soft:rgba(255,59,62,.20);
+    --shadow:none; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1A33; --panel:#14274A; --text:#EAF1FF; --muted:#A9B9DA;
+  --border:rgba(234,241,255,.16); --border-strong:rgba(234,241,255,.38);
+  --chip:rgba(138,255,107,.12); --chip-text:#B9FFA6;
+  --lime-soft:rgba(138,255,107,.16); --done-soft:rgba(242,139,20,.22); --live-soft:rgba(255,59,62,.20);
+  --shadow:none; color-scheme:dark;
+}
+
+/* ---------- base ---------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Rubik,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+[lang="ar"],.ar{font-family:Cairo,"Noto Naskh Arabic","Segoe UI",Tahoma,sans-serif}
+a{color:var(--teal)}
+h1,h2,h3{line-height:1.2;margin:0}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:none;box-shadow:var(--focus);border-radius:10px}
+.skip{position:absolute;inset-inline-start:16px;top:-60px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:12px;z-index:50}
+.skip:focus{top:12px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+.muted{color:var(--muted)}
+mark.new{background:var(--done-soft);color:inherit;border:1px solid rgba(242,139,20,.55);border-radius:6px;padding:0 6px;font-weight:600;font-size:.8em;letter-spacing:.04em}
+
+/* ---------- hero ---------- */
+.hero{padding:28px 0 20px;background:
+  radial-gradient(900px 300px at 85% -40%, rgba(138,255,107,.28), transparent 60%),
+  radial-gradient(700px 300px at 0% 0%, rgba(4,145,165,.18), transparent 60%);
+  border-bottom:1px solid var(--border)}
+.hero .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand .mark{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--teal),var(--lime));display:grid;place-items:center;color:var(--ink);font-weight:800;font-family:Cairo,sans-serif;font-size:20px;flex:none}
+.brand .kicker{font-size:13px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.hero h1{font-size:clamp(28px,5vw,42px);font-weight:700;margin-top:6px}
+.hero h1 .ar{font-weight:800;color:var(--teal);font-size:.72em;display:inline-block;margin-inline-start:10px}
+.hero .purpose{max-width:74ch;margin-top:12px;font-size:17px}
+.theme-btn{border:1px solid var(--border-strong);background:var(--panel);border-radius:999px;padding:10px 14px;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;gap:8px}
+.hero .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+/* Arabic mode: the whole page reads in Cairo, right to left; Latin-only lines
+   (French names, app lists) keep their reading order but hug the same edge. */
+html[lang="ar"] body{font-family:Cairo,"Noto Naskh Arabic","Segoe UI",Tahoma,sans-serif}
+html[dir="rtl"] .latin{direction:ltr;text-align:right}
+html[dir="rtl"] .latin.left{text-align:left}
+html[dir="rtl"] .legend dt .chips{direction:ltr}
+html[dir="rtl"] .search kbd{direction:ltr}
+.totals{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.tot{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:10px 14px;min-width:120px}
+.tot b{display:block;font-size:22px;line-height:1.1}
+.tot span{font-size:12.5px;color:var(--muted)}
+.howto{margin-top:16px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:4px 18px}
+.howto summary{cursor:pointer;padding:12px 0;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px;min-height:44px}
+.howto summary::-webkit-details-marker{display:none}
+.howto summary::before{content:"";width:9px;height:9px;border-inline-end:2px solid var(--teal);border-bottom:2px solid var(--teal);transform:rotate(-45deg);transition:transform .2s;margin-inline-start:2px}
+.howto[open] summary::before{transform:rotate(45deg)}
+.legend{display:grid;grid-template-columns:1fr;gap:10px 18px;padding:4px 0 16px;font-size:14.5px}
+@media(min-width:720px){.legend{grid-template-columns:1fr 1fr}}
+.legend dt{font-weight:600;margin-top:4px}
+.legend dd{margin:0;color:var(--muted)}
+.legend .chips{display:inline-flex;gap:6px;flex-wrap:wrap;vertical-align:middle}
+
+/* ---------- toolbar ---------- */
+.toolbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 0}
+@supports not (background:color-mix(in srgb,red 50%,blue)){.toolbar{background:var(--bg)}}
+.tb{display:grid;gap:8px;grid-template-columns:1fr}
+.tb .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.search{flex:1 1 220px;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border-strong);border-radius:999px;padding:0 14px;min-height:44px}
+.search input{flex:1;border:0;background:transparent;min-width:0;padding:10px 0}
+.search input:focus{outline:none;box-shadow:none}
+.search kbd{font:12px/1 ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--border-strong);border-radius:6px;padding:3px 6px;color:var(--muted)}
+.ctl{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:999px;padding:0 8px 0 12px;min-height:44px;font-size:14px}
+.ctl select{border:0;background:transparent;padding:10px 4px;max-width:46vw;cursor:pointer}
+.ctl select:focus{box-shadow:none;outline:2px solid var(--teal);outline-offset:-2px;border-radius:8px}
+.ctl.check{padding:0 14px;cursor:pointer;gap:8px}
+.ctl.check input{width:18px;height:18px;accent-color:var(--teal);margin:0}
+.btn{border:1px solid var(--border-strong);background:var(--panel);border-radius:999px;padding:10px 14px;cursor:pointer;min-height:44px;font-weight:500}
+.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+:root[data-theme="dark"] .btn.primary{background:var(--lime);color:var(--ink);border-color:var(--lime)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.primary{background:var(--lime);color:var(--ink);border-color:var(--lime)}}
+.counter{margin-inline-start:auto;font-size:14px;color:var(--muted);white-space:nowrap}
+.counter b{color:var(--text)}
+
+/* ---------- sections ---------- */
+main{padding:8px 0 40px}
+.sec{margin-top:28px;scroll-margin-top:130px}
+.sec>details{border:0}
+.sec summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:10px 0;min-height:44px}
+.sec summary::-webkit-details-marker{display:none}
+.sec summary h2{font-size:clamp(22px,3.4vw,30px);font-weight:700}
+.sec summary h2 .ar{color:var(--teal);font-weight:800;font-size:.8em;margin-inline-start:10px}
+.sec summary .count{font-size:13px;color:var(--chip-text);background:var(--chip);border-radius:999px;padding:4px 10px;font-weight:600}
+.sec summary .tog{margin-inline-start:auto;font-size:13px;color:var(--muted)}
+.sec summary .tog::after{content:"Collapse"}
+.sec details:not([open]) summary .tog::after{content:"Expand"}
+.sec .lede{max-width:80ch;color:var(--muted);margin-bottom:14px}
+.grid{display:grid;gap:14px;grid-template-columns:1fr}
+@media(min-width:740px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1120px){.grid{grid-template-columns:repeat(3,1fr)}}
+.nomatch{display:none;color:var(--muted);padding:18px;border:1px dashed var(--border-strong);border-radius:var(--radius);text-align:center}
+.sec.empty .nomatch{display:block}
+.sec.empty .grid{display:none}
+
+/* ---------- cards ---------- */
+.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:18px 18px 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;position:relative;transition:transform .18s ease,border-color .18s ease}
+.card[hidden]{display:none}
+.card:hover{border-color:var(--border-strong)}
+.card.flash{animation:flash 1.6s ease}
+@keyframes flash{0%{box-shadow:0 0 0 4px var(--lime)}100%{box-shadow:var(--shadow)}}
+.card-h{display:flex;gap:10px;align-items:flex-start}
+.card-h .names{flex:1;min-width:0}
+.card .id{font:600 11.5px/1 ui-monospace,Menlo,Consolas,monospace;color:var(--muted);letter-spacing:.06em}
+.card h3{font-size:18px;font-weight:700;margin-top:4px}
+.card .ar{display:block;font-size:17px;font-weight:700;color:var(--teal);margin-top:4px;text-align:start}
+.card .fr{font-size:13.5px;color:var(--muted);margin-top:2px;font-style:italic}
+.badges{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex:none}
+.badge{font-size:12px;font-weight:600;border-radius:999px;padding:4px 9px;border:1px solid var(--border);white-space:nowrap;line-height:1.2}
+.badge.effort{background:var(--chip);color:var(--chip-text);border-color:transparent}
+.badge.impact{letter-spacing:.08em;color:var(--done);border-color:transparent;background:var(--done-soft)}
+.badge.h-quick{background:var(--lime-soft);color:inherit;border-color:transparent}
+.badge.h-next{background:var(--chip);color:var(--chip-text);border-color:transparent}
+.badge.h-big{background:transparent;border-color:var(--border-strong)}
+.badge.anti{background:var(--live-soft);color:var(--live);border-color:transparent}
+.badge.reuse{background:transparent;border-style:dashed}
+.what{font-size:15.5px}
+.meta{margin:0;display:grid;gap:8px;font-size:14px}
+.meta>div{display:grid;grid-template-columns:92px 1fr;gap:8px;align-items:start}
+.meta dt{font-weight:600;color:var(--muted);font-size:12.5px;letter-spacing:.02em;padding-top:2px}
+.meta dd{margin:0}
+.card details.more{border-top:1px dashed var(--border);padding-top:8px}
+.card details.more summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--chip-text);min-height:36px;display:flex;align-items:center}
+.card details.more .meta{margin-top:6px}
+.roles{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:4px;border-top:1px solid var(--border)}
+.role{font-size:12px;border-radius:999px;padding:4px 9px;background:var(--bg);border:1px solid var(--border)}
+.role.s{border-color:rgba(4,145,165,.5)}.role.p{border-color:rgba(242,139,20,.6)}.role.t{border-color:rgba(23,46,91,.5)}.role.a{border-color:rgba(255,59,62,.5)}
+:root[data-theme="dark"] .role.t{border-color:rgba(234,241,255,.5)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .role.t{border-color:rgba(234,241,255,.5)}}
+.card.anti{border-style:dashed;border-color:rgba(255,59,62,.45)}
+.card.anti h3{text-decoration:line-through;text-decoration-color:var(--live);text-decoration-thickness:2px}
+.card.programme .ar{font-size:19px}
+
+/* ---------- roadmap ---------- */
+.road{display:grid;gap:14px;grid-template-columns:1fr;margin-bottom:18px}
+@media(min-width:900px){.road{grid-template-columns:repeat(3,1fr)}}
+.lane{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.lane h3{font-size:17px;display:flex;align-items:center;gap:8px}
+.lane h3 .n{margin-inline-start:auto;font-size:13px;color:var(--chip-text);background:var(--chip);padding:3px 9px;border-radius:999px}
+.lane p{font-size:13.5px;color:var(--muted);margin:6px 0 10px}
+.lane ol{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.jump{display:flex;gap:8px;align-items:center;width:100%;text-align:start;background:transparent;border:0;padding:8px 6px;border-radius:12px;cursor:pointer;min-height:40px;font-size:14px}
+.jump:hover{background:var(--bg)}
+.jump .id{font:600 11px/1 ui-monospace,Menlo,Consolas,monospace;color:var(--muted);min-width:42px}
+.jump .st{margin-inline-start:auto;color:var(--done);font-size:12px;letter-spacing:.08em}
+.lane.quick{border-top:4px solid var(--lime)}.lane.next{border-top:4px solid var(--teal)}.lane.big{border-top:4px solid var(--ink)}
+:root[data-theme="dark"] .lane.big{border-top-color:#EAF1FF}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .lane.big{border-top-color:#EAF1FF}}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--border);padding:28px 0 60px;font-size:14.5px}
+footer h2{font-size:20px;margin-bottom:8px}
+footer ul{margin:8px 0 0;padding-inline-start:18px;display:grid;gap:4px}
+footer .cols{display:grid;gap:22px;grid-template-columns:1fr}
+@media(min-width:900px){footer .cols{grid-template-columns:1.1fr 1fr}}
+code{font:13px ui-monospace,Menlo,Consolas,monospace;background:var(--chip);padding:1px 6px;border-radius:6px}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- print ---------- */
+@media print{
+  :root{--bg:#fff;--panel:#fff;--text:#000;--muted:#333;--border:#999;--border-strong:#666;--shadow:none}
+  body{font-size:11.5px}
+  .toolbar,.theme-btn,.skip,.sec summary .tog,.howto summary::before,.jump .st,.road,.nomatch{display:none!important}
+  .hero{background:none;padding:10px 0}
+  .grid{grid-template-columns:repeat(2,1fr)!important;gap:10px}
+  .card{break-inside:avoid;page-break-inside:avoid;box-shadow:none;border:1px solid #888;border-radius:10px;padding:10px}
+  .card h3{font-size:13px}.card .ar{font-size:13px;color:#000}.what{font-size:11.5px}.meta{font-size:10.5px}
+  .sec{break-before:page}
+  .sec:first-of-type{break-before:auto}
+  .badge{border:1px solid #888;background:none!important;color:#000!important}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:9px;color:#333}
+  details:not([open])>*:not(summary){display:block}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#toolbar">Skip to filters</a>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">و</div>
+        <div>
+          <div class="kicker">Wael Academy · product research · October 2026</div>
+          <h1>Feature Catalog <span class="ar" dir="rtl" lang="ar">كتالوغ الخصائص</span></h1>
+        </div>
+      </div>
+      <div class="acts">
+        <button class="theme-btn" id="langBtn" type="button" lang="ar" dir="rtl" title="العربية / English">
+          <span aria-hidden="true">⇄</span> <span id="langLabel">العربية</span>
+        </button>
+        <button class="theme-btn" id="themeBtn" type="button" aria-live="polite" title="Cycle theme: auto → light → dark">
+          <span aria-hidden="true">◐</span> <span id="themeLabel">Theme: auto</span>
+        </button>
+      </div>
+    </div>
+    <p class="purpose">Everything we <em>could</em> build next in the élève space to help Tunisian collège and lycée students <strong>prepare for exams</strong>, <strong>work through exercises</strong> more smoothly, <strong>study together</strong>, and follow a <strong>well-structured programme per subject</strong> — benchmarked against 40+ study apps and live-class ecosystems, grounded in learning science, and sized against the entities the prototype already holds. The full research with sources lives in <code>docs/mobile/features-research.md</code>.</p>
+    <div class="totals" id="totals" aria-label="Catalogue totals"></div>
+    <details class="howto">
+      <summary>How to read a card</summary>
+      <dl class="legend">
+        <dt>EN name · <span dir="rtl" lang="ar">التسمية بالدارجة</span> · <em>Nom français</em></dt>
+        <dd>The English working name, a suggested in-app label in Tunisian derja (RTL), and the French name used by teachers and parents.</dd>
+        <dt>Effort <span class="chips"><span class="badge effort">S</span><span class="badge effort">M</span><span class="badge effort">L</span></span></dt>
+        <dd><b>S</b> ≈ a few days to two weeks of front-end work on the prototype; <b>M</b> = two to six weeks or new content authoring; <b>L</b> = needs a backend, media pipeline or AI, or more than six weeks.</dd>
+        <dt>Impact <span class="chips"><span class="badge impact">★☆☆</span><span class="badge impact">★★☆</span><span class="badge impact">★★★</span></span></dt>
+        <dd>★ nice to have · ★★ clearly moves exam results or retention · ★★★ core to the product promise (exam prep, exercises, shared study).</dd>
+        <dt>Horizon <span class="chips"><span class="badge h-quick">Quick win</span><span class="badge h-next">Next</span><span class="badge h-big">Big bet</span></span></dt>
+        <dd>Quick win = ≤ 2 weeks and reuses existing data · Next = 1–2 months · Big bet = needs backend/AI/media work.</dd>
+        <dt>Roles <span class="chips"><span class="role s">Student</span><span class="role p">Parent</span><span class="role t">Teacher</span><span class="role a">Admin</span></span></dt>
+        <dd>Who sees or operates the feature. Four roles are four filtered views over one dataset — never four apps.</dd>
+        <dt>Data it needs · <mark class="new">NEW</mark></dt>
+        <dd>Ties each feature to existing entities (years, subjects, chapters, lessons, sessions/recordings, live-sessions, exams, homeworks, quizzes, groups, users, resources, offers/subscriptions). Anything after <mark class="new">NEW</mark> does not exist yet. “Reuses existing data” means no new <em>content</em> must be authored — at most a tag, a flag or a per-user list over existing collections.</dd>
+        <dt>Why it works · Seen in · Design note</dt>
+        <dd>The learning-science or motivation rationale (with the study behind it), the reference apps that do it well, and how it should show up in the UI in one line.</dd>
+      </dl>
+    </details>
+  </div>
+</header>
+
+<div class="toolbar" id="toolbar" role="search" aria-label="Filter the catalogue">
+  <div class="wrap tb">
+    <div class="row">
+      <label class="search">
+        <span aria-hidden="true">⌕</span>
+        <input id="q" type="search" placeholder="Search features, labels, apps, data…" autocomplete="off" aria-label="Search features">
+        <kbd title="Press / to focus">/</kbd>
+      </label>
+      <label class="ctl"><span id="lSec">Section</span> <select id="fSec"><option value="all">All</option></select></label>
+      <label class="ctl"><span id="lEffort">Effort</span> <select id="fEffort"><option value="all">Any</option><option value="S">S</option><option value="M">M</option><option value="L">L</option></select></label>
+      <label class="ctl"><span id="lImpact">Impact</span> <select id="fImpact"><option value="1">Any</option><option value="2">★★ and up</option><option value="3">★★★ only</option></select></label>
+      <label class="ctl"><span id="lRole">Role</span> <select id="fRole"><option value="all">Any</option><option value="s">Student</option><option value="p">Parent</option><option value="t">Teacher</option><option value="a">Admin</option></select></label>
+      <label class="ctl"><span id="lHorizon">Horizon</span> <select id="fHorizon"><option value="all">Any</option><option value="quick">Quick win</option><option value="next">Next</option><option value="big">Big bet</option></select></label>
+    </div>
+    <div class="row">
+      <label class="ctl check"><input type="checkbox" id="fReuse"> <span id="lReuse">Only features that reuse existing data</span></label>
+      <label class="ctl check"><input type="checkbox" id="fHideAnti"> <span id="lHideAnti">Hide anti-features</span></label>
+      <button class="btn" type="button" id="expandAll">Expand all</button>
+      <button class="btn" type="button" id="collapseAll">Collapse all</button>
+      <button class="btn primary" type="button" id="reset">Reset</button>
+      <div class="counter" id="counter" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+<main id="catalog" class="wrap">
+  <section class="sec" id="sec-exam" data-sec="exam">
+    <details open>
+      <summary><h2>1 · Exam preparation <span class="ar" dir="rtl" lang="ar">التحضير للامتحانات</span></h2><span class="count" data-count="exam"></span><span class="tog"></span></summary>
+      <p class="lede">The Tunisian year is organised around devoirs de contrôle, devoirs de synthèse and the bac (session principale 3–10 June 2026; contrôle 29 June–2 July). Every card here turns those dates and the exam formats into retrieval practice — the two “high utility” techniques of Dunlosky et al. (2013): practice testing and distributed practice.</p>
+      <div class="grid" data-grid="exam"></div><p class="nomatch">No exam-preparation cards match the current filters.</p>
+    </details>
+  </section>
+  <section class="sec" id="sec-practice" data-sec="practice">
+    <details open>
+      <summary><h2>2 · Exercises &amp; practice <span class="ar" dir="rtl" lang="ar">التمارين</span></h2><span class="count" data-count="practice"></span><span class="tog"></span></summary>
+      <p class="lede">Exercises are where the academy's teaching meets the student's hand. The cards move the student from a PDF série to guided attempts: progressive hints, worked solutions synced to steps, variants, interleaved sets, and a photo-to-correction loop with the teacher.</p>
+      <div class="grid" data-grid="practice"></div><p class="nomatch">No practice cards match the current filters.</p>
+    </details>
+  </section>
+  <section class="sec" id="sec-live" data-sec="live">
+    <details open>
+      <summary><h2>3 · Live &amp; replays <span class="ar" dir="rtl" lang="ar">الحصص المباشرة والتسجيلات</span></h2><span class="count" data-count="live"></span><span class="tog"></span></summary>
+      <p class="lede">Live séances and their recordings are the academy's core asset. These cards make a 90-minute recording usable for revision (markers, notes, checkpoints), make the live hour interactive (Q&amp;A, polls, raise hand), and close the absence gap (attendance, catch-up).</p>
+      <div class="grid" data-grid="live"></div><p class="nomatch">No live/replay cards match the current filters.</p>
+    </details>
+  </section>
+  <section class="sec" id="sec-social" data-sec="social">
+    <details open>
+      <summary><h2>4 · Shared &amp; social <span class="ar" dir="rtl" lang="ar">نقراو مع بعضنا</span></h2><span class="count" data-count="social"></span><span class="tog"></span></summary>
+      <p class="lede">Small, cooperative and opt-in. Pairs and groups rather than global rankings; effort rather than marks; a streak that can be shielded with an earned “Fire pass”. Patterns from Duolingo (Friend Streak +22% daily completion), Noon Academy, Forest, Focusmate and Habitica.</p>
+      <div class="grid" data-grid="social"></div><p class="nomatch">No shared/social cards match the current filters.</p>
+    </details>
+  </section>
+  <section class="sec" id="sec-habits" data-sec="habits">
+    <details open>
+      <summary><h2>5 · Motivation &amp; habits <span class="ar" dir="rtl" lang="ar">العادة والتحفيز</span></h2><span class="count" data-count="habits"></span><span class="tog"></span></summary>
+      <p class="lede">Daily goal, streak, focus timer, habit calendar, a few badges that certify competence, a weekly report for the student and a digest for the parent — with forgiveness built in (comeback mode) so one missed day never becomes a lost student.</p>
+      <div class="grid" data-grid="habits"></div><p class="nomatch">No habit cards match the current filters.</p>
+    </details>
+  </section>
+  <section class="sec" id="sec-organise" data-sec="organise">
+    <details open>
+      <summary><h2>6 · Organisation <span class="ar" dir="rtl" lang="ar">التنظيم</span></h2><span class="count" data-count="organise"></span><span class="tog"></span></summary>
+      <p class="lede">One planner that merges live sessions, homework deadlines, the official DC/DS windows and bac dates, with notifications that arrive at the student's own study hour, offline downloads, calendar sync and a quick-capture inbox.</p>
+      <div class="grid" data-grid="organise"></div><p class="nomatch">No organisation cards match the current filters.</p>
+    </details>
+  </section>
+  <section class="sec" id="sec-programme" data-sec="programme">
+    <details open>
+      <summary><h2>7 · Programme design per subject <span class="ar" dir="rtl" lang="ar">برنامج كل مادّة</span></h2><span class="count" data-count="programme"></span><span class="tog"></span></summary>
+      <p class="lede">What each matière needs so that “the programme is good”: the content types, the exercise patterns that fit the discipline, the exam format (durations and coefficients per section, as tabulated by reviserbac.tn from the Arrêté of 24 April 2008 as amended — verify with the ministry), and what a complete chapter looks like. Open “Exam format &amp; what good looks like” on each card.</p>
+      <div class="grid" data-grid="programme"></div><p class="nomatch">No programme cards match the current filters.</p>
+    </details>
+  </section>
+  <section class="sec" id="sec-teacher" data-sec="teacher">
+    <details open>
+      <summary><h2>8 · Teacher &amp; admin counterpart <span class="ar" dir="rtl" lang="ar">فضاء الأستاذ والإدارة</span></h2><span class="count" data-count="teacher"></span><span class="tog"></span></summary>
+      <p class="lede">None of the student features work without authoring, tagging, correction and moderation tools. These cards are the cost side of the ledger — and the analytics that let a teacher aim the next séance.</p>
+      <div class="grid" data-grid="teacher"></div><p class="nomatch">No teacher/admin cards match the current filters.</p>
+    </details>
+  </section>
+  <section class="sec" id="sec-roadmap" data-sec="roadmap">
+    <details open>
+      <summary><h2>9 · Roadmap &amp; anti-features <span class="ar" dir="rtl" lang="ar">خارطة الطريق</span></h2><span class="count" data-count="roadmap"></span><span class="tog"></span></summary>
+      <p class="lede">The three lanes below are computed from the cards' horizon. Click any item to jump to its card (filters are cleared). Then the list of things we deliberately will not build.</p>
+      <div class="road" id="road"></div>
+      <div class="grid" data-grid="roadmap"></div><p class="nomatch">No roadmap cards match the current filters.</p>
+    </details>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <h2>Methodology</h2>
+      <p>Desk research on 26 October 2026: 52 distinct web searches and page fetches covering flashcard and retrieval apps (Quizlet, Anki, RemNote, Seneca, Kahoot!, Wayground), homework-help communities (Brainly, Knowunity, Vaia, Photomath, Gauth), mastery courseware (Khan Academy, BYJU'S), live-class ecosystems (Physics Wallah, Unacademy, Vedantu), French bac apps (SchoolMouv, Kartable, Les Bons Profs, Nomad Education, Studeo, digiSchool, Lumni), Tunisian and MENA players (TakiAcademy, devoir.tn, devoinet, reviserbac.tn, Najja7ni, Abwaab, Noon, Baims, Nafham, EdTrust), focus and habit tools (Forest, Flora, FLIP, Focusmate, Study Together, Habitica, Finch, Todoist), Duolingo's mechanics including the 2025 Energy change, Google Classroom, calendar subscription mechanics, and parent reporting (ClassDojo, Seesaw). Facts dated after 2024 were checked against at least one dated source; where sources conflicted the card says so or uses the more conservative figure. Impact and effort are the author's judgement against the prototype's current entities.</p>
+      <p style="margin-top:10px">Each card reuses the prototype's vocabulary (<span dir="rtl" lang="ar">دروس · تمرين · سلسلة تمارين · ملخص · كويز · فرض مراقبة · فرض تأليفي · الإصلاح</span>) so labels can be pasted into <code>/student-v2</code> as they are.</p>
+    </div>
+    <div>
+      <h2>Key sources (short list)</h2>
+      <ul>
+        <li>Dunlosky, Rawson, Marsh, Nathan &amp; Willingham (2013), <em>Psychological Science in the Public Interest</em> 14(1) — <a href="https://www.psychologicalscience.org/news/releases/which-study-strategies-make-the-grade.html">APS summary</a></li>
+        <li>Roediger &amp; Karpicke (2006), <em>Psychological Science</em> 17(3) — <a href="https://psychology.ecu.edu/wp-content/pv-uploads/sites/216/2019/03/Roediger-Karpicke-2006.pdf">PDF</a></li>
+        <li>Adesope, Trevisan &amp; Sundararajan (2017), <em>Review of Educational Research</em> 87(3) — <a href="https://journals.sagepub.com/doi/10.3102/0034654316689306">SAGE</a></li>
+        <li>Cepeda et al. (2006), <em>Psychological Bulletin</em> 132(3) — <a href="https://pubmed.ncbi.nlm.nih.gov/16719566/">PubMed</a></li>
+        <li>Rohrer, Dedrick &amp; Stershic (2015); Rohrer et al. (2020) interleaved maths — <a href="https://www.gwern.net/doc/psychology/spaced-repetition/2019-rohrer.pdf">PDF</a>; Brunmair &amp; Richter (2019) meta-analysis — <a href="https://www.frontiersin.org/articles/10.3389/fpsyg.2019.02296/full">Frontiers</a></li>
+        <li>Metcalfe (2017), “Learning from errors”, <em>Annual Review of Psychology</em> 68 — <a href="https://tipsforteachers.substack.com/p/research-bite-31-learning-from-errors">summary</a></li>
+        <li>Agarwal et al. (2014), retrieval practice and test anxiety — <a href="https://profiles.wustl.edu/en/publications/classroom-based-programs-of-retrieval-practice-reduce-middle-scho/">WUSTL</a></li>
+        <li>Duolingo: <a href="https://blog.duolingo.com/improving-the-streak">Improving the streak</a> · <a href="https://blog.duolingo.com/product-lessons-friend-streak/">Friend Streak lessons</a> · <a href="https://www.classcentral.com/report/duolingo-breaks-hearts-for-energy/">Energy change (Class Central)</a></li>
+        <li>Seneca RCT — <a href="https://senecalearning.com/en-GB/blog/the-actual-impact-of-seneca-on-student-grades/">blog</a>; Khan Academy mastery levels — <a href="https://support.khanacademy.org/hc/en-us/articles/115002552631">help center</a></li>
+        <li>Bac 2026 calendar — <a href="https://www.lapresse.tn/2026/06/01/calendrier-chiffres-et-nouvelles-mesures-tout-ce-quil-faut-savoir-sur-les-examens-nationaux-et-le-baccalaureat-2026/">La Presse</a>; DC/DS calendar 2025-26 — <a href="https://www.lapresse.tn/2025/12/01/calendrier-scolaire-2025-2026-dates-des-devoirs-de-synthese-et-controles-dans-les-colleges-et-lycees/">La Presse</a>; coefficients — <a href="https://www.reviserbac.tn/calculatrice">reviserbac.tn</a></li>
+        <li>TakiAcademy offers — <a href="https://takiacademy.com/ar/offers/baccalaureate">takiacademy.com</a>; Physics Wallah batches — <a href="https://www.pw.live/iit-jee/class-11/batches/batch-prime-arjuna-11th-jee-2026-563246">pw.live</a></li>
+      </ul>
+      <p style="margin-top:10px">Full list with titles, URLs and access dates: <code>docs/mobile/features-research.md</code>.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+/* ---------------- data ---------------- */
+var SECTIONS=[
+ {k:"exam",n:"Exam preparation"},{k:"practice",n:"Exercises & practice"},{k:"live",n:"Live & replays"},
+ {k:"social",n:"Shared & social"},{k:"habits",n:"Motivation & habits"},{k:"organise",n:"Organisation"},
+ {k:"programme",n:"Programme per subject"},{k:"teacher",n:"Teacher & admin"},{k:"roadmap",n:"Roadmap & anti-features"}
+];
+var ROLES={s:"Student",p:"Parent",t:"Teacher",a:"Admin"};
+var HORIZON={quick:"Quick win",next:"Next",big:"Big bet"};
+
+/* ---------------- language ----------------
+   Two languages, one page: English (the authoring language, captured from the
+   DOM at boot) and Modern Standard Arabic. `LANG` drives everything that is
+   rendered by script (cards, totals, lanes, counters) through t() and tr();
+   the static chrome is swapped by selector from I18N. AR_CARDS holds the
+   fusha translation of every card's content, keyed by id; a card without an
+   entry falls back to English. */
+var LANG="en";
+var SECTIONS_AR={exam:"التحضير للامتحانات",practice:"التمارين والتدريب",live:"الحصص المباشرة والتسجيلات",social:"المذاكرة المشتركة والاجتماعية",habits:"التحفيز والعادات",organise:"التنظيم",programme:"تصميم البرنامج لكلّ مادة",teacher:"فضاء الأستاذ والإدارة",roadmap:"خارطة الطريق والخصائص المُستبعَدة"};
+var ROLES_AR={s:"تلميذ",p:"وليّ",t:"أستاذ",a:"إدارة"};
+var HORIZON_AR={quick:"مكسب سريع",next:"لاحقًا",big:"رهان كبير"};
+var LBL={
+ en:{effort:"Effort",reuse:"Reuses data",reuseT:"No new content to author",dont:"Don’t build",ctypes:"Content types",epat:"Exercise patterns",more:"Exam format &amp; what good looks like",xfmt:"Exam format",good:"What good looks like",seen:"Seen in",data:"Data it needs",design:"Design note",why:"Why it works",whynot:"Why not",instead:"Instead",impact:"Impact",all:"All",cards:"cards",of:"of",showing:"Showing <b>{n}</b> of {t} cards",
+  totCards:"cards in total",totFeat:"features · {n} anti-features",totQuick:"quick wins (≤ 2 weeks)",totNext:"next (1–2 months)",totBig:"big bets (backend / AI)",totReuse:"reuse existing data",totTop:"rated ★★★",
+  laneQuick:"Quick wins",laneQuickP:"≤ 2 weeks each, reuse existing data. Ship in this order: tagging first, then everything that reads the tags.",laneNext:"Next",laneNextP:"1–2 months. Mostly new per-user state and teacher authoring; still no backend.",laneBig:"Big bets",laneBigP:"Need a backend, a media pipeline or AI; design them now, build after the quick wins prove the loop.",
+  theme:"Theme",auto:"auto",light:"light",dark:"dark",themeT:"Cycle theme: auto → light → dark",langBtn:"العربية",langT:"التبديل إلى العربية"},
+ ar:{effort:"الجهد",reuse:"تعيد استعمال البيانات",reuseT:"لا يلزم تأليف محتوى جديد",dont:"لا نبنيها",ctypes:"أنواع المحتوى",epat:"أنماط التمارين",more:"صيغة الامتحان وكيف يبدو الإنجاز الجيّد",xfmt:"صيغة الامتحان",good:"كيف يبدو الإنجاز الجيّد",seen:"أين رأيناها",data:"البيانات اللازمة",design:"ملاحظة التصميم",why:"لماذا تنجح",whynot:"لماذا لا",instead:"البديل",impact:"الأثر",all:"الكل",cards:"بطاقة",of:"من",showing:"عرض <b>{n}</b> من {t} بطاقة",
+  totCards:"بطاقة في المجموع",totFeat:"خاصية · {n} خصائص مُستبعَدة",totQuick:"مكاسب سريعة (≤ أسبوعين)",totNext:"لاحقًا (1–2 شهر)",totBig:"رهانات كبيرة (خادم خلفي / ذكاء اصطناعي)",totReuse:"تعيد استعمال البيانات الموجودة",totTop:"مصنّفة ★★★",
+  laneQuick:"مكاسب سريعة",laneQuickP:"أسبوعان أو أقل لكلّ واحدة، وتعيد استعمال البيانات الموجودة. تُنجَز بهذا الترتيب: الوسم أوّلًا، ثمّ كلّ ما يقرأ الوسوم.",laneNext:"لاحقًا",laneNextP:"من شهر إلى شهرين. في الغالب حالة جديدة لكلّ مستعمل وأدوات تأليف للأستاذ؛ من دون خادم خلفي بعد.",laneBig:"رهانات كبيرة",laneBigP:"تحتاج خادمًا خلفيًا أو سلسلة معالجة للوسائط أو ذكاءً اصطناعيًا؛ تُصمَّم الآن وتُبنى بعد أن تُثبت المكاسب السريعة جدوى الحلقة.",
+  theme:"المظهر",auto:"تلقائي",light:"فاتح",dark:"داكن",themeT:"تبديل المظهر: تلقائي ← فاتح ← داكن",langBtn:"English",langT:"Switch to English"}
+};
+function t(k){return LBL[LANG][k];}
+/* The static chrome: [selector, how, Arabic]. English is read from the DOM
+   once at boot, so the markup stays the single source of the English text. */
+var I18N=[
+ ["a.skip","text","الانتقال إلى المرشّحات"],
+ ["header .kicker","text","أكاديمية وائل · بحث المنتج · أكتوبر 2026"],
+ ["header h1","html",'كتالوغ الخصائص <span class="ar" dir="ltr" lang="en">Feature Catalog</span>'],
+ ["header .purpose","html",'كلّ ما <em>يمكننا</em> بناؤه لاحقًا في فضاء التلميذ لمساعدة تلاميذ المرحلتين الإعدادية والثانوية في تونس على <strong>التحضير للامتحانات</strong>، و<strong>التمرّن على التمارين</strong> بسلاسة أكبر، و<strong>المذاكرة الجماعية</strong>، واتّباع <strong>برنامج محكم لكلّ مادة</strong> — مقارنةً بأكثر من 40 تطبيقًا للدراسة ومنظومات الدروس المباشرة، واستنادًا إلى علوم التعلّم، ومقدَّرًا على أساس الكيانات التي يحتويها النموذج الأولي بالفعل. البحث الكامل مع مصادره في <code>docs/mobile/features-research.md</code>.'],
+ ["#totals","attr:aria-label","مجاميع الكتالوغ"],
+ [".howto summary","text","كيف تقرأ البطاقة"],
+ [".legend dt:nth-of-type(1)","html",'الاسم بالإنجليزية · <span dir="rtl" lang="ar">التسمية بالدارجة</span> · <em>الاسم بالفرنسية</em>'],
+ [".legend dd:nth-of-type(1)","html","الاسم الإنجليزي المعتمد في العمل، وتسمية مقترحة داخل التطبيق بالدارجة التونسية، والاسم الفرنسي الذي يستعمله الأساتذة والأولياء. في الواجهة العربية يظهر الاسم بالفصحى أوّلًا، ويبقى الاسم الإنجليزي أسفله."],
+ [".legend dt:nth-of-type(2)","html",'الجهد <span class="chips"><span class="badge effort">S</span><span class="badge effort">M</span><span class="badge effort">L</span></span>'],
+ [".legend dd:nth-of-type(2)","html","<b>S</b> ≈ من بضعة أيام إلى أسبوعين من عمل الواجهة على النموذج الأولي؛ <b>M</b> = من أسبوعين إلى ستة أسابيع أو تأليف محتوى جديد؛ <b>L</b> = يحتاج خادمًا خلفيًا أو سلسلة معالجة للوسائط أو ذكاءً اصطناعيًا، أو أكثر من ستة أسابيع."],
+ [".legend dt:nth-of-type(3)","html",'الأثر <span class="chips"><span class="badge impact">★☆☆</span><span class="badge impact">★★☆</span><span class="badge impact">★★★</span></span>'],
+ [".legend dd:nth-of-type(3)","html","★ مفيدة · ★★ تحسّن بوضوح نتائج الامتحانات أو الاستمرارية · ★★★ جوهرية لوعد المنتج (التحضير للامتحانات، التمارين، المذاكرة المشتركة)."],
+ [".legend dt:nth-of-type(4)","html",'الأفق <span class="chips"><span class="badge h-quick">مكسب سريع</span><span class="badge h-next">لاحقًا</span><span class="badge h-big">رهان كبير</span></span>'],
+ [".legend dd:nth-of-type(4)","html","مكسب سريع = أسبوعان أو أقل مع إعادة استعمال البيانات الموجودة · لاحقًا = من شهر إلى شهرين · رهان كبير = يحتاج خادمًا خلفيًا أو ذكاءً اصطناعيًا أو عملًا على الوسائط."],
+ [".legend dt:nth-of-type(5)","html",'الأدوار <span class="chips"><span class="role s">تلميذ</span><span class="role p">وليّ</span><span class="role t">أستاذ</span><span class="role a">إدارة</span></span>'],
+ [".legend dd:nth-of-type(5)","html","من يرى الخاصية أو يشغّلها. الأدوار الأربعة أربع نظرات مُرشَّحة على مجموعة بيانات واحدة — وليست أربعة تطبيقات."],
+ [".legend dt:nth-of-type(6)","html",'البيانات اللازمة · <mark class="new">NEW</mark>'],
+ [".legend dd:nth-of-type(6)","html",'تربط كلّ خاصية بالكيانات الموجودة (<span class="latin" style="display:inline">years, subjects, chapters, lessons, sessions/recordings, live-sessions, exams, homeworks, quizzes, groups, users, resources, offers/subscriptions</span>). كلّ ما يأتي بعد <mark class="new">NEW</mark> غير موجود بعد. «تعيد استعمال البيانات الموجودة» تعني أنّه لا يلزم تأليف <em>محتوى</em> جديد — على الأكثر وسم أو علامة أو قائمة لكلّ مستعمل فوق المجموعات الموجودة.'],
+ [".legend dt:nth-of-type(7)","text","لماذا تنجح · أين رأيناها · ملاحظة التصميم"],
+ [".legend dd:nth-of-type(7)","text","المبرّر من علوم التعلّم أو التحفيز (مع الدراسة التي يستند إليها)، والتطبيقات المرجعية التي تنجزها جيّدًا، وكيف ينبغي أن تظهر في الواجهة في سطر واحد."],
+ ["#toolbar","attr:aria-label","تصفية الكتالوغ"],
+ ["#q","attr:placeholder","ابحث في الخصائص والتسميات والتطبيقات والبيانات…"],
+ ["#q","attr:aria-label","البحث في الخصائص"],
+ [".search kbd","attr:title","اضغط / للانتقال إلى البحث"],
+ ["#lSec","text","القسم"],["#lEffort","text","الجهد"],["#lImpact","text","الأثر"],["#lRole","text","الدور"],["#lHorizon","text","الأفق"],
+ ["#fEffort option[value=all]","text","أيّ"],
+ ["#fImpact option[value='1']","text","أيّ"],["#fImpact option[value='2']","text","★★ فأكثر"],["#fImpact option[value='3']","text","★★★ فقط"],
+ ["#fRole option[value=all]","text","أيّ"],["#fRole option[value=s]","text","تلميذ"],["#fRole option[value=p]","text","وليّ"],["#fRole option[value=t]","text","أستاذ"],["#fRole option[value=a]","text","إدارة"],
+ ["#fHorizon option[value=all]","text","أيّ"],["#fHorizon option[value=quick]","text","مكسب سريع"],["#fHorizon option[value=next]","text","لاحقًا"],["#fHorizon option[value=big]","text","رهان كبير"],
+ ["#lReuse","text","الخصائص التي تعيد استعمال البيانات الموجودة فقط"],
+ ["#lHideAnti","text","إخفاء الخصائص المُستبعَدة"],
+ ["#expandAll","text","توسيع الكل"],["#collapseAll","text","طيّ الكل"],["#reset","text","إعادة الضبط"],
+ ["#sec-exam h2","html",'1 · التحضير للامتحانات <span class="ar" dir="ltr" lang="en">Exam preparation</span>'],
+ ["#sec-exam .lede","text","تنتظم السنة الدراسية التونسية حول فروض المراقبة والفروض التأليفية والبكالوريا (الدورة الرئيسية 3–10 جوان 2026؛ دورة المراقبة 29 جوان – 2 جويلية). تحوّل كلّ بطاقة هنا تلك المواعيد وصيغ الامتحانات إلى ممارسة للاسترجاع — وهما الأسلوبان «عاليا الفائدة» عند Dunlosky وزملائه (2013): الاختبار الذاتي والتكرار المتباعد."],
+ ["#sec-practice h2","html",'2 · التمارين والتدريب <span class="ar" dir="ltr" lang="en">Exercises &amp; practice</span>'],
+ ["#sec-practice .lede","text","التمارين هي حيث يلتقي تدريس الأكاديمية بيد التلميذ. تنقل هذه البطاقات التلميذ من سلسلة تمارين في ملف PDF إلى محاولات موجَّهة: تلميحات متدرّجة، وحلول محلولة متزامنة مع الخطوات، وتمارين مشابهة، ومجموعات متداخلة، وحلقة «صورة ← إصلاح» مع الأستاذ."],
+ ["#sec-live h2","html",'3 · الحصص المباشرة والتسجيلات <span class="ar" dir="ltr" lang="en">Live &amp; replays</span>'],
+ ["#sec-live .lede","text","الحصص المباشرة وتسجيلاتها هي الأصل الجوهري للأكاديمية. تجعل هذه البطاقات تسجيلًا مدّته 90 دقيقة صالحًا للمراجعة (علامات زمنية، ملاحظات، نقاط تحقّق)، وتجعل ساعة البثّ تفاعلية (أسئلة وأجوبة، استطلاعات، رفع اليد)، وتسدّ فجوة الغياب (الحضور، التدارك)."],
+ ["#sec-social h2","html",'4 · المذاكرة المشتركة والاجتماعية <span class="ar" dir="ltr" lang="en">Shared &amp; social</span>'],
+ ["#sec-social .lede","text","صغيرة وتعاونية واختيارية. ثنائيات ومجموعات بدل الترتيب العام؛ الجهد بدل الأعداد؛ وسلسلة انتظام يمكن حمايتها بـ«درع السلسلة (Fire pass)» المكتسَب. أنماط مأخوذة من Duolingo (سلسلة الأصدقاء: +22% في الإنجاز اليومي) وNoon Academy وForest وFocusmate وHabitica."],
+ ["#sec-habits h2","html",'5 · التحفيز والعادات <span class="ar" dir="ltr" lang="en">Motivation &amp; habits</span>'],
+ ["#sec-habits .lede","text","هدف يومي، وسلسلة انتظام، ومؤقّت تركيز، وتقويم للعادات، وبضع شارات تشهد بالكفاءة، وتقرير أسبوعي للتلميذ وملخّص للوليّ — مع تسامح مدمج (وضع العودة) حتى لا يتحوّل يوم ضائع إلى تلميذ ضائع."],
+ ["#sec-organise h2","html",'6 · التنظيم <span class="ar" dir="ltr" lang="en">Organisation</span>'],
+ ["#sec-organise .lede","text","مخطّط واحد يجمع الحصص المباشرة وآجال الواجبات ومواعيد فروض المراقبة والفروض التأليفية الرسمية وتواريخ البكالوريا، مع إشعارات تصل في ساعة مذاكرة التلميذ نفسه، وتنزيل للاستعمال دون اتصال، ومزامنة التقويم، وصندوق تدوين سريع."],
+ ["#sec-programme h2","html",'7 · تصميم البرنامج لكلّ مادة <span class="ar" dir="ltr" lang="en">Programme design per subject</span>'],
+ ["#sec-programme .lede","text","ما تحتاجه كلّ مادة حتى يكون «البرنامج جيّدًا»: أنواع المحتوى، وأنماط التمارين الملائمة للاختصاص، وصيغة الامتحان (المدد والضوارب حسب الشعبة، كما جدولها موقع reviserbac.tn استنادًا إلى قرار 24 أفريل 2008 المنقّح — يُتحقَّق منها لدى الوزارة)، وكيف يبدو المحور المكتمل. افتح «صيغة الامتحان وكيف يبدو الإنجاز الجيّد» في كلّ بطاقة."],
+ ["#sec-teacher h2","html",'8 · فضاء الأستاذ والإدارة <span class="ar" dir="ltr" lang="en">Teacher &amp; admin counterpart</span>'],
+ ["#sec-teacher .lede","text","لا تعمل أيّ خاصية من خصائص التلميذ دون أدوات التأليف والوسم والإصلاح والإشراف. هذه البطاقات هي جانب الكلفة في الميزان — والتحليلات التي تتيح للأستاذ توجيه الحصّة القادمة."],
+ ["#sec-roadmap h2","html",'9 · خارطة الطريق والخصائص المُستبعَدة <span class="ar" dir="ltr" lang="en">Roadmap &amp; anti-features</span>'],
+ ["#sec-roadmap .lede","text","تُحسَب المسارات الثلاثة أدناه من أفق البطاقات. انقر أيّ عنصر للانتقال إلى بطاقته (تُمسح المرشّحات). ثمّ قائمة ما قرّرنا عمدًا ألّا نبنيه."],
+ [".sec .nomatch","text-all","لا توجد بطاقات في هذا القسم تطابق المرشّحات الحالية."],
+ ["footer .cols > div:first-child > h2","text","المنهجية"],
+ ["footer .cols > div:first-child > p:first-of-type","text","بحث مكتبي بتاريخ 26 أكتوبر 2026: 52 عملية بحث وجلب صفحات مختلفة شملت تطبيقات البطاقات والاسترجاع (Quizlet, Anki, RemNote, Seneca, Kahoot!, Wayground)، ومجتمعات المساعدة في الواجبات (Brainly, Knowunity, Vaia, Photomath, Gauth)، ومنصّات الإتقان (Khan Academy, BYJU'S)، ومنظومات الدروس المباشرة (Physics Wallah, Unacademy, Vedantu)، وتطبيقات البكالوريا الفرنسية (SchoolMouv, Kartable, Les Bons Profs, Nomad Education, Studeo, digiSchool, Lumni)، والفاعلين في تونس والمنطقة (TakiAcademy, devoir.tn, devoinet, reviserbac.tn, Najja7ni, Abwaab, Noon, Baims, Nafham, EdTrust)، وأدوات التركيز والعادات (Forest, Flora, FLIP, Focusmate, Study Together, Habitica, Finch, Todoist)، وآليات Duolingo بما فيها تغيير «الطاقة» سنة 2025، وGoogle Classroom، وآليات الاشتراك في التقويمات، وتقارير الأولياء (ClassDojo, Seesaw). الوقائع اللاحقة لسنة 2024 رُوجعت على مصدر مؤرَّخ واحد على الأقل؛ وحيث تعارضت المصادر تذكر البطاقة ذلك أو تعتمد الرقم الأكثر تحفّظًا. تقديرات الأثر والجهد هي حكم المؤلّف قياسًا إلى كيانات النموذج الأولي الحالية."],
+ ["footer .cols > div:first-child > p:last-of-type","html",'تعيد كلّ بطاقة استعمال مفردات النموذج الأولي (<span dir="rtl" lang="ar">دروس · تمرين · سلسلة تمارين · ملخص · كويز · فرض مراقبة · فرض تأليفي · الإصلاح</span>) حتى يمكن لصق التسميات في <code>/student-v2</code> كما هي.'],
+ ["footer .cols > div:last-child > h2","text","أهمّ المصادر (قائمة مختصرة)"],
+ ["footer .cols > div:last-child > p","html",'القائمة الكاملة بالعناوين والروابط وتواريخ الاطّلاع: <code>docs/mobile/features-research.md</code>.']
+];
+var AR_CARDS=/*@@AR_CARDS@@*/{"EP01":{"name":"بنك مواضيع البكالوريا حسب المحور","w":"كل موضوع (الدورة الرئيسية ودورة المراقبة، حسب الشعبة والسنة) مع إصلاحه وسلّم تنقيطه، يُتصفَّح حسب المادة ثم المحور وليس حسب السنة فقط، بحيث يجد التلميذ الذي يراجع « suites » تمارين البكالوريا الثمانية حول المتتاليات في قائمة واحدة.","y":"ممارسة الاسترجاع على مواضيع امتحانات حقيقية تتفوّق على إعادة القراءة (Roediger & Karpicke 2006; Adesope 2017, g ≈ 0.61). ويتيح الربط بالمحاور أن تكون الممارسة متباعدة وموجَّهة بدل جرعة واحدة كبيرة في شهر ماي.","d":"exams (pdfs نص + الإصلاح، videoUrl، subjectIds، yearIds)، chapters، subjects. NEW: وسوم exam→chapter لكل تمرين، نوع الدورة (رئيسية / مراقبة)، تسمية السنة، النقاط لكل تمرين.","g":"في موادي، يعرض تبويب « سوجي » داخل كل محور التمارين السابقة في شكل بطاقات مع زر « جرّبو بالوقت » (تشغيل بتوقيت)."},"EP02":{"name":"امتحان تجريبي موقّت بسلّم التنقيط الحقيقي","w":"ابدأ موضوعًا كاملًا أو فرضًا بمدّته الحقيقية (4 h لرياضيات البكالوريا في شعبة الرياضيات، 2 h لفرض تأليفي)، مع ساعة تعمل، ثم نقّط نفسك سطرًا سطرًا وفق سلّم التنقيط واحصل على عدد على /20.","y":"التدرّب في ظروف الامتحان هو الأفضل انتقالًا (المعالجة الملائمة للانتقال)؛ كما أن الاسترجاع تحت ضغط الوقت يخفّض القلق — فقد أفاد 72% من 1,408 تلميذًا بأنهم أقلّ توتّرًا بعد ممارسة الاسترجاع في القسم (Agarwal et al. 2014).","d":"exams، quiz-exams، users. NEW: سجلّ المحاولة (startedAt، المدّة، التنقيط الذاتي لكل تمرين، العدد النهائي).","g":"« وضع الامتحان » بملء الشاشة مع الساعة في الشريط العلوي وإخفاء شريط التنقّل؛ وتعرض شاشة النهاية العدد على /20 وتفصيلًا لكل تمرين بتدرّجات لون المادة."},"EP03":{"name":"عدّ تنازلي للامتحان + خطة مراجعة تلقائية","w":"اختر الفرض القادم أو البكالوريا؛ يوزّع التطبيق محاور تلك المادة على الأيام المتبقية، مع التداخل بين المواد موزونةً بالضارب، ويعرض عنصرين أو ثلاثة عناصر لليوم.","y":"التكرار المتباعد تقنية « عالية الفائدة » (Dunlosky et al. 2013)، والفاصل الأمثل يكبر مع طول مدّة الاحتفاظ (Cepeda et al. 2006). والمواعيد النهائية الموزَّعة بانتظام تتفوّق على موعد نهائي واحد (Ariely & Wertenbroch 2002 — نتائج التكرار متباينة، لذلك اجعل الخطة قابلة للتعديل).","d":"years (الشعبة)، subjects، chapters، exams. NEW: exam-calendar (فترات فروض المراقبة والفروض التأليفية DC/DS وتواريخ البكالوريا لكل سنة/شعبة)، عناصر الخطة لكل مستخدم.","g":"بطاقة رئيسية (hero) في الصفحة الرئيسية « X يوم للفرض التأليفي » مع عناصر خطة اليوم في شكل شرائح قابلة للنقر؛ وشاشة الخطة خطّ زمني عمودي."},"EP04":{"name":"دفتر الأخطاء","w":"نقرة واحدة على أي سؤال اختبار سريع أو تمرين أخطأ فيه التلميذ تحفظه في دفتر شخصي موسومًا بالمحور ونوع الخطأ — حساب، طريقة، نسيان القانون، سوء قراءة السؤال — مع حالة « مُصحَّح » بعد إعادة حلّه بشكل صحيح.","y":"الأخطاء المتبوعة بتغذية راجعة تصحيحية تحسّن الاحتفاظ بالمعلومة، خاصة الأخطاء المرتكَبة بثقة (Metcalfe 2017)؛ وتسمية نوع الخطأ شكل من الشرح الذاتي، وهو تقنية متوسطة الفائدة (Dunlosky 2013).","d":"quizzes (questions)، lessons (exercice / serie)، chapters. NEW: مدخلات الأخطاء لكل مستخدم (ref، type، note، resolved).","g":"عدّاد أحمر صغير على بلاطة المحور؛ ويجمّع الدفتر المدخلات حسب المحور مع زر « عاود » على كل مدخل."},"EP05":{"name":"بطاقات مراجعة بالتكرار المتباعد","w":"مجموعات بطاقات لكل محور يعدّها الأستاذ أو التلميذ (تعريفات، قوانين، تواريخ، مفردات، مصطلحات علوم الحياة والأرض SVT)؛ وطابور مراجعة يومي تجدوله خوارزمية على نمط FSRS؛ وتنقلب البطاقات بالتمرير.","y":"الاختبار التدريبي والتباعد هما التقنيتان عاليتا الفائدة (Dunlosky 2013). وخوارزمية FSRS، المجدوِل الافتراضي في Anki منذ الإصدار 25.07 (حسب ما أُفيد)، تبلغ نفس نسبة الاحتفاظ بمراجعات أقلّ بنحو 20–30% مقارنة بـ SM-2.","d":"chapters، lessons (resume). NEW: cards (front، back، chapterId، authorId)، سجلّ المراجعة لكل مستخدم (تاريخ الاستحقاق، الاستقرار).","g":"بطاقات تُمرَّر بالسحب مع « عرفتها / ما عرفتهاش »؛ وتعرض بلاطة المادة عدد البطاقات المستحقّة اليوم في كبسولة بالأخضر الليموني (lime)."},"EP06":{"name":"مستوى الإتقان في كل محور","w":"يعرض كل محور مستوى من أربعة — ما بديتش · مألوف · متمكّن · متقن — يُحسب عند العرض من دقّة الاختبارات السريعة والتمارين المنجَزة وأعداد الامتحانات التجريبية، ويتراجع تدريجيًا عندما لا تتمّ العودة إلى المحور.","y":"الإتقان المقروء يركّز الجهد على المحاور الضعيفة. ومستويات Khan Academy (Familiar 70–99%، Proficient 100%، Mastered بعد مراجعة مختلطة المهارات) تكافئ إعادة الاختبار المتباعدة لا نتيجة واحدة محظوظة.","d":"chapters، quizzes، lessons، exams (مشتقّ). NEW: محاولات الاختبارات السريعة والتمارين لكل مستخدم (سجلّ خفيف).","g":"حلقة من أربعة أجزاء على كل بلاطة محور في موادي؛ ويظهر مفتاح الرموز مرة واحدة عند أول فتح."},"EP07":{"name":"مراجعة سريعة","w":"جولة من عشر دقائق على محور: الملخّص، ثم القوانين أو التعريفات الثلاثة الواجب حفظها، ثم خمسة أسئلة استرجاع. مصمَّمة لليلة التي تسبق فرض المراقبة.","y":"الملخّصات وحدها منخفضة الفائدة، لكن الملخّص + فحص الاسترجاع هو ما اختبرته التجربة العشوائية المضبوطة لـ Seneca (n ≈ 1,120): نحو 2× أعداد المجموعة الضابطة التي استعملت دليل مراجعة (حسب تصريح الشركة).","d":"lessons (resume)، quizzes (chapterId). NEW: لا شيء — لكن يجب أن يتوفّر ملخّص واختبار سريع للمحور.","g":"زر « ⚡ مراجعة سريعة » في أعلى المحور عندما يتوفّر الملخّص والاختبار السريع معًا."},"EP08":{"name":"خريطة حرارية للمواضيع السابقة حسب المحور","w":"لكل محور: كم مرة ورد في دورات البكالوريا العشر الأخيرة، والتمرين النموذجي فيه، والنقاط التي حملها، حتى يكفّ التلاميذ عن الإفراط في مراجعة محورهم المفضّل.","y":"يجعل وزن المحاور في الامتحان صريحًا ويوائم وقت التدرّب مع مواضع النقاط؛ وهو عرض مشتقّ زهيد الكلفة بمجرّد وسم المواضيع السابقة (EP01).","d":"exams، chapters. NEW: نفس وسوم exam→chapter مع النقاط كما في EP01.","g":"شريط حراري « خرج 8 مرّات في 10 سنين » على بلاطات محاور سنة البكالوريا؛ والنقر يعرض قائمة التمارين."},"EP09":{"name":"مدرّب سلّم التنقيط / شبكة التقييم","w":"يُعرض تمرين وإجابة نموذجية وسلّم التنقيط الرسمي؛ يمنح التلميذ النقاط سطرًا سطرًا، ثم يقارن بتنقيط الأستاذ ويرى أين كان متساهلًا أكثر من اللازم أو متشدّدًا أكثر من اللازم.","y":"التقييم الذاتي وفق معايير يبني المعايرة ويعلّم ما يكافئه المصحّحون؛ ودراسة أمثلة محلولة ومنقَّطة تخفّض الحمل المعرفي لدى المبتدئين (Sweller & Cooper 1985).","d":"exams (pdfs نص + الإصلاح). NEW: سطور سلّم التنقيط لكل تمرين، التنقيط الذاتي للتلميذ.","g":"عرض مقسوم — الإجابة في جهة وقائمة سلّم التنقيط في الجهة الأخرى؛ والنقر على سطر يمنح نقاطه."},"EP10":{"name":"التدرّب على الشفاهي في اللغات","w":"سجّل إجابة من دقيقتين عن سؤال بالفرنسية أو الإنجليزية أو العربية، ثم أعد الاستماع إليها، وقيّم نفسك وفق شبكة مصغّرة من ثلاثة معايير؛ مع تغذية راجعة اختيارية من الأستاذ.","y":"توليد الإجابة مع التغذية الراجعة؛ وتمرين تحت ضغط خفيف قبل الاختبارات الشفاهية والتطبيقية الحقيقية (14–23 ماي 2026 للبكالوريا).","d":"subjects، chapters. NEW: تسجيلات صوتية لكل مستخدم، تعريفات شبكات التقييم.","g":"زر ميكروفون كبير، وشكل موجي أثناء التسجيل، ثم ورقة تقييم ذاتي من ثلاثة صفوف."},"EP11":{"name":"محاكيات فرض المراقبة / الفرض التأليفي","w":"قبل أسبوعين من كل فترة في الرزنامة الرسمية (مثلًا DS1 من 1 إلى 13 ديسمبر 2025، وDS2 من 23 فيفري إلى 7 مارس 2026)، فرض محاكى يُجمَّع من المحاور المدرَّسة إلى حينه، بالصيغة الصحيحة (1 h للمراقبة مقابل 2 h للتأليفي).","y":"تطابق الصيغة يعدّل أثر الاختبار (Adesope 2017)؛ والسنة الدراسية التونسية منظَّمة حرفيًا حول هذه الفترات، فهي إذن المحفّز الأكثر طبيعية للتدرّب.","d":"exams (pdfs الفروض DC/DS)، chapters، years. NEW: الرزنامة الرسمية لفروض المراقبة والفروض التأليفية، علامة « محور مُدرَّس » لكل مجموعة.","g":"تظهر بطاقة « فرض بلان » في الصفحة الرئيسية قبل أسبوعين من كل فترة، وتعدّد المحاور التي يغطّيها."},"EP12":{"name":"مراجعة المحاور الضعيفة قبل الامتحان","w":"قبل الامتحان، المحاور الثلاثة ذات أدنى إتقان × أعلى وزن في الامتحان، لكل منها إجراء من خمس عشرة دقيقة (اختبار سريع، تمرين سابق، دفعة بطاقات مراجعة).","y":"الاسترجاع الموجَّه والمتداخل يتفوّق على إعادة القراءة الشاملة؛ والترجيح بالضارب وتواتر الورود في المواضيع السابقة يضع الجهد حيث توجد النقاط.","d":"chapters، quizzes، وسوم الامتحانات (مشتقّة من EP06 وEP08). NEW: لا شيء.","g":"ثلاث بطاقات متراصّة في شاشة العدّ التنازلي، ملوَّنة بالأحمر (live-red) / البرتقالي / الأخضر الليموني (lime) حسب الإتقان."},"EP13":{"name":"قائمة تحقّق ليوم الامتحان","w":"لكل امتحان: الاستدعاء، بطاقة التعريف، الآلة الحاسبة المسموح بها، الأقلام، المركز والتوقيت، « النوم قبل الساعة 22:00 »، مع عدّ تنازلي إلى أول اختبار. ويرى الأولياء القائمة نفسها.","y":"نوايا التنفيذ تقلّل التوتّر والهفوات التي يمكن تفاديها؛ وهي وسيلة صغيرة وزهيدة الكلفة لبناء ثقة الأولياء.","d":"NEW: مدخلات exam-calendar (البكالوريا 3–10 جوان 2026؛ دورة المراقبة 29 جوان–2 جويلية 2026؛ التطبيقي/الشفاهي 14–23 ماي)، قالب قائمة التحقّق.","g":"ورقة قائمة تحقّق تُفتح من بطاقة العدّ التنازلي؛ والعناصر المؤشَّر عليها تبقى مؤشَّرة."},"EP14":{"name":"مرشد الدورة الرئيسية / دورة المراقبة","w":"يشرح القواعد بالدارجة (النجاح بمعدّل ≥ 10، دورة المراقبة، المواد التي يُعاد اجتيازها) ويحسب « ما أحتاجه في كل مادة أعيد اجتيازها » انطلاقًا من أعداد الامتحانات التجريبية وضوارب الشعبة.","y":"يسيء التلاميذ فهم القواعد ويصابون بالهلع؛ وحاسبة شفافة موزونة بالضوارب تحوّل القلق إلى خطة.","d":"years (الشعبة)، subjects. NEW: جدول الضوارب لكل شعبة (قرار 24 أفريل 2008 كما تمّ تنقيحه)، نصّ القواعد.","g":"أداة معدّل موزون في لوحة البكالوريا مع أشرطة « ماذا لو » لكل مادة."},"EP15":{"name":"مسار مناظرة السنة التاسعة","w":"برنامج مخصَّص لمناظرة جوان: الرياضيات، العلوم، الفرنسية، العربية (والإنجليزية) مع مواضيع المناظرات السابقة، وخطة وتيرة، ومنطق الـ 350 نقطة (200 للامتحان + 150 للمعدّل السنوي، حسب ما أُفيد).","y":"امتحان مختلف وجمهور مختلف (المرحلة الإعدادية). والعرض « خطوة بخطوة للنموذجي » يبيع هذا بالفعل — وعلى التطبيق أن يجعله مرئيًا.","d":"years (y-9)، offers (offer-khotwa)، exams، paths. NEW: مواضيع المناظرة، ضوارب المناظرة.","g":"صفحة رئيسية منفصلة « مناظرة » لمستخدمي السنة التاسعة مبنيّة من المكوّنات نفسها، مع تاريخ المناظرة باللون البرتقالي."},"EP16":{"name":"ورقة القوانين والتعريفات لكل محور","w":"الأشياء الخمسة إلى الخمسة عشر الواجب حفظها عن ظهر قلب في كل محور، قابلة للطباعة، مع وضع « أخفِ واسترجع » يموّه كل سطر حتى يُنقر عليه.","y":"الاستدعاء الموجَّه بإشارات لورقة القوانين ممارسة استرجاع زهيدة الكلفة؛ والوضع المخفي يحوّل الورقة السلبية إلى اختبار.","d":"lessons (resume). NEW: عناصر قوانين مهيكلة لكل محور (نصّ / LaTeX).","g":"انقر على سطر لتمويهه؛ و« خبّي الكل » يبدّل وضع الاسترجاع؛ وأيقونة طباعة في الأعلى."},"PR01":{"name":"تلميحات تدريجية (ثلاثة مستويات)","w":"يحمل كل تمرين ثلاثة تلميحات — دفعة خفيفة، الطريقة، السطر الأول من الحلّ — ولا يُفتح الإصلاح الكامل إلا بعد محاولة أو بعد التلميح الثالث.","y":"التوجيه المتناقص تدريجيًا يُبقي التلميذ في حالة توليد للحلّ (صعوبة مرغوبة، Bjork) مع تجنّب التخبّط؛ وPhotomath يبيع بالضبط هذه « خطوات المستوى الثالث » في باقته المدفوعة.","d":"lessons (exercice / serie). NEW: نصوص التلميحات لكل تمرين (يؤلّفها الأستاذ في TA01).","g":"زر « عطيني فكرة » مع مقياس من ثلاث نقاط؛ وكل نقرة تكشف مستوى واحدًا وتخفت نقطته."},"PR02":{"name":"فيديو الإصلاح المتزامن مع الخطوات","w":"فيديو الإصلاح مقسَّم إلى فصول حسب الخطوة؛ وتتمرّر الخطوات المكتوبة وتُبرَز مع تشغيل الفيديو، والنقر على خطوة ينقل الفيديو إليها.","y":"الأمثلة المحلولة تخفّض الحمل المعرفي لدى المبتدئين (Sweller & Cooper 1985)؛ ومزامنة النصّ مع الشرح الصوتي تتّبع مبادئ الوسائط المتعدّدة.","d":"lessons (videoUrl، pdfs الإصلاح)، video-comments. NEW: الطوابع الزمنية للخطوات لكل إصلاح.","g":"المشغّل في الأعلى، وتحته قائمة الخطوات مع الخطوة النشطة بالأزرق المخضرّ (teal)؛ والقائمة هي فهرس محتويات الفيديو."},"PR03":{"name":"جرّب نسخة مغايرة","w":"بعد الإصلاح، تمرين شقيق بقيم مختلفة أو بسؤال معدَّل حتى يثبت التلميذ أنه قادر على حلّه بمفرده.","y":"أزواج مثال–مسألة تتفوّق على الأمثلة وحدها (أبحاث المثال المحلول)؛ والاختبار الذي يلي المثال هو حيث يترسّخ التعلّم.","d":"lessons. NEW: رابط نسخة مغايرة بين التمارين (يؤلّفه الأستاذ).","g":"« جرّب نسخة أخرى » في نهاية الإصلاح؛ وتُفتح النسخة المغايرة والتلميحات مخفية في البداية."},"PR04":{"name":"سلّم الصعوبة لكل محور","w":"تمارين موسومة بـ ★ تطبيق · ★★ كلاسيكي في البكالوريا · ★★★ صعب / معهد نموذجي؛ ويعرض المحور الدرجات المنجَزة من السلّم.","y":"الصعوبة المتدرّجة صعوبة مرغوبة من دون إفراط في الحمل، وتجعل « لم أحلّ سوى السهلة » مرئيًا.","d":"lessons. NEW: حقل الصعوبة لكل تمرين.","g":"ثلاث درجات تحت عنوان المحور؛ والدرجات المكتملة تمتلئ بالأخضر الليموني (lime)."},"PR05":{"name":"تمرين التدرّب اليومي (DPP)","w":"تمرين واحد يوميًا لكل مادة متابَعة، يُختار من المحاور الأخيرة، مع نشر الإصلاح على الساعة 20:00 وزر « بديت » بنقرة واحدة.","y":"استرجاع يومي متباعد (Cepeda 2006; Dunlosky 2013). وقاعدة Duolingo القائلة بأن درسًا واحدًا يحافظ على سلسلة الانتظام رفعت الاحتفاظ بالمستخدمين في اليوم 14 بنسبة 3.3% ونسبة المتعلّمين الذين لديهم سلسلة انتظام بنسبة 10.5%.","d":"lessons (exercice)، chapters، subjects. NEW: لا شيء — التناوب يُحسب.","g":"البطاقة الأولى في الصفحة الرئيسية: « تمرين اليوم — رياضيات » بلون المادة وزر « بديت » بالأخضر الليموني (lime)."},"PR06":{"name":"رفع صورة للحلّ المكتوب بخطّ اليد","w":"صوّر الحلّ المكتوب بخطّ اليد؛ فيُرفَق بالتمرين ويصل إلى طابور الإصلاح لدى الأستاذ مع حالة مرئية.","y":"الامتحانات التونسية تنقّط العمل المكتوب؛ والتغذية الراجعة على الطريقة لا على الإجابة هي ما يصحّح المفاهيم الخاطئة (Metcalfe 2017).","d":"homeworks، lessons، users. NEW: submission (image، exerciseId، status، عدد الأستاذ).","g":"زر عائم (FAB) للكاميرا على التمرين؛ وصورة مصغّرة مع شريحة « في الطابور » حتى تتمّ إعادته."},"PR07":{"name":"طابور الإصلاح لدى الأستاذ","w":"يرى الأستاذ الأعمال المرسَلة حسب المجموعة والتمرين، ويعلّق على الصورة (قلم، أختام « ✓ méthode »، « ✗ calcul »)، ويعيد كل واحد منها مع عدد — في غضون 24 ساعة.","y":"التغذية الراجعة في وقتها هي النصف الثاني من أثر الاختبار؛ والطابور المرئي يجعل مدّة الردّ وعدًا (« محرّك حلّ الاستفسارات في غضون 24 ساعة » لدى Physics Wallah).","d":"NEW: الأعمال المرسَلة، التعليقات، الأعداد، الطوابع الزمنية لمدّة الردّ.","g":"رزمة أعمال مرسَلة قابلة للتمرير على لوحة الأستاذ اللوحية؛ وشارة عدّاد على تبويب الأستاذ."},"PR08":{"name":"شريط تقدّم سلسلة التمارين","w":"تعرض كل سلسلة تمارين n/N تمرينًا بحالات مُنجَز · مُتعثَّر فيه · مُتخطًّى تغذّي إتقان المحور.","y":"التقدّم المرئي يديم الجهد (تدرّج الهدف)؛ وتقسيم ملف PDF طويل إلى تمارين مرقّمة هو الشرط المسبق للتلميحات والنسخ المغايرة والإشارات المرجعية.","d":"lessons (serie)، paths. NEW: قائمة التمارين لكل سلسلة (الأرقام، الصفحة)، حالة التمرين لكل مستخدم.","g":"شريط مقسَّم تحت بطاقة السلسلة؛ والنقر على جزء يفتح ذلك التمرين."},"PR09":{"name":"حفظ التمارين الصعبة كإشارة مرجعية","w":"ضع نجمة على أي تمرين لإضافته إلى قائمة « لإعادة الحلّ »؛ ويعيد التطبيق إظهاره بعد ثلاثة أيام وبعد عشرة أيام.","y":"إعادة محاولة متباعدة لأصعب العناصر وفق جدول متّسع الفواصل.","d":"lessons. NEW: قائمة إشارات مرجعية لكل مستخدم مع التواريخ.","g":"نجمة على بطاقة التمرين؛ واختصار « للمراجعة » في أعلى تمارين."},"PR10":{"name":"إعادة الأخطاء","w":"مجموعة من عشرة أسئلة تُبنى فقط من أسئلة الاختبارات السريعة التي أخطأ فيها التلميذ ومدخلات دفتر الأخطاء، متداخلة عبر المحاور.","y":"الاسترجاع على أخطاء التلميذ نفسه مع التغذية الراجعة (Metcalfe 2017) مقترنًا بالتداخل (Rohrer et al. 2015: 72% مقابل 38% في الاختبار النهائي).","d":"quizzes، دفتر الأخطاء (EP04). NEW: لا شيء.","g":"شريحة « عاود الأخطاء » في الصفحة الرئيسية كلّما كانت هناك خمسة أخطاء أو أكثر في الانتظار."},"PR11":{"name":"مجموعة مختلطة متداخلة","w":"مجموعة تخلط تمارين من ثلاثة أو أربعة محاور بحيث يضطرّ التلميذ إلى اختيار الطريقة بدل تطبيق آخر طريقة دُرِّست.","y":"التدرّب المتداخل في الرياضيات ضاعف تقريبًا نتائج الاختبار مقارنة بالتدرّب المجزَّأ — 72% مقابل 38% (d = 1.05, Rohrer, Dedrick & Stershic 2015) و61% مقابل 38% عبر 54 قسمًا (Rohrer et al. 2020).","d":"lessons (exercice)، chapters. NEW: لا شيء.","g":"بطاقة « خلطة » بالأزرق المخضرّ (teal) في تمارين تسمّي المحاور المخلوطة لكن لا تكشف أي تمرين يتبع أي محور."},"PR12":{"name":"مؤقّت لكل تمرين","w":"يقترح كل تمرين وقتًا مستهدفًا مشتقًّا من نقاطه في البكالوريا؛ يشغّله التلميذ ويرى وقته مقارنة بالهدف.","y":"يبني إيقاع الامتحان؛ وضغط الوقت صعوبة مرغوبة عندما تتبعه تغذية راجعة.","d":"lessons. NEW: الدقائق المستهدفة لكل تمرين (افتراضيًا من النقاط).","g":"مؤقّت حلقي صغير في ترويسة التمرين يتحوّل إلى البرتقالي بعد تجاوز الهدف."},"PR13":{"name":"لوحة مسوّدة لإظهار خطوات الحلّ","w":"لوحة رسم بسيطة بالإصبع أو القلم الرقمي تحت كل تمرين للتوصّل إلى الإجابة، تُحفظ لكل تمرين وتُعرض بجانب الإصلاح لاحقًا.","y":"حلّ المسألة هو الاسترجاع بعينه؛ واللوحة تخفّض عائق « سأحلّه لاحقًا على الورق ».","d":"lessons. NEW: ضربات الرسم على اللوحة لكل مستخدم وتمرين.","g":"ورقة تُسحب من الأسفل مع قلم وممحاة؛ وتبقى الصورة المصغّرة للوحة على بطاقة التمرين."},"PR14":{"name":"ورقة القوانين في سياقها","w":"أثناء حلّ تمرين، تحمل لوحة جانبية قوانين المحور، مخفية افتراضيًا ويمكن إلقاء نظرة عليها بنقرة واحدة.","y":"يقلّل تشتّت الانتباه؛ وإلقاء النظرة يكلّف نقرة، لذلك يحاول التلميذ الاسترجاع أولًا، وعدد مرات الاطّلاع إشارة ذاتية لطيفة.","d":"عناصر القوانين (EP16). NEW: لا شيء إضافي على EP16.","g":"زر عائم « Σ »؛ وتنزلق اللوحة من الجهة النهائية (end)."},"PR15":{"name":"اطرح سؤالًا حول هذا التمرين","w":"سؤال (نصّ + صورة) مرفق بتمرين محدَّد؛ يجيب الأستاذ أو الزملاء ويبقى خيط النقاش مرئيًا للمجموعة.","y":"حلّ الاستفسارات هو جوهر منظومات الدروس المباشرة؛ والإجابات العلنية توسّع شرحًا واحدًا ليشمل المجموعة كلّها.","d":"video-comments (النمط نفسه)، chat-messages، lessons، groups. NEW: خيط أسئلة لكل تمرين.","g":"زر « ؟ » على التمرين؛ ويُفتح خيط النقاش في ورقة منزلقة؛ وتحصل إجابات الأستاذ على علامة صحّ بالأخضر الليموني (lime)."},"PR16":{"name":"بنك الأسئلة واختبارات سريعة متعدّدة المحاور","w":"أسئلة اختيار من متعدّد يسمها الأستاذ بالمحور والصعوبة، لكل منها شرح؛ ويجمّع التطبيق اختبارات سريعة حسب المحور أو مختلطة أو على نمط الامتحان.","y":"اختبارات التدرّب بالاختيار من متعدّد تُظهر أكبر أحجام لأثر الاختبار (Adesope 2017)؛ والوسم هو ما يجعل التداخل والإتقان قابلين للحساب.","d":"quizzes (questions، chapterId، tags). NEW: الصعوبة والشرح لكل سؤال.","g":"ترى الإدارة جدولًا قابلًا للتصفية؛ ويرى التلميذ زر « كويز مخلّط » لكل مادة."},"LV01":{"name":"تسجيل مقسّم بعلامات زمنية","w":"يضيف الأستاذ (أو أداة سريعة) علامات زمنية إلى التسجيل — « تذكير »، « تمرين 1 »، « تمرين 2 » — وينتقل التلاميذ بينها.","y":"تقسيم الفيديوهات الطويلة يحسّن التعلّم (مبدأ التقسيم segmenting principle) ويحوّل حصّة من 90 دقيقة إلى مادة قابلة للاستعمال ليلة الفرض.","d":"sessions (recordingUrl)، video-comments. NEW: علامات زمنية (الوقت، التسمية، مؤشّر الأهمية) لكل تسجيل.","g":"شرائح العلامات الزمنية فوق شريط التقدّم في المشغّل؛ الشريحة الحالية بالأزرق المخضرّ (teal)."},"LV02":{"name":"سرعة التشغيل واستئناف المشاهدة","w":"سرعة من 0.75× إلى 2×، وتخطٍّ بمقدار ±10 s، وحفظ موضع التوقّف لكل فيديو.","y":"من المتطلّبات الأساسية التي لا غنى عنها — يعيد التلاميذ المشاهدة بسرعة 1.5× للمراجعة؛ والاستئناف يلغي كلفة «أين توقّفت؟».","d":"sessions، lessons (videoUrl). NEW: موضع التوقّف لكل مستخدم وفيديو.","g":"زرّ سرعة على شكل حبّة (pill) في جهة النهاية من أزرار التحكّم في المشغّل."},"LV03":{"name":"ملاحظات موقّتة","w":"اكتب ملاحظة أثناء المشاهدة؛ تُختم بالوقت، وتنقل قائمة الملاحظات الفيديو إلى تلك اللحظة.","y":"تدوين الملاحظات مع مؤشّرات استرجاع يحوّل المشاهدة السلبية إلى مادة منظّمة للمراجعة لاحقًا.","d":"video-comments (البنية نفسها). NEW: مؤشّر خصوصية (private flag).","g":"تبويب « نوتات » بجانب التعليقات؛ تعرض كل ملاحظة « 12:34 » كشريحة تنقل الفيديو عند النقر."},"LV04":{"name":"أسئلة واستطلاعات مباشرة","w":"أثناء الحصّة المباشرة ينشر التلاميذ أسئلة قابلة للتصويت ويجيبون عن استطلاعات الأستاذ السريعة؛ وتظهر النتائج في لوحة قيادة الأستاذ.","y":"الاسترجاع منخفض الرهانات داخل الحصّة (الاستطلاعات) والأسئلة المرئية يرفعان الانتباه؛ والتصويت بالإعجاب يُبرز الإشكال الشائع.","d":"live-sessions، chat-messages، groups. NEW: كائنات الاستطلاع والسؤال مع الأصوات.","g":"درج في جهة النهاية من شاشة البثّ المباشر بتبويبين « أسئلة » و« سونداج »."},"LV05":{"name":"نقاط تحقّق في التسجيل (اختبار سريع داخل الفيديو)","w":"سؤالان أو ثلاثة تُدرج عند العلامات الزمنية؛ يتوقّف الفيديو، يجيب التلميذ، ثم يتابع الفيديو.","y":"الاختبارات المُدرجة في أثناء المشاهدة تقلّل شرود الذهن وتحسّن التعلّم من المحاضرات المصوّرة (Szpunar, Khan & Schacter 2013).","d":"sessions، quizzes. NEW: روابط اختبار سريع عند علامة زمنية.","g":"يُعتم المشغّل وتنزلق بطاقة السؤال من الأسفل."},"LV06":{"name":"الحضور ووضع التدارك","w":"يُسجَّل الحضور لكل حصّة مباشرة؛ والحصّة الفائتة تظهر بعبارة « فاتتك حصّة » مع التسجيل والوثائق والواجب المنزلي في بطاقة تدارك واحدة.","y":"يوقف دوّامة التسرّب بعد غياب واحد — وعد Vedantu «لن تتخلّف أبدًا» وقد صار ملموسًا.","d":"live-sessions، sessions، resources، homeworks، groups، users. NEW: سجلّات الحضور.","g":"بطاقة برتقالية في الصفحة الرئيسية تضمّ الأمور الثلاثة المطلوبة؛ تختفي عند مشاهدة التسجيل."},"LV07":{"name":"ملخّص الحصّة وحزمة الوثائق","w":"بعد كل حصّة: ملخّص من خمسة أسطر، وملفات PDF المستعملة، والواجب المنزلي، والحصّة القادمة — في بطاقة واحدة.","y":"مؤشّر استرجاع لليوم التالي ونهاية لسؤال «أين ملف PDF؟».","d":"sessions (description)، live-sessions (resourceIds)، homeworks (sessionId). NEW: لا شيء.","g":"الحالة الموسّعة لبطاقة الحصّة في التقويم."},"LV08":{"name":"تذكيرات ودخول بنقرة واحدة","w":"إشعارات قبل 24 h، وقبل 1 h، وعند «تبدأ الآن»، بزرّ واحد « ادخل »؛ تعرض الأستاذ والمجموعة والوثائق.","y":"الحضور يحدّد النتائج في نماذج التعليم المباشر؛ والتذكيرات هي الرافعة الأقلّ كلفة.","d":"live-sessions، users. NEW: لا شيء.","g":"نقطة حمراء (لون البثّ المباشر) على التبويب وشريط علوي أثناء الحصّة."},"LV09":{"name":"أبرز مقاطع التسجيل","w":"يحدّد الأستاذ مقطعين أو ثلاثة «لا بدّ من مشاهدتها»؛ ووضع أبرز المقاطع يشغّل تلك المقاطع فقط.","y":"يخفّض كلفة العودة إلى الشرح الأساسي — المراجعة المتباعدة للدرس، لا للتمارين فقط.","d":"العلامات الزمنية من LV01 مع مؤشّر الأهمية. NEW: لا شيء إضافي على LV01.","g":"مفتاح تبديل « ⭐ أهمّ لحظات » في المشغّل."},"LV10":{"name":"رفع اليد","w":"يطلب التلميذ الكلمة؛ يقبل الأستاذ من طابور الانتظار؛ ويُفتح الميكروفون لذلك التلميذ.","y":"التعبير عن إشكال بصوت مسموع أمام المجموعة هو لحظة الحصّة المباشرة التي يدفع التلاميذ ثمنها (خاصية « Raise a hand » في Unacademy).","d":"live-sessions. NEW: حالة طابور رفع اليد.","g":"زرّ يد في شاشة البثّ المباشر؛ وتعرض لوحة قيادة الأستاذ الطابور بالترتيب."},"SO01":{"name":"مجموعات الدراسة","w":"لكل مجموعة في الأكاديمية فضاء خاص: الأعضاء، والخلاصة (منشورات الأستاذ، الواجبات المنزلية)، ودردشة، ورزم بطاقات مشتركة، وهدف هذا الأسبوع.","y":"الانتماء والمساءلة الاجتماعية؛ بنت Noon Academy منتجها كلّه على مجموعات الدراسة بين الأقران.","d":"groups، users، chat-messages، homeworks، live-sessions. NEW: لا شيء.","g":"تبويب « مجموعتي »؛ تعرض ترويسة المجموعة الصور الرمزية المتراكبة وحلقة الهدف الأسبوعي."},"SO02":{"name":"قائمة مهام مشتركة","w":"قائمة مهام يتشاركها من تلميذين إلى ستة تلاميذ — «سلسلة تمارين 4، التمارين 1–5 قبل الخميس» — تعرض كل مهمّة من أنهاها؛ ويمكن إسناد المهمّة إلى شخص واحد.","y":"الالتزام العلني مع تقدّم مرئي هو أبسط أشكال المساءلة الاجتماعية؛ نمط الإسناد والإشعار في Todoist، وضرر الفريق (party) في Habitica عندما يتغيّب أحدهم.","d":"homeworks، lessons، groups، users. NEW: كائنات المهام (المرجع، المُسنَد إليه، مَن أنجزها، الموعد).","g":"قائمة تحقّق مع صور رمزية متراكبة في كل صفّ وشريط « ✓ 3/5 » على القائمة."},"SO03":{"name":"تحدّي المجموعة الأسبوعي","w":"يحدّد الأستاذ أو التلاميذ هدفًا أسبوعيًا — «50 تمرينًا كمجموعة»، «الجميع ينهي الفرض التجريبي DS1» — ويمتلئ شريط واحد بعمل الجميع.","y":"الأهداف التعاونية تتجنّب الإحباط الناتج عن المنافسة الصرفة؛ نمط Friends Quest في Duolingo.","d":"groups، lessons، quizzes. NEW: كائن التحدّي (الهدف، المدّة الزمنية، المساهمات).","g":"شريط تقدّم كبير أعلى المجموعة تصطفّ عليه الصور الرمزية للمساهمين."},"SO04":{"name":"مذاكرة ثنائية (زوج)","w":"اقترن بزميل واحد في القسم: سلسلة انتظام مشتركة، وتمرين يومي مشترك، وزرّ تحفيز « هيّا ».","y":"المتعلّمون الذين لديهم Friend Streak واحد على الأقل كانوا أكثر احتمالًا بنسبة 22% لإتمام درسهم اليومي (Duolingo)؛ والزوج هو أصغر وحدة اجتماعية فعّالة.","d":"users، groups. NEW: رابط الاقتران، عدّاد سلسلة الانتظام المشتركة.","g":"صورتان رمزيتان بينهما شعلة واحدة في الصفحة الرئيسية؛ يرسل التحفيز إشعارًا فوريًا (push) ويشغّل مؤثّرًا صوتيًا."},"SO05":{"name":"قاعة مذاكرة بمؤقّت مشترك","w":"انضمّ إلى قاعة مجموعة أو قاعة مفتوحة، وشغّل مؤقّتًا من 25 أو 50 دقيقة معًا، وشاهد من هو « في القراية » (الكاميرا مغلقة)، ونمِّ شعلة مشتركة تخبو إذا غادر أحدهم.","y":"الحضور المشترك يرفع نسبة المتابعة حتى النهاية (بحسب تصريحات المستخدمين — استبيانات Focusmate؛ مع قلّة الدراسات المضبوطة، وفق CHADD)؛ والشجرة المشتركة في Forest أداة التزام قوية.","d":"groups، users. NEW: جلسات القاعة (الأعضاء، البداية، المدّة).","g":"بطاقة قاعة بحلقة مشتركة كبيرة وصور رمزية للأعضاء تتنفّس بهدوء (آمنة مع وضع تقليل الحركة)."},"SO06":{"name":"لوحة ترتيب حسب الجهد (اختيارية)","w":"ترتيب أسبوعي حسب الجهد — التمارين، الاختبارات السريعة، الدقائق — لا حسب الأعداد أبدًا؛ اختياري بموافقة كل تلميذ؛ يُعاد ضبطه كل يوم اثنين.","y":"الدوريات تعزّز التفاعل (Duolingo) لكنّ الترتيب حسب الأعداد يضرّ بأصحاب النتائج الضعيفة؛ والترتيب حسب الجهد وبشكل اختياري يبقيه آمنًا.","d":"users، groups، سجلّ النشاط. NEW: مؤشّر الموافقة (opt-in).","g":"قائمة قصيرة يظهر فيها التلميذ دائمًا؛ ويحصل الثلاثة الأوائل على تاج خفيف."},"SO07":{"name":"سلسلة الانتظام ودرع السلسلة (Fire pass)","w":"سلسلة انتظام يومية يبقيها حيّة تمرين واحد؛ ودرع السلسلة (Fire pass) درع مكتسب يحمي يومًا واحدًا فائتًا — يُكسب بإتمام تحدّي أسبوعي أو فرض تجريبي، ويُخزَّن منه اثنان على الأكثر، ولا يُشترى أبدًا.","y":"السلسلة مع التجميد تزيل هاوية الخوف من الخسارة التي تدفع التلاميذ إلى الانسحاب بعد تفويت واحد؛ تجميد السلسلة في Duolingo وقاعدته «درس واحد يحفظ السلسلة» رفعا الاحتفاظ بالمستخدمين كليهما.","d":"users. NEW: عدّاد سلسلة الانتظام، عدد الدروع، سجلّ الأحداث.","g":"شعلة مع شارة درع صغيرة؛ عند استعمال درع تظهر عبارة « باس النار خدم » باللون البرتقالي."},"SO08":{"name":"مهمّات الأسبوع","w":"ثلاث مهمّات في الأسبوع — «أنهِ سلسلتي تمارين»، «فرض تجريبي واحد»، «أجب عن سؤال واحد لزميل» — مكافأتها درع سلسلة (Fire pass) أو شارة أو نقاط للمجموعة.","y":"أهداف قصيرة وملموسة بتقدّم مرئي (نظرية تحديد الأهداف)؛ واقتصاد المكافآت الذي يقف خلف درع السلسلة.","d":"lessons، quizzes، exams. NEW: قوالب المهمّات، تقدّم المهمّات.","g":"ثلاثة صفوف بأشرطة تقدّم في الصفحة الرئيسية؛ الصفّ المكتمل يومض بالأخضر الليموني (lime)."},"SO09":{"name":"شروح بين الأقران","w":"ينشر التلميذ شرحًا قصيرًا مكتوبًا أو صوتيًا لتمرين؛ يضع الأقران علامة « فهمت »؛ ويمكن للأستاذ تثبيت أفضل شرح.","y":"الشرح هو أقوى أشكال التوسّع المعرفي (أثر المتعلّم المُعلِّم protégé effect)؛ وتتوسّع Knowunity وBrainly اعتمادًا على محتوى الأقران.","d":"lessons، video-comments. NEW: منشورات الشرح، التثبيتات، أصوات « فهمت ».","g":"زرّ « فسّر » أسفل التمرين؛ ويحمل الشرح المثبّت دبّوسًا بالأزرق المخضرّ (teal)."},"SO10":{"name":"تشجيعات الأستاذ","w":"تشجيعات بنقرة واحدة — « محاولة ممتازة »، « تحسّن واضح » — لتلميذ أو مجموعة، تظهر في الخلاصة وللأولياء.","y":"الثناء المحدّد المبني على الجهد يدعم المثابرة؛ ونقاط ClassDojo هي النسخة الجماهيرية منه.","d":"users، groups. NEW: أحداث التشجيع.","g":"بطاقة على شكل ملصق مع الصورة الرمزية للأستاذ ومؤثّر صوتي."},"SO11":{"name":"رزم بطاقات مراجعة مشتركة","w":"يمكن مشاركة رزم البطاقات التي يعدّها الأستاذ أو تلميذ مع المجموعة، بينما يبقى جدول المراجعة شخصيًا لكل واحد.","y":"محتوى مجتمعي على نطاق واسع (Quizlet classes، Knowunity) مقترن بتباعد شخصي في المراجعة.","d":"decks (EP05)، groups. NEW: رابط مشاركة من الرزمة إلى المجموعة (deck→group).","g":"زرّ « شارك مع المجموعة » على الرزمة؛ وتحمل الرزم المشتركة الصورة الرمزية لصاحبها."},"SO12":{"name":"هدف المجموعة للفرض القادم","w":"قبل الفرض التأليفي، تحدّد المجموعة هدفًا جماعيًا — «الجميع ≥ 12 في الفرض التجريبي» — ويظهر التقدّم في شكل توزيع مجهول الهوية.","y":"فاعلية جماعية دون إحراج: مخطّط النقاط يعرض المجموعة، ولا يعرض الشخص أبدًا.","d":"groups، محاولات الفروض التجريبية (EP02). NEW: كائن الهدف.","g":"مخطّط نقاط لأعداد الفرض التجريبي مع خطّ الهدف بالأخضر الليموني (lime)."},"SO13":{"name":"إيجاد شريك مذاكرة","w":"اعثر على زميل في القسم حسب المادة والمستوى وساعة المذاكرة المعتادة؛ يبدأ الأمر كمذاكرة ثنائية (SO04).","y":"يزيل عقبة البداية الباردة للخصائص الاجتماعية عند التلاميذ الذين لا شريك لهم أصلًا؛ والإشراف يحافظ على سلامة القاصرين.","d":"users، groups. NEW: التفضيلات، طلبات الاقتران، مؤشّرات الإشراف.","g":"ورقة سفلية من ثلاث خطوات (المادة · المستوى · الساعة) ثم بطاقة شريك مقترح واحدة."},"SO14":{"name":"تحدّي صديق (مبارزة اختبار سريع)","w":"أرسل اختبارًا سريعًا من عشرة أسئلة في محور إلى صديق؛ يلعب الاثنان؛ وتعرض بطاقة النتيجة النتيجتين جنبًا إلى جنب مع زرّ لإعادة المباراة.","y":"المنافسة بجرعات صغيرة مع الأصدقاء ممتعة وتُبقي الاسترجاع مستمرًّا (وضع « challenge friends » في Kahoot!).","d":"quizzes، users. NEW: سجلّ المبارزة.","g":"بطاقة نتيجة بصورتين رمزيتين وشريطين؛ شريط الفائز بالأخضر الليموني (lime)."},"MH01":{"name":"هدف يومي","w":"اختر 10 أو 20 أو 30 دقيقة، أو 1 أو 3 أو 5 تمارين؛ تمتلئ الحلقة بأي نشاط، وتمرين واحد يحفظ سلسلة الانتظام.","y":"فصل سلسلة الانتظام عن الهدف رفع احتفاظ Duolingo بالمستخدمين في اليوم 14 بنسبة 3.3% ونسبة المتعلّمين الذين لديهم سلسلة بنسبة 10.5%؛ وكان الهدف «المكثّف» الأقلّ احتمالًا لإنتاج سلسلة.","d":"users. NEW: ضبط الهدف، سجلّ النشاط.","g":"حلقة في ترويسة الصفحة الرئيسية؛ واحتفال قصير عند 100% (آمن مع وضع تقليل الحركة)."},"MH02":{"name":"مؤقّت تركيز مرتبط بمهمّة","w":"ابدأ تركيزًا لمدّة 25 دقيقة على تمرين أو محور تختاره؛ تهدأ الشاشة؛ وتُحتسب الدقائق ضمن الهدف اليومي.","y":"تحديد وقت محدّد لمهمّة واحدة يقلّل التسويف؛ والشجرة التي تنمو في Forest (وقلب الهاتف للبدء في FLIP) هما النموذجان.","d":"lessons، chapters. NEW: جلسات التركيز.","g":"مؤقّت بملء الشاشة بلون المادة مع شعلة تكبر."},"MH03":{"name":"تقويم العادات","w":"شبكة شهرية للأيام النشطة (والأيام المحمية بالدرع) ملوّنة حسب المادة.","y":"السلاسل المرئية («لا تقطع السلسلة») تدعم المراقبة الذاتية.","d":"سجلّ النشاط (MH01). NEW: لا شيء.","g":"نقاط بألوان المواد؛ والأيام المحمية تعرض درعًا صغيرًا."},"MH04":{"name":"شارات ذات معنى","w":"ثماني شارات مرتبطة بأحداث التعلّم — أول فرض تجريبي، إصلاح عشرة أخطاء، سلسلة تمارين كاملة، مساعدة خمسة أقران، «جاهز لـ DS1» — ولكل شارة قاعدتها معروضة.","y":"تنجح الشارات عندما تشهد على الكفاءة لا على النقرات (نظرية التحديد الذاتي)؛ وعرض القاعدة يبقيها صادقة.","d":"أحداث عبر quizzes، exams، lessons. NEW: تعريفات الشارات.","g":"رفّ من ثماني شارات؛ الشارات المقفلة تعرض قاعدتها، لا لغزًا."},"MH05":{"name":"تقرير التقدّم الأسبوعي","w":"مساء الأحد: الدقائق، والتمارين، وتغيّرات الإتقان، وأفضل محور، وأضعف محور، واقتراح واحد للأسبوع القادم.","y":"التغذية الراجعة مع التأمّل تغلق الحلقة؛ والمادة القابلة للمشاركة تغذّي الخصائص الاجتماعية أيضًا.","d":"مشتقّ من سجلّ النشاط، ومن quizzes، ومن الإتقان. NEW: لا شيء.","g":"بطاقة قابلة للتمرير على نمط القصص (story)؛ يصدّر « شارك » صورة."},"MH06":{"name":"ملخّص للوليّ","w":"ملخّص أسبوعي للوليّ: الحضور في الحصص المباشرة، والواجبات المنزلية المنجزة أو المتأخّرة، وأعداد الفروض التجريبية، ووقت العمل، وتشجيعات الأستاذ — ولا يشمل الدردشة أبدًا.","y":"ملخّصات الوليّ (Google Classroom، يومية أو أسبوعية، دون أعداد أو دردشات) وقصص ClassDojo هي النمط المُثبت؛ والأولياء هم من يدفعون الاشتراك.","d":"users (رابط وليّ↔تلميذ)، الحضور، homeworks، محاولات الامتحانات، subscriptions. NEW: الرابط + الصلاحيات (TA10).","g":"الصفحة الرئيسية للوليّ = بطاقة واحدة لكل ابن بأربعة أرقام ورابط « التفاصيل »."},"MH07":{"name":"وضع العودة","w":"بعد خمسة أيام أو أكثر من الخمول: لا شاشة تأنيب؛ بل عودة من ثلاث خطوات (اختبار سريع من خمس دقائق، ومقطع بارز واحد من تسجيل، وتمرين واحد) وعرض درع سلسلة (Fire pass) لاستعادة سلسلة الانتظام.","y":"الشعور بالخجل يدفع إلى الانقطاع؛ والعودة منخفضة العتبة تستعيد المستخدمين المنقطعين (المنطق الذي يقف خلف إصلاح السلسلة في Duolingo).","d":"سجلّ النشاط. NEW: لا شيء.","g":"بطاقة ترحيب دافئة بثلاث شرائح صغيرة ودون أرقام حمراء."},"MH08":{"name":"تنبيهات ذكية","w":"إشعارات في ساعة المذاكرة المعتادة للتلميذ فقط، مرتبطة بمحتوى محدّد (« تمرين اليوم جاهز »، « صاحبك كمّل »)، وبحدّ أقصى إشعار واحد في اليوم.","y":"التذكيرات الموافقة للتوقيت تتفوّق على التذكيرات العامّة؛ والإفراط في الإشعارات يعوّد الناس على التجاهل.","d":"سجلّ النشاط. NEW: تفضيلات الإشعارات.","g":"ورقة إعدادات مع منتقي « وقتي المفضّل »."},"MH09":{"name":"عملة نقاط واحدة","w":"عملة واحدة تُكسب بأحداث التعلّم وتُنفق على دروع السلسلة (Fire pass) أو إطارات الصورة الرمزية أو لافتة المجموعة — ولا تُنفق أبدًا على الإجابات أو التلميحات.","y":"يبقي المكافآت خفيفة ويتجنّب ردّة الفعل السلبية على جدار الدفع Energy في Duolingo سنة 2025، حيث كانت حتى الدروس الكاملة تكلّف طاقة.","d":"NEW: دفتر النقاط، عناصر المتجر.","g":"عدّاد صغير في الترويسة؛ والمتجر ورقة سفلية من ستة عناصر."},"MH10":{"name":"تفقّد الحالة النفسية (اختياري)","w":"تفقّد اختياري بنقرة واحدة في أسابيع الامتحانات؛ تقصّر الخطة الجلسات في الأيام الصعبة وتقترح تمرين تنفّس.","y":"قلق الامتحانات حقيقي؛ وممارسة الاسترجاع نفسها تخفّضه (Agarwal 2014)، وأدوات التنظيم الذاتي الصغيرة تساعد.","d":"NEW: سجلّات التفقّد (خاصّة).","g":"صفّ من أربعة وجوه؛ لا يُعرض أبدًا للمجموعة أو الوليّ."},"OR01":{"name":"مخطّط الأسبوع","w":"عرض أسبوعي واحد يجمع الحصص المباشرة وآجال الواجبات المنزلية وفترات فروض المراقبة والفروض التأليفية وتواريخ الامتحانات وعناصر خطة المراجعة.","y":"مصدر وحيد للحقيقة يقلّل العبء المعرفي؛ وإخراج الخطة من الذهن إلى مكان مرئي هو الخطوة الأولى في التعلّم المنظَّم ذاتيًا.","d":"live-sessions، sessions، homeworks (dueDate)، exams. NEW: تقويم الامتحانات، عناصر الخطة.","g":"شريط أفقي للأيام مع بطاقات متراصّة لكل يوم؛ ولليوم الحالي عمود فقري بلون تركوازي (teal)."},"OR02":{"name":"آجال الواجبات المنزلية وحالتها","w":"كل الواجبات المنزلية مع أجل التسليم والحالة (للإنجاز · مُسلَّم · مُصلَح · متأخّر) وملفات PDF والحصّة التي صدرت عنها.","y":"الآجال الظاهرة وحالة «متأخّر» تقلّلان من الواجبات الفائتة — وهو نمط «الأعمال الناقصة» في Google Classroom.","d":"homeworks (dueDate، pdfs، sessionId، groupIds). NEW: حالة لكل مستخدم.","g":"قائمة مجمّعة حسب «هذا الأسبوع / الجاي / متأخّر»؛ والمتأخّر بالأحمر الحيّ (live red)."},"OR03":{"name":"تقويم الامتحانات الرسمي","w":"تقويم الوزارة حسب السنة والشعبة — آجال فروض المراقبة، وفترات الفروض التأليفية، وتواريخ الاختبارات الكتابية والتطبيقية والشفوية للبكالوريا، ومناظرة التاسعة أساسي (concours 9ème) — تحرّره الإدارة ويُعرض لكل تلميذ حسب شعبته فقط.","y":"السنة كلّها تدور حول هذه التواريخ؛ وكل عدّ تنازلي وخطة ومحاكٍ يعتمد على هذه المجموعة الواحدة.","d":"years. NEW: مجموعة exam-calendar (type، window، yearIds).","g":"جدول للإدارة؛ ويرى التلميذ خطًا زمنيًا عموديًا لتواريخه هو فقط."},"OR04":{"name":"مزامنة التقويم (ICS)","w":"تغذية ICS شخصية (الحصص والآجال والامتحانات) يمكن الاشتراك فيها من Google Calendar (الويب، «From URL») أو Apple Calendar (webcal، «New Calendar Subscription»).","y":"تلتقي التلاميذ والأولياء حيث يوجد تقويمهم أصلًا؛ وبالطريقة نفسها يدفع Google Classroom آجال التسليم إلى Google Calendar.","d":"live-sessions، homeworks، تقويم الامتحانات. NEW: رمز تغذية (token) لكل مستخدم (يتطلّب نقطة نهاية في الخادم الخلفي backend).","g":"«اشترك في الروزنامة» في الإعدادات مع حقل لنسخ الرابط وزرّين."},"OR05":{"name":"تنزيل للاستعمال دون اتصال","w":"تنزيل ملفات PDF والملخّصات وتسجيلات مختارة للاستعمال دون اتصال؛ وتنتهي صلاحية التنزيلات بانتهاء الاشتراك.","y":"الاتصال وكلفة البيانات مشكلتان حقيقيتان؛ وكلّ من Les Bons Profs وKahoot! يوفّر وضعًا دون اتصال.","d":"lessons (pdfs)، resources، sessions. NEW: حالة التنزيل (تتطلّب غلاف التطبيق).","g":"أيقونة تنزيل مع حلقة تقدّم على كل ملف PDF وكل تسجيل."},"OR06":{"name":"تدوين سريع","w":"زرّ «+» يلتقط ملاحظة مصوّرة أو صوتية أو نصية بنقرتين ويصنّفها تحت المحور الحالي أو في صندوق وارد.","y":"يقلّل عناء تدوين شكّ أثناء الدرس؛ ويغذّي خيط الأسئلة (PR15) ودفتر الأخطاء (EP04).","d":"chapters. NEW: ملاحظات (notes).","g":"زرّ عائم (FAB) في الشريط السفلي؛ والمحور الافتراضي هو آخر محور فُتح."},"OR07":{"name":"البحث في كل شيء","w":"بحث واحد عبر المحاور والتمارين والتسجيلات (عبر تسميات العلامات) والوثائق ومواضيع الامتحانات السابقة.","y":"العثور على المحتوى هو الخطوة الأولى في الممارسة؛ وتسميات العلامات تجعل الفيديو قابلًا للبحث.","d":"كل المجموعات (مشتقّ). NEW: لا شيء.","g":"حقل بحث في شاشة المواد؛ والنتائج مجمّعة حسب النوع مع أشرطتها."},"OR08":{"name":"اشتراكي بوضوح","w":"ما يشمله عرضي (البثّ المباشر، التسجيلات، الامتحانات، المنتدى)، وتاريخ الانتهاء، والتجديد، وأكواد التخفيض؛ والعناصر المقفلة تبيّن السبب.","y":"وضوح الصلاحيات يخفّف عبء الدعم — تبيع TakiAcademy ستّ باقات للبكالوريا بمحتويات مختلفة، فيختلط الأمر على التلاميذ.","d":"offers، subscriptions، accesses، promo-codes، promo-redemptions. NEW: لا شيء.","g":"بطاقة عرض بصفوف للمشمول / غير المشمول؛ وأيقونة قفل مع «في عرض +» على العناصر المقيّدة."},"OR09":{"name":"جدول أوقات المعهد","w":"إدخال جدول أوقات المعهد ليتجنّب المخطّط التعارضات ويقترح فترات فارغة لخطة المراجعة.","y":"الخطط الواقعية هي التي تُتّبع؛ والتعارضات هي السبب الأول في موت الخطط.","d":"NEW: خانات جدول الأوقات لكل مستخدم.","g":"محرّر شبكي 6 × 8؛ والخانات ملوّنة بتدرّج لون المادة."},"PG01":{"name":"الرياضيات (Mathématiques)","w":"درس بالفيديو + ملخّص، ورقة الصيغ، سلاسل تمارين حسب الصعوبة (★/★★/★★★)، بنك فروض المراقبة والفروض التأليفية حسب الثلاثي، مواضيع البكالوريا موسومة حسب المحور مع النقاط، فيديوهات الإصلاح مقسّمة إلى فصول حسب الخطوة.","y":"مثال محلول → صيغة مغايرة → مجموعة مختلطة؛ مهام «démonstration» (برهان)؛ صحيح/خطأ مع التعليل؛ تمرين بكالوريا موقّت (≈ 45 دقيقة)؛ أنواع الأخطاء حساب / منهج / تحرير في الدفتر.","x":"ضوارب البكالوريا (reviserbac.tn، قرار 2008 بصيغته المنقّحة): شعبة الرياضيات 4 (4 h)، العلوم التجريبية 3 (3 h)، العلوم التقنية 3، علوم الإعلامية 3، الاقتصاد والتصرف 2، الآداب 1. مواضيع من أربعة تمارين (الأعداد المركّبة، المتتاليات، الدوال/التكامل، الاحتمالات/الحسابيات في شعبة الرياضيات)؛ تمرين افتتاحي بأسئلة متعددة الاختيارات (QCM) في عدة شعب؛ سلّم تنقيط لكل سؤال.","q":"لكل محور ≥ 1 درس، وملخّص، وسلسلتا تمارين (★ و★★)، وتمارين البكالوريا الخاصة بالمحور مع إصلاحاتها، واختبار من 15 سؤالًا متعدد الاختيارات — ويمكن للتلميذ تنفيذ أي تمرين موقّتًا مع سلّم تنقيطه.","d":"subjects، chapters، lessons، exams، quizzes. NEW: الصعوبة، وسوم امتحان→محور، عناصر الصيغ.","g":"تعرض بلاطات المحاور حلقة الإتقان مع شريط الحرارة «خرج في الباك»."},"PG02":{"name":"العلوم الفيزيائية (Sciences physiques)","w":"دروس مقسّمة فيزياء / كيمياء، رسوم متحرّكة لـ RC-RL-التذبذبات-الموجات، بطاقة صيغ مع الوحدات، سلاسل تمارين، مواضيع بكالوريا (تمرينان في الفيزياء + تمرين أو تمرينان في الكيمياء) مع أصول الرسوم البيانية.","y":"قراءة الرسوم البيانية (انقر على المنحنى لقراءة قيمة)، التحقّق من الوحدات والأبعاد، «exploitation de courbe» (استثمار المنحنى)، أسئلة QCM مع التعليل، أسئلة وصف التجربة.","x":"البكالوريا: 3 h؛ الضارب 4 في العلوم التجريبية والرياضيات، و3 في العلوم التقنية، و2 في علوم الإعلامية. تمارين مبنية على وثائق ورسوم بيانية؛ سلّم تنقيط لكل سؤال.","q":"لكل محور فيديو، ورسم متحرّك واحد، وبطاقة الصيغ، وسلسلتا تمارين، وتمرين سابق واحد يمكن للتلميذ أن يعلّق على رسمه البياني على الشاشة.","d":"subjects، chapters، lessons، exams. NEW: أصول الرسوم البيانية / الرسوم المتحرّكة، وسوم الامتحانات.","g":"تبويبات فرعية «فيزياء / كيمياء» داخل المحور."},"PG03":{"name":"علوم الحياة والأرض (Sciences de la vie et de la terre)","w":"مخطّطات مشروحة (التكاثر، الوراثة، المناعة، الفيزيولوجيا العصبية)، بطاقات تذكّر للمصطلحات، تمارين تحليل الوثائق، بنك أسئلة QCM / QROC، مواضيع بكالوريا مع شبكات تقييم.","y":"تسمية عناصر المخطّط (بالسحب أو النقر)، أسئلة QROC مع إجابة نموذجية، تحليل وثائق مع شبكة تقييم، تصميم تأليفي، بطاقات تذكّر للمفردات.","x":"بكالوريا العلوم التجريبية: ضارب علوم الحياة والأرض 4، 3 h (جزء QCM/QROC وجزء تحليل وثائق)؛ شعبة الرياضيات: الضارب 1، 2 h.","q":"لكل محور مخطّط مسمّى العناصر مع وضع لإخفاء الأسماء، و30 بطاقة تذكّر، ومجموعتا أسئلة QROC، وتمرين وثائق سابق واحد مع شبكة تقييم.","d":"subjects، chapters، lessons، quizzes. NEW: أصول تسميات المخطّطات، بطاقات التذكّر.","g":"المخطّط هو غلاف المحور، مع مفتاح تبديل «خبّي الأسماء»."},"PG04":{"name":"الإعلامية / الخوارزميات (Informatique / Algorithmique)","w":"دروس خوارزميات مع Python، ملعب برمجة (code playground)، جداول تتبّع، مواضيع سابقة تطبيقية وكتابية، دروس STI لشعبة علوم الإعلامية.","y":"تتبّع الخوارزمية، إكمال السطر الناقص، كتابة الدالة (تُتحقَّق آليًا بالاختبارات)، التحويل خوارزمية ↔ Python، مهام تصحيح الأخطاء البرمجية، محاكاة الامتحان التطبيقي.","x":"شعبة علوم الإعلامية: الخوارزميات والبرمجة بضارب 3 (كتابي 2 + تطبيقي 1)، STI 3، الرياضيات 3؛ وفي الشعب الأخرى ضارب الإعلامية 1 (العلوم التقنية: كتابي 0.5 + تطبيقي 0.5). الامتحان التطبيقي من 16 إلى 23 ماي 2026 لنحو 162,000 مترشّح.","q":"لكل محور مثال قابل للتشغيل، وخمسة تمارين تُصحَّح آليًا، وامتحان تطبيقي تجريبي واحد بصيغة الامتحان.","d":"subjects، chapters، lessons. NEW: مشغّل أكواد (خادم خلفي معزول sandbox)، حالات اختبار.","g":"ورقة محرّر بخط أحادي العرض؛ ونتائج الاختبارات في صفوف ليمونية / حمراء."},"PG05":{"name":"العلوم التقنية — الميكانيك والكهرباء (Technique — Mécanique & Électricité)","w":"قارئات الملف التقني (الرسوم الهندسية، قائمة القطع)، الميكانيك (نقل الحركة، التوجيه، التقييس)، الكهرباء (المنطق، GRAFCET، المتحكّمات المبرمجة API)، أدلّة الأعمال التطبيقية، ملفات البكالوريا.","y":"قراءة الرسم → الإجابة؛ إكمال GRAFCET؛ جداول الحقيقة؛ سلاسل حسابية مع الوحدات؛ قوائم تحقّق للأعمال التطبيقية؛ تمرين «dossier» موقّت.","x":"بكالوريا العلوم التقنية: التكنولوجيا بضارب 3 مع اختبار مبني على ملف تقني مدّته 4 h، الأعمال التطبيقية في التكنولوجيا 1 (الاختبار التطبيقي من 14 إلى 23 ماي 2026؛ 21,677 مترشّحًا في 289 مركزًا)، الرياضيات 3، الفيزياء 3.","q":"لكل محور رسم مشروح قابل للتكبير، وسلسلتا تمارين، وقائمة تحقّق للأعمال التطبيقية، وتمرين ملف تقني سابق واحد.","d":"subjects، chapters، lessons، exams. NEW: أصول الرسوم مع نقاط تفاعلية.","g":"عارض رسوم قابل للتكبير مع نقاط تفاعلية مرقّمة."},"PG06":{"name":"الفرنسية (Français)","w":"الأعمال الأدبية المقرّرة مع مسارد، المنهجية (المقال essai، التلخيص résumé، تحليل النص commentaire، الإنتاج الكتابي production écrite)، تدريبات نحوية، محفّزات للشفوي، مواضيع سابقة.","y":"نحو بملء الفراغات، بطاقات «ضع تصميم مقال»، بطاقات تذكّر للمفردات، إنتاج كتابي موقّت مع شبكة تقييم، أسئلة QCM لفهم المقروء، تسجيل شفوي.","x":"بكالوريا الفرنسية: 2 h، الضارب 1 في معظم الشعب و2 في الآداب؛ فهم + لغة + مقال. مناظرة التاسعة أساسي: ضارب الفرنسية 3 (منقول، غير متحقَّق منه).","q":"لكل وحدة (séquence) نص مع مسرد، وثلاثة تدريبات، وموضوع مقال واحد مع شبكة تقييم وإجابة نموذجية.","d":"lessons، resources. NEW: شبكات التقييم، عناصر المسرد.","g":"ورقة شبكة تقييم «المنهجية» مثبّتة في أعلى الوحدة."},"PG07":{"name":"الإنجليزية (Anglais)","w":"دروس حسب الوظيفة اللغوية، مجموعات بطاقات مفردات، تدريبات نحوية، مقاطع استماع مع نصوصها المكتوبة، محفّزات كتابة (بريد إلكتروني، مقال)، مواضيع سابقة.","y":"استماع مع كشف النص المكتوب، بطاقات تذكّر للمفردات، إعادة ترتيب الجمل، كتابة مع شبكة تقييم، تسجيل للتحدّث.","x":"بكالوريا الإنجليزية: 2 h، الضارب 1 في كل الشعب؛ فهم المقروء + لغة + كتابة.","q":"مجموعة مختلطة أسبوعية من 15 دقيقة (قراءة + لغة + كتابة قصيرة واحدة) لكل مستوى.","d":"lessons، quizzes. NEW: مقاطع صوتية.","g":"رقائق مهارات (قراءة · لغة · كتابة · تحدّث) في شاشة المادة."},"PG08":{"name":"العربية (Arabe)","w":"نصوص وأعلام حسب الشعبة، تدريبات قواعد، منهجية الإنشاء، نصوص حجاجية لشعبة الآداب، محفّزات للشفوي، مواضيع سابقة.","y":"تدريبات إعراب، مفردات، بطاقات «ضع تصميم الإنشاء»، تحليل نص مع شبكة تقييم، استماع على طريقة الإملاء.","x":"بكالوريا العربية: الضارب 4 في الآداب و1 في الشعب الأخرى (reviserbac.tn). مناظرة التاسعة أساسي: ضارب العربية 2 (منقول، غير متحقَّق منه).","q":"لكل وحدة (séquence) نص مع تعريف بالنقر، و20 بطاقة تذكّر، وتدريبان في القواعد، وإنشاء واحد مع شبكة تقييم.","d":"lessons، resources. NEW: مسرد، شبكة تقييم.","g":"قارئ مصمَّم أصلًا للاتجاه من اليمين إلى اليسار (RTL) مع تعريف الكلمات بالنقر."},"PG09":{"name":"التاريخ والجغرافيا (Histoire-Géographie)","w":"خطوط زمنية، خرائط، بطاقات تذكّر للتواريخ والمصطلحات، تحليل وثائق، منهجية المقال، مواضيع سابقة.","y":"ترتيب التواريخ، تسمية عناصر الخريطة، تحليل وثائق مع شبكة تقييم، «اكتب التصميم»، بطاقات تذكّر.","x":"البكالوريا: الضارب 2 في الآداب والاقتصاد والتصرف، و1 في الشعب الأخرى؛ مقال أو تحليل وثائق.","q":"لكل محور خط زمني، وخريطة، و30 بطاقة تذكّر، وتمرين وثائق واحد مع إجابة نموذجية.","d":"lessons، quizzes. NEW: أصول الخطوط الزمنية والخرائط.","g":"شريط خط زمني تفاعلي كترويسة للمحور."},"PG10":{"name":"الفلسفة (Philosophie)","w":"مفاهيم وأعلام، بنك أقوال، منهجية المقال وتحليل النص، مقالات نموذجية، مواضيع سابقة مشروحة.","y":"بطاقات «صُغ إشكالية هذا الموضوع»، بطاقات تذكّر للأقوال (العَلَم ↔ الفكرة)، منشئ التصميم (مقدّمة · ثلاثة أجزاء · خاتمة)، مقال موقّت مع شبكة تقييم، مراجعة الأقران.","x":"بكالوريا الفلسفة: الضارب 3 في الآداب و1 في الشعب الأخرى؛ الاختيار بين المقال وتحليل النص.","q":"لكل مفهوم عشرة أقوال، وتصميمان نموذجيان، وموضوع مقال موقّت واحد مع شبكة تقييم، ونموذج مُصلَح.","d":"lessons، resources. NEW: الأقوال، شبكات التقييم.","g":"منشئ تصميم من خمسة صناديق قابلة للتوسيع."},"PG11":{"name":"الاقتصاد والتصرف (Économie & Gestion)","w":"دروس حسب الموضوعات، تمارين حسابية (المحاسبة، التكاليف، النسب)، دراسات وثائق وحالات، مقالات تأليفية، مواضيع سابقة.","y":"إكمال الجداول (اليومية، الموازنة)، حساب النسب مع تحقّق آلي، دراسة حالة مع شبكة تقييم، تعريفات بأسئلة QCM.","x":"بكالوريا الاقتصاد والتصرف: التصرف بضارب 4، الاقتصاد 3، التاريخ والجغرافيا 2، الرياضيات 2 (reviserbac.tn، قيم 2026).","q":"لكل محور حالة محلولة واحدة، وثلاثة تمارين حسابية تُتحقَّق آليًا، وحالة سابقة واحدة.","d":"lessons، quizzes. NEW: تمارين بإدخال جدولي.","g":"مدخلات جدولية شبيهة بجداول البيانات مع علامات تحقّق ليمونية."},"PG12":{"name":"التربية الإسلامية / التفكير الإسلامي (Éducation islamique / Pensée islamique)","w":"نصوص مع شرح، مسرد مفاهيم، منهجية المقال، مواضيع سابقة؛ التربية الإسلامية في الإعدادي والتفكير الإسلامي في الثانوي (شعبة الآداب).","y":"بطاقات تذكّر للحفظ، مطابقة المفاهيم، مقال قصير مع شبكة تقييم، أسئلة QCM.","x":"الإعدادي: تقييم مستمر. الثانوي شعبة الآداب: التفكير الإسلامي مادة امتحان — يجب التثبّت من ضاربه ومدّته في القرار الوزاري (Arrêté)؛ فهو لا يظهر في جدول شعبة الآداب على reviserbac.tn.","q":"لكل وحدة نص مع شرح، و15 بطاقة تذكّر، وموضوع مقال واحد.","d":"lessons. NEW: مسرد.","g":"قارئ نصوص مع شرح بالنقر."},"TA01":{"name":"تأليف التمارين مع الوسوم","w":"إنشاء تمرين (نطاق صفحات من PDF أو مكتوب)، ووسمه بالمحور · الصعوبة · سنة الامتحان · النقاط، وإضافة ثلاثة تلميحات، وإرفاق الإصلاح (PDF أو فيديو مع طوابع زمنية للخطوات)، وربط صيغة مغايرة.","y":"كل خاصية للتلميذ في القسمين 1–2 لا تساوي أكثر من جودة الوسم؛ ويجب أن يكلّف تأليف المحتوى دقائق لا ساعات.","d":"lessons، chapters، exams. NEW: حقول الوسوم، التلميحات، روابط الصيغ المغايرة، الطوابع الزمنية للخطوات.","g":"نموذج واحد مع رقائق؛ و«استورد من PDF» يقسّم سلسلة التمارين إلى تمارين مرقّمة."},"TA02":{"name":"منشئ الاختبارات السريعة على بنك أسئلة","w":"كتابة أسئلة متعددة الاختيارات مع شروح، ووسمها حسب المحور والصعوبة، وبناء اختبارات سريعة يدويًا أو آليًا (محور، مختلط، تجريبي).","y":"اختبارات التدريب متعددة الاختيارات تحمل أكبر أحجام أثر الاختبار (Adesope 2017)؛ والشروح تجعل التغذية الراجعة تعليمية.","d":"quizzes. NEW: شرح وصعوبة لكل سؤال.","g":"قائمة أسئلة مع تحرير مضمّن ومفتاح تبديل «معاينة كتلميذ»."},"TA03":{"name":"إدخال مواضيع الامتحانات السابقة","w":"رفع موضوع + إصلاح + سلّم تنقيط، وتقسيمه إلى تمارين، ووسم كل تمرين بالمحاور مع النقاط، وتحديد الدورة / السنة / الشعبة.","y":"يشغّل EP01 وEP08 وEP11 — عمل بعد ظهر واحد لكل مادة في السنة.","d":"exams. NEW: سجلات على مستوى التمرين مع الوسوم والنقاط.","g":"ملف PDF في جهة، وصفوف التمارين مع رقائق المحاور في الجهة الأخرى."},"TA04":{"name":"أدوات الإصلاح والتعليق","w":"التعليق على الأعمال المسلَّمة بالصور، وختم التعليقات الشائعة، ومنح النقاط حسب كل سطر من سلّم التنقيط، والإرجاع دفعة واحدة.","y":"سرعة الإرجاع وجودة التغذية الراجعة تحدّدان ما إذا كانت PR06 تستحقّ العناء؛ وأدوات المعالجة بالدفعات تحافظ على وقت الأستاذ معقولًا.","d":"submissions (PR06). NEW: التعليقات التوضيحية، بنك التعليقات.","g":"أداة تعليق بملء الشاشة مع درج لبنك التعليقات."},"TA05":{"name":"تحليلات المجموعة","w":"لكل مجموعة: خريطة حرارية للإتقان (التلاميذ × المحاور)، والحضور، وإنجاز الواجبات المنزلية، وتوزيع أعداد الامتحانات التجريبية، وقائمة «تلاميذ في خطر» مع السبب.","y":"تمكّن الأستاذ من توجيه الحصّة القادمة نحو المحور الذي أخفقت فيه المجموعة كلّها.","d":"groups، users، quiz attempts، attendance، homeworks (مشتقّ). NEW: لا شيء غير السجلات.","g":"خريطة حرارية مع تعمّق بالنقر؛ وقائمة المعرّضين للخطر جدول بسيط."},"TA06":{"name":"لوحة قيادة الحصّة المباشرة","w":"عرض الأستاذ أثناء الحصّة المباشرة: علامات الحضور، وطابور الأسئلة، ومُطلِق استطلاعات، وزرّ «ضع علامة المحور الآن»، ومشاركة وثيقة.","y":"شاشة واحدة لـ LV01 وLV04 وLV06 وLV10 — تموت خصائص البثّ المباشر إذا احتاج الأستاذ إلى أربع أدوات.","d":"live-sessions، chat-messages، groups. NEW: العلامات، الاستطلاعات، الحضور.","g":"لوحة قيادة داكنة بأزرار كبيرة للوحة اللمسية."},"TA07":{"name":"تكليف بواجب منزلي أو تحدٍّ","w":"تكليف مجموعة بسلسلة تمارين أو تمرين أو اختبار سريع أو امتحان تجريبي مع أجل — اختياريًا كتحدٍّ جماعي — ومتابعة الإنجاز مباشرة.","y":"حلقة التكليف → الإنجاز → الإصلاح → الإرجاع هي ما جعله Google Classroom معيارًا.","d":"homeworks، groups، lessons، quizzes. NEW: كائن التحدّي (SO03).","g":"زرّ «كلّف» على أي محتوى؛ وورقة لاختيار المجموعة والتاريخ."},"TA08":{"name":"لوحة فجوات المحتوى","w":"لكل مادة وسنة: المحاور التي لا درس فيها ولا سلسلة تمارين ولا اختبار سريع ولا موضوع سابق — قائمة «قريباً»، مرتّبة حسب الأولوية وفق وزن الامتحان.","y":"تُظهر البيانات الأولية للنموذج الأولي معظم المحاور فارغة؛ وإظهار الفجوة يتيح لتأليف المحتوى أن يتبع الأثر.","d":"subjects، chapters، lessons، quizzes، exams (مشتقّ). NEW: لا شيء.","g":"مصفوفة المحاور × أنواع المحتوى مع خلايا فارغة بالبرتقالي."},"TA09":{"name":"الإشراف والسلامة","w":"أزرار إبلاغ على الرسائل والشروح، ومرشّحات كلمات مفتاحية، وإجابات يثبّتها الأستاذ، وقواعد لما يراه الوليّ، وحدود لمعدّل الرسائل الخاصة.","y":"وجود القاصرين مع الخصائص الاجتماعية يستوجبه؛ وتعتمد Brainly وKnowunity على المشرفين.","d":"chat-messages، video-comments. NEW: البلاغات، الإشارات (flags).","g":"طابور للإدارة مع السياق؛ وإخفاء وإشعار بنقرة واحدة."},"TA10":{"name":"ربط الوليّ ↔ التلميذ","w":"تربط الإدارة وليًّا بتلميذ أو أكثر وتحدّد ما يراه الوليّ (الحضور، الواجبات المنزلية، الأعداد — وليس الدردشة أبدًا).","y":"الشرط المسبق لموجز الوليّ؛ والخصوصية بالتصميم (يرى الأولياء في Google Classroom ملخّصات لا الأعداد ولا الدردشات).","d":"users (تلميذ / وليّ). NEW: الربط + الصلاحيات.","g":"كتلة «العائلة» في صفحة المستخدم لدى الإدارة."},"AN01":{"name":"لوحات ترتيب عامة حسب الأعداد","w":"ترتيب التلاميذ حسب أعدادهم أمام الجميع.","y":"يضرّ بضعاف الأداء ويرفع القلق؛ وينبغي أن تكون المنافسة اختيارية ومبنية على الجهد (SO06) أو تعاونية (SO03).","d":"—","g":"بدلًا من ذلك: لوحة ترتيب حسب الجهد، اختيارية، تُصفَّر أسبوعيًا، وتحدّيات جماعية."},"AN02":{"name":"الدفع لمواصلة التدريب (جدران دفع «الطاقة»)","w":"تحديد عدد التمارين أو الاختبارات السريعة في اليوم ما لم يدفع التلميذ أو يشاهد إعلانات.","y":"تغيير Duolingo إلى نظام Energy سنة 2025 — حيث تستنزف حتى الدروس المتقنة الطاقة — جلب انتقادات حادّة؛ فالتدريب هو المنتج، ولا يكون أبدًا جدار الدفع.","d":"—","g":"بدلًا من ذلك: تقييد الحصص المباشرة والإصلاحات حسب العرض (OR08)، وإبقاء التدريب غير محدود."},"AN03":{"name":"ذكاء اصطناعي يوزّع الحلول الكاملة","w":"روبوت محادثة يعيد الإجابة الكاملة لأي تمرين عند الطلب.","y":"يقتل الاسترجاع والتوليد؛ وإذا استُعمل الذكاء الاصطناعي فيكون سقراطيًا (على طريقة Khanmigo)، يبدأ بالتلميح، ويراجعه الأستاذ.","d":"—","g":"بدلًا من ذلك: تلميحات تدريجية (PR01) يؤلّفها الأساتذة؛ وخيط أسئلة (PR15)."},"AN04":{"name":"إشعارات عامة مزعجة","w":"إشعارات يومية من نوع «ارجع!» في ساعات عشوائية.","y":"يعوّد الناس على تجاهل الإشعارات؛ تنبيه واحد في اليوم مرتبط بمحتوى محدّد في الساعة التي يختارها التلميذ (MH08).","d":"—","g":"بدلًا من ذلك: تنبيهات MH08 الذكية بسقف صارم."},"AN05":{"name":"تطبيقات منفصلة لكل دور","w":"بناء تطبيق للوليّ وتطبيق للأستاذ وتطبيق للتلميذ كمنتجات منفصلة.","y":"الأدوار الأربعة هي أربع واجهات عرض مرشّحة على مجموعة بيانات واحدة (قاعدة المشروع)؛ والتكرار يضاعف الأخطاء ويشتّت البيانات.","d":"—","g":"بدلًا من ذلك: AppShell واحد مع إعداد تنقّل (nav config) لكل دور؛ وخصائص نطاق (scope props) على الشاشات المشتركة."},"AN06":{"name":"محرّكات حقيقية داخل النموذج الأولي","w":"تنفيذ خوارزميات حقيقية للجدولة أو التسعير أو التنقيط أو التوصية داخل النموذج الأولي القابل للنقر.","y":"يعرض النموذج الأولي المظهر والتدفّق والتفاعلات الأساسية على مخزن في الذاكرة؛ قيم عرض مشتقّة فقط.","d":"—","g":"بدلًا من ذلك: قيم مشتقّة بسيطة (أعداد، X/Y، فرز/ترشيح أساسي) وبيانات أولية قابلة للتصديق."},"AN07":{"name":"شارة لكل شيء","w":"عشرات الشارات لتسجيل الدخول وفتح ملف PDF والنقر على تبويب.","y":"يميّع المعنى ويحوّل الدافعية نحو الحلية؛ الاكتفاء بثماني شارات تشهد على أحداث تعلّم (MH04).","d":"—","g":"بدلًا من ذلك: شارات MH04 ذات معنى بقواعد ظاهرة."}};
+/* keys: i id · s section · en/ar/fr names · w what · y why · sn seen in · e effort · m impact · r roles · d data · ru reuses existing data · g design note · h horizon · x exam format (programme) · q what good looks like (programme) · a anti-feature */
+var CARDS=[
+/* ===== 1. EXAM PREPARATION ===== */
+{i:"EP01",s:"exam",en:"Bac past-paper bank by chapter",ar:"بنك سوجي الباك حسب الفصل",fr:"Banque de sujets de bac par chapitre",
+ w:"Every sujet (session principale and contrôle, by section and year) with its corrigé and barème, browsable by subject → chapter and not only by year, so a student revising « suites » finds the eight bac exercises on suites in one list.",
+ y:"Retrieval practice on authentic items beats rereading (Roediger & Karpicke 2006; Adesope 2017, g ≈ 0.61). Chapter mapping lets the practice be spaced and targeted instead of one big binge in May.",
+ sn:"digiSchool annales, Nomad Education, reviserbac.tn, devoir.tn / devoinet, Physics Wallah PYQs",e:"M",m:3,r:"s t a",
+ d:"exams (pdfs نص + الإصلاح, videoUrl, subjectIds, yearIds), chapters, subjects. NEW: exam→chapter tags per exercise, session type (principale / contrôle), year label, points per exercise.",ru:1,
+ g:"In موادي, a « سوجي » tab inside each chapter lists past exercises as cards with « جرّبو بالوقت » (run as timed).",h:"quick"},
+{i:"EP02",s:"exam",en:"Timed mock exam with the real barème",ar:"امتحان بلان بالوقت والبارام",fr:"Examen blanc chronométré avec barème officiel",
+ w:"Start a full sujet or a devoir with its real duration (4 h for bac Maths in section Math, 2 h for a devoir de synthèse), a running clock, then self-mark line by line against the barème and get a /20.",
+ y:"Practice under test conditions transfers best (transfer-appropriate processing); retrieval under time pressure also lowers anxiety — 72% of 1,408 students reported being less nervous after classroom retrieval practice (Agarwal et al. 2014).",
+ sn:"Kahoot! Test mode, Nomad Education, Vedantu mock tests, Physics Wallah test series, TakiAcademy evaluation exams",e:"M",m:3,r:"s t",
+ d:"exams, quiz-exams, users. NEW: attempt record (startedAt, duration, self-marks per exercise, final mark).",ru:0,
+ g:"Full-screen « وضع الامتحان » with the clock in the top bar and the nav hidden; the end screen shows the /20 and a per-exercise breakdown in subject tints.",h:"next"},
+{i:"EP03",s:"exam",en:"Exam countdown + automatic revision plan",ar:"العدّاد للامتحان وبرنامج المراجعة",fr:"Compte à rebours + plan de révision automatique",
+ w:"Pick the next devoir or the bac; the app spreads the chapters of that subject over the remaining days, interleaving subjects weighted by coefficient, and shows today's two or three items.",
+ y:"Distributed practice is « high utility » (Dunlosky et al. 2013) and the optimal gap grows with the retention interval (Cepeda et al. 2006). Evenly spaced deadlines beat one final deadline (Ariely & Wertenbroch 2002 — replication mixed, so keep the plan editable).",
+ sn:"RemNote Exam Scheduler, Vaia study plan, Nomad parcours de révision, Abwaab « Morshed » advisor",e:"M",m:3,r:"s p",
+ d:"years (section), subjects, chapters, exams. NEW: exam-calendar (DC/DS windows and bac dates per year/section), plan items per user.",ru:0,
+ g:"Home hero card « X يوم للفرض التأليفي » with today's plan items as tappable chips; the plan screen is a vertical timeline.",h:"next"},
+{i:"EP04",s:"exam",en:"Error notebook",ar:"كرّاس الأخطاء",fr:"Cahier d'erreurs",
+ w:"One tap on any missed quiz item or exercise files it in a personal notebook tagged by chapter and error type — calculation, method, forgot the formula, misread the question — with a « fixed » state once redone correctly.",
+ y:"Errors followed by corrective feedback improve retention, especially confident errors (Metcalfe 2017); naming the error type is self-explanation, a moderate-utility technique (Dunlosky 2013).",
+ sn:"Anki leech tags, Khan Academy « skills to practise », Gauth history, Physics Wallah bookmarks",e:"S",m:3,r:"s t",
+ d:"quizzes (questions), lessons (exercice / serie), chapters. NEW: per-user error entries (ref, type, note, resolved).",ru:1,
+ g:"A small red counter on the chapter tile; the notebook groups entries by chapter with a « عاود » button on each.",h:"quick"},
+{i:"EP05",s:"exam",en:"Flashcards with spaced repetition",ar:"كارطات المراجعة",fr:"Flashcards à répétition espacée",
+ w:"Teacher- or student-made decks per chapter (definitions, formulas, dates, vocabulary, SVT terms); a daily review queue scheduled by an FSRS-style algorithm; cards flip with a swipe.",
+ y:"Practice testing and spacing are the two high-utility techniques (Dunlosky 2013). FSRS, Anki's default scheduler since 25.07 (reported), reaches the same retention with roughly 20–30% fewer reviews than SM-2.",
+ sn:"Anki, Quizlet Learn, RemNote, Vaia, Kahoot! flashcards",e:"M",m:3,r:"s t",
+ d:"chapters, lessons (resume). NEW: cards (front, back, chapterId, authorId), review log per user (due date, stability).",ru:0,
+ g:"Swipe cards with « عرفتها / ما عرفتهاش »; the subject tile shows today's due count as a lime pill.",h:"next"},
+{i:"EP06",s:"exam",en:"Mastery level per chapter",ar:"مستوى التمكّن في كل فصل",fr:"Maîtrise par chapitre",
+ w:"Each chapter shows one of four levels — ما بديتش · مألوف · متمكّن · متقن — computed in render from quiz accuracy, exercises completed and mock marks, and decaying gently when the chapter is not revisited.",
+ y:"Legible mastery focuses effort on weak chapters. Khan Academy's levels (Familiar 70–99%, Proficient 100%, Mastered after a mixed-skill review) reward spaced re-tests rather than one lucky score.",
+ sn:"Khan Academy mastery, Seneca, BYJU'S warm-up / sprint / race, Wayground VoyageMath",e:"S",m:3,r:"s p t",
+ d:"chapters, quizzes, lessons, exams (derived). NEW: quiz and exercise attempts per user (a light log).",ru:1,
+ g:"A four-segment ring on each chapter tile in موادي; the legend shows once on first open.",h:"quick"},
+{i:"EP07",s:"exam",en:"Révision express",ar:"مراجعة سريعة",fr:"Révision express",
+ w:"A ten-minute pass on a chapter: the ملخص, the three formulas or definitions to know, then five retrieval questions. Built for the evening before a devoir de contrôle.",
+ y:"Summaries alone are low utility, but summary + retrieval check is what Seneca's RCT (n ≈ 1,120) tested: about 2× the marks of a revision-guide control (company-reported).",
+ sn:"Seneca, Lumni « révise en 10 min chrono », Nomad fiches, SchoolMouv fiches",e:"S",m:2,r:"s t",
+ d:"lessons (resume), quizzes (chapterId). NEW: none — but a résumé and a quiz must exist for the chapter.",ru:1,
+ g:"A « ⚡ مراجعة سريعة » button at the top of a chapter when both a résumé and a quiz exist.",h:"quick"},
+{i:"EP08",s:"exam",en:"Past-paper → chapter heat map",ar:"شنوّة يجي في الامتحان؟",fr:"Cartographie sujets → chapitres",
+ w:"For each chapter: how many times it appeared in the last ten bac sessions, the typical exercise and the points it carried, so students stop over-revising their favourite chapter.",
+ y:"Makes exam weighting explicit and aligns practice time with where the marks are; a cheap derived view once past papers are tagged (EP01).",
+ sn:"digiSchool annales par thème, reviserbac.tn, Physics Wallah chapter-wise PYQs",e:"M",m:2,r:"s t",
+ d:"exams, chapters. NEW: the same exam→chapter tags with points as EP01.",ru:1,
+ g:"A heat bar « خرج 8 مرّات في 10 سنين » on bac-year chapter tiles; tap to list the exercises.",h:"next"},
+{i:"EP09",s:"exam",en:"Barème / rubric trainer",ar:"تعلّم كيفاش يتنقّط",fr:"Entraînement au barème",
+ w:"Show an exercise, a model answer and the official barème; the student awards points line by line, then compares with the teacher's marking and sees where they are too generous or too harsh.",
+ y:"Self-assessment against criteria builds calibration and teaches what examiners reward; studying worked, marked examples lowers cognitive load for novices (Sweller & Cooper 1985).",
+ sn:"Google Classroom rubrics, Abwaab model answers, Lumni méthodologie",e:"M",m:2,r:"s t",
+ d:"exams (pdfs نص + الإصلاح). NEW: barème lines per exercise, student self-marks.",ru:0,
+ g:"Split view — answer on one side, barème checklist on the other; tapping a line awards its points.",h:"next"},
+{i:"EP10",s:"exam",en:"Oral practice for languages",ar:"تدرّب على الشفاهي",fr:"Entraînement à l'oral (langues)",
+ w:"Record a two-minute answer to a prompt in Français, Anglais or Arabe, play it back, self-rate on a three-criteria mini-rubric; optional teacher feedback.",
+ y:"Generation plus feedback; rehearsal under mild pressure before the real oral and practical tests (14–23 May 2026 for the bac).",
+ sn:"Lumni « petits tutos du Grand oral », Duolingo speaking, Knowunity",e:"M",m:2,r:"s t",
+ d:"subjects, chapters. NEW: audio recordings per user, rubric definitions.",ru:0,
+ g:"A large mic button, a waveform while recording, then a three-row self-rating sheet.",h:"big"},
+{i:"EP11",s:"exam",en:"Devoir de contrôle / synthèse simulators",ar:"فرض بلان (مراقبة / تأليفي)",fr:"Simulateurs de devoir de contrôle / synthèse",
+ w:"Two weeks before each window of the official calendar (e.g. DS1 1–13 Dec 2025, DS2 23 Feb–7 Mar 2026), a simulated devoir assembled from the chapters covered so far, in the right format (1 h contrôle vs 2 h synthèse).",
+ y:"Format matching moderates the testing effect (Adesope 2017); the Tunisian school year is literally organised around these windows, so this is the most natural trigger for practice.",
+ sn:"devoir.tn / devoinet / devoirat.net banks, TakiAcademy evaluation exams, Vedantu tests",e:"M",m:3,r:"s t p",
+ d:"exams (DC/DS pdfs), chapters, years. NEW: official DC/DS calendar, « chapter covered » marker per group.",ru:1,
+ g:"A « فرض بلان » card appears on Home two weeks before each window listing the chapters it covers.",h:"next"},
+{i:"EP12",s:"exam",en:"Weak-chapter review before an exam",ar:"الفصول اللي لازم تراجعها",fr:"Révision ciblée des chapitres faibles",
+ w:"Before an exam, the three chapters with the lowest mastery × highest exam weight, each with a fifteen-minute action (a quiz, a past exercise, a flashcard batch).",
+ y:"Targeted, interleaved retrieval beats blanket rereading; weighting by coefficient and past-paper frequency puts effort where the marks are.",
+ sn:"Khan Academy course challenge, Seneca smart review, Quizlet Learn",e:"S",m:2,r:"s p",
+ d:"chapters, quizzes, exam tags (derived from EP06 and EP08). NEW: none.",ru:1,
+ g:"Three stacked cards on the countdown screen, coloured live-red / orange / lime by mastery.",h:"quick"},
+{i:"EP13",s:"exam",en:"Exam-day checklist",ar:"شنوّة نهزّ معايا نهار الامتحان",fr:"Checklist du jour J",
+ w:"Per exam: convocation, ID, allowed calculator, pens, centre and time, « sleep by 22:00 », with a countdown to the first paper. Parents see the same list.",
+ y:"Implementation intentions reduce avoidable stress and slips; a small, cheap trust-builder for parents.",
+ sn:"Nomad Education, Kartable, Google Calendar reminders",e:"S",m:1,r:"s p",
+ d:"NEW: exam-calendar entries (bac 3–10 June 2026; contrôle 29 June–2 July 2026; practical/oral 14–23 May), checklist template.",ru:1,
+ g:"A checklist sheet opened from the countdown card; ticked items stay ticked.",h:"quick"},
+{i:"EP14",s:"exam",en:"Session principale / contrôle coach",ar:"دليل الدورة الرئيسية ودورة المراقبة",fr:"Guide session principale / session de contrôle",
+ w:"Explains the rules in derja (pass at ≥ 10, the contrôle session, which subjects to re-sit) and computes « what I need in each re-sit subject » from mock marks and the section's coefficients.",
+ y:"Students misunderstand the rules and panic; a transparent, coefficient-weighted calculator turns anxiety into a plan.",
+ sn:"reviserbac.tn « Mo3adli » calculators, kedma.tn",e:"S",m:2,r:"s p",
+ d:"years (section), subjects. NEW: coefficient table per section (Arrêté 24 April 2008 as amended), rules text.",ru:1,
+ g:"A weighted-average widget on the bac dashboard with « what if » sliders per subject.",h:"quick"},
+{i:"EP15",s:"exam",en:"Concours 9ème track",ar:"مسار مناظرة النموذجي",fr:"Parcours concours 9ème (lycées pilotes)",
+ w:"A dedicated programme for the June concours: Maths, Sciences, Français, Arabe (and Anglais) with the past concours papers, a pace plan and the 350-point logic (200 exam + 150 annual average, as reported).",
+ y:"A different exam and population (collège). The offer « خطوة بخطوة للنموذجي » already sells this — the app should make it visible.",
+ sn:"TakiAcademy, Tunisiecollege.net, Physics Wallah targeted batches",e:"M",m:2,r:"s p t a",
+ d:"years (y-9), offers (offer-khotwa), exams, paths. NEW: concours papers, concours coefficients.",ru:1,
+ g:"A separate « مناظرة » home for 9ème users built from the same components, with the concours date in orange.",h:"next"},
+{i:"EP16",s:"exam",en:"Formula & definition sheet per chapter",ar:"ورقة القوانين",fr:"Fiche formules & définitions",
+ w:"The five to fifteen things to know by heart per chapter, printable, with a « hide and recall » mode that blurs each line until tapped.",
+ y:"Cued recall of a formula sheet is cheap retrieval practice; the hidden mode turns a passive fiche into a test.",
+ sn:"Nomad fiches, Kartable, Anki",e:"S",m:2,r:"s t",
+ d:"lessons (resume). NEW: structured formula items per chapter (text / LaTeX).",ru:1,
+ g:"Tap a line to blur it; « خبّي الكل » toggles the recall mode; a print icon at the top.",h:"quick"},
+
+/* ===== 2. EXERCISES & PRACTICE ===== */
+{i:"PR01",s:"practice",en:"Progressive hints (three levels)",ar:"عطيني فكرة",fr:"Indices progressifs",
+ w:"Each exercise carries three hints — a nudge, the method, the first line of the solution — and the full corrigé unlocks only after an attempt or the third hint.",
+ y:"Faded guidance keeps the student generating (desirable difficulty, Bjork) while avoiding floundering; Photomath sells exactly these « third-level steps » in its paid tier.",
+ sn:"Photomath Plus, Gauth, Khanmigo (Socratic), Brainly",e:"M",m:3,r:"s t",
+ d:"lessons (exercice / serie). NEW: hint texts per exercise (teacher-authored in TA01).",ru:0,
+ g:"A « عطيني فكرة » button with a three-dot meter; each tap reveals one level and dims the dot.",h:"next"},
+{i:"PR02",s:"practice",en:"Worked-solution video synced to steps",ar:"فيديو الإصلاح خطوة بخطوة",fr:"Vidéo de correction synchronisée aux étapes",
+ w:"The corrigé video is chaptered by step; the written steps scroll and highlight as the video plays, and tapping a step seeks the video.",
+ y:"Worked examples reduce cognitive load for novices (Sweller & Cooper 1985); synchronising text and narration follows the multimedia principles.",
+ sn:"Photomath Plus animated tutorials, Les Bons Profs, Studeo correction videos",e:"M",m:3,r:"s t",
+ d:"lessons (videoUrl, pdfs الإصلاح), video-comments. NEW: step timestamps per corrigé.",ru:1,
+ g:"Player on top, a step list under it with the active step in teal; the list is the video's table of contents.",h:"next"},
+{i:"PR03",s:"practice",en:"Try a variant",ar:"جرّب نفس التمرين بأرقام أخرى",fr:"Variante du même exercice",
+ w:"After the corrigé, a sibling exercise with different values or a twisted question so the student proves they can do it alone.",
+ y:"Example–problem pairs outperform examples alone (worked-example research); the test after the example is where the learning consolidates.",
+ sn:"Khan Academy, BYJU'S, Wayground VoyageMath",e:"M",m:2,r:"s t",
+ d:"lessons. NEW: variant link between exercises (teacher-authored).",ru:0,
+ g:"« جرّب نسخة أخرى » at the end of the corrigé; the variant opens with hints hidden first.",h:"next"},
+{i:"PR04",s:"practice",en:"Difficulty ladder per chapter",ar:"سلّم الصعوبة",fr:"Échelle de difficulté",
+ w:"Exercises labelled ★ application · ★★ bac classic · ★★★ hard / lycée pilote; the chapter shows which rungs are done.",
+ y:"Progressive difficulty is a desirable difficulty without overload, and it makes « I only did the easy ones » visible.",
+ sn:"Physics Wallah DPP levels, Brilliant, Kartable",e:"S",m:2,r:"s t",
+ d:"lessons. NEW: difficulty field per exercise.",ru:1,
+ g:"Three rungs under the chapter header; completed rungs fill lime.",h:"quick"},
+{i:"PR05",s:"practice",en:"Daily practice problem (DPP)",ar:"تمرين اليوم",fr:"Exercice du jour",
+ w:"One exercise a day per followed subject, chosen from recent chapters, with the corrigé released at 20:00 and a one-tap « بديت ».",
+ y:"Spaced daily retrieval (Cepeda 2006; Dunlosky 2013). Duolingo's rule that one lesson keeps the streak raised day-14 retention 3.3% and the share of learners on a streak 10.5%.",
+ sn:"Physics Wallah DPP, Duolingo daily goal, Brilliant daily challenge",e:"S",m:3,r:"s t",
+ d:"lessons (exercice), chapters, subjects. NEW: none — the rotation is computed.",ru:1,
+ g:"The first card on Home: « تمرين اليوم — رياضيات » with the subject tint and a lime « بديت » button.",h:"quick"},
+{i:"PR06",s:"practice",en:"Photo upload of handwritten work",ar:"صوّر حلّك",fr:"Dépôt photo du brouillon",
+ w:"Snap the handwritten solution; it attaches to the exercise and lands in the teacher's correction queue with a visible status.",
+ y:"Tunisian exams mark written work; feedback on method rather than answer is what fixes misconceptions (Metcalfe 2017).",
+ sn:"Gauth, Brainly scan, Google Classroom submissions, Seesaw",e:"M",m:3,r:"s t",
+ d:"homeworks, lessons, users. NEW: submission (image, exerciseId, status, teacher mark).",ru:0,
+ g:"Camera FAB on the exercise; a thumbnail with a « في الطابور » chip until it is returned.",h:"next"},
+{i:"PR07",s:"practice",en:"Teacher correction queue",ar:"طابور الإصلاح",fr:"File de correction",
+ w:"The teacher sees submissions by group and exercise, annotates on the photo (pen, stamps « ✓ méthode », « ✗ calcul »), returns each with a mark — within 24 hours.",
+ y:"Timely feedback is the second half of the testing effect; a visible queue makes turnaround a promise (Physics Wallah's « doubt engine within 24 hours »).",
+ sn:"Physics Wallah doubt engine, Google Classroom grading, Seesaw annotations",e:"L",m:3,r:"t a",
+ d:"NEW: submissions, annotations, marks, turnaround timestamps.",ru:0,
+ g:"A swipeable stack of submissions on the teacher's tablet; a counter badge on the teacher's tab.",h:"big"},
+{i:"PR08",s:"practice",en:"Série progress bar",ar:"وين وصلت في السلسلة",fr:"Progression de la série",
+ w:"Each série shows n/N exercises with done · struggled · skipped states that feed the chapter's mastery.",
+ y:"Visible progress sustains effort (goal gradient); splitting a long PDF into numbered exercises is the precondition for hints, variants and bookmarks.",
+ sn:"Khan unit progress, Kartable, Seneca",e:"S",m:2,r:"s t p",
+ d:"lessons (serie), paths. NEW: exercise list per série (numbers, page), per-user exercise status.",ru:1,
+ g:"A segmented bar under the série card; tapping a segment opens that exercise.",h:"quick"},
+{i:"PR09",s:"practice",en:"Bookmark hard exercises",ar:"خلّيه للمراجعة",fr:"Marquer un exercice difficile",
+ w:"Star any exercise to a « to redo » list; the app resurfaces it after three and ten days.",
+ y:"Spaced re-attempt of the hardest items on an expanding schedule.",
+ sn:"Physics Wallah bookmarks, Anki, Kahoot! study",e:"S",m:2,r:"s",
+ d:"lessons. NEW: per-user bookmark list with dates.",ru:1,
+ g:"A star on the exercise card; a « للمراجعة » shortcut at the top of تمارين.",h:"quick"},
+{i:"PR10",s:"practice",en:"Mistakes replay",ar:"عاود الأخطاء",fr:"Rejouer ses erreurs",
+ w:"A ten-question set rebuilt only from the student's missed quiz items and error-notebook entries, interleaved across chapters.",
+ y:"Retrieval on one's own errors with feedback (Metcalfe 2017) combined with interleaving (Rohrer et al. 2015: 72% vs 38% on the final test).",
+ sn:"Quizlet Learn « missed terms », Seneca, Khan Academy",e:"S",m:3,r:"s",
+ d:"quizzes, error notebook (EP04). NEW: none.",ru:1,
+ g:"A « عاود الأخطاء » chip on Home whenever five or more errors are pending.",h:"quick"},
+{i:"PR11",s:"practice",en:"Interleaved mixed set",ar:"خلطة تمارين",fr:"Série mixte (interleaving)",
+ w:"A set mixing exercises from three or four chapters so the student must choose the method rather than apply the last one taught.",
+ y:"Interleaved maths practice roughly doubled test scores versus blocked practice — 72% vs 38% (d = 1.05, Rohrer, Dedrick & Stershic 2015) and 61% vs 38% across 54 classes (Rohrer et al. 2020).",
+ sn:"Rohrer's interleaved worksheets, Khan course challenge, Seneca",e:"S",m:3,r:"s t",
+ d:"lessons (exercice), chapters. NEW: none.",ru:1,
+ g:"A teal « خلطة » card in تمارين that names the chapters mixed but not which exercise is which.",h:"quick"},
+{i:"PR12",s:"practice",en:"Timer per exercise",ar:"وقّت روحك",fr:"Chrono par exercice",
+ w:"Each exercise suggests a target time derived from its bac points; the student runs it and sees their time against the target.",
+ y:"Builds exam pacing; time pressure is a desirable difficulty when feedback follows.",
+ sn:"Kahoot! test mode, Vedantu, Physics Wallah",e:"S",m:2,r:"s t",
+ d:"lessons. NEW: target minutes per exercise (default from points).",ru:1,
+ g:"A small ring timer in the exercise header that turns orange past the target.",h:"quick"},
+{i:"PR13",s:"practice",en:"Show-your-work canvas",ar:"ورقة البرويون",fr:"Brouillon numérique",
+ w:"A simple finger/stylus canvas under each exercise to work out the answer, saved per exercise and shown beside the corrigé afterwards.",
+ y:"Working the problem is the retrieval; a canvas lowers the friction of « I'll do it later on paper ».",
+ sn:"Photomath, Brainly, RemNote handwriting",e:"M",m:1,r:"s",
+ d:"lessons. NEW: canvas strokes per user and exercise.",ru:1,
+ g:"A pull-up sheet with pen and eraser; the canvas thumbnail stays on the exercise card.",h:"next"},
+{i:"PR14",s:"practice",en:"Formula sheet in context",ar:"القوانين في بلاصتها",fr:"Formulaire contextuel",
+ w:"While doing an exercise, a side panel holds the chapter's formulas, hidden by default and one tap to peek.",
+ y:"Reduces split attention; the peek costs a tap so the student tries recall first, and peek counts are a gentle self-signal.",
+ sn:"Photomath, Kartable",e:"S",m:1,r:"s",
+ d:"formula items (EP16). NEW: none beyond EP16.",ru:1,
+ g:"A floating « Σ » button; the panel slides from the end side.",h:"quick"},
+{i:"PR15",s:"practice",en:"Ask a question on this exercise",ar:"عندي سؤال في التمرين",fr:"Poser une question sur l'exercice",
+ w:"A question (text + photo) attached to an exact exercise; the teacher or peers answer and the thread stays visible to the group.",
+ y:"Doubt-solving is the core of live-class ecosystems; public answers scale one explanation to the whole group.",
+ sn:"Physics Wallah doubt engine, Brainly, Unacademy « Raise a hand », Studeo forums",e:"M",m:3,r:"s t",
+ d:"video-comments (same pattern), chat-messages, lessons, groups. NEW: question thread per exercise.",ru:1,
+ g:"A « ؟ » button on the exercise; the thread opens as a sheet; teacher answers get a lime check.",h:"next"},
+{i:"PR16",s:"practice",en:"Question bank & mixed-chapter quizzes",ar:"بنك الأسئلة",fr:"Banque de questions",
+ w:"Teacher-tagged MCQs by chapter and difficulty, each with an explanation; the app assembles quizzes by chapter, mixed, or exam-style.",
+ y:"Multiple-choice practice tests show the largest testing-effect sizes (Adesope 2017); tagging is what makes interleaving and mastery computable.",
+ sn:"Wayground AI Hub, Kahoot!, Seneca, TakiAcademy QCM",e:"M",m:3,r:"t a s",
+ d:"quizzes (questions, chapterId, tags). NEW: difficulty and explanation per question.",ru:1,
+ g:"Admin sees a filterable table; the student sees a « كويز مخلّط » button per subject.",h:"next"},
+
+/* ===== 3. LIVE & REPLAYS ===== */
+{i:"LV01",s:"live",en:"Chaptered replay",ar:"التسجيل مقسّم",fr:"Replay chapitré",
+ w:"The teacher (or a quick tool) adds markers to the recording — « تذكير », « تمرين 1 », « تمرين 2 » — and students jump between them.",
+ y:"Segmenting long videos improves learning (segmenting principle) and turns a 90-minute séance into something usable the night before a devoir.",
+ sn:"YouTube chapters, Les Bons Profs, Studeo short videos",e:"S",m:3,r:"s t",
+ d:"sessions (recordingUrl), video-comments. NEW: markers (time, label, key flag) per recording.",ru:1,
+ g:"Marker chips above the progress bar in the player; the current chip in teal.",h:"quick"},
+{i:"LV02",s:"live",en:"Playback speed & resume",ar:"سرعة الفيديو",fr:"Vitesse de lecture",
+ w:"0.75× to 2× speed, ±10 s skips, and the position remembered per video.",
+ y:"Table stakes — students re-watch at 1.5× for revision; resuming removes the « where was I » cost.",
+ sn:"Khan Academy, Les Bons Profs, YouTube",e:"S",m:2,r:"s",
+ d:"sessions, lessons (videoUrl). NEW: position per user and video.",ru:1,
+ g:"A speed pill at the end side of the player controls.",h:"quick"},
+{i:"LV03",s:"live",en:"Timestamped notes",ar:"نوتات على الفيديو",fr:"Notes horodatées",
+ w:"Type a note while watching; it is stamped with the time, and the notes list seeks the video.",
+ y:"Note-taking with retrieval cues turns passive watching into a structured artefact for later review.",
+ sn:"RemNote, Knowunity, Coursera",e:"S",m:2,r:"s",
+ d:"video-comments (same shape). NEW: a private flag.",ru:1,
+ g:"A « نوتات » tab beside comments; each note shows « 12:34 » as a tap-to-seek chip.",h:"quick"},
+{i:"LV04",s:"live",en:"Live Q&A and polls",ar:"أسئلة وسوندات في الحصّة",fr:"Questions & sondages en direct",
+ w:"During a live séance students post upvotable questions and answer the teacher's quick polls; results appear on the teacher's cockpit.",
+ y:"Low-stakes in-class retrieval (polls) and visible questioning raise attention; upvotes surface the common doubt.",
+ sn:"Kahoot!, Wayground live, Unacademy live chat, Vedantu in-class doubts",e:"M",m:3,r:"s t",
+ d:"live-sessions, chat-messages, groups. NEW: poll and question objects with votes.",ru:1,
+ g:"An end-side drawer in the live screen with « أسئلة » and « سونداج » tabs.",h:"next"},
+{i:"LV05",s:"live",en:"Replay checkpoints (quiz in the video)",ar:"كويز في وسط الفيديو",fr:"Quiz dans le replay",
+ w:"Two or three questions inserted at markers; the video pauses, the student answers, the video continues.",
+ y:"Interpolated tests reduce mind-wandering and improve learning from video lectures (Szpunar, Khan & Schacter 2013).",
+ sn:"Wayground interactive video, Edpuzzle, Khan Academy",e:"M",m:2,r:"s t",
+ d:"sessions, quizzes. NEW: quiz-at-timestamp links.",ru:1,
+ g:"The player dims and the question card slides up from the bottom.",h:"next"},
+{i:"LV06",s:"live",en:"Attendance & catch-up mode",ar:"لحق اللي فاتك",fr:"Présence & mode rattrapage",
+ w:"Attendance is recorded per live séance; a missed one shows « فاتتك حصّة » with the replay, the documents and the homework in a single catch-up card.",
+ y:"Stops the drop-out spiral after one absence — the « never fall behind » promise of Vedantu, made concrete.",
+ sn:"Vedantu, TakiAcademy recordings, Google Classroom missing work",e:"S",m:3,r:"s p t",
+ d:"live-sessions, sessions, resources, homeworks, groups, users. NEW: attendance records.",ru:1,
+ g:"An orange card on Home with the three things to do; it disappears when the replay is watched.",h:"quick"},
+{i:"LV07",s:"live",en:"Session résumé & documents bundle",ar:"ملخّص الحصّة",fr:"Résumé de séance",
+ w:"After each séance: a five-line résumé, the PDFs used, the homework and the next séance — one card.",
+ y:"A retrieval cue for the next day and an end to « where is the PDF ».",
+ sn:"Abwaab summaries, Google Classroom stream",e:"S",m:2,r:"s t",
+ d:"sessions (description), live-sessions (resourceIds), homeworks (sessionId). NEW: none.",ru:1,
+ g:"The session card's expanded state in the agenda.",h:"quick"},
+{i:"LV08",s:"live",en:"Reminders & one-tap join",ar:"تذكير الحصّة",fr:"Rappel & accès en un geste",
+ w:"24 h, 1 h and « starting now » notifications with a single « ادخل » button; shows the teacher, the group and the documents.",
+ y:"Attendance drives outcomes in live models; reminders are the cheapest lever.",
+ sn:"Zoom, Unacademy, TakiAcademy",e:"S",m:2,r:"s p",
+ d:"live-sessions, users. NEW: none.",ru:1,
+ g:"A live-red dot on the tab and a top banner during the session.",h:"quick"},
+{i:"LV09",s:"live",en:"Replay highlights",ar:"أهمّ 3 دقايق",fr:"Extraits clés du replay",
+ w:"The teacher flags two or three « must-watch » segments; a highlights mode plays only those.",
+ y:"Lowers the cost of revisiting the key explanation — the spaced review of the lesson, not just of the exercises.",
+ sn:"Lumni ten-minute capsules, Studeo short videos",e:"S",m:1,r:"s t",
+ d:"markers from LV01 with a key flag. NEW: none beyond LV01.",ru:1,
+ g:"A « ⭐ أهمّ لحظات » toggle in the player.",h:"next"},
+{i:"LV10",s:"live",en:"Raise a hand",ar:"نرفع يدّي",fr:"Lever la main",
+ w:"A student asks to speak; the teacher accepts from a queue; the mic opens for that student.",
+ y:"Verbalising a doubt in front of the group is the live-class moment students pay for (Unacademy's « Raise a hand »).",
+ sn:"Unacademy, Zoom, Vedantu",e:"M",m:2,r:"s t",
+ d:"live-sessions. NEW: hand-raise queue state.",ru:1,
+ g:"A hand button in the live screen; the teacher's cockpit shows the queue in order.",h:"next"},
+
+/* ===== 4. SHARED & SOCIAL ===== */
+{i:"SO01",s:"social",en:"Study groups",ar:"مجموعتي",fr:"Groupes d'étude",
+ w:"Each academy group gets a space: members, a feed (teacher posts, homework), a chat, shared decks and this week's goal.",
+ y:"Belonging and social accountability; Noon Academy built its whole product on peer study groups.",
+ sn:"Noon Academy, Google Classroom, Study Together (Discord)",e:"M",m:3,r:"s t a",
+ d:"groups, users, chat-messages, homeworks, live-sessions. NEW: none.",ru:1,
+ g:"A « مجموعتي » tab; the group header shows the avatar stack and the weekly goal ring.",h:"next"},
+{i:"SO02",s:"social",en:"Shared task list",ar:"قائمة خدمة مشتركة",fr:"Liste de tâches partagée",
+ w:"A to-do list shared by two to six students — « série 4, ex. 1–5 before Thursday » — each task shows who has finished; one person can be assigned.",
+ y:"Public commitment plus visible progress is the simplest social accountability; Todoist's assign-and-notify pattern, Habitica's party damage when someone skips.",
+ sn:"Todoist shared projects, Google Tasks, Habitica party",e:"M",m:3,r:"s",
+ d:"homeworks, lessons, groups, users. NEW: task objects (ref, assignee, done-by, due).",ru:1,
+ g:"A checklist with avatar stacks on each row and a « ✓ 3/5 » ribbon on the list.",h:"next"},
+{i:"SO03",s:"social",en:"Group challenge of the week",ar:"تحدّي المجموعة",fr:"Défi de groupe",
+ w:"Teacher or students set a weekly target — « 50 exercises as a group », « everyone finishes the DS1 mock » — and one bar fills with everyone's work.",
+ y:"Cooperative goals avoid the demotivation of pure competition; the Duolingo Friends Quest pattern.",
+ sn:"Duolingo Friends Quests, Forest Plant Together, Habitica quests",e:"M",m:3,r:"s t",
+ d:"groups, lessons, quizzes. NEW: challenge object (target, window, contributions).",ru:1,
+ g:"A big progress bar at the top of the group with contribution avatars along it.",h:"next"},
+{i:"SO04",s:"social",en:"Duo study (pair)",ar:"زوز نقراو مع بعضنا",fr:"Binôme d'étude",
+ w:"Pair with one classmate: a shared streak, a shared daily exercise, and a « هيّا » nudge button.",
+ y:"Learners with at least one Friend Streak were 22% more likely to complete their daily lesson (Duolingo); the pair is the smallest viable social unit.",
+ sn:"Duolingo Friend Streak, Flora pairs, Focusmate",e:"S",m:3,r:"s",
+ d:"users, groups. NEW: pair link, shared streak counter.",ru:1,
+ g:"Two avatars with one flame between them on Home; the nudge sends a push and plays a cue.",h:"quick"},
+{i:"SO05",s:"social",en:"Study room with shared timer",ar:"قاعة المراجعة",fr:"Salle d'étude (timer partagé)",
+ w:"Join a group or open room, start a 25- or 50-minute timer together, see who is « في القراية » (camera off), and grow a shared flame that fades if anyone leaves.",
+ y:"Co-presence raises follow-through (self-reported — Focusmate's surveys; little controlled research, per CHADD); Forest's shared tree is a strong commitment device.",
+ sn:"Forest Plant Together, Flora, Study Together (Discord), Focusmate, FLIP",e:"M",m:2,r:"s",
+ d:"groups, users. NEW: room sessions (members, start, duration).",ru:1,
+ g:"A room card with a big shared ring and member avatars breathing softly (reduced-motion safe).",h:"next"},
+{i:"SO06",s:"social",en:"Effort leaderboard (opt-in)",ar:"ترتيب المجموعة (اختياري)",fr:"Classement de groupe (opt-in)",
+ w:"A weekly ranking by effort — exercises, quizzes, minutes — never by marks; opt-in per student; resets every Monday.",
+ y:"Leagues drive engagement (Duolingo) but mark-based rankings hurt low performers; effort-based and opt-in keeps it safe.",
+ sn:"Duolingo leagues, Kahoot!, Study Together ranks, FLIP school ranking, Noon",e:"S",m:2,r:"s t",
+ d:"users, groups, activity log. NEW: opt-in flag.",ru:1,
+ g:"A short list where the student is always visible; the top three get a subtle crown.",h:"next"},
+{i:"SO07",s:"social",en:"Streak & Fire pass (streak shield)",ar:"الفلام وباس النار",fr:"Série quotidienne & « Fire pass » (gel de série)",
+ w:"A daily streak kept alive by one exercise; the Fire pass is an earned shield that protects one missed day — won by finishing a weekly challenge or a mock exam, two stored at most, never bought.",
+ y:"The streak plus a freeze removes the loss-aversion cliff that makes students quit after one miss; Duolingo's freeze and its « one lesson keeps the streak » rule both lifted retention.",
+ sn:"Duolingo streak freeze, Finch pause, Snapchat streaks",e:"S",m:3,r:"s",
+ d:"users. NEW: streak counter, shield count, event log.",ru:1,
+ g:"A flame with a small shield badge; using a shield shows « باس النار خدم » in orange.",h:"quick"},
+{i:"SO08",s:"social",en:"Weekly quests",ar:"مهام الأسبوع",fr:"Quêtes de la semaine",
+ w:"Three quests a week — « finish two séries », « one mock exam », « answer one peer question » — rewarded with a Fire pass, a badge or group points.",
+ y:"Short, concrete goals with visible progress (goal-setting theory); the reward economy behind the streak shield.",
+ sn:"Duolingo Daily and Friends Quests, Habitica dailies",e:"S",m:2,r:"s",
+ d:"lessons, quizzes, exams. NEW: quest templates, quest progress.",ru:1,
+ g:"Three rows with progress bars on Home; a completed row pops lime.",h:"quick"},
+{i:"SO09",s:"social",en:"Peer explanations",ar:"فسّر لصاحبك",fr:"Explications entre pairs",
+ w:"A student posts a short written or voice explanation of an exercise; peers mark « فهمت »; the teacher can pin the best one.",
+ y:"Explaining is the strongest elaboration (the protégé effect); Knowunity and Brainly scale on peer content.",
+ sn:"Knowunity notes, Brainly, Nafham crowd videos",e:"M",m:2,r:"s t",
+ d:"lessons, video-comments. NEW: explanation posts, pins, « فهمت » votes.",ru:1,
+ g:"A « فسّر » button under an exercise; a pinned explanation wears a teal pin.",h:"next"},
+{i:"SO10",s:"social",en:"Teacher shout-outs",ar:"تشجيع من الأستاذ",fr:"Encouragements de l'enseignant",
+ w:"One-tap shout-outs — « محاولة ممتازة », « تحسّن واضح » — to a student or a group, visible in the feed and to parents.",
+ y:"Specific, effort-based praise supports persistence; ClassDojo's points are the mass-market version.",
+ sn:"ClassDojo, Seesaw, Khan Academy teacher notes",e:"S",m:2,r:"t s p",
+ d:"users, groups. NEW: shout-out events.",ru:1,
+ g:"A sticker-like card with the teacher's avatar and a sound cue.",h:"quick"},
+{i:"SO11",s:"social",en:"Shared flashcard decks",ar:"كارطات المجموعة",fr:"Decks de cartes partagés",
+ w:"Decks made by the teacher or a student can be shared with the group while everyone's review schedule stays personal.",
+ y:"Community content at scale (Quizlet classes, Knowunity) combined with personal spacing.",
+ sn:"Quizlet classes, Anki shared decks, Knowunity",e:"S",m:2,r:"s t",
+ d:"decks (EP05), groups. NEW: share link deck→group.",ru:0,
+ g:"« شارك مع المجموعة » on a deck; shared decks carry the author's avatar.",h:"next"},
+{i:"SO12",s:"social",en:"Group goal for the next devoir",ar:"هدف المجموعة للفرض",fr:"Objectif de groupe pour le devoir",
+ w:"Before a devoir de synthèse, the group sets a collective goal — « everyone ≥ 12 on the mock » — and progress shows as an anonymous distribution.",
+ y:"Collective efficacy without shaming: the dot plot shows the group, never the person.",
+ sn:"Noon Academy, Habitica quests",e:"S",m:1,r:"s t",
+ d:"groups, mock attempts (EP02). NEW: goal object.",ru:1,
+ g:"A dot plot of mock marks with the goal line in lime.",h:"next"},
+{i:"SO13",s:"social",en:"Find a study partner",ar:"نلقى شريك قراية",fr:"Trouver un binôme",
+ w:"Match with a classmate by subject, level and usual study hour; starts as a Duo (SO04).",
+ y:"Removes the cold start of social features for students who don't already have a partner; moderation keeps it safe for minors.",
+ sn:"Focusmate matching, Study Together partner channels",e:"M",m:2,r:"s a",
+ d:"users, groups. NEW: preferences, match requests, moderation flags.",ru:1,
+ g:"A three-step sheet (subject · level · hour) then one suggested partner card.",h:"big"},
+{i:"SO14",s:"social",en:"Challenge a friend (quiz duel)",ar:"تحدّي صاحبك",fr:"Duel de quiz",
+ w:"Send a ten-question chapter quiz to a friend; both play; the result card shows the two scores side by side with a rematch button.",
+ y:"Competition in small doses with friends is fun and keeps retrieval going (Kahoot!'s « challenge friends » mode).",
+ sn:"Kahoot! challenge, Duolingo, QuizUp",e:"S",m:2,r:"s",
+ d:"quizzes, users. NEW: duel record.",ru:1,
+ g:"A result card with two avatars and two bars; the winner's bar in lime.",h:"next"},
+
+/* ===== 5. MOTIVATION & HABITS ===== */
+{i:"MH01",s:"habits",en:"Daily goal",ar:"هدفي اليومي",fr:"Objectif quotidien",
+ w:"Choose 10, 20 or 30 minutes or 1, 3 or 5 exercises; the ring fills with any activity and one exercise keeps the streak.",
+ y:"Decoupling the streak from the goal raised Duolingo's day-14 retention 3.3% and the share of learners on a streak 10.5%; the « intense » goal was the least likely to produce a streak.",
+ sn:"Duolingo, Finch, Forest",e:"S",m:3,r:"s",
+ d:"users. NEW: goal setting, activity log.",ru:1,
+ g:"A ring in the Home header; a brief celebration at 100% (reduced-motion safe).",h:"quick"},
+{i:"MH02",s:"habits",en:"Focus timer tied to a task",ar:"مؤقّت التركيز",fr:"Minuteur de concentration",
+ w:"Start a 25-minute focus on a chosen exercise or chapter; the screen goes calm; the minutes count toward the daily goal.",
+ y:"Time-boxing one task reduces procrastination; Forest's growing tree (and FLIP's flip-to-start) are the models.",
+ sn:"Forest, Flora, FLIP, Focusmate",e:"S",m:2,r:"s",
+ d:"lessons, chapters. NEW: focus sessions.",ru:1,
+ g:"A full-screen timer in the subject tint with a flame that grows.",h:"quick"},
+{i:"MH03",s:"habits",en:"Habit calendar",ar:"روزنامة العادة",fr:"Calendrier d'habitude",
+ w:"A month grid of active days (and shielded days) coloured by subject.",
+ y:"Visual chains (« don't break the chain ») support self-monitoring.",
+ sn:"Duolingo streak calendar, Finch, GitHub contribution graph",e:"S",m:1,r:"s p",
+ d:"activity log (MH01). NEW: none.",ru:1,
+ g:"Dots in subject tints; shielded days show a tiny shield.",h:"quick"},
+{i:"MH04",s:"habits",en:"Meaningful badges",ar:"شارات تستاهلها",fr:"Badges qui ont du sens",
+ w:"Eight badges tied to learning events — first mock exam, ten errors fixed, a full série, five peers helped, « DS1 ready » — each with its rule shown.",
+ y:"Badges work when they certify competence rather than clicks (self-determination theory); showing the rule keeps them honest.",
+ sn:"Khan Academy, Habitica, Duolingo achievements",e:"S",m:1,r:"s",
+ d:"events across quizzes, exams, lessons. NEW: badge definitions.",ru:1,
+ g:"A shelf of eight; locked badges show their rule, not a mystery.",h:"next"},
+{i:"MH05",s:"habits",en:"Weekly progress report",ar:"تقرير الأسبوع",fr:"Bilan hebdomadaire",
+ w:"Sunday evening: minutes, exercises, mastery deltas, best chapter, weakest chapter and one suggestion for next week.",
+ y:"Feedback plus reflection closes the loop; a shareable artefact also feeds the social features.",
+ sn:"Duolingo weekly recap, Khan progress, Vaia",e:"S",m:2,r:"s",
+ d:"derived from the activity log, quizzes and mastery. NEW: none.",ru:1,
+ g:"A scrollable story-like card; « شارك » exports an image.",h:"quick"},
+{i:"MH06",s:"habits",en:"Parent digest",ar:"تقرير الوالدين",fr:"Résumé pour les parents",
+ w:"A weekly summary for the parent: live-session attendance, homework done or late, mock marks, time on task and teacher shout-outs — never the chat.",
+ y:"Guardian summaries (Google Classroom, daily or weekly, no grades or chats) and ClassDojo stories are the proven pattern; parents pay the subscription.",
+ sn:"Google Classroom guardian summaries, ClassDojo, Seesaw, Khan Parent Dashboard, EdTrust",e:"M",m:3,r:"p a",
+ d:"users (parent↔student link), attendance, homeworks, exam attempts, subscriptions. NEW: link + permissions (TA10).",ru:1,
+ g:"Parent Home = one card per child with four numbers and a « التفاصيل » link.",h:"next"},
+{i:"MH07",s:"habits",en:"Comeback mode",ar:"رجعت؟ مرحبا بيك",fr:"Mode retour après absence",
+ w:"After five or more inactive days: no guilt screen; a three-step re-entry (a five-minute quiz, one replay highlight, one exercise) and a Fire pass offer to restore the streak.",
+ y:"Shame drives churn; a low-threshold re-entry recovers lapsed users (the logic behind Duolingo's streak repair).",
+ sn:"Duolingo, Finch, Headspace",e:"S",m:2,r:"s",
+ d:"activity log. NEW: none.",ru:1,
+ g:"A warm welcome card with three small chips and no red numbers.",h:"quick"},
+{i:"MH08",s:"habits",en:"Smart nudges",ar:"تنبيهات في وقتها",fr:"Rappels intelligents",
+ w:"Notifications only at the student's usual study hour, content-specific (« تمرين اليوم جاهز », « صاحبك كمّل ») and at most one a day.",
+ y:"Timing-matched reminders outperform generic ones; over-notifying trains people to ignore.",
+ sn:"Duolingo notification experiments, Finch",e:"M",m:2,r:"s",
+ d:"activity log. NEW: notification preferences.",ru:1,
+ g:"A settings sheet with a « وقتي المفضّل » picker.",h:"next"},
+{i:"MH09",s:"habits",en:"One points currency",ar:"نقاط",fr:"Points",
+ w:"One currency earned by learning events and spent on Fire passes, avatar frames or a group banner — never on answers or hints.",
+ y:"Keeps rewards light and avoids the backlash of Duolingo's 2025 Energy paywall, where even perfect lessons cost energy.",
+ sn:"Habitica gold, Duolingo gems, Brainly points",e:"S",m:1,r:"s a",
+ d:"NEW: points ledger, shop items.",ru:1,
+ g:"A small counter in the header; the shop is a sheet with six items.",h:"next"},
+{i:"MH10",s:"habits",en:"Wellbeing check-in (optional)",ar:"كيفاش حاسس روحك؟",fr:"Check-in bien-être",
+ w:"An optional one-tap check-in in exam weeks; the plan shortens sessions on hard days and offers a breathing exercise.",
+ y:"Test anxiety is real; retrieval practice itself lowers it (Agarwal 2014) and small self-regulation tools help.",
+ sn:"Finch, Headspace, Nomad Education",e:"S",m:1,r:"s",
+ d:"NEW: check-ins (private).",ru:1,
+ g:"A row of four faces; never shown to the group or the parent.",h:"next"},
+
+/* ===== 6. ORGANISATION ===== */
+{i:"OR01",s:"organise",en:"Week planner",ar:"برنامجي",fr:"Planning de la semaine",
+ w:"One week view merging live sessions, homework deadlines, DC/DS windows, exam dates and the revision plan's items.",
+ y:"A single source of truth reduces cognitive load; externalising the plan is the first step of self-regulated learning.",
+ sn:"Vaia planner, Google Calendar, Notion",e:"M",m:3,r:"s p",
+ d:"live-sessions, sessions, homeworks (dueDate), exams. NEW: exam calendar, plan items.",ru:1,
+ g:"A horizontal day strip with stacked cards per day; today has a teal spine.",h:"next"},
+{i:"OR02",s:"organise",en:"Homework deadlines & status",ar:"واجباتي",fr:"Devoirs à rendre",
+ w:"All homework with due date, status (to do · submitted · corrected · late), the PDFs and the séance it came from.",
+ y:"Visible deadlines and a « late » state reduce misses — Google Classroom's missing-work pattern.",
+ sn:"Google Classroom, Notion, Seesaw",e:"S",m:3,r:"s p t",
+ d:"homeworks (dueDate, pdfs, sessionId, groupIds). NEW: per-user status.",ru:1,
+ g:"A list grouped « هذا الأسبوع / الجاي / متأخّر »; late in live red.",h:"quick"},
+{i:"OR03",s:"organise",en:"Official exam calendar",ar:"مواعيد الامتحانات",fr:"Dates d'examens",
+ w:"The ministry calendar by year and section — DC deadlines, DS windows, bac written, practical and oral dates, concours 9ème — editable by admin and shown to each student for their section only.",
+ y:"The whole year revolves around these dates; every countdown, plan and simulator depends on this one collection.",
+ sn:"reviserbac.tn dates, ecoles.com.tn, Nomad Education",e:"S",m:3,r:"a s p t",
+ d:"years. NEW: exam-calendar collection (type, window, yearIds).",ru:1,
+ g:"An admin table; the student sees a vertical timeline of their own dates.",h:"quick"},
+{i:"OR04",s:"organise",en:"Calendar sync (ICS)",ar:"زيد الحصص في روزنامتك",fr:"Synchronisation calendrier (ICS)",
+ w:"A personal ICS feed (sessions, deadlines, exams) to subscribe to in Google Calendar (web, « From URL ») or Apple Calendar (webcal, « New Calendar Subscription »).",
+ y:"Meets students and parents where their calendar already is; Google Classroom pushes due dates to Google Calendar the same way.",
+ sn:"Google Classroom → Google Calendar, school ICS feeds",e:"M",m:2,r:"s p",
+ d:"live-sessions, homeworks, exam calendar. NEW: feed token per user (needs a backend endpoint).",ru:0,
+ g:"« اشترك في الروزنامة » in settings with a copy-link field and two buttons.",h:"big"},
+{i:"OR05",s:"organise",en:"Offline downloads",ar:"حمّل للأوفلاين",fr:"Téléchargement hors-ligne",
+ w:"Download PDFs, résumés and selected replays for offline use; downloads expire with the subscription.",
+ y:"Connectivity and data costs are real; Les Bons Profs and Kahoot! both ship offline modes.",
+ sn:"Les Bons Profs, Kahoot! offline, Quizlet Plus offline",e:"L",m:2,r:"s",
+ d:"lessons (pdfs), resources, sessions. NEW: download state (needs the app wrapper).",ru:0,
+ g:"A download icon with a ring progress on each PDF and replay.",h:"big"},
+{i:"OR06",s:"organise",en:"Quick capture",ar:"نسجّل بسرعة",fr:"Capture rapide",
+ w:"A « + » that captures a photo, voice or text note in two taps and files it under the current chapter or an inbox.",
+ y:"Lowers the friction of noting a doubt in class; feeds the question thread (PR15) and the error notebook (EP04).",
+ sn:"Notion, Google Keep, RemNote",e:"S",m:1,r:"s",
+ d:"chapters. NEW: notes.",ru:1,
+ g:"A FAB on the bottom bar; the chapter defaults to the last one opened.",h:"next"},
+{i:"OR07",s:"organise",en:"Search everything",ar:"لوّج",fr:"Recherche globale",
+ w:"One search across chapters, exercises, replays (by marker labels), documents and past papers.",
+ y:"Finding is the first step of practice; marker labels make video searchable.",
+ sn:"Notion, Knowunity, Khan Academy",e:"S",m:2,r:"s t",
+ d:"all collections (derived). NEW: none.",ru:1,
+ g:"A search field on the subjects screen; results grouped by type with their ribbons.",h:"quick"},
+{i:"OR08",s:"organise",en:"My subscription, clearly",ar:"اشتراكي",fr:"Mon abonnement",
+ w:"What my offer includes (live, replays, exams, forum), expiry, renewal and promo codes; locked items say why.",
+ y:"Clear entitlements cut support load — TakiAcademy sells six bac tiers with different inclusions and students get confused.",
+ sn:"TakiAcademy offers, Quizlet Plus, Duolingo Super",e:"S",m:2,r:"s p a",
+ d:"offers, subscriptions, accesses, promo-codes, promo-redemptions. NEW: none.",ru:1,
+ g:"An offer card with included / excluded rows; a lock icon with « في عرض + » on gated items.",h:"quick"},
+{i:"OR09",s:"organise",en:"School timetable",ar:"جدول أوقات المعهد",fr:"Emploi du temps du lycée",
+ w:"Enter the school timetable so the planner avoids clashes and suggests free slots for the revision plan.",
+ y:"Realistic plans are the ones that get followed; clashes are the first reason plans die.",
+ sn:"Vaia, Notion templates, EdTrust",e:"M",m:1,r:"s",
+ d:"NEW: timetable slots per user.",ru:1,
+ g:"A 6 × 8 grid editor; slots coloured by subject tint.",h:"next"},
+
+/* ===== 7. PROGRAMME DESIGN PER SUBJECT ===== */
+{i:"PG01",s:"programme",en:"Mathématiques",ar:"رياضيات",fr:"Mathématiques",
+ w:"Content types: cours video + ملخص, formula sheet, séries by difficulty (★/★★/★★★), DC/DS bank by trimester, bac sujets tagged by chapter with points, corrigé videos chaptered by step.",
+ y:"Exercise patterns: worked example → variant → mixed set; « démonstration » tasks; vrai/faux with justification; timed bac exercise (≈ 45 min); error types calcul / méthode / rédaction in the notebook.",
+ x:"Bac coefficients (reviserbac.tn, Arrêté 2008 as amended): section Math 4 (4 h), Sciences exp. 3 (3 h), Technique 3, Informatique 3, Éco-Gestion 2, Lettres 1. Sujets of four exercises (complexes, suites, fonctions/intégrales, probabilités/arithmétique in Math); QCM opener in several sections; barème per question.",
+ q:"Every chapter has ≥ 1 cours, a résumé, two séries (★ and ★★), the chapter's bac exercises with corrigés, a 15-question MCQ — and a student can run any exercise timed with its barème.",
+ sn:"Physics Wallah DPP, Khan Academy, Kartable, devoir.tn",e:"M",m:3,r:"s t a",
+ d:"subjects, chapters, lessons, exams, quizzes. NEW: difficulty, exam→chapter tags, formula items.",ru:1,
+ g:"Chapter tiles show the mastery ring plus the « خرج في الباك » heat bar.",h:"next"},
+{i:"PG02",s:"programme",en:"Sciences physiques",ar:"علوم فيزيائية",fr:"Sciences physiques",
+ w:"Content types: cours split physique / chimie, animations for RC-RL-oscillations-ondes, formula fiche with units, séries, bac sujets (two physics + one or two chemistry exercises) with graph assets.",
+ y:"Exercise patterns: graph reading (tap the curve to read a value), unit and dimension checks, « exploitation de courbe », QCM with justification, experiment-description questions.",
+ x:"Bac: 3 h; coefficient 4 in Sciences exp. and Math, 3 in Technique, 2 in Informatique. Exercises built around documents and graphs; barème per question.",
+ q:"Each chapter has a video, one animation, the formula fiche, two séries and one past exercise whose graph the student can annotate on screen.",
+ sn:"PhET-style animations, Physics Wallah, Les Bons Profs",e:"M",m:3,r:"s t a",
+ d:"subjects, chapters, lessons, exams. NEW: graph / animation assets, exam tags.",ru:1,
+ g:"« فيزياء / كيمياء » sub-tabs inside the chapter.",h:"next"},
+{i:"PG03",s:"programme",en:"Sciences de la vie et de la terre",ar:"علوم الحياة والأرض",fr:"SVT",
+ w:"Content types: annotated schémas (reproduction, génétique, immunité, neurophysiologie), term flashcards, document-analysis exercises, QCM / QROC bank, bac sujets with rubrics.",
+ y:"Exercise patterns: label the diagram (drag or tap), QROC with model answer, document analysis with rubric, synthesis plan, flashcards for vocabulary.",
+ x:"Bac Sciences exp.: SVT coefficient 4, 3 h (a QCM/QROC part and a document-analysis part); section Math: coefficient 1, 2 h.",
+ q:"Each chapter has a labelled schema with a hide-labels mode, 30 flashcards, two QROC sets and one past document exercise with a rubric.",
+ sn:"Seneca, Quizlet, Lumni",e:"M",m:3,r:"s t a",
+ d:"subjects, chapters, lessons, quizzes. NEW: diagram label assets, flashcards.",ru:1,
+ g:"The schema is the chapter cover, with a « خبّي الأسماء » toggle.",h:"next"},
+{i:"PG04",s:"programme",en:"Informatique / Algorithmique",ar:"إعلامية وخوارزميات",fr:"Informatique & algorithmique",
+ w:"Content types: algorithm lessons with Python, a code playground, trace tables, past practical and written papers, STI lessons for the Informatique section.",
+ y:"Exercise patterns: trace the algorithm, fill the missing line, write the function (auto-checked by tests), algorithm ↔ Python conversion, debugging tasks, practical-exam simulations.",
+ x:"Section Informatique: Algorithmique & programmation coefficient 3 (written 2 + practical 1), STI 3, Maths 3; elsewhere Informatique coefficient 1 (Technique: written 0.5 + practical 0.5). Practical exam 16–23 May 2026 for ~162,000 candidates.",
+ q:"Every chapter has a runnable example, five auto-graded exercises and one practical mock in the exam format.",
+ sn:"Brilliant, Khan Academy CS, replit-style playgrounds",e:"L",m:2,r:"s t",
+ d:"subjects, chapters, lessons. NEW: code runner (sandbox backend), test cases.",ru:0,
+ g:"A monospace editor sheet; test results as lime / red rows.",h:"big"},
+{i:"PG05",s:"programme",en:"Technique — Mécanique & Électricité",ar:"تكنولوجيا — ميكانيك وكهرباء",fr:"Technologie (mécanique & électricité)",
+ w:"Content types: dossier technique readers (plans, nomenclature), mechanics (transmission, guidage, cotation), electricity (logique, GRAFCET, API), TP guides, bac dossiers.",
+ y:"Exercise patterns: read the drawing → answer; complete the GRAFCET; truth tables; calculation chains with units; TP checklists; a timed « dossier » exercise.",
+ x:"Bac Technique: Technologie coefficient 3 with a 4 h dossier-based paper, TP Technologie 1 (practical 14–23 May 2026; 21,677 candidates in 289 centres), Maths 3, Physique 3.",
+ q:"Each chapter has an annotated zoomable plan, two séries, a TP checklist and one past dossier exercise.",
+ sn:"Engineering CAD viewers, Physics Wallah",e:"L",m:2,r:"s t",
+ d:"subjects, chapters, lessons, exams. NEW: plan assets with hotspots.",ru:0,
+ g:"A zoomable plan viewer with numbered hotspots.",h:"big"},
+{i:"PG06",s:"programme",en:"Français",ar:"فرنسية",fr:"Français",
+ w:"Content types: œuvres au programme with glossaries, méthodologie (essai, résumé, commentaire, production écrite), grammar drills, oral prompts, past papers.",
+ y:"Exercise patterns: fill-the-gap grammar, « plan an essay » cards, vocabulary flashcards, timed production écrite with rubric, reading-comprehension QCM, oral recording.",
+ x:"Bac Français: 2 h, coefficient 1 in most sections and 2 in Lettres; compréhension + langue + essai. Concours 9ème: Français coefficient 3 (reported, unverified).",
+ q:"Each sequence has a text with glossary, three drills, one essay prompt with rubric and a model answer.",
+ sn:"Lumni Bac Français, Nomad fiches, Kartable",e:"M",m:2,r:"s t",
+ d:"lessons, resources. NEW: rubrics, glossary items.",ru:1,
+ g:"A « المنهجية » rubric sheet pinned at the top of the sequence.",h:"next"},
+{i:"PG07",s:"programme",en:"Anglais",ar:"أنقليزية",fr:"Anglais",
+ w:"Content types: lessons by function, vocabulary decks, grammar drills, listening clips with transcripts, writing prompts (email, essay), past papers.",
+ y:"Exercise patterns: listening with transcript reveal, vocabulary flashcards, sentence reorder, writing with rubric, speaking recording.",
+ x:"Bac Anglais: 2 h, coefficient 1 in all sections; reading comprehension + language + writing.",
+ q:"A weekly 15-minute mixed set (reading + language + one short writing) per level.",
+ sn:"Duolingo, Quizlet, Kahoot!",e:"S",m:2,r:"s t",
+ d:"lessons, quizzes. NEW: audio clips.",ru:1,
+ g:"Skill chips (reading · language · writing · speaking) on the subject screen.",h:"next"},
+{i:"PG08",s:"programme",en:"Arabe",ar:"عربية",fr:"Arabe",
+ w:"Content types: texts and authors by section, قواعد drills, إنشاء methodology, argumentative texts for Lettres, oral prompts, past papers.",
+ y:"Exercise patterns: إعراب parsing drills, vocabulary, « plan the essay » cards, text analysis with rubric, dictation-style listening.",
+ x:"Bac Arabe: coefficient 4 in Lettres, 1 elsewhere (reviserbac.tn). Concours 9ème: Arabe coefficient 2 (reported, unverified).",
+ q:"Each sequence has a text with tap-to-define, 20 flashcards, two grammar drills and one essay with rubric.",
+ sn:"Nafham, Abwaab, Noon",e:"M",m:2,r:"s t",
+ d:"lessons, resources. NEW: glossary, rubric.",ru:1,
+ g:"An RTL-native reader with tap-to-define words.",h:"next"},
+{i:"PG09",s:"programme",en:"Histoire-Géographie",ar:"تاريخ وجغرافيا",fr:"Histoire-Géographie",
+ w:"Content types: timelines, maps, dates and terms flashcards, document analysis, مقال methodology, past papers.",
+ y:"Exercise patterns: date ordering, map labelling, document commentary with rubric, « write the plan », flashcards.",
+ x:"Bac: coefficient 2 in Lettres and Éco-Gestion, 1 elsewhere; dissertation or commentaire de documents.",
+ q:"Each chapter has a timeline, a map, 30 flashcards and one document exercise with a model answer.",
+ sn:"Seneca, Kartable, Lumni",e:"M",m:2,r:"s t",
+ d:"lessons, quizzes. NEW: timeline and map assets.",ru:1,
+ g:"An interactive timeline strip as the chapter header.",h:"next"},
+{i:"PG10",s:"programme",en:"Philosophie",ar:"فلسفة",fr:"Philosophie",
+ w:"Content types: notions and authors, quotes bank, dissertation and text-commentary method, model essays, annotated past papers.",
+ y:"Exercise patterns: « problematise this sujet » cards, quote flashcards (author ↔ idea), plan builder (intro · three parts · conclusion), timed dissertation with rubric, peer review.",
+ x:"Bac Philo: coefficient 3 in Lettres, 1 elsewhere; choice between dissertation and commentaire de texte.",
+ q:"Each notion has ten quotes, two model plans, one timed essay prompt with rubric and a corrected sample.",
+ sn:"Lumni, Nomad fiches Philo, Kartable",e:"M",m:2,r:"s t",
+ d:"lessons, resources. NEW: quotes, rubrics.",ru:1,
+ g:"A plan builder of five expandable boxes.",h:"next"},
+{i:"PG11",s:"programme",en:"Économie & Gestion",ar:"اقتصاد وتصرّف",fr:"Économie & Gestion",
+ w:"Content types: lessons by theme, calculation exercises (comptabilité, coûts, ratios), document and case studies, synthesis essays, past papers.",
+ y:"Exercise patterns: table completion (journal, bilan), ratio calculation with auto-check, case study with rubric, QCM definitions.",
+ x:"Bac Éco-Gestion: Gestion coefficient 4, Économie 3, Histoire-Géo 2, Maths 2 (reviserbac.tn, 2026 values).",
+ q:"Each chapter has one worked case, three auto-checked calculation exercises and one past case.",
+ sn:"Khan Academy economics, Kartable",e:"M",m:2,r:"s t",
+ d:"lessons, quizzes. NEW: table-input exercises.",ru:1,
+ g:"Spreadsheet-like table inputs with lime checks.",h:"next"},
+{i:"PG12",s:"programme",en:"Éducation islamique / Pensée islamique",ar:"تربية إسلامية / تفكير إسلامي",fr:"Éducation islamique / Pensée islamique",
+ w:"Content types: texts with explanation, a concepts glossary, essay method, past papers; collège تربية إسلامية and lycée (Lettres) التفكير الإسلامي.",
+ y:"Exercise patterns: memorisation flashcards, concept matching, short essay with rubric, QCM.",
+ x:"Collège: continuous assessment. Lycée Lettres: التفكير الإسلامي is an exam subject — confirm its coefficient and duration in the Arrêté; it does not appear in reviserbac.tn's Lettres table.",
+ q:"Each unit has a text with explanation, 15 flashcards and one essay prompt.",
+ sn:"Abwaab, Noon",e:"S",m:1,r:"s t",
+ d:"lessons. NEW: glossary.",ru:1,
+ g:"A text reader with tap-to-explain.",h:"next"},
+
+/* ===== 8. TEACHER & ADMIN ===== */
+{i:"TA01",s:"teacher",en:"Exercise authoring with tags",ar:"إضافة تمرين",fr:"Éditeur d'exercices",
+ w:"Create an exercise (PDF page range or typed), tag chapter · difficulty · exam year · points, add three hints, attach the corrigé (PDF or video with step timestamps), link a variant.",
+ y:"Every student feature in sections 1–2 is only as good as the tagging; authoring must cost minutes, not hours.",
+ sn:"Wayground AI Hub, Google Classroom, Seneca authoring",e:"M",m:3,r:"t a",
+ d:"lessons, chapters, exams. NEW: the tag fields, hints, variant links, step timestamps.",ru:1,
+ g:"One form with chips; « استورد من PDF » splits a série into numbered exercises.",h:"next"},
+{i:"TA02",s:"teacher",en:"Quiz builder on a question bank",ar:"صنع كويز",fr:"Générateur de quiz",
+ w:"Write MCQs with explanations, tag by chapter and difficulty, build quizzes by hand or automatically (chapter, mixed, mock).",
+ y:"MCQ practice tests carry the largest testing-effect sizes (Adesope 2017); explanations make the feedback instructive.",
+ sn:"Kahoot!, Wayground, Seneca",e:"M",m:3,r:"t a",
+ d:"quizzes. NEW: explanation and difficulty per question.",ru:1,
+ g:"A question list with inline edit and a « preview as student » toggle.",h:"next"},
+{i:"TA03",s:"teacher",en:"Past-paper ingestion",ar:"إدخال سوجي الباك",fr:"Import de sujets d'examen",
+ w:"Upload a sujet + corrigé + barème, split it into exercises, tag each to chapters with points, set session / year / section.",
+ y:"Powers EP01, EP08 and EP11 — one afternoon per subject per year.",
+ sn:"digiSchool annales, reviserbac.tn",e:"M",m:3,r:"a t",
+ d:"exams. NEW: exercise-level records with tags and points.",ru:1,
+ g:"PDF on one side, exercise rows with chapter chips on the other.",h:"next"},
+{i:"TA04",s:"teacher",en:"Correction & annotation tools",ar:"أدوات الإصلاح",fr:"Outils de correction",
+ w:"Annotate photo submissions, stamp common comments, award marks per barème line, return in batch.",
+ y:"Turnaround and quality of feedback decide whether PR06 is worth it; batch tools keep teacher time sane.",
+ sn:"Google Classroom comment bank + rubrics, Seesaw",e:"L",m:3,r:"t",
+ d:"submissions (PR06). NEW: annotations, comment bank.",ru:0,
+ g:"A full-screen annotator with a comment-bank drawer.",h:"big"},
+{i:"TA05",s:"teacher",en:"Group analytics",ar:"إحصائيات المجموعة",fr:"Analytique de groupe",
+ w:"Per group: a mastery heat map (students × chapters), attendance, homework completion, mock-mark distribution and a « students at risk » list with the reason.",
+ y:"Lets the teacher aim the next séance at the chapter the whole group missed.",
+ sn:"Khan Academy teacher dashboard, Seneca, Wayground reports",e:"M",m:3,r:"t a",
+ d:"groups, users, quiz attempts, attendance, homeworks (derived). NEW: none beyond the logs.",ru:1,
+ g:"A heat map with tap-to-drill; the at-risk list is a plain table.",h:"next"},
+{i:"TA06",s:"teacher",en:"Live-session cockpit",ar:"لوحة الحصّة المباشرة",fr:"Console de séance live",
+ w:"Teacher view during a live séance: attendance ticks, the question queue, a poll launcher, a « mark chapter now » button, share a document.",
+ y:"One screen for LV01, LV04, LV06 and LV10 — the live features die if the teacher needs four tools.",
+ sn:"Kahoot! host view, Zoom, Unacademy educator app",e:"M",m:2,r:"t",
+ d:"live-sessions, chat-messages, groups. NEW: markers, polls, attendance.",ru:1,
+ g:"A dark cockpit with large buttons for a tablet.",h:"next"},
+{i:"TA07",s:"teacher",en:"Assign homework or a challenge",ar:"كلّف بواجب أو تحدّي",fr:"Assigner devoirs & défis",
+ w:"Assign a série, exercise, quiz or mock to a group with a due date — optionally as a group challenge — and watch completion live.",
+ y:"The assign → do → correct → return loop is what Google Classroom made standard.",
+ sn:"Google Classroom, Khan Academy assignments, Kahoot! student-paced",e:"S",m:3,r:"t",
+ d:"homeworks, groups, lessons, quizzes. NEW: challenge object (SO03).",ru:1,
+ g:"A « كلّف » button on any content; a sheet picks the group and the date.",h:"quick"},
+{i:"TA08",s:"teacher",en:"Content-gaps dashboard",ar:"شنوّة ناقص في البرنامج",fr:"Tableau des manques de contenu",
+ w:"Per subject and year: chapters with no cours, no série, no quiz or no past paper — the « قريباً » list, prioritised by exam weight.",
+ y:"The prototype's seed shows most chapters empty; making the gap visible lets authoring follow impact.",
+ sn:"Internal CMS dashboards",e:"S",m:2,r:"a t",
+ d:"subjects, chapters, lessons, quizzes, exams (derived). NEW: none.",ru:1,
+ g:"A matrix chapters × content kinds with empty cells in orange.",h:"quick"},
+{i:"TA09",s:"teacher",en:"Moderation & safety",ar:"الإشراف",fr:"Modération",
+ w:"Report buttons on messages and explanations, keyword filters, teacher-pinned answers, parent visibility rules, rate limits on DMs.",
+ y:"Minors plus social features require it; Brainly and Knowunity depend on moderators.",
+ sn:"Brainly moderators, Discord, ClassDojo",e:"M",m:2,r:"a t",
+ d:"chat-messages, video-comments. NEW: reports, flags.",ru:1,
+ g:"An admin queue with context; one-tap hide and notify.",h:"next"},
+{i:"TA10",s:"teacher",en:"Parent ↔ student linking",ar:"ربط حساب الوالدين",fr:"Lien parent–élève",
+ w:"Admin links a parent to one or more students and sets what the parent sees (attendance, homework, marks — never chat).",
+ y:"The precondition of the parent digest; privacy by design (Google Classroom guardians see summaries, not grades or chats).",
+ sn:"Google Classroom guardians, ClassDojo",e:"S",m:2,r:"a p",
+ d:"users (student / parent). NEW: link + permissions.",ru:1,
+ g:"A « العائلة » block in the admin user page.",h:"quick"},
+
+/* ===== 9. ANTI-FEATURES ===== */
+{i:"AN01",s:"roadmap",a:1,en:"Mark-based public leaderboards",ar:"ترتيب عام بالعلامات",fr:"Classement public par notes",
+ w:"Ranking students by their marks for everyone to see.",
+ y:"Harms low performers and raises anxiety; competition should be opt-in and effort-based (SO06) or cooperative (SO03).",
+ sn:"Avoided by Seesaw; criticised in Duolingo leagues",e:"S",m:1,r:"s",d:"—",ru:1,g:"Do instead: effort leaderboard, opt-in, weekly reset, group challenges.",h:"big"},
+{i:"AN02",s:"roadmap",a:1,en:"Pay-to-continue practice (« energy » paywalls)",ar:"ادفع باش تكمّل",fr:"Paywall sur la pratique",
+ w:"Limiting the number of exercises or quizzes a day unless the student pays or watches ads.",
+ y:"Duolingo's 2025 Energy change — where even perfect lessons drain energy — drew heavy criticism; practice is the product, never the paywall.",
+ sn:"Duolingo Energy (2025), Gauth 11 questions/day",e:"S",m:1,r:"s a",d:"—",ru:1,g:"Do instead: gate live séances and corrections by offer (OR08), keep practice unlimited.",h:"big"},
+{i:"AN03",s:"roadmap",a:1,en:"AI that hands out full solutions",ar:"روبو يعطيك الحل كامل",fr:"IA qui donne la solution complète",
+ w:"A chatbot that returns the complete answer to any exercise on request.",
+ y:"Kills retrieval and generation; if AI is used, it is Socratic (Khanmigo-style), hint-first, and teacher-reviewed.",
+ sn:"Contrast: Khanmigo guided approach",e:"L",m:1,r:"s",d:"—",ru:1,g:"Do instead: progressive hints (PR01) authored by teachers; a question thread (PR15).",h:"big"},
+{i:"AN04",s:"roadmap",a:1,en:"Generic push spam",ar:"تنبيهات بلا معنى",fr:"Notifications génériques",
+ w:"Daily « come back! » notifications at random hours.",
+ y:"Trains people to ignore notifications; one content-specific nudge a day at the student's own hour (MH08).",
+ sn:"Every churned app",e:"S",m:1,r:"s",d:"—",ru:1,g:"Do instead: MH08 smart nudges with a hard cap.",h:"big"},
+{i:"AN05",s:"roadmap",a:1,en:"Separate apps per role",ar:"تطبيق لكل دور",fr:"Une application par rôle",
+ w:"Building a parent app, a teacher app and a student app as separate products.",
+ y:"Four roles are four filtered views over one dataset (project rule); duplication multiplies bugs and splits the data.",
+ sn:"Project CLAUDE.md",e:"L",m:1,r:"s p t a",d:"—",ru:1,g:"Do instead: one AppShell with a nav config per role; scope props on shared screens.",h:"big"},
+{i:"AN06",s:"roadmap",a:1,en:"Real engines inside the prototype",ar:"محرّك حقيقي في البروتوتيب",fr:"Moteurs métier dans le prototype",
+ w:"Implementing real scheduling, pricing, scoring or recommendation algorithms in the clickable prototype.",
+ y:"The prototype demonstrates look, flow and core interactions on an in-memory store; derived display values only.",
+ sn:"Project CLAUDE.md",e:"L",m:1,r:"a",d:"—",ru:1,g:"Do instead: simple derived values (counts, X/Y, basic sort/filter) and believable seed data.",h:"big"},
+{i:"AN07",s:"roadmap",a:1,en:"A badge for everything",ar:"شارة على كل شيء",fr:"Badges à tout-va",
+ w:"Dozens of badges for logging in, opening a PDF, tapping a tab.",
+ y:"Dilutes meaning and shifts motivation to the trinket; keep eight badges that certify learning events (MH04).",
+ sn:"Over-gamified apps",e:"S",m:1,r:"s",d:"—",ru:1,g:"Do instead: MH04 meaningful badges with visible rules.",h:"big"}
+];
+
+/* ---------------- helpers ---------------- */
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function dataHtml(d){var i=d.indexOf("NEW:");if(i<0)return esc(d);return esc(d.slice(0,i))+' <mark class="new">NEW</mark> '+esc(d.slice(i+4).trim());}
+function stars(n){return "★★★".slice(0,n)+"☆☆☆".slice(0,3-n);}
+function norm(s){return String(s||"").toLowerCase().replace(/[ً-ْٰـ]/g,"").replace(/[éèêë]/g,"e").replace(/[àâ]/g,"a").replace(/[îï]/g,"i").replace(/[ôö]/g,"o").replace(/[ûùü]/g,"u").replace(/ç/g,"c");}
+function secName(k){if(LANG==="ar"&&SECTIONS_AR[k])return SECTIONS_AR[k];for(var i=0;i<SECTIONS.length;i++)if(SECTIONS[i].k===k)return SECTIONS[i].n;return k;}
+function roleName(r){return LANG==="ar"?ROLES_AR[r]:ROLES[r];}
+function horizonName(h){return LANG==="ar"?HORIZON_AR[h]:HORIZON[h];}
+/* A card's field in the current language — the fusha translation when the
+   card has one, the English otherwise. */
+function tr(c,k){if(LANG==="ar"){var a=AR_CARDS[c.i];if(a&&a[k])return a[k];}return c[k];}
+function cname(c){if(LANG==="ar"){var a=AR_CARDS[c.i];if(a&&a.name)return a.name;}return c.en;}
+
+function cardHtml(c){
+  var roles=c.r.split(" ").filter(Boolean);
+  var isProg=c.s==="programme", isAnti=!!c.a, ar=LANG==="ar";
+  var h='<article class="card'+(isProg?" programme":"")+(isAnti?" anti":"")+'" id="'+c.i+'" tabindex="-1" data-id="'+c.i+'" data-sec="'+c.s+'" data-effort="'+c.e+'" data-impact="'+c.m+'" data-roles="'+esc(c.r)+'" data-horizon="'+c.h+'" data-reuse="'+(c.ru?1:0)+'" data-anti="'+(isAnti?1:0)+'">';
+  /* Names: English first with the derja label and the French under it; in
+     Arabic the fusha name leads and the English joins the French line. */
+  if(ar){
+    h+='<header class="card-h"><div class="names"><span class="id">'+c.i+'</span><h3 lang="ar">'+esc(cname(c))+'</h3><span class="ar" dir="rtl" lang="ar">'+esc(c.ar)+'</span><p class="fr latin" lang="fr">'+esc(c.fr)+' · <span lang="en">'+esc(c.en)+'</span></p></div>';
+  }else{
+    h+='<header class="card-h"><div class="names"><span class="id">'+c.i+'</span><h3>'+esc(c.en)+'</h3><span class="ar" dir="rtl" lang="ar">'+esc(c.ar)+'</span><p class="fr" lang="fr">'+esc(c.fr)+'</p></div>';
+  }
+  h+='<div class="badges">';
+  if(isAnti){h+='<span class="badge anti">'+t("dont")+'</span>';}
+  else{h+='<span class="badge effort" title="'+t("effort")+'">'+t("effort")+' '+c.e+'</span><span class="badge impact" aria-label="'+t("impact")+' '+c.m+' / 3">'+stars(c.m)+'</span><span class="badge h-'+c.h+'">'+horizonName(c.h)+'</span>'+(c.ru?'<span class="badge reuse" title="'+t("reuseT")+'">'+t("reuse")+'</span>':'');}
+  h+='</div></header>';
+  var seen='<div><dt>'+t("seen")+'</dt><dd class="latin left">'+esc(c.sn)+'</dd></div>';
+  if(isProg){
+    h+='<dl class="meta"><div><dt>'+t("ctypes")+'</dt><dd>'+esc(tr(c,"w").replace(/^Content types:\s*/,""))+'</dd></div><div><dt>'+t("epat")+'</dt><dd>'+esc(tr(c,"y").replace(/^Exercise patterns:\s*/,""))+'</dd></div></dl>';
+    h+='<details class="more"><summary>'+t("more")+'</summary><dl class="meta"><div><dt>'+t("xfmt")+'</dt><dd>'+esc(tr(c,"x"))+'</dd></div><div><dt>'+t("good")+'</dt><dd>'+esc(tr(c,"q"))+'</dd></div>'+seen+'<div><dt>'+t("data")+'</dt><dd>'+dataHtml(tr(c,"d"))+'</dd></div><div><dt>'+t("design")+'</dt><dd>'+esc(tr(c,"g"))+'</dd></div></dl></details>';
+  }else if(isAnti){
+    h+='<p class="what">'+esc(tr(c,"w"))+'</p><dl class="meta"><div><dt>'+t("whynot")+'</dt><dd>'+esc(tr(c,"y"))+'</dd></div>'+seen+'<div><dt>'+t("instead")+'</dt><dd>'+esc(tr(c,"g"))+'</dd></div></dl>';
+  }else{
+    h+='<p class="what">'+esc(tr(c,"w"))+'</p><dl class="meta"><div><dt>'+t("why")+'</dt><dd>'+esc(tr(c,"y"))+'</dd></div>'+seen+'<div><dt>'+t("data")+'</dt><dd>'+dataHtml(tr(c,"d"))+'</dd></div><div><dt>'+t("design")+'</dt><dd>'+esc(tr(c,"g"))+'</dd></div></dl>';
+  }
+  h+='<footer class="roles">'+roles.map(function(r){return '<span class="role '+r+'">'+roleName(r)+'</span>';}).join("")+'</footer></article>';
+  return h;
+}
+
+/* ---------------- render ---------------- */
+var grids={};
+document.querySelectorAll("[data-grid]").forEach(function(g){grids[g.getAttribute("data-grid")]=g;});
+var bySec={};
+CARDS.forEach(function(c){(bySec[c.s]=bySec[c.s]||[]).push(c);});
+var cardEls=[],cardIndex={};
+
+/* The cards, their search index (both languages, so a search finds a card
+   whichever way the page is being read) and the id → element map. */
+function renderCards(){
+  Object.keys(grids).forEach(function(k){grids[k].innerHTML=(bySec[k]||[]).map(cardHtml).join("");});
+  cardEls=Array.prototype.slice.call(document.querySelectorAll(".card"));
+  cardIndex={};
+  cardEls.forEach(function(el){
+    var c=CARDS.filter(function(x){return x.i===el.dataset.id;})[0], a=AR_CARDS[c.i]||{};
+    el.dataset.search=norm([c.i,c.en,c.ar,c.fr,c.w,c.y,c.sn,c.d,c.g,c.x||"",c.q||"",a.name||"",a.w||"",a.y||"",a.d||"",a.g||"",a.x||"",a.q||"",
+      SECTIONS_AR[c.s]||"",secName(c.s),HORIZON[c.h],HORIZON_AR[c.h],c.r.split(" ").map(function(r){return ROLES[r]+" "+ROLES_AR[r];}).join(" ")].join(" · "));
+    cardIndex[c.i]=el;
+  });
+}
+
+/* section select */
+var fSec=document.getElementById("fSec");
+function fillSectionSelect(){
+  var keep=fSec.value||"all";
+  fSec.innerHTML="";
+  var all=document.createElement("option");all.value="all";all.textContent=t("all");fSec.appendChild(all);
+  SECTIONS.forEach(function(s){var o=document.createElement("option");o.value=s.k;o.textContent=secName(s.k);fSec.appendChild(o);});
+  fSec.value=keep;
+}
+
+/* totals */
+function renderTotals(){
+  var feats=CARDS.filter(function(c){return !c.a;}), anti=CARDS.length-feats.length;
+  var hz={quick:0,next:0,big:0};feats.forEach(function(c){hz[c.h]++;});
+  var reuse=feats.filter(function(c){return c.ru;}).length;
+  var top=feats.filter(function(c){return c.m===3;}).length;
+  document.getElementById("totals").innerHTML=[
+    ["<b>"+CARDS.length+"</b><span>"+t("totCards")+"</span>"],
+    ["<b>"+feats.length+"</b><span>"+t("totFeat").replace("{n}",anti)+"</span>"],
+    ["<b>"+hz.quick+"</b><span>"+t("totQuick")+"</span>"],
+    ["<b>"+hz.next+"</b><span>"+t("totNext")+"</span>"],
+    ["<b>"+hz.big+"</b><span>"+t("totBig")+"</span>"],
+    ["<b>"+reuse+"</b><span>"+t("totReuse")+"</span>"],
+    ["<b>"+top+"</b><span>"+t("totTop")+"</span>"]
+  ].map(function(x){return '<div class="tot">'+x[0]+'</div>';}).join("");
+}
+
+/* roadmap lanes */
+var road=document.getElementById("road");
+function renderLanes(){
+  var lanes=[{k:"quick",t:t("laneQuick"),p:t("laneQuickP")},{k:"next",t:t("laneNext"),p:t("laneNextP")},{k:"big",t:t("laneBig"),p:t("laneBigP")}];
+  var order={exam:0,practice:1,live:2,social:3,habits:4,organise:5,programme:6,teacher:7,roadmap:8};
+  road.innerHTML=lanes.map(function(l){
+    var items=CARDS.filter(function(c){return !c.a&&c.h===l.k;}).sort(function(a,b){return (b.m-a.m)||(order[a.s]-order[b.s])||a.i.localeCompare(b.i);});
+    return '<div class="lane '+l.k+'"><h3>'+l.t+'<span class="n">'+items.length+'</span></h3><p>'+l.p+'</p><ol>'+items.map(function(c){
+      return '<li><button type="button" class="jump" data-target="'+c.i+'"><span class="id">'+c.i+'</span><span>'+esc(cname(c))+'</span><span class="st" aria-label="'+t("impact")+' '+c.m+'">'+stars(c.m)+'</span></button></li>';
+    }).join("")+'</ol></div>';
+  }).join("");
+}
+road.addEventListener("click",function(e){
+  var b=e.target.closest(".jump");if(!b)return;
+  resetFilters();
+  var el=cardIndex[b.dataset.target];if(!el)return;
+  var det=el.closest("details");if(det&&!det.open)det.open=true;
+  if(el.scrollIntoView)el.scrollIntoView({block:"center"});
+  el.focus({preventScroll:true});
+  el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash");
+});
+
+/* ---------------- filtering ---------------- */
+var q=document.getElementById("q"),fEffort=document.getElementById("fEffort"),fImpact=document.getElementById("fImpact"),
+    fRole=document.getElementById("fRole"),fHorizon=document.getElementById("fHorizon"),fReuse=document.getElementById("fReuse"),
+    fHideAnti=document.getElementById("fHideAnti"),counter=document.getElementById("counter");
+
+function apply(){
+  var terms=norm(q.value).split(/\s+/).filter(Boolean);
+  var sec=fSec.value,eff=fEffort.value,imp=parseInt(fImpact.value,10),role=fRole.value,hz=fHorizon.value,reuse=fReuse.checked,hideAnti=fHideAnti.checked;
+  var shown=0,per={};
+  cardEls.forEach(function(el){
+    var d=el.dataset,ok=true;
+    if(sec!=="all"&&d.sec!==sec)ok=false;
+    if(ok&&eff!=="all"&&d.effort!==eff)ok=false;
+    if(ok&&parseInt(d.impact,10)<imp)ok=false;
+    if(ok&&role!=="all"&&d.roles.split(" ").indexOf(role)<0)ok=false;
+    if(ok&&hz!=="all"&&d.horizon!==hz)ok=false;
+    if(ok&&reuse&&d.reuse!=="1")ok=false;
+    if(ok&&hideAnti&&d.anti==="1")ok=false;
+    if(ok&&terms.length){var s=d.search;for(var i=0;i<terms.length;i++){if(s.indexOf(terms[i])<0){ok=false;break;}}}
+    el.hidden=!ok;
+    if(ok){shown++;per[d.sec]=(per[d.sec]||0)+1;}
+  });
+  counter.innerHTML=t("showing").replace("{n}",shown).replace("{t}",cardEls.length);
+  document.querySelectorAll(".sec").forEach(function(s){
+    var k=s.dataset.sec,n=per[k]||0,total=(bySec[k]||[]).length;
+    var c=s.querySelector("[data-count]");if(c)c.textContent=n===total?total+" "+t("cards"):n+" "+t("of")+" "+total;
+    s.classList.toggle("empty",n===0);
+  });
+}
+function resetFilters(){q.value="";fSec.value="all";fEffort.value="all";fImpact.value="1";fRole.value="all";fHorizon.value="all";fReuse.checked=false;fHideAnti.checked=false;apply();}
+[fSec,fEffort,fImpact,fRole,fHorizon,fReuse,fHideAnti].forEach(function(c){c.addEventListener("change",apply);});
+q.addEventListener("input",apply);
+q.addEventListener("keydown",function(e){if(e.key==="Escape"){q.value="";apply();}});
+document.getElementById("reset").addEventListener("click",resetFilters);
+document.addEventListener("keydown",function(e){
+  if(e.key==="/"&&!/input|select|textarea/i.test(document.activeElement.tagName)){e.preventDefault();q.focus();}
+});
+document.getElementById("expandAll").addEventListener("click",function(){document.querySelectorAll("details").forEach(function(d){d.open=true;});});
+document.getElementById("collapseAll").addEventListener("click",function(){document.querySelectorAll(".sec > details").forEach(function(d){d.open=false;});});
+window.addEventListener("beforeprint",function(){document.querySelectorAll("details").forEach(function(d){d.open=true;});});
+
+/* ---------------- theme ---------------- */
+var root=document.documentElement,themeBtn=document.getElementById("themeBtn"),themeLabel=document.getElementById("themeLabel");
+var THEME_KEY="wael-catalog-theme",themeCur="auto";
+try{themeCur=localStorage.getItem(THEME_KEY)||"auto";}catch(e){}
+function setTheme(th){themeCur=th;if(th==="auto"){root.removeAttribute("data-theme");}else{root.setAttribute("data-theme",th);}themeLabel.textContent=t("theme")+": "+t(th);themeBtn.title=t("themeT");try{localStorage.setItem(THEME_KEY,th);}catch(e){}}
+themeBtn.addEventListener("click",function(){setTheme(themeCur==="auto"?"light":themeCur==="light"?"dark":"auto");});
+
+/* ---------------- language ---------------- */
+var LANG_KEY="wael-catalog-lang",langBtn=document.getElementById("langBtn"),langLabel=document.getElementById("langLabel");
+/* Capture the English once, from the markup, before anything is swapped. */
+I18N.forEach(function(e){
+  var how=e[1],sel=e[0];
+  var els=how==="text-all"?Array.prototype.slice.call(document.querySelectorAll(sel)):[document.querySelector(sel)];
+  e.els=els.filter(Boolean);
+  e.en=e.els.map(function(el){
+    if(how==="html")return el.innerHTML;
+    if(how==="text"||how==="text-all")return el.textContent;
+    return el.getAttribute(how.slice(5));
+  });
+});
+function applyLang(lang){
+  LANG=lang==="ar"?"ar":"en";
+  var ar=LANG==="ar";
+  root.setAttribute("lang",ar?"ar":"en");
+  root.setAttribute("dir",ar?"rtl":"ltr");
+  I18N.forEach(function(e){
+    var how=e[1];
+    e.els.forEach(function(el,i){
+      var v=ar?e[2]:e.en[i];
+      if(how==="html")el.innerHTML=v;
+      else if(how==="text"||how==="text-all")el.textContent=v;
+      else el.setAttribute(how.slice(5),v);
+    });
+  });
+  langLabel.textContent=t("langBtn");
+  langBtn.title=t("langT");
+  langBtn.setAttribute("lang",ar?"en":"ar");
+  langBtn.setAttribute("dir",ar?"ltr":"rtl");
+  fillSectionSelect();
+  renderCards();
+  renderTotals();
+  renderLanes();
+  setTheme(themeCur);
+  apply();
+  try{localStorage.setItem(LANG_KEY,LANG);}catch(e){}
+}
+langBtn.addEventListener("click",function(){applyLang(LANG==="ar"?"en":"ar");});
+
+var startLang="en";
+try{startLang=localStorage.getItem(LANG_KEY)||"en";}catch(e){}
+applyLang(startLang);
+})();
+</script>
+<noscript><p class="wrap" style="padding:24px 16px">This catalogue renders its cards with JavaScript. Enable scripts, or read <code>docs/mobile/features-research.md</code> for the same content in prose.</p></noscript>
+</body>
+</html>

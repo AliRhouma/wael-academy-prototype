@@ -24,7 +24,7 @@ export function RoleSwitcher() {
 
   return (
     <div className="min-h-dvh bg-canvas">
-      <div className="mx-auto flex min-h-dvh w-full max-w-[720px] flex-col justify-center px-4 pb-[max(2.5rem,env(safe-area-inset-bottom))] pt-[max(2.5rem,env(safe-area-inset-top))] sm:px-6">
+      <div className="mx-auto flex min-h-dvh w-full max-w-[720px] flex-col justify-center px-4 pb-[max(2.5rem,var(--sai-bottom))] pt-[max(2.5rem,var(--sai-top))] sm:px-6">
         <header className="mb-8 text-center">
           {/* THE FULL LOCKUP, not the chip — this is the app's front door, the
               one screen with room for the whole mark and the only place its
@@ -83,6 +83,9 @@ export function RoleSwitcher() {
           </Link>
           <Link to="/design-system" className="font-medium text-brand-600 hover:underline">
             نظام التصميم
+          </Link>
+          <Link to="/mobile" className="font-medium text-brand-600 hover:underline">
+            على الهاتف
           </Link>
         </p>
       </div>

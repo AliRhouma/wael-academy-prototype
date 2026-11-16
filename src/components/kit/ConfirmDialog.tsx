@@ -92,7 +92,7 @@ export function ConfirmDialog({
           side="bottom"
           className="gap-0 rounded-t-xl border-border bg-surface-raised p-0"
         >
-          <div className="flex flex-col items-center gap-2 px-6 pt-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-center">
+          <div className="flex flex-col items-center gap-2 px-6 pt-6 pb-[max(1.5rem,var(--sai-bottom))] text-center">
             {icon}
             <SheetTitle className="mt-2 font-display text-xl font-bold text-ink">{title}</SheetTitle>
             {description && (

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { ArrowLeft, Sparkles } from "lucide-react"
 import { BASE } from "./lib"
-import { CtaLink, Panel } from "./ui"
+import { CtaLink, Panel, btnClass } from "./ui"
 
 /**
  * A screen the new space hasn't been designed for yet. Never a dead end: it
@@ -17,7 +17,7 @@ export function V2Placeholder({ title, legacy, note }: { title: string; legacy?:
           <span className="grid size-16 place-items-center rounded-full bg-v2-brand/[0.08]">
             <Sparkles className="size-8 stroke-v2-grad" strokeWidth={1.5} />
           </span>
-          <p className="max-w-md text-[calc(9.5px*var(--ts))] leading-relaxed text-v2-ink/65">
+          <p className="max-w-md text-[calc(9.5px*var(--ts))] leading-relaxed text-v2-ink-2">
             {note ?? "الفضاء الجديد يتبنى صفحة بصفحة، على حسب ما توصل التصاميم من Figma."}
           </p>
           <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
@@ -27,10 +27,7 @@ export function V2Placeholder({ title, legacy, note }: { title: string; legacy?:
                 <ArrowLeft className="size-4" />
               </CtaLink>
             )}
-            <Link data-uisfx="back"
-              to={BASE}
-              className="inline-flex min-h-11 items-center rounded-full border border-v2-ink/20 px-5 text-[calc(9.5px*var(--ts))] font-semibold text-v2-ink transition hover:border-v2-brand/50"
-            >
+            <Link data-uisfx="back" to={BASE} className={btnClass}>
               رجوع للرئيسية
             </Link>
           </div>
