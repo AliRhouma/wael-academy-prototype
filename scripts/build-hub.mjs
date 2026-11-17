@@ -246,7 +246,7 @@ const v2 = children("/student-v2").map((c) =>
 
 const GAME_LABELS = {
   MobileSplash: "Écran de lancement", MobileWelcome: "Bienvenue", MobileLevel: "Choix du niveau", MobileSubject: "Choix de la matière",
-  MobileQuiz: "Le défi (3 questions)", MobileResult: "Résultat", MobileRegister: "Inscription", MobileLogin: "Connexion", MobileHome: "Accueil (la ville)",
+  MobileQuiz: "Le défi (3 questions)", MobileResult: "Résultat", MobileRegister: "Inscription", MobileLogin: "Connexion", MobileHome: "Accueil (la ville)", MobileTown: "La ville (après le login)",
   WebGameLanding: "Page d'accueil", WebGameLogin: "Connexion", WebHome: "L'application",
 }
 const game = (base) => children(base).map((c) => page(c.path, GAME_LABELS[c.component] || c.component))
@@ -275,16 +275,25 @@ const APP = [
     ],
   },
   {
-    id: "mobile", title: "Téléphones & jeux", status: statusOf.get("/mobile"),
-    intro: "L'espace élève dans un iPhone 13 Pro Max et un Galaxy A55, puis les versions « jeu » (téléphone en paysage et web) et la ville isométrique.",
+    id: "jeu", title: "Le jeu — téléphone en paysage et web", status: statusOf.get("/mobilegame"),
+    intro: "La version « jeu » : sur téléphone tenu en paysage (iPhone 13 Pro Max ou Galaxy A55), wael en 3D accueille l'élève, un défi de 3 questions, le compte, puis la ville isométrique ; et la même chose en web. Astuce : à la connexion du jeu, « ادخل لمدينتك » sans rien remplir ouvre la ville avec le compte démo.",
     pages: [
-      page("/mobile", "Galerie des deux téléphones", "Aussi à la racine de mobile.<domaine>"),
-      ...game("/mobilegame").map((p) => ({ ...p, group: "Jeu — téléphone" })),
+      ...game("/mobilegame").map((p) => ({ ...p, group: "Jeu — téléphone (paysage)" })),
       ...game("/webgame").map((p) => ({ ...p, group: "Jeu — web" })),
       page("/map", "La ville — île", "Page de test", "test"),
       page("/map/planete", "La ville — planète", "Page de test", "test"),
+      page("/map/atelier", "Atelier des assets", "Vérifie les PNG de l'artiste contre le guide", "test"),
     ],
-    variants: [["/mobilegame?device=galaxy", "Jeu sur Galaxy A55"]],
+    variants: [
+      ["/mobilegame", "Jeu sur iPhone"],
+      ["/mobilegame?device=galaxy", "Jeu sur Galaxy A55"],
+      ["/mobilegame/connexion", "Connexion → la ville"],
+    ],
+  },
+  {
+    id: "mobile", title: "Les deux téléphones", status: statusOf.get("/mobile"),
+    intro: "L'espace élève dans un iPhone 13 Pro Max et un Galaxy A55, côte à côte.",
+    pages: [page("/mobile", "Galerie des deux téléphones", "Aussi à la racine de mobile.<domaine>")],
   },
   {
     id: "roles", title: "Espaces par rôle", status: statusOf.get("/admin"),
@@ -323,6 +332,7 @@ const SKILL_ORDER = ["wael-gamified", "wael-mobile-ios", "wael-mobile-android", 
 const DOC_GROUPS = [
   { id: "reference", title: "Référence produit", intro: "Où en est le projet, et ce qu'on pourrait construire ensuite.", match: (r) => /^docs\/(FEATURES\.md|features(-catalog)?\.html|sound-effects\.md)$/.test(r) },
   { id: "recherche-mobile", title: "Recherche mobile & gamification", intro: "La recherche derrière les skins iOS, Android et « play ».", match: (r) => r.startsWith("docs/mobile/") },
+  { id: "3d", title: "3D — personnages et effets", intro: "La base de connaissance pour wael en 3D et les effets 3D de l'interface (splash, poses, animation).", match: (r) => r.startsWith("docs/3d/") },
   { id: "onboarding", title: "Onboarding — recherche", intro: "Comment les meilleures apps accueillent un nouvel élève.", match: (r) => r.startsWith("docs/onboarding/") },
   { id: "next-update", title: "Prochaine mise à jour", intro: "Critique, prototypes HTML et cahiers des charges (client et développeurs).", match: (r) => r.startsWith("docs/next-update/") },
   { id: "autres", title: "Autres documents", intro: "Contenu pédagogique et ressources graphiques.", match: () => true },
@@ -549,6 +559,8 @@ footer{margin-top:48px;padding-top:18px;border-top:2px solid var(--line);font-si
   <p class="host" id="host"></p>
   <div class="starts">
     <a class="start primary" href="/student-v2"><span class="ico" aria-hidden="true">🎓</span><b>Espace élève</b><span>Le cœur du produit, refonte Figma</span></a>
+    <a class="start" href="/mobilegame"><span class="ico" aria-hidden="true">🎮</span><b>Le jeu — téléphone</b><span>En paysage, wael en 3D, le défi puis la ville</span></a>
+    <a class="start" href="/webgame"><span class="ico" aria-hidden="true">🕹️</span><b>Le jeu — web</b><span>La même aventure dans le navigateur</span></a>
     <a class="start" href="/mobile"><span class="ico" aria-hidden="true">📱</span><b>Les deux téléphones</b><span>iPhone 13 Pro Max et Galaxy A55</span></a>
     <a class="start" href="/roles"><span class="ico" aria-hidden="true">👥</span><b>Choisir un rôle</b><span>Admin, prof, parent, élève</span></a>
     <a class="start" href="${attr(hubUrl.get(join(DOCS, "FEATURES.md")) ?? "#documentation")}"><span class="ico" aria-hidden="true">🧭</span><b>Où en est le projet</b><span>La référence des fonctionnalités</span></a>
