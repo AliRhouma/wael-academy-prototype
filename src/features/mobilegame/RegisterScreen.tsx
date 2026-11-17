@@ -1,18 +1,16 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { AlertCircle, Eye, EyeOff, MessageSquareText, Sparkles } from "lucide-react"
+import { AlertCircle, Eye, EyeOff, MessageSquareText } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { sfx } from "@/features/student-v2/sound"
 import { useAuth } from "@/stores/useAuth"
 import { matiereKey } from "@/data/matiere"
-import { SubjectIcon } from "@/components/icons/subjects"
 import { DEMO_CODE, LEVELS, MIN_PASSWORD, RESEND_AFTER_S, normalizePhone, phoneTaken, register } from "@/features/auth/auth"
 import { gInput } from "@/features/game/shared/ui"
-import { Wael3D } from "@/features/game/shared/Wael3D"
 import { useGamePlatform } from "./MobileGameLayout"
 import { usePlatformUi } from "./platformUi"
-import { FlowScreen, STEPS, Tag, useGameShake, usePlatformCorners } from "./onboarding/parts"
-import { useOnboarding, useScore, yearById, yearLabel } from "./onboarding/flow"
+import { FlowScreen, STEPS, WaelAside, useGameShake, usePlatformCorners } from "./onboarding/parts"
+import { useOnboarding, useScore } from "./onboarding/flow"
 
 /**
  * « أعمل كونط » — the account that KEEPS what the student just made.
@@ -42,11 +40,10 @@ export default function RegisterScreen() {
   const navigate = useNavigate()
   const ui = usePlatformUi()
   const ios = useGamePlatform() === "ios"
-  const { card, panel } = usePlatformCorners()
+  const { card } = usePlatformCorners()
   const signInAs = useAuth((s) => s.signInAs)
   const { yearId, subject, finished } = useOnboarding()
   const { right, total, points } = useScore()
-  const year = yearById(yearId)
 
   const [step, setStep] = useState<Step>("phone")
   const [name, setName] = useState("")
@@ -117,7 +114,7 @@ export default function RegisterScreen() {
     if (!res.ok) return fail(res.error)
     sfx("connect")
     signInAs(res.user)
-    navigate("/mobilegame/accueil")
+    navigate("/mobilegame/accueil", { viewTransition: true })
   }
 
   const label = "mb-1 block text-[calc(8px*var(--ts))] font-bold text-v2-ink"
@@ -141,7 +138,7 @@ export default function RegisterScreen() {
       backLabel="رجوع"
       end={
         step === "phone" ? (
-          <Link to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.link, "text-[calc(8px*var(--ts))]")}>
+          <Link viewTransition to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.link, "text-[calc(8px*var(--ts))] text-v2-cta!")}>
             عندي كونط
           </Link>
         ) : (
@@ -160,37 +157,17 @@ export default function RegisterScreen() {
         )
       }
       aside={
-        <aside className={cn("relative min-h-0 overflow-hidden border-2 border-[#052a30] bg-v2-chapter p-2.5", panel)}>
-          {/* #052a30 = --v2-edge-deep, the chapter's own edge */}
-          {/* وائل presents what is being saved, thinks with you while the SMS comes, nods at the last step */}
-          <Wael3D
-            pose={step === "phone" ? "present" : step === "code" ? "think" : "nod"}
-            poses={["present", "think", "nod"]}
-            className="absolute bottom-0 end-[-6%] h-[64%]"
-          />
-          <div className={cn("relative border-2 border-v2-ink bg-v2-surface p-2.5 shadow-[0_3px_0_var(--v2-ink)]", card)}>
-            <p className="text-[calc(7.1px*var(--ts))] font-bold text-v2-ink-2">تتسجّل في الكونط</p>
-            {finished && subject ? (
-              <>
-                <p className="mt-1 flex items-center gap-1.5 text-[calc(8px*var(--ts))] font-extrabold text-v2-ink">
-                  <SubjectIcon name={subject} className="size-8 shrink-0" />
-                  <span className="min-w-0">
-                    <span className="block truncate">{matiereKey(subject)}</span>
-                    <bdi dir="ltr" className="text-[calc(11px*var(--ts))] font-black tabular-nums">
-                      {right}/{total}
-                    </bdi>
-                  </span>
-                </p>
-                <p className="mt-1.5 inline-flex items-center gap-1 text-[calc(7.1px*var(--ts))] font-extrabold text-v2-brand-text">
-                  <Sparkles className="size-3.5" strokeWidth={2.4} /> <bdi dir="ltr">+{points}</bdi> نقطة
-                </p>
-              </>
-            ) : (
-              <p className="mt-1 text-[calc(7.5px*var(--ts))] font-bold leading-snug text-v2-ink">مدينتك، نقاطك والدوري.</p>
-            )}
-            {year && <Tag className="mt-1.5">{yearLabel(year)}</Tag>}
-          </div>
-        </aside>
+        // وائل presents what is being saved, thinks with you while the SMS comes, nods at the last step
+        <WaelAside
+          say={
+            finished && subject
+              ? `نحفظولك ${matiereKey(subject)} · ${right}/${total} · +${points} نقطة. ما تضيّعش مدينتك!`
+              : "مدينتك، نقاطك والدوري: نحفظوهم في كونط."
+          }
+          tone="yay"
+          pose={step === "phone" ? "present" : step === "code" ? "think" : "nod"}
+          poses={["present", "think", "nod"]}
+        />
       }
       overlay={
         sms && (
@@ -221,7 +198,8 @@ export default function RegisterScreen() {
         )
       }
     >
-      <div className={cn("min-h-0 flex-1 overflow-y-auto ps-2 pe-1 pb-2", shake)}>
+      {/* the account is a sheet over the town — « don't lose your town » (docs/video-research) */}
+      <div className={cn("min-h-0 flex-1 overflow-y-auto rounded-[22px] border-2 border-v2-ink/20 bg-v2-surface p-3 shadow-[0_10px_28px_rgb(0_0_0/.3)] motion-safe:animate-[game-sheet-up_400ms_cubic-bezier(.2,.8,.2,1)]", shake)}>
         <h1 className="text-[calc(12.5px*var(--ts))] font-black leading-tight text-v2-ink">{titles[step][0]}</h1>
         <p className="mb-2 text-[calc(7.5px*var(--ts))] text-v2-ink-2">{titles[step][1]}</p>
 

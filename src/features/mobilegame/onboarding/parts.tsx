@@ -2,8 +2,9 @@ import { useEffect, useState, type CSSProperties, type ReactNode } from "react"
 import { Link } from "react-router-dom"
 import { ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Wael3D, type WaelPose } from "@/features/game/shared/Wael3D"
-import { MobileScreen, useGamePlatform } from "../MobileGameLayout"
+import type { WaelPose } from "@/features/game/shared/Wael3D"
+import { useWorldStep, useWorldWael } from "./world"
+import { useGamePlatform } from "../MobileGameLayout"
 import { usePlatformUi } from "../platformUi"
 
 /**
@@ -18,7 +19,6 @@ import { usePlatformUi } from "../platformUi"
 
 /** The flow's steps, for the one progress bar (welcome counts: endowed progress). */
 export const STEPS = { welcome: 1, level: 2, subject: 3, q1: 4, q2: 5, q3: 6, result: 7 } as const
-const TOTAL = 7
 
 /** Corners per platform: iOS 22 / 14 (concentric), Android 28 / 16 (the M3 scale). */
 export function usePlatformCorners() {
@@ -28,7 +28,6 @@ export function usePlatformCorners() {
 
 export function FlowScreen({
   step,
-  progress,
   back,
   backLabel = "رجوع",
   end,
@@ -37,7 +36,7 @@ export function FlowScreen({
   overlay,
 }: {
   step: number
-  /** Overrides `step / TOTAL` (the sign-up runs its own three steps). */
+  /** Kept for callers; the world's quest path shows the progress now. */
   progress?: number
   back?: string
   backLabel?: string
@@ -48,27 +47,31 @@ export function FlowScreen({
 }) {
   const ui = usePlatformUi()
   const ios = useGamePlatform() === "ios"
+  useWorldStep(step)
   return (
-    <MobileScreen className="bg-v2-mint-grid">
-      <div className="flex h-full flex-col">
-        <header className="flex h-12 shrink-0 items-center gap-3 ps-1 pe-1">
+    <>
+      {/* the step — the one layer that moves between steps (view-transition-name: flow-step) */}
+      <div
+        className="flow-step absolute flex flex-col"
+        // the safe area: the step sits inside the notch / home-bar insets (absolute children ignore the stage's padding)
+        style={{ top: "var(--gs-top)", left: "var(--gs-left)", right: "var(--gs-right)", bottom: "var(--gs-bottom)" }}
+      >
+        <header className="flex h-12 shrink-0 items-center justify-between gap-3 ps-1 pe-1">
           {back ? (
-            <Link to={back} data-uisfx="back" aria-label={backLabel} className={ui.back}>
+            <Link to={back} viewTransition data-uisfx="back" aria-label={backLabel} className={cn(ui.back, "bg-white/10 text-white!")}>
               <ChevronRight className="size-6" strokeWidth={ios ? 2.4 : 2} />
             </Link>
           ) : (
             <span className={cn(ui.target, "w-2")} aria-hidden />
           )}
-          <FlowProgress value={progress ?? step / TOTAL} />
-          <div className="flex shrink-0 items-center">{end}</div>
+          <div className="flex shrink-0 items-center text-white">{end}</div>
         </header>
-        <div className={cn("grid min-h-0 flex-1 gap-3 pb-1", aside ? "grid-cols-[1fr_minmax(0,27%)]" : "grid-cols-1")}>
-          <main className="flex min-h-0 min-w-0 flex-col">{children}</main>
-          {aside}
-        </div>
+        {/* the end side belongs to وائل: the content keeps clear of him */}
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col pe-[32%] pb-1">{children}</main>
       </div>
+      {aside}
       {overlay}
-    </MobileScreen>
+    </>
   )
 }
 
@@ -90,21 +93,16 @@ export function FlowProgress({ value }: { value: number }) {
 }
 
 /**
- * Wael on the end side with what he says. The bubble pops when the line
- * changes (his "reaction"), with its text already in place — no typewriter.
- * `tone`: `yay` gives the bubble the lime edge (a right answer, a choice made).
- *
- * وائل is the 3D presenter (docs/3d/3d-characters-and-ui-effects.md § 7): he
- * stands on a small cream plinth with a navy edge — the town buildings' own
- * plinth — and his `pose` reacts with the bubble (a swap is a crossfade; list
- * every pose the screen can reach in `poses` so they're pre-mounted).
+ * What وائل says and does on this step. He lives in the world (world.tsx) —
+ * the same spot on every step, so he never jumps; a step only changes his
+ * line and his pose (a swap is a crossfade; list every pose the step can
+ * reach in `poses` so they're pre-mounted).
  */
 export function WaelAside({
   say,
   tone = "calm",
   pose = "present",
   poses,
-  children,
 }: {
   say: ReactNode
   tone?: "calm" | "yay"
@@ -112,33 +110,8 @@ export function WaelAside({
   poses?: readonly WaelPose[]
   children?: ReactNode
 }) {
-  const { panel } = usePlatformCorners()
-  // The bubble re-keys on its line so the pop replays on every reaction.
-  const [k, setK] = useState(0)
-  const sayKey = typeof say === "string" ? say : ""
-  useEffect(() => setK((n) => n + 1), [sayKey])
-  return (
-    <aside className={cn("relative min-h-0 overflow-hidden border-2 border-[#052a30] bg-v2-chapter", panel)}>
-      {/* #052a30 = --v2-edge-deep, the chapter's own edge (as on the login's art panel) */}
-      <div
-        key={k}
-        aria-live="polite"
-        className="absolute inset-x-2.5 top-2.5 z-10 origin-bottom-left rounded-2xl rounded-es-sm border-2 border-v2-ink bg-v2-surface px-3 py-2 text-[calc(7.5px*var(--ts))] font-bold leading-snug text-v2-ink shadow-[0_3px_0_var(--v2-ink)] motion-safe:animate-[game-pop_320ms_cubic-bezier(.34,1.56,.64,1)_both] data-[tone=yay]:border-[#5bcd3f] data-[tone=yay]:shadow-[0_3px_0_#5bcd3f]"
-        data-tone={tone}
-        // #5bcd3f = --v2-edge-cta's light value (the lime's own edge); the bubble sits outside the play scope
-      >
-        {say}
-      </div>
-      {/* the plinth: cream stone, navy tile edge — an illustration, not a button */}
-      <div
-        aria-hidden
-        className="absolute bottom-[4%] start-1/2 h-[10%] w-[78%] -translate-x-1/2 rounded-[50%] border-2 border-b-4 border-v2-ink bg-[#fbf3e4] rtl:translate-x-1/2"
-        // #fbf3e4 = the town plinth's cream (map palette `cream`); no token carries it
-      />
-      <Wael3D pose={pose} poses={poses} className="absolute bottom-[7.5%] start-1/2 h-[72%] -translate-x-1/2 rtl:translate-x-1/2" />
-      {children}
-    </aside>
-  )
+  useWorldWael({ say, tone, pose, poses })
+  return null
 }
 
 /**
@@ -153,7 +126,8 @@ export function tileClass(selected: boolean, card: string) {
     card,
     selected
       ? "border-[#5bcd3f] bg-v2-cta text-v2-on-cta shadow-[0_4px_0_var(--v2-edge-cta,#5bcd3f)]"
-      : "border-v2-ink/15 bg-v2-surface text-v2-ink shadow-[0_3px_0_var(--v2-edge-tile,rgb(23_46_91/.14))] hover:border-v2-brand/40",
+      : // a cream game piece with a navy lip — the town plinths' cream (#fbf3e4, map palette), no token carries it
+        "border-v2-ink/25 bg-[#fbf3e4] text-v2-ink shadow-[0_4px_0_rgb(23_46_91/.45)] hover:border-v2-cta",
   )
 }
 

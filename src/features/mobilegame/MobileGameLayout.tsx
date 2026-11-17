@@ -156,6 +156,21 @@ function useFitScale(platform: GamePlatform) {
 }
 
 export default function MobileGameLayout() {
+  // Which way the next view transition slides (world.css): a back control → "back", anything else → "forward".
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const back = (e.target as Element | null)?.closest?.('[data-uisfx="back"]')
+      document.documentElement.dataset.nav = back ? "back" : "forward"
+    }
+    const onPop = () => (document.documentElement.dataset.nav = "back")
+    document.addEventListener("click", onClick, true)
+    window.addEventListener("popstate", onPop)
+    return () => {
+      document.removeEventListener("click", onClick, true)
+      window.removeEventListener("popstate", onPop)
+    }
+  }, [])
+
   useGameDocument("مدينة وائل — التطبيق")
   const framed = useMedia("(hover: hover) and (pointer: fine) and (min-width: 960px) and (min-height: 540px)")
   const portrait = useMedia("(orientation: portrait)")

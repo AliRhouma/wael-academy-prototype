@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, type CSSProperties } from "react"
 import { Link } from "react-router-dom"
 import { BookOpen, Gamepad2, GraduationCap } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -33,7 +33,7 @@ export default function WelcomeScreen() {
       back="/mobilegame"
       backLabel="رجوع للبداية"
       end={
-        <Link to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.link, "text-[calc(8px*var(--ts))]")}>
+        <Link viewTransition to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.link, "text-[calc(8px*var(--ts))] text-v2-cta!")}>
           عندي كونط
         </Link>
       }
@@ -41,34 +41,34 @@ export default function WelcomeScreen() {
     >
       <div className="flex min-h-0 flex-1 flex-col justify-center gap-3 ps-2">
         <div>
-          <p className="text-v2-grad text-[calc(7.5px*var(--ts))] font-bold">مرحبا بيك في مدينة وائل</p>
-          <h1 className="text-[calc(14px*var(--ts))] font-black leading-tight text-v2-ink">نبداو بلعبة صغيرة</h1>
+          <p className="text-[calc(7.5px*var(--ts))] font-bold text-v2-cta">مرحبا بيك في مدينة وائل</p>
+          <h1 className="text-[calc(16px*var(--ts))] font-black leading-tight text-white">نبداو بلعبة صغيرة</h1>
         </div>
-        <ol className="grid grid-cols-3 gap-2.5">
+        <ol className="deal grid grid-cols-3 gap-2.5">
           {ROUTE.map((r, i) => (
             <li
               key={r.title}
-              className={cn("relative flex flex-col gap-1.5 border-2 border-v2-ink/10 bg-v2-surface p-3 motion-safe:animate-[game-rise_240ms_ease-out_both]", card)}
-              style={{ animationDelay: `${i * 40}ms` }}
+              className={cn("relative flex flex-col gap-1.5 border-2 border-white/15 bg-white/[0.08] p-3", card)}
+              style={{ "--i": i } as CSSProperties}
             >
               <span className="flex items-center gap-2">
                 <span className={cn("grid size-8 place-items-center rounded-xl text-white", i === 2 ? "bg-v2-cta text-v2-on-cta" : "bg-v2-brand")}>
                   <r.icon className="size-[18px]" strokeWidth={2.2} />
                 </span>
-                <bdi dir="ltr" className="text-[calc(9px*var(--ts))] font-black tabular-nums text-v2-ink/25">
+                <bdi dir="ltr" className="text-[calc(9px*var(--ts))] font-black tabular-nums text-white/30">
                   {i + 1}
                 </bdi>
               </span>
-              <span className="text-[calc(8.5px*var(--ts))] font-extrabold leading-tight text-v2-ink">{r.title}</span>
-              <span className="text-[calc(7.1px*var(--ts))] leading-snug text-v2-ink-2">{r.body}</span>
+              <span className="text-[calc(8.5px*var(--ts))] font-extrabold leading-tight text-white">{r.title}</span>
+              <span className="text-[calc(7.1px*var(--ts))] leading-snug text-white/65">{r.body}</span>
             </li>
           ))}
         </ol>
         <div className="flex items-center gap-3">
-          <Link to="/mobilegame/niveau" data-uisfx="forward" className={cn(ui.cta, "text-[calc(10px*var(--ts))]")}>
+          <Link viewTransition to="/mobilegame/niveau" data-uisfx="forward" className={cn(ui.cta, "text-[calc(10px*var(--ts))]")}>
             يلّا نبداو
           </Link>
-          <span className="text-[calc(7.1px*var(--ts))] text-v2-ink-2">بلا كونط، بلا كلمة سر</span>
+          <span className="text-[calc(7.1px*var(--ts))] text-white/60">بلا كونط، بلا كلمة سر</span>
         </div>
       </div>
     </FlowScreen>

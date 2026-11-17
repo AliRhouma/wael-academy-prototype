@@ -1,0 +1,81 @@
+{
+  "id": "1zOguaY2ElI",
+  "url": "https://www.youtube.com/watch?v=1zOguaY2ElI",
+  "title": "This App Has An Almost Perfect Onboarding | App Breakdown #58",
+  "channel": "App Breakdown",
+  "duration_s": 1270,
+  "upload_date": "20260316",
+  "topic": "Onboarding & first minutes",
+  "summary": "A designer walks through the Brilliant learning app on a phone from splash screen to first finished lesson, commenting on each screen. Brilliant uses a mascot that reacts to every choice, one question per screen, account creation only after the learner has invested, and a first lesson that is pure 'learn by doing' with Duolingo-style feedback sheets. He also flags the misses: a fake notification prompt that confuses, extra screens that slow the path to the first lesson, and a paywall shown before any learning.",
+  "insights": [
+    {
+      "time": "01:13",
+      "t": 73,
+      "insight": "A mascot appears from the second screen on and frames the whole onboarding as 'building your path' together. The character is the voice of every question, so the questions feel like a conversation rather than a form.",
+      "quote": "I guess it's going to guide me through the onboarding.",
+      "visual": "A near-empty white screen with only the green mascot and one line, 'Let's build a learning path just for you', above a single Continue button.",
+      "frame": "frames/1zOguaY2ElI/t0073.jpg"
+    },
+    {
+      "time": "03:20",
+      "t": 200,
+      "insight": "Each answer gets an immediate, personal reaction from the character (a different pose and a witty line for morning, afternoon or night). Tiny reactions make choice screens feel alive. His critique: the reactions swap instantly and feel canned; a small delay would feel more natural.",
+      "quote": "I'm really loving these like small interactions with the character.",
+      "visual": "The 'when do you learn' screen with 'Nightly ritual' selected in a purple gradient and the mascot's bubble reading 'Math by moonlight? Sounds dreamy.'",
+      "frame": "frames/1zOguaY2ElI/t0200.jpg"
+    },
+    {
+      "time": "04:00",
+      "t": 240,
+      "insight": "Anti-pattern: a fake OS permission dialog with an arrow pointing at 'Allow', but the real action is a separate Continue button. Users tap the fake button and nothing happens. Never put a decoy control on screen; whatever looks tappable must respond.",
+      "quote": "This is a good example of how not to do this type of screen.",
+      "visual": "A mock iOS notification dialog drawn inside the screen with a green arrow pointing to Allow, plus a black Continue button below it. The presenter points at his phone to show the confusion.",
+      "frame": "frames/1zOguaY2ElI/t0240.jpg"
+    },
+    {
+      "time": "04:33",
+      "t": 278,
+      "insight": "Sign-up comes only after the user has put effort into the app (goals, topic, level, daily time), and it is framed as saving that effort ('discover your learning path') rather than as a gate. Apple/Google one-tap options come first.",
+      "quote": "asking for account creation only after the user has given value to the app",
+      "visual": "The 'Create a free profile to discover your learning path' screen: Apple and Google buttons, 'Continue with email', and a small 'Existing user? Sign in' link.",
+      "frame": "frames/1zOguaY2ElI/t0278.jpg"
+    },
+    {
+      "time": "11:30",
+      "t": 690,
+      "insight": "The first exercise is hands-on: tap the cells to colour half a shape, with a haptic on every tap. A big green feedback sheet slides up with 'Correct!' and the XP earned. Learning by doing gives a win in seconds. A wrong answer gets a softer yellow sheet with 'Why?' and 'Try again'.",
+      "quote": "just like Duolingo, there's the correct sheet at the bottom",
+      "visual": "The 'Finding Half' exercise: a square split into four with the top half coloured blue, and a green bottom sheet showing 'Correct! +15 XP' with Why? and Continue buttons.",
+      "frame": "frames/1zOguaY2ElI/t0690.jpg"
+    },
+    {
+      "time": "12:40",
+      "t": 760,
+      "insight": "Halfway through the first lesson, an animated 'Skill check' interstitial breaks the rhythm and changes the exercise type (squares to triangles), so a short session doesn't get monotonous. It acts like a mini level-up inside the lesson.",
+      "visual": "A full-screen interstitial with a progress bar at the top, a blue check badge in the centre labelled 'Skill check', and a Continue button.",
+      "frame": "frames/1zOguaY2ElI/t0760.jpg"
+    },
+    {
+      "time": "14:30",
+      "t": 870,
+      "insight": "The best moment to ask for something is right after a win and a commitment. Brilliant asks again for notifications after the first finished lesson and the streak pledge, when the value is obvious. The mascot holds a phone, and there is a quiet 'Maybe later' option.",
+      "quote": "this is a very timely way to do it",
+      "visual": "'Reach your goal with reminders' screen: mascot with a phone and a check badge, 'Maybe later' text link above an 'Allow notifications' button.",
+      "frame": "frames/1zOguaY2ElI/t0870.jpg"
+    },
+    {
+      "time": "20:21",
+      "t": 1221,
+      "insight": "His closing verdict: what makes the product easy is that every screen has one obvious big call to action, so the user always knows the next step and is never lost. That 'golden path' matters more than any single animation.",
+      "quote": "No matter where you are, there's a big CTA, you know where to go next",
+      "visual": "The home screen: one recommended course card ('Arithmetic Thinking, Level 1') with its illustration and a single blue Start button, above the bottom nav.",
+      "frame": "frames/1zOguaY2ElI/t1221.jpg"
+    }
+  ],
+  "apply_to_wael": [
+    "Make Wael (the 3D teacher) the voice of every first-launch step. Level and subject should be questions he asks in a speech bubble inside the town scene, not standalone form screens, and he reacts to each pick with a short pose plus an Arabic quip (e.g. on choosing Maths). Add a ~300 ms beat before the reaction so it feels natural.",
+    "Keep exactly one primary pressable button per step, in the same place every time (bottom, thumb reach in landscape). Never draw decorative controls that look tappable but aren't.",
+    "In the 3-question game, show the answer feedback as a big bottom sheet (green 'صحيح' + XP, or a softer amber 'حاول مرة أخرى' with a 'لماذا؟' explanation) with sound and haptic. Use a mid-game interstitial (e.g. 'السؤال الأخير!') as a mini level-up beat.",
+    "Present account creation after the result as 'save your progress / your place in the town': one-tap Google/Apple first and email second. Ask for notifications only at the end, once the student has a score and a streak to protect."
+  ]
+}

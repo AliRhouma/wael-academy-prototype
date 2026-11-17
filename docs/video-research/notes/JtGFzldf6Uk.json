@@ -1,0 +1,61 @@
+{
+  "id": "JtGFzldf6Uk",
+  "url": "https://www.youtube.com/watch?v=JtGFzldf6Uk",
+  "title": "Laws of UX: Hick's Law (with examples!)",
+  "channel": "AM Design",
+  "duration_s": 898,
+  "upload_date": "20210921",
+  "topic": "Simplicity & immersion",
+  "summary": "A product designer walks through Hick's law (decision time grows with the number and complexity of choices) and ties it to working-memory limits, then shows practical ways to cut choices: simplified remotes, step-by-step onboarding, a highlighted recommended plan, multi-step forms, Google's one-field home page and category-based settings. He closes with the opposite failure: collapsing options into bare, ambiguous icons that users cannot decode.",
+  "insights": [
+    {
+      "time": "03:21", "t": 201,
+      "insight": "Working memory is a small buffer; when new information arrives and the slots are full, something already there gets dropped, often the user's original intention. Every extra option or line of text on a screen competes for those few slots.",
+      "visual": "Slide 'User's Working Memory': a row of memory slots, three filled, with five incoming items pushing the oldest one out (shown in red).",
+      "frame": "frames/JtGFzldf6Uk/t0201.jpg"
+    },
+    {
+      "time": "05:10", "t": 310,
+      "insight": "Modern TV remotes kept only the crucial buttons and moved the rest of the complexity onto the screen, shown only when needed. Keep the always-visible controls to the essential few and surface the rest in context.",
+      "visual": "Side-by-side photo of an old button-covered remote and a minimal modern remote with a handful of buttons.",
+      "frame": "frames/JtGFzldf6Uk/t0310.jpg"
+    },
+    {
+      "time": "06:53", "t": 413,
+      "insight": "When a choice is unavoidable, highlight the recommended option so the decision becomes 'accept or change' instead of 'compare everything'. A visually emphasised default removes most of the deliberation.",
+      "visual": "A pricing page with three plans where the middle 'Pro' plan is raised and coloured as the recommended one.",
+      "frame": "frames/JtGFzldf6Uk/t0413.jpg"
+    },
+    {
+      "time": "08:24", "t": 504,
+      "insight": "A long form shown all at once scares people off; the same fields split into short numbered steps with one Next button feel light. Chunk long input into a few steps, each with a single clear action.",
+      "visual": "Slide 'Forms': on the left (Bad) a tall grid of fields, on the right (Good) a short 'Step 1' with a few fields and a green Next button.",
+      "frame": "frames/JtGFzldf6Uk/t0504.jpg"
+    },
+    {
+      "time": "08:54", "t": 534,
+      "insight": "Google's home page offers essentially one thing to do; extra tabs, filters and tools appear only after the first search. Make the first screen a single obvious action and reveal power features as the person goes deeper.",
+      "quote": "allows users to actually just get right into the gist",
+      "visual": "The Google home page: a centred logo and a single search field on an otherwise empty page.",
+      "frame": "frames/JtGFzldf6Uk/t0534.jpg"
+    },
+    {
+      "time": "12:39", "t": 759,
+      "insight": "Over-simplifying backfires: reducing a navigation to bare, abstract icons (grid, power, graph) leaves users guessing what each one means. Fewer choices only help when each remaining choice is instantly understandable.",
+      "visual": "Slide 'Categorisation that doesn't make sense' marked Bad: a smart-home app whose bottom bar is unlabelled icons.",
+      "frame": "frames/JtGFzldf6Uk/t0759.jpg"
+    },
+    {
+      "time": "13:30", "t": 810,
+      "insight": "The fix is simple: put a short label under each icon, as Facebook does even for familiar icons. Labels remove ambiguity at almost no cost in space.",
+      "visual": "Slide 'Facebook Example' marked Good: a phone with a bottom bar of icons each carrying a text label, magnified.",
+      "frame": "frames/JtGFzldf6Uk/t0810.jpg"
+    }
+  ],
+  "apply_to_wael": [
+    "On the 'pick level' and 'pick subject' steps, pre-highlight a recommended choice (e.g. Bac / the most-played subject) with Wael pointing at it, so most students confirm with one tap instead of comparing a grid.",
+    "Cap each onboarding screen at one primary action and at most 3-5 large, labelled options; if there are more subjects, show the top few and a quiet 'others' entry.",
+    "Split account creation into tiny steps (name, then phone or code), one field per screen in landscape, each with a single big Next, instead of a form page.",
+    "On the town map, every building or hotspot gets a short Arabic label next to its icon; never rely on an unlabelled symbol for navigation."
+  ]
+}

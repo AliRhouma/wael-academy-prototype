@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, type CSSProperties } from "react"
+import { flushSync } from "react-dom"
 import { useNavigate } from "react-router-dom"
 import { Check, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { sfx } from "@/features/student-v2/sound"
 import { matiereKey } from "@/data/matiere"
-import { SubjectIcon } from "@/components/icons/subjects"
+import { Subject3D } from "./art3d"
 import { usePlatformUi } from "../platformUi"
-import { FlowScreen, STEPS, WaelAside, useGameShake, usePlatformCorners } from "./parts"
+import { FlowScreen, GameBurst, STEPS, WaelAside, useGameShake, usePlatformCorners } from "./parts"
 import { quizFor, useOnboarding } from "./flow"
 
 /**
@@ -36,6 +37,7 @@ export default function QuizScreen() {
     return first === -1 ? 2 : first
   })
   const [shake, triggerShake] = useGameShake()
+  const [burstAt, setBurstAt] = useState(0)
 
   useEffect(() => {
     if (questions.length !== 3) navigate(yearId ? "/mobilegame/matiere" : "/mobilegame/niveau", { replace: true })
@@ -52,7 +54,10 @@ export default function QuizScreen() {
   function choose(c: number) {
     if (done) return
     answer(i, c)
-    if (c === q.answer) sfx("success")
+    if (c === q.answer) {
+      sfx("success")
+      setBurstAt(Date.now())
+    }
     else {
       sfx("error")
       triggerShake()
@@ -62,8 +67,13 @@ export default function QuizScreen() {
   function next() {
     if (last) {
       finish()
-      navigate("/mobilegame/resultat")
-    } else setI(i + 1)
+      navigate("/mobilegame/resultat", { viewTransition: true })
+    } else {
+      // the next question slides in like a step (world.css), the town and وائل stay
+      document.documentElement.dataset.nav = "forward"
+      if (document.startViewTransition) document.startViewTransition(() => flushSync(() => setI(i + 1)))
+      else setI(i + 1)
+    }
   }
 
   const say = !done
@@ -82,8 +92,8 @@ export default function QuizScreen() {
       back="/mobilegame/matiere"
       backLabel="رجوع للمواد"
       end={
-        <span className="inline-flex items-center gap-1.5 text-[calc(8px*var(--ts))] font-extrabold text-v2-ink">
-          <SubjectIcon name={subject ?? ""} className="size-7" />
+        <span className="inline-flex items-center gap-1.5 text-[calc(8px*var(--ts))] font-extrabold text-white">
+          <Subject3D name={subject ?? ""} className="size-8" />
           {round > 1 && (
             <span>
               الجولة <bdi dir="ltr">{round}</bdi> ·
@@ -100,7 +110,7 @@ export default function QuizScreen() {
         {/* the question — flat: it informs, it doesn't take a tap */}
         <section
           key={`q-${i}`}
-          className={cn("shrink-0 border-2 border-v2-ink/10 bg-v2-surface px-3.5 py-2.5 motion-safe:animate-[game-rise_240ms_ease-out_both]", card)}
+          className={cn("shrink-0 border-2 border-v2-ink/25 bg-[#fbf3e4] px-3.5 py-2.5 shadow-[0_4px_0_rgb(23_46_91/.45)] motion-safe:animate-[game-rise_240ms_ease-out_both]", card)}
         >
           <p className="text-[calc(7.1px*var(--ts))] font-bold text-v2-brand-text">
             {matiereKey(subject ?? "")} · من البرنامج: <span dir="auto">{q.chapter}</span>
@@ -110,7 +120,7 @@ export default function QuizScreen() {
           </p>
         </section>
 
-        <div role="radiogroup" aria-label="الأجوبة" dir={dir} className={cn("grid min-h-0 flex-1 grid-cols-2 auto-rows-fr gap-2", shake)}>
+        <div role="radiogroup" aria-label="الأجوبة" dir={dir} className={cn("deal grid min-h-0 flex-1 grid-cols-2 auto-rows-fr gap-2", shake)} key={`a-${i}`}>
           {q.choices.map((c, k) => {
             const isRight = done && k === q.answer
             const isWrongPick = done && k === picked && !right
@@ -124,15 +134,16 @@ export default function QuizScreen() {
                 onClick={() => choose(k)}
                 dir={dir}
                 lang={q.lang}
+                style={{ "--i": k } as CSSProperties}
                 className={cn(
                   "relative flex min-h-12 items-center gap-2.5 border-2 px-3 text-start text-[calc(8.8px*var(--ts))] font-bold leading-tight transition-[translate,box-shadow,background-color,border-color,opacity] duration-200 ease-[cubic-bezier(.34,1.56,.64,1)]",
                   "focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-v2-brand",
                   card,
                   !done &&
-                    "border-v2-ink/15 bg-v2-surface text-v2-ink shadow-[0_3px_0_var(--v2-edge-tile,rgb(23_46_91/.14))] hover:border-v2-brand/40 active:translate-y-[3px] active:shadow-none active:duration-75",
+                    "border-v2-ink/25 bg-[#fbf3e4] text-v2-ink shadow-[0_4px_0_rgb(23_46_91/.45)] hover:border-v2-cta active:translate-y-[3px] active:shadow-none active:duration-75",
                   isRight && "border-[#5bcd3f] bg-v2-cta text-v2-on-cta shadow-[0_4px_0_var(--v2-edge-cta,#5bcd3f)]",
-                  isWrongPick && "border-dashed border-v2-ink/35 bg-v2-ink/[0.06] text-v2-ink-2",
-                  done && !isRight && !isWrongPick && "border-v2-ink/10 bg-v2-surface text-v2-ink-2 opacity-60",
+                  isWrongPick && "border-dashed border-white/40 bg-white/10 text-white/70",
+                  done && !isRight && !isWrongPick && "border-v2-ink/10 bg-[#fbf3e4] text-v2-ink-2 opacity-45",
                 )}
               >
                 <span
@@ -144,16 +155,25 @@ export default function QuizScreen() {
                   {isRight ? <Check className="size-4" strokeWidth={3} /> : isWrongPick ? <X className="size-4" strokeWidth={3} /> : (q.lang === "ar" ? LETTERS_AR : LETTERS)[k]}
                 </span>
                 <span className="min-w-0 flex-1">{c}</span>
+                {/* the right answer pays out on the spot: a burst and +10 rising toward the quest path */}
+                {isRight && right && (
+                  <>
+                    <GameBurst at={burstAt} />
+                    <span aria-hidden className="fly-points pointer-events-none absolute -top-3 end-3 rounded-full border-2 border-v2-ink bg-v2-cta px-2 text-[calc(7.5px*var(--ts))] font-black text-v2-on-cta">
+                      <bdi dir="ltr">+10</bdi>
+                    </span>
+                  </>
+                )}
               </button>
             )
           })}
         </div>
 
         {/* the bottom row: a hint while choosing, the why + « الجاية » once answered */}
-        <div className={cn("flex h-[60px] shrink-0 items-center gap-3 border-2 px-3", card, done ? (right ? "border-[#5bcd3f] bg-v2-cta/20" : "border-v2-ink/10 bg-v2-surface") : "border-transparent")}>
+        <div className={cn("flex h-[60px] shrink-0 items-center gap-3 border-2 px-3", card, done ? (right ? "border-[#5bcd3f] bg-[#0b2d3a]/85" : "border-white/15 bg-[#0b2d3a]/85") : "border-transparent")}>
           {done ? (
             <>
-              <p className="min-w-0 flex-1 text-[calc(7.5px*var(--ts))] leading-snug text-v2-ink">
+              <p className="min-w-0 flex-1 text-[calc(7.5px*var(--ts))] leading-snug text-white">
                 <b className="font-extrabold">{right ? "صحيح · " : "الجواب: "}</b>
                 <bdi dir={dir} lang={q.lang}>
                   {right ? q.explain : `${q.choices[q.answer]} — ${q.explain}`}
@@ -164,7 +184,7 @@ export default function QuizScreen() {
               </button>
             </>
           ) : (
-            <p className="text-[calc(7.5px*var(--ts))] text-v2-ink-2">اختار جواب واحد — ما فماش وقت محدود.</p>
+            <p className="text-[calc(7.5px*var(--ts))] text-white/65">اختار جواب واحد — ما فماش وقت محدود.</p>
           )}
         </div>
       </div>

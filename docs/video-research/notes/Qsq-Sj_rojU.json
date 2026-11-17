@@ -1,0 +1,82 @@
+{
+  "id": "Qsq-Sj_rojU",
+  "url": "https://www.youtube.com/watch?v=Qsq-Sj_rojU",
+  "title": "I Studied 1,460 Onboarding Flows. Here's What I Found.",
+  "channel": "Mobbin",
+  "duration_s": 606,
+  "upload_date": "20260416",
+  "topic": "Onboarding & first minutes",
+  "summary": "Mobbin's designer analysed 1,460 onboarding flows from 986 apps. Her conclusion: length is not the problem; what matters is how fast the user feels the product's value (the 'aha moment') and whether the flow feels short. The best flows sell the outcome instead of listing features, let users try the core experience before signing up, show what their answers unlocked, and keep something moving on screen. Friction is placed deliberately: a custom screen before permission prompts, and sign-up split into small steps.",
+  "insights": [
+    {
+      "time": "00:46",
+      "t": 52,
+      "insight": "Good onboarding is a loop, not a checklist: sign up, set up, reach the aha moment (where you actually feel the value), then build a habit. Every screen should move the user towards the aha moment as fast as possible.",
+      "quote": "That's where you actually feel the product's value.",
+      "visual": "A minimal diagram: a dotted circle with Signup, Setup, Aha Moment and Habit at its four points.",
+      "frame": "frames/Qsq-Sj_rojU/t0052.jpg"
+    },
+    {
+      "time": "01:25",
+      "t": 88,
+      "insight": "The first screen should show the product in action with motion, not explain it with text. Runbuds opens on an animated running track with friends' avatars circling it, so you grasp the idea before reading anything.",
+      "quote": "you get a feel for what it does without reading a single word",
+      "visual": "Runbuds' red welcome screen: a stadium track with runner avatars and scores orbiting 'Create group challenges', and a single white Start button.",
+      "frame": "frames/Qsq-Sj_rojU/t0088.jpg"
+    },
+    {
+      "time": "01:33",
+      "t": 95,
+      "insight": "Let people try the core experience before asking for an account. Alma lets you score a meal (the 'Alma Score' ring with food categories) during onboarding, so the value is felt, not promised.",
+      "quote": "It lets you try the core experience before you sign up.",
+      "visual": "Alma onboarding screen 'Balance your nutrition with the Alma Score': a 95 score ring above food-group tiles (fruits, vegetables, whole grains) and a Continue button.",
+      "frame": "frames/Qsq-Sj_rojU/t0095.jpg"
+    },
+    {
+      "time": "04:43",
+      "t": 283,
+      "insight": "Make onboarding questions use the product's own interaction. Speak (a language app) asks its questions in a chat bubble from its character and has you answer by speaking, so setup already rehearses the core activity. A quiet 'I can't speak now' escape keeps it pressure-free.",
+      "quote": "The steps before this screen already had you speaking instead of typing.",
+      "visual": "Speak screen: the blue character avatar asking 'What's motivating you to learn French?' in a bubble, a big round mic button at the bottom, and a small 'I can't speak now' link.",
+      "frame": "frames/Qsq-Sj_rojU/t0283.jpg"
+    },
+    {
+      "time": "05:47",
+      "t": 350,
+      "insight": "Duolingo has one of the longest flows (about 60 screens before sign-up) yet it doesn't feel long. Every step is quick and voiced by the mascot, and the first lesson plus its satisfaction come before account creation.",
+      "quote": "it doesn't even feel long",
+      "visual": "A Duolingo screen with only Duo, the green owl, in the centre: a single, uncluttered beat of the flow carried by the character.",
+      "frame": "frames/Qsq-Sj_rojU/t0350.jpg"
+    },
+    {
+      "time": "06:14",
+      "t": 374,
+      "insight": "Delight hides length. Bump animates even the loading and verification states, so something is always happening on screen and the user never sits on a dead frame. Moments that rarely get design attention are where the feel is won.",
+      "quote": "Even the loading states are wild.",
+      "visual": "Bump's vivid blue map screen with friends' avatars around a glossy 3D logo and a 'Get me in' button: a playful, game-like onboarding screen.",
+      "frame": "frames/Qsq-Sj_rojU/t0374.jpg"
+    },
+    {
+      "time": "08:04",
+      "t": 486,
+      "insight": "Before a system permission prompt, show a custom screen in the product's own voice explaining the benefit. This 'primer' noticeably raises accept rates; Center even previews the notification you would receive.",
+      "quote": "a lot of apps show a custom screen before the notification pop-up",
+      "visual": "Brilliant's primer: the mascot's bubble 'I'll remind you to learn so it becomes a long-term habit' above a mock iOS permission dialog with an arrow pointing at Allow.",
+      "frame": "frames/Qsq-Sj_rojU/t0486.jpg"
+    },
+    {
+      "time": "08:27",
+      "t": 512,
+      "insight": "More screens can mean less friction. Houzz split one long sign-up form into several one-question screens and conversions rose about 15%. Each small step feels effortless even though the total number of taps grows.",
+      "quote": "Maybe the friction we add in one place removes friction in another.",
+      "visual": "An A/B comparison: variant A, a single dense sign-up page; variant B, two simple Houzz screens with one field each, linked by an arrow.",
+      "frame": "frames/Qsq-Sj_rojU/t0512.jpg"
+    }
+  ],
+  "apply_to_wael": [
+    "Define Wael's aha moment as 'I just answered a real bac-style question and Wael celebrated it', and cut or merge anything between splash and that first question. Level and subject picks become two quick taps inside the town scene, not separate form pages.",
+    "Replace text explanations on the welcome step with motion: the 3D town comes alive (buildings light up for each subject, Wael waves) so a student understands 'this is a game world for my subjects' without reading.",
+    "Never show a dead frame between steps. Animate the hand-offs (camera glides from the town to a building for the subject, cards fly in for the questions, a 'Wael prépare ton défi' beat), so the flow feels like one continuous scene.",
+    "After the result, split account creation into one-field steps voiced by Wael with a progress bar, and put a Wael-voiced primer before any notification permission."
+  ]
+}

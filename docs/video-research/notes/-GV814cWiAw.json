@@ -1,0 +1,82 @@
+{
+  "id": "-GV814cWiAw",
+  "url": "https://www.youtube.com/watch?v=-GV814cWiAw",
+  "title": "Can we Improve Tutorials for Complex Games?",
+  "channel": "Game Maker's Toolkit",
+  "duration_s": 1286,
+  "upload_date": "20210531",
+  "topic": "Onboarding & first minutes",
+  "summary": "Mark Brown looks at why tutorials for complex games lose players and borrows fixes from simpler genres. The main ideas: spread teaching through play instead of front-loading it, start with one decision and a near-empty UI, and replace 'click here' arrows with tiny problems the player solves. He adds advisor characters for feedback and leans on conventions players already know. The same principles apply to any app that must teach a new user something without feeling like school.",
+  "insights": [
+    {
+      "time": "01:45",
+      "t": 112,
+      "insight": "A player's willingness to learn grows with their investment (George Fan, Plants vs Zombies). Lessons dumped at the start exceed that willingness; the same lessons accepted later feel natural. So let people play first and teach once they care.",
+      "quote": "a player's willingness to learn grows along with their level of investment",
+      "visual": "A simple graph: 'willingness to learn' on the vertical axis rising linearly with 'investment (time)' on the horizontal axis.",
+      "frame": "frames/-GV814cWiAw/t0112.jpg"
+    },
+    {
+      "time": "02:54",
+      "t": 174,
+      "insight": "Replace the up-front tutorial block with small lessons sprinkled through real play. The player is in the actual game almost immediately, and each lesson arrives exactly when it becomes relevant (the crafting tip when you find the crafting table).",
+      "quote": "it can be split up and sprinkled throughout the entire experience",
+      "visual": "Two blocks side by side, a red 'tutorial' block before a blue 'gameplay' block: the old front-loaded model that the video argues against splitting up.",
+      "frame": "frames/-GV814cWiAw/t0174.jpg"
+    },
+    {
+      "time": "04:01",
+      "t": 241,
+      "insight": "The 'inverted pyramid of decision making' (Civilization): turn one has a single decision, turn two has one more, and choices branch out only as the player grows. Start a new user with exactly one choice and let complexity unfold.",
+      "quote": "you basically have one decision to make on your first turn",
+      "visual": "A tree diagram growing upward from a single node into branches: one decision becoming two, then many.",
+      "frame": "frames/-GV814cWiAw/t0241.jpg"
+    },
+    {
+      "time": "05:25",
+      "t": 325,
+      "insight": "Progressive disclosure of the interface itself. Mini Metro starts with almost no UI, just stations to connect. The line menu, clock and passenger counter appear only once you are playing. Ask of every panel: does it need to be there in the first minute?",
+      "quote": "At the beginning, there's almost no interface at all",
+      "visual": "Mini Metro early game: a white map with a river, three station shapes and two coloured lines, with only a tiny clock in the corner and no other HUD.",
+      "frame": "frames/-GV814cWiAw/t0325.jpg"
+    },
+    {
+      "time": "10:47",
+      "t": 647,
+      "insight": "Blindly following 'tap here' arrows teaches nothing. The game counts progress, but the brain doesn't learn. Threes turns its tutorial into tiny puzzles with a goal ('use the walls to add 1 and 2') and lets the player work out the move, which is real thinking from the first second.",
+      "quote": "as far as my brain is concerned, I've learned nothing",
+      "visual": "The Threes board: a 4x4 grid of number tiles (blue 1s, a red 2, white 3s, 6s, 12 and 24) mid-tutorial.",
+      "frame": "frames/-GV814cWiAw/t0647.jpg"
+    },
+    {
+      "time": "12:34",
+      "t": 754,
+      "insight": "Give objectives, not instructions, and pair them with an advisor character. Offworld Trading Company lists goals the player solves alone (no arrows) while a character pops in to explain or warn when something goes wrong. The guide supplies fast feedback and the 'why' behind actions.",
+      "quote": "use advisor characters who can warn you if you're doing something dumb",
+      "visual": "Offworld game view: a checklist of objectives at top right, and an advisor character portrait at bottom right with a text panel explaining resources and a 'How do I make food?' reply option.",
+      "frame": "frames/-GV814cWiAw/t0754.jpg"
+    },
+    {
+      "time": "16:44",
+      "t": 1008,
+      "insight": "Use icons people already know from everyday apps. In Total War Troy playtests, an hourglass 'End turn' button (which most people read as 'loading') left one player stuck for 40 minutes on turn one. Swapping it for an arrow fixed it. Don't assume genre literacy, and playtest the first minutes.",
+      "quote": "don't assume your audience has played other games",
+      "visual": "Total War Troy's circular HUD with the hourglass end-turn button circled in yellow, sourced from the developers' UX article.",
+      "frame": "frames/-GV814cWiAw/t1008.jpg"
+    },
+    {
+      "time": "17:42",
+      "t": 1062,
+      "insight": "Show, don't tell. Into the Breach explains each weapon with a tiny looping animation of its effect on the grid instead of a paragraph, which is far faster to grasp. Cut words, avoid jargon, keep language consistent.",
+      "quote": "showing that little animation of them moving is a thousand times more effective",
+      "visual": "Into the Breach 'Artillery Mech' card: a short caption above a mini isometric animation showing the shot hitting the centre tile and pushing adjacent units, with a Continue button.",
+      "frame": "frames/-GV814cWiAw/t1062.jpg"
+    }
+  ],
+  "apply_to_wael": [
+    "Put the 3-question game before almost everything else. Level and subject can be one tap each, or even inferred, and all explanations of the town, XP and streaks should wait until after the first win, when the student is invested.",
+    "Start the town with one choice and almost no HUD. After the first game, reveal only the building the student just 'unlocked' and add coins/XP/streak counters one at a time as they first become meaningful.",
+    "Teach by doing inside the game, not with tooltips: the first question itself shows how to answer (e.g. a pulsing answer card with Wael gesturing towards it), with no 'tap here' arrow overlay. Wael acts as the advisor who reacts to mistakes with a one-line why.",
+    "Prefer familiar icons and short animations over text. Show Wael's explanations as tiny animated demos, keep RTL Arabic copy minimal and jargon-free, and playtest the first 2 minutes with real Tunisian students."
+  ]
+}

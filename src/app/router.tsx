@@ -80,6 +80,7 @@ import MobileSubject from "@/features/mobilegame/onboarding/SubjectScreen"
 import MobileQuiz from "@/features/mobilegame/onboarding/QuizScreen"
 import MobileResult from "@/features/mobilegame/onboarding/ResultScreen"
 import MobileRegister from "@/features/mobilegame/RegisterScreen"
+import { WorldStage as MobileWorld } from "@/features/mobilegame/onboarding/world"
 import WebGameLayout from "@/features/webgame/WebGameLayout"
 import WebGameLanding from "@/features/webgame/LandingPage"
 import WebGameLogin from "@/features/webgame/LoginPage"
@@ -247,13 +248,19 @@ export const router = createBrowserRouter([
     element: <MobileGameLayout />,
     children: [
       { index: true, element: <MobileSplash /> },
-      /* first launch: welcome → level → matière → 3 questions → result → account */
-      { path: "bienvenue", element: <MobileWelcome /> },
-      { path: "niveau", element: <MobileLevel /> },
-      { path: "matiere", element: <MobileSubject /> },
-      { path: "defi", element: <MobileQuiz /> },
-      { path: "resultat", element: <MobileResult /> },
-      { path: "inscription", element: <MobileRegister /> },
+      /* first launch: welcome → level → matière → 3 questions → result → account —
+         one world (the town, وائل, the quest path) mounted once around every step */
+      {
+        element: <MobileWorld />,
+        children: [
+          { path: "bienvenue", element: <MobileWelcome /> },
+          { path: "niveau", element: <MobileLevel /> },
+          { path: "matiere", element: <MobileSubject /> },
+          { path: "defi", element: <MobileQuiz /> },
+          { path: "resultat", element: <MobileResult /> },
+          { path: "inscription", element: <MobileRegister /> },
+        ],
+      },
       { path: "connexion", element: <MobileLogin /> },
       { path: "accueil", element: <MobileTown /> },
       { path: "*", element: <MobileSoon /> },

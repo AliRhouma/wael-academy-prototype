@@ -1,0 +1,26 @@
+{
+  "id": "4Bv45aPMGyI",
+  "url": "https://www.youtube.com/watch?v=4Bv45aPMGyI",
+  "title": "The Power of Video Game HUDs",
+  "channel": "Game Maker's Toolkit",
+  "duration_s": 989,
+  "upload_date": "20210429",
+  "topic": "Game feel & game UI",
+  "summary": "Mark Brown splits the HUD into gauges (surfacing hidden state) and previews (showing the result of an action before you commit), then argues for showing less: manage cognitive load with visual hierarchy and 'three reads', reveal elements only when relevant, and move information into the world (diegetic UI) or onto the objects themselves. He shows that the precision of UI changes how players think, and that mechanics which cannot be shown clearly should be simplified.",
+  "insights": [
+    {"time": "02:31", "t": 153, "insight": "Gauges surface hidden state so the player can plan instead of guessing. Slay the Spire players acted randomly until each enemy displayed an icon of its next move above its head.", "visual": "Slay the Spire tutorial: an enemy with a sword-and-'10' intent icon floating above it, information placed on the character rather than in a side panel.", "frame": "frames/4Bv45aPMGyI/t0153.jpg"},
+    {"time": "04:05", "t": 245, "insight": "Previews show what will happen before you commit. Shovel Knight's pose change did not explain the dash-slash; a small reticle on the target object, appearing only when in range, made it instantly understandable.", "quote": "The reticule was the most important change we made", "visual": "Specter Knight next to a lantern with a targeting reticle on it, showing exactly where the dash will take him.", "frame": "frames/4Bv45aPMGyI/t0245.jpg"},
+    {"time": "07:22", "t": 442, "insight": "Rank information into three reads: first the main play elements, second the critical rules, third the small details. Use weight, colour, scale and motion so the first read dominates, and let items move between reads as the situation changes.", "visual": "Spell Tower diagram: the letter grid is the first read, highlighted danger columns and blue bonus letters the second, small rule markers the third.", "frame": "frames/4Bv45aPMGyI/t0442.jpg"},
+    {"time": "08:55", "t": 540, "insight": "Hiding UI for immersion must never cost readability; and UI does not have to look like boring 2D assets. Persona 5 turns every menu and transition into stylised, animated graphic art that feels part of the game's world.", "visual": "Persona 5 transition: a tarot-card character card wrapped in jagged white chains over a dark scene, a menu as spectacle rather than a form.", "frame": "frames/4Bv45aPMGyI/t0540.jpg"},
+    {"time": "09:50", "t": 590, "insight": "Diegetic UI puts the information physically in the world: Dead Space shows health as a glowing spine on Isaac's suit and ammo on the gun itself, removing the overlay entirely while keeping the data readable.", "visual": "Dead Space close-ups highlighting the health bar built into the suit's spine and the ammo count projected from the weapon.", "frame": "frames/4Bv45aPMGyI/t0590.jpg"},
+    {"time": "10:00", "t": 600, "insight": "Even a conventional HUD gains presence when it is framed as belonging to the character: Metroid Prime draws it on Samus's visor, which jiggles and fogs, so the UI connects you to the avatar instead of floating above the game.", "visual": "Metroid Prime's curved visor HUD with energy and missile readouts sitting on the inside of the helmet.", "frame": "frames/4Bv45aPMGyI/t0600.jpg"},
+    {"time": "10:53", "t": 653, "insight": "Going further, the object itself can be the gauge: Wreckfest's car visibly crumples, Mario's size is his health. No bar is needed when the world shows the state.", "visual": "A battered demolition-derby car whose dents and missing panels communicate damage directly.", "frame": "frames/4Bv45aPMGyI/t0653.jpg"},
+    {"time": "12:17", "t": 737, "insight": "UI precision changes behaviour. Reigns showed exact stat numbers and players optimised numbers while skipping the story; switching to vague bars brought them back to reading and choosing emotionally.", "visual": "Reigns: a character card with the story prompt and only small, imprecise stat icons at the top.", "frame": "frames/4Bv45aPMGyI/t0737.jpg"}
+  ],
+  "apply_to_wael": [
+    "Take the onboarding progress out of the app-style progress bar and put it in the world: e.g. three lanterns, flags or path stones in the town that light up as the level, subject and questions are done (diegetic gauge), or show progress on Wael himself.",
+    "Apply the three reads to each onboarding screen: first read = the choice objects and Wael; second read = the one instruction line; third read = back/skip. Strip everything else so the landscape phone screen never feels like a form.",
+    "Use previews on choices: when the player hovers or presses a subject or level, show what it leads to (the matching building in the town glows, Wael points at it) before they commit.",
+    "Keep stats vague and emotional during onboarding (stars, a glowing badge, Wael's reaction) rather than exact percentages, so first-time players stay in the story instead of reading numbers."
+  ]
+}

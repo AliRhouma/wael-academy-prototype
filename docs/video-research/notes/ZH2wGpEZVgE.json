@@ -1,0 +1,64 @@
+{
+  "id": "ZH2wGpEZVgE",
+  "url": "https://www.youtube.com/watch?v=ZH2wGpEZVgE",
+  "title": "Design Club - Super Mario Bros: Level 1-1 - How Super Mario Mastered Level Design",
+  "channel": "Extra History",
+  "duration_s": 343,
+  "upload_date": "20140605",
+  "topic": "Simplicity & immersion",
+  "summary": "A shot-by-shot breakdown of the first 30 seconds of Super Mario Bros. 1-1, showing how the screen layout, motion and placement of each object teach the player every core rule (go right, jump, power-ups, variable jump height) without a single line of text. Each lesson is a safe, cheap-to-fail situation that the player cannot get past without learning the skill, and secrets reward both experts and players who make mistakes.",
+  "insights": [
+    {
+      "time": "00:45", "t": 45,
+      "insight": "The first screen is calm and empty: nothing moves, nothing threatens. That quiet gives the player time to poke at the controls before anything is asked of them. A first screen should be a safe sandbox, not a demand.",
+      "quote": "Nothing is moving, nothing is apparently threatening.",
+      "visual": "The opening frame of 1-1: Mario small at the far left, a wide band of empty blue sky and ground ahead of him.",
+      "frame": "frames/ZH2wGpEZVgE/t0045.jpg"
+    },
+    {
+      "time": "01:23", "t": 83,
+      "insight": "Placing Mario off-centre with open space in front tells you the goal (go right) through composition alone, work other games spend whole cutscenes on. Direction and purpose should be readable from the layout before any word is read.",
+      "quote": "The player never feels lost in purpose",
+      "visual": "Close-up of Mario at the left edge with the word MOVE overlaid and the empty path stretching right.",
+      "frame": "frames/ZH2wGpEZVgE/t0083.jpg"
+    },
+    {
+      "time": "01:39", "t": 99,
+      "insight": "Meaning is carried by look and motion: the flashing question block invites, the Goomba's angry brows and the fact it walks toward you say 'danger'. Use shape, colour and movement as the instruction, so the player infers rules instead of reading them.",
+      "quote": "the sprite itself has some distinctly angry eyebrows",
+      "visual": "Zoom on the flashing ? block above and the first Goomba with its frowning face on the ground.",
+      "frame": "frames/ZH2wGpEZVgE/t0099.jpg"
+    },
+    {
+      "time": "02:13", "t": 134,
+      "insight": "The first enemy is a gate: you cannot pass without discovering jump, but dying costs almost nothing because you restart a few steps back. Short retry loops make experimentation feel safe, which is what lets people learn by doing.",
+      "quote": "Short iteration cycles are your friend.",
+      "visual": "Mario facing the first Goomba under the row of ? blocks, the gate that forces the first jump.",
+      "frame": "frames/ZH2wGpEZVgE/t0134.jpg"
+    },
+    {
+      "time": "02:52", "t": 172,
+      "insight": "The mushroom's path is engineered so the player almost cannot miss it: it bounces off the pipe back toward Mario, and even trying to jump over it knocks you into it. Guide the player toward the right outcome while leaving them feeling fully in control.",
+      "visual": "The mushroom sliding toward the green pipe, with an on-screen arrow showing it will rebound back toward Mario.",
+      "frame": "frames/ZH2wGpEZVgE/t0172.jpg"
+    },
+    {
+      "time": "03:31", "t": 211,
+      "insight": "Pipes of rising height introduce one new nuance at a time (hold longer to jump higher) and double as a safe rehearsal of the pit jumps that come later. Teach a skill in a low-stakes version before you test it for real.",
+      "visual": "Mario jumping between two pipes of increasing height, with a Goomba walking below.",
+      "frame": "frames/ZH2wGpEZVgE/t0211.jpg"
+    },
+    {
+      "time": "04:27", "t": 267,
+      "insight": "A hidden block sits exactly where a mistimed jump into the first pit would land, turning a likely failure into a surprise reward. Design the 'mistake' path so it delights instead of punishes.",
+      "visual": "Mario jumping early toward the first pit, the spot where the invisible block catches him.",
+      "frame": "frames/ZH2wGpEZVgE/t0267.jpg"
+    }
+  ],
+  "apply_to_wael": [
+    "Make the welcome screen a calm sandbox: Wael and the floating town idle, one obvious glowing target (e.g. a lit door or path in the town) and empty space pointing toward it, so students know where to go without reading an instruction.",
+    "Replace 'pick level / pick subject' forms with world objects the student taps (buildings or doors in the town, each with a subject badge); motion and glow on the next target do the explaining.",
+    "Make the first of the 3 questions a gate that teaches the interaction itself (one tap on an obvious answer, instant feedback, zero penalty for a wrong tap), then add one new nuance per question like the rising pipes.",
+    "Turn wrong answers into a soft catch: Wael reacts, shows the right answer and the student continues; never a red 'fail' screen during the first game."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "zFv6KAdQ5SE",
+  "url": "https://www.youtube.com/watch?v=zFv6KAdQ5SE",
+  "title": "What Capcom Didn't Tell You About Resident Evil 4",
+  "channel": "Game Maker's Toolkit",
+  "duration_s": 359,
+  "upload_date": "20150602",
+  "topic": "Simplicity & immersion",
+  "summary": "Mark Brown shows how Resident Evil 4 silently adjusts its difficulty to the player's performance, keeping them in the flow channel between boredom and anxiety without ever asking them to pick a difficulty. He contrasts it with games that offer visible help (Super Guide, the MGS5 chicken hat) and argues that invisible adjustment avoids making players feel patronised, citing Left 4 Dead's stress-based pacing and flOw's player-chosen depth as other ways to match challenge to skill.",
+  "insights": [
+    {
+      "time": "00:32", "t": 32,
+      "insight": "The game constantly reads how well you are doing (hits taken, accuracy, deaths) and slides an internal difficulty level up or down. Matching challenge to skill can be a continuous background process instead of a menu choice at the start.",
+      "visual": "Gameplay overlaid with an on-screen gauge running from Easy through Normal to Professional, showing the hidden difficulty level moving.",
+      "frame": "frames/zFv6KAdQ5SE/t0032.jpg"
+    },
+    {
+      "time": "01:02", "t": 62,
+      "insight": "After a few deaths in a hard room, two snipers simply stop spawning, so the same room becomes beatable. When a player is stuck, quietly remove a source of pressure rather than showing a failure screen.",
+      "quote": "suddenly the snipers are gone",
+      "visual": "The water room with arrows marking the two crossbow snipers on the balcony, the enemies that vanish after repeated deaths.",
+      "frame": "frames/zFv6KAdQ5SE/t0062.jpg"
+    },
+    {
+      "time": "01:30", "t": 90,
+      "insight": "Flow is the channel where difficulty rises with skill: too easy and people get bored, too hard and they get anxious. Asking a novice to choose a difficulty up front risks dropping them outside the channel immediately.",
+      "visual": "The classic flow diagram: game difficulty on the vertical axis, player skill on the horizontal, a diagonal FLOW band with a line staying inside it.",
+      "frame": "frames/zFv6KAdQ5SE/t0090.jpg"
+    },
+    {
+      "time": "02:45", "t": 165,
+      "insight": "Explicit help such as a Super Guide that offers to finish the level for you works, but many players refuse it out of pride. Offering help visibly can feel like an admission of failure.",
+      "visual": "Donkey Kong Country Returns with the SUPER GUIDE banner: a ghost Kong playing the level for the stuck player.",
+      "frame": "frames/zFv6KAdQ5SE/t0165.jpg"
+    },
+    {
+      "time": "03:03", "t": 183,
+      "insight": "Worse, some games mock you for taking the easier route (a goofy chicken hat). Help that labels or embarrasses the player breaks immersion and motivation; subtle help keeps both.",
+      "quote": "without making them feel patronised",
+      "visual": "A Metal Gear Solid V presentation where the host holds up the chicken hat given to players who die too often.",
+      "frame": "frames/zFv6KAdQ5SE/t0183.jpg"
+    },
+    {
+      "time": "04:22", "t": 262,
+      "insight": "Left 4 Dead tracks each player's stress and throttles enemies back when it gets too high so the team gets a breather. Pace intensity with rests, driven by how the player is actually doing.",
+      "visual": "Left 4 Dead gameplay after a fight, a 'You saved Francis' notice on screen, illustrating the stress-driven pacing system.",
+      "frame": "frames/zFv6KAdQ5SE/t0262.jpg"
+    },
+    {
+      "time": "04:44", "t": 284,
+      "insight": "flOw lets players set their own depth: eat a red creature to dive into harder waters, a blue one to retreat. Letting the player steer difficulty through a diegetic action inside the world feels like play, not like a settings screen.",
+      "visual": "The title screen of flOw: a glowing creature tracing the word flow in a deep blue ocean.",
+      "frame": "frames/zFv6KAdQ5SE/t0284.jpg"
+    }
+  ],
+  "apply_to_wael": [
+    "Drop or hide the explicit 'pick level' difficulty choice where possible: start the 3-question game easy and let question 2 and 3 adapt silently (harder after a correct answer, gentler after a wrong one) so every student finishes feeling capable.",
+    "Never show a 'you failed' state in the first game; if a student misses, Wael quietly offers a hint or removes one wrong option, without labelling it 'easy mode'.",
+    "In the town, let students choose challenge through the world (a calm practice garden vs a 'challenge tower') rather than a difficulty setting in a menu.",
+    "Pace the onboarding with breathers: after the result screen celebrate before asking for account creation, so effort and reward alternate instead of stacking demands."
+  ]
+}

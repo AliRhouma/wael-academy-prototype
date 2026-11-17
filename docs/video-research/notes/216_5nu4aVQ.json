@@ -1,0 +1,25 @@
+{
+  "id": "216_5nu4aVQ",
+  "url": "https://www.youtube.com/watch?v=216_5nu4aVQ",
+  "title": "Secrets of Game Feel and Juice",
+  "channel": "Game Maker's Toolkit",
+  "duration_s": 319,
+  "upload_date": "20150217",
+  "topic": "Game feel & game UI",
+  "summary": "Mark Brown contrasts a limp mobile platformer with games that 'pop and crackle', and argues game feel lives in the core second-to-second action: it should be fun even in an empty room. He then lists polish tricks borrowed from Vlambeer, Cactus and grapefrukt (screen shake, hit-stop, flashes, big sounds, rising pitch, smart camera, exaggerated scale, permanence) and closes with the rule that juice must amplify whatever the game is actually about.",
+  "insights": [
+    {"time": "00:19", "t": 19, "insight": "A game can be complete and functional yet feel 'limp and lifeless': flat feedback, tiny effects, generic on-screen buttons. Players detect this within seconds of touching the controls, before any content matters.", "quote": "the video game equivalent of a cabbage", "visual": "Random Heroes on iPhone: a small hero, muted palette, generic arrow and A/B touch buttons and a pause icon, nothing reacting to input.", "frame": "frames/216_5nu4aVQ/t0019.jpg"},
+    {"time": "00:33", "t": 33, "insight": "The same genre feels alive when every action produces energetic, oversized feedback: explosions, flashes, rings, numbers. Liveliness, not genre or content, separates a game from a flat screen.", "visual": "Super Time Force mid-action: a big yellow explosion, a timer ring and score HUD; the screen is crackling with feedback for one shot.", "frame": "frames/216_5nu4aVQ/t0033.jpg"},
+    {"time": "02:50", "t": 170, "insight": "Screen shake and impact effects give instant proof that the player has touched the world. Hits should flash, knock back, spray and pop numbers so the result of an action is unmistakable.", "visual": "Downwell-style hit: red impact bursts and '$9' reward numbers popping out where the enemy was hit, with the money total updating in the corner.", "frame": "frames/216_5nu4aVQ/t0170.jpg"},
+    {"time": "03:02", "t": 182, "insight": "Hit-stop: freezing the action for a split second at the moment of impact makes a hit feel heavy and readable. A tiny pause at the important moment is itself feedback.", "visual": "Street Fighter II, Ryu landing a kick on Dhalsim; the action judders on contact, a classic freeze-frame impact.", "frame": "frames/216_5nu4aVQ/t0182.jpg"},
+    {"time": "03:47", "t": 227, "insight": "Vary sounds to avoid repetition, and raise the pitch with each consecutive success (Mario, Peggle) so a streak audibly builds tension and joy.", "visual": "Peggle mid-combo: a chain of hits with '28 pegs' and '+50,000 style points' popping, the moment the rising-pitch notes climb.", "frame": "frames/216_5nu4aVQ/t0227.jpg"},
+    {"time": "04:26", "t": 266, "insight": "Permanence: leaving the traces of what the player did on screen (bodies, splatter) gives a short-term memory of their achievement and makes the win feel earned, instead of wiping the slate clean.", "visual": "Hotline Miami after a fight: the aftermath stays on the floor while 'YOU GOT 10680pts' and 'GO TO CAR!' appear over the level.", "frame": "frames/216_5nu4aVQ/t0266.jpg"},
+    {"time": "04:47", "t": 287, "insight": "Juice must double down on the game's core verb: a shooter gets kick and shudder, a precision platformer gets a still camera and friction. Effects that fight the core action hurt it.", "visual": "A precision platformer with buzz-saws, where the camera stays steady so every jump can be landed.", "frame": "frames/216_5nu4aVQ/t0287.jpg"}
+  ],
+  "apply_to_wael": [
+    "Identify Wael Academy's core verb (answering / choosing) and make it juicy in the empty-room test: tapping an answer must feel good with no score, story or map around it, through press squash, a tiny hit-stop on the correct answer, a burst and a sound on the same frame.",
+    "Use a rising pitch for consecutive correct answers in the 3-question game (note 1, 2, 3 climbing), so the streak builds audibly toward the result screen.",
+    "Add permanence across the onboarding: the level and subject picked, and the stars earned, should stay visible in the world (a badge on Wael, a lit building or flag in the town) rather than vanishing when the next screen loads; the result screen should show the traces of the 3 answers.",
+    "Keep juice proportional: celebration effects belong to correct answers and the result; selection screens (level, subject) get lighter feedback so the big moments still stand out."
+  ]
+}

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { sfx } from "@/features/student-v2/sound"
 import { useAuth } from "@/stores/useAuth"
 import { matiereKey } from "@/data/matiere"
-import { SubjectIcon } from "@/components/icons/subjects"
+import { Subject3D } from "./art3d"
 import { useGamePlatform } from "../MobileGameLayout"
 import { usePlatformUi } from "../platformUi"
 import { FlowScreen, GameBurst, GameSheet, STEPS, WaelAside, useGameShake, usePlatformCorners } from "./parts"
@@ -72,7 +72,7 @@ export default function ResultScreen() {
   function playAgain() {
     if (user) {
       replay()
-      navigate("/mobilegame/defi")
+      navigate("/mobilegame/defi", { viewTransition: true })
     } else setGate(true)
   }
 
@@ -89,7 +89,7 @@ export default function ResultScreen() {
       backLabel="رجوع للأسئلة"
       end={
         !user && (
-          <Link to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.link, "text-[calc(8px*var(--ts))]")}>
+          <Link viewTransition to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.link, "text-[calc(8px*var(--ts))] text-v2-cta!")}>
             عندي كونط
           </Link>
         )
@@ -98,7 +98,7 @@ export default function ResultScreen() {
       overlay={
         <GameSheet open={gate} onClose={() => setGate(false)} title="اعمل كونط باش تعاود تلعب">
           <div className="flex items-center gap-4 pt-1">
-            <SubjectIcon name={subject ?? ""} className="size-16 shrink-0" />
+            <Subject3D name={subject ?? ""} className="size-16 shrink-0" />
             <div className="min-w-0">
               <h2 className="text-[calc(11px*var(--ts))] font-extrabold leading-tight text-v2-ink">باش تعاود تلعب، اعمل كونط</h2>
               <p className="mt-1 text-[calc(8px*var(--ts))] leading-snug text-v2-ink-2">
@@ -112,10 +112,10 @@ export default function ResultScreen() {
                 مبعد
               </button>
             )}
-            <Link to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.secondary, "text-[calc(9px*var(--ts))]")}>
+            <Link viewTransition to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.secondary, "text-[calc(9px*var(--ts))]")}>
               عندي كونط
             </Link>
-            <Link to="/mobilegame/inscription" data-uisfx="forward" className={cn(ui.cta, "text-[calc(9.5px*var(--ts))]", ios && "flex-1")}>
+            <Link viewTransition to="/mobilegame/inscription" data-uisfx="forward" className={cn(ui.cta, "text-[calc(9.5px*var(--ts))]", ios && "flex-1")}>
               اعمل كونط
             </Link>
           </div>
@@ -124,7 +124,7 @@ export default function ResultScreen() {
     >
       <div className="flex min-h-0 flex-1 flex-col gap-2 ps-2">
         {/* the score — flat card, one big number */}
-        <section className={cn("relative flex flex-1 items-center gap-4 overflow-hidden border-2 border-v2-ink/10 bg-v2-surface px-4 py-2", panel)}>
+        <section className={cn("relative flex flex-1 items-center gap-4 overflow-hidden border-2 border-v2-ink/25 bg-[#fbf3e4] px-4 py-2 shadow-[0_5px_0_rgb(23_46_91/.45)] motion-safe:animate-[game-pop_380ms_cubic-bezier(.34,1.56,.64,1)_both]", panel)}>
           <div className="relative grid shrink-0 place-items-center">
             <p className="text-[calc(7.5px*var(--ts))] font-bold text-v2-ink-2">نتيجتك</p>
             <bdi dir="ltr" className="text-[calc(30px*var(--ts))] font-black leading-none tabular-nums text-v2-ink">
@@ -160,7 +160,7 @@ export default function ResultScreen() {
             </p>
           </div>
           {/* the matière's badge — the thing the account keeps */}
-          <SubjectIcon name={subject ?? ""} className="mt-5 size-20 shrink-0" />
+          <Subject3D name={subject ?? ""} className="mt-5 size-24 shrink-0" />
           <span
             className="absolute end-3 top-3 rounded-[10px] border-2 border-[#f28b14] px-2 py-0.5 text-[calc(7.5px*var(--ts))] font-extrabold text-[#b9680b] motion-safe:animate-[game-stamp_420ms_cubic-bezier(.34,1.56,.64,1)_both] [transform:rotate(-6deg)]"
             // #f28b14 / #b9680b = --v2-done and --v2-edge-done (the play stamp), literal outside the play scope
@@ -173,11 +173,11 @@ export default function ResultScreen() {
         <ol className={cn("flex shrink-0 items-center gap-2", shake)} aria-label="الجولات">
           {[1, 2, 3].map((n) =>
             n <= round ? (
-              <li key={n} className={cn("flex h-11 flex-1 items-center justify-center gap-1.5 border-2 border-[#5bcd3f] bg-v2-cta/25 text-[calc(7.5px*var(--ts))] font-extrabold text-v2-ink", card)}>
+              <li key={n} className={cn("flex h-11 flex-1 items-center justify-center gap-1.5 border-2 border-[#5bcd3f] bg-v2-cta text-[calc(7.5px*var(--ts))] font-extrabold text-v2-on-cta", card)}>
                 <Check className="size-4" strokeWidth={3} /> الجولة <bdi dir="ltr">{n}</bdi>
               </li>
             ) : user ? (
-              <li key={n} className={cn("flex h-11 flex-1 items-center justify-center gap-1.5 border-2 border-v2-ink/15 bg-v2-surface text-[calc(7.5px*var(--ts))] font-bold text-v2-ink", card)}>
+              <li key={n} className={cn("flex h-11 flex-1 items-center justify-center gap-1.5 border-2 border-white/20 bg-white/10 text-[calc(7.5px*var(--ts))] font-bold text-white", card)}>
                 الجولة <bdi dir="ltr">{n}</bdi>
               </li>
             ) : (
@@ -186,7 +186,7 @@ export default function ResultScreen() {
                   type="button"
                   onClick={locked}
                   aria-label={`الجولة ${n} — مسكّرة، تتحلّ بالكونط`}
-                  className={cn("flex h-11 w-full items-center justify-center gap-1.5 border-2 border-dashed border-v2-ink/30 text-[calc(7.5px*var(--ts))] font-bold text-v2-ink-2", card)}
+                  className={cn("flex h-11 w-full items-center justify-center gap-1.5 border-2 border-dashed border-white/35 bg-white/5 text-[calc(7.5px*var(--ts))] font-bold text-white/75", card)}
                 >
                   <Lock className="size-3.5" strokeWidth={2.4} /> الجولة <bdi dir="ltr">{n}</bdi> · بالكونط
                 </button>
@@ -197,11 +197,11 @@ export default function ResultScreen() {
 
         <div className="flex shrink-0 items-center gap-2.5">
           {user ? (
-            <Link to="/mobilegame/accueil" data-uisfx="open" className={cn(ui.cta, "flex-1 text-[calc(9.5px*var(--ts))]")}>
+            <Link viewTransition to="/mobilegame/accueil" data-uisfx="open" className={cn(ui.cta, "flex-1 text-[calc(9.5px*var(--ts))]")}>
               ادخل لمدينتك
             </Link>
           ) : (
-            <Link to="/mobilegame/inscription" data-uisfx="forward" className={cn(ui.cta, "flex-1 text-[calc(9.5px*var(--ts))]")}>
+            <Link viewTransition to="/mobilegame/inscription" data-uisfx="forward" className={cn(ui.cta, "flex-1 text-[calc(9.5px*var(--ts))]")}>
               احفظ نتيجتك
             </Link>
           )}

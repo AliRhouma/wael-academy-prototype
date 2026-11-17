@@ -1,0 +1,25 @@
+{
+  "id": "-auyB19Mc6U",
+  "url": "https://www.youtube.com/watch?v=-auyB19Mc6U",
+  "title": "Diegetic UI - Realistic, or Distracting? - Extra Credits",
+  "channel": "Extra Credits",
+  "duration_s": 474,
+  "upload_date": "20190814",
+  "topic": "Game feel & game UI",
+  "summary": "Extra Credits defines the four kinds of game UI (non-diegetic, diegetic, spatial, meta) with a simple two-question chart, then looks back at the 2000s push to hide UI inside the world. The verdict: in-world UI is great when it stays as convenient and legible as a flat HUD, but cumbersome diegetic tricks draw attention to themselves and break the very immersion they were meant to create.",
+  "insights": [
+    {"time": "02:02", "t": 122, "insight": "Classify every UI element with two questions: does it exist in the fiction, and does it sit in the 3D space? That yields non-diegetic (flat overlay), diegetic (in the world, characters see it), spatial (in the 3D space, only the player sees it) and meta (in the fiction, but on the screen).", "visual": "The Fagerholt and Lorentzon two-by-two chart with the four colour-coded quadrants NON-DIEGETIC, SPATIAL, META, DIEGETIC.", "frame": "frames/-auyB19Mc6U/t0122.jpg"},
+    {"time": "02:11", "t": 131, "insight": "The same information can be diegetic or not: Halo 3 mounts the ammo readout on the gun, while a conventional HUD prints the number flat at the screen edge.", "visual": "A Master Chief doodle holding a rifle, with a flat '30' ammo counter floating at the bottom of the screen as the non-diegetic contrast.", "frame": "frames/-auyB19Mc6U/t0131.jpg"},
+    {"time": "02:36", "t": 156, "insight": "Spatial UI (glowing arrows, an exclamation mark over a point of interest, a prompt next to the wall you can hide behind) is valuable because it delivers information in context, where the player is already looking, instead of a centred popup.", "visual": "A character beside a treasure chest with a big yellow exclamation mark floating over it, a world-anchored marker only the player can see.", "frame": "frames/-auyB19Mc6U/t0156.jpg"},
+    {"time": "03:36", "t": 216, "insight": "Meta UI lives on the screen but belongs to the fiction, like blood splatter on the camera when hit: feedback felt as part of the experience rather than read from a bar.", "visual": "Red splatter covering a mock game title screen, the classic damage-feedback overlay.", "frame": "frames/-auyB19Mc6U/t0216.jpg"},
+    {"time": "04:14", "t": 254, "insight": "Long in-world animations used as UI (opening a jacket to browse the inventory) are clever once and tiresome forever. Legible first, stylised second: in-world UI must never be slower or less convenient than the flat version.", "quote": "good UI should be legible first and stylized second", "visual": "The Alone in the Dark jacket gag: a character opening his coat lined with items like a street seller, the cumbersome diegetic inventory.", "frame": "frames/-auyB19Mc6U/t0254.jpg"},
+    {"time": "05:27", "t": 327, "insight": "Diegetic UI works when it is as visible as a HUD would be: Dead Space's spine health bar succeeds because the over-the-shoulder camera always keeps it on screen (its 3D map, by contrast, was so awkward players abandoned it).", "visual": "Isaac from behind with arrows pointing to the glowing health bar on his back and an ammo count floating from the gun.", "frame": "frames/-auyB19Mc6U/t0327.jpg"},
+    {"time": "06:50", "t": 410, "insight": "Irony of immersion: badly done in-world UI draws attention to itself and breaks immersion, while simple, concise UI is absorbed almost subconsciously and keeps focus on the play.", "visual": "The presenter swamped by panels, quest boxes, menus and prompts, illustrating how competing UI elements pull attention away from the game.", "frame": "frames/-auyB19Mc6U/t0410.jpg"}
+  ],
+  "apply_to_wael": [
+    "Classify every element of the onboarding with the four-quadrant chart: Wael and choice objects as diegetic (signposts, doors, books or buildings in the 3D town), the 'tap here' hints as spatial markers floating over those objects, the correct/wrong flash as meta feedback, and keep only a tiny non-diegetic layer (back, sound, skip).",
+    "Present level and subject choices as world objects (e.g. signposts or doors the camera flies past) but keep them as fast and legible as a button: one tap selects, labels stay large and readable in Arabic, no multi-step animation before the choice can be made.",
+    "Put hints in context: instead of an instruction banner at the top, Wael points or a small spatial arrow appears next to the object to tap, which suits a landscape phone where the eye is on the scene.",
+    "Avoid diegetic gimmicks that slow repeat use: the cinematic transitions should be skippable or shorten after the first run, so the in-world flow never becomes the 'jacket inventory' of the app."
+  ]
+}

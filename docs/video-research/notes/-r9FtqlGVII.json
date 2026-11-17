@@ -1,0 +1,74 @@
+{
+  "id": "-r9FtqlGVII",
+  "url": "https://www.youtube.com/watch?v=-r9FtqlGVII",
+  "title": "The Worlds Best Mobile App Onboarding (Duolingo)",
+  "channel": "Herman Made It",
+  "duration_s": 946,
+  "upload_date": "20251122",
+  "topic": "Onboarding & first minutes",
+  "summary": "An indie app developer lays out every screen of Duolingo's onboarding side by side on a board and explains why each one is there. The order is the lesson: the mascot comes first, then a few quick personal questions, a 'building your course' beat, a daily-goal commitment, and permission asks tied to value. A real first lesson and a streak come next, and only after that 'don't lose your progress' sign-up (split into one field per screen) and the paywall.",
+  "insights": [
+    {
+      "time": "02:33",
+      "t": 153,
+      "insight": "Right after the splash, Duo introduces himself ('Hi there! I'm Duo!') and sets expectations: 'just 7 quick questions before we start your first lesson'. Naming a short, finite number of steps and promising the lesson as the payoff makes the setup feel light.",
+      "quote": "They introduce you to Duo, which is this little bird",
+      "visual": "A row of phone screens: splash, Duo waving with 'Hi there! I'm Duo!', Duo again with the '7 quick questions' bubble, the language picker list, and a 'course building' screen. The mascot is the hero of every screen.",
+      "frame": "frames/-r9FtqlGVII/t0153.jpg"
+    },
+    {
+      "time": "03:22",
+      "t": 202,
+      "insight": "Personalisation comes before any account or payment. Each tap (language, how you heard of us, current level) is a small investment that commits the user. A brief 'course building' animation after the choice makes the app feel like it is crafting something just for them, even if the work is instant.",
+      "quote": "add personalization before you ask about account creation",
+      "visual": "The language list with Korean selected, then a Duo-reading-a-book 'course building' screen with social proof ('3 million people learning Korean'), then the source and level questions. Each screen has a single green Continue button.",
+      "frame": "frames/-r9FtqlGVII/t0202.jpg"
+    },
+    {
+      "time": "05:49",
+      "t": 349,
+      "insight": "The learner picks a daily goal and confirms with an 'I'm committed' button. This builds an identity ('I'm someone learning this') before they have paid or signed up. The next screen turns the choice into a concrete payoff ('that's N words in your first week').",
+      "quote": "we're already saying that we're committing to a specific number of minutes per day",
+      "visual": "Screens for 'Best thing to pack is the local language', 'Let's set up a learning routine', the daily-goal list (3/10/15/20 min) with an 'I'M COMMITTED' button, and a 'That's 25 words in your first week' confirmation, each voiced by Duo.",
+      "frame": "frames/-r9FtqlGVII/t0349.jpg"
+    },
+    {
+      "time": "06:49",
+      "t": 409,
+      "insight": "Permission requests (notifications, home-screen widget) are never cold. Duo first states the benefit ('I'll remind you to practice so it becomes a habit'), and only then does the system dialog appear. The button label says what the user gets ('Remind me to practice').",
+      "quote": "Don't ask for notifications as soon as they hop in",
+      "visual": "Duo's 'I'll remind you to practice' screen, the dimmed screen with the real OS dialog, and the 'I'll cheer you on from your home screen' widget preview with an 'Add widget' button.",
+      "frame": "frames/-r9FtqlGVII/t0409.jpg"
+    },
+    {
+      "time": "08:49",
+      "t": 529,
+      "insight": "The user gets a real first lesson before any account or payment: tap the sound, choose the matching character, get an instant 'Excellent!' banner. The product itself is the best pitch, and the first win lands within minutes of install.",
+      "quote": "We haven't created an account, but we're already in our first Korean lesson.",
+      "visual": "The 'Where would you like to start?' choice (start from scratch vs find my level), then lesson screens: 'What sound does this make?' with a big blue character tile, and a 2x2 character grid with an 'Excellent!' feedback bar.",
+      "frame": "frames/-r9FtqlGVII/t0529.jpg"
+    },
+    {
+      "time": "09:29",
+      "t": 569,
+      "insight": "The end of the first lesson is staged as a celebration: an illustrated 'Learning legend!' result with stat chips, then 'A streak is born', with a big flame and '1 day streak'. The first win becomes something the learner now owns and wants to keep.",
+      "quote": "A streak is born, practice every day to help it grow.",
+      "visual": "The celebration screen with characters and three stat chips (XP, accuracy, time), Duo saying 'Nice job!', and the big orange flame with '1 day streak' over a week row of circles and an 'I'm committed' button.",
+      "frame": "frames/-r9FtqlGVII/t0569.jpg"
+    },
+    {
+      "time": "11:42",
+      "t": 702,
+      "insight": "Sign-up is framed as protecting what the user already earned ('Don't lose your progress! Let's create a profile'). The form is split into one field per screen (age, then name, then email, then password) under a progress bar, because one short step feels easier than a long form.",
+      "quote": "Don't put a lot of information in one page, split it up",
+      "visual": "Duo with 'Don't lose your progress! Let's create a profile' and a Create profile button, then single-field screens 'How old are you?' and 'What is your name?' with social sign-in buttons below.",
+      "frame": "frames/-r9FtqlGVII/t0702.jpg"
+    }
+  ],
+  "apply_to_wael": [
+    "After the splash, have Wael greet the student and promise a short, finite path in his bubble (e.g. 'سؤالان صغيران وبعدها نلعبو!'). Keep him on-screen on every step so level, subject and game read as one conversation inside the town, not separate forms.",
+    "After the subject pick, add a 1–2 s 'Wael prépare ton défi' beat (he flips through a book or the town lights up a building) as the transition into the game. It hides the screen change and makes the game feel built for this student.",
+    "Stage the result like Duolingo's: an illustrated celebration with 2–3 stat chips (score, XP, time) and a 'first flame/streak' moment owned by the student. Then ask for the account as 'ما تخسرش تقدّمك' (save your progress and your house in the town), one field per screen with a progress bar and Google sign-in first.",
+    "Ask for notifications later and in Wael's voice, tied to the benefit ('نفكّرك باش تحافظ على السلسلة'). Never use a cold system prompt on first launch."
+  ]
+}

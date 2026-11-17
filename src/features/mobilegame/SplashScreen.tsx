@@ -94,7 +94,7 @@ export default function SplashScreen() {
 
       <div className="relative grid h-full grid-cols-[1fr_1.12fr] items-center gap-4 ps-4 pe-2">
         {/* L6 — the words and the one way in */}
-        <div className="relative z-10">
+        <div className="flow-step relative z-10">
           <GameLogo light className="sp-text h-9 w-[4.2rem]" />
           <span
             className="sp-text mt-4 inline-flex items-center gap-1.5 rounded-full bg-v2-cta px-2.5 py-1 text-[calc(7.1px*var(--ts))] font-extrabold text-v2-on-cta"
@@ -110,20 +110,20 @@ export default function SplashScreen() {
           </p>
           <div className="sp-text mt-5 flex items-center gap-3" style={{ ["--i" as string]: 2 }}>
             {user ? (
-              <Link to="/mobilegame/accueil" data-uisfx="open" className={cn(ui.cta, "text-[calc(10px*var(--ts))]")}>
+              <Link viewTransition to="/mobilegame/accueil" data-uisfx="open" className={cn(ui.cta, "text-[calc(10px*var(--ts))]")}>
                 ادخل لمدينتك
               </Link>
             ) : (
               <>
                 {/* First launch plays before it asks: the game, then the account. */}
-                <Link
+                <Link viewTransition
                   to={finished ? "/mobilegame/resultat" : "/mobilegame/bienvenue"}
                   data-uisfx="open"
                   className={cn(ui.cta, "text-[calc(10px*var(--ts))]")}
                 >
                   {finished ? "شوف نتيجتك" : "يلّا نبداو"}
                 </Link>
-                <Link to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.secondaryDark, "text-[calc(9px*var(--ts))]")}>
+                <Link viewTransition to="/mobilegame/connexion" data-uisfx="forward" className={cn(ui.secondaryDark, "text-[calc(9px*var(--ts))]")}>
                   عندي كونط
                 </Link>
               </>
@@ -134,7 +134,8 @@ export default function SplashScreen() {
         {/* The art: the town floats behind, وائل stands at its inner edge, turned toward the words */}
         <div className="relative h-full">
           {/* L3 — the island, behind and above his shoulder, never behind his face */}
-          <div className={cn("sp-bob absolute end-[-6%] top-[6%] w-[72%]", asleep && "sp-paused")}>
+          {/* view-transition-name world-island: on « يلّا نبداو » the town flies to its place in the flow */}
+          <div className={cn("sp-bob absolute end-[-6%] top-[6%] w-[72%]", asleep && "sp-paused")} style={{ viewTransitionName: "world-island" }}>
             <img
               src={townIsland}
               alt="مدينة وائل: المدرسة، المكتبة، برج الرياضيات والبيت الأخضر"
@@ -150,7 +151,7 @@ export default function SplashScreen() {
             pose={pose}
             poses={["wave", "present"]}
             blink={!asleep}
-            className="sp-wael absolute bottom-[2px] start-[-4%] h-[86%] origin-bottom"
+            className="sp-wael world-wael absolute bottom-[2px] start-[-4%] h-[86%] origin-bottom"
           />
 
           {/* L5 — one flat chip: it isn't tappable, so no lip (A4) */}

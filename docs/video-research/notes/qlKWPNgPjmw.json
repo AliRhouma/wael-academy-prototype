@@ -1,0 +1,50 @@
+{
+  "id": "qlKWPNgPjmw",
+  "url": "https://www.youtube.com/watch?v=qlKWPNgPjmw",
+  "title": "Progressive Disclosure",
+  "channel": "NNgroup",
+  "duration_s": 322,
+  "upload_date": "20220715",
+  "topic": "Simplicity & immersion",
+  "summary": "Nielsen Norman Group explains progressive disclosure: show only the few options most people need now and tuck the rest behind one extra action (a More button, an accordion, a next step). Examples from Word's Replace dialog, a phone checkout, payment branching and a product page show how it keeps people focused, with the caveat that every hidden option costs an extra tap, which only pays off if most people never need it.",
+  "insights": [
+    {
+      "time": "01:18", "t": 78,
+      "insight": "The default view holds just the two fields almost everyone needs; advanced options wait behind a single More button. Start with the minimum that completes the common task and let curiosity, not the screen, open the rest.",
+      "quote": "For most tasks, this dialog will be enough.",
+      "visual": "Word's Find and Replace dialog in its compact form: two fields and a More button at the bottom left.",
+      "frame": "frames/qlKWPNgPjmw/t0078.jpg"
+    },
+    {
+      "time": "01:48", "t": 108,
+      "insight": "Expanded, the same dialog becomes a wall of checkboxes. Showing that to everyone up front would force people to work out what to fill, what to click and what to ignore, which is exactly the overload that makes a screen feel like a form.",
+      "visual": "The same dialog after pressing More, now full of search-option checkboxes and Format/Special buttons.",
+      "frame": "frames/qlKWPNgPjmw/t0108.jpg"
+    },
+    {
+      "time": "02:40", "t": 160,
+      "insight": "In a multi-step flow, only the current step is open and the others stay collapsed, so attention sits on one thing at a time. Long sequences feel short when each moment asks one question.",
+      "quote": "This approach focuses the user on the current step",
+      "visual": "A phone checkout with the Shipping Address step open and the delivery and payment steps greyed and collapsed below.",
+      "frame": "frames/qlKWPNgPjmw/t0160.jpg"
+    },
+    {
+      "time": "03:35", "t": 215,
+      "insight": "Branching flows should hide everything the person's earlier choice made irrelevant: pick Apple Pay and card fields never appear. Each answer should shrink what comes next, not add to it.",
+      "visual": "A payment-method screen with Apple Pay selected, so only an Apple Pay button is shown and no card fields.",
+      "frame": "frames/qlKWPNgPjmw/t0215.jpg"
+    },
+    {
+      "time": "04:05", "t": 245,
+      "insight": "Progressive disclosure applies to content too: a product page leads with images and the essentials, while detailed specs sit in accordions for the few who want them. Reveal depth on demand, and remember each reveal costs a tap, so only hide what most people truly do not need.",
+      "visual": "A clothing product page: photo strip and short info on top, collapsed specification rows, colour variants below.",
+      "frame": "frames/qlKWPNgPjmw/t0245.jpg"
+    }
+  ],
+  "apply_to_wael": [
+    "One decision per screen in the onboarding: level, then subject, each as a single full-screen choice with Wael speaking one line; never show level + subject + account fields together.",
+    "Let each choice shrink the next: once the level is picked, show only the subjects of that level (and pre-highlight the most likely one) instead of the whole catalogue.",
+    "Defer account creation until after the result screen (already the plan) and ask only the 1-2 fields needed to save progress; push everything else (avatar, school, phone) to later, optional moments in the town.",
+    "Keep the town map quiet on first arrival: one lit building and the rest dimmed or 'locked', revealing more of the town as the student plays rather than showing every feature on day one."
+  ]
+}
