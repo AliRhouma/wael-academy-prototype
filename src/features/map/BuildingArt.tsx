@@ -1,39 +1,75 @@
 import type { ReactNode } from "react"
+import { buildingFile, MASTER_TILE_W, TEMPLATES, useAlpha, useArtLibrary } from "./art"
 import { diamond, HALF_W, iso, poly, round, type Footprint } from "./iso"
 import { C, LINE, shade } from "./palette"
 import { Box, Dome, Door, Flag, Gable, LeftFace, Pole, Pyramid, RightFace, Sign, Windows, faceWidth } from "./shapes"
-import type { Building } from "./townLayout"
+import type { Building, BuildingKind } from "./townLayout"
 
 /**
  * The ONE place a building is drawn, keyed by `kind`. Every kind is built from
  * the iso primitives in `shapes.tsx`, in world coordinates, standing on its
  * footprint. Heights grow a little with the level so an upgrade shows.
  *
- * `BuildingVisual` is what the map renders: the code-drawn art, or — when the
- * building carries a `sprite` — that image instead (see `SpriteBuilding`).
+ * `BuildingVisual` is what the map renders: the delivered art when there is a
+ * file for this building at this level (`art.ts`), else the code-drawn art.
  */
 export function BuildingVisual({ b }: { b: Building }) {
-  return b.sprite ? <SpriteBuilding b={b} /> : <BuildingArt b={b} />
+  const sprite = useBuildingSprite(b)
+  return sprite ? <SpriteBuilding b={b} url={sprite.url} /> : <BuildingArt b={b} />
 }
 
-/** A real asset, bottom-anchored on the footprint's bottom corner. */
-export function SpriteBuilding({ b }: { b: Building }) {
-  const left = iso(b.x, b.y + b.h)
-  const right = iso(b.x + b.w, b.y)
-  const bottom = iso(b.x + b.w, b.y + b.h)
-  const width = (right.x - left.x) * (b.spriteScale ?? 1)
-  const height = width * 2 // tall box; the image keeps its own ratio inside it
-  const cx = (left.x + right.x) / 2
+/** Asset names per kind, as the artist names the files (`building_<name>…png`). */
+export const ART_OF_KIND: Record<BuildingKind, string> = {
+  school: "school",
+  library: "library",
+  lab: "lab",
+  mathTower: "math_tower",
+  music: "music",
+  stadium: "stadium",
+  greenhouse: "greenhouse",
+  cafe: "cafe",
+  arena: "arena",
+  house: "house",
+  shop: "shop",
+}
+export const artNameOf = (b: Building) => b.art ?? ART_OF_KIND[b.kind]
+
+/** The delivered file for this building at its level, if any. */
+export function useBuildingSprite(b: Building): { file: string; url: string } | null {
+  const lib = useArtLibrary()
+  const file = buildingFile(lib, artNameOf(b), b.level)
+  return file ? { file, url: lib.get(file)! } : null
+}
+
+/**
+ * Where a building's master canvas goes on the map: the template's anchor
+ * (768, 1728) on the footprint's centre, scaled so the template's tile diamond
+ * (1024 px wide) matches the footprint's diamond — 1/16 for one tile.
+ */
+export function spriteFrame(b: Building) {
+  const t = TEMPLATES.building
+  const k = ((b.w + b.h) * HALF_W) / MASTER_TILE_W
+  const a = iso(b.x + b.w / 2, b.y + b.h / 2)
+  return { k, x: a.x - t.ax! * k, y: a.y - t.ay! * k, w: t.w * k, h: t.h * k, anchorY: a.y }
+}
+
+/** A delivered image on the template's anchor. Its visible area is the hit target. */
+export function SpriteBuilding({ b, url }: { b: Building; url: string }) {
+  const f = spriteFrame(b)
+  const alpha = useAlpha(url)
+  const box = alpha?.box
   return (
-    <image
-      href={b.sprite}
-      x={round(cx - width / 2)}
-      y={round(bottom.y + (b.spriteOffsetY ?? 0) - height)}
-      width={round(width)}
-      height={round(height)}
-      preserveAspectRatio="xMidYMax meet"
-    />
+    <g>
+      <image href={url} x={round(f.x)} y={round(f.y)} width={round(f.w)} height={round(f.h)} preserveAspectRatio="none" pointerEvents="none" />
+      {box && <rect x={round(f.x + box.left * f.k)} y={round(f.y + box.top * f.k)} width={round((box.right - box.left) * f.k)} height={round((box.bottom - box.top) * f.k)} fill="transparent" />}
+    </g>
   )
+}
+
+/** Height (px above the ground) of a delivered image's top, once measured. */
+export function spriteTop(b: Building, top: number) {
+  const f = spriteFrame(b)
+  return f.anchorY - (f.y + top * f.k)
 }
 
 /** Wall height (to the eaves) of a building at its current level. */

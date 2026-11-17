@@ -289,7 +289,7 @@ function Footer() {
       <div className={cn(wContainer, "flex flex-col items-center justify-between gap-4 text-[calc(8.5px*var(--ts))] text-v2-ink-2 sm:flex-row")}>
         <GameLogo className="h-9 w-[4.2rem]" />
         <nav className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-          <Link to="/" className="hover:text-v2-ink">الموقع</Link>
+          <Link to="/site" className="hover:text-v2-ink">الموقع</Link>
           <Link to="/student-v2" className="hover:text-v2-ink">فضاء التلميذ</Link>
           <Link to="/mobilegame" className="hover:text-v2-ink">التطبيق</Link>
           <Link to="/webgame/connexion" className="hover:text-v2-ink">ادخل</Link>

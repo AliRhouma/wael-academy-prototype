@@ -73,7 +73,7 @@ export function AuthFrame({ children }: { children: ReactNode }) {
           {/* Logo first, so RTL puts it on the right and the back link on the
               left — the frame's own arrangement. */}
           <Link
-            to="/"
+            to="/site"
             data-uisfx="back"
             aria-label="Wael Academy — الصفحة الرئيسية"
             className="block h-[3.25rem] w-[5rem] shrink-0 bg-v2-ink transition hover:opacity-80 md:h-[4.25rem] md:w-[6.4rem]"
@@ -89,7 +89,7 @@ export function AuthFrame({ children }: { children: ReactNode }) {
             }}
           />
           <Link
-            to="/"
+            to="/site"
             data-uisfx="back"
             className="group inline-flex items-center gap-2.5 text-[calc(10px*var(--ts))] font-semibold text-v2-ink transition hover:text-v2-brand md:text-[calc(10.5px*var(--ts))]"
           >

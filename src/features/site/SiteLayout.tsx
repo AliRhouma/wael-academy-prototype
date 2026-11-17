@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet"
 import { useToast } from "@/components/kit/Toast"
 import { cn } from "@/lib/utils"
 import lockup from "@/assets/v2/logo-lockup.png"
-import { NAV } from "./content"
+import { NAV, SITE } from "./content"
 import { Facebook, Instagram, TikTok, btnLime, btnOutline, container } from "./parts"
 
 /** Where the site's two calls to action lead in the prototype. */
@@ -56,7 +56,7 @@ export default function SiteLayout() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  // `/#offres` lands ON the section, under the fixed header; a new page
+  // `/site#offres` lands ON the section, under the fixed header; a new page
   // starts at its top.
   useEffect(() => {
     setMenu(false)
@@ -67,7 +67,7 @@ export default function SiteLayout() {
     window.scrollTo({ top: 0 })
   }, [pathname, hash])
 
-  const isActive = (to: string) => (to.startsWith("/#") ? pathname === "/" && hash === to.slice(1) : pathname === to)
+  const isActive = (to: string) => (to.includes("#") ? pathname === SITE && hash === to.slice(to.indexOf("#")) : pathname === to)
 
   return (
     <div className="min-h-dvh bg-white text-v2-ink">
@@ -78,7 +78,7 @@ export default function SiteLayout() {
         )}
       >
         <div className={cn(container, "flex items-center gap-6 transition-[padding] duration-300", scrolled ? "py-2" : "py-4 md:py-8")}>
-          <Link to="/" className="shrink-0 rounded-lg focus-visible:outline-2 focus-visible:outline-v2-brand">
+          <Link to={SITE} className="shrink-0 rounded-lg focus-visible:outline-2 focus-visible:outline-v2-brand">
             <Logo className={cn("transition-[height,width] duration-300", scrolled && "md:h-[4.25rem] md:w-[6.4rem]")} />
           </Link>
 
@@ -165,7 +165,7 @@ function Footer() {
   return (
     <footer className="bg-v2-footer text-white">
       <div className={cn(container, "flex flex-col items-center gap-8 py-14 text-center md:py-16")}>
-        <Link to="/" aria-label="Wael Academy">
+        <Link to={SITE} aria-label="Wael Academy">
           <Logo tone="white" />
         </Link>
         <nav className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3">

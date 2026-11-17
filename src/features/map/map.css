@@ -154,3 +154,10 @@
   0%, 100% { transform: scaleY(1); }
   50% { transform: scaleY(0.88); }
 }
+
+/* atelier: the transparency checkerboard behind a delivered PNG */
+.atelier-checker {
+  background-color: #ffffff;
+  background-image: conic-gradient(rgb(23 46 91 / 0.08) 25%, transparent 0 50%, rgb(23 46 91 / 0.08) 0 75%, transparent 0);
+  background-size: 24px 24px;
+}

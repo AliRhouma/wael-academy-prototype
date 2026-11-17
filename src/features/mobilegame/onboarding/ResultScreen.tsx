@@ -57,6 +57,15 @@ export default function ResultScreen() {
     return () => window.clearTimeout(t)
   }, [finished, right])
 
+  // وائل celebrates on the burst's frame (one celebration: the burst, the cue and his pose together), then stands proud
+  const [cheering, setCheering] = useState(false)
+  useEffect(() => {
+    if (!burstAt) return
+    setCheering(true)
+    const t = window.setTimeout(() => setCheering(false), 1600)
+    return () => window.clearTimeout(t)
+  }, [burstAt])
+
   if (!finished) return null
   const year = yearById(yearId)
 
@@ -85,7 +94,7 @@ export default function ResultScreen() {
           </Link>
         )
       }
-      aside={<WaelAside say={waelLine(right)} tone={right >= 2 ? "yay" : "calm"} />}
+      aside={<WaelAside say={waelLine(right)} tone={right >= 2 ? "yay" : "calm"} pose={cheering ? "celebrate" : "proud"} poses={["proud", "celebrate"]} />}
       overlay={
         <GameSheet open={gate} onClose={() => setGate(false)} title="اعمل كونط باش تعاود تلعب">
           <div className="flex items-center gap-4 pt-1">

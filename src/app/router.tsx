@@ -73,7 +73,7 @@ import DeviceGallery from "@/features/mobile/DeviceGallery"
 import MobileGameLayout from "@/features/mobilegame/MobileGameLayout"
 import MobileSplash from "@/features/mobilegame/SplashScreen"
 import MobileLogin from "@/features/mobilegame/LoginScreen"
-import { MobileHome, MobileSoon } from "@/features/mobilegame/screens"
+import { MobileSoon, MobileTown } from "@/features/mobilegame/screens"
 import MobileWelcome from "@/features/mobilegame/onboarding/WelcomeScreen"
 import MobileLevel from "@/features/mobilegame/onboarding/LevelScreen"
 import MobileSubject from "@/features/mobilegame/onboarding/SubjectScreen"
@@ -85,6 +85,7 @@ import WebGameLanding from "@/features/webgame/LandingPage"
 import WebGameLogin from "@/features/webgame/LoginPage"
 import { WebHome, WebSoon } from "@/features/webgame/screens"
 import TownMapPage from "@/features/map/TownMapPage"
+import ArtAtelier from "@/features/map/ArtAtelier"
 
 /**
  * `mobile.<host>` is the device gallery's own door: its root IS the gallery
@@ -152,12 +153,13 @@ function SectionPlaceholder({ title }: { title: string }) {
 }
 
 /**
- * The project hub is a static page (public/hub/, built by `npm run hub`). The
- * app only sees "/hub" when the trailing slash is missing — hand over to the
- * file — or when the hub was never generated.
+ * The project hub is a static page (public/hub/, built by `npm run hub`) and
+ * the project's front door: "/" opens it (vercel.json redirects there before
+ * the app loads; this covers dev and any other host). The app also sees "/hub"
+ * when the trailing slash is missing, or when the hub was never generated.
  */
 function HubDoor() {
-  if (window.location.pathname === "/hub") {
+  if (window.location.pathname === "/" || window.location.pathname === "/hub") {
     window.location.replace("/hub/" + window.location.search + window.location.hash)
     return null
   }
@@ -223,18 +225,19 @@ function roleRoute(
 }
 
 export const router = createBrowserRouter([
+  /* "/" is the project hub — every page, design system and doc — except on
+     mobile.<host>, whose front door is the phone gallery. */
+  { path: "/", element: MOBILE_HOST ? <DeviceGallery /> : <HubDoor /> },
   /* The public site — the Figma landing (« Page D'acceuil ») and « About us ».
      The previous landing stays reachable at /landing-ancien. */
-  MOBILE_HOST
-    ? { path: "/", element: <DeviceGallery /> }
-    : {
-        path: "/",
-        element: <SiteLayout />,
-        children: [
-          { index: true, element: <SiteHome /> },
-          { path: "a-propos", element: <SiteAbout /> },
-        ],
-      },
+  {
+    path: "/site",
+    element: <SiteLayout />,
+    children: [
+      { index: true, element: <SiteHome /> },
+      { path: "a-propos", element: <SiteAbout /> },
+    ],
+  },
   /* The élève space on an iPhone and a Galaxy, side by side. */
   { path: "/mobile", element: <DeviceGallery /> },
   /* The GAME versions — a separate app (phone, landscape) and a separate web
@@ -252,7 +255,7 @@ export const router = createBrowserRouter([
       { path: "resultat", element: <MobileResult /> },
       { path: "inscription", element: <MobileRegister /> },
       { path: "connexion", element: <MobileLogin /> },
-      { path: "accueil", element: <MobileHome /> },
+      { path: "accueil", element: <MobileTown /> },
       { path: "*", element: <MobileSoon /> },
     ],
   },
@@ -269,6 +272,7 @@ export const router = createBrowserRouter([
   /* The game's isometric town (« مدينتي »), drawn in code — pan, zoom, tap a building. */
   { path: "/map", element: <TownMapPage /> },
   { path: "/map/planete", element: <TownMapPage key="planet" shape="planet" /> },
+  { path: "/map/atelier", element: <ArtAtelier /> },
   /* The front door — « Log In », and the register / reset screens the real
      élève space reaches from it. Outside every shell: no rail, no top bar. */
   { path: "/connexion", element: <LoginPage /> },

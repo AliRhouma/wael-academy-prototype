@@ -253,11 +253,11 @@ const game = (base) => children(base).map((c) => page(c.path, GAME_LABELS[c.comp
 
 const APP = [
   {
-    id: "site", title: "Site public & connexion", status: statusOf.get("/"),
+    id: "site", title: "Site public & connexion", status: statusOf.get("/site"),
     intro: "Ce que voit un visiteur : la page d'accueil du Figma, « À propos », puis la porte d'entrée.",
     pages: [
-      page("/", "Page d'accueil", "Landing du Figma", "built", { mainHost: true }),
-      page("/a-propos", "À propos", "", "built", { mainHost: true }),
+      page("/site", "Page d'accueil", "Landing du Figma"),
+      page("/site/a-propos", "À propos"),
       page("/connexion", "Connexion", "Compte démo 29340118 · wael1234"),
       page("/inscription", "Inscription"),
       page("/mot-de-passe-oublie", "Mot de passe oublié", "Code de démo 123456"),
@@ -353,7 +353,7 @@ const statusPill = (mark) => (mark ? `<span class="status" title="Statut dans do
 
 const pageRow = (p) => {
   const [label, cls] = STATE[p.state]
-  return `<li data-search="${attr(`${p.label} ${p.path} ${p.note} ${p.group ?? ""}`)}"><a class="row" href="${attr(p.path)}"${p.mainHost ? " data-main-host" : ""}>
+  return `<li data-search="${attr(`${p.label} ${p.path} ${p.note} ${p.group ?? ""}`)}"><a class="row" href="${attr(p.path)}">
   <span class="row-main"><span class="row-title"><bdi>${esc(p.label)}</bdi></span>${p.note ? `<span class="row-note">${esc(p.note)}</span>` : ""}</span>
   <code class="row-path">${esc(p.path)}</code><span class="state state-${cls}">${label}</span></a></li>`
 }
@@ -578,12 +578,11 @@ ${docHtml}
 
 <script>
 (function () {
-  // On mobile.<domaine>, "/" is the phone gallery: the public site lives on the main host.
-  var host = location.hostname, mobile = /^mobile\\./i.test(host)
-  var main = location.protocol + "//" + location.host.replace(/^mobile\\./i, "")
-  var hostLine = document.getElementById("host")
-  hostLine.innerHTML = "Vous êtes sur <b>" + location.host + "</b>. Cette page est à <b>/hub/</b> sur chaque hôte" + (mobile ? " — ici « / » est la galerie des téléphones, le site public s'ouvre sur <b>" + main.replace(/^https?:\\/\\//, "") + "</b>." : ", y compris <b>mobile." + location.host + "</b>.")
-  if (mobile) document.querySelectorAll("[data-main-host]").forEach(function (a) { a.href = main + a.getAttribute("href") })
+  // "/" opens this page — except on mobile.<domaine>, where "/" is the phone gallery.
+  var mobile = /^mobile\\./i.test(location.hostname)
+  document.getElementById("host").innerHTML = "Vous êtes sur <b>" + location.host + "</b>. " + (mobile
+    ? "Ici « / » ouvre la galerie des téléphones ; ce plan reste à <b>/hub/</b>."
+    : "Ce plan s'ouvre à « / » et à <b>/hub/</b> — aussi sur <b>mobile." + location.host + "/hub/</b>.")
 
   // Theme: follows the device until a choice is made here.
   var root = document.documentElement, key = "wael-hub-theme"

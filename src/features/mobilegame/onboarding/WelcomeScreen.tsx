@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { BookOpen, Gamepad2, GraduationCap } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -20,6 +21,12 @@ const ROUTE = [
 export default function WelcomeScreen() {
   const ui = usePlatformUi()
   const { card } = usePlatformCorners()
+  // he greets you, then turns to present the route once the cards are on screen
+  const [pose, setPose] = useState<"wave" | "present">("wave")
+  useEffect(() => {
+    const t = window.setTimeout(() => setPose("present"), 1800)
+    return () => clearTimeout(t)
+  }, [])
   return (
     <FlowScreen
       step={STEPS.welcome}
@@ -30,7 +37,7 @@ export default function WelcomeScreen() {
           عندي كونط
         </Link>
       }
-      aside={<WaelAside say="أهلا، أنا وائل! خلّيني نعرفك في دقيقة، ومبعد نلعبو." />}
+      aside={<WaelAside say="أهلا، أنا وائل! خلّيني نعرفك في دقيقة، ومبعد نلعبو." pose={pose} poses={["wave", "present"]} />}
     >
       <div className="flex min-h-0 flex-1 flex-col justify-center gap-3 ps-2">
         <div>

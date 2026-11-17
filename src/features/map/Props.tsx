@@ -1,5 +1,6 @@
 import { memo } from "react"
-import { iso, round } from "./iso"
+import { MASTER_TILE_W, propFile, TEMPLATES, useArtLibrary } from "./art"
+import { HALF_W, iso, round } from "./iso"
 import { C, LINE, shade } from "./palette"
 import { FOUNTAIN, type Prop } from "./townLayout"
 
@@ -11,6 +12,23 @@ const LEAVES = [C.leaf, C.leafLight, C.leafDark]
 const OL = { stroke: C.ink, strokeOpacity: 0.4, strokeWidth: 1 }
 
 export const PropArt = memo(function PropArt({ p }: { p: Prop }) {
+  // delivered art first (`prop_<kind>_<nn>.png`, a variant per prop), else the code drawing
+  const lib = useArtLibrary()
+  const file = propFile(lib, p.kind, p.variant)
+  if (file) return <PropSprite p={p} url={lib.get(file)!} />
+  return <PropDrawing p={p} />
+})
+
+/** A delivered prop on the template's anchor (512, 832), 1/16 per tile — the fountain covers 2 × 2. */
+function PropSprite({ p, url }: { p: Prop; url: string }) {
+  const t = TEMPLATES.prop
+  const big = p.kind === "fountain"
+  const c = big ? iso(FOUNTAIN.x + FOUNTAIN.w / 2, FOUNTAIN.y + FOUNTAIN.h / 2) : iso(p.gx + 0.5 + p.dx, p.gy + 0.5 + p.dy)
+  const k = (((big ? FOUNTAIN.w + FOUNTAIN.h : 2) * HALF_W) / MASTER_TILE_W) * p.scale
+  return <image href={url} x={round(c.x - t.ax! * k)} y={round(c.y - t.ay! * k)} width={round(t.w * k)} height={round(t.h * k)} preserveAspectRatio="none" pointerEvents="none" />
+}
+
+export const PropDrawing = memo(function PropDrawing({ p }: { p: Prop }) {
   const c = iso(p.gx + 0.5 + p.dx, p.gy + 0.5 + p.dy)
   const s = p.scale
   const at = `translate(${round(c.x)} ${round(c.y)}) scale(${s})`

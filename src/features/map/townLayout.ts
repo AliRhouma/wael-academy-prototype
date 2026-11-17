@@ -108,14 +108,10 @@ export interface Building {
   /** Base colour for kinds that vary (houses). */
   color?: string
   /**
-   * A real PNG/SVG asset to draw INSTEAD of the code-drawn building. The image
-   * is bottom-anchored on the footprint's bottom corner and as wide as the
-   * footprint's diamond (`spriteScale` multiplies that width; `spriteOffsetY`
-   * nudges it down in px when a pack's art has empty space under the base).
+   * The asset name of its delivered art (`building_<art>[_l<level>].png`, see
+   * `art.ts`). Defaults to its kind's name (`ART_OF_KIND` in `BuildingArt.tsx`).
    */
-  sprite?: string
-  spriteScale?: number
-  spriteOffsetY?: number
+  art?: string
 }
 
 export const SCHOOL_ID = "ecole"

@@ -94,7 +94,7 @@ export default function QuizScreen() {
           </bdi>
         </span>
       }
-      aside={<WaelAside say={say} tone={done && right ? "yay" : "calm"} />}
+      aside={<WaelAside say={say} tone={done && right ? "yay" : "calm"} pose={!done ? "think" : right ? "cheer" : "hmm"} poses={["think", "cheer", "hmm"]} />}
     >
       <div className="flex min-h-0 flex-1 flex-col gap-2 ps-2">
         {/* the question — flat: it informs, it doesn't take a tap */}

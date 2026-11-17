@@ -2,7 +2,7 @@ import { useEffect, useState, type CSSProperties, type ReactNode } from "react"
 import { Link } from "react-router-dom"
 import { ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
-import character from "../../../../svg icons/Caracter.png"
+import { Wael3D, type WaelPose } from "@/features/game/shared/Wael3D"
 import { MobileScreen, useGamePlatform } from "../MobileGameLayout"
 import { usePlatformUi } from "../platformUi"
 
@@ -93,8 +93,25 @@ export function FlowProgress({ value }: { value: number }) {
  * Wael on the end side with what he says. The bubble pops when the line
  * changes (his "reaction"), with its text already in place — no typewriter.
  * `tone`: `yay` gives the bubble the lime edge (a right answer, a choice made).
+ *
+ * وائل is the 3D presenter (docs/3d/3d-characters-and-ui-effects.md § 7): he
+ * stands on a small cream plinth with a navy edge — the town buildings' own
+ * plinth — and his `pose` reacts with the bubble (a swap is a crossfade; list
+ * every pose the screen can reach in `poses` so they're pre-mounted).
  */
-export function WaelAside({ say, tone = "calm", children }: { say: ReactNode; tone?: "calm" | "yay"; children?: ReactNode }) {
+export function WaelAside({
+  say,
+  tone = "calm",
+  pose = "present",
+  poses,
+  children,
+}: {
+  say: ReactNode
+  tone?: "calm" | "yay"
+  pose?: WaelPose
+  poses?: readonly WaelPose[]
+  children?: ReactNode
+}) {
   const { panel } = usePlatformCorners()
   // The bubble re-keys on its line so the pop replays on every reaction.
   const [k, setK] = useState(0)
@@ -112,11 +129,13 @@ export function WaelAside({ say, tone = "calm", children }: { say: ReactNode; to
       >
         {say}
       </div>
-      <img
-        src={character}
-        alt="وائل"
-        className="absolute bottom-0 start-1/2 h-[66%] -translate-x-1/2 object-contain drop-shadow-[0_8px_16px_rgb(0_0_0/.35)] rtl:translate-x-1/2"
+      {/* the plinth: cream stone, navy tile edge — an illustration, not a button */}
+      <div
+        aria-hidden
+        className="absolute bottom-[4%] start-1/2 h-[10%] w-[78%] -translate-x-1/2 rounded-[50%] border-2 border-b-4 border-v2-ink bg-[#fbf3e4] rtl:translate-x-1/2"
+        // #fbf3e4 = the town plinth's cream (map palette `cream`); no token carries it
       />
+      <Wael3D pose={pose} poses={poses} className="absolute bottom-[7.5%] start-1/2 h-[72%] -translate-x-1/2 rtl:translate-x-1/2" />
       {children}
     </aside>
   )

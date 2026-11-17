@@ -210,7 +210,7 @@ export function AppShell({ nav }: { nav: NavItem[] }) {
 
   function signOut() {
     logout()
-    navigate("/")
+    navigate("/site")
   }
 
   return (

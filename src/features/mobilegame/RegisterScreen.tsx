@@ -8,7 +8,7 @@ import { matiereKey } from "@/data/matiere"
 import { SubjectIcon } from "@/components/icons/subjects"
 import { DEMO_CODE, LEVELS, MIN_PASSWORD, RESEND_AFTER_S, normalizePhone, phoneTaken, register } from "@/features/auth/auth"
 import { gInput } from "@/features/game/shared/ui"
-import character from "../../../svg icons/Caracter.png"
+import { Wael3D } from "@/features/game/shared/Wael3D"
 import { useGamePlatform } from "./MobileGameLayout"
 import { usePlatformUi } from "./platformUi"
 import { FlowScreen, STEPS, Tag, useGameShake, usePlatformCorners } from "./onboarding/parts"
@@ -162,7 +162,12 @@ export default function RegisterScreen() {
       aside={
         <aside className={cn("relative min-h-0 overflow-hidden border-2 border-[#052a30] bg-v2-chapter p-2.5", panel)}>
           {/* #052a30 = --v2-edge-deep, the chapter's own edge */}
-          <img src={character} alt="" aria-hidden className="absolute -bottom-1 end-0 h-[62%] object-contain drop-shadow-[0_8px_16px_rgb(0_0_0/.35)]" />
+          {/* وائل presents what is being saved, thinks with you while the SMS comes, nods at the last step */}
+          <Wael3D
+            pose={step === "phone" ? "present" : step === "code" ? "think" : "nod"}
+            poses={["present", "think", "nod"]}
+            className="absolute bottom-0 end-[-6%] h-[64%]"
+          />
           <div className={cn("relative border-2 border-v2-ink bg-v2-surface p-2.5 shadow-[0_3px_0_var(--v2-ink)]", card)}>
             <p className="text-[calc(7.1px*var(--ts))] font-bold text-v2-ink-2">تتسجّل في الكونط</p>
             {finished && subject ? (

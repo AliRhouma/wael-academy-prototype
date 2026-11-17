@@ -39,6 +39,8 @@ export default function SubjectScreen() {
         <WaelAside
           say={picked ? `${picked.label}؟ اختيار باهي! حضّرتلك 3 أسئلة من البرنامج.` : "شنيّة المادة اللي تحبّها برشا؟"}
           tone={picked ? "yay" : "calm"}
+          pose={picked ? "nod" : "present"}
+          poses={["present", "nod"]}
         />
       }
     >

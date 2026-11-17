@@ -50,7 +50,7 @@ export default function LevelScreen() {
 
   const chosen = yearById(yearId)
   return (
-    <FlowScreen step={STEPS.level} back="/mobilegame/bienvenue" aside={<WaelAside say={reaction(open)} tone={open ? "yay" : "calm"} />}>
+    <FlowScreen step={STEPS.level} back="/mobilegame/bienvenue" aside={<WaelAside say={reaction(open)} tone={open ? "yay" : "calm"} pose={open ? "nod" : "curious"} poses={["curious", "nod"]} />}>
       <div className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-y-auto ps-2 pb-2">
         <h1 className="text-[calc(12.5px*var(--ts))] font-black leading-tight text-v2-ink">في أنا سنة تقرا؟</h1>
         <div role="radiogroup" aria-label="المستوى" className="grid grid-cols-4 gap-2.5">

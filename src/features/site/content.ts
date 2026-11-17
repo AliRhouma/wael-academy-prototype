@@ -7,11 +7,14 @@ import { Award, CalendarClock, Gem, Headset, HeartHandshake, Lightbulb, ShieldCh
  * grey boxes) it is written in the same voice so the demo never shows filler.
  */
 
+/** The site's home. "/" opens the project hub (/hub/); the site lives here. */
+export const SITE = "/site"
+
 export const NAV = [
-  { label: "شكون نحنا", to: "/a-propos" },
-  { label: "عروضنا", to: "/#offres" },
-  { label: "اساتذتنا", to: "/#asatidha" },
-  { label: "المنصة", to: "/#mnassa" },
+  { label: "شكون نحنا", to: `${SITE}/a-propos` },
+  { label: "عروضنا", to: `${SITE}#offres` },
+  { label: "اساتذتنا", to: `${SITE}#asatidha` },
+  { label: "المنصة", to: `${SITE}#mnassa` },
 ]
 
 export const STATS: { icon: LucideIcon; value: string; label: string }[] = [

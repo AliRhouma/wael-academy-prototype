@@ -1,0 +1,76 @@
+/*
+ * The splash's entrance — docs/3d/3d-characters-and-ui-effects.md § 6
+ * (Option B "presenter beside his town", amendments A2–A4 approved
+ * 2026-11-16 for this screen).
+ *
+ * First paint is the flat --v2-deep (the OS launch colour), everything is laid
+ * out and the CTA is tappable from frame one. Then, in under 600 ms: glow +
+ * island rise (240 ms), Wael rises with the play pop curve (320 ms), the text
+ * deals in 40 ms apart from 120 ms, the CTAs at 200 ms, the chip pops once.
+ * Only transform and opacity animate. `.sp-enter` is set on the first visit of
+ * the session only; under reduced motion none of this exists.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .sp-enter .sp-glow {
+    animation: sp-fade 240ms ease-out backwards;
+  }
+  .sp-enter .sp-island {
+    animation: sp-rise 240ms cubic-bezier(0.22, 0.9, 0.3, 1) backwards;
+  }
+  .sp-enter .sp-wael {
+    animation: sp-wael 320ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    transform-origin: 50% 100%;
+  }
+  .sp-enter .sp-text {
+    animation: sp-rise 240ms cubic-bezier(0.22, 0.9, 0.3, 1) backwards;
+    animation-delay: calc(120ms + var(--i, 0) * 40ms);
+  }
+  .sp-enter .sp-chip {
+    animation: sp-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    animation-delay: 360ms;
+  }
+  /* the one ambient loop: the island bobs once the entrance is over */
+  .sp-bob {
+    animation: v2-float 6s ease-in-out infinite;
+    animation-delay: 560ms;
+  }
+  .sp-bob.sp-paused {
+    animation-play-state: paused;
+  }
+  /* pose swap (wave → present): a 120 ms crossfade */
+  .sp-pose {
+    transition: opacity 120ms linear;
+  }
+}
+
+@keyframes sp-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes sp-rise {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+@keyframes sp-wael {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+    scale: 0.96;
+  }
+}
+@keyframes sp-pop {
+  0% {
+    opacity: 0;
+    scale: 0.6;
+  }
+  60% {
+    opacity: 1;
+    scale: 1.15;
+  }
+  100% {
+    scale: 1;
+  }
+}

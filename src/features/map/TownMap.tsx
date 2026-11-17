@@ -1,5 +1,6 @@
 import { memo, useMemo, type KeyboardEvent } from "react"
-import { BuildingVisual, topHeight, wallHeight } from "./BuildingArt"
+import { BuildingVisual, spriteTop, topHeight, useBuildingSprite, wallHeight } from "./BuildingArt"
+import { useAlpha } from "./art"
 import { GroundLayer, PLANET_PX } from "./Ground"
 import { diamond, HALF_W, iso, round, TILE_H } from "./iso"
 import { C, SHADOW } from "./palette"
@@ -184,8 +185,12 @@ const Shadows = memo(function Shadows({ buildings, props }: { buildings: Buildin
  * bottom centre by `--iz`.
  */
 const Label = memo(function Label({ b, active }: { b: Building; active: boolean }) {
+  // over delivered art, the badge sits on the image's visible top
+  const sprite = useBuildingSprite(b)
+  const alpha = useAlpha(sprite?.url ?? null)
   if (b.kind === "house" && !active) return null
-  const top = iso(b.x + b.w / 2, b.y + b.h / 2, topHeight(b) + 6)
+  const h = sprite && alpha?.box ? spriteTop(b, alpha.box.top) : topHeight(b)
+  const top = iso(b.x + b.w / 2, b.y + b.h / 2, h + 6)
   const locked = b.level === 0
   return (
     <g transform={`translate(${round(top.x)} ${round(top.y)})`} className="map-label-anchor" data-bid={b.id}>

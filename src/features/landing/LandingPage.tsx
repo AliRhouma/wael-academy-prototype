@@ -101,7 +101,7 @@ function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-surface/80 pt-safe backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-[1220px] items-center gap-3 px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-2.5">
+        <Link to="/site" className="flex items-center gap-2.5">
           <BrandMark />
           <span className="leading-tight">
             <span className="block font-display text-[calc(15px*var(--ts))] font-bold text-ink">Wael Academy</span>

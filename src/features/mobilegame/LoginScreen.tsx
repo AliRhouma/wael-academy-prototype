@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { ChevronRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { DemoFillButton, GameLoginForm } from "@/features/game/shared/parts"
-import { TownArt } from "@/features/game/shared/TownArt"
-import character from "../../../svg icons/Caracter.png"
+import { Wael3D } from "@/features/game/shared/Wael3D"
+import townIsland from "@/assets/splash/town_island.webp"
 import { MobileScreen, useGamePlatform } from "./MobileGameLayout"
 import { usePlatformUi } from "./platformUi"
 
@@ -39,6 +39,7 @@ export default function LoginScreen() {
             compact
             ui={ui}
             showDemo={false}
+            demoWhenEmpty
             forgotTo="/mobilegame/oublie"
             registerTo="/mobilegame/inscription"
             onSuccess={() => navigate("/mobilegame/accueil")}
@@ -47,8 +48,16 @@ export default function LoginScreen() {
 
         <div className={cn("relative my-1 me-1 overflow-hidden border-2 border-[#052a30] bg-v2-chapter", ios ? "rounded-[22px]" : "rounded-[28px]")}>
           {/* #052a30 = --v2-edge-deep, the chapter's own edge */}
-          <TownArt className="absolute -bottom-[18%] -end-[14%] w-[95%] opacity-90" />
-          <img src={character} alt="" aria-hidden className="absolute bottom-0 start-[6%] h-[86%] object-contain drop-shadow-[0_8px_16px_rgb(0_0_0/.35)]" />
+          {/* the same 3D town as the splash, floating behind وائل, who presents the form (3D knowledge base § 7) */}
+          <img
+            src={townIsland}
+            alt=""
+            aria-hidden
+            className="v2-float absolute -end-[10%] top-[22%] w-[78%] select-none"
+            style={{ filter: "drop-shadow(0 14px 18px color-mix(in oklab, var(--v2-deep) 70%, black))" }}
+            draggable={false}
+          />
+          <Wael3D pose="present" className="absolute bottom-[1%] start-[2%] h-[84%]" />
           <div className="absolute end-4 top-4 max-w-[58%] rounded-2xl rounded-ss-sm border-2 border-v2-ink bg-v2-surface px-3 py-2 text-[calc(7.5px*var(--ts))] font-bold leading-snug text-v2-ink shadow-[0_3px_0_var(--v2-ink)]">
             مرحبا! مدينتك تستنّى فيك — ادخل نكمّلو نبنيو.
           </div>

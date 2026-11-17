@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { CheckCircle2, ChevronLeft, Hand, LocateFixed, Minus, Navigation2, Plus } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -31,8 +31,22 @@ import "./map.css"
  *
  * Two shapes of the same town (`shape`): the square island at `/map`, the
  * small round planet at `/map/planete`.
+ *
+ * `framed`: the same town inside the game app's phone (`/mobilegame/accueil`,
+ * the place login leads to) — it fills the screen instead of the window,
+ * keeps its controls clear of the notch and home bar (the frame's `--gs-*`
+ * insets) and the « Entrer » overlay stays inside the phone. `back` is where
+ * the round back button goes.
  */
-export default function TownMapPage({ shape = "island" }: { shape?: TownShape }) {
+export default function TownMapPage({
+  shape = "island",
+  framed = false,
+  back = "/webgame",
+}: {
+  shape?: TownShape
+  framed?: boolean
+  back?: string
+}) {
   const isMobile = useIsMobile()
   const navigate = useNavigate()
   const location = useLocation()
@@ -179,7 +193,16 @@ export default function TownMapPage({ shape = "island" }: { shape?: TownShape })
   }
 
   return (
-    <div lang="fr" dir="ltr" className="map-space-bg relative h-dvh w-full overflow-hidden" >
+    <div
+      lang="fr"
+      dir="ltr"
+      // overflow-CLIP, not hidden: a hidden box still scrolls when the browser brings a focused
+      // element into view (the tapped building), which slid the « Entrer » overlay off the screen.
+      // The camera owns all movement, so this box must never scroll.
+      className={cn("map-space-bg relative w-full overflow-clip", framed ? "h-full" : "h-dvh")}
+      // in the phone frame the safe areas are the frame's insets (MobileGameLayout)
+      style={framed ? ({ "--sai-top": "var(--gs-top)", "--sai-bottom": "var(--gs-bottom)" } as CSSProperties) : undefined}
+    >
       {/* the map */}
       <div ref={camera.viewportRef} className="map-viewport absolute inset-0" tabIndex={0} aria-label="Ville — glisser pour explorer, molette ou pincer pour zoomer">
         <div ref={camera.worldRef} className="map-world">
@@ -189,8 +212,11 @@ export default function TownMapPage({ shape = "island" }: { shape?: TownShape })
       </div>
 
       {/* top bar */}
-      <header className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-start gap-2 px-3 pt-[max(0.75rem,var(--sai-top))] md:gap-3 md:px-5 md:pt-5">
-        <Link to="/webgame" data-uisfx="back" aria-label="Retour au jeu" className={cn(gBtn, "pointer-events-auto size-12 shrink-0 rounded-full p-0")}>
+      <header
+        className="pointer-events-none absolute inset-x-0 top-0 z-20 flex items-start gap-2 px-3 pt-[max(0.75rem,var(--sai-top))] md:gap-3 md:px-5 md:pt-5"
+        style={framed ? { paddingLeft: "calc(var(--gs-left) + 12px)", paddingRight: "calc(var(--gs-right) + 12px)", paddingTop: "calc(var(--gs-top) + 8px)" } : undefined}
+      >
+        <Link to={back} data-uisfx="back" aria-label="Retour au jeu" className={cn(gBtn, "pointer-events-auto size-12 shrink-0 rounded-full p-0")}>
           <ChevronLeft className="size-6" />
         </Link>
         <div className="pointer-events-auto flex min-w-0 items-center gap-3 rounded-full border-2 border-v2-ink/10 bg-v2-surface/95 py-1.5 pe-2 ps-4 backdrop-blur">
@@ -209,7 +235,10 @@ export default function TownMapPage({ shape = "island" }: { shape?: TownShape })
       </header>
 
       {/* zoom controls — top end on phones (the sheet owns the bottom), bottom end on desktop */}
-      <div className="absolute end-3 top-[calc(max(0.75rem,var(--sai-top))+4rem)] z-20 flex flex-col gap-2.5 md:bottom-6 md:end-6 md:top-auto">
+      <div
+        className="absolute end-3 top-[calc(max(0.75rem,var(--sai-top))+4rem)] z-20 flex flex-col gap-2.5 md:bottom-6 md:end-6 md:top-auto"
+        style={framed ? { top: "auto", right: "calc(var(--gs-right) + 12px)", bottom: "calc(var(--gs-bottom) + 10px)" } : undefined}
+      >
         <button type="button" onClick={camera.zoomIn} data-uisfx="press" aria-label="Zoomer" className={cn(gBtn, "size-12 rounded-2xl p-0")}>
           <Plus className="size-5" strokeWidth={2.75} />
         </button>
@@ -275,13 +304,13 @@ export default function TownMapPage({ shape = "island" }: { shape?: TownShape })
         </div>
       )}
 
-      {enterB && <Interior b={enterB} onBack={leave} />}
+      {enterB && <Interior b={enterB} onBack={leave} framed={framed} />}
     </div>
   )
 }
 
 /** « Entrer » — the inside of a building is the next step; a warm placeholder until then. */
-function Interior({ b, onBack }: { b: Building; onBack: () => void }) {
+function Interior({ b, onBack, framed = false }: { b: Building; onBack: () => void; framed?: boolean }) {
   const ui = KIND_UI[b.kind]
   const l = iso(b.x, b.y + b.h)
   const r = iso(b.x + b.w, b.y)
@@ -290,7 +319,7 @@ function Interior({ b, onBack }: { b: Building; onBack: () => void }) {
   const pad = 26
   const vb = `${l.x - pad} ${top.y - pad} ${r.x - l.x + pad * 2} ${bottom.y - top.y + pad * 2}`
   return (
-    <div className="fixed inset-0 z-[65] overflow-y-auto bg-v2-mint-grid motion-safe:animate-in motion-safe:fade-in-0 motion-safe:duration-200">
+    <div className={cn(framed ? "absolute" : "fixed", "inset-0 z-[65] overflow-y-auto bg-v2-mint-grid motion-safe:animate-in motion-safe:fade-in-0 motion-safe:duration-200")}>
       <div className="mx-auto flex min-h-full max-w-lg flex-col items-center justify-center px-5 pb-[max(2rem,var(--sai-bottom))] pt-[max(2rem,var(--sai-top))] text-center">
         <div className="w-full rounded-[28px] border-2 border-v2-ink/10 bg-v2-surface p-6 shadow-[0_12px_32px_rgb(21_58_45/0.12)]">
           <svg viewBox={vb} className="mx-auto h-44 w-auto max-w-full" aria-hidden style={{ direction: "ltr" }}>

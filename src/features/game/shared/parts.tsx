@@ -88,8 +88,11 @@ export function GameLoginForm({
   registerTo,
   ui,
   showDemo = true,
+  demoWhenEmpty = false,
 }: {
   compact?: boolean
+  /** Prototype shortcut: submitting with both fields empty signs in the demo student. */
+  demoWhenEmpty?: boolean
   onSuccess: () => void
   forgotTo: string
   registerTo: string
@@ -106,7 +109,8 @@ export function GameLoginForm({
 
   function submit(e: FormEvent) {
     e.preventDefault()
-    const res = signIn(identifier, password)
+    const empty = !identifier.trim() && !password
+    const res = demoWhenEmpty && empty ? signIn(DEMO_ACCOUNT.phone, DEMO_ACCOUNT.password) : signIn(identifier, password)
     if (!res.ok) {
       setError(res.error)
       sfx("error")
